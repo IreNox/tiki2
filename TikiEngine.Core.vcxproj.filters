@@ -1,0 +1,356 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\Engine">
+      <UniqueIdentifier>{efcc6767-8e0d-487b-b010-16699e4b9001}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core">
+      <UniqueIdentifier>{2186df8e-ed7d-4a95-8b5e-27a20d62d2d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Math">
+      <UniqueIdentifier>{97395375-7f76-4ddc-8014-13c9b834bb26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\List">
+      <UniqueIdentifier>{ee5b6dd6-afaa-4ab7-ab10-d5a7ef654c07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Resources">
+      <UniqueIdentifier>{ade75fab-0465-4275-b9d2-7438a1d07326}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Helper">
+      <UniqueIdentifier>{27214e4f-a8db-45de-8b45-6f4128ff0991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Elements">
+      <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core">
+      <UniqueIdentifier>{46eb0964-ee28-4748-8abb-e47650a0a801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\Math">
+      <UniqueIdentifier>{c98a007c-6b2e-447e-b89a-9bad18d4fb55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Engine">
+      <UniqueIdentifier>{40b0c0a4-f782-44bb-9b9b-20dbcd2e2746}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scene">
+      <UniqueIdentifier>{8b11e3bf-e8ae-4b8f-a023-cdf7ec7edad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\Resources">
+      <UniqueIdentifier>{1f09cddc-549e-43e0-bb58-3a39aa9140dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Descriptions">
+      <UniqueIdentifier>{658fb262-4766-4655-a056-d78021dd6f65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces">
+      <UniqueIdentifier>{2ded2737-277b-45af-8c66-93baa7bfb5c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Modules">
+      <UniqueIdentifier>{0be57129-1b5a-4055-aa5c-d17170b1e4bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Graphics">
+      <UniqueIdentifier>{ff8d7c53-a093-42c7-81f5-d72b9cd1ac42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\Static">
+      <UniqueIdentifier>{e53c7935-23fd-4c2e-bc23-376d950a59b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\Modules">
+      <UniqueIdentifier>{d3d3141a-50df-4343-aa0f-f6f628087ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Args">
+      <UniqueIdentifier>{bdc712d0-b742-40b9-9b6d-a8bc9f281755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Modules">
+      <UniqueIdentifier>{991ca4f3-a7ca-4e2d-bb24-30e5aa020f56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Graphics">
+      <UniqueIdentifier>{4017730b-2b4a-4fab-81b9-a863c67082fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Components">
+      <UniqueIdentifier>{4f1acbf8-fec5-4b04-8ff7-0baada5080d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\Components">
+      <UniqueIdentifier>{bbc58230-b969-45fa-8986-b0055ced6fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Components">
+      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\GameObjects">
+      <UniqueIdentifier>{81c6535b-6480-4ac5-ab9e-c88a4426e7d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Components\Extern">
+      <UniqueIdentifier>{2079d969-2bd0-4a3d-9613-75c8c8002f2e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\Camera.cpp">
+      <Filter>Quelldateien\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Element.cpp">
+      <Filter>Quelldateien\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Mesh.cpp">
+      <Filter>Quelldateien\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Quad.cpp">
+      <Filter>Quelldateien\Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Vector2.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Vector4.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Vector3.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Transform.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Matrix3x3.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Matrix2x2.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Matrix.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Engine.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GarbageCollector.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Input.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Window.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Console.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene.cpp">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Texture.cpp">
+      <Filter>Quelldateien\Core\Resources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Core\Dictionary.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EngineDescription.h">
+      <Filter>Headerdateien\Core\Descriptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Engine.h">
+      <Filter>Headerdateien\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GraphicsDescription.h">
+      <Filter>Headerdateien\Core\Descriptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ICollection.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IList.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IDictionary.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IEnumerable.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IEnumerator.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\KeyValuePair.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\List.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix3x3.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix2x2.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Queue.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector2.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector4.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector3.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Transform.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\WindowDescription.h">
+      <Filter>Headerdateien\Core\Descriptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Stack.h">
+      <Filter>Headerdateien\Core\List</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Texture.h">
+      <Filter>Headerdateien\Core\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Object.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperHash.h">
+      <Filter>Headerdateien\Core\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IContentManager.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IModule.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IGraphics.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IPhysics.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ModuleType.h">
+      <Filter>Headerdateien\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ModuleRequest.h">
+      <Filter>Headerdateien\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ModuleResponse.h">
+      <Filter>Headerdateien\Core\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DrawArgs.h">
+      <Filter>Headerdateien\Core\Args</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\UpdateArgs.h">
+      <Filter>Headerdateien\Core\Args</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IInput.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\InitializationArgs.h">
+      <Filter>Headerdateien\Core\Args</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IRenderTarget.h">
+      <Filter>Headerdateien\Interfaces\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EngineObject.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\InputDescription.h">
+      <Filter>Headerdateien\Core\Descriptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Color.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DrawContext.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ViewPort.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Console.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GarbageCollector.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Input.h">
+      <Filter>Headerdateien\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ITexture.h">
+      <Filter>Headerdateien\Interfaces\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ComponentType.h">
+      <Filter>Headerdateien\Core\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrices.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameTime.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\InputState.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Scene.h">
+      <Filter>Headerdateien\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Window.h">
+      <Filter>Headerdateien\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ICollider.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IRenderer.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IRigidbody.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IComponent.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\core\ICamera.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CameraOrbital.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ILight.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IBehavior.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\RendererMesh.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\RendererQuad.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Camera.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Light.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameObject.h">
+      <Filter>Headerdateien\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TypeDef.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TypeInc.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Quaternion.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IMaterial.h">
+      <Filter>Headerdateien\Interfaces\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Key.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

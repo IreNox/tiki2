@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Headerdateien\Buffer">
+      <UniqueIdentifier>{dbea668f-bcab-45ca-80e9-c9256b9693ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Vertex">
+      <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Shader">
+      <UniqueIdentifier>{ab46f0ec-920e-484c-b473-a7a851bd4257}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Buffer">
+      <UniqueIdentifier>{96f9157a-4c5c-453c-a8bb-0a08acba9170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Shader">
+      <UniqueIdentifier>{3eddbe5d-58f8-4509-a4f0-e7d17e2b3552}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Vertex">
+      <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Graphics\Graphics.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Buffer.cpp">
+      <Filter>Quelldateien\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\IndexBuffer.cpp">
+      <Filter>Quelldateien\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexBuffer.cpp">
+      <Filter>Quelldateien\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DefaultShader.cpp">
+      <Filter>Quelldateien\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Shader.cpp">
+      <Filter>Quelldateien\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DefaultVertex.cpp">
+      <Filter>Quelldateien\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\SimpleVertex.cpp">
+      <Filter>Quelldateien\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexDeclaration.cpp">
+      <Filter>Quelldateien\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ShaderVariable.cpp">
+      <Filter>Quelldateien\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\PostProcessVertex.cpp">
+      <Filter>Quelldateien\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexData.cpp">
+      <Filter>Quelldateien\Vertex</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Graphics\Graphics.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Buffer.h">
+      <Filter>Headerdateien\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ConstantBuffer.h">
+      <Filter>Headerdateien\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\IndexBuffer.h">
+      <Filter>Headerdateien\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\VertexBuffer.h">
+      <Filter>Headerdateien\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\PostProcessVertex.h">
+      <Filter>Headerdateien\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DefaultVertex.h">
+      <Filter>Headerdateien\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SimpleVertex.h">
+      <Filter>Headerdateien\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\VertexDeclaration.h">
+      <Filter>Headerdateien\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DefaultShader.h">
+      <Filter>Headerdateien\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Shader.h">
+      <Filter>Headerdateien\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\d3dx11effect.h">
+      <Filter>Headerdateien\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\VertexData.h">
+      <Filter>Headerdateien\Vertex</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

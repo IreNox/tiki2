@@ -1,0 +1,228 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Core\Camera.cpp" />
+    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Core\Element.cpp" />
+    <ClCompile Include="src\Core\Engine.cpp" />
+    <ClCompile Include="src\Core\GarbageCollector.cpp" />
+    <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\Core\Matrix.cpp" />
+    <ClCompile Include="src\Core\Matrix2x2.cpp" />
+    <ClCompile Include="src\Core\Matrix3x3.cpp" />
+    <ClCompile Include="src\Core\Mesh.cpp" />
+    <ClCompile Include="src\Core\Quad.cpp" />
+    <ClCompile Include="src\Core\Scene.cpp" />
+    <ClCompile Include="src\Core\Texture.cpp" />
+    <ClCompile Include="src\Core\Transform.cpp" />
+    <ClCompile Include="src\Core\Vector2.cpp" />
+    <ClCompile Include="src\Core\Vector3.cpp" />
+    <ClCompile Include="src\Core\Vector4.cpp" />
+    <ClCompile Include="src\Core\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Core\Camera.h" />
+    <ClInclude Include="inc\core\ICamera.h" />
+    <ClInclude Include="inc\Core\Color.h" />
+    <ClInclude Include="inc\Core\ComponentType.h" />
+    <ClInclude Include="inc\Core\Console.h" />
+    <ClInclude Include="inc\Core\Dictionary.h" />
+    <ClInclude Include="inc\Core\DrawArgs.h" />
+    <ClInclude Include="inc\Core\DrawContext.h" />
+    <ClInclude Include="inc\Core\Engine.h" />
+    <ClInclude Include="inc\Core\EngineDescription.h" />
+    <ClInclude Include="inc\Core\EngineObject.h" />
+    <ClInclude Include="inc\Core\IBehavior.h" />
+    <ClInclude Include="inc\Core\ICollider.h" />
+    <ClInclude Include="inc\Core\IComponent.h" />
+    <ClInclude Include="inc\Core\IInput.h" />
+    <ClInclude Include="inc\Core\IMaterial.h" />
+    <ClInclude Include="inc\Core\InitializationArgs.h" />
+    <ClInclude Include="inc\Core\InputDescription.h" />
+    <ClInclude Include="inc\Core\IRenderer.h" />
+    <ClInclude Include="inc\Core\IRenderTarget.h" />
+    <ClInclude Include="inc\Core\IRigidbody.h" />
+    <ClInclude Include="inc\Core\ITexture.h" />
+    <ClInclude Include="inc\Core\Key.h" />
+    <ClInclude Include="inc\Core\Light.h" />
+    <ClInclude Include="inc\Core\Quaternion.h" />
+    <ClInclude Include="inc\Core\TypeDef.h" />
+    <ClInclude Include="inc\Core\TypeInc.h" />
+    <ClInclude Include="inc\Core\UpdateArgs.h" />
+    <ClInclude Include="inc\Core\GameTime.h" />
+    <ClInclude Include="inc\Core\GarbageCollector.h" />
+    <ClInclude Include="inc\Core\GraphicsDescription.h" />
+    <ClInclude Include="inc\Core\HelperHash.h" />
+    <ClInclude Include="inc\Core\CameraOrbital.h" />
+    <ClInclude Include="inc\Core\ICollection.h" />
+    <ClInclude Include="inc\Core\IContentManager.h" />
+    <ClInclude Include="inc\Core\IDictionary.h" />
+    <ClInclude Include="inc\Core\GameObject.h" />
+    <ClInclude Include="inc\Core\IEnumerable.h" />
+    <ClInclude Include="inc\Core\IEnumerator.h" />
+    <ClInclude Include="inc\Core\IGraphics.h" />
+    <ClInclude Include="inc\Core\ILight.h" />
+    <ClInclude Include="inc\Core\IList.h" />
+    <ClInclude Include="inc\Core\IModule.h" />
+    <ClInclude Include="inc\Core\Input.h" />
+    <ClInclude Include="inc\Core\InputState.h" />
+    <ClInclude Include="inc\Core\IPhysics.h" />
+    <ClInclude Include="inc\Core\KeyValuePair.h" />
+    <ClInclude Include="inc\Core\List.h" />
+    <ClInclude Include="inc\Core\Matrices.h" />
+    <ClInclude Include="inc\Core\Matrix.h" />
+    <ClInclude Include="inc\Core\Matrix2x2.h" />
+    <ClInclude Include="inc\Core\Matrix3x3.h" />
+    <ClInclude Include="inc\Core\RendererMesh.h" />
+    <ClInclude Include="inc\Core\ModuleRequest.h" />
+    <ClInclude Include="inc\Core\ModuleResponse.h" />
+    <ClInclude Include="inc\Core\ModuleType.h" />
+    <ClInclude Include="inc\Core\Object.h" />
+    <ClInclude Include="inc\Core\RendererQuad.h" />
+    <ClInclude Include="inc\Core\Queue.h" />
+    <ClInclude Include="inc\Core\Scene.h" />
+    <ClInclude Include="inc\Core\Stack.h" />
+    <ClInclude Include="inc\Core\Texture.h" />
+    <ClInclude Include="inc\Core\Transform.h" />
+    <ClInclude Include="inc\Core\Vector2.h" />
+    <ClInclude Include="inc\Core\Vector3.h" />
+    <ClInclude Include="inc\Core\Vector4.h" />
+    <ClInclude Include="inc\Core\ViewPort.h" />
+    <ClInclude Include="inc\Core\Window.h" />
+    <ClInclude Include="inc\Core\WindowDescription.h" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TikiEngineCore</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\Output_dd_obj.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\Output_dd_obj.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\Output_dd_obj.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\Output_dd_obj.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
