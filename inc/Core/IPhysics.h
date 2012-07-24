@@ -4,16 +4,19 @@
 
 namespace TikiEngine
 {
-	class IPhysics : public IModule
+	namespace Modules
 	{
-	public:
-
-		IPhysics(Engine* engine)
-			: IModule(engine)
+		class IPhysics : public IModule
 		{
-		}
-		virtual ~IPhysics() {}
+		public:
 
-		virtual void DoWhatIWant() = 0;
-	};
+			IPhysics(Engine* engine)
+				: IModule(engine)
+			{
+			}
+			virtual ~IPhysics() {}
+
+			virtual void DoWhatIWant() = 0;
+		};
+	}
 }

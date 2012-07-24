@@ -1,8 +1,20 @@
 #pragma once
-class Actor
+
+#include "Core/IPhysics.h"
+
+namespace TikiEngine
 {
-public:
-	Actor(void);
-	~Actor(void);
-};
+	namespace Modules
+	{
+		class Physics : public IPhysics
+		{
+		public:
+			Physics(Engine* engine);
+			~Physics();
+
+			void DoWhatIWant();
+		};
+	}
+}
+
 

@@ -16,9 +16,8 @@ namespace TikiEngine
 
 		void* ContentManager::Load(string name)
 		{
-
+			return 0;
 		}
-
 	}
 }
 

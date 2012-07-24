@@ -1,12 +1,24 @@
 
-#include "Physics/Actor.h"
+#include "Physics/Physics.h"
 
-
-Actor::Actor(void)
+namespace TikiEngine
 {
-}
+	namespace Modules
+	{
+		Physics::Physics(Engine* engine)
+			: IPhysics(engine)
+		{
 
+		}
 
-Actor::~Actor(void)
-{
+		Physics::~Physics()
+		{
+
+		}
+
+		void Physics::DoWhatIWant()
+		{
+
+		}
+	}
 }

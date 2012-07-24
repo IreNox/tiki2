@@ -8,8 +8,8 @@ namespace TikiEngine
 {
 	class Scene;
 
-	class DrawArgs;
-	class UpdateArgs;
+	struct DrawArgs;
+	struct UpdateArgs;
 
 	namespace Modules
 	{
@@ -20,7 +20,7 @@ namespace TikiEngine
 
 	namespace Description
 	{
-		class EngineDescription;
+		struct EngineDescription;
 	}
 	
 	using namespace TikiEngine::Modules;

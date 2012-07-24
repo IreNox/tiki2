@@ -34,7 +34,7 @@ namespace TikiEngine
 
 		bool GetKey(Key keyCode)
 		{
-			return (keyboardState[keyCode] & 0x80);
+			return (keyboardState[keyCode] & 0x80) != 0;
 		}
 
 	private:
