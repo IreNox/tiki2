@@ -35,6 +35,28 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effects11", "src\Effects11\Effects11.vcxproj", "{DF460EAB-570D-4B50-9089-2E2FC801BF38}"
 EndProject
 Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = TikiEngine.Core.vcxproj
+		SccLocalPath1 = .
+		SccProjectUniqueName2 = TikiEngine.Graphics.vcxproj
+		SccLocalPath2 = .
+		SccProjectUniqueName3 = Game.vcxproj
+		SccLocalPath3 = .
+		SccProjectUniqueName4 = TikiEngine.Physics.vcxproj
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = TikiEngine.Resources.vcxproj
+		SccLocalPath5 = .
+		SccProjectUniqueName6 = src\\Assets\\Assets.csproj
+		SccProjectName6 = src/Assets
+		SccLocalPath6 = src\\Assets
+		SccProjectUniqueName7 = src\\Effects11\\Effects11.vcxproj
+		SccProjectName7 = src/Effects11
+		SccLocalPath7 = src\\Effects11
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86

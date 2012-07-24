@@ -113,6 +113,10 @@
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>TikiEngineCore</RootNamespace>
+    <SccProjectName>SAK</SccProjectName>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
