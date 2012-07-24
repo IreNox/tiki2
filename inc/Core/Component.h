@@ -10,15 +10,18 @@ namespace TikiEngine
 
 	namespace Components
 	{
-		class IComponent : public EngineObject
+		class Component : public EngineObject
 		{
 		public:
 
-			IComponent(Engine* engine, GameObject* gameObject, ComponentType type)
+			Component(Engine* engine, GameObject* gameObject, ComponentType type)
 				: EngineObject(engine), gameObject(gameObject), type(type)
 			{
 			}
-			virtual ~IComponent() {}
+			virtual ~Component() {}
+
+			virtual void Draw(const DrawArgs& args) = 0;
+			virtual void Update(const UpdateArgs& args) = 0;
 
 			GameObject* GetGameObject()
 			{

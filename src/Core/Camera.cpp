@@ -2,15 +2,13 @@
 #include "Core/Engine.h"
 #include "Core/Camera.h"
 
-#include "Graphics/ConstantBuffer.h"
-
 namespace TikiEngine
 {
-	namespace Elements
+	namespace Components
 	{
 		#pragma region Class
-		Camera::Camera(Engine* engine)
-			: Element(engine)
+		Camera::Camera(Engine* engine, GameObject* gameObject)
+			: Component(engine, gameObject, ComponentType::Camera)
 		{
 			//D3DXMATRIX matrix;
 			//D3D11_VIEWPORT* vp = engine->graphics->GetViewPort();
@@ -40,35 +38,49 @@ namespace TikiEngine
 
 		Camera::~Camera()
 		{
-			delete(matrixBuffer);
 		}
 		#pragma endregion
 
-		#pragma region Member
-		void Camera::Dispose()
-		{
-		}
-		#pragma endregion
-
-		#pragma region Member - Get/Set
+		#pragma region Member - Get
 		Matrices* Camera::GetMatrices()
 		{
 			return &matrices;
 		}
 
-		ConstantBuffer<Matrices>* Camera::GetMatrixBuffer()
+		Matrix* Camera::GetViewMatrix()
 		{
-			return matrixBuffer;
+			return &matrices.ViewMatrix;
 		}
 
-		void Camera::SetProjection(const Matrix& projection)
+		Matrix* Camera::GetProjectionMatrix()
 		{
-			this->matrices.ProjectionMatrix = projection;
+			return &matrices.ProjectionMatrix;
+		}
+
+		IRenderTarget* Camera::GetRenderTarget()
+		{
+			return renderTarget;
+		}
+		#pragma endregion
+
+		#pragma region Member - Set
+		void Camera::SetProjectionMatrix(const Matrix& projection)
+		{
+			matrices.ProjectionMatrix = projection;
+		}
+
+		void Camera::SetRenderTarget(IRenderTarget* renderTarget)
+		{
+			this->renderTarget = renderTarget;
 		}
 		#pragma endregion
 
 		#pragma region Member - Update
-		void Camera::Update(const FrameArgs& args)
+		void Camera::Draw(const DrawArgs& args)
+		{
+		}
+
+		void Camera::Update(const UpdateArgs& args)
 		{
 			//D3DXMATRIX matrix;
 

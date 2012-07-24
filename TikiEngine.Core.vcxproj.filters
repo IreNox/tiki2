@@ -78,24 +78,21 @@
     <Filter Include="Headerdateien\Engine\Components">
       <UniqueIdentifier>{bbc58230-b969-45fa-8986-b0055ced6fcf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Interfaces\Components">
-      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Engine\GameObjects">
       <UniqueIdentifier>{81c6535b-6480-4ac5-ab9e-c88a4426e7d0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Interfaces\Components\Extern">
-      <UniqueIdentifier>{2079d969-2bd0-4a3d-9613-75c8c8002f2e}</UniqueIdentifier>
+    <Filter Include="Quelldateien\Engine\Static">
+      <UniqueIdentifier>{f0878656-490e-4e7e-8561-83dd08592719}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Engine\Modules">
+      <UniqueIdentifier>{96fde335-370e-4b58-9a27-d8a18f2ddbba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Extern Components">
+      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp">
-      <Filter>Quelldateien\Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Element.cpp">
-      <Filter>Quelldateien\Elements</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Mesh.cpp">
       <Filter>Quelldateien\Elements</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Quad.cpp">
@@ -125,16 +122,7 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GarbageCollector.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Input.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Window.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Console.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Scene.cpp">
@@ -142,6 +130,18 @@
     </ClCompile>
     <ClCompile Include="src\Core\Texture.cpp">
       <Filter>Quelldateien\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GarbageCollector.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Console.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Input.cpp">
+      <Filter>Quelldateien\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GameObject.cpp">
+      <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -298,38 +298,11 @@
     <ClInclude Include="inc\Core\Window.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ICollider.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IRenderer.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IRigidbody.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IComponent.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\core\ICamera.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\CameraOrbital.h">
-      <Filter>Headerdateien\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ILight.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IBehavior.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\RendererMesh.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\RendererQuad.h">
       <Filter>Headerdateien\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Camera.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
@@ -351,6 +324,30 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
       <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IBehavior.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IRigidbody.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ICollider.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ILight.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Component.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CameraBla.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\core\Camera.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IMesh.h">
+      <Filter>Headerdateien\Interfaces\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -21,14 +21,13 @@
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
-    <ClCompile Include="src\Core\Element.cpp" />
+    <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
     <ClCompile Include="src\Core\Matrix3x3.cpp" />
-    <ClCompile Include="src\Core\Mesh.cpp" />
     <ClCompile Include="src\Core\Quad.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\Texture.cpp" />
@@ -39,8 +38,8 @@
     <ClCompile Include="src\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Core\Camera.h" />
-    <ClInclude Include="inc\core\ICamera.h" />
+    <ClInclude Include="inc\Core\CameraBla.h" />
+    <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
     <ClInclude Include="inc\Core\Console.h" />
@@ -52,12 +51,12 @@
     <ClInclude Include="inc\Core\EngineObject.h" />
     <ClInclude Include="inc\Core\IBehavior.h" />
     <ClInclude Include="inc\Core\ICollider.h" />
-    <ClInclude Include="inc\Core\IComponent.h" />
+    <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
     <ClInclude Include="inc\Core\IMaterial.h" />
     <ClInclude Include="inc\Core\InitializationArgs.h" />
     <ClInclude Include="inc\Core\InputDescription.h" />
-    <ClInclude Include="inc\Core\IRenderer.h" />
+    <ClInclude Include="inc\Core\IMesh.h" />
     <ClInclude Include="inc\Core\IRenderTarget.h" />
     <ClInclude Include="inc\Core\IRigidbody.h" />
     <ClInclude Include="inc\Core\ITexture.h" />
@@ -71,7 +70,6 @@
     <ClInclude Include="inc\Core\GarbageCollector.h" />
     <ClInclude Include="inc\Core\GraphicsDescription.h" />
     <ClInclude Include="inc\Core\HelperHash.h" />
-    <ClInclude Include="inc\Core\CameraOrbital.h" />
     <ClInclude Include="inc\Core\ICollection.h" />
     <ClInclude Include="inc\Core\IContentManager.h" />
     <ClInclude Include="inc\Core\IDictionary.h" />

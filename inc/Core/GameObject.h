@@ -3,7 +3,7 @@
 #include "Core/Engine.h"
 #include "Core/EngineObject.h"
 #include "Core/Transform.h"
-#include "Core/IComponent.h"
+#include "Core/Component.h"
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
@@ -19,20 +19,17 @@ namespace TikiEngine
 
 		Transform PRS;
 
-		GameObject(Engine* engine)
-			: EngineObject(engine)
-		{
-		}
-		virtual ~GameObject() {}
+		GameObject(Engine* engine);
+		virtual ~GameObject();
 
-		virtual void Initialize(const InitializationArgs& args) = 0;
+		virtual bool Initialize(const InitializationArgs& args) = 0;
 
 		virtual void Draw(const DrawArgs& args) = 0;
 		virtual void Update(const UpdateArgs& args) = 0;
 
 	protected:
 
-		List<IComponent*> components;
+		List<Component*> components;
 	};
 }
 

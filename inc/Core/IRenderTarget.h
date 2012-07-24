@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Core/EngineObject.h"
+#include "Core/ITexture.h"
 
 namespace TikiEngine
 {
 	namespace Graphics
 	{
-		class IRenderTarget : public EngineObject
+		class IRenderTarget : public ITexture
 		{
 		public:
 
 			IRenderTarget(Engine* engine)
-				: EngineObject(engine)
+				: ITexture(engine)
 			{
 			}
 

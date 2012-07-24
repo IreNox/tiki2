@@ -20,7 +20,7 @@ void Console::Write(string text)
 	fclose(h);
 }
 
-void Console::WriteError(string message, HRESULT code)
+void Console::WriteError(string message, Int32 code)
 {
 	Console::Write("Error: " + message + ". Code:\n"); //HRESULT_CODE(code)
 

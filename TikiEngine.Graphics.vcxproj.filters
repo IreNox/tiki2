@@ -65,6 +65,9 @@
     <ClCompile Include="src\Graphics\VertexData.cpp">
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Mesh.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Graphics.h">
