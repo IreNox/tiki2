@@ -61,7 +61,7 @@ namespace TikiEngine
 		 * @brief Startet die Anwendungsschleife
 		 */
 		void Run();
-
+		
 		/*!
 		 * @brief Gibt das aktuelle Arbeitsverzeichnis zurück
 		 * @return Das aktuelle Arbeitsverzeichnis

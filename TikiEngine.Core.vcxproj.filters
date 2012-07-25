@@ -24,9 +24,6 @@
     <Filter Include="Headerdateien\Core\Resources">
       <UniqueIdentifier>{ade75fab-0465-4275-b9d2-7438a1d07326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Elements">
-      <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Core">
       <UniqueIdentifier>{46eb0964-ee28-4748-8abb-e47650a0a801}</UniqueIdentifier>
     </Filter>
@@ -87,13 +84,16 @@
     <Filter Include="Headerdateien\Interfaces\Extern Components">
       <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Engine\GameObjects">
+      <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp">
-      <Filter>Quelldateien\Elements</Filter>
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Quad.cpp">
-      <Filter>Quelldateien\Elements</Filter>
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Vector2.cpp">
       <Filter>Quelldateien\Core\Math</Filter>

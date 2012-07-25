@@ -16,7 +16,7 @@ namespace TikiEngine
 		{
 		public:
 
-			Quad(Engine* engine, Shader* shader);
+			Quad(Engine* engine);
 			~Quad();
 
 			bool Initialize(const InitializationArgs& args);
@@ -30,12 +30,6 @@ namespace TikiEngine
 			IMaterial* material;
 
 			IMeshRenderer* renderer;
-
-
-			VertexDeclaration* decl;
-
-			UINT bufferIndex;
-			VertexBuffer* vertexBuffer;
 
 		};
 	}
