@@ -1,31 +1,36 @@
 #pragma once
 
-#include "Core/Element.h"
-#include "Graphics/Shader.h"
+#include "Core/GameObject.h"
+#include "Core/IMeshRenderer.h"
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/PostProcessVertex.h"
 
 namespace TikiEngine
 {
-	namespace Elements
+	namespace Objects
 	{
-		using namespace TikiEngine::Buffer;
 		using namespace TikiEngine::Effects;
 		using namespace TikiEngine::Vertices;
 
-		class Quad : public Element
+		class Quad : public GameObject
 		{
 		public:
 
 			Quad(Engine* engine, Shader* shader);
 			~Quad();
 
-			void Draw(const FrameArgs& args);
-			void Update(const FrameArgs& args);
+			bool Initialize(const InitializationArgs& args);
+
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
 
 		private:
 
-			Shader* shader;
+			IMesh* mesh;
+			IMaterial* material;
+
+			IMeshRenderer* renderer;
+
 
 			VertexDeclaration* decl;
 

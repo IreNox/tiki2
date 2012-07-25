@@ -24,9 +24,6 @@
     <Filter Include="Headerdateien\Core\Resources">
       <UniqueIdentifier>{ade75fab-0465-4275-b9d2-7438a1d07326}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Helper">
-      <UniqueIdentifier>{27214e4f-a8db-45de-8b45-6f4128ff0991}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Elements">
       <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
     </Filter>
@@ -143,6 +140,9 @@
     <ClCompile Include="src\Core\GameObject.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\HelperLibrary.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -214,9 +214,6 @@
     <ClInclude Include="inc\Core\Object.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\HelperHash.h">
-      <Filter>Headerdateien\Core\Helper</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IContentManager.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
@@ -230,9 +227,6 @@
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ModuleType.h">
-      <Filter>Headerdateien\Core\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ModuleRequest.h">
       <Filter>Headerdateien\Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ModuleResponse.h">
@@ -298,12 +292,6 @@
     <ClInclude Include="inc\Core\Window.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\RendererMesh.h">
-      <Filter>Headerdateien\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\RendererQuad.h">
-      <Filter>Headerdateien\Engine\Components</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
@@ -348,6 +336,24 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IMesh.h">
       <Filter>Headerdateien\Interfaces\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Mesh.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Quad.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IMeshRenderer.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperLibrary.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperHash.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiInfo.h">
+      <Filter>Headerdateien\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

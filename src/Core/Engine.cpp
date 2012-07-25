@@ -5,6 +5,7 @@
 #include <direct.h>
 
 #include "Core/Engine.h"
+#include "Core/HelperLibrary.h"
 #include "Core/GarbageCollector.h"
 
 #include "Core/Window.h"
@@ -65,6 +66,8 @@ namespace TikiEngine
 	#pragma region Member - Init
 	bool Engine::Initialize(const EngineDescription& desc)
 	{
+		HelperLibrary::LoadDefault();
+
 		window = new Window(desc.hInst);
 		if (!window->Initialize(&desc.Window))
 		{
@@ -72,14 +75,14 @@ namespace TikiEngine
 			return false;
 		}
 
-		//graphics = new Graphics(this);
+		graphics = HelperLibrary::CreateModule<IGraphics>();
 		if (!graphics->Initialize(desc))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Direct3D.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
-		//input = new Input(this);
+		input = HelperLibrary::CreateModule<IInput>();
 		if (!input->Initialize(desc))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Input.", L"TikiEngine 2.0", MB_ICONERROR);

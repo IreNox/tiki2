@@ -12,11 +12,13 @@ namespace TikiEngine
 		{
 		public:
 
-			IMaterial(Engine* engine)
-				: EngineObject(engine)
-			{
-			}
-			~IMaterial();
+			virtual void LoadFromFile(string fileName) = 0;
+			virtual void CompileFromFile(string fileName) = 0;
+
+			virtual void SelectSubByIndex(UInt32 index) = 0;
+			virtual void SelectSubByName(string name) = 0;
+
+			virtual void Apply() = 0;
 
 			virtual Int32 GetInt(string key) = 0;
 			virtual Boolean GetBoolean(string key) = 0;
@@ -31,6 +33,8 @@ namespace TikiEngine
 			virtual void SetVector3(string key, const Vector3& value) = 0;
 			virtual void SetVector4(string key, const Vector4& value) = 0;
 			virtual void SetMatrix(string key, const Matrix& value) = 0;
+
+			virtual bool GetReady() = 0;
 		};
 	}
 }

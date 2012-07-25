@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef _WIN64
+typedef __int64 IntPtr;
+#else
+typedef __int32 IntPtr;
+#endif
+
 typedef unsigned char Byte;
 
 typedef __int16 Int16;

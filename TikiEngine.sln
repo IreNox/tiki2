@@ -29,9 +29,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assets", "src\Assets\Assets
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effects11", "src\Effects11\Effects11.vcxproj", "{DF460EAB-570D-4B50-9089-2E2FC801BF38}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Input", "TikiEngine.Input.vcxproj", "{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Sound", "TikiEngine.Sound.vcxproj", "{B5833648-23F3-48E5-8359-3D4923658E59}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -51,6 +55,10 @@ Global
 		SccProjectUniqueName7 = src\\Effects11\\Effects11.vcxproj
 		SccProjectName7 = src/Effects11
 		SccLocalPath7 = src\\Effects11
+		SccProjectUniqueName8 = TikiEngine.Input.vcxproj
+		SccLocalPath8 = .
+		SccProjectUniqueName9 = TikiEngine.Sound.vcxproj
+		SccLocalPath9 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -115,6 +123,22 @@ Global
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x64.Build.0 = Release|x64
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x86.ActiveCfg = Release|Win32
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38}.Release|x86.Build.0 = Release|Win32
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Debug|x64.ActiveCfg = Debug|x64
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Debug|x64.Build.0 = Debug|x64
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Debug|x86.ActiveCfg = Debug|Win32
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Debug|x86.Build.0 = Debug|Win32
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Release|x64.ActiveCfg = Release|x64
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Release|x64.Build.0 = Release|x64
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Release|x86.ActiveCfg = Release|Win32
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}.Release|x86.Build.0 = Release|Win32
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Debug|x64.ActiveCfg = Debug|x64
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Debug|x64.Build.0 = Debug|x64
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Debug|x86.ActiveCfg = Debug|Win32
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Debug|x86.Build.0 = Debug|Win32
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x64.ActiveCfg = Release|x64
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x64.Build.0 = Release|x64
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x86.ActiveCfg = Release|Win32
+		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -7,26 +7,30 @@
 
 namespace TikiEngine
 {
-	using TikiEngine::Description::EngineDescription;
-
-	class IModule : public EngineObject
+	namespace Modules
 	{
-	public:
+		using TikiEngine::Description::EngineDescription;
 
-		IModule(Engine* engine)
-			: EngineObject(engine)
+		class IModule : public EngineObject
 		{
-		}
+		public:
 
-		virtual ~IModule()
-		{
-		}
+			IModule(Engine* engine)
+				: EngineObject(engine)
+			{
+			}
 
-		virtual bool Initialize(const EngineDescription& desc) = 0;
+			virtual ~IModule()
+			{
+			}
 
-		virtual void Begin() = 0;
-		virtual void End() = 0;
+			virtual bool Initialize(const EngineDescription& desc) = 0;
 
-		virtual void Dispose() = 0;
-	};
+			virtual void Begin() = 0;
+			virtual void End() = 0;
+
+			virtual void Dispose() = 0;
+		};
+
+	}
 }

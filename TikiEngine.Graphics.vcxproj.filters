@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Headerdateien\Buffer">
-      <UniqueIdentifier>{dbea668f-bcab-45ca-80e9-c9256b9693ab}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Vertex">
       <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
@@ -26,6 +23,15 @@
     </Filter>
     <Filter Include="Quelldateien\Vertex">
       <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Internal">
+      <UniqueIdentifier>{8d8958a3-9884-4db2-80ae-b47347c8f79b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Internal\Buffer">
+      <UniqueIdentifier>{dbea668f-bcab-45ca-80e9-c9256b9693ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Internal\Vertex">
+      <UniqueIdentifier>{84667c00-bfd7-4a54-94f8-2a9d68f25750}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,16 +80,16 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Buffer.h">
-      <Filter>Headerdateien\Buffer</Filter>
+      <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ConstantBuffer.h">
-      <Filter>Headerdateien\Buffer</Filter>
+      <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\IndexBuffer.h">
-      <Filter>Headerdateien\Buffer</Filter>
+      <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexBuffer.h">
-      <Filter>Headerdateien\Buffer</Filter>
+      <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\PostProcessVertex.h">
       <Filter>Headerdateien\Vertex</Filter>
@@ -92,9 +98,6 @@
       <Filter>Headerdateien\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SimpleVertex.h">
-      <Filter>Headerdateien\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\VertexDeclaration.h">
       <Filter>Headerdateien\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DefaultShader.h">
@@ -107,7 +110,10 @@
       <Filter>Headerdateien\Shader</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexData.h">
-      <Filter>Headerdateien\Vertex</Filter>
+      <Filter>Headerdateien\Internal\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\VertexDeclaration.h">
+      <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

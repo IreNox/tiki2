@@ -24,6 +24,7 @@
     <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
+    <ClCompile Include="src\Core\HelperLibrary.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
@@ -49,11 +50,13 @@
     <ClInclude Include="inc\Core\Engine.h" />
     <ClInclude Include="inc\Core\EngineDescription.h" />
     <ClInclude Include="inc\Core\EngineObject.h" />
+    <ClInclude Include="inc\Core\HelperLibrary.h" />
     <ClInclude Include="inc\Core\IBehavior.h" />
     <ClInclude Include="inc\Core\ICollider.h" />
     <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
     <ClInclude Include="inc\Core\IMaterial.h" />
+    <ClInclude Include="inc\Core\IMeshRenderer.h" />
     <ClInclude Include="inc\Core\InitializationArgs.h" />
     <ClInclude Include="inc\Core\InputDescription.h" />
     <ClInclude Include="inc\Core\IMesh.h" />
@@ -89,12 +92,12 @@
     <ClInclude Include="inc\Core\Matrix.h" />
     <ClInclude Include="inc\Core\Matrix2x2.h" />
     <ClInclude Include="inc\Core\Matrix3x3.h" />
-    <ClInclude Include="inc\Core\RendererMesh.h" />
-    <ClInclude Include="inc\Core\ModuleRequest.h" />
+    <ClInclude Include="inc\Core\Mesh.h" />
+    <ClInclude Include="inc\Core\TikiInfo.h" />
     <ClInclude Include="inc\Core\ModuleResponse.h" />
     <ClInclude Include="inc\Core\ModuleType.h" />
     <ClInclude Include="inc\Core\Object.h" />
-    <ClInclude Include="inc\Core\RendererQuad.h" />
+    <ClInclude Include="inc\Core\Quad.h" />
     <ClInclude Include="inc\Core\Queue.h" />
     <ClInclude Include="inc\Core\Scene.h" />
     <ClInclude Include="inc\Core\Stack.h" />
