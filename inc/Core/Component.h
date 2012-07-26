@@ -33,6 +33,8 @@ namespace TikiEngine
 				return type;
 			}
 
+			virtual bool GetReady() = 0;
+
 		protected:
 
 			GameObject* gameObject;

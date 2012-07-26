@@ -22,6 +22,7 @@ namespace TikiEngine
 			virtual Int32 GetWidth() = 0;
 			virtual Int32 GetHeight() = 0;
 
+			virtual void* GetResource() = 0;
 		};
 	}
 }

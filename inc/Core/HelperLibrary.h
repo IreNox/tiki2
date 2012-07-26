@@ -59,14 +59,14 @@ namespace TikiEngine
 		template <class T>
 		static TikiInfo* getDefault(IntPtr* hash)
 		{
-			hash = typeid(T).hash_code();
+			*hash = typeid(T).hash_code();
 
-			if (defaultLibrarys.ContainsKey(hash))
+			if (defaultLibrarys.ContainsKey(*hash))
 			{
-				return defaultLibrarys.Get(hash);
+				return defaultLibrarys.Get(*hash);
 			}
 
-			reutrn 0;
+			return 0;
 		}
 
 		static Dictionary<IntPtr, TikiInfo*> defaultLibrarys;

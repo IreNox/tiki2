@@ -21,9 +21,6 @@
     <Filter Include="Headerdateien\Core\List">
       <UniqueIdentifier>{ee5b6dd6-afaa-4ab7-ab10-d5a7ef654c07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Resources">
-      <UniqueIdentifier>{ade75fab-0465-4275-b9d2-7438a1d07326}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Core">
       <UniqueIdentifier>{46eb0964-ee28-4748-8abb-e47650a0a801}</UniqueIdentifier>
     </Filter>
@@ -35,9 +32,6 @@
     </Filter>
     <Filter Include="Quelldateien\Scene">
       <UniqueIdentifier>{8b11e3bf-e8ae-4b8f-a023-cdf7ec7edad3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Core\Resources">
-      <UniqueIdentifier>{1f09cddc-549e-43e0-bb58-3a39aa9140dd}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Core\Descriptions">
       <UniqueIdentifier>{658fb262-4766-4655-a056-d78021dd6f65}</UniqueIdentifier>
@@ -87,6 +81,12 @@
     <Filter Include="Quelldateien\Engine\GameObjects">
       <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\Vertex">
+      <UniqueIdentifier>{ff531a00-c424-432b-8150-af7fa5a9beef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\Graphics">
+      <UniqueIdentifier>{d5e4ab7f-87e8-4eaf-8c0e-72521b77253f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp">
@@ -125,9 +125,6 @@
     <ClCompile Include="src\Core\Scene.cpp">
       <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Texture.cpp">
-      <Filter>Quelldateien\Core\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\GarbageCollector.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
@@ -142,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\HelperLibrary.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Material.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -207,9 +207,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Stack.h">
       <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Texture.h">
-      <Filter>Headerdateien\Core\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Object.h">
       <Filter>Headerdateien</Filter>
@@ -307,9 +304,6 @@
     <ClInclude Include="inc\Core\Quaternion.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\IMaterial.h">
-      <Filter>Headerdateien\Interfaces\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
       <Filter>Headerdateien\Core</Filter>
     </ClInclude>
@@ -354,6 +348,24 @@
     </ClInclude>
     <ClInclude Include="inc\Core\TikiInfo.h">
       <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Texture.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DefaultVertex.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\PostProcessVertex.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SimpleVertex.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IShader.h">
+      <Filter>Headerdateien\Interfaces\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Material.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

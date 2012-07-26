@@ -36,4 +36,19 @@ namespace TikiEngine
 			components[i]->Update(args);
 		}
 	}
+
+	void GameObject::AddComponent(Component* comp)
+	{
+		components.Add(comp);
+	}
+
+	Component* GameObject::GetComponent(IntPtr hash)
+	{
+		return 0;
+	}
+
+	bool GameObject::RemoveComponent(Component* comp)
+	{
+		return components.Remove(comp);
+	}
 }

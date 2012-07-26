@@ -4,6 +4,7 @@
 #include "Core/EngineObject.h"
 #include "Core/Transform.h"
 #include "Core/Component.h"
+#include "Core/Material.h"
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
@@ -11,6 +12,7 @@
 
 namespace TikiEngine
 {
+	using namespace TikiEngine::Graphics;
 	using namespace TikiEngine::Components;
 
 	class GameObject : public EngineObject
@@ -21,11 +23,14 @@ namespace TikiEngine
 
 		GameObject(Engine* engine);
 		virtual ~GameObject();
+		
+		virtual bool Initialize(const InitializationArgs& args);
+		virtual void Draw(const DrawArgs& args);
+		virtual void Update(const UpdateArgs& args);
 
-		virtual bool Initialize(const InitializationArgs& args) = 0;
-
-		virtual void Draw(const DrawArgs& args) = 0;
-		virtual void Update(const UpdateArgs& args) = 0;
+		void AddComponent(Component* comp);
+		Component* GetComponent(IntPtr hash);
+		bool RemoveComponent(Component* comp);
 
 	protected:
 

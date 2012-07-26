@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/TypeDef.h"
 #include "Core/GarbageCollector.h"
 
 class Object
@@ -19,12 +20,12 @@ public:
 		//}
 	}
 
-	unsigned int AddRef()
+	UInt32 AddRef()
 	{
 		return ++refCount;
 	}
 
-	unsigned int Release()
+	UInt32 Release()
 	{
 		refCount--;
 
@@ -38,5 +39,5 @@ public:
 
 private:
 
-	unsigned int refCount;
+	UInt32 refCount;
 };

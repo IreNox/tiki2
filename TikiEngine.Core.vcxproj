@@ -26,12 +26,12 @@
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
     <ClCompile Include="src\Core\HelperLibrary.cpp" />
     <ClCompile Include="src\Core\Input.cpp" />
+    <ClCompile Include="src\Core\Material.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
     <ClCompile Include="src\Core\Matrix3x3.cpp" />
     <ClCompile Include="src\Core\Quad.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
-    <ClCompile Include="src\Core\Texture.cpp" />
     <ClCompile Include="src\Core\Transform.cpp" />
     <ClCompile Include="src\Core\Vector2.cpp" />
     <ClCompile Include="src\Core\Vector3.cpp" />
@@ -44,6 +44,7 @@
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
     <ClInclude Include="inc\Core\Console.h" />
+    <ClInclude Include="inc\Core\DefaultVertex.h" />
     <ClInclude Include="inc\Core\Dictionary.h" />
     <ClInclude Include="inc\Core\DrawArgs.h" />
     <ClInclude Include="inc\Core\DrawContext.h" />
@@ -55,7 +56,7 @@
     <ClInclude Include="inc\Core\ICollider.h" />
     <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
-    <ClInclude Include="inc\Core\IMaterial.h" />
+    <ClInclude Include="inc\Core\IShader.h" />
     <ClInclude Include="inc\Core\IMeshRenderer.h" />
     <ClInclude Include="inc\Core\InitializationArgs.h" />
     <ClInclude Include="inc\Core\InputDescription.h" />
@@ -65,7 +66,11 @@
     <ClInclude Include="inc\Core\ITexture.h" />
     <ClInclude Include="inc\Core\Key.h" />
     <ClInclude Include="inc\Core\Light.h" />
+    <ClInclude Include="inc\Core\Material.h" />
+    <ClInclude Include="inc\Core\PostProcessVertex.h" />
     <ClInclude Include="inc\Core\Quaternion.h" />
+    <ClInclude Include="inc\Core\SimpleVertex.h" />
+    <ClInclude Include="inc\Core\Texture.h" />
     <ClInclude Include="inc\Core\TypeDef.h" />
     <ClInclude Include="inc\Core\TypeInc.h" />
     <ClInclude Include="inc\Core\UpdateArgs.h" />
@@ -101,7 +106,6 @@
     <ClInclude Include="inc\Core\Queue.h" />
     <ClInclude Include="inc\Core\Scene.h" />
     <ClInclude Include="inc\Core\Stack.h" />
-    <ClInclude Include="inc\Core\Texture.h" />
     <ClInclude Include="inc\Core\Transform.h" />
     <ClInclude Include="inc\Core\Vector2.h" />
     <ClInclude Include="inc\Core\Vector3.h" />

@@ -2,14 +2,13 @@
 
 #include "Core/GameObject.h"
 #include "Core/IMeshRenderer.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/PostProcessVertex.h"
+#include "Core/PostProcessVertex.h"
 
 namespace TikiEngine
 {
 	namespace Objects
 	{
-		using namespace TikiEngine::Effects;
+		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 
 		class Quad : public GameObject
@@ -21,13 +20,10 @@ namespace TikiEngine
 
 			bool Initialize(const InitializationArgs& args);
 
-			void Draw(const DrawArgs& args);
-			void Update(const UpdateArgs& args);
-
 		private:
 
 			IMesh* mesh;
-			IMaterial* material;
+			Material* material;
 
 			IMeshRenderer* renderer;
 

@@ -20,15 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp" />
-    <ClCompile Include="src\Graphics\DefaultShader.cpp" />
     <ClCompile Include="src\Graphics\DefaultVertex.cpp" />
     <ClCompile Include="src\Graphics\Graphics.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Mesh.cpp" />
     <ClCompile Include="src\Graphics\PostProcessVertex.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
-    <ClCompile Include="src\Graphics\ShaderVariable.cpp" />
     <ClCompile Include="src\Graphics\SimpleVertex.cpp" />
+    <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\VertexData.cpp" />
     <ClCompile Include="src\Graphics\VertexDeclaration.cpp" />
@@ -38,12 +37,11 @@
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
     <ClInclude Include="inc\Graphics\DefaultShader.h" />
-    <ClInclude Include="inc\Graphics\DefaultVertex.h" />
     <ClInclude Include="inc\Graphics\Graphics.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
-    <ClInclude Include="inc\Graphics\PostProcessVertex.h" />
+    <ClInclude Include="inc\Graphics\Mesh.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />
-    <ClInclude Include="inc\Graphics\SimpleVertex.h" />
+    <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />
     <ClInclude Include="inc\Graphics\VertexData.h" />
     <ClInclude Include="inc\Graphics\VertexDeclaration.h" />

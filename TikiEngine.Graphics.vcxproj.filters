@@ -33,6 +33,9 @@
     <Filter Include="Headerdateien\Internal\Vertex">
       <UniqueIdentifier>{84667c00-bfd7-4a54-94f8-2a9d68f25750}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Components">
+      <UniqueIdentifier>{2233eb01-a8e9-4594-bd6e-c681c179a21e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Graphics.cpp">
@@ -47,9 +50,6 @@
     <ClCompile Include="src\Graphics\VertexBuffer.cpp">
       <Filter>Quelldateien\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DefaultShader.cpp">
-      <Filter>Quelldateien\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Shader.cpp">
       <Filter>Quelldateien\Shader</Filter>
     </ClCompile>
@@ -62,9 +62,6 @@
     <ClCompile Include="src\Graphics\VertexDeclaration.cpp">
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\ShaderVariable.cpp">
-      <Filter>Quelldateien\Shader</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\PostProcessVertex.cpp">
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
@@ -72,6 +69,9 @@
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Mesh.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Texture.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,15 +91,6 @@
     <ClInclude Include="inc\Graphics\VertexBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\PostProcessVertex.h">
-      <Filter>Headerdateien\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DefaultVertex.h">
-      <Filter>Headerdateien\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\SimpleVertex.h">
-      <Filter>Headerdateien\Vertex</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\DefaultShader.h">
       <Filter>Headerdateien\Shader</Filter>
     </ClInclude>
@@ -114,6 +105,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexDeclaration.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Texture.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Mesh.h">
+      <Filter>Headerdateien\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
