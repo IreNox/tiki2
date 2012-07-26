@@ -60,8 +60,8 @@ Matrix2x2 Matrix2x2::Multiply(Matrix2x2 matrix)
 	Vector2 m2r1 = Vector2(matrix.M10, matrix.M11);
 	
 	return Matrix2x2(
-		m1r0.Dot(m2r0), m1r0.Dot(m2r1),
-		m1r1.Dot(m2r0), m1r1.Dot(m2r1)
+		Vector2::Dot(m1r0,m2r0), Vector2::Dot(m1r0,m2r1),
+		Vector2::Dot(m1r1,m1r1), Vector2::Dot(m1r1,m2r1)
 	);
 }
 

@@ -5,9 +5,16 @@
 class Vector3
 {
 public:
-	float X;
-	float Y;
-	float Z;
+	union
+	{
+		struct
+		{
+			float X;
+			float Y;
+			float Z;
+		};
+		float arr[3];
+	};
 
 	Vector3(void);
 	Vector3(float all);
@@ -17,26 +24,47 @@ public:
 	~Vector3(void);
 
 	float Length() const;
-	Vector3 Negate() const;
-	Vector3 Normalize() const;
+	float LengthSquared() const; //build
+	void Negate();
+	void Normalize();
 	Vector3 Transform(const Matrix& matrix) const;
 
 	static float Dot(const Vector3& vector1, const Vector3& vector2);
+	static Vector3 Cross(const Vector3& vector1, const Vector3& vector2);
 	static float Angle(const Vector3& vector1, const Vector3& vector2);
 	static float Distance(const Vector3& vector1, const Vector3& vector2);
+	static float DistanceSquared(const Vector3& vector1, const Vector3& vector2); // build
+	static Vector3 Reflect(const Vector3& vector, const Vector3& normal); //build
+	static Vector3 Clamp(const Vector3& value1, const Vector3& value2); // build
+	static Vector3 Lerp(const Vector3& value1, const Vector3& value2); // build
 
-	static Vector3 Cross(const Vector3& vector1, const Vector3& vector2);
+	static Vector3 Normalize(const Vector3& vector);
+	static Vector3 Negate(const Vector3& vector);
+
 
 	bool operator== (const Vector3& rhs) const;
 	bool operator!= (const Vector3& rhs) const;
 
 	Vector3 operator+ (const Vector3& rhs) const;
-	Vector3 operator+= (const Vector3& rhs) const;
+	Vector3 operator+= (const Vector3& rhs) ;
 
 	Vector3 operator- () const ;
 	Vector3 operator- (const Vector3& rhs) const;
-	Vector3 operator-= (const Vector3& rhs) const;
+	Vector3 operator-= (const Vector3& rhs) ;
 
 	Vector3 operator* (float rhs) const;
 	Vector3 operator/ (float rhs) const;
+
+	static Vector3 Zero;
+	static Vector3 One;
+	static Vector3 UnitX;
+	static Vector3 UnitY;
+	static Vector3 UnitZ;
+
+	static Vector3 Up;
+	static Vector3 Down;
+	static Vector3 Right;
+	static Vector3 Left;
+	static Vector3 Forward;
+	static Vector3 Backward;
 };

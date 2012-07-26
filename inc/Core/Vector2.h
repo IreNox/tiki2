@@ -14,9 +14,6 @@ public:
 		float arr[2];
 	};
 
-	//float X;
-	//float Y;
-
 	Vector2(void);
 	Vector2(float all);
 	Vector2(float* arr);
@@ -24,38 +21,42 @@ public:
 
 	~Vector2(void);
 
-	Vector2 Add(Vector2 vector);	
-	Vector2 Substract(Vector2 vector);
+	float Length() const;
+	float LengthSquared() const;
 
-	Vector2 Divide(float value);
-	Vector2 Multiply(float value);
+	void Negate();
+	static Vector2 Negate(const Vector2& vector);
 
-	float Dot(Vector2 vector);
-	float Angle(Vector2 vector);
+	void Normalize();
+	static Vector2 Normalize(const Vector2& vector);
 
-	Vector2 Negate();
-	Vector2 Cross(Vector2 vector);
-	Vector2 Reflect(Vector2 normal);
+	static float Distance(const Vector2& vector1, const Vector2& vector2);
+	static float DistanceSquared(const Vector2& vector1, const Vector2& vector2);
 
-	float Length();
-	float Distance(Vector2 vector);
+	static float Dot(const Vector2& vector1, const Vector2& vector2);
+	static float Angle(const Vector2& vector1, const Vector2& vector2);
+	static Vector2 Reflect(const Vector2& vector, const Vector2& normal);
+	static Vector2 Clamp(const Vector2& value1, const Vector2& min, const Vector2& max);
+	static Vector2 Lerp(const Vector2& value1, const Vector2& value2, float amount);
 
-	Vector2 Normalize();
-	void Vector2::Print();
+	bool Vector2::operator== (const Vector2& rhs);
+	bool Vector2::operator!= (const Vector2& rhs);
 
-	bool Vector2::operator== (Vector2 rhs);
-	bool Vector2::operator!= (Vector2 rhs);
-
-	Vector2 operator+ (Vector2 rhs);
-	Vector2 operator+= (Vector2 rhs);
+	Vector2 operator+ (const Vector2& rhs);
+	Vector2& operator+= (const Vector2& rhs);
 
 	Vector2 operator- ();
-	Vector2 operator- (Vector2 rhs);
-	Vector2 operator-= (Vector2 rhs);
+	Vector2 operator- (const Vector2& rhs);
+	Vector2& operator-= (const Vector2& rhs);
 
-	Vector2 operator* (float rhs);
-	Vector2 operator/ (float rhs);
+	Vector2 operator* (const float& rhs);
+	Vector2 operator/ (const float& rhs);
 
 	static int Dimensions;
 	static Vector2 Input();
+
+	static Vector2 Zero;
+	static Vector2 One;
+	static Vector2 UnitX;
+	static Vector2 UnitY;
 };

@@ -68,19 +68,27 @@ float Vector3::Length() const
 		(this->Z * this->Z)
 	);
 }
-
-Vector3 Vector3::Negate() const
+float Vector3::LengthSquared() const
 {
-	return Vector3(
-		-this->X,
-		-this->Y,
-		-this->Z
-		);
+	return (this->X * this->X) + (this->Y * this->Y) + (this->Z * this->Z);
 }
 
-Vector3 Vector3::Normalize() const
+void Vector3::Negate() 
 {
-	return *this / this->Length();
+	this->X = -this->X;
+	this->Y = -this->Y;
+	this->Z = -this->Z;
+}
+Vector3 Vector3::Negate(const Vector3& vector) 
+{
+	return Vector3(-vector.X, -vector.Y, - vector.Z);
+}
+
+Vector3 Vector3::Normalize(const Vector3& vector) 
+{
+	float length = sqrt(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z);
+	return Vector3(vector.X / length, vector.Y / length, vector.Z / length);
+
 }
 #pragma endregion
 
@@ -117,14 +125,14 @@ Vector3 Vector3::operator+ (const Vector3& vector) const
 	);
 }
 
-Vector3 Vector3::operator+= (const Vector3& rhs) const
+Vector3 Vector3::operator+= (const Vector3& rhs) 
 {
-	return *this + rhs;
+	return *this = (*this + rhs);
 }
 
 Vector3 Vector3::operator- () const
 {
-	return this->Negate();
+	return Vector3(-this->X, -this->Y, - this->Y);
 }
 
 Vector3 Vector3::operator- (const Vector3& vector) const
@@ -136,9 +144,9 @@ Vector3 Vector3::operator- (const Vector3& vector) const
 	);
 }
 
-Vector3 Vector3::operator-= (const Vector3& rhs) const
+Vector3 Vector3::operator-= (const Vector3& rhs) 
 {
-	return *this - rhs;
+	return *this = *this - rhs;
 }
 
 Vector3 Vector3::operator* (float rhs) const
@@ -159,3 +167,17 @@ Vector3 Vector3::operator/ (float rhs) const
 	);
 }
 #pragma endregion
+#pragma region statics
+Vector3 Vector3::Zero = Vector3(0.0);
+Vector3 Vector3::One = Vector3(1.0);
+Vector3 Vector3::UnitX = Vector3(1,0,0);
+Vector3 Vector3::UnitY = Vector3(0,1,0);
+Vector3 Vector3::UnitZ = Vector3(0,0,1);
+
+Vector3 Vector3::Up = Vector3(0,1,0);
+Vector3 Vector3::Down = Vector3(0,-1,0);
+Vector3 Vector3::Right = Vector3(1,0,0);
+Vector3 Vector3::Left = Vector3(-1,0,0);
+Vector3 Vector3::Forward = Vector3(0,0,-1); // possible RH / LH corruption
+Vector3 Vector3::Backward = Vector3(0,0,1); //possibile RH / LH corruption
+#pragma endregion statics
