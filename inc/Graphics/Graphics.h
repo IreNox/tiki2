@@ -22,7 +22,7 @@ namespace TikiEngine
 			Graphics(Engine* engine);
 			~Graphics();
 
-			bool Initialize(const EngineDescription* desc);
+			bool Initialize(EngineDescription& desc);
 
 			void Begin();
 
@@ -49,9 +49,10 @@ namespace TikiEngine
 			IndexBuffer* GetIndexBuffer();
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl);
 
+			bool GetReady();
+
 		private:
 			HWND hWnd;
-			Engine* engine;
 
 			bool inited;
 
@@ -67,6 +68,8 @@ namespace TikiEngine
 
 			D3D11_VIEWPORT viewPort; 
 			ID3D11RasterizerState* rasterState;
+
+			float clearColor[4];
 
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;

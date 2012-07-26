@@ -12,7 +12,7 @@ namespace TikiEngine
 	namespace Vertices
 	{
 		using namespace TikiEngine::Buffer;
-		using namespace TikiEngine::Effects;
+		using namespace TikiEngine::Graphics;
 
 		class VertexData
 		{

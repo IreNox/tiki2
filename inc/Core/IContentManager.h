@@ -4,23 +4,25 @@
 
 namespace TikiEngine
 {
-	class IContentManager : public IModule
+	namespace Modules
 	{
-	public:
-
-		IContentManager(Engine* engine)
-			: IModule(engine)
+		class IContentManager : public IModule
 		{
-		}
-		virtual ~IContentManager() {}
+		public:
 
-		virtual void* Load(string name) = 0;
+			IContentManager(Engine* engine)
+				: IModule(engine)
+			{
+			}
+			virtual ~IContentManager() {}
 
-		// coming soon
-		//virtual IMesh* LoadMesh(string name) = 0;
-		//virtual ITexture* LoadTexture(string name) = 0;
-		//virtual IMaterial* LoadMaterial(string name) = 0;
+			virtual void* Load(string name) = 0;
 
-	};
+			// coming soon
+			//virtual IMesh* LoadMesh(string name) = 0;
+			//virtual ITexture* LoadTexture(string name) = 0;
+			//virtual IMaterial* LoadMaterial(string name) = 0;
+
+		};
+	}
 }
-

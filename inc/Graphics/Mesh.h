@@ -5,6 +5,8 @@
 #include "Graphics/VertexData.h"
 #include "Graphics/VertexDeclaration.h"
 
+#include "Graphics/Shader.h"
+
 namespace TikiEngine
 {
 	namespace Graphics
@@ -19,14 +21,16 @@ namespace TikiEngine
 			virtual ~Mesh();
 
 			void SetVertexData(void* data, UInt32 dataLength);
-			void SetVertexDeclaration(void* data, UInt32 dataLength);
+			void SetVertexDeclaration(InputElement* elements, UInt32 count);
+
+			void CreateInputLayout(Shader* shader, ID3D11InputLayout** layout, UInt32* hash);
 
 			bool GetReady();
 
 		private:
 
 			VertexData* data;
-			VertexDeclaration* decl;
+			List<InputElement> decl;
 		};
 	}
 }

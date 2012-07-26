@@ -367,5 +367,8 @@
     <ClInclude Include="inc\Core\Material.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\InputElement.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

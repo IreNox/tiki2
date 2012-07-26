@@ -24,7 +24,7 @@ namespace TikiEngine
 			{
 			}
 
-			virtual bool Initialize(const EngineDescription& desc) = 0;
+			virtual bool Initialize(EngineDescription& desc) = 0;
 
 			virtual void Begin() = 0;
 			virtual void End() = 0;

@@ -4,17 +4,20 @@
 
 namespace TikiEngine
 {
-	class IGraphics : public IModule
+	namespace Modules
 	{
-	public:
-
-		IGraphics(Engine* engine)
-			: IModule(engine)
+		class IGraphics : public IModule
 		{
-		}
-		virtual ~IGraphics() {}
+		public:
 
-		virtual void Draw() = 0;
-	};
+			IGraphics(Engine* engine)
+				: IModule(engine)
+			{
+			}
+			virtual ~IGraphics() {}
+
+			virtual void Draw() = 0;
+		};
+	}
 }
 

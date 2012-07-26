@@ -2,13 +2,15 @@
 #include "Core/Engine.h"
 #include "Core/Console.h"
 
+#include "Graphics/Buffer.h"
+
 namespace TikiEngine
 {
 	namespace Buffer
 	{
 		#pragma region Class
-		Buffer::Buffer(Engine* engine, UINT size)
-			: engine(engine), context(engine->graphics->GetDeviceContext()), elementSize(size), buffer(0), bufferSize(0), bufferUsage(0)
+		Buffer::Buffer(Engine* engine, UInt32 size)
+			: engine(engine), elementSize(size), buffer(0), bufferSize(0), bufferUsage(0)
 		{
 		}
 
@@ -83,7 +85,6 @@ namespace TikiEngine
 		#pragma region Member - ResizeBuffer
 		void Buffer::writeBuffer(void* addData, UINT dataSize, UINT index)
 		{
-			auto context = engine->graphics->GetDeviceContext();
 			D3D11_MAPPED_SUBRESOURCE mapped;
 
 			HRESULT r = context->Map(

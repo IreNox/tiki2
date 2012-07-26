@@ -62,6 +62,21 @@ public:
 	{
 		return (this->IndexOf(item) != -1);
 	}
+
+	T* ToArray()
+	{
+		T* arr = new T[lengthData];
+
+		int i = 0;
+		while (i < lengthData)
+		{
+			arr[i] = data[i];
+
+			i++;
+		}
+
+		return arr;
+	}
 	#pragma endregion
 
 	#pragma region Member - Add

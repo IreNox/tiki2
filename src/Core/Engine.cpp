@@ -64,7 +64,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Init
-	bool Engine::Initialize(const EngineDescription& desc)
+	bool Engine::Initialize(EngineDescription& desc)
 	{
 		HelperLibrary::LoadDefault();
 

@@ -1,18 +1,18 @@
 #pragma once
 
-#include "Window.h"
+#include "Core/TypeDef.h"
 
 namespace TikiEngine
 {
 	class HelperHash
 	{
 	public:
-		static ULONG Hash(UCHAR* str, UINT len)
+		static UInt32 Hash(Byte* str, UInt32 len)
 		{
-			int c = 0;
-			ULONG hash = 0;
+			Int32 c = 0;
+			UInt32 hash = 0;
     
-			for (UINT i = 0; i < len; i++)
+			for (UInt32 i = 0; i < len; i++)
 			{
 				c = *str++;
 				hash = c + (hash << 6) + (hash << 16) - hash;

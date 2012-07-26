@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Core/Object.h"
+#include "Core/TypeDef.h"
+#include "Core/EngineObject.h"
+
 #include "Graphics/VertexDeclaration.h"
 
 namespace TikiEngine
@@ -14,13 +16,13 @@ namespace TikiEngine
 		class Buffer : public Object
 		{
 		public:
-			Buffer(Engine* engine, UINT size);
+			Buffer(Engine* engine, UInt32 size);
 			virtual ~Buffer();
 
-			void Apply(UINT offset) const;
+			void Apply(UInt32 offset) const;
 
-			void Copy(void* data, UINT size, UINT index);
-			void Allocate(void* data, UINT count, UINT* index);
+			void Copy(void* data, UInt32 size, UInt32 index);
+			void Allocate(void* data, UInt32 count, UInt32* index);
 
 			UINT GetElementSize() const;
 			ID3D11Buffer* GetBuffer() const;
@@ -32,7 +34,7 @@ namespace TikiEngine
 			ID3D11DeviceContext* context;
 
 			virtual void fillBufferDesc(D3D11_BUFFER_DESC* desc) = 0;
-			virtual ID3D11Buffer* createBuffer(UINT size, void* data) = 0;
+			virtual ID3D11Buffer* createBuffer(UInt32 size, void* data) = 0;
 
 		private:
 			UINT bufferSize;
@@ -42,8 +44,8 @@ namespace TikiEngine
 
 			D3D11_BUFFER_DESC bufferDesc;
 
-			void writeBuffer(void* addData, UINT dataSize, UINT index);
-			void resizeBuffer(void* addData, UINT dataSize);
+			void writeBuffer(void* addData, UInt32 dataSize, UInt32 index);
+			void resizeBuffer(void* addData, UInt32 dataSize);
 		};
 	}
 }

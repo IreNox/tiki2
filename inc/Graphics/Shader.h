@@ -8,12 +8,8 @@
 
 namespace TikiEngine
 {
-	class Engine;
-
-	namespace Effects
+	namespace Graphics
 	{
-		using namespace TikiEngine::Graphics;
-
 		class Shader : public IShader
 		{
 		public:
@@ -21,8 +17,8 @@ namespace TikiEngine
 			Shader(Engine* engine);
 			~Shader();
 
-			void LoadFromFile(string fileName);
-			void CompileFromFile(string fileName);
+			void LoadFromFile(wstring fileName);
+			void CompileFromFile(wstring fileName);
 
 			void SelectSubByIndex(UInt32 index);
 			void SelectSubByName(string name);
@@ -48,7 +44,7 @@ namespace TikiEngine
 
 			bool GetReady();
 
-			void CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, ULONG* hash);
+			void CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash);
 
 		protected:
 			Engine* engine;
@@ -60,7 +56,7 @@ namespace TikiEngine
 			ID3DX11EffectPass* pass;
 			ID3DX11EffectTechnique* technique;
 
-			void compileShader(string filename);
+			void compileShader(wstring fileName);
 			void createEffect(ID3D10Blob* blob);
 		};
 	}

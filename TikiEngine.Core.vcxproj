@@ -56,6 +56,7 @@
     <ClInclude Include="inc\Core\ICollider.h" />
     <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
+    <ClInclude Include="inc\Core\InputElement.h" />
     <ClInclude Include="inc\Core\IShader.h" />
     <ClInclude Include="inc\Core\IMeshRenderer.h" />
     <ClInclude Include="inc\Core\InitializationArgs.h" />

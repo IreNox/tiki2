@@ -16,5 +16,7 @@ public:
 
 	virtual int IndexOf(T item) = 0;
 
+	virtual T* ToArray() = 0;
+
 	virtual T operator[](int index) = 0;
 };

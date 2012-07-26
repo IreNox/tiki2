@@ -1,30 +1,21 @@
 
-#include "Core/Texture.h"
 #include "Core/Engine.h"
+#include "Graphics/Texture.h"
 
 #include "Core/Console.h"
 
+#include <d3d11.h>
+#include <d3dx11.h>
+
 namespace TikiEngine
 {
-	namespace Resources
+	namespace Graphics
 	{
 		#pragma region Class
-		Texture::Texture(Engine* engine, wstring fileName)
-			: engine(engine)
+		Texture::Texture(Engine* engine)
+			: ITexture(engine)
 		{
-			//HRESULT r = D3DX11CreateShaderResourceViewFromFile(
-			//	engine->graphics->GetDevice(),
-			//	fileName.c_str(),
-			//	0,
-			//	0,
-			//	&texture,
-			//	0
-			//);
 
-			//if (FAILED(r))
-			//{
-			//	Console::WriteError("Can't load Texture", r);
-			//}
 		}
 
 		Texture::~Texture()
@@ -35,14 +26,67 @@ namespace TikiEngine
 				texture = 0;
 			}
 		}
-		#pragma endregion Class
+		#pragma endregion
 
 		#pragma region Member
-		ID3D11ShaderResourceView* Texture::GetTexture()
+		void* Texture::GetResource()
 		{
-			return texture;
+			return (void*)texture;
+		}
+
+		bool Texture::GetReady()
+		{
+			return (texture != 0);
 		}
 		#pragma endregion
+
+		#pragma region Member - Create
+		void Texture::LoadFromFile(wstring fileName)
+		{
+			HRESULT r = D3DX11CreateShaderResourceViewFromFile(
+				engine->graphics->GetDevice(),
+				fileName.c_str(),
+				0,
+				0,
+				&texture,
+				0
+			);
+
+			if (FAILED(r))
+			{
+				Console::WriteError("Can't load Texture", r);
+			}
+		}
+
+		void Texture::Create(Int32 width, Int32 height)
+		{
+
+		}
+		#pragma endregion
+
+		#pragma region Member - Data
+		Int32 Texture::GetWidth()
+		{
+			return 0;
+		}
+
+		Int32 Texture::GetHeight()
+		{
+			return 0;
+		}
+
+		void GetData(Int32 format, void** data)
+		{
+
+		}
+
+		void SetData(Int32 format, void* data, UInt32 dataLength)
+		{
+
+		}
+		#pragma endregion
+
+
 	}
 }
 

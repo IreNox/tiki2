@@ -12,14 +12,8 @@
     <Filter Include="Headerdateien\Vertex">
       <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Shader">
-      <UniqueIdentifier>{ab46f0ec-920e-484c-b473-a7a851bd4257}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Buffer">
       <UniqueIdentifier>{96f9157a-4c5c-453c-a8bb-0a08acba9170}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Shader">
-      <UniqueIdentifier>{3eddbe5d-58f8-4509-a4f0-e7d17e2b3552}</UniqueIdentifier>
     </Filter>
     <Filter Include="Quelldateien\Vertex">
       <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
@@ -36,6 +30,12 @@
     <Filter Include="Headerdateien\Components">
       <UniqueIdentifier>{2233eb01-a8e9-4594-bd6e-c681c179a21e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Resources">
+      <UniqueIdentifier>{18fb9633-b103-4628-af7e-0a7ff86a5f5b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Resources">
+      <UniqueIdentifier>{ab46f0ec-920e-484c-b473-a7a851bd4257}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Graphics.cpp">
@@ -49,9 +49,6 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexBuffer.cpp">
       <Filter>Quelldateien\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Shader.cpp">
-      <Filter>Quelldateien\Shader</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\DefaultVertex.cpp">
       <Filter>Quelldateien\Vertex</Filter>
@@ -69,9 +66,15 @@
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Mesh.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Texture.cpp">
+      <Filter>Quelldateien\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Shader.cpp">
+      <Filter>Quelldateien\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DllMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,14 +94,11 @@
     <ClInclude Include="inc\Graphics\VertexBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\DefaultShader.h">
-      <Filter>Headerdateien\Shader</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\Shader.h">
-      <Filter>Headerdateien\Shader</Filter>
+      <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\d3dx11effect.h">
-      <Filter>Headerdateien\Shader</Filter>
+      <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexData.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
@@ -106,11 +106,14 @@
     <ClInclude Include="inc\Graphics\VertexDeclaration.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\Texture.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\Mesh.h">
       <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DllMain.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Texture.h">
+      <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

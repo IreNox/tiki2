@@ -4,9 +4,7 @@
 
 namespace TikiEngine
 {
-	class Engine;
-
-	using namespace TikiEngine::Effects;
+	using namespace TikiEngine::Graphics;
 
 	namespace Vertices
 	{
@@ -28,7 +26,7 @@ namespace TikiEngine
 			Engine* engine;
 			Shader* shader;
 
-			ULONG hash;
+			UInt32 hash;
 			ID3D11InputLayout* inputLayout;
 
 			virtual void internalApply();

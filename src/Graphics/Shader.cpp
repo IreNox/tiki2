@@ -1,4 +1,5 @@
 #pragma comment(lib, "Effects11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
 
 #include "Graphics/Shader.h"
 #include "Core/Console.h"
@@ -9,15 +10,16 @@
 #include "Graphics/ConstantBuffer.h"
 
 #include <d3d11.h>
+#include <d3dx11.h>
 #include <D3Dcompiler.h>
 
 namespace TikiEngine
 {
-	namespace Effects
+	namespace Graphics
 	{
 		#pragma region Class
 		Shader::Shader(Engine* engine)
-			: engine(engine)
+			: IShader(engine)
 		{
 			this->device = 0;
 			this->context = 0;
@@ -55,7 +57,7 @@ namespace TikiEngine
 		//	delete(worldMatrix);
 		//}
 
-		void Shader::CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, ULONG* hash)
+		void Shader::CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash)
 		{
 			D3DX11_PASS_SHADER_DESC effectVsDesc;
 			pass->GetVertexShaderDesc(&effectVsDesc);
@@ -219,7 +221,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member
-		void Shader::compileShader(string fileName)
+		void Shader::compileShader(wstring fileName)
 		{
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;

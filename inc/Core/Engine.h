@@ -13,9 +13,11 @@ namespace TikiEngine
 
 	namespace Modules
 	{
+		class IAudio;
 		class IInput;
 		class IPhysics;
 		class IGraphics;
+		class IContentManager;
 	}
 
 	namespace Description
@@ -30,9 +32,11 @@ namespace TikiEngine
 	{
 	public:
 
+		IAudio* audio;
 		IInput* input;
 		IPhysics* physics;
 		IGraphics* graphics;
+		IContentManager* content;
 
 		Window* window;
 	
@@ -55,7 +59,7 @@ namespace TikiEngine
 		 *
 		 * @return Erfolgreich
 		 */
-		bool Initialize(const EngineDescription& desc);
+		bool Initialize(EngineDescription& desc);
 
 		/*!
 		 * @brief Startet die Anwendungsschleife

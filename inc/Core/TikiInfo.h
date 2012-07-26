@@ -24,6 +24,15 @@ namespace TikiEngine
 
 		List<IntPtr> Modules;
 		List<IntPtr> Components;
+
+		TikiInfo()
+			: LibraryName(), LibraryHandle(0), FuncTikiModule(0), FuncTikiComponent(0), Modules(), Components()
+		{
+		}
+
+		~TikiInfo()
+		{
+		}
 	};
 }
 
