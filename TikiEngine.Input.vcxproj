@@ -19,10 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Input\Input.h" />
+    <ClInclude Include="inc\Input\DllMain.h" />
+    <ClInclude Include="inc\Input\InputModule.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Input\Input.cpp" />
+    <ClCompile Include="src\Input\DllMain.cpp" />
+    <ClCompile Include="src\Input\InputModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}</ProjectGuid>
