@@ -27,7 +27,7 @@ namespace TikiEngine
 		bool Input::Initialize(EngineDescription& desc)
 		{
 			this->hWnd = desc.Window.hWnd;
-			this->hInst = desc.Window.hInst;
+			this->hInst = desc.hInst;
 			this->viewPort = ViewPort(0, 0, desc.Window.Width, desc.Window.Height);
 
 			HRESULT r = DirectInput8Create(

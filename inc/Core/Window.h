@@ -2,17 +2,17 @@
 
 #include "windows.h"
 
-#include "WindowDescription.h"
+#include "Core/EngineDescription.h"
 
-using TikiEngine::Description::WindowDescription;
+using TikiEngine::Description::EngineDescription;
 
 class Window
 {
 public:
-	Window(HINSTANCE hInst);
+	Window();
 	~Window(void);
 
-	bool Initialize(const WindowDescription* desc);
+	bool Initialize(EngineDescription& desc);
 
 	void Show();
 	void ShowDialog();

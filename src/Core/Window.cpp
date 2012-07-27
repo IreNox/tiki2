@@ -2,8 +2,7 @@
 #include "Core\Window.h"
 
 #pragma region Class
-Window::Window(HINSTANCE hInst)
-	: hInst(hInst)
+Window::Window()
 {
 }
 
@@ -17,13 +16,15 @@ Window::~Window(void)
 #pragma endregion
 
 #pragma region Init
-bool Window::Initialize(const WindowDescription* desc)
+bool Window::Initialize(EngineDescription& desc)
 {
 	WNDCLASSEX win = WNDCLASSEX();
 
+	hInst = desc.hInst;
+
 	win.hInstance = hInst;
 	win.lpfnWndProc = &Window::WndProc;
-	win.lpszClassName = desc->WindowClass;
+	win.lpszClassName = desc.Window.WindowClass;
 	win.cbSize = sizeof(WNDCLASSEX);
 	win.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 
@@ -31,13 +32,13 @@ bool Window::Initialize(const WindowDescription* desc)
 
 	if (FAILED(r))
 	{
-		MessageBox(NULL, L"Can't register Class.", desc->WindowTitle, MB_HELP);
+		MessageBox(NULL, L"Can't register Class.", desc.Window.WindowTitle, MB_HELP);
 		return false;
 	}
 
 	hWnd = CreateWindow(
-		desc->WindowClass,
-		desc->WindowTitle,
+		desc.Window.WindowClass,
+		desc.Window.WindowTitle,
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
@@ -51,9 +52,11 @@ bool Window::Initialize(const WindowDescription* desc)
 
 	if (!hWnd)
 	{
-		MessageBox(NULL, L"Can't create Window.", desc->WindowTitle, MB_HELP);
+		MessageBox(NULL, L"Can't create Window.", desc.Window.WindowTitle, MB_HELP);
 		return false;
 	}
+
+	desc.Window.hWnd = hWnd;
 
 	return true;
 }

@@ -29,14 +29,16 @@ namespace TikiEngine
 			 */
 			LPCWSTR WindowTitle;
 	
+			/*!
+			 * @brief The window handle.
+			 */
 			HWND hWnd;
-			HINSTANCE hInst;
 
 			/*!
 			 * @brief Creates an instance of WINDOW_DESCRIPTION
 			 */
 			WindowDescription()
-				: hWnd(0), hInst(0)
+				: hWnd(0)
 			{
 				this->Width = 800;
 				this->Height = 600;

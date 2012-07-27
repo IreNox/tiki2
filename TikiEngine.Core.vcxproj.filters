@@ -54,9 +54,6 @@
     <Filter Include="Headerdateien\Core\Args">
       <UniqueIdentifier>{bdc712d0-b742-40b9-9b6d-a8bc9f281755}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Modules">
-      <UniqueIdentifier>{991ca4f3-a7ca-4e2d-bb24-30e5aa020f56}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Core\Graphics">
       <UniqueIdentifier>{4017730b-2b4a-4fab-81b9-a863c67082fc}</UniqueIdentifier>
     </Filter>
@@ -234,12 +231,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IPhysics.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ModuleType.h">
-      <Filter>Headerdateien\Core\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ModuleResponse.h">
-      <Filter>Headerdateien\Core\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\DrawArgs.h">
       <Filter>Headerdateien\Core\Args</Filter>

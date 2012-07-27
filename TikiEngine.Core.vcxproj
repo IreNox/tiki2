@@ -103,8 +103,6 @@
     <ClInclude Include="inc\Core\Matrix3x3.h" />
     <ClInclude Include="inc\Core\Mesh.h" />
     <ClInclude Include="inc\Core\TikiInfo.h" />
-    <ClInclude Include="inc\Core\ModuleResponse.h" />
-    <ClInclude Include="inc\Core\ModuleType.h" />
     <ClInclude Include="inc\Core\Object.h" />
     <ClInclude Include="inc\Core\Quad.h" />
     <ClInclude Include="inc\Core\Queue.h" />
@@ -156,22 +154,22 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\Output_dd_obj.props" />
+    <Import Project="props\Output_dd_lib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\Output_dd_obj.props" />
+    <Import Project="props\Output_dd_lib.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\Output_dd_obj.props" />
+    <Import Project="props\Output_dd_lib.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\Output_dd_obj.props" />
+    <Import Project="props\Output_dd_lib.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup />

@@ -68,8 +68,8 @@ namespace TikiEngine
 	{
 		HelperLibrary::LoadDefault(this);
 
-		window = new Window(desc.hInst);
-		if (!window->Initialize(&desc.Window))
+		window = new Window();
+		if (!window->Initialize(desc))
 		{
 			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;

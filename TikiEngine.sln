@@ -5,6 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Core", "TikiEngi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game.vcxproj", "{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}"
 	ProjectSection(ProjectDependencies) = postProject
+		{7F239751-2D21-4503-BBA2-F480DB6EBFE6} = {7F239751-2D21-4503-BBA2-F480DB6EBFE6}
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
 EndProject
@@ -18,12 +19,25 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Effects11", "src\Effects11\Effects11.vcxproj", "{DF460EAB-570D-4B50-9089-2E2FC801BF38}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Input", "TikiEngine.Input.vcxproj", "{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Sound", "TikiEngine.Sound.vcxproj", "{B5833648-23F3-48E5-8359-3D4923658E59}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsDX11", "TikiEngine.GraphicsDX11.vcxproj", "{59897D41-2ADE-4851-8D7A-E3CF1C80F120}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DF460EAB-570D-4B50-9089-2E2FC801BF38} = {DF460EAB-570D-4B50-9089-2E2FC801BF38}
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Resources", "TikiEngine.Resources.vcxproj", "{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -47,12 +61,10 @@ Global
 		SccLocalPath6 = .
 		SccProjectUniqueName7 = TikiEngine.Sound.vcxproj
 		SccLocalPath7 = .
-		SccProjectUniqueName8 = TikiEngine.GraphicsDX11\\TikiEngine.GraphicsDX11.vcxproj
-		SccProjectName8 = TikiEngine.GraphicsDX11
-		SccLocalPath8 = TikiEngine.GraphicsDX11
-		SccProjectUniqueName9 = TikiEngine.Resources\\TikiEngine.Resources.vcxproj
-		SccProjectName9 = TikiEngine.Resources
-		SccLocalPath9 = TikiEngine.Resources
+		SccProjectUniqueName8 = TikiEngine.GraphicsDX11.vcxproj
+		SccLocalPath8 = .
+		SccProjectUniqueName9 = TikiEngine.Resources.vcxproj
+		SccLocalPath9 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
