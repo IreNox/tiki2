@@ -1,39 +1,31 @@
 
-#include "Graphics/DllMain.h"
-#include "Graphics/MeshRenderer.h"
+#include "Input/DllMain.h"
 
 #include <typeinfo.h>
 
 namespace TikiEngine
 {
-	using namespace TikiEngine::Graphics;
-	using namespace TikiEngine::Components;
+	using namespace TikiEngine::Modules;
 
 	TikiInfo DllMain::DllInfo = TikiInfo();
 	
 	Engine* DllMain::Engine = 0;
-
-	GraphicsModule* DllMain::Module = 0;
-	ID3D11Device* DllMain::Device = 0;
-	ID3D11DeviceContext* DllMain::Context = 0;
+	InputModule* DllMain::Module = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new GraphicsModule(engine);
+		DllMain::Module = new InputModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiComponent = CreateComponent;
 
-		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
-
-		DllInfo.Components.Add(typeid(IMesh).hash_code());
-		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
+		DllInfo.Modules.Add(typeid(IInput).hash_code());
 	}
 
 	IModule* DllMain::CreateModule(IntPtr hash)
 	{
-		if (hash != typeid(IGraphics).hash_code())
+		if (hash != typeid(IInput).hash_code())
 		{
 			return 0;
 		}
@@ -43,11 +35,6 @@ namespace TikiEngine
 
 	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
 	{
-		if (hash == typeid(IMeshRenderer).hash_code())
-		{
-			return new MeshRenderer(DllMain::Engine, gameObject);
-		}
-
 		return 0;
 	}
 }

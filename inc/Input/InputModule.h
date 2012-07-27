@@ -13,12 +13,12 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		class Input : public IInput
+		class InputModule : public IInput
 		{
 		public:
 
-			Input(Engine* engine);
-			~Input();
+			InputModule(Engine* engine);
+			~InputModule();
 			
 			bool Initialize(EngineDescription& desc);
 

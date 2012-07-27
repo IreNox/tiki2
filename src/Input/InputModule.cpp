@@ -4,27 +4,28 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "Core/Engine.h"
-#include "Core/Input.h"
 #include "Core/Console.h"
+
+#include "Input/InputModule.h"
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		#pragma region Class
-		Input::Input(Engine* engine)
+		InputModule::InputModule(Engine* engine)
 			: IInput(engine), input(0), mouse(0), keyboard(0), hWnd(0), hInst(0), mousePos(0, 0), viewPort()
 		{
 			ZeroMemory(keyboardState, sizeof(keyboardState));
 		}
 
-		Input::~Input()
+		InputModule::~InputModule()
 		{
 		}
 		#pragma endregion
 
 		#pragma region Member
-		bool Input::Initialize(EngineDescription& desc)
+		bool InputModule::Initialize(EngineDescription& desc)
 		{
 			this->hWnd = desc.Window.hWnd;
 			this->hInst = desc.hInst;
@@ -49,13 +50,13 @@ namespace TikiEngine
 			return true;
 		}
 
-		void Input::Begin()
+		void InputModule::Begin()
 		{
 			this->readData(keyboard, sizeof(keyboardState), (void*)&keyboardState);
 			this->readData(mouse, sizeof(mouseState), (void*)&mouseState);
 		}
 
-		void Input::FillInputState(InputState* state)
+		void InputModule::FillInputState(InputState* state)
 		{
 			Vector2 dis = Vector2(
 				(float)mouseState.lX / viewPort.Width,
@@ -79,11 +80,11 @@ namespace TikiEngine
 			);				
 		}
 
-		void Input::End()
+		void InputModule::End()
 		{
 		}
 
-		void Input::Dispose()
+		void InputModule::Dispose()
 		{
 			if (input != 0)
 			{
@@ -108,7 +109,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member
-		void Input::initDevice(IDirectInputDevice8** device, GUID guid, LPCDIDATAFORMAT format)
+		void InputModule::initDevice(IDirectInputDevice8** device, GUID guid, LPCDIDATAFORMAT format)
 		{
 			HRESULT r = input->CreateDevice(guid, device, NULL);
 
@@ -139,7 +140,7 @@ namespace TikiEngine
 			}
 		}
 
-		bool Input::readData(IDirectInputDevice8* device, UINT size, void* destination)
+		bool InputModule::readData(IDirectInputDevice8* device, UINT size, void* destination)
 		{
 			HRESULT r = device->GetDeviceState(size, destination);
 
