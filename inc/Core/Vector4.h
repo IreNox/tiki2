@@ -3,10 +3,17 @@
 class Vector4
 {
 public:
-	float X;
-	float Y;
-	float Z;
-	float W;
+	union
+	{
+		struct
+		{
+			float X;
+			float Y;
+			float Z;
+			float W;
+		};
+		float arr[4];
+	};
 
 	Vector4(void);
 	Vector4(float all);
@@ -15,41 +22,49 @@ public:
 
 	virtual ~Vector4(void);
 
-	Vector4 Add(Vector4 vector);	
-	Vector4 Substract(Vector4 vector);
-
-	Vector4 Divide(float value);
-	virtual Vector4 Multiply(float value);
-
-	float Dot(Vector4 vector);
+	
 	float Angle(Vector4 vector);
 
 	Vector4 Negate();
 	Vector4 Cross(Vector4 vector);
-	Vector4 Reflect(Vector4 normal);
 
 	float Length();
-	float Distance(Vector4 vector);
+	float LengthSquared();
+	static float Distance(const Vector4& vector1, const Vector4& vector2);
+	static float DistanceSquared(const Vector4& vector1, const Vector4& vector2);
+	static float Dot(const Vector4& vector1, const Vector4& vector2);
 
 	Vector4 Normalize();
+	static Vector4 Normalize(const Vector4& vector);
+	static Vector4 Clamp(Vector4& value1, const Vector4& min, const Vector4& max);
+	static Vector4 Lerp(const Vector4& value1, const Vector4& value2, float amount);
 
-	void Vector4::Print();
 
-	bool Vector4::operator== (Vector4 rhs);
-	bool Vector4::operator!= (Vector4 rhs);
+	//boolean operators
+	bool Vector4::operator== (const Vector4& rhs) const;
+	bool Vector4::operator!= (const Vector4& rhs) const;
 
-	Vector4 operator+ (Vector4 rhs);
-	Vector4 operator+= (Vector4 rhs);
+	//arithmetic operation
+	Vector4 operator+ (const Vector4& rhs) const;
+	Vector4 operator- () const;
+	Vector4 operator- (const Vector4& rhs) const;
+	Vector4 operator* (float rhs ) const;
+	Vector4 operator/ (float rhs) const;
 
-	Vector4 operator- ();
-	Vector4 operator- (Vector4 rhs);
-	Vector4 operator-= (Vector4 rhs);
-
-	Vector4 operator* (float rhs);
-	Vector4 operator* (Vector4 rhs);
-
-	Vector4 operator/ (float rhs);
+	//arithmetic updates
+	Vector4& operator+= (const Vector4& rhs);
+	Vector4& operator-= (const Vector4& rhs);
 
 	static int Dimensions;
 	static Vector4 Input();
+
+	//static attributes
+
+	static Vector4 Identity;
+	static Vector4 Zero; 
+	static Vector4 One; 
+	static Vector4 UnitX; 
+	static Vector4 UnitY;
+	static Vector4 UnitZ; 
+	static Vector4 UnitW; 
 };

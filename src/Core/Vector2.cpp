@@ -69,7 +69,7 @@ Vector2 Vector2::Lerp(const Vector2& value1, const Vector2& value2, float amount
 }
 #pragma endregion
 
-#pragma region Length, Distance, Angle, Cross, Normalize
+#pragma region Length, Distance, Normalize Angle, Cross, Normalize
 float Vector2::Length() const
 {
 	return sqrt(
@@ -97,13 +97,13 @@ float Vector2::DistanceSquared(const Vector2& vector1, const Vector2& vector2)
 
 void Vector2::Normalize()
 {
-	float num = 1 / sqrt((double)(this->X * this->X + this->Y * this->Y));
+	float num = 1 / sqrtf(this->X * this->X + this->Y * this->Y);
 	this->X = this->X * num;
 	this->Y = this->Y * num;
 }
 Vector2 Vector2::Normalize(const Vector2& vector)
 {
-	float num = 1 / sqrt((double)(vector.X * vector.X + vector.Y * vector.Y));
+	float num = 1 / sqrtf(vector.X * vector.X + vector.Y * vector.Y);
 	return Vector2(vector.X * num, vector.Y * num);
 }
 
@@ -113,58 +113,60 @@ float Vector2::Angle(const Vector2& vector1, const Vector2& vector2)
 }
 #pragma endregion
 
+#pragma region Operators
+#pragma region bool operations
+bool Vector2::operator== (const Vector2& rhs) const
+{
+	return	(this->X == rhs.X) &&
+		(this->Y == rhs.Y);
+}
+
+bool Vector2::operator!= (const Vector2& rhs) const
+{
+	return this->X != rhs.X || this->Y != rhs.Y;
+}
+#pragma endregion bool operations
+
+#pragma region arithmetic operations
+Vector2 Vector2::operator+ (const Vector2& rhs) const
+{
+	return Vector2(this->X + rhs.X, this->Y + rhs.Y);
+}
+Vector2 Vector2::operator- () const
+{
+	return Vector2(-this->X,-this->Y);
+}
+Vector2 Vector2::operator- (const Vector2& rhs) const
+{
+	return Vector2(this->X - rhs.X , this->Y - rhs.Y);
+}
+Vector2 Vector2::operator* (const float& rhs) const
+{
+	return Vector2(this->X * rhs, this->Y * rhs);
+}
+Vector2 Vector2::operator/ (const float& rhs) const
+{
+	return Vector2(this->X / rhs, this->Y / rhs);
+}
+#pragma endregion arithmetic operations
+
+#pragma region arithmetic updates
+Vector2& Vector2::operator+= (const Vector2& rhs)
+{
+	return *this = *this + rhs;
+}
+Vector2& Vector2::operator-= (const Vector2& rhs)
+{
+	return *this = *this - rhs;
+}
+#pragma endregion arithmetic updates
+
+#pragma endregion
+
 #pragma region static attributes
 Vector2	Vector2::Zero = Vector2(0.0);
 Vector2 Vector2::One = Vector2(1.0);
 Vector2 Vector2::UnitX = Vector2(1.0,0.0);
 Vector2 Vector2::UnitY = Vector2(0.0,1.0);
 
-#pragma endregion
-
-#pragma region Operators
-bool Vector2::operator== (const Vector2& rhs)
-{
-	return	(this->X == rhs.X) &&
-			(this->Y == rhs.Y);
-}
-
-bool Vector2::operator!= (const Vector2& rhs)
-{
-	return this->X != rhs.X || this->Y != rhs.Y;
-}
-
-Vector2 Vector2::operator+ (const Vector2& rhs)
-{
-	return Vector2(this->X + rhs.X, this->Y + rhs.Y);
-}
-
-Vector2& Vector2::operator+= (const Vector2& rhs)
-{
-	return *this = *this + rhs;
-}
-
-Vector2 Vector2::operator- ()
-{
-	return Vector2(-this->X,-this->Y);
-}
-
-Vector2 Vector2::operator- (const Vector2& rhs)
-{
-	return Vector2(this->X - rhs.X , this->Y - rhs.Y);
-}
-
-Vector2& Vector2::operator-= (const Vector2& rhs)
-{
-	return *this = *this - rhs;
-}
-
-Vector2 Vector2::operator* (const float& rhs)
-{
-	return Vector2(this->X * rhs, this->Y * rhs);
-}
-
-Vector2 Vector2::operator/ (const float& rhs)
-{
-	return Vector2(this->X / rhs, this->Y / rhs);
-}
 #pragma endregion

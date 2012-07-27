@@ -28,57 +28,10 @@ Vector4::~Vector4(void)
 }
 #pragma endregion
 
-#pragma region Add, Substract
-Vector4 Vector4::Add(Vector4 vector)
-{
-	return Vector4(
-		this->X + vector.X,
-		this->Y + vector.Y,
-		this->Z + vector.Z,
-		this->W + vector.W
-	);
-}
-
-Vector4 Vector4::Substract(Vector4 vector)
-{
-	return Vector4(
-		this->X - vector.X,
-		this->Y - vector.Y,
-		this->Z - vector.Z,
-		this->W - vector.W
-	);
-}
-#pragma endregion
-
-#pragma region Multiply, Divide
-Vector4 Vector4::Multiply(float value)
-{
-	return Vector4(
-		this->X * value,
-		this->Y * value,
-		this->Z * value,
-		this->W * value
-	);
-}
-
-Vector4 Vector4::Divide(float value)
-{
-	return Vector4(
-		this->X / value,
-		this->Y / value,
-		this->Z / value,
-		this->W / value
-	);
-}
-#pragma endregion
-
 #pragma region Dot, Cross, Negate, Reflect
-float Vector4::Dot(Vector4 vector)
+float Vector4::Dot(const Vector4& vector1, const Vector4& vector2)
 {
-	return	(this->X * vector.X) +
-			(this->Y * vector.Y) +
-			(this->Z * vector.Z) +
-			(this->W * vector.W);
+	return vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z + vector1.W * vector2.W;
 }
 
 Vector4 Vector4::Cross(Vector4 vector)
@@ -88,22 +41,7 @@ Vector4 Vector4::Cross(Vector4 vector)
 
 Vector4 Vector4::Negate()
 {
-	return this->Multiply(-1.0f);
-}
-
-Vector4 Vector4::Reflect(Vector4 normal)
-{
-	Vector4 negate = normal.Negate();
-	Vector4 twoDot = Vector4(2.0f) * this->Dot(normal);
-
-	return this->Add(
-		Vector4(
-			twoDot.X * negate.X,
-			twoDot.Y * negate.Y,
-			twoDot.Z * negate.Z,
-			twoDot.W * negate.W
-		)
-	);
+	return *this * -1;
 }
 #pragma endregion
 
@@ -117,28 +55,49 @@ float Vector4::Length()
 		(this->W * this->W)
 	);
 }
-
-float Vector4::Distance(Vector4 vector)
+float Vector4::LengthSquared()
 {
-	return (*this - vector).Length();
+	return(this->X * this->X) + (this->Y * this->Y) + (this->Z * this->Z) + (this->W * this->W);
+}
+
+float Vector4::Distance(const Vector4& value1, const Vector4& value2)
+{
+	float num = value1.X - value2.X;
+	float num2 = value1.Y - value2.Y;
+	float num3 = value1.Z - value2.Z;
+	float num4 = value1.W - value2.W;
+	float num5 = num * num + num2 * num2 + num3 * num3 + num4 * num4;
+	return sqrtf(num5);
+}
+float Vector4::DistanceSquared(const Vector4& value1, const Vector4& value2)
+{
+	float num = value1.X - value2.X;
+	float num2 = value1.Y - value2.Y;
+	float num3 = value1.Z - value2.Z;
+	float num4 = value1.W - value2.W;
+	return num * num + num2 * num2 + num3 * num3 + num4 * num4;
 }
 
 float Vector4::Angle(Vector4 vector)
 {
-	return acos(
-		this->Dot(vector) /
+	return acos(Dot(*this, vector)/
 		(this->Length() * vector.Length())
 	) * (180 / 3.1415926f);
 }
 
 Vector4 Vector4::Normalize()
 {
-	return *this / this->Length();
+	return *this = *this / this->Length();
+}
+Vector4 Vector4::Normalize(const Vector4& vector)
+{
+	float num = vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z + vector.W * vector.W;
+	return Vector4(vector.X / num, vector.Y / num, vector.Z / num, vector.W / num);
 }
 #pragma endregion
 
 #pragma region Operators
-bool Vector4::operator== (Vector4 rhs)
+bool Vector4::operator== (const Vector4& rhs) const
 {
 	return	(this->X == rhs.X) &&
 			(this->Y == rhs.Y) &&
@@ -146,48 +105,83 @@ bool Vector4::operator== (Vector4 rhs)
 			(this->W == rhs.W);
 }
 
-bool Vector4::operator!= (Vector4 rhs)
+bool Vector4::operator!= (const Vector4& rhs) const
 {
 	return	!(*this == rhs);
 }
 
-Vector4 Vector4::operator+ (Vector4 rhs)
+Vector4 Vector4::operator+ (const Vector4& rhs) const
 {
-	return this->Add(rhs);
+	return Vector4(this->X + rhs.X , this->Y + rhs.Y, this->Z + rhs.Z, this->W + rhs.W);
 }
 
-Vector4 Vector4::operator+= (Vector4 rhs)
+Vector4& Vector4::operator+= (const Vector4& rhs)
 {
-	return this->Add(rhs);
+	return *this = *this + rhs;
 }
 
-Vector4 Vector4::operator- ()
+Vector4 Vector4::operator- () const
 {
-	return this->Negate();
+	return *this * -1;
 }
 
-Vector4 Vector4::operator- (Vector4 rhs)
+Vector4 Vector4::operator- (const Vector4& rhs) const
 {
-	return this->Substract(rhs);
+	return Vector4(this->X - rhs.X , this->Y - rhs.Y, this->Z - rhs.Z, this->W - rhs.W);
 }
 
-Vector4 Vector4::operator-= (Vector4 rhs)
+Vector4& Vector4::operator-= (const Vector4& rhs) 
 {
-	return this->Substract(rhs);
+	return *this = *this - rhs;
 }
 
-Vector4 Vector4::operator* (float rhs)
+Vector4 Vector4::operator* (float rhs) const
 {
-	return this->Multiply(rhs);
+	return Vector4(this->X * rhs, this->Y * rhs, this->Z * rhs, this->W * rhs);
 }
 
-Vector4 Vector4::operator* (Vector4 rhs)
+Vector4 Vector4::operator/ (float rhs) const
 {
-	return this->Cross(rhs);
+	return Vector4(this->X / rhs, this->Y / rhs, this->Z / rhs, this->W / rhs);
 }
 
-Vector4 Vector4::operator/ (float rhs)
+Vector4 Vector4::Clamp( Vector4& value1, const Vector4& min, const Vector4& max )
 {
-	return this->Divide(rhs);
+	float num = value1.X;
+	num = ((num > max.X) ? max.X : num);
+	num = ((num < min.X) ? min.X : num);
+	float num2 = value1.Y;
+	num2 = ((num2 > max.Y) ? max.Y : num2);
+	num2 = ((num2 < min.Y) ? min.Y : num2);
+	float num3 = value1.Z;
+	num3 = ((num3 > max.Z) ? max.Z : num3);
+	num3 = ((num3 < min.Z) ? min.Z : num3);
+	float num4 = value1.W;
+	num4 = ((num4 > max.W) ? max.W : num4);
+	num4 = ((num4 < min.W) ? min.W : num4);
+
+	return Vector4(num, num2, num3, num4 );
+
 }
+
+Vector4 Vector4::Lerp( const Vector4& value1, const Vector4& value2, float amount )
+{
+	Vector4 result;
+	result.X = value1.X + (value2.X - value1.X) * amount;
+	result.Y = value1.Y + (value2.Y - value1.Y) * amount;
+	result.Z = value1.Z + (value2.Z - value1.Z) * amount;
+	result.W = value1.W + (value2.W - value1.W) * amount;
+	return result;
+}
+
+#pragma endregion
+
+#pragma region static attributes
+Vector4 Vector4::Zero = Vector4(0,0,0,0); 
+Vector4 Vector4::One = Vector4(1,1,1,1); 
+Vector4 Vector4::UnitX = Vector4(1,0,0,0); 
+Vector4 Vector4::UnitY = Vector4(0,1,0,0);
+Vector4 Vector4::UnitZ = Vector4(0,0,1,0); 
+Vector4 Vector4::UnitW = Vector4(0,0,0,1); 
+
 #pragma endregion

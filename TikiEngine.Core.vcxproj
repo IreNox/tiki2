@@ -33,6 +33,7 @@
     <ClCompile Include="src\Core\Matrix3x3.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
     <ClCompile Include="src\Core\Quad.cpp" />
+    <ClCompile Include="src\Core\Quaternion.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\SimpleVertex.cpp" />
     <ClCompile Include="src\Core\Transform.cpp" />

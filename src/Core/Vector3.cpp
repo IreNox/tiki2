@@ -2,7 +2,7 @@
 #include <Math.h>
 #include "Core/Vector3.h"
 
-#pragma region Class
+#pragma region Init
 Vector3::Vector3(void)
 	: X(0), Y(0), Z(0)
 {
@@ -28,7 +28,29 @@ Vector3::~Vector3(void)
 }
 #pragma endregion
 
-#pragma region Dot, Distance, Cross
+#pragma region Methods
+float Vector3::Length() const
+{
+	return sqrt(
+		(this->X * this->X) +
+		(this->Y * this->Y) +
+		(this->Z * this->Z)
+		);
+}
+float Vector3::LengthSquared() const
+{
+	return (this->X * this->X) + (this->Y * this->Y) + (this->Z * this->Z);
+}
+
+void Vector3::Negate() 
+{
+	this->X = -this->X;
+	this->Y = -this->Y;
+	this->Z = -this->Z;
+}
+#pragma endregion Methods
+
+#pragma region static Methods
 float Vector3::Dot(const Vector3& vector1, const Vector3& vector2)
 {
 	return	(vector1.X * vector2.X) +
@@ -48,6 +70,10 @@ float Vector3::Distance(const Vector3& vector1, const Vector3& vector2)
 {
 	return (vector1 - vector2).Length();
 }
+float Vector3::DistanceSquared(const Vector3& vector1, const Vector3& vector2)
+{
+	return (vector1-vector2).LengthSquared();
+}
 
 Vector3 Vector3::Cross(const Vector3& vector1, const Vector3& vector2)
 {
@@ -57,28 +83,7 @@ Vector3 Vector3::Cross(const Vector3& vector1, const Vector3& vector2)
 		(vector1.X * vector2.Y) - (vector1.Y * vector2.X)
 	);
 }
-#pragma endregion
 
-#pragma region Length, Negate, Normalize
-float Vector3::Length() const
-{
-	return sqrt(
-		(this->X * this->X) +
-		(this->Y * this->Y) +
-		(this->Z * this->Z)
-	);
-}
-float Vector3::LengthSquared() const
-{
-	return (this->X * this->X) + (this->Y * this->Y) + (this->Z * this->Z);
-}
-
-void Vector3::Negate() 
-{
-	this->X = -this->X;
-	this->Y = -this->Y;
-	this->Z = -this->Z;
-}
 Vector3 Vector3::Negate(const Vector3& vector) 
 {
 	return Vector3(-vector.X, -vector.Y, - vector.Z);
@@ -92,14 +97,16 @@ Vector3 Vector3::Normalize(const Vector3& vector)
 }
 #pragma endregion
 
+
 #pragma region Transform
 Vector3 Vector3::Transform(const Matrix& matrix) const
 {
-	return Vector3(
-		this->X * matrix.M00 + this->Y * matrix.M01 + this->Z * matrix.M02 + matrix.M03,
-		this->X * matrix.M10 + this->Y * matrix.M11 + this->Z * matrix.M12 + matrix.M13,
-		this->X * matrix.M20 + this->Y * matrix.M21 + this->Z * matrix.M22 + matrix.M23
-	);
+	return Vector3();
+	//return Vector3(
+	//	this->X * matrix.M00 + this->Y * matrix.M01 + this->Z * matrix.M02 + matrix.M03,
+	//	this->X * matrix.M10 + this->Y * matrix.M11 + this->Z * matrix.M12 + matrix.M13,
+	//	this->X * matrix.M20 + this->Y * matrix.M21 + this->Z * matrix.M22 + matrix.M23
+	//);
 }
 #pragma endregion
 
@@ -125,14 +132,14 @@ Vector3 Vector3::operator+ (const Vector3& vector) const
 	);
 }
 
-Vector3 Vector3::operator+= (const Vector3& rhs) 
+Vector3& Vector3::operator+= (const Vector3& rhs) 
 {
 	return *this = (*this + rhs);
 }
 
-Vector3 Vector3::operator- () const
+Vector3& Vector3::operator- () const
 {
-	return Vector3(-this->X, -this->Y, - this->Y);
+	return Vector3(-this->X, -this->Y, -this->Z);
 }
 
 Vector3 Vector3::operator- (const Vector3& vector) const
@@ -144,7 +151,7 @@ Vector3 Vector3::operator- (const Vector3& vector) const
 	);
 }
 
-Vector3 Vector3::operator-= (const Vector3& rhs) 
+Vector3& Vector3::operator-= (const Vector3& rhs) 
 {
 	return *this = *this - rhs;
 }
@@ -166,7 +173,44 @@ Vector3 Vector3::operator/ (float rhs) const
 		this->Z / rhs
 	);
 }
+
+Vector3 Vector3::Reflect( const Vector3& vector, const Vector3& normal )
+{
+	float num = vector.X * normal.X + vector.Y * normal.Y + vector.Z * normal.Z;
+
+	return Vector3(
+		vector.X - 2 * num * normal.X,
+		vector.Y - 2 * num * normal.Y,
+		vector.Z - 2 * num * normal.Z);
+}
+
+Vector3 Vector3::Clamp( const Vector3& value1, const Vector3& min, const Vector3& max )
+{
+	float num = value1.X;
+	num = ((num > max.X) ? max.X : num);
+	num = ((num < min.X) ? min.X : num);
+
+	float num2 = value1.Y;
+	num2 = ((num2 > max.Y) ? max.Y : num2);
+	num2 = ((num2 < min.Y) ? min.Y : num2);
+
+	float num3 = value1.Z;
+	num3 = ((num3 > max.Z) ? max.Z : num3);
+	num3 = ((num3 < min.Z) ? min.Z : num3);
+
+	return Vector3(num,num2,num3);
+}
+
+Vector3 Vector3::Lerp( const Vector3& value1, const Vector3& value2,const float amount )
+{
+	return Vector3(
+		value1.X + (value2.X - value1.X) * amount,
+		value1.Y + (value2.Y - value1.Y) * amount,
+		value1.Z + (value2.Z - value1.Z) * amount);
+}
+
 #pragma endregion
+
 #pragma region statics
 Vector3 Vector3::Zero = Vector3(0.0);
 Vector3 Vector3::One = Vector3(1.0);
@@ -178,6 +222,9 @@ Vector3 Vector3::Up = Vector3(0,1,0);
 Vector3 Vector3::Down = Vector3(0,-1,0);
 Vector3 Vector3::Right = Vector3(1,0,0);
 Vector3 Vector3::Left = Vector3(-1,0,0);
-Vector3 Vector3::Forward = Vector3(0,0,-1); // possible RH / LH corruption
-Vector3 Vector3::Backward = Vector3(0,0,1); //possibile RH / LH corruption
+
+Vector3 Vector3::ForwardRH = Vector3(0,0,-1);
+Vector3 Vector3::BackwardRH = Vector3(0,0,1);
+Vector3 Vector3::ForwardLH = Vector3(0,0,1);
+Vector3 Vector3::BackwardLH = Vector3(0,0,-1);
 #pragma endregion statics

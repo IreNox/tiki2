@@ -3,6 +3,8 @@
 class Vector2
 {
 public:
+
+	//struct
 	union
 	{
 		struct
@@ -14,6 +16,7 @@ public:
 		float arr[2];
 	};
 
+	//constructor
 	Vector2(void);
 	Vector2(float all);
 	Vector2(float* arr);
@@ -39,22 +42,27 @@ public:
 	static Vector2 Clamp(const Vector2& value1, const Vector2& min, const Vector2& max);
 	static Vector2 Lerp(const Vector2& value1, const Vector2& value2, float amount);
 
-	bool Vector2::operator== (const Vector2& rhs);
-	bool Vector2::operator!= (const Vector2& rhs);
 
-	Vector2 operator+ (const Vector2& rhs);
+	//boolean comparison
+	bool Vector2::operator== (const Vector2& rhs) const;
+	bool Vector2::operator!= (const Vector2& rhs) const;
+
+	//arithmetic operations
+	Vector2 operator+ (const Vector2& rhs) const;
+	Vector2 operator- (const Vector2& rhs) const;
+	Vector2 operator- () const;
+	Vector2 operator* (const float& rhs) const;
+	Vector2 operator/ (const float& rhs) const;
+
+	//arithmetic updates
 	Vector2& operator+= (const Vector2& rhs);
-
-	Vector2 operator- ();
-	Vector2 operator- (const Vector2& rhs);
 	Vector2& operator-= (const Vector2& rhs);
 
-	Vector2 operator* (const float& rhs);
-	Vector2 operator/ (const float& rhs);
 
 	static int Dimensions;
 	static Vector2 Input();
 
+	//static attributes
 	static Vector2 Zero;
 	static Vector2 One;
 	static Vector2 UnitX;
