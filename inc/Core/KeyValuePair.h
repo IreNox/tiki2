@@ -17,27 +17,28 @@ public:
 	{
 	}
 
-	TKey GetKey()
+	TKey GetKey() const
 	{
 		return key;
 	}
 
-	TValue GetValue()
+	TValue GetValue() const
 	{
 		return value;
 	}
 
-	bool operator==(KeyValuePair<TKey, TValue>& kvp)
+	bool operator==(const KeyValuePair<TKey, TValue>& kvp) const
 	{
 		return this->GetKey() == kvp.GetKey();
 	}
 
-	bool operator!=(KeyValuePair<TKey, TValue>& kvp)
+	bool operator!=(const KeyValuePair<TKey, TValue>& kvp) const
 	{
 		return !(this->GetKey() == kvp.GetKey());
 	}
 
 private:
+
 	TKey key;
 	TValue value;
 };

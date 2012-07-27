@@ -26,7 +26,6 @@
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
     <ClCompile Include="src\Core\HelperLibrary.cpp" />
-    <ClCompile Include="src\Core\Input.cpp" />
     <ClCompile Include="src\Core\Material.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
@@ -60,6 +59,7 @@
     <ClInclude Include="inc\Core\ICollider.h" />
     <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
+    <ClInclude Include="inc\Core\Input.h" />
     <ClInclude Include="inc\Core\InputElement.h" />
     <ClInclude Include="inc\Core\IShader.h" />
     <ClInclude Include="inc\Core\IMeshRenderer.h" />
@@ -93,7 +93,6 @@
     <ClInclude Include="inc\Core\ILight.h" />
     <ClInclude Include="inc\Core\IList.h" />
     <ClInclude Include="inc\Core\IModule.h" />
-    <ClInclude Include="inc\Core\Input.h" />
     <ClInclude Include="inc\Core\InputState.h" />
     <ClInclude Include="inc\Core\IPhysics.h" />
     <ClInclude Include="inc\Core\KeyValuePair.h" />

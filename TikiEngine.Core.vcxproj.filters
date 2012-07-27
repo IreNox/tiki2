@@ -131,9 +131,6 @@
     <ClCompile Include="src\Core\Console.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Input.cpp">
-      <Filter>Quelldateien\Engine\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\GameObject.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
@@ -271,9 +268,6 @@
     <ClInclude Include="inc\Core\GarbageCollector.h">
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Input.h">
-      <Filter>Headerdateien\Engine\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\ITexture.h">
       <Filter>Headerdateien\Interfaces\Graphics</Filter>
     </ClInclude>
@@ -375,6 +369,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\InputElement.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Input.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,6 +18,12 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Input\Input.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Input\Input.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>
@@ -134,12 +140,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\Input\InputModule.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Input\InputModule.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

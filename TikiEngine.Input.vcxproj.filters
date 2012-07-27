@@ -11,12 +11,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Input\InputModule.h">
+    <ClInclude Include="inc\Input\Input.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Input\InputModule.cpp">
+    <ClCompile Include="src\Input\Input.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
