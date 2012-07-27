@@ -24,6 +24,11 @@ namespace TikiEngine
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiComponent = CreateComponent;
+
+		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
+
+		DllInfo.Components.Add(typeid(IMesh).hash_code());
+		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 	}
 
 	IModule* DllMain::CreateModule(IntPtr hash)
@@ -47,7 +52,7 @@ namespace TikiEngine
 	}
 }
 
-extern "C++" TikiInfo* GetTikiInfo(Engine* engine)
+extern "C" __declspec(dllexport) TikiInfo* GetTikiInfo(Engine* engine)
 {
 	TikiEngine::DllMain::InitDll(engine);
 

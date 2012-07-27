@@ -14,7 +14,7 @@ namespace TikiEngine
 		WCHAR cd[MAX_PATH];
 
 		_wgetcwd(cd, MAX_PATH);
-		wstring path = wstring(cd) + L"*.dll";
+		wstring path = wstring(cd) + L"\\*.dll";
 
 		WIN32_FIND_DATA file;
 		HANDLE handle = FindFirstFile(path.c_str(), &file);
@@ -25,7 +25,7 @@ namespace TikiEngine
 			{
 				if (file.cFileName[0] == '.') continue;
 
-				TikiInfo* info = loadLibrary(engine, wstring(file.cFileName));
+				TikiInfo* info = loadLibrary(engine, wstring(cd) + L"\\" + wstring(file.cFileName));
 
 				if (info != 0)
 				{
@@ -60,7 +60,8 @@ namespace TikiEngine
 		HMODULE libraryHandle = LoadLibrary(libraryName.c_str());
 		if (libraryHandle == 0) return 0;
 
-		GetTikiInfo getTikiInfo = (GetTikiInfo)GetProcAddress(libraryHandle, "GetTikiInfo");
+		FARPROC temp = GetProcAddress(libraryHandle, "GetTikiInfo");
+		GetTikiInfo getTikiInfo = (GetTikiInfo)temp;
 		if (getTikiInfo == 0) return 0;
 
 		TikiInfo* info = getTikiInfo(engine);

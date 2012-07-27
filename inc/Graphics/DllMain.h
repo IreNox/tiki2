@@ -41,4 +41,4 @@ namespace TikiEngine
 	};
 }
 
-TikiInfo* GetTikiInfo(Engine* engine);
+extern "C" __declspec(dllexport) TikiInfo* GetTikiInfo(Engine* engine);
