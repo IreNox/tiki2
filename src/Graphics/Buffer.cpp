@@ -3,6 +3,7 @@
 #include "Core/Console.h"
 
 #include "Graphics/Buffer.h"
+#include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -10,7 +11,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Buffer::Buffer(Engine* engine, UInt32 size)
-			: engine(engine), elementSize(size), buffer(0), bufferSize(0), bufferUsage(0)
+			: EngineObject(engine), elementSize(size), buffer(0), bufferSize(0), bufferUsage(0)
 		{
 		}
 
@@ -27,7 +28,7 @@ namespace TikiEngine
 		#pragma region Member
 		void Buffer::Apply(UINT offset) const
 		{
-			context->IASetVertexBuffers(0, 1, &buffer, &elementSize, &offset);
+			DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &elementSize, &offset);
 		}
 
 		ID3D11Buffer* Buffer::GetBuffer() const
@@ -87,7 +88,7 @@ namespace TikiEngine
 		{
 			D3D11_MAPPED_SUBRESOURCE mapped;
 
-			HRESULT r = context->Map(
+			HRESULT r = DllMain::Context->Map(
 				buffer,
 				0,
 				D3D11_MAP_WRITE_DISCARD,
@@ -109,15 +110,13 @@ namespace TikiEngine
 				dataSize
 			);			
 
-			context->Unmap(buffer, 0);
+			DllMain::Context->Unmap(buffer, 0);
 		}
 
 		void Buffer::resizeBuffer(void* addData, UINT dataSize)
 		{
 			UINT neededSize = this->bufferUsage + dataSize;
 			UINT size = neededSize;
-
-			auto context = engine->graphics->GetDeviceContext();
 
 			UINT index = 0;
 			char* newData = new char[size];
@@ -130,7 +129,7 @@ namespace TikiEngine
 				mapped.RowPitch = 0;
 				mapped.DepthPitch = 0;
 
-				context->Map(
+				DllMain::Context->Map(
 					buffer,
 					0,
 					D3D11_MAP_READ,
@@ -141,7 +140,7 @@ namespace TikiEngine
 				index = this->bufferUsage;
 				memcpy(newData, mapped.pData, this->bufferUsage);
 
-				context->Unmap(buffer, 0);
+				DllMain::Context->Unmap(buffer, 0);
 
 				buffer->Release();
 				buffer = 0;

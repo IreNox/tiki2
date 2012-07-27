@@ -4,7 +4,7 @@
 #pragma comment(lib, "d3dx11.lib")
 
 #include "Core\Engine.h"
-#include "Graphics\Graphics.h"
+#include "Graphics\GraphicsModule.h"
 
 #include "Core/Console.h"
 #include "Graphics/DllMain.h"
@@ -14,7 +14,7 @@ namespace TikiEngine
 	namespace Modules
 	{
 		#pragma region Class
-		Graphics::Graphics(Engine* engine)
+		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0)
 		{
@@ -24,7 +24,7 @@ namespace TikiEngine
 			clearColor[3] = 1.0;
 		}
 
-		Graphics::~Graphics()
+		GraphicsModule::~GraphicsModule()
 		{
 			if(swapChain)
 			{
@@ -96,7 +96,7 @@ namespace TikiEngine
 #pragma endregion
 
 		#pragma region Init
-		bool Graphics::Initialize(EngineDescription& desc)
+		bool GraphicsModule::Initialize(EngineDescription& desc)
 		{
 			if (inited) return false;
 
@@ -276,27 +276,27 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		ID3D11Device* Graphics::GetDevice()
+		ID3D11Device* GraphicsModule::GetDevice()
 		{
 			return this->device;
 		}
 
-		ID3D11DeviceContext* Graphics::GetDeviceContext()
+		ID3D11DeviceContext* GraphicsModule::GetDeviceContext()
 		{
 			return this->deviceContext;
 		}
 
-		D3D11_VIEWPORT* Graphics::GetViewPort()
+		D3D11_VIEWPORT* GraphicsModule::GetViewPort()
 		{
 			return &viewPort;
 		}
 
-		IndexBuffer* Graphics::GetIndexBuffer()
+		IndexBuffer* GraphicsModule::GetIndexBuffer()
 		{
 			return indexBuffer;
 		}
 
-		VertexBuffer* Graphics::GetVertexBuffer(VertexDeclaration* decl)
+		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl)
 		{
 			ULONG hash = decl->GetDeclarationHash();
 
@@ -313,25 +313,25 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Draw
-		void Graphics::Begin()
+		void GraphicsModule::Begin()
 		{
 			deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
 		}
 
-		void Graphics::Draw()
+		void GraphicsModule::Draw()
 		{
 
 		}
 
-		void Graphics::End()
+		void GraphicsModule::End()
 		{
 			swapChain->Present(0, 0);
 		}
 		#pragma endregion
 
 		#pragma region Member - CreateBuffer
-		//ID3D11Buffer* Graphics::CreateVertexBuffer(const void* data, UINT size)
+		//ID3D11Buffer* GraphicsModule::CreateVertexBuffer(const void* data, UINT size)
 		//{
 		//	D3D11_BUFFER_DESC desc;
 		//	desc.Usage = D3D11_USAGE_DEFAULT;
@@ -362,7 +362,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - CompileShader
-		//ID3D11PixelShader* Graphics::CompileShaderPS(const char* code)
+		//ID3D11PixelShader* GraphicsModule::CompileShaderPS(const char* code)
 		//{
 		//	ID3D10Blob* blobPS = NULL;
 		//	ID3D10Blob* blobError = NULL;
@@ -415,7 +415,7 @@ namespace TikiEngine
 		//	return shader;
 		//}
 
-		//HRESULT Graphics::CompileShaderVS(const char* code, const D3D11_INPUT_ELEMENT_DESC* inputElements, UINT elementsCount, ID3D11VertexShader** vsShader, ID3D11InputLayout** inputLayout)
+		//HRESULT GraphicsModule::CompileShaderVS(const char* code, const D3D11_INPUT_ELEMENT_DESC* inputElements, UINT elementsCount, ID3D11VertexShader** vsShader, ID3D11InputLayout** inputLayout)
 		//{
 		//	ID3D10Blob* blobVS = NULL;
 		//	ID3D10Blob* blobError = NULL;

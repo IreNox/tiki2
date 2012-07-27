@@ -3,6 +3,7 @@
 #include "Graphics/Texture.h"
 
 #include "Core/Console.h"
+#include "Graphics/DllMain.h"
 
 #include <d3d11.h>
 #include <d3dx11.h>
@@ -44,7 +45,7 @@ namespace TikiEngine
 		void Texture::LoadFromFile(wstring fileName)
 		{
 			HRESULT r = D3DX11CreateShaderResourceViewFromFile(
-				engine->graphics->GetDevice(),
+				DllMain::Device,
 				fileName.c_str(),
 				0,
 				0,

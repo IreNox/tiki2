@@ -38,9 +38,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\Graphics.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Buffer.cpp">
       <Filter>Quelldateien\Buffer</Filter>
     </ClCompile>
@@ -50,16 +47,7 @@
     <ClCompile Include="src\Graphics\VertexBuffer.cpp">
       <Filter>Quelldateien\Buffer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DefaultVertex.cpp">
-      <Filter>Quelldateien\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\SimpleVertex.cpp">
-      <Filter>Quelldateien\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\VertexDeclaration.cpp">
-      <Filter>Quelldateien\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\PostProcessVertex.cpp">
       <Filter>Quelldateien\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexData.cpp">
@@ -77,11 +65,14 @@
     <ClCompile Include="src\Graphics\DllMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsModule.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DefaultVertex.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Graphics\Graphics.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\Buffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
@@ -117,6 +108,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\MeshRenderer.h">
       <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\GraphicsModule.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,6 +2,8 @@
 #include "Core/Engine.h"
 #include "Graphics/IndexBuffer.h"
 
+#include "Graphics/DllMain.h"
+
 namespace TikiEngine
 {
 	namespace Buffer
@@ -40,7 +42,7 @@ namespace TikiEngine
     
 			ID3D11Buffer* buffer;
 
-			HRESULT r = engine->graphics->GetDevice()->CreateBuffer(
+			HRESULT r = DllMain::Device->CreateBuffer(
 				&desc,
 				&initData,
 				&buffer

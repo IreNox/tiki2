@@ -87,6 +87,9 @@
     <Filter Include="Quelldateien\Core\Graphics">
       <UniqueIdentifier>{d5e4ab7f-87e8-4eaf-8c0e-72521b77253f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Core\Vertex">
+      <UniqueIdentifier>{e4c0eb3b-439a-4255-b8ef-a51ce6d823f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp">
@@ -142,6 +145,15 @@
     </ClCompile>
     <ClCompile Include="src\Core\Material.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\DefaultVertex.cpp">
+      <Filter>Quelldateien\Core\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\PostProcessVertex.cpp">
+      <Filter>Quelldateien\Core\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\SimpleVertex.cpp">
+      <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

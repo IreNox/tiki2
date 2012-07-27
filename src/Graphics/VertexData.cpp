@@ -2,6 +2,8 @@
 #include "Core/Engine.h"
 #include "Graphics/VertexData.h"
 
+#include "Graphics/DllMain.h"
+
 namespace TikiEngine
 {
 	namespace Vertices
@@ -12,8 +14,8 @@ namespace TikiEngine
 		VertexData::VertexData(Engine* engine, Shader* shader, VertexDeclaration* decl)
 			: engine(engine), shader(shader), decl(decl), allocatedIndex(false), allocatedVertex(false)
 		{
-			this->indexBuffer = engine->graphics->GetIndexBuffer();
-			this->vertexBuffer = engine->graphics->GetVertexBuffer(decl);
+			this->indexBuffer = DllMain::Module->GetIndexBuffer();
+			this->vertexBuffer = DllMain::Module->GetVertexBuffer(decl);
 		}
 		
 		VertexData::~VertexData()
@@ -28,10 +30,9 @@ namespace TikiEngine
 		{
 			UINT offset = 0;
 			UINT stride = decl->GetElementSize();
-			auto context = engine->graphics->GetDeviceContext();
 
 			ID3D11Buffer* buffer = this->vertexBuffer->GetBuffer();
-			context->IASetVertexBuffers(
+			DllMain::Context->IASetVertexBuffers(
 				0,
 				1,
 				&buffer,
@@ -39,13 +40,13 @@ namespace TikiEngine
 				&offset
 			);
 
-			context->IASetIndexBuffer(
+			DllMain::Context->IASetIndexBuffer(
 				this->indexBuffer->GetBuffer(),
 				DXGI_FORMAT_R32_UINT,
 				0
 			);
 
-			context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 			decl->Apply();
 			shader->Apply();

@@ -1,9 +1,8 @@
 
 #include "Graphics/DllMain.h"
-#include <typeinfo.h>
-
-
 #include "Graphics/MeshRenderer.h"
+
+#include <typeinfo.h>
 
 namespace TikiEngine
 {
@@ -19,6 +18,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
+		DllMain::Module = new GraphicsModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiComponent = CreateComponent;
@@ -26,19 +26,19 @@ namespace TikiEngine
 
 	IModule* DllMain::CreateModule(IntPtr hash)
 	{
-		if (hash == typeid(IGraphics).hash_code())
+		if (hash != typeid(IGraphics).hash_code())
 		{
-			return new Graphics(Engine);
+			return 0;
 		}
 
-		return 0;
+		return DllMain::Module;
 	}
 
 	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
 	{
 		if (hash == typeid(IMeshRenderer).hash_code())
 		{
-			return new MeshRenderer(Engine, gameObject);
+			return new MeshRenderer(DllMain::Engine, gameObject);
 		}
 
 		return 0;

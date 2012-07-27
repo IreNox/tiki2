@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core\IGraphics.h"
+#include "Core/Dictionary.h"
 
 #include <D3D11.h>
 #include <D3DX11.h>
@@ -8,19 +9,17 @@
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
 
-#include "Core/Dictionary.h"
-
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using namespace TikiEngine::Buffer;
 
-		class Graphics : public IGraphics
+		class GraphicsModule : public IGraphics
 		{
 		public:
-			Graphics(Engine* engine);
-			~Graphics();
+			GraphicsModule(Engine* engine);
+			~GraphicsModule();
 
 			bool Initialize(EngineDescription& desc);
 
