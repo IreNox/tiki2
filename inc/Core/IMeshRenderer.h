@@ -14,6 +14,12 @@ namespace TikiEngine
 		class IMeshRenderer : public Component
 		{
 		public:
+			IMeshRenderer(Engine* engine, GameObject* gameObject)
+				: Component(engine, gameObject, ComponentType::Renderer)
+			{
+			}
+			~IMeshRenderer();
+
 			virtual IMesh* GetMesh() = 0;
 			virtual Material* GetMaterial() = 0;
 

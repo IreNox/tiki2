@@ -17,7 +17,7 @@ namespace TikiEngine
 	{
 	public:
 
-		static void LoadDefault();
+		static void LoadDefault(Engine* engine);
 
 		#pragma region Member - Create
 		template <class T>
@@ -35,14 +35,14 @@ namespace TikiEngine
 		}
 
 		template <class T>
-		static T* CreateComponent()
+		static T* CreateComponent(GameObject* gameObject)
 		{
 			IntPtr hash;
 			TikiInfo* info = getDefault<T>(&hash);
 
 			if (info != 0)
 			{
-				return (T*)info->FuncTikiComponent(hash);
+				return (T*)info->FuncTikiComponent(hash, gameObject);
 			}
 
 			return 0;
@@ -54,7 +54,7 @@ namespace TikiEngine
 		HelperLibrary();
 		~HelperLibrary();
 
-		static TikiInfo* loadLibrary(wstring libraryName);
+		static TikiInfo* loadLibrary(Engine* engine, wstring libraryName);
 
 		template <class T>
 		static TikiInfo* getDefault(IntPtr* hash)

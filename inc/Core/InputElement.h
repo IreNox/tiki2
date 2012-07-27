@@ -30,6 +30,17 @@ namespace TikiEngine
 
 			UInt32				ElementSize;
 			InputElementFormat	ElementFormat;
+
+			bool operator==(const InputElement& rhs)
+			{
+				return (this->SemanticType == rhs.SemanticType) && (this->SemanticIndex == rhs.SemanticIndex) &&
+					   (this->ElementFormat == rhs.ElementFormat) && (this->ElementSize == rhs.ElementSize);
+			}
+
+			bool operator!=(const InputElement& rhs)
+			{
+				return !(*this == rhs);
+			}
 		};
 	}
 }

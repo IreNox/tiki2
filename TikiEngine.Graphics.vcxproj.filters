@@ -115,5 +115,8 @@
     <ClInclude Include="inc\Graphics\Texture.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\MeshRenderer.h">
+      <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

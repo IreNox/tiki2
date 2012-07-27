@@ -4,12 +4,12 @@
 
 namespace TikiEngine
 {
-	typedef TikiInfo*(*GetTikiInfo)();
+	typedef TikiInfo*(*GetTikiInfo)(Engine* engine);
 
 	Dictionary<IntPtr, TikiInfo*> HelperLibrary::defaultLibrarys = Dictionary<IntPtr, TikiInfo*>();
 	Dictionary<wstring, TikiInfo*> HelperLibrary::loadedLibrarys = Dictionary<wstring, TikiInfo*>();
 
-	void HelperLibrary::LoadDefault()
+	void HelperLibrary::LoadDefault(Engine* engine)
 	{
 		WCHAR cd[MAX_PATH];
 
@@ -25,7 +25,7 @@ namespace TikiEngine
 			{
 				if (file.cFileName[0] == '.') continue;
 
-				TikiInfo* info = loadLibrary(wstring(file.cFileName));
+				TikiInfo* info = loadLibrary(engine, wstring(file.cFileName));
 
 				if (info != 0)
 				{
@@ -50,7 +50,7 @@ namespace TikiEngine
 		}
 	}
 
-	TikiInfo* HelperLibrary::loadLibrary(wstring libraryName)
+	TikiInfo* HelperLibrary::loadLibrary(Engine* engine, wstring libraryName)
 	{
 		if (loadedLibrarys.ContainsKey(libraryName))
 		{
@@ -63,7 +63,7 @@ namespace TikiEngine
 		GetTikiInfo getTikiInfo = (GetTikiInfo)GetProcAddress(libraryHandle, "GetTikiInfo");
 		if (getTikiInfo == 0) return 0;
 
-		TikiInfo* info = getTikiInfo();
+		TikiInfo* info = getTikiInfo(engine);
 		if (info == 0) return 0;
 
 		info->LibraryName = libraryName;

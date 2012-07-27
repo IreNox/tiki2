@@ -66,7 +66,7 @@ namespace TikiEngine
 	#pragma region Member - Init
 	bool Engine::Initialize(EngineDescription& desc)
 	{
-		HelperLibrary::LoadDefault();
+		HelperLibrary::LoadDefault(this);
 
 		window = new Window(desc.hInst);
 		if (!window->Initialize(&desc.Window))
@@ -86,6 +86,13 @@ namespace TikiEngine
 		if (!input->Initialize(desc))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Input.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
+		physics = HelperLibrary::CreateModule<IPhysics>();
+		if (!physics->Initialize(desc))
+		{
+			MessageBox(window->GetHWND(), L"Can't init Physics.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 

@@ -41,6 +41,7 @@
     <ClInclude Include="inc\Graphics\Graphics.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
     <ClInclude Include="inc\Graphics\Mesh.h" />
+    <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />

@@ -7,6 +7,7 @@
 #include "Graphics\Graphics.h"
 
 #include "Core/Console.h"
+#include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -265,6 +266,9 @@ namespace TikiEngine
 			deviceContext->RSSetViewports(1, &viewPort);
 
 			this->indexBuffer = new IndexBuffer(this->engine);
+
+			DllMain::Device = device;
+			DllMain::Context = deviceContext;
 
 			inited = true;
 			return true;

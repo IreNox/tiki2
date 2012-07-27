@@ -13,6 +13,12 @@ namespace TikiEngine
 		{
 		public:
 
+			IShader(Engine* engine)
+				: EngineObject(engine)
+			{
+			}
+			~IShader() {}
+
 			virtual void LoadFromFile(string fileName) = 0;
 			virtual void CompileFromFile(string fileName) = 0;
 

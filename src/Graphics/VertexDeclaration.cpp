@@ -2,6 +2,8 @@
 #include "Core/Engine.h"
 #include "Graphics/VertexDeclaration.h"
 
+#include "Graphics/DllMain.h"
+
 namespace TikiEngine
 {
 	namespace Vertices
@@ -53,7 +55,7 @@ namespace TikiEngine
 		#pragma region Member - Apply
 		void VertexDeclaration::Apply() 
 		{
-			engine->graphics->GetDeviceContext()->IASetInputLayout(
+			DllMain::Context->IASetInputLayout(
 				this->inputLayout
 			);
 

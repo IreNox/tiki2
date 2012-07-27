@@ -1,3 +1,4 @@
+#pragma once
 
 #include "List.h"
 #include "IDictionary.h"

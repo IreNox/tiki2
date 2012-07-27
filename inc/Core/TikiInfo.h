@@ -12,7 +12,7 @@ namespace TikiEngine
 	using namespace TikiEngine::Components;
 
 	typedef IModule*(*FuncGetTikiModule)(IntPtr);
-	typedef Component*(*FuncGetTikiComponent)(IntPtr);
+	typedef Component*(*FuncGetTikiComponent)(IntPtr, GameObject* gameObject);
 
 	struct TikiInfo 
 	{
