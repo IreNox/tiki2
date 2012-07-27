@@ -26,6 +26,10 @@ namespace TikiEngine
 
 		GraphicsModule::~GraphicsModule()
 		{
+		}
+
+		void GraphicsModule::Dispose()
+		{
 			if(swapChain)
 			{
 				swapChain->SetFullscreenState(false, NULL);
@@ -93,7 +97,7 @@ namespace TikiEngine
 
 			inited = false;
 		}
-#pragma endregion
+		#pragma endregion
 
 		#pragma region Init
 		bool GraphicsModule::Initialize(EngineDescription& desc)

@@ -76,12 +76,12 @@ namespace TikiEngine
 			return 0;
 		}
 
-		void GetData(Int32 format, void** data)
+		void Texture::GetData(Int32 format, void** data)
 		{
 
 		}
 
-		void SetData(Int32 format, void* data, UInt32 dataLength)
+		void Texture::SetData(Int32 format, void* data, UInt32 dataLength)
 		{
 
 		}

@@ -12,6 +12,8 @@ namespace TikiEngine
 	TikiInfo DllMain::DllInfo = TikiInfo();
 	
 	Engine* DllMain::Engine = 0;
+
+	GraphicsModule* DllMain::Module = 0;
 	ID3D11Device* DllMain::Device = 0;
 	ID3D11DeviceContext* DllMain::Context = 0;
 
@@ -45,7 +47,7 @@ namespace TikiEngine
 	}
 }
 
-TikiInfo* GetTikiInfo(Engine* engine)
+extern "C++" TikiInfo* GetTikiInfo(Engine* engine)
 {
 	TikiEngine::DllMain::InitDll(engine);
 

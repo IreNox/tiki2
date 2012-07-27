@@ -3,24 +3,12 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Core", "TikiEngine.Core.vcxproj", "{939525FD-4CD7-4020-9947-77629AC5A091}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Graphics", "TikiEngine.Graphics.vcxproj", "{40C458AB-E389-45EA-9177-F57A3BB91865}"
-	ProjectSection(ProjectDependencies) = postProject
-		{7F239751-2D21-4503-BBA2-F480DB6EBFE6} = {7F239751-2D21-4503-BBA2-F480DB6EBFE6}
-		{DF460EAB-570D-4B50-9089-2E2FC801BF38} = {DF460EAB-570D-4B50-9089-2E2FC801BF38}
-		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game.vcxproj", "{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}"
 	ProjectSection(ProjectDependencies) = postProject
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Physics", "TikiEngine.Physics.vcxproj", "{E29CCD5B-949C-477F-BBC2-2B694ACA8346}"
-	ProjectSection(ProjectDependencies) = postProject
-		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
-	EndProjectSection
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Resources", "TikiEngine.Resources.vcxproj", "{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}"
 	ProjectSection(ProjectDependencies) = postProject
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
@@ -33,6 +21,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Input", "TikiEng
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Sound", "TikiEngine.Sound.vcxproj", "{B5833648-23F3-48E5-8359-3D4923658E59}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsDX11", "TikiEngine.GraphicsDX11.vcxproj", "{59897D41-2ADE-4851-8D7A-E3CF1C80F120}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Resources", "TikiEngine.Resources.vcxproj", "{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 10
@@ -41,24 +33,26 @@ Global
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = TikiEngine.Core.vcxproj
 		SccLocalPath1 = .
-		SccProjectUniqueName2 = TikiEngine.Graphics.vcxproj
+		SccProjectUniqueName2 = Game.vcxproj
 		SccLocalPath2 = .
-		SccProjectUniqueName3 = Game.vcxproj
+		SccProjectUniqueName3 = TikiEngine.Physics.vcxproj
 		SccLocalPath3 = .
-		SccProjectUniqueName4 = TikiEngine.Physics.vcxproj
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = TikiEngine.Resources.vcxproj
-		SccLocalPath5 = .
-		SccProjectUniqueName6 = src\\Assets\\Assets.csproj
-		SccProjectName6 = src/Assets
-		SccLocalPath6 = src\\Assets
-		SccProjectUniqueName7 = src\\Effects11\\Effects11.vcxproj
-		SccProjectName7 = src/Effects11
-		SccLocalPath7 = src\\Effects11
-		SccProjectUniqueName8 = TikiEngine.Input.vcxproj
-		SccLocalPath8 = .
-		SccProjectUniqueName9 = TikiEngine.Sound.vcxproj
-		SccLocalPath9 = .
+		SccProjectUniqueName4 = src\\Assets\\Assets.csproj
+		SccProjectName4 = src/Assets
+		SccLocalPath4 = src\\Assets
+		SccProjectUniqueName5 = src\\Effects11\\Effects11.vcxproj
+		SccProjectName5 = src/Effects11
+		SccLocalPath5 = src\\Effects11
+		SccProjectUniqueName6 = TikiEngine.Input.vcxproj
+		SccLocalPath6 = .
+		SccProjectUniqueName7 = TikiEngine.Sound.vcxproj
+		SccLocalPath7 = .
+		SccProjectUniqueName8 = TikiEngine.GraphicsDX11\\TikiEngine.GraphicsDX11.vcxproj
+		SccProjectName8 = TikiEngine.GraphicsDX11
+		SccLocalPath8 = TikiEngine.GraphicsDX11
+		SccProjectUniqueName9 = TikiEngine.Resources\\TikiEngine.Resources.vcxproj
+		SccProjectName9 = TikiEngine.Resources
+		SccLocalPath9 = TikiEngine.Resources
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -75,14 +69,6 @@ Global
 		{939525FD-4CD7-4020-9947-77629AC5A091}.Release|x64.Build.0 = Release|x64
 		{939525FD-4CD7-4020-9947-77629AC5A091}.Release|x86.ActiveCfg = Release|Win32
 		{939525FD-4CD7-4020-9947-77629AC5A091}.Release|x86.Build.0 = Release|Win32
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Debug|x64.ActiveCfg = Debug|x64
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Debug|x64.Build.0 = Debug|x64
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Debug|x86.ActiveCfg = Debug|Win32
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Debug|x86.Build.0 = Debug|Win32
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Release|x64.ActiveCfg = Release|x64
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Release|x64.Build.0 = Release|x64
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Release|x86.ActiveCfg = Release|Win32
-		{40C458AB-E389-45EA-9177-F57A3BB91865}.Release|x86.Build.0 = Release|Win32
 		{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}.Debug|x64.ActiveCfg = Debug|x64
 		{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}.Debug|x64.Build.0 = Debug|x64
 		{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}.Debug|x86.ActiveCfg = Debug|Win32
@@ -99,14 +85,6 @@ Global
 		{E29CCD5B-949C-477F-BBC2-2B694ACA8346}.Release|x64.Build.0 = Release|x64
 		{E29CCD5B-949C-477F-BBC2-2B694ACA8346}.Release|x86.ActiveCfg = Release|Win32
 		{E29CCD5B-949C-477F-BBC2-2B694ACA8346}.Release|x86.Build.0 = Release|Win32
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Debug|x64.ActiveCfg = Debug|x64
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Debug|x64.Build.0 = Debug|x64
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Debug|x86.ActiveCfg = Debug|Win32
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Debug|x86.Build.0 = Debug|Win32
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Release|x64.ActiveCfg = Release|x64
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Release|x64.Build.0 = Release|x64
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Release|x86.ActiveCfg = Release|Win32
-		{00C63C7C-090C-4BD3-BF52-79AC3C56EB88}.Release|x86.Build.0 = Release|Win32
 		{7F239751-2D21-4503-BBA2-F480DB6EBFE6}.Debug|x64.ActiveCfg = Release|Any CPU
 		{7F239751-2D21-4503-BBA2-F480DB6EBFE6}.Debug|x64.Build.0 = Release|Any CPU
 		{7F239751-2D21-4503-BBA2-F480DB6EBFE6}.Debug|x86.ActiveCfg = Release|Any CPU
@@ -139,6 +117,22 @@ Global
 		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x64.Build.0 = Release|x64
 		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x86.ActiveCfg = Release|Win32
 		{B5833648-23F3-48E5-8359-3D4923658E59}.Release|x86.Build.0 = Release|Win32
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Debug|x64.ActiveCfg = Debug|x64
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Debug|x64.Build.0 = Debug|x64
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Debug|x86.ActiveCfg = Debug|Win32
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Debug|x86.Build.0 = Debug|Win32
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x64.ActiveCfg = Release|x64
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x64.Build.0 = Release|x64
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x86.ActiveCfg = Release|Win32
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x86.Build.0 = Release|Win32
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x64.ActiveCfg = Debug|x64
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x64.Build.0 = Debug|x64
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x86.ActiveCfg = Debug|Win32
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x86.Build.0 = Debug|Win32
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x64.ActiveCfg = Release|x64
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x64.Build.0 = Release|x64
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x86.ActiveCfg = Release|Win32
+		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

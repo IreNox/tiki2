@@ -6,32 +6,39 @@ namespace TikiEngine
 {
 	namespace Vertices
 	{
-		enum InputElementType
+		enum InputSemanticType
 		{
-			Position,
-			Normal,
-			TexCoord,
-			Tangent,
-			Color,
-			Binormal
+			IST_Unknown,
+			IST_Position,
+			IST_Normal,
+			IST_TexCoord,
+			IST_Tangent,
+			IST_Color,
+			IST_Binormal
 		};
 
 		enum InputElementFormat
 		{
-			Float,
-			UInt,
-			Bool
+			IEF_Unknown,
+			IEF_Float,
+			IEF_UInt,
+			IEF_Bool
 		};
 
 		struct InputElement
 		{
-			InputElementType	SemanticType;
+			InputSemanticType	SemanticType;
 			UInt32				SemanticIndex;
 
 			InputElementFormat	ElementFormat;
 			UInt32				ElementSize;
 
-			InputElement(InputElementType semanticType, UInt32 semanticIndex, InputElementFormat elementFormat, UInt32 elementSize)
+			InputElement()
+				: SemanticType(InputSemanticType::IST_Unknown), SemanticIndex(0), ElementFormat(InputElementFormat::IEF_Unknown), ElementSize(0)
+			{
+			}
+
+			InputElement(InputSemanticType semanticType, UInt32 semanticIndex, InputElementFormat elementFormat, UInt32 elementSize)
 				: SemanticType(semanticType), SemanticIndex(semanticIndex), ElementFormat(elementFormat), ElementSize(elementSize)
 			{
 			}

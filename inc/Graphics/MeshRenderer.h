@@ -2,6 +2,8 @@
 
 #include "Core/IMeshRenderer.h"
 
+#include "Graphics/Mesh.h"
+
 namespace TikiEngine
 {
 	namespace Components
@@ -20,6 +22,14 @@ namespace TikiEngine
 
 			void SetMesh(IMesh* mesh);
 			void SetMaterial(Material* material);
+
+			bool GetReady();
+
+		private:
+
+			Mesh* mesh;
+			Material* material;
+
 		};
 	}
 }

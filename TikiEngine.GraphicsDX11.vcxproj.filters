@@ -12,12 +12,6 @@
     <Filter Include="Headerdateien\Vertex">
       <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Buffer">
-      <UniqueIdentifier>{96f9157a-4c5c-453c-a8bb-0a08acba9170}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Vertex">
-      <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Internal">
       <UniqueIdentifier>{8d8958a3-9884-4db2-80ae-b47347c8f79b}</UniqueIdentifier>
     </Filter>
@@ -36,22 +30,34 @@
     <Filter Include="Headerdateien\Resources">
       <UniqueIdentifier>{ab46f0ec-920e-484c-b473-a7a851bd4257}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Internal">
+      <UniqueIdentifier>{873bba07-b6d0-4c1d-b74a-373788301624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Internal\Vertex">
+      <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Internal\Buffer">
+      <UniqueIdentifier>{96f9157a-4c5c-453c-a8bb-0a08acba9170}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Components">
+      <UniqueIdentifier>{694c8d5b-cfc6-4977-9fe4-714521dafeef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
-      <Filter>Quelldateien\Buffer</Filter>
+      <Filter>Quelldateien\Internal\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\IndexBuffer.cpp">
-      <Filter>Quelldateien\Buffer</Filter>
+      <Filter>Quelldateien\Internal\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexBuffer.cpp">
-      <Filter>Quelldateien\Buffer</Filter>
+      <Filter>Quelldateien\Internal\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexDeclaration.cpp">
-      <Filter>Quelldateien\Vertex</Filter>
+      <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexData.cpp">
-      <Filter>Quelldateien\Vertex</Filter>
+      <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Mesh.cpp">
       <Filter>Quelldateien\Resources</Filter>
@@ -68,8 +74,8 @@
     <ClCompile Include="src\Graphics\GraphicsModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\DefaultVertex.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="src\Graphics\MeshRenderer.cpp">
+      <Filter>Quelldateien\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

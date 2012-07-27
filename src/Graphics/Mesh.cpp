@@ -66,22 +66,22 @@ namespace TikiEngine
 				
 				switch (input.SemanticType)
 				{
-					case InputElementType::Position:
+					case InputSemanticType::IST_Position:
 						element.SemanticName = "POSITION";
 						break;
-					case InputElementType::Normal:
+					case InputSemanticType::IST_Normal:
 						element.SemanticName = "NORMAL";
 						break;
-					case InputElementType::TexCoord:
+					case InputSemanticType::IST_TexCoord:
 						element.SemanticName = "TEXCOORD";
 						break;
-					case InputElementType::Tangent:
+					case InputSemanticType::IST_Tangent:
 						element.SemanticName = "TANGENT";
 						break;
-					case InputElementType::Color:
+					case InputSemanticType::IST_Color:
 						element.SemanticName = "COLOR";
 						break;
-					case InputElementType::Binormal:
+					case InputSemanticType::IST_Binormal:
 						element.SemanticName = "BINORMAL";
 						break;
 				}
@@ -89,7 +89,7 @@ namespace TikiEngine
 
 				switch (input.ElementFormat)
 				{
-					case InputElementFormat::UInt:
+					case InputElementFormat::IEF_UInt:
 						switch (input.ElementSize)
 						{
 							case 1:
@@ -106,7 +106,7 @@ namespace TikiEngine
 								break;
 						}
 						break;
-					case InputElementFormat::Float:
+					case InputElementFormat::IEF_Float:
 						switch (input.ElementSize)
 						{
 							case 1:
@@ -123,7 +123,7 @@ namespace TikiEngine
 								break;
 						}
 						break;
-					case InputElementFormat::Bool:
+					case InputElementFormat::IEF_Bool:
 						element.Format = DXGI_FORMAT_R8_UINT;
 						break;
 				}

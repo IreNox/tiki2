@@ -10,6 +10,9 @@
 #include "Core/Quad.h"
 //#include "TeeTriangle.h"
 
+using namespace TikiEngine;
+using namespace TikiEngine::Description;
+
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 145, 149 = List

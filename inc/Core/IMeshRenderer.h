@@ -18,7 +18,7 @@ namespace TikiEngine
 				: Component(engine, gameObject, ComponentType::Renderer)
 			{
 			}
-			~IMeshRenderer();
+			~IMeshRenderer() {}
 
 			virtual IMesh* GetMesh() = 0;
 			virtual Material* GetMaterial() = 0;

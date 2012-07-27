@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Shader::Shader(Engine* engine)
-			: IShader(engine)
+			: IShader(engine), effect(0)
 		{
 			this->device = 0;
 			this->context = 0;
@@ -39,6 +39,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
+		bool Shader::GetReady()
+		{
+			return (effect != 0);
+		}
+
 		void Shader::Apply()
 		{
 			pass->Apply(0, context);
@@ -110,12 +115,22 @@ namespace TikiEngine
 		#pragma region Member - Variable - Get
 		int Shader::GetInt(string key)
 		{
-			int* value = 0;
+			int value = 0;
 			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
 
-			scalar->GetInt(value);
+			scalar->GetInt(&value);
 
-			return *value;
+			return value;
+		}
+
+		bool Shader::GetBoolean(string key)
+		{
+			int value = 0;
+			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+
+			scalar->GetBool(&value);
+
+			return value;
 		}
 
 		float Shader::GetSingle(string key)
@@ -175,6 +190,13 @@ namespace TikiEngine
 			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
 
 			cv->SetInt(value);
+		}
+
+		void Shader::SetBoolean(string key, Boolean value)
+		{
+			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
+
+			cv->SetBool(value);
 		}
 
 		void Shader::SetSingle(string key, Single value)
