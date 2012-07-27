@@ -28,8 +28,13 @@ namespace TikiEngine
 			InputElementType	SemanticType;
 			UInt32				SemanticIndex;
 
-			UInt32				ElementSize;
 			InputElementFormat	ElementFormat;
+			UInt32				ElementSize;
+
+			InputElement(InputElementType semanticType, UInt32 semanticIndex, InputElementFormat elementFormat, UInt32 elementSize)
+				: SemanticType(semanticType), SemanticIndex(semanticIndex), ElementFormat(elementFormat), ElementSize(elementSize)
+			{
+			}
 
 			bool operator==(const InputElement& rhs)
 			{

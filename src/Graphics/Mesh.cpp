@@ -98,6 +98,9 @@ namespace TikiEngine
 							case 2:
 								element.Format = DXGI_FORMAT_R32G32_UINT;
 								break;
+							case 3:
+								element.Format = DXGI_FORMAT_R32G32B32_UINT;
+								break;
 							case 4:
 								element.Format = DXGI_FORMAT_R32G32B32A32_UINT;
 								break;
@@ -106,15 +109,18 @@ namespace TikiEngine
 					case InputElementFormat::Float:
 						switch (input.ElementSize)
 						{
-						case 1:
-							element.Format = DXGI_FORMAT_R32_FLOAT;
-							break;
-						case 2:
-							element.Format = DXGI_FORMAT_R32G32_FLOAT;
-							break;
-						case 4:
-							element.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-							break;
+							case 1:
+								element.Format = DXGI_FORMAT_R32_FLOAT;
+								break;
+							case 2:
+								element.Format = DXGI_FORMAT_R32G32_FLOAT;
+								break;
+							case 3:
+								element.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+								break;
+							case 4:
+								element.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+								break;
 						}
 						break;
 					case InputElementFormat::Bool:
