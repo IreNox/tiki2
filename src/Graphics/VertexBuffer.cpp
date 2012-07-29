@@ -23,7 +23,7 @@ namespace TikiEngine
 		#pragma region Member
 		void VertexBuffer::fillBufferDesc(D3D11_BUFFER_DESC* desc)
 		{
-			desc->BindFlags = D3D11_BIND_FLAG::D3D11_BIND_VERTEX_BUFFER;
+			desc->BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		}
 		#pragma endregion
 

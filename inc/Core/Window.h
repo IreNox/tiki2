@@ -1,28 +1,42 @@
 #pragma once
 
-#include "windows.h"
-
+#include "Core/IModule.h"
 #include "Core/EngineDescription.h"
 
-using TikiEngine::Description::EngineDescription;
+#include <Windows.h>
 
-class Window
+namespace TikiEngine
 {
-public:
-	Window();
-	~Window(void);
+	namespace Modules
+	{
+		using TikiEngine::Description::EngineDescription;
 
-	bool Initialize(EngineDescription& desc);
+		class Window : public IModule
+		{
+		public:
+			Window(Engine* engine);
+			~Window(void);
 
-	void Show();
-	void ShowDialog();
+			bool Initialize(EngineDescription& desc);
 
-	HWND GetHWND();
-private:
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+			void Begin();
+			void End();
 
-protected:
-	HWND hWnd;
-	HINSTANCE hInst;
-};
+			void Dispose();
+
+			HWND GetHWND();
+			bool GetReady();
+
+		private:
+			static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
+		protected:
+
+			MSG msg;
+			HWND hWnd;
+			HINSTANCE hInst;
+		};
+	}
+}
+
 

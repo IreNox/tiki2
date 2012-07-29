@@ -20,3 +20,5 @@ typedef float  Single;
 typedef double Double;
 
 typedef bool Boolean;
+
+#define MATH_PI 3.1415926535f

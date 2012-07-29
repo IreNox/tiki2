@@ -6,9 +6,9 @@ namespace TikiEngine
 {
 	namespace Components
 	{
-		#pragma region Class
+#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, ComponentType::Camera)
+			: Component(engine, gameObject, CT_Camera)
 		{
 			//D3DXMATRIX matrix;
 			//D3D11_VIEWPORT* vp = engine->graphics->GetViewPort();
@@ -31,7 +31,13 @@ namespace TikiEngine
 			//	100.0f
 			//);
 
-			//this->matrices.ProjectionMatrix = Matrix(matrix);
+			this->matrices.ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(
+				MATH_PI / 4,
+				1, //(args. width / height),
+				0.01f,
+				1000.0f
+			);
+
 
 			//this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
 		}
@@ -39,7 +45,7 @@ namespace TikiEngine
 		Camera::~Camera()
 		{
 		}
-		#pragma endregion
+#pragma endregion
 
 		#pragma region Member - Get
 		Matrices* Camera::GetMatrices()
@@ -84,18 +90,22 @@ namespace TikiEngine
 		{
 			//D3DXMATRIX matrix;
 
+			float g_fX = 0;
+			float g_fY = 0;
+			float g_fEyeDistance = 5;
+
 			//g_fX += args.Input.MouseDistance.x;
 			//g_fY += args.Input.MouseDistance.y;
 
-			//D3DXVECTOR3 g_vAt = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			//D3DXVECTOR3 g_vUp = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+			Vector3 g_vAt = Vector3(0.0f, 0.0f, 0.0f);
+			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);
 			//float g_fEyeDistance = 5.0f;
 
-			//D3DXVECTOR3 g_vEye = D3DXVECTOR3(
-			//	sinf(g_fX) * g_fEyeDistance,
-			//	cosf(g_fY) * g_fEyeDistance,
-			//	(cosf(g_fX) * sinf(g_fY)) * g_fEyeDistance
-			//);
+			Vector3 g_vEye = Vector3(
+				sinf(g_fX) * g_fEyeDistance,
+				cosf(g_fY) * g_fEyeDistance,
+				(cosf(g_fX) * sinf(g_fY)) * g_fEyeDistance
+			);
 
 			//D3DXMatrixLookAtLH(
 			//	&matrix,
@@ -111,7 +121,11 @@ namespace TikiEngine
 			//	&D3DXVECTOR3(0, 1, 0)
 			//);
 
-			//this->matrices.ViewMatrix = Matrix(matrix);
+			this->matrices.ViewMatrix = Matrix::CreateLookAt(
+				g_vEye,
+				g_vAt,
+				g_vUp
+			);
 
 			//Matrices* data = matrixBuffer->Map();
 			//data->ViewMatrix = matrices.ViewMatrix.Transpose();

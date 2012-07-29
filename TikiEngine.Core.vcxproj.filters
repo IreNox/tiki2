@@ -87,14 +87,11 @@
     <Filter Include="Quelldateien\Core\Vertex">
       <UniqueIdentifier>{e4c0eb3b-439a-4255-b8ef-a51ce6d823f5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Engine\Components">
+      <UniqueIdentifier>{6c6f3071-0261-42e8-b8dd-6fb190c67203}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\Camera.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Quad.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Vector2.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
     </ClCompile>
@@ -119,9 +116,6 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Window.cpp">
-      <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Scene.cpp">
       <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
@@ -133,9 +127,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\GameObject.cpp">
       <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\HelperLibrary.cpp">
-      <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Material.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
@@ -151,6 +142,21 @@
     </ClCompile>
     <ClCompile Include="src\Core\SimpleVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\CameraObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Camera.cpp">
+      <Filter>Quelldateien\Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\QuadObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Window.cpp">
+      <Filter>Quelldateien\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\LibraryManager.cpp">
+      <Filter>Quelldateien\Engine\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -289,9 +295,6 @@
     <ClInclude Include="inc\Core\Window.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Light.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\GameObject.h">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
@@ -322,35 +325,20 @@
     <ClInclude Include="inc\Core\Component.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\CameraBla.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\core\Camera.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IMesh.h">
       <Filter>Headerdateien\Interfaces\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Mesh.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Quad.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IMeshRenderer.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\HelperLibrary.h">
-      <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\HelperHash.h">
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TikiInfo.h">
       <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Texture.h">
-      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\DefaultVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
@@ -370,8 +358,20 @@
     <ClInclude Include="inc\Core\InputElement.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Input.h">
-      <Filter>Headerdateien</Filter>
+    <ClInclude Include="inc\Core\CameraObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\MeshObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\QuadObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LightObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LibraryManager.h">
+      <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

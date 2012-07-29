@@ -33,7 +33,7 @@ public:
 
 	~List()
 	{
-		//delete(this->data);
+		delete[](this->data);
 	}
 	#pragma endregion
 
@@ -239,7 +239,7 @@ private:
 				newData[i] = this->data[i];
 			}
 
-			delete(this->data);
+			delete[](this->data);
 
 			this->data = newData;
 			this->lengthArr = size;

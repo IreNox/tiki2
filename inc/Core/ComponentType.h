@@ -6,13 +6,13 @@ namespace TikiEngine
 	{
 		enum ComponentType
 		{
-			Unknown,
-			Behavior,
-			Camera,
-			Collider,
-			Light,
-			Renderer,
-			Rigidbody
+			CT_Unknown,
+			CT_Behavior,
+			CT_Camera,
+			CT_Collider,
+			CT_Light,
+			CT_Renderer,
+			CT_Rigidbody
 		};
 	}
 }

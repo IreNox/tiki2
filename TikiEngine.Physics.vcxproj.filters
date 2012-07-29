@@ -11,12 +11,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Physics\Physics.h">
+    <ClInclude Include="inc\Physics\DllMain.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\PhysicsModule.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Physics\Physics.cpp">
+    <ClCompile Include="src\Physics\DllMain.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

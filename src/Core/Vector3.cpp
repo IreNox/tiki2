@@ -137,7 +137,7 @@ Vector3& Vector3::operator+= (const Vector3& rhs)
 	return *this = (*this + rhs);
 }
 
-Vector3& Vector3::operator- () const
+Vector3 Vector3::operator- () const
 {
 	return Vector3(-this->X, -this->Y, -this->Z);
 }

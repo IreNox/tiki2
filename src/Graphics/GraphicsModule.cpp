@@ -18,10 +18,10 @@ namespace TikiEngine
 			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0)
 		{
-			clearColor[0] = 0.1;
-			clearColor[1] = 0.4;
-			clearColor[2] = 0.8;
-			clearColor[3] = 1.0;
+			clearColor[0] = 0.1f;
+			clearColor[1] = 0.4f;
+			clearColor[2] = 0.8f;
+			clearColor[3] = 1.0f;
 		}
 
 		GraphicsModule::~GraphicsModule()

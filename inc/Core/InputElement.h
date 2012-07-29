@@ -34,7 +34,7 @@ namespace TikiEngine
 			UInt32				ElementSize;
 
 			InputElement()
-				: SemanticType(InputSemanticType::IST_Unknown), SemanticIndex(0), ElementFormat(InputElementFormat::IEF_Unknown), ElementSize(0)
+				: SemanticType(IST_Unknown), SemanticIndex(0), ElementFormat(IEF_Unknown), ElementSize(0)
 			{
 			}
 

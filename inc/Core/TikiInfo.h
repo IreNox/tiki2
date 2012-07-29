@@ -16,7 +16,6 @@ namespace TikiEngine
 
 	struct TikiInfo 
 	{
-		wstring LibraryName;
 		HMODULE LibraryHandle;
 
 		FuncGetTikiModule FuncTikiModule;
@@ -26,7 +25,7 @@ namespace TikiEngine
 		List<IntPtr> Components;
 
 		TikiInfo()
-			: LibraryName(), LibraryHandle(0), FuncTikiModule(0), FuncTikiComponent(0), Modules(), Components()
+			: LibraryHandle(0), FuncTikiModule(0), FuncTikiComponent(0), Modules(), Components()
 		{
 		}
 

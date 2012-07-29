@@ -20,18 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
+    <ClCompile Include="src\Core\CameraObject.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
     <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
-    <ClCompile Include="src\Core\HelperLibrary.cpp" />
+    <ClCompile Include="src\Core\LibraryManager.cpp" />
     <ClCompile Include="src\Core\Material.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
     <ClCompile Include="src\Core\Matrix3x3.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
-    <ClCompile Include="src\Core\Quad.cpp" />
+    <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\SimpleVertex.cpp" />
@@ -42,7 +43,7 @@
     <ClCompile Include="src\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Core\CameraBla.h" />
+    <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
@@ -54,12 +55,11 @@
     <ClInclude Include="inc\Core\Engine.h" />
     <ClInclude Include="inc\Core\EngineDescription.h" />
     <ClInclude Include="inc\Core\EngineObject.h" />
-    <ClInclude Include="inc\Core\HelperLibrary.h" />
+    <ClInclude Include="inc\Core\LibraryManager.h" />
     <ClInclude Include="inc\Core\IBehavior.h" />
     <ClInclude Include="inc\Core\ICollider.h" />
     <ClInclude Include="inc\Core\Component.h" />
     <ClInclude Include="inc\Core\IInput.h" />
-    <ClInclude Include="inc\Core\Input.h" />
     <ClInclude Include="inc\Core\InputElement.h" />
     <ClInclude Include="inc\Core\IShader.h" />
     <ClInclude Include="inc\Core\IMeshRenderer.h" />
@@ -70,12 +70,11 @@
     <ClInclude Include="inc\Core\IRigidbody.h" />
     <ClInclude Include="inc\Core\ITexture.h" />
     <ClInclude Include="inc\Core\Key.h" />
-    <ClInclude Include="inc\Core\Light.h" />
+    <ClInclude Include="inc\Core\LightObject.h" />
     <ClInclude Include="inc\Core\Material.h" />
     <ClInclude Include="inc\Core\PostProcessVertex.h" />
     <ClInclude Include="inc\Core\Quaternion.h" />
     <ClInclude Include="inc\Core\SimpleVertex.h" />
-    <ClInclude Include="inc\Core\Texture.h" />
     <ClInclude Include="inc\Core\TypeDef.h" />
     <ClInclude Include="inc\Core\TypeInc.h" />
     <ClInclude Include="inc\Core\UpdateArgs.h" />
@@ -101,10 +100,10 @@
     <ClInclude Include="inc\Core\Matrix.h" />
     <ClInclude Include="inc\Core\Matrix2x2.h" />
     <ClInclude Include="inc\Core\Matrix3x3.h" />
-    <ClInclude Include="inc\Core\Mesh.h" />
+    <ClInclude Include="inc\Core\MeshObject.h" />
     <ClInclude Include="inc\Core\TikiInfo.h" />
     <ClInclude Include="inc\Core\Object.h" />
-    <ClInclude Include="inc\Core\Quad.h" />
+    <ClInclude Include="inc\Core\QuadObject.h" />
     <ClInclude Include="inc\Core\Queue.h" />
     <ClInclude Include="inc\Core\Scene.h" />
     <ClInclude Include="inc\Core\Stack.h" />

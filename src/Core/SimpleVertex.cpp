@@ -6,7 +6,7 @@ namespace TikiEngine
 	namespace Vertices
 	{
 		InputElement SimpleVertex::Declaration[1] = {
-			InputElement(InputSemanticType::IST_Position, 0, InputElementFormat::IEF_Float, 3)
+			InputElement(IST_Position, 0, IEF_Float, 3)
 		};
 	}
 }

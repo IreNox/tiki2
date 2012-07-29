@@ -1,107 +1,124 @@
 // Main.cpp
 #include "Core\Window.h"
 
-#pragma region Class
-Window::Window()
+namespace TikiEngine
 {
-}
-
-Window::~Window(void)
-{
-	if (hWnd != 0)
+	namespace Modules
 	{
-		DestroyWindow(hWnd);
-	}	
-}
-#pragma endregion
+		#pragma region Class
+		Window::Window(Engine* engine)
+			: IModule(engine)
+		{
+			ZeroMemory(&msg, sizeof(MSG));
+		}
 
-#pragma region Init
-bool Window::Initialize(EngineDescription& desc)
-{
-	WNDCLASSEX win = WNDCLASSEX();
+		Window::~Window(void)
+		{
+		}
+		#pragma endregion
 
-	hInst = desc.hInst;
+		#pragma region Member - Init
+		bool Window::Initialize(EngineDescription& desc)
+		{
+			WNDCLASSEX win = WNDCLASSEX();
 
-	win.hInstance = hInst;
-	win.lpfnWndProc = &Window::WndProc;
-	win.lpszClassName = desc.Window.WindowClass;
-	win.cbSize = sizeof(WNDCLASSEX);
-	win.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+			hInst = desc.hInst;
 
-	HRESULT r = RegisterClassEx(&win);
+			win.hInstance = hInst;
+			win.lpfnWndProc = &Window::WndProc;
+			win.lpszClassName = desc.Window.WindowClass;
+			win.cbSize = sizeof(WNDCLASSEX);
+			win.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
 
-	if (FAILED(r))
-	{
-		MessageBox(NULL, L"Can't register Class.", desc.Window.WindowTitle, MB_HELP);
-		return false;
+			HRESULT r = RegisterClassEx(&win);
+
+			if (FAILED(r))
+			{
+				MessageBox(NULL, L"Can't register Class.", desc.Window.WindowTitle, MB_HELP);
+				return false;
+			}
+
+			hWnd = CreateWindow(
+				desc.Window.WindowClass,
+				desc.Window.WindowTitle,
+				WS_OVERLAPPEDWINDOW,
+				CW_USEDEFAULT,
+				CW_USEDEFAULT,
+				CW_USEDEFAULT,
+				CW_USEDEFAULT,
+				NULL,
+				NULL,
+				hInst,
+				NULL
+			);
+
+			if (!hWnd)
+			{
+				MessageBox(NULL, L"Can't create Window.", desc.Window.WindowTitle, MB_HELP);
+				return false;
+			}
+
+			desc.Window.hWnd = hWnd;
+
+			ShowWindow(hWnd, 1);
+			UpdateWindow(hWnd);
+
+			return true;
+		}
+		#pragma endregion
+
+		#pragma region Member
+		HWND Window::GetHWND()
+		{
+			return this->hWnd;
+		}
+
+		bool Window::GetReady()
+		{
+			return (msg.message != WM_QUIT);
+		}
+
+		void Window::Dispose()
+		{
+			if (hWnd != 0)
+			{
+				DestroyWindow(hWnd);
+				hWnd = 0;
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - Show
+		__inline void Window::Begin()
+		{
+			if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+			{
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
+			}
+		}
+
+		__inline void Window::End()
+		{
+		}
+		#pragma endregion
+
+		#pragma region Member - Static - WndProc
+		LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+		{
+			switch (message)
+			{
+			case WM_DESTROY:
+				PostQuitMessage(0);
+				break;
+			default:
+				return DefWindowProc(hWnd, message, wParam, lParam);
+				break;
+			}
+
+			return 0;
+		}
+		#pragma endregion
+
 	}
-
-	hWnd = CreateWindow(
-		desc.Window.WindowClass,
-		desc.Window.WindowTitle,
-		WS_OVERLAPPEDWINDOW,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		CW_USEDEFAULT,
-		NULL,
-		NULL,
-		hInst,
-		NULL
-	);
-
-	if (!hWnd)
-	{
-		MessageBox(NULL, L"Can't create Window.", desc.Window.WindowTitle, MB_HELP);
-		return false;
-	}
-
-	desc.Window.hWnd = hWnd;
-
-	return true;
 }
-#pragma endregion
-
-#pragma region Member
-HWND Window::GetHWND()
-{
-	return this->hWnd;
-}
-#pragma endregion
-
-#pragma region Member - Show
-void Window::Show()
-{
-	ShowWindow(hWnd, 1);
-	UpdateWindow(hWnd);
-}
-
-void Window::ShowDialog()
-{
-	this->Show();
-
-	MSG msg;
-	while (GetMessage(&msg, NULL, 0, 0))
-	{
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-}
-#pragma endregion
-
-#pragma region Member - Static - WndProc
-LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
-{
-    switch (message)
-    {
-		case WM_DESTROY:
-			PostQuitMessage(0);
-			break;
-		default:
-			return DefWindowProc(hWnd, message, wParam, lParam);
-			break;
-    }
-
-	return 0;
-}
-#pragma endregion

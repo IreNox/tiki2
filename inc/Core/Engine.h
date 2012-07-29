@@ -1,18 +1,24 @@
 #pragma once
 
 #include "Core/TypeInc.h"
+#include "Core/EngineDescription.h"
 
-class Window;
+#include "Core/List.h"
 
 namespace TikiEngine
 {
 	class Scene;
-
+	
 	struct DrawArgs;
 	struct UpdateArgs;
 
 	namespace Modules
 	{
+		class IModule;
+
+		class Window;
+		class LibraryManager;
+
 		class IAudio;
 		class IInput;
 		class IPhysics;
@@ -20,11 +26,6 @@ namespace TikiEngine
 		class IContentManager;
 	}
 
-	namespace Description
-	{
-		struct EngineDescription;
-	}
-	
 	using namespace TikiEngine::Modules;
 	using namespace TikiEngine::Description;
 
@@ -39,6 +40,7 @@ namespace TikiEngine
 		IContentManager* content;
 
 		Window* window;
+		LibraryManager* librarys;
 	
 		Scene* scene;
 
@@ -65,12 +67,6 @@ namespace TikiEngine
 		 * @brief Startet die Anwendungsschleife
 		 */
 		void Run();
-		
-		/*!
-		 * @brief Gibt das aktuelle Arbeitsverzeichnis zurück
-		 * @return Das aktuelle Arbeitsverzeichnis
-		 */
-		string GetWorkingDir();
 
 	protected:
 
@@ -79,7 +75,11 @@ namespace TikiEngine
 
 	private:
 
-		string workingDir;
+		EngineDescription desc;
+
+		List<IModule*> loadedModules;
+
+		bool initModule(IModule* module);
 
 	};
 }

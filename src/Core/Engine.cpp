@@ -2,13 +2,12 @@
 #include <math.h>
 #include <string>
 #include <sstream>
-#include <direct.h>
 
 #include "Core/Engine.h"
-#include "Core/HelperLibrary.h"
 #include "Core/GarbageCollector.h"
 
 #include "Core/Window.h"
+#include "Core/LibraryManager.h"
 
 #include "Core/Scene.h"
 
@@ -26,12 +25,8 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Engine::Engine()
-		: scene(NULL)
+		: scene(0), loadedModules()
 	{
-		char path[256];
-		_getcwd(path, 256);
-
-		this->workingDir = string(path);
 	}
 
 	Engine::~Engine()
@@ -42,55 +37,57 @@ namespace TikiEngine
 			scene = 0;
 		}
 
-		if (graphics != 0)
+		loadedModules.Remove(librarys);
+
+		int i = 0;
+		while (i < loadedModules.Count())
 		{
-			delete(graphics);
-			graphics = 0;
+			loadedModules[i]->Dispose();
+			delete(loadedModules[i]);
+
+			i++;
 		}
 
-		if (window != 0)
-		{
-			delete(window);
-			window = 0;
-		}
-	}
-	#pragma endregion
-
-	#pragma region Member
-	string Engine::GetWorkingDir()
-	{
-		return this->workingDir;
+		librarys->Dispose();
+		delete(librarys);
 	}
 	#pragma endregion
 
 	#pragma region Member - Init
 	bool Engine::Initialize(EngineDescription& desc)
 	{
-		HelperLibrary::LoadDefault(this);
+		this->desc = desc;
 
-		window = new Window();
-		if (!window->Initialize(desc))
+		window = new Window(this);		
+		if (!initModule(window))
 		{
 			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
-		graphics = HelperLibrary::CreateModule<IGraphics>();
-		if (!graphics->Initialize(desc))
+		librarys = new LibraryManager(this);		
+		if (!initModule(librarys))
+		{
+			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
+		graphics = librarys->CreateModule<IGraphics>();
+		if (!initModule(graphics))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Direct3D.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
-		input = HelperLibrary::CreateModule<IInput>();
-		if (!input->Initialize(desc))
+		input = librarys->CreateModule<IInput>();
+		if (!initModule(input))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Input.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
-		physics = HelperLibrary::CreateModule<IPhysics>();
-		if (!physics->Initialize(desc))
+		physics = librarys->CreateModule<IPhysics>();
+		if (!initModule(physics))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Physics.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
@@ -103,8 +100,6 @@ namespace TikiEngine
 	#pragma region Member - Run
 	void Engine::Run()
 	{
-		window->Show();
-	
 		LARGE_INTEGER freq;
 		LARGE_INTEGER last;
 		LARGE_INTEGER current;
@@ -117,15 +112,9 @@ namespace TikiEngine
 
 		QueryPerformanceCounter(&last);
 
-		MSG msg;
-		ZeroMemory(&msg, sizeof(MSG));
-		while (msg.message != WM_QUIT)
+		while (window->GetReady())
 		{
-			if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
-			{
-				TranslateMessage(&msg);
-				DispatchMessage(&msg);
-			}
+			window->Begin();
 
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
@@ -135,20 +124,29 @@ namespace TikiEngine
 
 			UpdateArgs args = UpdateArgs(time);
 			input->Begin();
+			physics->Begin();
+
 			input->FillInputState(&args.Input);
+
 			this->Update(args);
+
+			physics->End();
 			input->End();
 
 			DrawArgs drawArgs = DrawArgs(time, DrawContext(), graphics);
 
+			graphics->Begin();
 			this->Draw(drawArgs);
+			graphics->End();
 
 			GC::Collect();
 
-			if (args.Input.GetKey(Key::ESCAPE))
+			if (args.Input.GetKey(KEY_ESCAPE))
 			{
 				DestroyWindow(window->GetHWND());
 			}
+
+			window->End();
 		}
 	}
 	#pragma endregion
@@ -156,14 +154,10 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Engine::Draw(const DrawArgs& args)
 	{
-		graphics->Begin();
-
 		if (scene)
 		{
 			scene->Draw(args);
 		}
-
-		graphics->End();
 	}
 
 	void Engine::Update(const UpdateArgs& args)
@@ -182,6 +176,21 @@ namespace TikiEngine
 		{
 			scene->Update(args);
 		}
+	}
+	#pragma endregion
+
+	#pragma region Private Member
+	bool Engine::initModule(IModule* module)
+	{
+		if (module != 0)
+		{
+			if (!module->Initialize(desc)) return false;
+
+			loadedModules.Add(module);
+			return true;
+		}
+
+		return false;
 	}
 	#pragma endregion
 }

@@ -130,7 +130,7 @@ namespace TikiEngine
 
 			scalar->GetBool(&value);
 
-			return value;
+			return (value ? true : false);
 		}
 
 		float Shader::GetSingle(string key)
