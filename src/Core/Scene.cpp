@@ -3,7 +3,7 @@
 
 namespace TikiEngine
 {
-	#pragma region Init
+	#pragma region Class
 	Scene::Scene(Engine* engine)
 		: EngineObject(engine), elements()
 	{

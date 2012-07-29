@@ -30,29 +30,14 @@
     <Filter Include="Quelldateien\Engine">
       <UniqueIdentifier>{40b0c0a4-f782-44bb-9b9b-20dbcd2e2746}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Scene">
-      <UniqueIdentifier>{8b11e3bf-e8ae-4b8f-a023-cdf7ec7edad3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Core\Descriptions">
       <UniqueIdentifier>{658fb262-4766-4655-a056-d78021dd6f65}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Interfaces">
-      <UniqueIdentifier>{2ded2737-277b-45af-8c66-93baa7bfb5c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Interfaces\Modules">
-      <UniqueIdentifier>{0be57129-1b5a-4055-aa5c-d17170b1e4bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Interfaces\Graphics">
-      <UniqueIdentifier>{ff8d7c53-a093-42c7-81f5-d72b9cd1ac42}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Engine\Static">
       <UniqueIdentifier>{e53c7935-23fd-4c2e-bc23-376d950a59b8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Engine\Modules">
       <UniqueIdentifier>{d3d3141a-50df-4343-aa0f-f6f628087ea5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Core\Args">
-      <UniqueIdentifier>{bdc712d0-b742-40b9-9b6d-a8bc9f281755}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Core\Graphics">
       <UniqueIdentifier>{4017730b-2b4a-4fab-81b9-a863c67082fc}</UniqueIdentifier>
@@ -72,9 +57,6 @@
     <Filter Include="Quelldateien\Engine\Modules">
       <UniqueIdentifier>{96fde335-370e-4b58-9a27-d8a18f2ddbba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Interfaces\Extern Components">
-      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Engine\GameObjects">
       <UniqueIdentifier>{6e7d7e19-e530-4338-a273-c977d5eb23f1}</UniqueIdentifier>
     </Filter>
@@ -89,6 +71,24 @@
     </Filter>
     <Filter Include="Quelldateien\Engine\Components">
       <UniqueIdentifier>{6c6f3071-0261-42e8-b8dd-6fb190c67203}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Args/States">
+      <UniqueIdentifier>{bdc712d0-b742-40b9-9b6d-a8bc9f281755}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Input">
+      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces">
+      <UniqueIdentifier>{2ded2737-277b-45af-8c66-93baa7bfb5c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Modules">
+      <UniqueIdentifier>{0be57129-1b5a-4055-aa5c-d17170b1e4bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Graphics">
+      <UniqueIdentifier>{ff8d7c53-a093-42c7-81f5-d72b9cd1ac42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Extern Components">
+      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -116,17 +116,11 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Scene.cpp">
-      <Filter>Quelldateien\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\GarbageCollector.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Console.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GameObject.cpp">
-      <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Material.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
@@ -157,6 +151,21 @@
     </ClCompile>
     <ClCompile Include="src\Core\LibraryManager.cpp">
       <Filter>Quelldateien\Engine\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MeshObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GameObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene.cpp">
+      <Filter>Quelldateien\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Mesh.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MeshIndexed.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,16 +248,16 @@
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\DrawArgs.h">
-      <Filter>Headerdateien\Core\Args</Filter>
+      <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\UpdateArgs.h">
-      <Filter>Headerdateien\Core\Args</Filter>
+      <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IInput.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\InitializationArgs.h">
-      <Filter>Headerdateien\Core\Args</Filter>
+      <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IRenderTarget.h">
       <Filter>Headerdateien\Interfaces\Graphics</Filter>
@@ -280,23 +289,11 @@
     <ClInclude Include="inc\Core\ComponentType.h">
       <Filter>Headerdateien\Core\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Matrices.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\GameTime.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\InputState.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Scene.h">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Window.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\GameObject.h">
-      <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TypeDef.h">
       <Filter>Headerdateien</Filter>
@@ -306,9 +303,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Quaternion.h">
       <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Key.h">
-      <Filter>Headerdateien\Core</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IBehavior.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
@@ -327,9 +321,6 @@
     </ClInclude>
     <ClInclude Include="inc\core\Camera.h">
       <Filter>Headerdateien\Engine\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IMesh.h">
-      <Filter>Headerdateien\Interfaces\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IMeshRenderer.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
@@ -372,6 +363,27 @@
     </ClInclude>
     <ClInclude Include="inc\Core\LibraryManager.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrices.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Key.h">
+      <Filter>Headerdateien\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameTime.h">
+      <Filter>Headerdateien\Core\Args/States</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\InputState.h">
+      <Filter>Headerdateien\Core\Args/States</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Mesh.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\MeshIndexed.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

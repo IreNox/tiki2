@@ -18,6 +18,16 @@ namespace TikiEngine
 			}
 		}
 
+		void Material::Apply()
+		{
+			shader->Apply();
+		}
+
+		void Material::UpdateDrawArgs(const DrawArgs& args)
+		{
+			//TODO: Update shader vars
+		}
+
 		IShader* Material::GetShader()
 		{
 			return shader;

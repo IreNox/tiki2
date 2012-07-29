@@ -11,21 +11,22 @@ namespace TikiEngine
 		using namespace TikiEngine::Buffer;
 
 		#pragma region Class
-		VertexData::VertexData(Engine* engine, Shader* shader, VertexDeclaration* decl)
-			: engine(engine), shader(shader), decl(decl), allocatedIndex(false), allocatedVertex(false)
+		VertexData::VertexData(Engine* engine)
+			: EngineObject(engine), mesh(0), decl(0), shader(0), indexBuffer(0), vertexBuffer(0), allocatedIndex(false), allocatedVertex(false)
 		{
-			this->indexBuffer = DllMain::Module->GetIndexBuffer();
-			this->vertexBuffer = DllMain::Module->GetVertexBuffer(decl);
 		}
 		
 		VertexData::~VertexData()
 		{
-			delete(shader);
-			delete(decl);
+			if (mesh != 0) mesh->Release();
+			if (decl != 0) decl->Release();
+			if (shader != 0) shader->Release();
+			if (indexBuffer != 0) indexBuffer->Release();
+			if (vertexBuffer != 0) vertexBuffer->Release();
 		}
 		#pragma endregion
 
-		#pragma region Member - Apply
+		#pragma region Member - Apply/Draw
 		void VertexData::Apply()
 		{
 			UINT offset = 0;
@@ -51,23 +52,79 @@ namespace TikiEngine
 			decl->Apply();
 			shader->Apply();
 		}
+
+		void VertexData::Draw()
+		{
+			if (useIndex)
+			{
+				DllMain::Context->DrawIndexed(countIndex, indexIndex, indexVertex);
+			}
+			else
+			{
+				DllMain::Context->Draw(countVertex, 0);
+			}
+		}
 		#pragma endregion
 
-		#pragma region Member - SetData
-		void VertexData::SetIndexData(void* data, UINT size)
+		#pragma region Member - Get/Set
+		void VertexData::SetData(Mesh* inMesh, Shader* inShader)
 		{
-			this->setData(
-				this->indexBuffer,
-				data,
-				size,
-				&this->allocatedIndex,
-				&this->indexIndex,
-				&this->countIndex
-			);
-		}
+			if (inMesh == 0 || inShader == 0) 
+			{
+				throw "Arguments fail";
+			}
 
-		void VertexData::SetVertexData(void* data, UINT size)
-		{
+			if (mesh != inMesh || shader != inShader)
+			{
+				if (mesh != 0) mesh->Release();
+				if (decl != 0) decl->Release();
+				if (shader != 0) shader->Release();
+				if (indexBuffer != 0) indexBuffer->Release();
+				if (vertexBuffer != 0) vertexBuffer->Release();
+
+				decl = new VertexDeclaration(
+					engine,
+					inShader,
+					mesh->GetVertexDeclaration()
+					);
+				shader = inShader;
+				shader->AddRef();
+
+				indexBuffer = DllMain::Module->GetIndexBuffer();
+				indexBuffer->AddRef();
+
+				vertexBuffer = DllMain::Module->GetVertexBuffer(decl);
+				vertexBuffer->AddRef();
+			}
+
+			MeshIndexed* meshIndexed = dynamic_cast<MeshIndexed*>(mesh);
+
+			if (meshIndexed != 0)
+			{
+				useIndex = true;
+
+				UInt32* indices;
+				UInt32 indiciesCount;
+				meshIndexed->GetIndexData(&indices, &indiciesCount);
+
+				this->setData(
+					this->indexBuffer,
+					indices,
+					indiciesCount * sizeof(UInt32),
+					&this->allocatedIndex,
+					&this->indexIndex,
+					&this->countIndex
+				);
+			}
+			else
+			{
+				useIndex = false;
+			}
+			
+			void* data;
+			UInt32 size;
+			mesh->GetVertexData(&data, &size);
+
 			this->setData(
 				this->vertexBuffer,
 				data,
@@ -78,6 +135,13 @@ namespace TikiEngine
 			);
 		}
 
+		Mesh* VertexData::GetMesh()
+		{
+			return mesh;
+		}
+		#pragma endregion
+
+		#pragma region Private Member
 		void VertexData::setData(TikiEngine::Buffer::Buffer* buffer, void* data, UINT size, bool* allocated, UINT* index, UINT* count)
 		{
 			UINT newCount = size / buffer->GetElementSize();

@@ -29,7 +29,7 @@ public:
 	{
 		refCount--;
 
-		if (refCount < 1)
+		if (refCount == 0)
 		{
 			GC::Destroy(this);
 		}

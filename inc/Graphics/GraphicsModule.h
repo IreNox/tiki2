@@ -40,8 +40,8 @@ namespace TikiEngine
 			//ID3D11Buffer* CreateVertexBuffer(const void* data, UINT size);
 			//ID3D11InputLayout* CreateInputLayout();
 
-			ID3D11Device* GetDevice();
-			ID3D11DeviceContext* GetDeviceContext();
+			void* GetDevice();
+			void* GetDeviceContext();
 
 			D3D11_VIEWPORT* GetViewPort();
 

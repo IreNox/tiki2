@@ -2,8 +2,11 @@
 
 #include "Core/Matrix.h"
 
-struct Matrices 
+namespace TikiEngine
 {
-	Matrix ViewMatrix;
-	Matrix ProjectionMatrix;
-};
+	struct Matrices 
+	{
+		Matrix ViewMatrix;
+		Matrix ProjectionMatrix;
+	};
+}

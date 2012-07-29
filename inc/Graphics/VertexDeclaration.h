@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Core/EngineObject.h"
+#include "Core/InputElement.h"
+
 #include "Graphics/Shader.h"
 
 namespace TikiEngine
@@ -8,13 +11,11 @@ namespace TikiEngine
 
 	namespace Vertices
 	{
-		class VertexDeclaration : public Object
+		class VertexDeclaration : public EngineObject
 		{
 		public:
-			VertexDeclaration(TikiEngine::Engine* engine, Shader* shader, UINT elementSize);
-			VertexDeclaration(TikiEngine::Engine* engine, Shader* shader, UINT elementSize, D3D11_INPUT_ELEMENT_DESC* elements, UINT elementCount);
-
-			virtual ~VertexDeclaration();
+			VertexDeclaration(Engine* engine, IShader* shader, List<InputElement>* elements);
+			~VertexDeclaration();
 
 			void Apply();
 			
@@ -22,17 +23,16 @@ namespace TikiEngine
 			ULONG GetDeclarationHash();
 			Shader* GetShader();
 			
-		protected:
-			Engine* engine;
+		private:
+
 			Shader* shader;
 
 			UInt32 hash;
+			UInt32 elementSize;
 			ID3D11InputLayout* inputLayout;
 
-			virtual void internalApply();
+			void createInputLayout(List<InputElement>* decl);
 
-		private:
-			UINT elementSize;
 		};
 	}
 }

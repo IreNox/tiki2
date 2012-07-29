@@ -59,9 +59,6 @@
     <ClCompile Include="src\Graphics\VertexData.cpp">
       <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Mesh.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Texture.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
@@ -102,9 +99,6 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexDeclaration.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\Mesh.h">
-      <Filter>Headerdateien\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DllMain.h">
       <Filter>Headerdateien</Filter>

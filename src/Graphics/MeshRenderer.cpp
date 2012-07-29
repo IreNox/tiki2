@@ -7,25 +7,29 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		MeshRenderer::MeshRenderer(Engine* engine, GameObject* gameObject)
-			: IMeshRenderer(engine, gameObject)
+			: IMeshRenderer(engine, gameObject), mesh(0), material(0)
 		{
+			data = new VertexData(engine);
 		}
 
 		MeshRenderer::~MeshRenderer()
 		{
+			if (mesh != 0) mesh->Release();
+			if (material != 0) material->Release();
 
+			delete(data);
 		}
 		#pragma endregion
 
 		#pragma region Member
 		bool MeshRenderer::GetReady()
 		{
-			return (mesh != 0) && (material != 0);
+			return (mesh != 0 && mesh->GetReady()) && (material != 0 && material->GetReady());
 		}
 		#pragma endregion
 
 		#pragma region Member - Get/Set
-		IMesh* MeshRenderer::GetMesh()
+		Mesh* MeshRenderer::GetMesh()
 		{
 			return mesh;
 		}
@@ -35,19 +39,21 @@ namespace TikiEngine
 			return material;
 		}
 
-		void MeshRenderer::SetMesh(IMesh* mesh)
+		void MeshRenderer::SetMesh(Mesh* mesh)
 		{
 			if (this->mesh != 0)
 			{
 				this->mesh->Release();
 			}
 
-			this->mesh = (Mesh*)mesh;
+			this->mesh = mesh;
 
 			if (this->mesh != 0)
 			{
 				this->mesh->AddRef();
 			}
+
+			updateData();
 		}
 
 		void MeshRenderer::SetMaterial(Material* material)
@@ -63,19 +69,35 @@ namespace TikiEngine
 			{
 				this->material->AddRef();
 			}
+
+			updateData();
 		}
 		#pragma endregion
 
 		#pragma region Member - Draw/Update
 		void MeshRenderer::Draw(const DrawArgs& args)
 		{
+			material->UpdateDrawArgs(args);
 
+			data->Apply();
+			data->Draw();
 		}
 
 		void MeshRenderer::Update(const UpdateArgs& args)
 		{
-
 		}
 		#pragma endregion
+
+		#pragma region Private Member
+		void MeshRenderer::updateData()
+		{
+			if (!this->GetReady()) return;
+
+			data->SetData(
+				mesh,
+				(Shader*)material->GetShader()
+			);
+		}
+		#pragma endregion		
 	}
 }

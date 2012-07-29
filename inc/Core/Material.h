@@ -14,6 +14,10 @@ namespace TikiEngine
 			Material(Engine* engine);
 			~Material();
 
+			virtual void Apply();
+
+			virtual void UpdateDrawArgs(const DrawArgs& args);
+
 			IShader* GetShader();
 			void SetShader(IShader* shader);
 

@@ -22,7 +22,7 @@ namespace TikiEngine
 
 		private:
 
-			IMesh* mesh;
+			Mesh* mesh;
 			Material* material;
 
 			IMeshRenderer* renderer;

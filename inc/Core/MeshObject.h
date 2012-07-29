@@ -1,31 +1,28 @@
 #pragma once;
 
-//#include "Graphics/Shader.h"
-//#include "Core/Component.h"
-//#include "Graphics/VertexData.h"
-//
-//namespace TikiEngine
-//{
-//	namespace Components
-//	{
-//		using namespace TikiEngine::Vertices;
-//
-//		class Mesh : public Component
-//		{
-//		public:
-//			Mesh(Engine* engine);
-//			virtual ~Mesh();
-//
-//			virtual void Init(VertexDeclaration* decl);
-//
-//			virtual void Draw(const FrameArgs& args);
-//			virtual void Update(const FrameArgs& args);
-//
-//			void Dispose();
-//
-//		protected:
-//			Shader* shader;
-//			VertexData* data;
-//		};
-//	}
-//}
+#include "Core/GameObject.h"
+#include "Core/Material.h"
+#include "Core/IMeshRenderer.h"
+
+namespace TikiEngine
+{
+	namespace Objects
+	{
+		class MeshObject : public GameObject
+		{
+		public:
+			MeshObject(Engine* engine);
+			virtual ~MeshObject();
+
+			virtual bool Initialize(const InitializationArgs& args);
+
+			virtual void Draw(const DrawArgs& args);
+			virtual void Update(const UpdateArgs& args);
+
+		protected:
+
+			Material* material;
+			IMeshRenderer* renderer;
+		};
+	}
+}

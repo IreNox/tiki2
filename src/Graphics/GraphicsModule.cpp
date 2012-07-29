@@ -280,14 +280,14 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		ID3D11Device* GraphicsModule::GetDevice()
+		void* GraphicsModule::GetDevice()
 		{
-			return this->device;
+			return (void*)this->device;
 		}
 
-		ID3D11DeviceContext* GraphicsModule::GetDeviceContext()
+		void* GraphicsModule::GetDeviceContext()
 		{
-			return this->deviceContext;
+			return (void*)this->deviceContext;
 		}
 
 		D3D11_VIEWPORT* GraphicsModule::GetViewPort()

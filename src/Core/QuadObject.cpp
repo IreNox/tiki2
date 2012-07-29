@@ -1,9 +1,6 @@
 
 #include "Core/QuadObject.h"
 
-#include "Core/IMesh.h"
-#include "Core/IMeshRenderer.h"
-
 #include "Core/LibraryManager.h"
 
 namespace TikiEngine
@@ -26,7 +23,7 @@ namespace TikiEngine
 				 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			};
 
-			mesh = engine->librarys->CreateComponent<IMesh>(this);
+			mesh = new Mesh(engine);
 			mesh->SetVertexData(&vertices, sizeof(vertices));
 			mesh->SetVertexDeclaration(PostProcessVertex::Declaration, sizeof(PostProcessVertex::Declaration));
 

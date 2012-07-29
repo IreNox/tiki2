@@ -27,7 +27,6 @@ namespace TikiEngine
 
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 
-		DllInfo.Components.Add(typeid(IMesh).hash_code());
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 	}
 

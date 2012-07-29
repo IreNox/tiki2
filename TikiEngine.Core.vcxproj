@@ -31,6 +31,9 @@
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
     <ClCompile Include="src\Core\Matrix3x3.cpp" />
+    <ClCompile Include="src\Core\Mesh.cpp" />
+    <ClCompile Include="src\Core\MeshIndexed.cpp" />
+    <ClCompile Include="src\Core\MeshObject.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
     <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />
@@ -65,13 +68,14 @@
     <ClInclude Include="inc\Core\IMeshRenderer.h" />
     <ClInclude Include="inc\Core\InitializationArgs.h" />
     <ClInclude Include="inc\Core\InputDescription.h" />
-    <ClInclude Include="inc\Core\IMesh.h" />
+    <ClInclude Include="inc\Core\Mesh.h" />
     <ClInclude Include="inc\Core\IRenderTarget.h" />
     <ClInclude Include="inc\Core\IRigidbody.h" />
     <ClInclude Include="inc\Core\ITexture.h" />
     <ClInclude Include="inc\Core\Key.h" />
     <ClInclude Include="inc\Core\LightObject.h" />
     <ClInclude Include="inc\Core\Material.h" />
+    <ClInclude Include="inc\Core\MeshIndexed.h" />
     <ClInclude Include="inc\Core\PostProcessVertex.h" />
     <ClInclude Include="inc\Core\Quaternion.h" />
     <ClInclude Include="inc\Core\SimpleVertex.h" />

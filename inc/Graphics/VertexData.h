@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Graphics/Shader.h"
+#include "Core/EngineObject.h"
 
+#include "Graphics/Shader.h"
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
 
-#include "Graphics/VertexDeclaration.h"
+#include "Core/Mesh.h"
+#include "Core/MeshIndexed.h"
 
 namespace TikiEngine
 {
@@ -14,36 +16,40 @@ namespace TikiEngine
 		using namespace TikiEngine::Buffer;
 		using namespace TikiEngine::Graphics;
 
-		class VertexData
+		class VertexData : public EngineObject
 		{
 		public:
-			UINT indexIndex;
-			UINT indexVertex;
-
-			UINT countIndex;
-			UINT countVertex;
-
-			VertexData(Engine* engine, Shader* shader, VertexDeclaration* decl);
+			
+			VertexData(Engine* engine);
 			~VertexData();
 
 			void Apply();
+			void Draw();
 
-			void SetIndexData(void* data, UINT size);
-			void SetVertexData(void* data, UINT size);
+			Mesh* GetMesh();
+			void SetData(Mesh* mesh, Shader* material);
 
 		private:
-			Engine* engine;
 
+			UInt32 indexIndex;
+			UInt32 indexVertex;
+
+			UInt32 countIndex;
+			UInt32 countVertex;
+
+			bool useIndex;
 			bool allocatedIndex;
 			bool allocatedVertex;
 
 			IndexBuffer* indexBuffer;
 			VertexBuffer* vertexBuffer;
 
+			Mesh* mesh;
+
 			Shader* shader;
 			VertexDeclaration* decl;
 
-			void setData(TikiEngine::Buffer::Buffer* buffer, void* data, UINT size, bool* allocated, UINT* index, UINT* count);
+			void setData(TikiEngine::Buffer::Buffer* buffer, void* data, UInt32 size, bool* allocated, UInt32* index, UInt32* count);
 		};
 	}
 }

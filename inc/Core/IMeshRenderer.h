@@ -2,7 +2,7 @@
 
 #include "Core/Component.h"
 
-#include "Core/IMesh.h"
+#include "Core/Mesh.h"
 #include "Core/Material.h"
 
 namespace TikiEngine
@@ -20,10 +20,10 @@ namespace TikiEngine
 			}
 			~IMeshRenderer() {}
 
-			virtual IMesh* GetMesh() = 0;
+			virtual Mesh* GetMesh() = 0;
 			virtual Material* GetMaterial() = 0;
 
-			virtual void SetMesh(IMesh* mesh) = 0;
+			virtual void SetMesh(Mesh* mesh) = 0;
 			virtual void SetMaterial(Material* material) = 0;
 		};
 	}

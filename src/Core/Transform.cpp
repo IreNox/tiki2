@@ -4,7 +4,7 @@
 namespace TikiEngine
 {
 	Transform::Transform()
-		: Position(), Rotation(), Scale(1)
+		: Position(0.0f), Rotation(Quaternion::Identity), Scale(1.0f)
 	{
 	}
 
@@ -12,51 +12,12 @@ namespace TikiEngine
 	{
 	}
 
-	void Transform::Move(Vector3 direction)
+	void Transform::FillWorldMatrix(Matrix* worldMatrix) const
 	{
-		this->Position += direction;
-	}
+		Matrix rot = Matrix::CreateFromQuaternion(this->Rotation);
+		Matrix scale = Matrix::CreateScaleMatrix(this->Scale);
+		Matrix trans = Matrix::CreateTranslation(this->Position);
 
-	Matrix* Transform::GetWorldMatrix()
-	{
-		//TODO: Matrix erstellen
-
-		//D3DXMATRIX matrix;
-		//D3DXMATRIX matrixTemp;
-		//D3DXMATRIX matrixTempOut;
-
-		//D3DXMatrixIdentity(&matrix);
-
-		//D3DXMatrixTranslation(
-		//	&matrixTemp,
-		//	this->Position.X,
-		//	this->Position.Y,
-		//	this->Position.Z
-		//);
-		//D3DXMatrixMultiply(&matrixTempOut, &matrix, &matrixTemp);
-		//matrix = matrixTempOut;
-
-		//D3DXMatrixScaling(
-		//	&matrixTemp,
-		//	this->Scale.X,
-		//	this->Scale.Y,
-		//	this->Scale.Z
-		//);
-		//D3DXMatrixMultiply(&matrixTempOut, &matrix, &matrixTemp);
-		//matrix = matrixTempOut;
-
-		//D3DXMatrixRotationX(&matrixTemp, this->Rotation.X);
-		//D3DXMatrixMultiply(&matrixTempOut, &matrix, &matrixTemp);
-		//matrix = matrixTempOut;
-
-		//D3DXMatrixRotationY(&matrixTemp, this->Rotation.Y);
-		//D3DXMatrixMultiply(&matrixTempOut, &matrix, &matrixTemp);
-		//matrix = matrixTempOut;
-
-		//D3DXMatrixRotationZ(&matrixTemp, this->Rotation.Z);
-		//D3DXMatrixMultiply(&matrixTempOut, &matrix, &matrixTemp);
-		//matrix = matrixTempOut;
-
-		return new Matrix();
+		*worldMatrix = rot * scale * trans;
 	}
 }

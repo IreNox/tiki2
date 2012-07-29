@@ -1,7 +1,8 @@
 
 #include <Windows.h>
 
-#include <Core/Engine.h>
+#include "Core/Engine.h"
+#include "Core/Scene.h"
 
 //#include "Core/Texture.h"
 //#include "Graphics/DefaultShader.h"
@@ -16,7 +17,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 145, 149 = List
-	_CrtSetBreakAlloc(45514);
+	//_CrtSetBreakAlloc(45514);
 
 	{
 		EngineDescription desc;
@@ -27,7 +28,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 		Engine* engine = new Engine();
 		engine->Initialize(desc);
-		//engine->scene = new Scene(engine);
+		engine->scene = new Scene(engine);
 
 		//Texture* texture = new Texture(
 		//	engine,
