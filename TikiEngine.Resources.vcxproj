@@ -20,6 +20,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Resources\ContentManager.h" />
+    <ClInclude Include="inc\Resources\FbxTest.h" />
+    <ClInclude Include="src\Resources\FbxTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManager.cpp" />
@@ -63,21 +65,25 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.Resources_Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.Resources_Debug.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.Resources_Release.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.Resources_Release.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

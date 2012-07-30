@@ -412,5 +412,8 @@
     <ClInclude Include="inc\Core\Resource.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\MeshAnimated.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

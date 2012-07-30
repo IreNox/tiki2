@@ -14,6 +14,12 @@
     <ClInclude Include="inc\Resources\ContentManager.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Resources\FbxTest.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\FbxTest.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManager.cpp">
