@@ -81,12 +81,12 @@ namespace TikiEngine
 		#pragma region Member - Properties
 		Int32 FileStream::GetLength()
 		{
-			return 00;
+			return ftell(handle);
 		}
 
 		void FileStream::SetLength(Int32 len)
 		{
-
+			throw "Not supported";
 		}
 
 		Int64 FileStream::GetPosition()

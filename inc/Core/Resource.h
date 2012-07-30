@@ -19,10 +19,14 @@ namespace TikiEngine
 			virtual void LoadFromFile(wstring fileName);
 			virtual void SaveToFile(wstring fileName);
 
+			virtual void* GetNativeResource() = 0;
+
+			virtual bool GetReady() = 0;
+
 		protected:
 
-			virtual void loadFromStream(IStream* stream) = 0;
-			virtual void saveToStream(IStream* stream) = 0;
+			virtual void loadFromStream(Stream* stream) = 0;
+			virtual void saveToStream(Stream* stream) = 0;
 		};
 	}
 }

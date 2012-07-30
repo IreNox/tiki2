@@ -237,7 +237,7 @@ namespace TikiEngine
 		void Shader::SetTexture(string key, ITexture* texture)
 		{
 			effect->GetVariableByName(key.c_str())->AsShaderResource()->SetResource(
-				(ID3D11ShaderResourceView*)texture->GetResource()
+				(ID3D11ShaderResourceView*)texture->GetNativeResource()
 			);
 		}
 		#pragma endregion

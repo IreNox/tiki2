@@ -6,11 +6,11 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		class ContentManager : public IContentManager
+		class ContentManagerModule : public IContentManager
 		{
 		public:
-			ContentManager(Engine* engine);
-			~ContentManager(void);
+			ContentManagerModule(Engine* engine);
+			~ContentManagerModule(void);
 
 			void* Load(string name);
 		};

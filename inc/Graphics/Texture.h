@@ -9,6 +9,8 @@ namespace TikiEngine
 {
 	namespace Graphics
 	{
+		using TikiEngine::IO::Stream;
+
 		class Texture : public ITexture
 		{
 		public:
@@ -16,22 +18,28 @@ namespace TikiEngine
 			Texture(Engine* engine);
 			~Texture();
 
-			void LoadFromFile(wstring fileName);
-			void Create(Int32 width, Int32 height);
-
 			Int32 GetWidth();
 			Int32 GetHeight();
 
 			void GetData(Int32 format, void** data);
 			void SetData(Int32 format, void* data, UInt32 dataLength);
 
-			void* GetResource();
+			void* GetNativeResource();
 
 			bool GetReady();
 
+		protected:
+
+			void loadFromStream(Stream* stream);
+			void saveToStream(Stream* stream);
+
 		private:
 
-			ID3D11ShaderResourceView* texture;
+			ID3D11Texture2D* texture;
+			ID3D11ShaderResourceView* textureResource;
+
+			D3D11_TEXTURE2D_DESC desc;
+
 		};
 	}
 }

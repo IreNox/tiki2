@@ -45,6 +45,20 @@ namespace TikiEngine
 			}
 
 			template <class T>
+			T* CreateResource()
+			{
+				IntPtr hash;
+				TikiInfo* info = getDefault<T>(&hash);
+
+				if (info != 0)
+				{
+					return (T*)info->FuncTikiResource(hash);
+				}
+
+				return 0;
+			}
+
+			template <class T>
 			T* CreateComponent(GameObject* gameObject)
 			{
 				IntPtr hash;

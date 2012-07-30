@@ -1,5 +1,7 @@
 
 #include "Graphics/DllMain.h"
+
+#include "Graphics/Texture.h"
 #include "Graphics/MeshRenderer.h"
 
 #include <typeinfo.h>
@@ -38,6 +40,16 @@ namespace TikiEngine
 		}
 
 		return DllMain::Module;
+	}
+
+	Resource* DllMain::CreateResource(IntPtr hash)
+	{
+		if (hash == typeid(ITexture).hash_code())
+		{
+			return new Texture(DllMain::Engine);
+		}
+
+		return 0;
 	}
 
 	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)

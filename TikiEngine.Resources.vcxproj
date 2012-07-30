@@ -19,12 +19,12 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Resources\ContentManager.h" />
+    <ClInclude Include="inc\Resources\ContentManagerModule.h" />
     <ClInclude Include="inc\Resources\FbxTest.h" />
     <ClInclude Include="src\Resources\FbxTest.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Resources\ContentManager.cpp" />
+    <ClCompile Include="src\Resources\ContentManagerModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}</ProjectGuid>

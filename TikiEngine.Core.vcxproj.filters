@@ -415,5 +415,8 @@
     <ClInclude Include="inc\Core\MeshAnimated.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\TypeFunc.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
