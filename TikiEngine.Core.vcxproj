@@ -23,6 +23,7 @@
     <ClCompile Include="src\Core\CameraObject.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
+    <ClCompile Include="src\Core\FileStream.cpp" />
     <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
     <ClCompile Include="src\Core\GarbageCollector.cpp" />
@@ -37,6 +38,7 @@
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
     <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />
+    <ClCompile Include="src\Core\Resource.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
     <ClCompile Include="src\Core\SimpleVertex.cpp" />
     <ClCompile Include="src\Core\Transform.cpp" />
@@ -58,6 +60,9 @@
     <ClInclude Include="inc\Core\Engine.h" />
     <ClInclude Include="inc\Core\EngineDescription.h" />
     <ClInclude Include="inc\Core\EngineObject.h" />
+    <ClInclude Include="inc\Core\FileStream.h" />
+    <ClInclude Include="inc\Core\Resource.h" />
+    <ClInclude Include="inc\Core\Stream.h" />
     <ClInclude Include="inc\Core\LibraryManager.h" />
     <ClInclude Include="inc\Core\IBehavior.h" />
     <ClInclude Include="inc\Core\ICollider.h" />

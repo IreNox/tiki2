@@ -90,6 +90,18 @@
     <Filter Include="Headerdateien\Interfaces\Extern Components">
       <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Interfaces\Resources">
+      <UniqueIdentifier>{3a084f55-a415-4bf2-821b-173f048d599d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\I/O">
+      <UniqueIdentifier>{7a69854d-bf33-4563-85d0-ca9224470ab0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\I/O">
+      <UniqueIdentifier>{52568701-fac1-47d5-82bf-9060f7a5e09e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\Resources">
+      <UniqueIdentifier>{c39f976e-b6f1-48d2-b284-2b8809b90e9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -166,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\MeshIndexed.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\FileStream.cpp">
+      <Filter>Quelldateien\Core\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Resource.cpp">
+      <Filter>Quelldateien\Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -384,6 +402,15 @@
     </ClInclude>
     <ClInclude Include="inc\Core\MeshIndexed.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\FileStream.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Stream.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Resource.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
