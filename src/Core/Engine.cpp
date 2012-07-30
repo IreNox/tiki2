@@ -68,7 +68,7 @@ namespace TikiEngine
 		librarys = new LibraryManager(this);		
 		if (!initModule(librarys))
 		{
-			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
+			MessageBox(window->GetHWND(), L"Can't create LibraryManager.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
