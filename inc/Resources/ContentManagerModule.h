@@ -4,7 +4,7 @@
 
 namespace TikiEngine
 {
-	namespace Modules
+	namespace Resources
 	{
 		class ContentManagerModule : public IContentManager
 		{
@@ -12,7 +12,18 @@ namespace TikiEngine
 			ContentManagerModule(Engine* engine);
 			~ContentManagerModule(void);
 
-			void* Load(string name);
+			bool Initialize(EngineDescription& desc);
+
+			void Begin();
+			void End();
+
+			void Dispose();
+
+			void* Load(IntPtr hash, wstring name);
+
+			Mesh* LoadMesh(wstring name);
+			ITexture* LoadTexture(wstring name);
+			Material* LoadMaterial(wstring name);
 		};
 	}
 }

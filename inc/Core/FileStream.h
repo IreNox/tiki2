@@ -17,7 +17,7 @@ namespace TikiEngine
 			FM_WriteAppend
 		};
 
-		class FileStream : Stream
+		class FileStream : public Stream
 		{
 		public:
 

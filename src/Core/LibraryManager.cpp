@@ -104,6 +104,17 @@ namespace TikiEngine
 			}
 
 			i = 0;
+			while (i < info->Resources.Count())
+			{
+				if (!defaultLibrarys.ContainsKey(info->Resources[i]))
+				{
+					defaultLibrarys.Add(info->Resources[i], info);
+				}
+
+				i++;
+			}
+
+			i = 0;
 			while (i < info->Components.Count())
 			{
 				if (!defaultLibrarys.ContainsKey(info->Components[i]))

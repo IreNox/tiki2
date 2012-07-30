@@ -1,43 +1,33 @@
 
-#include "Graphics/DllMain.h"
-
-#include "Graphics/Texture.h"
-#include "Graphics/MeshRenderer.h"
+#include "Resources/DllMain.h"
 
 #include <typeinfo.h>
 
 namespace TikiEngine
 {
-	using namespace TikiEngine::Graphics;
+	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
 
 	TikiInfo DllMain::DllInfo = TikiInfo();
-	
-	Engine* DllMain::Engine = 0;
 
-	GraphicsModule* DllMain::Module = 0;
-	ID3D11Device* DllMain::Device = 0;
-	ID3D11DeviceContext* DllMain::Context = 0;
+	Engine* DllMain::Engine = 0;
+	ContentManagerModule* DllMain::Module = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new GraphicsModule(engine);
+		DllMain::Module = new ContentManagerModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
 
-		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
-
-		DllInfo.Resources.Add(typeid(ITexture).hash_code());
-
-		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
+		DllInfo.Modules.Add(typeid(IContentManager).hash_code());
 	}
 
 	IModule* DllMain::CreateModule(IntPtr hash)
 	{
-		if (hash != typeid(IGraphics).hash_code())
+		if (hash != typeid(IContentManager).hash_code())
 		{
 			return 0;
 		}
@@ -47,21 +37,11 @@ namespace TikiEngine
 
 	Resource* DllMain::CreateResource(IntPtr hash)
 	{
-		if (hash == typeid(ITexture).hash_code())
-		{
-			return new Texture(DllMain::Engine);
-		}
-
 		return 0;
 	}
 
 	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
 	{
-		if (hash == typeid(IMeshRenderer).hash_code())
-		{
-			return new MeshRenderer(DllMain::Engine, gameObject);
-		}
-
 		return 0;
 	}
 }

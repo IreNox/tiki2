@@ -93,6 +93,13 @@ namespace TikiEngine
 			return false;
 		}
 
+		content = librarys->CreateModule<IContentManager>();
+		if (!initModule(content))
+		{
+			MessageBox(window->GetHWND(), L"Can't init ContentManager.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
 		return true;
 	}
 	#pragma endregion

@@ -2,10 +2,16 @@
 
 #include "Core/IModule.h"
 
+#include "Core/Mesh.h"
+#include "Core/ITexture.h"
+#include "Core/Material.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using namespace TikiEngine::Graphics;
+
 		class IContentManager : public IModule
 		{
 		public:
@@ -16,12 +22,11 @@ namespace TikiEngine
 			}
 			virtual ~IContentManager() {}
 
-			virtual void* Load(string name) = 0;
+			virtual void* Load(IntPtr hash, wstring name) = 0;
 
-			// coming soon
-			//virtual IMesh* LoadMesh(string name) = 0;
-			//virtual ITexture* LoadTexture(string name) = 0;
-			//virtual IMaterial* LoadMaterial(string name) = 0;
+			virtual Mesh* LoadMesh(wstring name) = 0;
+			virtual ITexture* LoadTexture(wstring name) = 0;
+			virtual Material* LoadMaterial(wstring name) = 0;
 
 		};
 	}
