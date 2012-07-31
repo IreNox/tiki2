@@ -22,8 +22,6 @@
     <ClInclude Include="inc\Resources\ContentManagerModule.h" />
     <ClInclude Include="inc\Resources\DllMain.h" />
     <ClInclude Include="inc\Resources\FbxLoader.h" />
-    <ClInclude Include="inc\Resources\FbxTest.h" />
-    <ClInclude Include="src\Resources\FbxTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManagerModule.cpp" />
