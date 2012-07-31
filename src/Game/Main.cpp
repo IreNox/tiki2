@@ -27,33 +27,35 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.Window.Height = 600;
 
 		Engine* engine = new Engine();
-		engine->Initialize(desc);
-		engine->scene = new Scene(engine);
-
-		Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
-		if(mesh != 0)
+		
+		if (engine->Initialize(desc))
 		{
-			delete(mesh);
-			mesh = 0;
+			engine->scene = new Scene(engine);
+
+			Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
+			if(mesh != 0)
+			{
+				delete(mesh);
+				mesh = 0;
+			}
+
+			//ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
+
+			//Texture* texture = new Texture(
+			//	engine,
+			//	wstring(L"Data/Resources/box_diffuse.jpg")
+			//);
+
+			//Shader* shader = new DefaultShader(engine);
+			//shader->GetVariable("tex").SetTexture(texture);
+
+			//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
+			//Quad* quad = new Quad(engine, shaderPP);
+
+
+			//engine->scene->AddElement(new Box(engine, shader));
+			//scene->AddElement(new TeeTriangle(engine));
 		}
-
-
-		//ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
-
-		//Texture* texture = new Texture(
-		//	engine,
-		//	wstring(L"Data/Resources/box_diffuse.jpg")
-		//);
-
-		//Shader* shader = new DefaultShader(engine);
-		//shader->GetVariable("tex").SetTexture(texture);
-
-		//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
-		//Quad* quad = new Quad(engine, shaderPP);
-
-
-		//engine->scene->AddElement(new Box(engine, shader));
-		//scene->AddElement(new TeeTriangle(engine));
 
 		engine->Run();
 
