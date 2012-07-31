@@ -6,11 +6,8 @@
     <ExecutablePath>C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\Bin\win32;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup>
-    <ClCompile>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\Cooking\include;C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\Foundation\include;C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\NxCharacter\include;C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\Physics\include;C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\PhysXLoader\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-    </ClCompile>
+    <ClCompile />
     <Link>
-      <AdditionalLibraryDirectories>C:\Program Files %28x86%29\NVIDIA Corporation\NVIDIA PhysX SDK\v2.8.4_win\SDKs\lib\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>NxCharacter.lib;PhysXCooking.lib;PhysXCore.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
