@@ -93,7 +93,7 @@ public:
 	static Matrix CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane);
 	static Matrix CreateLookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector);
 	static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
-	static Matrix CreateFromQuaternion(Quaternion quaternion);
+	static Matrix CreateFromQuaternion(const Quaternion& quaternion);
 	static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll);
 
 
@@ -115,17 +115,5 @@ public:
 	Matrix& operator/= (const Matrix& matrix);
 
 	static Matrix Identity;
-
-	//static Matrix CreateRotationX(float x);
-	//static Matrix CreateRotationY(float y);
-	//static Matrix CreateRotationZ(float z);
-
-	//static Matrix CreateScale(const Vector3& scale);
-	//static Matrix CreateTranslate(const Vector3& pos);
-	//static Matrix CreateRotation(const Vector3& rotation);
-
-	//static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
-	//static Matrix CreateLookAt(const Vector3& position, const Vector3& lookAt, const Vector3& upVector);
-	//static Matrix CreatePerspectiveOffCenter(float left, float right, float bottom, float top, float nearPlaneDistance, float farPlaneDistance);
 };
 

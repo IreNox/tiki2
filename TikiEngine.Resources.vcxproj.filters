@@ -29,6 +29,9 @@
     <ClInclude Include="inc\Resources\DllMain.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Resources\FbxLoader.h">
+      <Filter>Headerdateien\Loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManagerModule.cpp">
@@ -36,6 +39,9 @@
     </ClCompile>
     <ClCompile Include="src\Resources\DllMain.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\FbxLoader.cpp">
+      <Filter>Quelldateien\Loader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

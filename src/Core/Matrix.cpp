@@ -311,7 +311,7 @@ Matrix Matrix::CreateWorld(const Vector3& position, const Vector3& forward, cons
 
 #pragma region Quaternion
 
-Matrix Matrix::CreateFromQuaternion(Quaternion quaternion)
+Matrix Matrix::CreateFromQuaternion(const Quaternion& quaternion)
 {
 	float num = quaternion.X * quaternion.X;
 	float num2 = quaternion.Y * quaternion.Y;

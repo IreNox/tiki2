@@ -7,6 +7,9 @@
     <Link>
       <AdditionalDependencies>fbxsdk-2013.2-mtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

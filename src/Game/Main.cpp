@@ -30,6 +30,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		engine->Initialize(desc);
 		engine->scene = new Scene(engine);
 
+		Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
+		if(mesh != 0)
+		{
+			delete(mesh);
+			mesh = 0;
+		}
+
+
 		//ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
 
 		//Texture* texture = new Texture(

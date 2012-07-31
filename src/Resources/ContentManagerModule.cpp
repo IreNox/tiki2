@@ -3,6 +3,7 @@
 
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
+#include "Resources/FbxLoader.h"
 
 #include <typeinfo.h>
 
@@ -43,20 +44,32 @@ namespace TikiEngine
 				ITexture* texture = engine->librarys->CreateResource<ITexture>();
 
 				texture->LoadFromFile(name);
+				return (void*) texture;
+			}
+
+			if (hash == typeid(Mesh).hash_code())
+			{
+				Mesh* iMesh = engine->librarys->CreateResource<Mesh>();
+
+				return (void*)iMesh;
 			}
 
 			return 0;
 		}
 
-		Mesh* ContentManagerModule::LoadMesh(wstring name)
+		Mesh* ContentManagerModule::LoadMesh(const wstring& name)
 		{
 			return (Mesh*)this->Load(
 				typeid(Mesh).hash_code(),
 				name
 			);
 		}
+		Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
+		{
+			return FbxLoader::LoadMesh(name);
+		}
 
-		ITexture* ContentManagerModule::LoadTexture(wstring name)
+		ITexture* ContentManagerModule::LoadTexture(const wstring& name)
 		{
 			return (ITexture*)this->Load(
 				typeid(ITexture).hash_code(),
@@ -64,7 +77,7 @@ namespace TikiEngine
 			);
 		}
 
-		Material* ContentManagerModule::LoadMaterial(wstring name)
+		Material* ContentManagerModule::LoadMaterial(const wstring& name)
 		{
 			return (Material*)this->Load(
 				typeid(Material).hash_code(),

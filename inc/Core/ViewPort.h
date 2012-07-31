@@ -4,19 +4,19 @@ namespace TikiEngine
 {
 	struct ViewPort
 	{
-		int Top;
-		int Left;
+		int X;
+		int Y;
 
 		int Width;
 		int Height;
 
 		ViewPort()
-			: Top(0), Left(0), Width(0), Height(0)
+			: X(0), Y(0), Width(0), Height(0)
 		{
 		}
 
-		ViewPort(int top, int left, int width, int height)
-			: Top(top), Left(left), Width(width), Height(height)
+		ViewPort(int x, int y, int width, int height)
+			: X(x), Y(y), Width(width), Height(height)
 		{
 		}
 	};

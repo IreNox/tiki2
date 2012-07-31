@@ -35,6 +35,7 @@
     <None Include="Data\Effects\pp_default.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Resources\Dice2.fbx" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Resources\box_diffuse.jpg">
