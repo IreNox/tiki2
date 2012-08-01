@@ -2,19 +2,20 @@
 
 namespace TikiEngine
 {
-	namespace Components
+	namespace Physics
 	{
-		PhysicsMaterial::PhysicsMaterial() : IPhysicsMaterial()
+		PhysicsMaterial::PhysicsMaterial(NxScene* setScene) : IPhysicsMaterial()
 		{
+			scene = setScene;
 			desc.setToDefault();
-			material = PhysicsModule::GetScene()->createMaterial(desc);
+			material = scene->createMaterial(desc);
 			index = material->getMaterialIndex();
 		}
 
 		PhysicsMaterial::~PhysicsMaterial()
 		{
 			// TODO : call release here from object? 
-			PhysicsModule::GetScene()->releaseMaterial(*material);
+			scene->releaseMaterial(*material);
 			material = NULL;
 		}
 
@@ -54,6 +55,5 @@ namespace TikiEngine
 			return index;
 		}
 		#pragma endregion
-
 	}
 }

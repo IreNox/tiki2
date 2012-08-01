@@ -62,6 +62,7 @@
     <ClInclude Include="inc\Core\EngineObject.h" />
     <ClInclude Include="inc\Core\FileStream.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
+    <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
     <ClInclude Include="inc\Core\MeshAnimated.h" />
     <ClInclude Include="inc\Core\Resource.h" />
     <ClInclude Include="inc\Core\Stream.h" />

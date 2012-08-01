@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Physics\BoxCollider.h" />
     <ClInclude Include="inc\Physics\Collider.h" />
     <ClInclude Include="inc\Physics\DllMain.h" />
     <ClInclude Include="inc\Physics\ErrorStream.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\DllMain.cpp" />
     <ClCompile Include="src\Physics\PhysicsMaterial.cpp" />
     <ClCompile Include="src\Physics\PhysicsModule.cpp" />

@@ -1,11 +1,13 @@
 
-#include "Physics/PhysicsMaterial.h"
+
 #include "Physics/PhysicsModule.h"
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using namespace TikiEngine::Physics;
+
 		// implement static member
 		NxScene* PhysicsModule::currentScene = NULL;
 
@@ -13,10 +15,19 @@ namespace TikiEngine
 			: IPhysics(engine)
 		{
 			pause = false;
+			tikiEngine = engine;
 		}
 
 		PhysicsModule::~PhysicsModule()
 		{
+			if (box != NULL)
+				delete box;
+			box = NULL;
+
+			if (box2 != NULL)
+				delete box2;
+			box2 = NULL;
+
 			if (physicsSDK != NULL)
 			{
 				// release scene
@@ -28,6 +39,7 @@ namespace TikiEngine
 				NxReleasePhysicsSDK(physicsSDK);
 				physicsSDK = NULL;
 			}
+
 		}
 
 		bool PhysicsModule::Initialize(EngineDescription& desc)
@@ -63,18 +75,31 @@ namespace TikiEngine
 			}
 			currentScene = scene;
 
+
+
+
 			// Create ground plane with material
 			NxPlaneShapeDesc planeDesc;
-			PhysicsMaterial mat;
-			mat.SetDynamicFriction(0.2f);
-			mat.SetStaticFriction(0.1f);
-			mat.SetRestitution(1.0f);
-			planeDesc.materialIndex = mat.GetIndex();
+			//PhysicsMaterial mat;
+			//mat.SetDynamicFriction(0.2f);
+			//mat.SetStaticFriction(0.1f);
+			//mat.SetRestitution(1.0f);
+			//planeDesc.materialIndex = mat.GetIndex();
 			NxActorDesc actorDesc;
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
 			//bool hardware = IsHardwarePresent();
+
+			// Create
+			box = new BoxCollider(tikiEngine, 0, scene, 
+				NxVec3(0, 10, 0), NxVec3(2, 2 ,2));
+			box->GetReady();
+
+			// Create static Trigger
+			box2 = new BoxCollider(tikiEngine, 0, scene, 
+				NxVec3(5, 5, 0), NxVec3(1, 1 ,1), true);
+			box2->GetReady();
 
 			return true;
 		}
@@ -82,6 +107,11 @@ namespace TikiEngine
 		bool PhysicsModule::IsHardwarePresent()
 		{
 			return physicsSDK->getHWVersion() != NX_HW_VERSION_NONE;
+		}
+
+		NxScene* PhysicsModule::GetScene()
+		{
+			return currentScene; 
 		}
 
 

@@ -3,17 +3,20 @@
 #include "Core/IPhysics.h"
 
 #include "PhysX/Physics/NxPhysics.h"
-#include "PhysX/Physics/NxPhysics.h"
 
-#include "Physics/Collider.h"
 #include "Physics/ErrorStream.h"
 #include "Physics/VRDSettings.h"
+
+
+#include "Physics/BoxCollider.h"
 
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using namespace TikiEngine::Physics;
+
 		class PhysicsModule : public IPhysics
 		{
 		public:
@@ -26,9 +29,8 @@ namespace TikiEngine
 			/*! @brief  detect if GPU PhysX acceleration is available by querying for the version of the hardware */
 			bool IsHardwarePresent();
 
-
 			/*! @brief retreives the current scene */
-			static NxScene* GetScene() { return currentScene; }
+			static NxScene* GetScene();
 
 			void Begin();
 			void End();
@@ -38,12 +40,16 @@ namespace TikiEngine
 			void Dispose();
 
 		private:
+			Engine* tikiEngine;
+
 			bool pause;
 			NxPhysicsSDK* physicsSDK;
 
 			NxScene* scene; 
 			static NxScene* currentScene;
-
+			
+			BoxCollider* box;
+			BoxCollider* box2;
 		};
 	}
 }

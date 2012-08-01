@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/Object.h"
-#include "Physics/PhysicsModule.h"
 
 namespace TikiEngine
 {
@@ -23,8 +22,6 @@ namespace TikiEngine
 			virtual Single GetRestitution() = 0;
 
 			virtual UInt16 GetIndex() = 0;
-
 		};
-
 	}
 }

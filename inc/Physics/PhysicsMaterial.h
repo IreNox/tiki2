@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Core/IPhysicsMaterial.h"
+#include "PhysX/Physics/NxPhysics.h"
 
 namespace TikiEngine
 {
-	namespace Components
+	namespace Physics
 	{
+		using namespace TikiEngine::Components;
+
 		/*! @brief Physics material describes how to handle 
 		 *	colliding objects (friction, bounciness).
 		 */
@@ -14,7 +17,7 @@ namespace TikiEngine
 
 		public:
 			/*! @brief Creates a new material. */
-			PhysicsMaterial();
+			PhysicsMaterial(NxScene* setScene);
 			~PhysicsMaterial();
 
 			/*! @brief The friction used when already moving. This value has to be between 0 and 1. */
@@ -35,9 +38,8 @@ namespace TikiEngine
 			UInt16 GetIndex();
 
 		private:
-
+			NxScene* scene;
 			UInt16 index;
-			
 			NxMaterialDesc desc;
 			NxMaterial* material;
 		};

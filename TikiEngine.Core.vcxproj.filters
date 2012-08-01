@@ -418,5 +418,8 @@
     <ClInclude Include="inc\Core\TypeGlobals.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IPhysicsMaterial.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

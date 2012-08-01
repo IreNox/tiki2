@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GameObject.h"
+#include "Core/Component.h"
 
 namespace TikiEngine
 {
@@ -16,7 +16,7 @@ namespace TikiEngine
 				: Component(engine, gameObject, CT_Collider)
 			{
 			}
-			~ICollider() {}
+			virtual ~ICollider() {}
 
 		};
 	}
