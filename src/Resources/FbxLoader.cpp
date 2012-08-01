@@ -41,6 +41,10 @@ namespace TikiEngine
 			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
 			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
 
+			Vector4 *vertexData = new Vector4[model->GetControlPointsCount()];
+			for(int i = 0; i < model->GetControlPointsCount(); i++)
+				vertexData[i] = ConvertToTiki(vertexArray[i]);
+
 			int size = sizeof(FbxVector4);
 			int mySize = sizeof(Vector4);
 

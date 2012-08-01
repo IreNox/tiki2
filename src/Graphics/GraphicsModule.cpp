@@ -18,9 +18,9 @@ namespace TikiEngine
 			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0)
 		{
-			clearColor[0] = 100.0f / 255;
-			clearColor[1] = 149.0f / 255;
-			clearColor[2] = 238.0f / 255;
+			clearColor[0] = 21.0f / 255;
+			clearColor[1] = 97.0f / 255;
+			clearColor[2] = 200.0f / 255;
 			clearColor[3] = 1.0f;
 		}
 
