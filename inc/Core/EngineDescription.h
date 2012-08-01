@@ -1,5 +1,8 @@
 #pragma once
 
+#define NOMINMAX
+#include <Windows.h>
+
 #include "Core/InputDescription.h"
 #include <Core/WindowDescription.h>
 #include <Core/GraphicsDescription.h>

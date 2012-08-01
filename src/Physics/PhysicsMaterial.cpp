@@ -49,7 +49,7 @@ namespace TikiEngine
 			return material->getRestitution();
 		}
 
-		UShort PhysicsMaterial::GetIndex()
+		UInt16 PhysicsMaterial::GetIndex()
 		{
 			return index;
 		}

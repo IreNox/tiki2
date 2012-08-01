@@ -4,7 +4,6 @@
 #include "Core/TikiInfo.h"
 #include "Core/IModule.h"
 
-#include <Windows.h>
 #include <typeinfo.h>
 
 #include "Core/Dictionary.h"

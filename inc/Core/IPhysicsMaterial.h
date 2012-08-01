@@ -22,7 +22,7 @@ namespace TikiEngine
 			virtual void SetRestitution(Single restitution) = 0;
 			virtual Single GetRestitution() = 0;
 
-			virtual UShort GetIndex() = 0;
+			virtual UInt16 GetIndex() = 0;
 
 		};
 

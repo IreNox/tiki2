@@ -13,6 +13,9 @@
 
 #include "Core/Key.h"
 
+#include "Core/List.h"
+#include "Core/Dictionary.h"
+
 #include <string>
 using std::string;
 using std::wstring;

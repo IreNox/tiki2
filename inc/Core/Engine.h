@@ -3,8 +3,6 @@
 #include "Core/TypeInc.h"
 #include "Core/EngineDescription.h"
 
-#include "Core/List.h"
-
 namespace TikiEngine
 {
 	class Scene;

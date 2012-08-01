@@ -3,8 +3,6 @@
 #include "Core/IModule.h"
 #include "Core/EngineDescription.h"
 
-#include <Windows.h>
-
 namespace TikiEngine
 {
 	namespace Modules

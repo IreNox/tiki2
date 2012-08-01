@@ -32,11 +32,13 @@ namespace TikiEngine
 			Single GetRestitution();
 
 			/*! @brief Gets the Material Index the PhysX SDK generates when we create a material */
-			UShort GetIndex();
+			UInt16 GetIndex();
 
 		private:
+
+			UInt16 index;
+			
 			NxMaterialDesc desc;
-			UShort index;
 			NxMaterial* material;
 		};
 	}

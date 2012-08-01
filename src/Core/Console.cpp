@@ -1,7 +1,6 @@
 
-#include <Windows.h>
-
 #include "Core/Console.h"
+#include <Windows.h>
 
 //#define _CRT_SECURE_NO_WARNINGS
 

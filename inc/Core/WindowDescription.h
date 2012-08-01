@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/TypeInc.h"
+
 namespace TikiEngine
 {
 	namespace Description
@@ -22,12 +24,12 @@ namespace TikiEngine
 			/*!
 			 * @brief The name of the Window Class.
 			 */
-			LPCWSTR WindowClass;
+			const wchar_t* WindowClass;
 
 			/*!
 			 * @brief The window title.
 			 */
-			LPCWSTR WindowTitle;
+			const wchar_t* WindowTitle;
 	
 			/*!
 			 * @brief The window handle.

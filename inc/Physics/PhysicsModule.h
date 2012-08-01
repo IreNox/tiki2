@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Core/IPhysics.h"
-//#include "../PhysX/Physics/NxPhysics.h"
-#include "NxPhysics.h"
-#include "ErrorStream.h"
-#include "VRDSettings.h"
+
+#include "PhysX/Physics/NxPhysics.h"
+#include "PhysX/Physics/NxPhysics.h"
+
 #include "Physics/Collider.h"
+#include "Physics/ErrorStream.h"
+#include "Physics/VRDSettings.h"
+
 
 namespace TikiEngine
 {
