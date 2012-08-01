@@ -2,7 +2,6 @@
 #include <Windows.h>
 
 #include "Core/Engine.h"
-#include "Core/Scene.h"
 
 //#include "Core/Texture.h"
 //#include "Graphics/DefaultShader.h"
@@ -11,7 +10,12 @@
 #include "Core/QuadObject.h"
 //#include "TeeTriangle.h"
 
+#include "Game/SceneTim.h"
+#include "Game/SceneMark.h"
+#include "Game/SceneAdrian.h"
+
 using namespace TikiEngine;
+using namespace TikiEngine::Game;
 using namespace TikiEngine::Description;
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
@@ -30,37 +34,27 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		
 		if (engine->Initialize(desc))
 		{
-			engine->scene = new Scene(engine);
+			DWORD buffer;
+			WCHAR username[100];
+			GetUserName(username, &buffer);
 
-			Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
-			if(mesh != 0)
+			wstring name = username;
+
+			if (name == L"tim.boden")
 			{
-				delete(mesh);
-				mesh = 0;
+				engine->scene = new SceneTim(engine);
+			}
+			else if (name == L"adrian.lück")
+			{
+				engine->scene = new SceneAdrian(engine);
+			}
+			else if (name == L"mark.reichert")
+			{
+				engine->scene = new SceneMark(engine);
 			}
 
-			//ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
-
-			//Texture* texture = new Texture(
-			//	engine,
-			//	wstring(L"Data/Resources/box_diffuse.jpg")
-			//);
-
-			//Shader* shader = new DefaultShader(engine);
-			//shader->GetVariable("tex").SetTexture(texture);
-
-			//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
-			//Quad* quad = new Quad(engine, shaderPP);
-
-
-			//engine->scene->AddElement(new Box(engine, shader));
-			//scene->AddElement(new TeeTriangle(engine));
+			engine->Run();
 		}
-
-		engine->Run();
-
-		//delete(shader);
-		//delete(texture);
 
 		delete(engine);
 	}

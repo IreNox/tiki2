@@ -23,6 +23,15 @@
     <ClInclude Include="src\Game\TeeTriangle.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SceneTim.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SceneMark.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SceneAdrian.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Box.cpp">
@@ -33,6 +42,15 @@
     </ClCompile>
     <ClCompile Include="src\Game\TeeTriangle.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneTim.cpp">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneMark.cpp">
+      <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneAdrian.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

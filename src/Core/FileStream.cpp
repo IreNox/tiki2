@@ -81,7 +81,9 @@ namespace TikiEngine
 		#pragma region Member - Properties
 		Int32 FileStream::GetLength()
 		{
+			fseek(handle, 0, SEEK_END);
 			return ftell(handle);
+			fseek(handle, 0, SEEK_SET);
 		}
 
 		void FileStream::SetLength(Int32 len)

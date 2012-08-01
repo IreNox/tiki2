@@ -7,6 +7,9 @@
     <Link>
       <AdditionalDependencies>NxCharacter64.lib;PhysXCooking64.lib;PhysXCore64.lib;PhysXLoader64.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\inc\PhysX\Cooking;.\inc\PhysX\Foundation;.\inc\PhysX\NxCharacter;.\inc\PhysX\Physics;.\inc\PhysX\PhysXLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
