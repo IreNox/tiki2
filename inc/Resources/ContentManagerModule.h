@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/IContentManager.h"
+#include "Resources/FbxLoader.h"
 
 namespace TikiEngine
 {
@@ -25,6 +26,9 @@ namespace TikiEngine
 			Mesh* LoadFbxMesh(const wstring& name);
 			ITexture* LoadTexture(const wstring& name);
 			Material* LoadMaterial(const wstring& name);
+
+		private:
+			FbxLoader *fbxLoader;
 		};
 	}
 }

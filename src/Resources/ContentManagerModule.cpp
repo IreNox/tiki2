@@ -14,10 +14,13 @@ namespace TikiEngine
 		ContentManagerModule::ContentManagerModule(Engine* engine)
 			: IContentManager(engine)
 		{
+			this->fbxLoader = new FbxLoader();
 		}
 		
 		ContentManagerModule::~ContentManagerModule()
 		{
+			if(this->fbxLoader)
+				delete(fbxLoader);
 		}
 
 		bool ContentManagerModule::Initialize(EngineDescription& desc)
@@ -66,7 +69,8 @@ namespace TikiEngine
 		}
 		Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
 		{
-			return FbxLoader::LoadMesh(name);
+
+			return this->fbxLoader->LoadMesh(name);
 		}
 
 		ITexture* ContentManagerModule::LoadTexture(const wstring& name)

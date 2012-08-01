@@ -1,13 +1,16 @@
 #pragma  once
 
+#include <string.h>
+#include <stdlib.h>
+
+#include "Core/Mesh.h"
+
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
-#include <string.h>
-#include "Core/Mesh.h"
 
 #ifdef IOS_REF
 #undef  IOS_REF
-#define IOS_REF (*(pManager->GetIOSettings()))
+#define IOS_REF (*(pSdkManager->GetIOSettings()))
 #endif
 
 
@@ -17,21 +20,23 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+
 		class FbxLoader
 		{
 		public:
 			FbxLoader();
 			~FbxLoader();
 
-			static Mesh* LoadMesh(const wstring& name);
+			Mesh* LoadMesh(const wstring& name);
 
 		private:
 
-			static void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
-			static bool LoadScene(FbxManager* pManager, FbxDocument* pScene, const char* pFilename);
+			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
+			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
+			Vector4 ConvertToTiki(const FbxVector4& vector);
 
-
-		protected:
+			FbxManager* fbxManager;
+			FbxScene* scene;
 		};
 	}
 }

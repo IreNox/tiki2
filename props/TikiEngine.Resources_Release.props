@@ -6,6 +6,7 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>fbxsdk-2013.2-mt.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <IgnoreSpecificDefaultLibraries>MSVCRT.lib</IgnoreSpecificDefaultLibraries>
     </Link>
     <ClCompile>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
