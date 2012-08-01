@@ -19,11 +19,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Physics\Collider.h" />
     <ClInclude Include="inc\Physics\DllMain.h" />
+    <ClInclude Include="inc\Physics\ErrorStream.h" />
+    <ClInclude Include="inc\Physics\PhysicsMaterial.h" />
     <ClInclude Include="inc\Physics\PhysicsModule.h" />
+    <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp" />
+    <ClCompile Include="src\Physics\PhysicsMaterial.cpp" />
     <ClCompile Include="src\Physics\PhysicsModule.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

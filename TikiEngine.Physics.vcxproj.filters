@@ -9,6 +9,12 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
+    <Filter Include="Headerdateien\Colliders">
+      <UniqueIdentifier>{055799a8-dd2a-463d-9860-da4266d2ff76}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Colliders">
+      <UniqueIdentifier>{dc264be6-3d54-4d01-97d7-6b3fc8fc0f8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Physics\DllMain.h">
@@ -17,6 +23,18 @@
     <ClInclude Include="inc\Physics\PhysicsModule.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\ErrorStream.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\VRDSettings.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\PhysicsMaterial.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\Collider.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -24,6 +42,9 @@
     </ClCompile>
     <ClCompile Include="src\Physics\PhysicsModule.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\PhysicsMaterial.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
