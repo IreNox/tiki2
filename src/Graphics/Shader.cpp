@@ -252,7 +252,7 @@ namespace TikiEngine
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;
 
-			UInt64 size = stream->GetLength();
+			PInt size = stream->GetLength();
 			char* data = new char[size];
 			stream->Read(data, 0, size);
 

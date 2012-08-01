@@ -2,11 +2,16 @@
 
 #ifdef _WIN64
 typedef __int64 IntPtr;
+
+typedef __int64 PInt;
+typedef unsigned __int64 UPInt;
+
 #else
 typedef __int32 IntPtr;
-#endif
 
-typedef __int32 IntSize;
+typedef __int32 PInt;
+typedef unsigned __int32 UPInt;
+#endif
 
 typedef unsigned char Byte;
 

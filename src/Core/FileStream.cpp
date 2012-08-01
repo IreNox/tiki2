@@ -14,16 +14,16 @@ namespace TikiEngine
 			switch (mode)
 			{
 			case FM_Read:
-				handle = _wfopen(fileName.c_str(), L"rb");
+				_wfopen_s(&handle, fileName.c_str(), L"rb");
 				break;
 			case FM_ReadWrite:
-				handle = _wfopen(fileName.c_str(), L"wb+");
+				_wfopen_s(&handle, fileName.c_str(), L"wb+");
 				break;
 			case FM_Write:
-				handle = _wfopen(fileName.c_str(), L"wb");
+				_wfopen_s(&handle, fileName.c_str(), L"wb");
 				break;
 			case FM_WriteAppend:
-				handle = _wfopen(fileName.c_str(), L"ab");
+				_wfopen_s(&handle, fileName.c_str(), L"ab");
 				break;
 			}
 		}
@@ -80,7 +80,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Properties
-		Int32 FileStream::GetLength()
+		PInt FileStream::GetLength()
 		{
 			Int64 pos = this->GetPosition();
 			fseek(handle, 0, SEEK_END);
@@ -91,7 +91,7 @@ namespace TikiEngine
 			return size;
 		}
 
-		void FileStream::SetLength(Int32 len)
+		void FileStream::SetLength(PInt len)
 		{
 			throw "Not supported";
 		}

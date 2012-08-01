@@ -5,15 +5,17 @@ namespace TikiEngine
 	namespace Resources
 	{
 		FbxLoader::FbxLoader(Engine* engine)
-			: EngineObject(engine)
+			: EngineObject(engine), fbxManager(0), scene(0)
 		{
 			this->InitializeSdkObjects(this->fbxManager, this->scene);
 		}
 		FbxLoader::~FbxLoader()
 		{
 			if(this->fbxManager)
+			{
 				fbxManager->Destroy();
-
+				fbxManager = 0;
+			}
 		}
 
 		Mesh* FbxLoader::LoadMesh(const wstring& name)
@@ -54,6 +56,8 @@ namespace TikiEngine
 
 			Mesh* mesh2 = new Mesh(engine);
 			mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
+
+			root->Destroy(true);		
 
 			return mesh2;
 		}

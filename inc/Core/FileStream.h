@@ -32,8 +32,8 @@ namespace TikiEngine
 			void WriteByte(Byte byte);
 			void Write(void* data, Int32 offset, UInt32 bytesCount);
 
-			Int32 GetLength();
-			void SetLength(Int32 len);
+			PInt GetLength();
+			void SetLength(PInt len);
 
 			Int64 GetPosition();
 			void SetPosition(Int64 pos);

@@ -191,7 +191,7 @@ Matrix Matrix::CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio
 	if (nearPlaneDistance >= farPlaneDistance)
 		throw "IllegalArgument nearPlaneDistance";
 
-	float num = 1 / tanf(fieldOfView * 0.5f);
+	float num = 1 / tan(fieldOfView * 0.5f);
 	float m = num / aspectRatio;
 
 	Matrix result;

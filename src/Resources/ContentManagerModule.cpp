@@ -25,7 +25,7 @@ namespace TikiEngine
 
 		ContentManagerModule::~ContentManagerModule()
 		{
-
+			SafeRelease(&fbxLoader);
 		}
 		#pragma endregion
 
