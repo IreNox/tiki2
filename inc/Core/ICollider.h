@@ -1,22 +1,23 @@
 #pragma once
 
-#include "Core/EngineObject.h"
+#include "GameObject.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
-		class ICollider : public EngineObject
+		/*! @brief An Interface of all colliders. */
+		class ICollider : public Component
 		{
 		public:
 
-			ICollider(Engine* engine)
-				: EngineObject(engine)
+			/*! @brief Create Collider Component */
+			ICollider(Engine* engine, GameObject* gameObject)
+				: Component(engine, gameObject, CT_Collider)
 			{
 			}
 			~ICollider() {}
 
-			virtual void ReplaceMe() = 0;
 		};
 	}
 }
