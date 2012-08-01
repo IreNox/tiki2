@@ -4,7 +4,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		class MeshIndexed : Mesh
 		{

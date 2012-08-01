@@ -8,7 +8,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		class Shader : public IShader
 		{

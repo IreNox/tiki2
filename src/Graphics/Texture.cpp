@@ -12,7 +12,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		#pragma region Class
 		Texture::Texture(Engine* engine)
@@ -62,7 +62,10 @@ namespace TikiEngine
 				Console::WriteError("Can't load Texture", r);
 			}
 
-			textureResource->QueryInterface<ID3D11Texture2D>(&texture);
+			ID3D11Resource* res;
+			textureResource->GetResource(&res);
+
+			texture = (ID3D11Texture2D*)res;
 			texture->GetDesc(&desc);
 		}
 

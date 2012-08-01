@@ -10,6 +10,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
+		using namespace TikiEngine::Resources;
 
 		class Quad : public GameObject
 		{

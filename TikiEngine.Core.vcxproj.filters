@@ -84,9 +84,6 @@
     <Filter Include="Headerdateien\Interfaces\Modules">
       <UniqueIdentifier>{0be57129-1b5a-4055-aa5c-d17170b1e4bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Interfaces\Graphics">
-      <UniqueIdentifier>{ff8d7c53-a093-42c7-81f5-d72b9cd1ac42}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Interfaces\Extern Components">
       <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
@@ -173,16 +170,19 @@
     <ClCompile Include="src\Core\Scene.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Mesh.cpp">
-      <Filter>Quelldateien\Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\MeshIndexed.cpp">
-      <Filter>Quelldateien\Core\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\FileStream.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Resource.cpp">
+    <ClCompile Include="src\Core\TypeGlobals.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\IResource.cpp">
+      <Filter>Quelldateien\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Mesh.cpp">
+      <Filter>Quelldateien\Core\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MeshIndexed.cpp">
       <Filter>Quelldateien\Core\Resources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -277,9 +277,6 @@
     <ClInclude Include="inc\Core\InitializationArgs.h">
       <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\IRenderTarget.h">
-      <Filter>Headerdateien\Interfaces\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\EngineObject.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
@@ -300,9 +297,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\GarbageCollector.h">
       <Filter>Headerdateien\Engine\Static</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ITexture.h">
-      <Filter>Headerdateien\Interfaces\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ComponentType.h">
       <Filter>Headerdateien\Core\Components</Filter>
@@ -358,9 +352,6 @@
     <ClInclude Include="inc\Core\SimpleVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\IShader.h">
-      <Filter>Headerdateien\Interfaces\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Material.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
@@ -409,9 +400,6 @@
     <ClInclude Include="inc\Core\Stream.h">
       <Filter>Headerdateien\Core\I/O</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Resource.h">
-      <Filter>Headerdateien\Interfaces\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\MeshAnimated.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
@@ -420,6 +408,18 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IPhysicsMaterial.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IResource.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IRenderTarget.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ITexture.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IShader.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

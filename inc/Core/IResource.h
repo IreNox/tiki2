@@ -9,15 +9,15 @@ namespace TikiEngine
 	{
 		using TikiEngine::IO::Stream;
 
-		class Resource : public EngineObject
+		class IResource : public EngineObject
 		{
 		public:
 
-			Resource(Engine* engine);
-			~Resource();
+			IResource(Engine* engine);
+			~IResource();
 
-			virtual void LoadFromFile(wstring fileName);
-			virtual void SaveToFile(wstring fileName);
+			virtual void LoadFromFile(wcstring fileName);
+			virtual void SaveToFile(wcstring fileName);
 
 			virtual void* GetNativeResource() = 0;
 

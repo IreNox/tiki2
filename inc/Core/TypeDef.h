@@ -23,4 +23,7 @@ typedef double Double;
 
 typedef bool Boolean;
 
+typedef const char* cstring;
+typedef const wchar_t* wcstring;
+
 #define MATH_PI 3.1415926535f

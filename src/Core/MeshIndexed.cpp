@@ -3,7 +3,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		#pragma region Class
 		MeshIndexed::MeshIndexed(Engine* engine)

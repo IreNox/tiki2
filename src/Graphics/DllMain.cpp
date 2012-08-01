@@ -45,7 +45,7 @@ namespace TikiEngine
 		return DllMain::Module;
 	}
 
-	Resource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(IntPtr hash)
 	{
 		if (hash == typeid(ITexture).hash_code())
 		{

@@ -15,7 +15,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		#pragma region Class
 		Shader::Shader(Engine* engine)

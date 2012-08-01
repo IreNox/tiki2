@@ -7,6 +7,8 @@ namespace TikiEngine
 {
 	namespace Graphics
 	{
+		using namespace TikiEngine::Resources;
+
 		class Material : public EngineObject
 		{
 		public:

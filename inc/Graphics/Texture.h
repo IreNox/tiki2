@@ -7,7 +7,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		using TikiEngine::IO::Stream;
 

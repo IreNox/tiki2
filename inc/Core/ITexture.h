@@ -1,19 +1,17 @@
 #pragma once
 
-#include "Core/Resource.h"
+#include "Core/IResource.h"
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
-		using TikiEngine::Resources::Resource;
-
-		class ITexture : public Resource
+		class ITexture : public IResource
 		{
 		public:
 
 			ITexture(Engine* engine)
-				: Resource(engine)
+				: IResource(engine)
 			{
 			}
 

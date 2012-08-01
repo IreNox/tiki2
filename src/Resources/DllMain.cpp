@@ -35,7 +35,7 @@ namespace TikiEngine
 		return DllMain::Module;
 	}
 
-	Resource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(IntPtr hash)
 	{
 		return 0;
 	}

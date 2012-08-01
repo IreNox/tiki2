@@ -4,7 +4,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		class IRenderTarget : public ITexture
 		{

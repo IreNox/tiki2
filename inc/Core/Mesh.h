@@ -1,17 +1,18 @@
 #pragma once
 
-#include "Core/EngineObject.h"
+#include "Core/TypeGlobals.h"
+
+#include "Core/IResource.h"
 #include "Core/InputElement.h"
 
-#include "Core/List.h"
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		using TikiEngine::Vertices::InputElement;
 
-		class Mesh : public EngineObject
+		class Mesh : public IResource
 		{
 		public:
 
@@ -24,6 +25,8 @@ namespace TikiEngine
 			List<InputElement>* GetVertexDeclaration();
 			void SetVertexDeclaration(InputElement* elements, UInt32 count);
 
+			virtual void* GetNativeResource();
+
 			virtual bool GetReady();
 
 		private:
@@ -32,6 +35,9 @@ namespace TikiEngine
 			UInt32 vertexDataLength;
 
 			List<InputElement> vertexDeclaration;
+
+			virtual void loadFromStream(Stream* stream);
+			virtual void saveToStream(Stream* stream);
 		};
 	}
 }

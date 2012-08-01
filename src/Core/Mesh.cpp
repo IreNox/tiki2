@@ -4,11 +4,11 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		#pragma region Class
 		Mesh::Mesh(Engine* engine)
-			: EngineObject(engine), vertexData(0), vertexDataLength(0), vertexDeclaration()
+			: IResource(engine), vertexData(0), vertexDataLength(0), vertexDeclaration()
 		{
 		}
 
@@ -26,6 +26,11 @@ namespace TikiEngine
 		bool Mesh::GetReady()
 		{
 			return (vertexData != 0) && (vertexDeclaration.Count() != 0);
+		}
+
+		void* Mesh::GetNativeResource()
+		{
+			return 0;
 		}
 		#pragma endregion
 
@@ -65,6 +70,18 @@ namespace TikiEngine
 				vertexDeclaration.Add(elements[i]);
 				i++;
 			}
+		}
+		#pragma endregion
+
+		#pragma region Protected Member
+		void Mesh::loadFromStream(Stream* stream)
+		{
+			//TODO: load mesh
+		}
+
+		void Mesh::saveToStream(Stream* stream)
+		{
+			//TODO: save mesh
 		}
 		#pragma endregion
 	}

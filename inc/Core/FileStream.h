@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/TypeInc.h"
+#include "Core/TypeGlobals.h"
 #include "Core/Stream.h"
 
 #include <stdio.h>
@@ -41,8 +41,6 @@ namespace TikiEngine
 		private:
 
 			FILE* handle;
-
-			UInt64 size;
 		};
 	}
 }

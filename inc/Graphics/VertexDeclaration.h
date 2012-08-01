@@ -7,7 +7,7 @@
 
 namespace TikiEngine
 {
-	using namespace TikiEngine::Graphics;
+	using namespace TikiEngine::Resources;
 
 	namespace Vertices
 	{

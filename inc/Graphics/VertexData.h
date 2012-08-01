@@ -14,7 +14,7 @@ namespace TikiEngine
 	namespace Vertices
 	{
 		using namespace TikiEngine::Buffer;
-		using namespace TikiEngine::Graphics;
+		using namespace TikiEngine::Resources;
 
 		class VertexData : public EngineObject
 		{

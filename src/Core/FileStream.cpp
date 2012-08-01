@@ -11,23 +11,19 @@ namespace TikiEngine
 		FileStream::FileStream(wstring fileName, FileMode mode)
 			: Stream(), handle(0)
 		{
-			//ULONG tmp;
-			//HANDLE h = OpenFile(fileName.c_str(), 0, 0);
-			//size = GetFileSize(h, &tmp);
-
 			switch (mode)
 			{
 			case FM_Read:
-				handle = _wfopen(fileName.c_str(), L"rb");
+				handle = _wfopen(fileName.c_str(), L"r");
 				break;
 			case FM_ReadWrite:
-				handle = _wfopen(fileName.c_str(), L"wb+");
+				handle = _wfopen(fileName.c_str(), L"w+");
 				break;
 			case FM_Write:
-				handle = _wfopen(fileName.c_str(), L"wb");
+				handle = _wfopen(fileName.c_str(), L"w");
 				break;
 			case FM_WriteAppend:
-				handle = _wfopen(fileName.c_str(), L"ab");
+				handle = _wfopen(fileName.c_str(), L"a");
 				break;
 			}
 		}
@@ -64,7 +60,7 @@ namespace TikiEngine
 			Byte* ptr = (Byte*)data;
 			ptr += offset;
 
-			fread(ptr, bytesCount, 1, handle);
+			fread_s(ptr, bytesCount, bytesCount, 1, handle);
 		}
 		#pragma endregion
 
@@ -86,6 +82,12 @@ namespace TikiEngine
 		#pragma region Member - Properties
 		Int32 FileStream::GetLength()
 		{
+			Int64 pos = this->GetPosition();
+			fseek(handle, 0, SEEK_END);
+			Int64 size = ftell(handle);
+
+			this->SetPosition(pos);
+
 			return size;
 		}
 

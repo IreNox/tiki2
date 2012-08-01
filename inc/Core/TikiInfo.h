@@ -4,7 +4,7 @@
 #include "Core/List.h"
 
 #include "Core/IModule.h"
-#include "Core/Resource.h"
+#include "Core/IResource.h"
 #include "Core/Component.h"
 
 namespace TikiEngine
@@ -14,7 +14,7 @@ namespace TikiEngine
 	using namespace TikiEngine::Components;
 
 	typedef IModule*(*FuncGetTikiModule)(IntPtr);
-	typedef Resource*(*FuncGetTikiResource)(IntPtr);
+	typedef IResource*(*FuncGetTikiResource)(IntPtr);
 	typedef Component*(*FuncGetTikiComponent)(IntPtr, GameObject* gameObject);
 
 	struct TikiInfo 

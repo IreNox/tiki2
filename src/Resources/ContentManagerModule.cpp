@@ -1,8 +1,9 @@
 
-#include "Resources/ContentManagerModule.h"
-
+#include "Core/TypeGlobals.h"
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
+
+#include "Resources/ContentManagerModule.h"
 #include "Resources/FbxLoader.h"
 
 #include <typeinfo.h>
@@ -11,18 +12,24 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
 			: IContentManager(engine)
 		{
+			wchar_t cd[MAX_PATH];
+			_wgetcwd(cd, MAX_PATH);
+			workingPath = cd;
+
 			this->fbxLoader = new FbxLoader();
 		}
-		
+
 		ContentManagerModule::~ContentManagerModule()
 		{
-			if(this->fbxLoader)
-				delete(fbxLoader);
-		}
 
+		}
+		#pragma endregion
+
+		#pragma region Member - Module
 		bool ContentManagerModule::Initialize(EngineDescription& desc)
 		{
 			return true;
@@ -38,34 +45,42 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
+			SafeRelease(&this->fbxLoader);
 		}
+		#pragma endregion
 
-		void* ContentManagerModule::Load(IntPtr hash, wstring name)
+		#pragma region Member - Load
+		IResource* ContentManagerModule::Load(IntPtr hash, wstring name)
 		{
+			bool loadFile = true;
+			IResource* value = 0;
+			wstring fileName = this->GetRealFilePath(name);
+
 			if (hash == typeid(ITexture).hash_code())
 			{
-				ITexture* texture = engine->librarys->CreateResource<ITexture>();
-
-				texture->LoadFromFile(name);
-				return (void*) texture;
+				value = engine->librarys->CreateResource<ITexture>();
 			}
-
-			if (hash == typeid(Mesh).hash_code())
+			else if (hash == typeid(Mesh).hash_code())
 			{
-				Mesh* iMesh = engine->librarys->CreateResource<Mesh>();
-
-				return (void*)iMesh;
+				value = engine->librarys->CreateResource<Mesh>();
 			}
 
-			return 0;
-		}
+			if (loadFile && value != 0)
+			{
+				value->LoadFromFile(fileName.c_str());
+			}
 
+			return value;
+		}
+		#pragma endregion
+
+		#pragma region Member - Load - Generic
 		Mesh* ContentManagerModule::LoadMesh(const wstring& name)
 		{
 			return (Mesh*)this->Load(
 				typeid(Mesh).hash_code(),
 				name
-			);
+				);
 		}
 		Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
 		{
@@ -86,7 +101,20 @@ namespace TikiEngine
 			return (Material*)this->Load(
 				typeid(Material).hash_code(),
 				name
-			);
+				);
 		}
+		#pragma endregion
+
+		#pragma region Member - Path
+		wstring ContentManagerModule::GetWorkingPath()
+		{
+			return workingPath;
+		}
+
+		wstring ContentManagerModule::GetRealFilePath(wstring fileName)
+		{
+			return workingPath + L"\\" + fileName;
+		}
+		#pragma endregion
 	}
 }

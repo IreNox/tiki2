@@ -2,19 +2,19 @@
 
 #include "Core/TypeInc.h"
 
-#include "Core/EngineObject.h"
+#include "Core/IResource.h"
 #include "Core/ITexture.h"
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
-		class IShader : public EngineObject
+		class IShader : public IResource
 		{
 		public:
 
 			IShader(Engine* engine)
-				: EngineObject(engine)
+				: IResource(engine)
 			{
 			}
 			~IShader() {}

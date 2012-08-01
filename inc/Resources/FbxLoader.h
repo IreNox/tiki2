@@ -13,15 +13,14 @@
 #define IOS_REF (*(pSdkManager->GetIOSettings()))
 #endif
 
-
-using namespace TikiEngine::Graphics;
+using namespace TikiEngine::Resources;
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
 
-		class FbxLoader
+		class FbxLoader : public Object
 		{
 		public:
 			FbxLoader();
