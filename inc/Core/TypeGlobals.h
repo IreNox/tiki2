@@ -3,7 +3,16 @@
 #include "Core/TypeInc.h"
 
 template <class T>
-void SafeRelease(T** ptr)
+inline void SafeAddRef(T** ptr)
+{
+	if (*ptr)
+	{
+		(*ptr)->AddRef();
+	}
+}
+
+template <class T>
+inline void SafeRelease(T** ptr)
 {
 	if (*ptr)
 	{

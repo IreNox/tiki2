@@ -1,7 +1,9 @@
 
 #include "Graphics/DllMain.h"
 
+#include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
+
 #include "Graphics/MeshRenderer.h"
 
 #include <typeinfo.h>
@@ -30,6 +32,7 @@ namespace TikiEngine
 
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 
+		DllInfo.Resources.Add(typeid(IShader).hash_code());
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
@@ -50,6 +53,10 @@ namespace TikiEngine
 		if (hash == typeid(ITexture).hash_code())
 		{
 			return new Texture(DllMain::Engine);
+		}
+		if (hash == typeid(IShader).hash_code())
+		{
+			return new Shader(DllMain::Engine);
 		}
 
 		return 0;

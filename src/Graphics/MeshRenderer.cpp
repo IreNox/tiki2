@@ -76,7 +76,9 @@ namespace TikiEngine
 
 		#pragma region Member - Draw/Update
 		void MeshRenderer::Draw(const DrawArgs& args)
-		{
+		{			
+			if (!this->GetReady()) return;
+
 			material->UpdateDrawArgs(args);
 
 			data->Apply();
@@ -85,6 +87,7 @@ namespace TikiEngine
 
 		void MeshRenderer::Update(const UpdateArgs& args)
 		{
+			//if (!this->GetReady()) return;
 		}
 		#pragma endregion
 

@@ -60,9 +60,14 @@ namespace TikiEngine
 			{
 				value = engine->librarys->CreateResource<ITexture>();
 			}
+			else if (hash == typeid(IShader).hash_code())
+			{
+				value = engine->librarys->CreateResource<IShader>();				
+			}
 			else if (hash == typeid(Mesh).hash_code())
 			{
 				value = engine->librarys->CreateResource<Mesh>();
+				loadFile = false;
 			}
 
 			if (loadFile && value != 0)
@@ -80,11 +85,11 @@ namespace TikiEngine
 			return (Mesh*)this->Load(
 				typeid(Mesh).hash_code(),
 				name
-				);
+			);
 		}
+
 		Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
 		{
-
 			return this->fbxLoader->LoadMesh(name);
 		}
 
@@ -98,10 +103,15 @@ namespace TikiEngine
 
 		Material* ContentManagerModule::LoadMaterial(const wstring& name)
 		{
-			return (Material*)this->Load(
-				typeid(Material).hash_code(),
-				name
-				);
+			Material* mat = new Material(engine);
+			mat->SetShader(
+				(IShader*)this->Load(
+					typeid(IShader).hash_code(),
+					name
+				)
+			);
+
+			return mat;
 		}
 		#pragma endregion
 

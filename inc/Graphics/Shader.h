@@ -42,12 +42,13 @@ namespace TikiEngine
 			void SetMatrix(string key, const Matrix& value);
 			void SetTexture(string key, ITexture* value);
 
+			void* GetNativeResource();
 			bool GetReady();
 
 			void CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash);
 
 		protected:
-			Engine* engine;
+			
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;
 
@@ -56,8 +57,8 @@ namespace TikiEngine
 			ID3DX11EffectPass* pass;
 			ID3DX11EffectTechnique* technique;
 
-			void compileShader(wstring fileName);
-			void createEffect(ID3D10Blob* blob);
+			void loadFromStream(Stream* stream);
+			void saveToStream(Stream* stream);
 		};
 	}
 }

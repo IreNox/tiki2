@@ -19,9 +19,6 @@ namespace TikiEngine
 			}
 			~IShader() {}
 
-			virtual void LoadFromFile(string fileName) = 0;
-			virtual void CompileFromFile(string fileName) = 0;
-
 			virtual void SelectSubByIndex(UInt32 index) = 0;
 			virtual void SelectSubByName(string name) = 0;
 

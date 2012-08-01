@@ -6,7 +6,7 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-		class MeshIndexed : Mesh
+		class MeshIndexed : public Mesh
 		{
 		public:
 

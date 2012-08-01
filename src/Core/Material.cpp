@@ -1,4 +1,5 @@
 
+#include "Core/TypeGlobals.h"
 #include "Core/Material.h"
 
 namespace TikiEngine
@@ -6,16 +7,13 @@ namespace TikiEngine
 	namespace Graphics
 	{
 		Material::Material(Engine* engine)
-			: EngineObject(engine)
+			: EngineObject(engine), shader(0)
 		{
 		}
 
 		Material::~Material()
 		{
-			if (shader != 0)
-			{
-				shader->Release();
-			}
+			SafeRelease(&shader);
 		}
 
 		void Material::Apply()
@@ -25,7 +23,13 @@ namespace TikiEngine
 
 		void Material::UpdateDrawArgs(const DrawArgs& args)
 		{
-			//TODO: Update shader vars
+			if (!this->GetReady()) return;
+
+			Matrix* worldMatrix = new Matrix(Matrix::Identity); //element->PRS.GetWorldMatrix();
+
+			shader->SetMatrix("worldMatrix", *worldMatrix);
+
+			delete(worldMatrix);
 		}
 
 		IShader* Material::GetShader()
@@ -35,17 +39,9 @@ namespace TikiEngine
 
 		void Material::SetShader(IShader* shader)
 		{
-			if (this->shader != 0)
-			{
-				this->shader->Release();
-			}
-
+			SafeRelease(&this->shader);
 			this->shader = shader;
-
-			if (this->shader != 0)
-			{
-				this->shader->AddRef();
-			}
+			SafeAddRef(&this->shader);
 		}
 
 		bool Material::GetReady()

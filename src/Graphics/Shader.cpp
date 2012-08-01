@@ -1,17 +1,19 @@
 #pragma comment(lib, "Effects11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
 
-#include "Graphics/Shader.h"
-#include "Core/Console.h"
-
+#include "Core/TypeGlobals.h"
 #include "Core/Engine.h"
-
+#include "Core/Console.h"
 #include "Core/HelperHash.h"
+
+#include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
 
 #include <d3d11.h>
 #include <d3dx11.h>
 #include <D3Dcompiler.h>
+
+#include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -21,11 +23,8 @@ namespace TikiEngine
 		Shader::Shader(Engine* engine)
 			: IShader(engine), effect(0)
 		{
-			this->device = 0;
-			this->context = 0;
-
-			technique = effect->GetTechniqueByIndex(0);
-			this->SelectSubByIndex(0);
+			this->device = DllMain::Device;
+			this->context = DllMain::Context;
 		}
 
 		Shader::~Shader()
@@ -42,6 +41,11 @@ namespace TikiEngine
 		bool Shader::GetReady()
 		{
 			return (effect != 0);
+		}
+
+		void* Shader::GetNativeResource()
+		{
+			return effect;
 		}
 
 		void Shader::Apply()
@@ -243,13 +247,19 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member
-		void Shader::compileShader(wstring fileName)
+		void Shader::loadFromStream(Stream* stream)
 		{
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;
 
-			HRESULT r = D3DX11CompileFromFile(
-				fileName.c_str(),
+			UInt64 size = stream->GetLength();
+			char* data = new char[size];
+			stream->Read(data, 0, size);
+
+			HRESULT r = D3DX11CompileFromMemory(
+				data,
+				size,
+				0,
 				0,
 				0,
 				0,
@@ -262,6 +272,8 @@ namespace TikiEngine
 				0
 			);
 
+			delete[](data);
+
 			if (FAILED(r))
 			{
 				if (r == D3D11_ERROR_FILE_NOT_FOUND)
@@ -273,6 +285,8 @@ namespace TikiEngine
 					if (errorBlob)
 					{
 						char* error = (char*)errorBlob->GetBufferPointer();
+						SafeRelease(&errorBlob);
+
 						Console::WriteError("Failed to compile effect. %s\n" + (string)error, r);
 					}
 					else
@@ -284,12 +298,7 @@ namespace TikiEngine
 				throw "Shader: .ctor: An error was corrupted.";
 			}
 
-			createEffect(blob);
-		}
-
-		void Shader::createEffect(ID3D10Blob* blob)
-		{
-			HRESULT r = D3DX11CreateEffectFromMemory(
+			r = D3DX11CreateEffectFromMemory(
 				blob->GetBufferPointer(),
 				blob->GetBufferSize(),
 				0,
@@ -297,11 +306,7 @@ namespace TikiEngine
 				&effect
 			);
 
-			if (blob != 0)
-			{
-				blob->Release();
-				blob = 0;
-			}
+			SafeRelease(&blob);
 
 			if (FAILED(r))
 			{
@@ -309,6 +314,14 @@ namespace TikiEngine
 
 				throw "Shader: .ctor: An error was corrupted.";
 			}
+
+			technique = effect->GetTechniqueByIndex(0);
+			this->SelectSubByIndex(0);
+		}
+
+		void Shader::saveToStream(Stream* stream)
+		{
+
 		}
 		#pragma endregion
 	}
