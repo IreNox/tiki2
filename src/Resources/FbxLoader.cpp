@@ -4,9 +4,8 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-
-
-		FbxLoader::FbxLoader()
+		FbxLoader::FbxLoader(Engine* engine)
+			: EngineObject(engine)
 		{
 			this->InitializeSdkObjects(this->fbxManager, this->scene);
 		}
@@ -16,6 +15,7 @@ namespace TikiEngine
 				fbxManager->Destroy();
 
 		}
+
 		Mesh* FbxLoader::LoadMesh(const wstring& name)
 		{
 			bool result = LoadScene(fbxManager, scene, name);
@@ -41,19 +41,21 @@ namespace TikiEngine
 			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
 			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
 
-			Vector4 *vertexData = new Vector4[model->GetControlPointsCount()];
+			UInt32 count = model->GetControlPointsCount();
+			UInt32 size = count * sizeof(DefaultVertex);
+
+			DefaultVertex *vertexData = new DefaultVertex[count];
+			ZeroMemory(vertexData, size);
+
 			for(int i = 0; i < model->GetControlPointsCount(); i++)
-				vertexData[i] = ConvertToTiki(vertexArray[i]);
+			{
+				ConvertToTiki(vertexArray[i], (float*)&vertexData[i]);
+			}				
 
-			int size = sizeof(FbxVector4);
-			int mySize = sizeof(Vector4);
+			Mesh* mesh2 = new Mesh(engine);
+			mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
 
-			int polycount = model->GetPolygonCount();
-
-
-			polycount = polycount;
-
-			return NULL;
+			return mesh2;
 		}
 
 		void FbxLoader::InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene)
@@ -64,8 +66,6 @@ namespace TikiEngine
 			pManager->SetIOSettings(ios);
 
 			pScene = FbxScene::Create(pManager, "");
-
-
 		}
 
 		bool FbxLoader::LoadScene(FbxManager* pSdkManager, FbxDocument* pScene, wstring filename)
@@ -113,9 +113,13 @@ namespace TikiEngine
 			return lStatus;
 		}
 
-		Vector4 FbxLoader::ConvertToTiki(const FbxVector4& vector)
+		void FbxLoader::ConvertToTiki(const FbxVector4& vector, float* output)
 		{
-			return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
+			output[0] = (float)vector[0];
+			output[1] = (float)vector[1];
+			output[2] = (float)vector[2];
+
+			//return Vector4((float), (float)vector[1], (float)vector[2], (float)vector[3]);
 		}
 
 	}

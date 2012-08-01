@@ -20,7 +20,7 @@ namespace TikiEngine
 			_wgetcwd(cd, MAX_PATH);
 			workingPath = cd;
 
-			this->fbxLoader = new FbxLoader();
+			this->fbxLoader = new FbxLoader(engine);
 		}
 
 		ContentManagerModule::~ContentManagerModule()

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 
 #include "Core/Mesh.h"
+#include "Core/DefaultVertex.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -13,17 +14,17 @@
 #define IOS_REF (*(pSdkManager->GetIOSettings()))
 #endif
 
+using namespace TikiEngine::Vertices;
 using namespace TikiEngine::Resources;
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-
-		class FbxLoader : public Object
+		class FbxLoader : public EngineObject
 		{
 		public:
-			FbxLoader();
+			FbxLoader(Engine* engine);
 			~FbxLoader();
 
 			Mesh* LoadMesh(const wstring& name);
@@ -32,7 +33,7 @@ namespace TikiEngine
 
 			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
 			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
-			Vector4 ConvertToTiki(const FbxVector4& vector);
+			void ConvertToTiki(const FbxVector4& vector, float* output);
 
 			FbxManager* fbxManager;
 			FbxScene* scene;
