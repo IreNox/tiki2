@@ -5,7 +5,7 @@
 #include "Core/Console.h"
 #include "Graphics/DllMain.h"
 
-#include "Core/TypeFunc.h"
+#include "Core/TypeGlobals.h"
 
 #include <d3d11.h>
 #include <d3dx11.h>
@@ -43,7 +43,7 @@ namespace TikiEngine
 		void Texture::loadFromStream(Stream* stream)
 		{
 			UInt32 size = stream->GetLength();
-			Byte* data = new Byte(size);
+			Byte* data = new Byte[size];
 
 			stream->Read(data, 0, size);
 

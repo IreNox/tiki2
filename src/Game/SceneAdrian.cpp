@@ -23,6 +23,8 @@ namespace TikiEngine
 				delete(mesh);
 				mesh = 0;
 			}
+
+			Scene::Initialize(args);
 		}
 
 		void SceneAdrian::Draw(const DrawArgs& args)

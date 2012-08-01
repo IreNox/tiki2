@@ -41,6 +41,8 @@ namespace TikiEngine
 		private:
 
 			FILE* handle;
+
+			UInt64 size;
 		};
 	}
 }

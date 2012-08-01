@@ -16,6 +16,9 @@ namespace TikiEngine
 
 		void SceneMark::Initialize(const InitializationArgs& args)
 		{
+			// Code hier
+
+			Scene::Initialize(args);
 		}
 
 		void SceneMark::Draw(const DrawArgs& args)

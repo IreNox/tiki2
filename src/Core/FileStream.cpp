@@ -1,6 +1,7 @@
 
-
 #include "Core/FileStream.h"
+
+#include <Windows.h>
 
 namespace TikiEngine
 {
@@ -10,19 +11,23 @@ namespace TikiEngine
 		FileStream::FileStream(wstring fileName, FileMode mode)
 			: Stream(), handle(0)
 		{
+			//ULONG tmp;
+			//HANDLE h = OpenFile(fileName.c_str(), 0, 0);
+			//size = GetFileSize(h, &tmp);
+
 			switch (mode)
 			{
 			case FM_Read:
-				handle = _wfopen(fileName.c_str(), L"r");
+				handle = _wfopen(fileName.c_str(), L"rb");
 				break;
 			case FM_ReadWrite:
-				handle = _wfopen(fileName.c_str(), L"w+");
+				handle = _wfopen(fileName.c_str(), L"wb+");
 				break;
 			case FM_Write:
-				handle = _wfopen(fileName.c_str(), L"w");
+				handle = _wfopen(fileName.c_str(), L"wb");
 				break;
 			case FM_WriteAppend:
-				handle = _wfopen(fileName.c_str(), L"a");
+				handle = _wfopen(fileName.c_str(), L"ab");
 				break;
 			}
 		}
@@ -81,9 +86,7 @@ namespace TikiEngine
 		#pragma region Member - Properties
 		Int32 FileStream::GetLength()
 		{
-			fseek(handle, 0, SEEK_END);
-			return ftell(handle);
-			fseek(handle, 0, SEEK_SET);
+			return size;
 		}
 
 		void FileStream::SetLength(Int32 len)

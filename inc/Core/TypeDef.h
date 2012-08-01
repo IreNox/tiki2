@@ -6,6 +6,8 @@ typedef __int64 IntPtr;
 typedef __int32 IntPtr;
 #endif
 
+typedef __int32 IntSize;
+
 typedef unsigned char Byte;
 
 typedef __int16 Int16;

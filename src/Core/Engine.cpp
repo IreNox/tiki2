@@ -115,9 +115,12 @@ namespace TikiEngine
 		if (!QueryPerformanceFrequency(&freq))
 		{
 			MessageBox(window->GetHWND(), L"No performance-counter found.", L"TikiEngine 2.0", MB_ICONERROR);
+			return;
 		}
-
 		QueryPerformanceCounter(&last);
+
+		InitializationArgs initArgs = InitializationArgs(content);
+		scene->Initialize(initArgs);
 
 		while (window->GetReady())
 		{

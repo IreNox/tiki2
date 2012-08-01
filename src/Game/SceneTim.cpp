@@ -16,7 +16,7 @@ namespace TikiEngine
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
-			//ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
+			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
 
 			//Texture* texture = new Texture(
 			//	engine,
@@ -32,6 +32,8 @@ namespace TikiEngine
 
 			//engine->scene->AddElement(new Box(engine, shader));
 			//scene->AddElement(new TeeTriangle(engine));
+
+			Scene::Initialize(args);
 		}
 
 		void SceneTim::Draw(const DrawArgs& args)

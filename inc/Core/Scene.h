@@ -27,7 +27,6 @@ namespace TikiEngine
 		virtual void Update(const UpdateArgs& args);
 
 	protected:
-		Engine* engine;
 
 		List<GameObject*> elements;
 	};

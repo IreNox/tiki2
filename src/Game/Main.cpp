@@ -37,20 +37,24 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			DWORD buffer;
 			WCHAR username[100];
 			GetUserName(username, &buffer);
-
+			
 			wstring name = username;
 
-			if (name == L"tim.boden")
+			if (name == L"tim.boden" || name == L"Der Hans von Morgen")
 			{
 				engine->scene = new SceneTim(engine);
 			}
-			else if (name == L"adrian.lück")
+			else if (name == L"adrian.lück" || name == L"Adrian")
 			{
 				engine->scene = new SceneAdrian(engine);
 			}
-			else if (name == L"mark.reichert")
+			else if (name == L"mark.reichert" || name == L"Shekk")
 			{
 				engine->scene = new SceneMark(engine);
+			}
+			else
+			{
+				//engine->scene = new SceneGameOver(engine);
 			}
 
 			engine->Run();
