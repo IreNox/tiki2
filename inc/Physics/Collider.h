@@ -13,11 +13,16 @@ namespace TikiEngine
 			Collider();
 			virtual ~Collider() {}
 
-			bool IsTrigger();
-			//void SetTrigger(bool isTrigger);
+			// These Methods can be used at runtime to raise Trigger flags
+			bool GetTriggerFlag();
+			void SetTriggerFlag(bool triggerFlag);
+
+			bool GetKinematicFlag();
+			void SetKinematicFlag(bool kinematicFlag);
 
 		protected:
 			bool isTrigger;
+			bool isKinematic;	// check if we have rigid body
 			NxActor* actor;
 			NxActorDesc actorDescription;
 			PhysicsMaterial material;

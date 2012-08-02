@@ -25,6 +25,7 @@
     <ClInclude Include="inc\Physics\ErrorStream.h" />
     <ClInclude Include="inc\Physics\PhysicsMaterial.h" />
     <ClInclude Include="inc\Physics\PhysicsModule.h" />
+    <ClInclude Include="inc\Physics\RigidBody.h" />
     <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,9 @@
     <ClInclude Include="inc\Physics\Collider.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\RigidBody.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">

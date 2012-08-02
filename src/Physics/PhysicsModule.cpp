@@ -76,12 +76,16 @@ namespace TikiEngine
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			// BoxCollider test
+			// BoxCollider init
 			box = new BoxCollider(tikiEngine, 0);
 			box->SetCenter(Vector3(0, 10, 0));
 			box->SetSize(Vector3(1, 5, 2));
 			box->SetCenter(Vector3(0, 5, 0));
 			box->SetSize(Vector3(3, 1, 3));
+
+			// BoxCollider Runtime
+			//box->SetKinematicFlag(false);
+			box->SetTriggerFlag(true);
 			Vector3 boxSize = box->GetSize();
 			Vector3 boxCenter = box->GetCenter();
 

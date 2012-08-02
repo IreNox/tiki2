@@ -77,9 +77,13 @@ namespace TikiEngine
 			{
 				// Triggers have no body description
 				//  TODO init RigidBody class here :)
-				NxBodyDesc bodyDesc;
-				bodyDesc.mass = 10;
-				actorDescription.body = &bodyDesc;
+				if (isKinematic)
+				{
+					NxBodyDesc bodyDesc;
+					bodyDesc.mass = 10;
+					actorDescription.body = &bodyDesc;
+				}
+
 			}
 
 			actorDescription.shapes.pushBack(&boxDesc);
