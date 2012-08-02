@@ -82,11 +82,15 @@ namespace TikiEngine
 				if (indexBuffer != 0) indexBuffer->Release();
 				if (vertexBuffer != 0) vertexBuffer->Release();
 
+				mesh = inMesh;
+				mesh->AddRef();
+
 				decl = new VertexDeclaration(
 					engine,
 					inShader,
 					mesh->GetVertexDeclaration()
-					);
+				);
+
 				shader = inShader;
 				shader->AddRef();
 

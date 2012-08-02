@@ -333,7 +333,6 @@ namespace TikiEngine
 
 			Matrices* matrices = matrixBuffer->Map();
 			*matrices = *args.Context.CurrentCamera->GetMatrices();
-
 			matrixBuffer->Unmap();
 		}
 

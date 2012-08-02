@@ -31,12 +31,12 @@ namespace TikiEngine
 			//	100.0f
 			//);
 
-			this->matrices.ProjectionMatrix = Matrix::CreatePerspectiveFieldOfView(
+			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
 				MATH_PI / 4,
 				1, //(args. width / height),
 				0.01f,
 				1000.0f
-			);
+			));
 
 
 			//this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
@@ -95,14 +95,14 @@ namespace TikiEngine
 		{
 			//D3DXMATRIX matrix;
 
-			float g_fX = 0;
-			float g_fY = 0;
+			float g_fX = 0.5f;
+			float g_fY = 0.4f;
 			float g_fEyeDistance = 5;
 
 			//g_fX += args.Input.MouseDistance.x;
 			//g_fY += args.Input.MouseDistance.y;
 
-			Vector3 g_vAt = Vector3(0.0f, 0.0f, 0.0f);
+			Vector3 g_vAt = Vector3(0.01f, 0.01f, 0.01f);
 			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);
 			//float g_fEyeDistance = 5.0f;
 
@@ -126,11 +126,11 @@ namespace TikiEngine
 			//	&D3DXVECTOR3(0, 1, 0)
 			//);
 
-			this->matrices.ViewMatrix = Matrix::CreateLookAt(
+			this->matrices.ViewMatrix = Matrix::Transpose(Matrix::CreateLookAt(
 				g_vEye,
 				g_vAt,
 				g_vUp
-			);
+			));
 
 			//Matrices* data = matrixBuffer->Map();
 			//data->ViewMatrix = matrices.ViewMatrix.Transpose();
