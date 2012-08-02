@@ -10,13 +10,16 @@ namespace TikiEngine
 		int Width;
 		int Height;
 
+		float MinDepth;
+		float MaxDepth;
+
 		ViewPort()
-			: X(0), Y(0), Width(0), Height(0)
+			: X(0), Y(0), Width(0), Height(0), MinDepth(0), MaxDepth(0)
 		{
 		}
 
-		ViewPort(int x, int y, int width, int height)
-			: X(x), Y(y), Width(width), Height(height)
+		ViewPort(int x, int y, int width, int height, float minDepth, float maxDepth)
+			: X(x), Y(y), Width(width), Height(height), MinDepth(minDepth), MaxDepth(maxDepth)
 		{
 		}
 	};

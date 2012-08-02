@@ -367,9 +367,6 @@
     <ClInclude Include="inc\Core\MeshObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\QuadObject.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\LightObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
@@ -429,6 +426,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IBoxCollider.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\QuadObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -66,6 +66,8 @@ namespace TikiEngine
 		 */
 		void Run();
 
+		EngineDescription* GetEngineDescription(); 
+
 	protected:
 
 		virtual void Draw(const DrawArgs& args);

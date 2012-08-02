@@ -65,7 +65,7 @@ namespace TikiEngine
 			//mesh->SetIndexData(indices, sizeof(indices));
 			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
 
-			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
+			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\DiceMap.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);

@@ -54,6 +54,13 @@ namespace TikiEngine
 	}
 	#pragma endregion
 
+	#pragma region Member
+	EngineDescription* Engine::GetEngineDescription()
+	{
+		return &desc;
+	}
+	#pragma endregion
+
 	#pragma region Member - Init
 	bool Engine::Initialize(EngineDescription& desc)
 	{

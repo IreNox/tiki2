@@ -29,7 +29,7 @@ namespace TikiEngine
 		{
 			this->hWnd = desc.Window.hWnd;
 			this->hInst = desc.hInst;
-			this->viewPort = ViewPort(0, 0, desc.Window.Width, desc.Window.Height);
+			this->viewPort = desc.Graphics.ViewPort;
 
 			HRESULT r = DirectInput8Create(
 				hInst,

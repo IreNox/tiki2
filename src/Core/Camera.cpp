@@ -2,6 +2,9 @@
 #include "Core/Engine.h"
 #include "Core/Camera.h"
 
+#include "Core/DrawArgs.h"
+#include "Core/UpdateArgs.h"
+
 namespace TikiEngine
 {
 	namespace Components
@@ -31,13 +34,14 @@ namespace TikiEngine
 			//	100.0f
 			//);
 
+			ViewPort* vp = &engine->GetEngineDescription()->Graphics.ViewPort;
+
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
-				MATH_PI / 4,
-				1, //(args. width / height),
+				MATH_PI / 4,				
+				(vp->Width / vp->Width),
 				0.01f,
 				1000.0f
 			));
-
 
 			//this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
 		}
@@ -95,12 +99,13 @@ namespace TikiEngine
 		{
 			//D3DXMATRIX matrix;
 
-			float g_fX = 0.5f;
-			float g_fY = 0.4f;
+			float g_fX = x;
+			float g_fY = y;
 			float g_fEyeDistance = 5;
 
-			//g_fX += args.Input.MouseDistance.x;
-			//g_fY += args.Input.MouseDistance.y;
+			x += args.Time.ElapsedTime;
+			y += args.Time.ElapsedTime;
+			//y += args.Input.MouseDistance.Y;
 
 			Vector3 g_vAt = Vector3(0.01f, 0.01f, 0.01f);
 			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/ViewPort.h"
+
 namespace TikiEngine
 {
 	namespace Description
@@ -15,6 +17,11 @@ namespace TikiEngine
 			 * @brief The resolution height.
 			 */
 			int Height;
+
+			/*!
+			 * @brief The Graphics ViewPort.
+			 */
+			ViewPort ViewPort;
 
 			GaphicsDescription()
 				: Width(800), Height(600)

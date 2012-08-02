@@ -13,6 +13,8 @@
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/ConstantBuffer.h"
 
+#include "Graphics/RenderTarget.h"
+
 namespace TikiEngine
 {
 	namespace Modules
@@ -35,18 +37,13 @@ namespace TikiEngine
 			void Clear(float* color);
 			void Present();
 
-			//ID3D11PixelShader* CompileShaderPS(const char* code);
-			//HRESULT CompileShaderVS(const char* code, const D3D11_INPUT_ELEMENT_DESC* inputElements, UINT elementsCount, ID3D11VertexShader** vsShader, ID3D11InputLayout** inputLayout);
-
-			//ID3D11Buffer* CreateVertexBuffer(const void* data, UINT size);
-			//ID3D11InputLayout* CreateInputLayout();
-
 			void* GetDevice();
 			void* GetDeviceContext();
 
-			ConstantBuffer<Matrices>* GetMatrixBuffer();
+			ViewPort* GetViewPort();
+			IRenderTarget* GetBackBufferRenderTarget();
 
-			D3D11_VIEWPORT* GetViewPort();
+			ConstantBuffer<Matrices>* GetMatrixBuffer();
 
 			IndexBuffer* GetIndexBuffer();
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl);
@@ -62,13 +59,14 @@ namespace TikiEngine
 			ID3D11DeviceContext* deviceContext;
 
 			IDXGISwapChain* swapChain;
-			ID3D11RenderTargetView* renderTargetView; 
+			ID3D11RenderTargetView* renderTargetView;
+			RenderTarget* renderTarget;
 
 			ID3D11Texture2D* depthStencilBuffer;
 			ID3D11DepthStencilView* depthStencilView;
 			ID3D11DepthStencilState* depthStencilState;
 
-			D3D11_VIEWPORT viewPort; 
+			ViewPort viewPort; 
 			ID3D11RasterizerState* rasterState;
 
 			float clearColor[4];

@@ -2,10 +2,15 @@
 
 #include "Core/IModule.h"
 
+#include "Core/ViewPort.h"
+#include "Core/IRenderTarget.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using TikiEngine::Resources::IRenderTarget;
+
 		class IGraphics : public IModule
 		{
 		public:
@@ -21,6 +26,10 @@ namespace TikiEngine
 						
 			virtual void* GetDevice() = 0;
 			virtual void* GetDeviceContext() = 0;
+
+			virtual ViewPort* GetViewPort() = 0;
+			virtual IRenderTarget* GetBackBufferRenderTarget() = 0;
+
 		};
 	}
 }

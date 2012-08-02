@@ -19,7 +19,7 @@ namespace TikiEngine
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0)
+			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), renderTarget(0)
 		{
 			clearColor[0] = 21.0f / 255;
 			clearColor[1] = 97.0f / 255;
@@ -38,59 +38,16 @@ namespace TikiEngine
 				swapChain->SetFullscreenState(false, NULL);
 			}
 
-			if (rasterState)
-			{
-				rasterState->Release();
-				rasterState = 0;
-			}
-
-			if(depthStencilView)
-			{
-				depthStencilView->Release();
-				depthStencilView = 0;
-			}
-
-			if(depthStencilState)
-			{
-				depthStencilState->Release();
-				depthStencilState = 0;
-			}
-
-			if(depthStencilBuffer)
-			{
-				depthStencilBuffer->Release();
-				depthStencilBuffer = 0;
-			}
-
-			if(renderTargetView)
-			{
-				renderTargetView->Release();
-				renderTargetView = 0;
-			}
-
-			if(deviceContext)
-			{
-				deviceContext->Release();
-				deviceContext = 0;
-			}
-
-			if(device)
-			{
-				device->Release();
-				device = 0;
-			}
-
-			if(swapChain)
-			{
-				swapChain->Release();
-				swapChain = 0;
-			}
-
-			if (indexBuffer != 0)
-			{
-				delete(indexBuffer);
-				indexBuffer = 0;
-			}
+			SafeRelease(&renderTarget);
+			SafeRelease(&rasterState);
+			SafeRelease(&depthStencilView);
+			SafeRelease(&depthStencilState);
+			SafeRelease(&depthStencilBuffer);
+			SafeRelease(&renderTargetView);
+			SafeRelease(&deviceContext);
+			SafeRelease(&device);
+			SafeRelease(&swapChain);
+			SafeRelease(&indexBuffer);
 
 			auto values = vertexBuffers.GetValues();
 			for (int i = 0; i < values.Count(); i++)
@@ -153,11 +110,12 @@ namespace TikiEngine
 				0,
 				__uuidof(ID3D11Texture2D),
 				(LPVOID*)&backBufferPtr
-				);
+			);
 
 			if (FAILED(r)) { return false; }
 
 			r = device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView);
+			renderTarget = new RenderTarget(engine, renderTargetView);
 			backBufferPtr->Release();
 
 			if (FAILED(r)) { return false; }
@@ -181,7 +139,7 @@ namespace TikiEngine
 				&depthDesc,
 				NULL,
 				&depthStencilBuffer
-				);
+			);
 
 			if (FAILED(r)) { return false; }
 
@@ -209,7 +167,7 @@ namespace TikiEngine
 			r = device->CreateDepthStencilState(
 				&depthStencilDesc,
 				&depthStencilState
-				);
+			);
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
 
 			if (FAILED(r)) { return false; }
@@ -225,7 +183,7 @@ namespace TikiEngine
 				depthStencilBuffer,
 				&depthStencilViewDesc,
 				&depthStencilView
-				);
+			);
 
 			if (FAILED(r)) { return false; }
 
@@ -233,7 +191,7 @@ namespace TikiEngine
 				1,
 				&renderTargetView,
 				depthStencilView
-				);
+			);
 
 			D3D11_RASTERIZER_DESC rasterDesc;
 
@@ -251,7 +209,7 @@ namespace TikiEngine
 			r = device->CreateRasterizerState(
 				&rasterDesc,
 				&rasterState
-				);
+			);
 
 			if(FAILED(r))
 			{
@@ -260,7 +218,7 @@ namespace TikiEngine
 
 			deviceContext->RSSetState(rasterState);
 
-			viewPort = D3D11_VIEWPORT();
+			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
 
 			viewPort.Width = (float)swapDesc.BufferDesc.Width;
@@ -269,6 +227,9 @@ namespace TikiEngine
 			viewPort.MaxDepth = 1.0f;
 			viewPort.TopLeftX = 0;
 			viewPort.TopLeftY = 0;
+			
+			memcpy(&this->viewPort, &viewPort, sizeof(viewPort));
+			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
 
@@ -283,7 +244,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member
+		#pragma region Member - Get
 		void* GraphicsModule::GetDevice()
 		{
 			return (void*)this->device;
@@ -294,19 +255,26 @@ namespace TikiEngine
 			return (void*)this->deviceContext;
 		}
 
-		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
-		{
-			return matrixBuffer;
-		}
-
-		D3D11_VIEWPORT* GraphicsModule::GetViewPort()
+		ViewPort* GraphicsModule::GetViewPort()
 		{
 			return &viewPort;
 		}
 
+		IRenderTarget* GraphicsModule::GetBackBufferRenderTarget()
+		{
+			return renderTarget;
+		}
+		#pragma endregion
+
+		#pragma region Member - Get - Buffer
 		IndexBuffer* GraphicsModule::GetIndexBuffer()
 		{
 			return indexBuffer;
+		}
+
+		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
+		{
+			return matrixBuffer;
 		}
 
 		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl)
@@ -318,7 +286,7 @@ namespace TikiEngine
 				vertexBuffers.Add(
 					hash, 
 					new VertexBuffer(engine, decl)
-				);
+					);
 			}
 
 			return vertexBuffers.Get(hash);		
@@ -340,157 +308,6 @@ namespace TikiEngine
 		{
 			swapChain->Present(0, 0);
 		}
-		#pragma endregion
-
-		#pragma region Member - CreateBuffer
-		//ID3D11Buffer* GraphicsModule::CreateVertexBuffer(const void* data, UINT size)
-		//{
-		//	D3D11_BUFFER_DESC desc;
-		//	desc.Usage = D3D11_USAGE_DEFAULT;
-		//	desc.ByteWidth = size;
-		//	desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		//	desc.CPUAccessFlags = 0;
-		//	desc.MiscFlags = 0;
-		//	desc.StructureByteStride = 0;
-
-		//	D3D11_SUBRESOURCE_DATA initData;
-		//	initData.pSysMem = data;
-		//   
-		//	ID3D11Buffer* buffer;
-
-		//	HRESULT r = device->CreateBuffer(
-		//		&desc,
-		//		&initData,
-		//		&buffer
-		//	);
-		//   
-		//	if(FAILED(r)) 
-		//	{
-		//		return NULL;
-		//	}
-
-		//	return buffer;
-		//}
-		#pragma endregion
-
-		#pragma region Member - CompileShader
-		//ID3D11PixelShader* GraphicsModule::CompileShaderPS(const char* code)
-		//{
-		//	ID3D10Blob* blobPS = NULL;
-		//	ID3D10Blob* blobError = NULL;
-
-		//	DWORD dwShaderFlags = D3D10_SHADER_ENABLE_STRICTNESS;
-		//#ifdef _DEBUG
-		//	dwShaderFlags |= D3D10_SHADER_DEBUG;
-		//#endif
-
-		//	HRESULT r = D3DCompile(
-		//		code,
-		//		lstrlenA(code) + 1,
-		//		"PS",
-		//		NULL,
-		//		NULL,
-		//		"PS",
-		//		"ps_5_0",
-		//		dwShaderFlags,
-		//		0,
-		//		&blobPS,
-		//		&blobError
-		//	);
-
-		//	if (FAILED(r))
-		//	{
-		//		if(blobError != NULL)
-		//		{
-		//			blobError->Release();
-		//		}
-
-		//		return NULL;
-		//	}
-
-		//	ID3D11PixelShader* shader;
-
-		//	r = device->CreatePixelShader(
-		//		blobPS->GetBufferPointer(),
-		//		blobPS->GetBufferSize(),
-		//		NULL,
-		//		&shader
-		//	);
-
-		//	blobPS->Release();
-
-		//	if (FAILED(r))
-		//	{
-		//		return NULL;
-		//	}
-
-		//	return shader;
-		//}
-
-		//HRESULT GraphicsModule::CompileShaderVS(const char* code, const D3D11_INPUT_ELEMENT_DESC* inputElements, UINT elementsCount, ID3D11VertexShader** vsShader, ID3D11InputLayout** inputLayout)
-		//{
-		//	ID3D10Blob* blobVS = NULL;
-		//	ID3D10Blob* blobError = NULL;
-
-		//	DWORD dwShaderFlags = D3D10_SHADER_ENABLE_STRICTNESS;
-		//#ifdef _DEBUG
-		//	dwShaderFlags |= D3D10_SHADER_DEBUG;
-		//#endif
-
-		//	HRESULT r = D3DCompile(
-		//		code,
-		//		lstrlenA(code) + 1,
-		//		"VS",
-		//		NULL,
-		//		NULL,
-		//		"VS",
-		//		"vs_5_0",
-		//		dwShaderFlags,
-		//		0,
-		//		&blobVS,
-		//		&blobError
-		//	);
-		//   
-		//	if (FAILED(r))
-		//	{
-		//		if(blobError != NULL)
-		//		{
-		//			//OutputDebugStringA( (CHAR*)blobError->GetBufferPointer() );
-		//			blobError->Release();
-		//		}
-
-		//		return r;
-		//	}
-
-		//	r = device->CreateVertexShader(
-		//		blobVS->GetBufferPointer(),
-		//		blobVS->GetBufferSize(),
-		//		NULL,
-		//		vsShader
-		//	);
-
-		//	if (FAILED(r))
-		//	{
-		//		return r;
-		//	}
-
-		//	r = device->CreateInputLayout(
-		//		inputElements,
-		//		elementsCount,
-		//		blobVS->GetBufferPointer(),
-		//		blobVS->GetBufferSize(),
-		//		inputLayout
-		//	);
-
-		//	blobVS->Release();
-
-		//	if (FAILED(r))
-		//	{
-		//		return r;
-		//	}
-
-		//	return r;
-		//}
 		#pragma endregion
 	}
 }
