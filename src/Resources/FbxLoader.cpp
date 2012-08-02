@@ -68,6 +68,7 @@ namespace TikiEngine
 					indices.Add(counter);
 					indices.Add(counter+1);
 					indices.Add(counter+2);
+
 					indices.Add(counter+1);
 					indices.Add(counter+2);
 					indices.Add(counter+3);
@@ -77,9 +78,13 @@ namespace TikiEngine
 				{
 					int position = model->GetPolygonVertex(i,k);
 
+
+					FbxVector4 pos = model->GetControlPointAt(position);
+					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(i);
+
 					ConvertToTiki(
-						model->GetControlPointAt(position), 
-						model->GetElementUV(0)->GetDirectArray().GetAt(i), 
+						pos, 
+						uv, 
 						(float*)&vertexData[counter]);	
 					counter++;
 				}
@@ -92,6 +97,7 @@ namespace TikiEngine
 
 			meshIndexed->SetVertexData(vertexData, size);
 			meshIndexed->SetIndexData(indexBufferData, indexBufferSize);
+			meshIndexed->SetVertexDeclaration(DefaultVertex::Declaration,3);
 
 			delete vertexData;
 			vertexData = 0;

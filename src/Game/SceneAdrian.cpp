@@ -31,20 +31,93 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
+			GameObject* go = new GameObject(engine);
+
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Dice2.fbx"); //new MeshIndexed(engine);
+
+			//DefaultVertex vertices[] = {
+			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
+			//	{ 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+			//	{ 1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+			//	{-1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f},
+			//	{-1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
+			//	{ 1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+			//	{ 1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+			//	{-1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f}
+			//};
+
+			//UINT indices[] = {
+			//	0, 1, 2,
+			//	0, 2, 3,
+			//	4, 0, 3,
+			//	4, 3, 7,
+			//	1, 5, 6,
+			//	1, 6, 2,
+			//	3, 4, 6,
+			//	3, 6, 7,
+			//	4, 5, 1,
+			//	4, 1, 0,
+			//	5, 4, 7,
+			//	5, 7, 6
+			//};
+
+			//mesh->SetVertexData(vertices, sizeof(vertices));
+			//mesh->SetIndexData(indices, sizeof(indices));
+			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
+
+			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\DiceMap.jpg");
+
+			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
+			mat->GetShader()->SetTexture("tex", tex);
+
+			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			render->SetMesh(mesh);
+			render->SetMaterial(mat);
+
+			go->AddComponent(render);
+
 			CameraObject* co = new CameraObject(engine);
+
+			this->AddElement(go);
 			this->AddElement(co);
 
-			Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
+			//Texture* texture = new Texture(
+			//	engine,
+			//	wstring(L"Data/Resources/box_diffuse.jpg")
+			//);
 
-			if(mesh != 0)
-			{
-				delete(mesh);
-				mesh = 0;
-			}
+			//Shader* shader = new DefaultShader(engine);
+			//shader->GetVariable("tex").SetTexture(texture);
+
+			//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
+			//Quad* quad = new Quad(engine, shaderPP);
+
+
+			//engine->scene->AddElement(new Box(engine, shader));
+			//scene->AddElement(new TeeTriangle(engine));
 
 			Scene::Initialize(args);
 
 			mainCamera = co->GetCameraComponent();
+
+
+
+			//////////////////////////////////////////////
+
+			//CameraObject* co = new CameraObject(engine);
+			//this->AddElement(co);
+
+			//Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
+
+			//if(mesh != 0)
+			//{
+			//	delete(mesh);
+			//	mesh = 0;
+			//}
+
+			//Scene::Initialize(args);
+
+			//mainCamera = co->GetCameraComponent();
 		}
 
 		void SceneAdrian::Draw(const DrawArgs& args)
