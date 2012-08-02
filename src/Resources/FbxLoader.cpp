@@ -31,6 +31,9 @@ namespace TikiEngine
 			FbxNode *root = scene->GetRootNode();
 			FbxNode *mesh = NULL;
 			FbxMesh *model = NULL;
+
+			
+
 			for(int i = 0; i < root->GetChildCount(); i++)
 			{
 				FbxNode *child = root->GetChild(i);
@@ -44,6 +47,7 @@ namespace TikiEngine
 					break;
 				}
 			} 
+			int blub = model->GetElementUV(0)->GetDirectArray().GetCount();
 
 			UINT polygonVertexCount = model->GetPolygonVertexCount();
 			UINT size = polygonVertexCount * sizeof(DefaultVertex);
@@ -53,11 +57,12 @@ namespace TikiEngine
 
 			List<UInt32> indices = List<UInt32>();
 
-			Int32 counter = 0;
+			UINT32 counter = 0;
 
 			for(Int32 i = 0; i < model->GetPolygonCount(); i++)
 			{
 				Int32 verticesInPolygon = model->GetPolygonSize(i);
+
 				if(verticesInPolygon == 3)
 				{
 					indices.Add(counter);
@@ -65,31 +70,32 @@ namespace TikiEngine
 					indices.Add(counter+2);
 				}else if(verticesInPolygon == 4)
 				{
+					indices.Add(counter+2);
+					indices.Add(counter+1); 
 					indices.Add(counter);
-					indices.Add(counter+1);
-					indices.Add(counter+2);
 
-					indices.Add(counter+1);
-					indices.Add(counter+2);
 					indices.Add(counter+3);
+					indices.Add(counter+2);
+					indices.Add(counter);
 				}
 
-				for(Int32 k = 0; k < verticesInPolygon;k++)
+				for(Int32 k = 0; k < verticesInPolygon; k++)
 				{
 					int position = model->GetPolygonVertex(i,k);
 
 
 					FbxVector4 pos = model->GetControlPointAt(position);
-					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(i);
+					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(counter);
 
 					ConvertToTiki(
 						pos, 
 						uv, 
 						(float*)&vertexData[counter]);	
+
 					counter++;
 				}
 			}
-
+			int bla = indices.Get(35);
 			UINT indexBufferSize = indices.Count();
 			UInt32 *indexBufferData = indices.ToArray();
 
@@ -209,7 +215,7 @@ namespace TikiEngine
 			output[5] = (float)vector[2];*/
 			//uvs
 			output[6] = (float)uv[0];
-			output[7] = (float)uv[1];
+			output[7] = (float)(1-uv[1]);
 
 
 

@@ -65,10 +65,10 @@ public:
 
 	T* ToArray()
 	{
-		T* arr = new T[lengthData];
+		T* arr = new T[lengthData+1];
 
 		int i = 0;
-		while (i < lengthData)
+		while (i <= lengthData)
 		{
 			arr[i] = data[i];
 

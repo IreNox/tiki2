@@ -211,7 +211,7 @@ namespace TikiEngine
 				Console::WriteError("Can't create RasterizerState", r);
 			}
 
-			deviceContext->RSSetState(rasterState);
+			//deviceContext->RSSetState(rasterState); //backfaceculling
 
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
