@@ -27,11 +27,11 @@ namespace TikiEngine
 			 /*! @brief OnTriggerStay is called almost all the frames for every Collider other that is touching the trigger. */
 			 //virtual void OnTriggerStay(ICollider* other) = 0;
 
-			 /*! @brief Is the collider a trigger? */
-			 // virtual bool IsTrigger() = 0;
+			 /*! @brief Is this collider a trigger? */
+			 //virtual bool IsTrigger() = 0;
 			 
-			 /*! @brief Sets whether the collider is a trigger */
-			 //virtual void SetTrigger(bool isTrigger) = 0;
+			 /*! @brief Set if the collider is a trigger */
+			// virtual void SetTrigger(bool isTrigger) = 0;
 
 		};
 	}

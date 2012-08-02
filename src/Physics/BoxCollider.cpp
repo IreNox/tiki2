@@ -11,7 +11,6 @@ namespace TikiEngine
 		{
 			size = NxVec3(NX_MAX_F32);
 			center = NxVec3(NX_MAX_F32);
-			isTrigger = false;
 		}
 
 		BoxCollider::~BoxCollider()
@@ -26,23 +25,23 @@ namespace TikiEngine
 		#pragma region IBoxCollider Methods
 		Vector3 BoxCollider::GetCenter()
 		{
-			return Vector3(center.x, center.y, center.z);
+			return center.get();
 		}
 
 		Vector3 BoxCollider::GetSize()
 		{
-			return Vector3(size.x, size.y, size.z);
+			return size.get(); 
 		}
 
 		void BoxCollider::SetSize(const Vector3& size)
 		{
-			this->size = size.arr; //NxVec3(size.X, size.Y, size.Z);
+			this->size = size.arr;
 			UpdateData();
 		}
 
 		void BoxCollider::SetCenter(const Vector3& center)
 		{
-			this->center = center.arr;//NxVec3(center.X, center.Y, center.Z);
+			this->center = center.arr;
 			UpdateData();
 		}
 

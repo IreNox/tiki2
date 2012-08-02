@@ -35,6 +35,9 @@
     <ClInclude Include="inc\Physics\BoxCollider.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\Collider.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -47,6 +50,9 @@
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\BoxCollider.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Collider.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,16 +1,17 @@
 #pragma once
 
+#include "Physics/Collider.h"
 #include "Core/IBoxCollider.h"
-#include "Physics/PhysicsMaterial.h"
+
+
 
 namespace TikiEngine 
 {
-
 	namespace Physics
 	{
 		using namespace TikiEngine::Components;
 
-		class BoxCollider : public IBoxCollider
+		class BoxCollider : public Collider, public IBoxCollider 
 		{
 		public:
 			/*! @brief Create BoxCollider 
@@ -21,10 +22,10 @@ namespace TikiEngine
 
 			/*! @brief Destructor */
 			~BoxCollider();
-
 			
 			void Update(const UpdateArgs& args) {}
 			void Draw(const DrawArgs& args) {}
+
 
 			Vector3 GetCenter();
 			Vector3 GetSize();
@@ -39,12 +40,9 @@ namespace TikiEngine
 			void UpdateData();
 
 		private:
-			bool isTrigger;
 			NxVec3 center;
 			NxVec3 size;
-			NxActor* actor;
-			NxActorDesc actorDescription;
-			PhysicsMaterial material;
+
 		};
 
 	}

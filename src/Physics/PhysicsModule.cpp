@@ -5,7 +5,7 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		//using namespace TikiEngine::Physics;
+		using namespace TikiEngine::Physics;
 
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine)
@@ -76,11 +76,15 @@ namespace TikiEngine
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			//box = new BoxCollider(tikiEngine, 0);
-			//box->SetCenter(Vector3(0, 10, 0));
-			//box->SetSize(Vector3(1, 5, 2));
-			//box->SetCenter(Vector3(0, 5, 0));
-			//box->SetSize(Vector3(3, 1, 3));
+			// BoxCollider test
+			box = new BoxCollider(tikiEngine, 0);
+			box->SetCenter(Vector3(0, 10, 0));
+			box->SetSize(Vector3(1, 5, 2));
+			box->SetCenter(Vector3(0, 5, 0));
+			box->SetSize(Vector3(3, 1, 3));
+			Vector3 boxSize = box->GetSize();
+			Vector3 boxCenter = box->GetCenter();
+
 
 			return true;
 		}
