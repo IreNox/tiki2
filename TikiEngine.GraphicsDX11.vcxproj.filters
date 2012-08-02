@@ -74,6 +74,9 @@
     <ClCompile Include="src\Graphics\MeshRenderer.cpp">
       <Filter>Quelldateien\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\RenderTarget.cpp">
+      <Filter>Quelldateien\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -111,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\GraphicsModule.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderTarget.h">
+      <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

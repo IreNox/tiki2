@@ -5,6 +5,7 @@
 #include "Core/Engine.h"
 #include "Core/Console.h"
 #include "Core/HelperHash.h"
+#include "Core/HelperPath.h"
 
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
@@ -111,15 +112,15 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Variable
-		//void Shader::SetConstantBuffer(const char* key, ID3D11Buffer* constantBuffer)
-		//{
-		//	HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(constantBuffer);
+		void Shader::SetConstantBuffer(const char* key, ID3D11Buffer* constantBuffer)
+		{
+			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(constantBuffer);
 
-		//	if (FAILED(r))
-		//	{
-		//		Console::WriteError("Can't set ConstantBuffer: " + string(key), r);
-		//	}
-		//}
+			if (FAILED(r))
+			{
+				Console::WriteError("Can't set ConstantBuffer: " + string(key), r);
+			}
+		}
 		#pragma endregion
 		
 		#pragma region Member - Variable - Get
@@ -258,21 +259,6 @@ namespace TikiEngine
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;
 
-			switch (fileName[0])
-			{
-			case 'o':
-			case 'O':
-				type = ST_Object;
-				break;
-			case 'p':
-			case 'P':
-				type = ST_PostProcess;
-				break;
-			default:
-				type = ST_Unknown;
-				break;
-			}
-
 			PInt size = stream->GetLength();
 			char* data = new char[size];
 			stream->Read(data, 0, size);
@@ -334,6 +320,28 @@ namespace TikiEngine
 				Console::Write("Failed to create effect. Error code: %d\n" + HRESULT_CODE(r));
 
 				throw "Shader: .ctor: An error was corrupted.";
+			}
+
+			wstring file = HelperPath::GetFilename(fileName);
+
+			switch (file[0])
+			{
+			case 'o':
+			case 'O':
+				type = ST_Object;
+
+				this->SetConstantBuffer(
+					"MatrixBuffer",
+					DllMain::Module->GetMatrixBuffer()->GetBuffer()
+				);
+				break;
+			case 'p':
+			case 'P':
+				type = ST_PostProcess;
+				break;
+			default:
+				type = ST_Unknown;
+				break;
 			}
 
 			technique = effect->GetTechniqueByIndex(0);

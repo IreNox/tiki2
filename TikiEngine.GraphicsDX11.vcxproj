@@ -24,6 +24,7 @@
     <ClCompile Include="src\Graphics\GraphicsModule.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
+    <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\VertexBuffer.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
+    <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />

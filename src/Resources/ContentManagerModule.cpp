@@ -69,7 +69,7 @@ namespace TikiEngine
 			}
 			else if (hash == typeid(Mesh).hash_code())
 			{
-				value = engine->librarys->CreateResource<Mesh>();
+				value = fbxLoader->LoadMesh(fileName);
 				loadFile = false;
 			}
 

@@ -10,6 +10,8 @@
 
 #include "Core/CameraObject.h"
 
+#include "Core/IContentManager.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -31,37 +33,37 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			MeshIndexed* mesh = new MeshIndexed(engine);
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Dice2.fbx"); //new MeshIndexed(engine);
 
-			DefaultVertex vertices[] = {
-				{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-				{ 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-				{ 1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-				{-1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f},
-				{-1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-				{ 1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-				{ 1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-				{-1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f}
-			};
+			//DefaultVertex vertices[] = {
+			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
+			//	{ 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+			//	{ 1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+			//	{-1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f},
+			//	{-1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
+			//	{ 1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
+			//	{ 1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
+			//	{-1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f}
+			//};
 
-			UINT indices[] = {
-				0, 1, 2,
-				0, 2, 3,
-				4, 0, 3,
-				4, 3, 7,
-				1, 5, 6,
-				1, 6, 2,
-				3, 4, 6,
-				3, 6, 7,
-				4, 5, 1,
-				4, 1, 0,
-				5, 4, 7,
-				5, 7, 6
-			};
+			//UINT indices[] = {
+			//	0, 1, 2,
+			//	0, 2, 3,
+			//	4, 0, 3,
+			//	4, 3, 7,
+			//	1, 5, 6,
+			//	1, 6, 2,
+			//	3, 4, 6,
+			//	3, 6, 7,
+			//	4, 5, 1,
+			//	4, 1, 0,
+			//	5, 4, 7,
+			//	5, 7, 6
+			//};
 
-			mesh->SetVertexData(vertices, sizeof(vertices));
-			mesh->SetIndexData(indices, sizeof(indices));
-			mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
+			//mesh->SetVertexData(vertices, sizeof(vertices));
+			//mesh->SetIndexData(indices, sizeof(indices));
+			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
 
 			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
 

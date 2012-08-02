@@ -18,6 +18,8 @@ namespace TikiEngine
 			Texture(Engine* engine);
 			~Texture();
 
+			void Create(UInt32 width, UInt32 height);
+
 			Int32 GetWidth();
 			Int32 GetHeight();
 

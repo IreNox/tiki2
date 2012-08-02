@@ -63,6 +63,7 @@
     <ClInclude Include="inc\Core\EngineObject.h" />
     <ClInclude Include="inc\Core\FileStream.h" />
     <ClInclude Include="inc\Core\IBoxCollider.h" />
+    <ClInclude Include="inc\Core\HelperPath.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
     <ClInclude Include="inc\Core\MeshAnimated.h" />
@@ -128,6 +129,7 @@
     <ClInclude Include="inc\Core\ViewPort.h" />
     <ClInclude Include="inc\Core\Window.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
+    <ClCompile Include="src\Core\HelperPath.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>

@@ -19,6 +19,8 @@ namespace TikiEngine
 			{
 			}
 
+			virtual void Create(UInt32 width, UInt32 height) = 0;
+
 			virtual Int32 GetWidth() = 0;
 			virtual Int32 GetHeight() = 0;
 

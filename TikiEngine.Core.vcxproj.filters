@@ -185,6 +185,9 @@
     <ClCompile Include="src\Core\MeshIndexed.cpp">
       <Filter>Quelldateien\Core\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\HelperPath.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -420,6 +423,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IShader.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperPath.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IBoxCollider.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>

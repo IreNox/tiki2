@@ -26,6 +26,8 @@ namespace TikiEngine
 			void Apply();
 			void ApplyVars(GameObject* gameObject);
 
+			void SetConstantBuffer(const char* key, ID3D11Buffer* constantBuffer);
+
 			Int32 GetInt(string key);
 			Single GetSingle(string key);
 			Boolean GetBoolean(string key);

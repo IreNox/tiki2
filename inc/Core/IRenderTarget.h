@@ -18,8 +18,7 @@ namespace TikiEngine
 			virtual ~IRenderTarget()
 			{
 			}
-
-
+			
 		};
 	}
 }

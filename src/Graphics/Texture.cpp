@@ -30,7 +30,7 @@ namespace TikiEngine
 		#pragma region Member
 		void* Texture::GetNativeResource()
 		{
-			return (void*)texture;
+			return (void*)textureResource;
 		}
 
 		bool Texture::GetReady()
@@ -40,6 +40,29 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
+		void Texture::Create(UInt32 width, UInt32 height)
+		{
+			if (this->GetReady()) return;
+
+			D3D11_TEXTURE2D_DESC desc;
+			ZeroMemory(&desc, sizeof(desc));
+
+			desc.Width = width;
+			desc.Height = height;
+			desc.MipLevels = 1;
+			desc.ArraySize = 1;
+			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			desc.SampleDesc.Count = 1;
+			desc.Usage = D3D11_USAGE_DEFAULT;
+			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+			DllMain::Device->CreateTexture2D(
+				&desc,
+				0,
+				&texture
+			);
+		}
+
 		void Texture::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			UInt32 size = stream->GetLength();
