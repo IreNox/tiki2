@@ -14,24 +14,25 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine)
+			: IContentManager(engine) , fbxLoader(0)
 		{
 			wchar_t cd[MAX_PATH];
 			_wgetcwd(cd, MAX_PATH);
 			workingPath = cd;
 
-			this->fbxLoader = new FbxLoader(engine);
+			
 		}
 
 		ContentManagerModule::~ContentManagerModule()
 		{
-			SafeRelease(&fbxLoader);
+			//there is always this fucking dispose method u overlook
 		}
 		#pragma endregion
 
 		#pragma region Member - Module
 		bool ContentManagerModule::Initialize(EngineDescription& desc)
 		{
+			this->fbxLoader = new FbxLoader(engine);
 			return true;
 		}
 
@@ -45,6 +46,8 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
+			//delete fbxLoader;
+			//fbxLoader = 0;
 			SafeRelease(&this->fbxLoader);
 		}
 		#pragma endregion

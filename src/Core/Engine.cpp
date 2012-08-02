@@ -48,6 +48,7 @@ namespace TikiEngine
 			i++;
 		}
 
+
 		librarys->Dispose();
 		delete(librarys);
 	}

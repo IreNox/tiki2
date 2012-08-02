@@ -3,7 +3,8 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "Core/Mesh.h"
+#include "Core/MeshIndexed.h"
+
 #include "Core/DefaultVertex.h"
 
 #define FBXSDK_NEW_API
@@ -33,7 +34,7 @@ namespace TikiEngine
 
 			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
 			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
-			void ConvertToTiki(const FbxVector4& vector, float* output);
+			Vector4 ConvertToTiki(const FbxVector4& vector, float* output);
 
 			FbxManager* fbxManager;
 			FbxScene* scene;

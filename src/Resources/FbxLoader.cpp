@@ -11,11 +11,17 @@ namespace TikiEngine
 		}
 		FbxLoader::~FbxLoader()
 		{
+			if(this->scene)
+			{
+				scene->Destroy();
+				scene = 0;
+			}
 			if(this->fbxManager)
 			{
 				fbxManager->Destroy();
 				fbxManager = 0;
 			}
+
 		}
 
 		Mesh* FbxLoader::LoadMesh(const wstring& name)
@@ -38,10 +44,16 @@ namespace TikiEngine
 					break;
 				}
 			}
-			int *vertices = model->GetPolygonVertices();
+
+			if(!model->IsTriangleMesh())
+			{
+				FbxGeometryConverter converter(this->fbxManager);
+				model = converter.TriangulateMesh(model);
+			}
 
 			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
 			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
+
 
 			UInt32 count = model->GetControlPointsCount();
 			UInt32 size = count * sizeof(DefaultVertex);
@@ -50,12 +62,17 @@ namespace TikiEngine
 			ZeroMemory(vertexData, size);
 
 			for(int i = 0; i < model->GetControlPointsCount(); i++)
-			{
-				ConvertToTiki(vertexArray[i], (float*)&vertexData[i]);
-			}				
+				ConvertToTiki(vertexArray[i], (float*)&vertexData[i]);		
 
-			Mesh* mesh2 = new Mesh(engine);
+			MeshIndexed* mesh2 = new MeshIndexed(engine);
 			mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
+
+			UInt32 *indices = (UInt32*)model->GetPolygonVertices();
+			UInt32 indicesCount = model->GetPolygonVertexCount();
+
+			mesh2->SetIndexData(indices, indicesCount);
+			mesh2->SetVertexDeclaration(DefaultVertex::Declaration,3);
+			//TODO setIndexBuffer
 
 			root->Destroy(true);		
 
@@ -117,13 +134,13 @@ namespace TikiEngine
 			return lStatus;
 		}
 
-		void FbxLoader::ConvertToTiki(const FbxVector4& vector, float* output)
+		Vector4 FbxLoader::ConvertToTiki(const FbxVector4& vector, float* output)
 		{
 			output[0] = (float)vector[0];
 			output[1] = (float)vector[1];
 			output[2] = (float)vector[2];
 
-			//return Vector4((float), (float)vector[1], (float)vector[2], (float)vector[3]);
+			return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
 		}
 
 	}

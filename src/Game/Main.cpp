@@ -21,7 +21,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA
-	//_CrtSetBreakAlloc(45514);
+	//_CrtSetBreakAlloc(189);
 
 	{
 		EngineDescription desc;
@@ -59,6 +59,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			engine->Run();
 		}
+
 
 		delete(engine);
 	}

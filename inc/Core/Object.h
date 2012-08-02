@@ -12,7 +12,7 @@ public:
 	{	
 	}
 
-	~Object()
+	virtual ~Object()
 	{
 		//if (refCount > 0)
 		//{
@@ -31,7 +31,7 @@ public:
 
 		if (refCount == 0)
 		{
-			GC::Destroy(this);
+			delete this;
 		}
 
 		return refCount;
