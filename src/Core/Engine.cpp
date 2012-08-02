@@ -4,7 +4,6 @@
 #include <sstream>
 
 #include "Core/Engine.h"
-#include "Core/GarbageCollector.h"
 
 #include "Core/Window.h"
 #include "Core/LibraryManager.h"
@@ -39,16 +38,15 @@ namespace TikiEngine
 
 		loadedModules.Remove(librarys);
 
-		int i = 0;
-		while (i < loadedModules.Count())
+		int i = loadedModules.Count() - 1;
+		while (i >= 0)
 		{
 			loadedModules[i]->Dispose();
 			delete(loadedModules[i]);
 
-			i++;
+			i--;
 		}
-
-
+		
 		librarys->Dispose();
 		delete(librarys);
 	}
@@ -164,8 +162,6 @@ namespace TikiEngine
 			this->Draw(drawArgs);
 			graphics->End();
 
-			GC::Collect();
-
 			if (args.Input.GetKey(KEY_ESCAPE))
 			{
 				DestroyWindow(window->GetHWND());
@@ -188,7 +184,7 @@ namespace TikiEngine
 	void Engine::Update(const UpdateArgs& args)
 	{
 		std::wostringstream s;
-		s << "TikiEngine 2.0 - FPS: " << (1.0f / args.Time.ElapsedTime);
+		s << "TikiEngine 2.0 - FPS: " << (1.0f / args.Time.ElapsedTime) << " - Mouse: " << args.Input.MousePosition.X << " : " << args.Input.MousePosition.Y;
 
 		wstring str = s.str();
 

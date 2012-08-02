@@ -89,6 +89,20 @@ public:
 		this->data[index] = item;
 	}
 
+	void AddRange(T* src, Int32 offset, UInt32 length)
+	{
+		int index = getNewIndex(this->lengthData + length, true);
+
+		UInt32 i = 0;
+		while (i < length)
+		{
+			index = getNewIndex(this->lengthData, true);
+
+			data[index] = src[i + offset];
+			i++;
+		}
+	}
+
 	void Insert(int index, T item)
 	{
 		if (this->IsReadOnly) return;
@@ -212,12 +226,13 @@ public:
 	};
 	#pragma endregion
 
-private:
-	#pragma region Vars
+protected:
+
 	T* data;
 	int lengthArr;
 	int lengthData;  
-	#pragma endregion
+
+private:
 
 	#pragma region Private Member
 	int getNextSize()

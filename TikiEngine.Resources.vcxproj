@@ -28,6 +28,9 @@
     <ClCompile Include="src\Resources\DllMain.cpp" />
     <ClCompile Include="src\Resources\FbxLoader.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}</ProjectGuid>
     <SccProjectName>SAK</SccProjectName>

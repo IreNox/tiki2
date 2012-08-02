@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/TypeDef.h"
-#include "Core/GarbageCollector.h"
 
 class Object
 {

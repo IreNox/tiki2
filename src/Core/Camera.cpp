@@ -103,9 +103,8 @@ namespace TikiEngine
 			float g_fY = y;
 			float g_fEyeDistance = 5;
 
-			x += args.Time.ElapsedTime;
-			y += args.Time.ElapsedTime;
-			//y += args.Input.MouseDistance.Y;
+			x += args.Input.MouseDistance.X;
+			y += args.Input.MouseDistance.Y;
 
 			Vector3 g_vAt = Vector3(0.01f, 0.01f, 0.01f);
 			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);

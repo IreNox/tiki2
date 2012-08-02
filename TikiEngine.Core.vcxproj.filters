@@ -125,9 +125,6 @@
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GarbageCollector.cpp">
-      <Filter>Quelldateien\Engine\Static</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Console.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
@@ -187,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\HelperPath.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Color.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -296,9 +296,6 @@
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Console.h">
-      <Filter>Headerdateien\Engine\Static</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\GarbageCollector.h">
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ComponentType.h">
@@ -429,6 +426,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\QuadObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="IScript.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

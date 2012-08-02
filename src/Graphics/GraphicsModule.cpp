@@ -1,4 +1,3 @@
-
 #pragma comment(lib, "dxgi.lib")
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dx11.lib")
@@ -21,10 +20,7 @@ namespace TikiEngine
 			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), renderTarget(0)
 		{
-			clearColor[0] = 21.0f / 255;
-			clearColor[1] = 97.0f / 255;
-			clearColor[2] = 200.0f / 255;
-			clearColor[3] = 1.0f;
+			clearColor = Color::TikiBlue;
 		}
 
 		GraphicsModule::~GraphicsModule()
@@ -227,7 +223,14 @@ namespace TikiEngine
 			viewPort.TopLeftX = 0;
 			viewPort.TopLeftY = 0;
 			
-			memcpy(&this->viewPort, &viewPort, sizeof(viewPort));
+			this->viewPort = ViewPort(
+				viewPort.TopLeftX,
+				viewPort.TopLeftY,
+				viewPort.Width,
+				viewPort.Height,
+				viewPort.MinDepth,
+				viewPort.MaxDepth
+			);
 			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
@@ -296,7 +299,7 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GraphicsModule::Begin(const DrawArgs& args)
 		{
-			deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+			deviceContext->ClearRenderTargetView(renderTargetView, clearColor.arr);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
 
 			if (args.Context.CurrentCamera)

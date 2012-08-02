@@ -12,6 +12,8 @@
 #include "Core/Matrix3x3.h"
 #include "Core/Matrix.h"
 
+#include "Core/Color.h"
+
 #include "Core/Key.h"
 
 #include "Core/List.h"

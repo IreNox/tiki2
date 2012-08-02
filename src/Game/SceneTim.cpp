@@ -98,7 +98,7 @@ namespace TikiEngine
 
 			Scene::Initialize(args);
 
-			//mainCamera = co->GetCameraComponent();
+			mainCamera = co->GetCameraComponent();
 		}
 
 		void SceneTim::Draw(const DrawArgs& args)

@@ -99,10 +99,10 @@ public:
 	{
 		List<TValue>* list = new List<TValue>();
 
-		for (int i = 0; i < this->Count(); i++)
+		for (int i = 0; i < lengthData; i++)
 		{
 			list->Add(
-				List::Get(i).GetValue()
+				data[i].GetValue()
 			);
 		}
 

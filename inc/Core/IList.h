@@ -9,6 +9,8 @@ public:
 	IList(void) { };
 	virtual ~IList(void) { };
 
+	virtual void AddRange(T* data, Int32 offset, UInt32 length) = 0;
+
 	virtual void Clear() = 0;
 
 	virtual void Insert(int index, T item) = 0;

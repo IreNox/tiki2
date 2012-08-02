@@ -1,13 +1,20 @@
 #pragma once
 
-#include "Core/IElement.h"
+#include "Core/Component.h"
 #include "Core/Color.h"
 
 namespace TikiEngine
 {
-	namespace Elements
+	namespace Components
 	{
-		class ILight : public IElement
+		enum LightType
+		{
+			LT_Point,
+			LT_Directional,
+			LT_Spot
+		};
+
+		class ILight : public Component
 		{
 		public:
 
@@ -16,6 +23,9 @@ namespace TikiEngine
 
 			virtual Color GetColor() const = 0;
 			virtual void SetColor(const Color& color) = 0;
+			
+			virtual LightType GetType() const = 0;
+			virtual void SetType(LightType type) = 0;
 		};
 	}
 }

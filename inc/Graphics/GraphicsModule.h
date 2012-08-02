@@ -69,7 +69,7 @@ namespace TikiEngine
 			ViewPort viewPort; 
 			ID3D11RasterizerState* rasterState;
 
-			float clearColor[4];
+			Color clearColor;
 			ConstantBuffer<Matrices>* matrixBuffer;
 
 			IndexBuffer* indexBuffer;

@@ -19,7 +19,20 @@ struct Color
 	{
 	}
 
+	Color(float r,float g, float b, float a)
+		: R(r), G(g), B(b), A(a)
+	{
+	}
+
 	~Color()
 	{
 	}
+
+	static Color TransparentBlack;
+	static Color White;
+	static Color Back;
+	static Color Red;
+	static Color Green;
+	static Color Blue;
+	static Color TikiBlue;
 };

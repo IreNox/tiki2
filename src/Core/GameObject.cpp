@@ -44,6 +44,15 @@ namespace TikiEngine
 
 	Component* GameObject::GetComponent(IntPtr hash)
 	{
+		int i = 0;
+		int c = components.Count();
+		while (i < c)
+		{
+			if ( typeid(components[i]).hash_code() == hash) return components[i];
+
+			i++;
+		}
+
 		return 0;
 	}
 

@@ -40,11 +40,37 @@ namespace TikiEngine
 	{
 		elements.Add(element);
 
+		UInt32 len = 0;
+		ILight** comLights = 0;
+		Camera** comCameras = 0;
+
+		element->GetComponents<ILight>(&comLights, &len);
+		if (comLights) lights.AddRange(comLights, 0, len);
+		delete(comLights);
+
+		element->GetComponents<Camera>(&comCameras, &len);
+		if (comCameras) cameras.AddRange(comCameras, 0, len);
+		delete(comCameras);
+
 		return element;
 	}
 
 	bool Scene::RemoveElement(GameObject* element)
 	{
+		UInt32 i = 0;
+		while (i < lights.Count())
+		{
+			if (lights[i]->GetGameObject() == element) lights.Remove(lights[i]);
+			i++;
+		}
+
+		i = 0;
+		while (i < cameras.Count())
+		{
+			if (cameras[i]->GetGameObject() == element) cameras.Remove(cameras[i]);
+			i++;
+		}
+
 		return elements.Remove(element);
 	}
 	#pragma endregion

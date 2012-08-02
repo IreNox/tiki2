@@ -21,12 +21,12 @@
   <ItemGroup>
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\CameraObject.cpp" />
+    <ClCompile Include="src\Core\Color.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
     <ClCompile Include="src\Core\FileStream.cpp" />
     <ClCompile Include="src\Core\GameObject.cpp" />
     <ClCompile Include="src\Core\Engine.cpp" />
-    <ClCompile Include="src\Core\GarbageCollector.cpp" />
     <ClCompile Include="src\Core\LibraryManager.cpp" />
     <ClCompile Include="src\Core\Material.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
@@ -94,7 +94,6 @@
     <ClInclude Include="inc\Core\TypeInc.h" />
     <ClInclude Include="inc\Core\UpdateArgs.h" />
     <ClInclude Include="inc\Core\GameTime.h" />
-    <ClInclude Include="inc\Core\GarbageCollector.h" />
     <ClInclude Include="inc\Core\GraphicsDescription.h" />
     <ClInclude Include="inc\Core\HelperHash.h" />
     <ClInclude Include="inc\Core\ICollection.h" />
@@ -130,6 +129,7 @@
     <ClInclude Include="inc\Core\Window.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
     <ClCompile Include="src\Core\HelperPath.cpp" />
+    <ClInclude Include="IScript.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>

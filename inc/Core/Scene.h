@@ -4,6 +4,9 @@
 #include "Core/GameObject.h"
 #include "Core/EngineObject.h"
 
+#include "Core/ILight.h"
+#include "Core/Camera.h"
+
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 #include "Core/InitializationArgs.h"
@@ -12,6 +15,8 @@
 
 namespace TikiEngine
 {
+	using namespace TikiEngine::Components;
+
 	class Scene : public EngineObject
 	{
 	public:
@@ -31,6 +36,10 @@ namespace TikiEngine
 	protected:
 
 		Camera* mainCamera;
+
 		List<GameObject*> elements;
+
+		List<ILight*> lights;
+		List<Camera*> cameras;
 	};
 }
