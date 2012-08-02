@@ -58,5 +58,8 @@
     <ClCompile Include="src\Physics\Collider.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\RigidBody.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -6,6 +6,7 @@ namespace TikiEngine
 	{
 		Collider::Collider()
 		{
+			isDynamic = true;
 			isTrigger = false;
 			isKinematic = false;
 		}
@@ -19,9 +20,10 @@ namespace TikiEngine
 		{
 			this->isTrigger = triggerFlag;
 
-			for (int i = 0; i < actor->getNbShapes(); i++)
+			for (unsigned int i = 0; i < actor->getNbShapes(); i++)
 			{
 				actor->getShapes()[i]->setFlag(NX_TRIGGER_ENABLE, isTrigger);
+
 			}
 		}
 
@@ -33,14 +35,12 @@ namespace TikiEngine
 		void Collider::SetKinematicFlag(bool kinematicFlag)
 		{
 			this->isKinematic = kinematicFlag;
-			
+
 			if (isKinematic)
 				actor->raiseBodyFlag(NX_BF_KINEMATIC);
 			else
-			{
-				actor->wakeUp();
 				actor->clearBodyFlag(NX_BF_KINEMATIC);
-			}
+
 		}
 
 	}

@@ -34,6 +34,7 @@
     <ClCompile Include="src\Physics\DllMain.cpp" />
     <ClCompile Include="src\Physics\PhysicsMaterial.cpp" />
     <ClCompile Include="src\Physics\PhysicsModule.cpp" />
+    <ClCompile Include="src\Physics\RigidBody.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E29CCD5B-949C-477F-BBC2-2B694ACA8346}</ProjectGuid>

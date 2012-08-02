@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Physics/RigidBody.h"
 #include "Physics/PhysicsMaterial.h"
 
 
@@ -20,9 +21,14 @@ namespace TikiEngine
 			bool GetKinematicFlag();
 			void SetKinematicFlag(bool kinematicFlag);
 
+
+			RigidBody GetRigidBody() { return rigidBody;}
+
 		protected:
 			bool isTrigger;
 			bool isKinematic;	// check if we have rigid body
+			bool isDynamic;
+			RigidBody rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;
 			PhysicsMaterial material;

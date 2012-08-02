@@ -76,7 +76,7 @@ namespace TikiEngine
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			// BoxCollider init
+			// BoxCollider init, by default they are static objects
 			box = new BoxCollider(tikiEngine, 0);
 			box->SetCenter(Vector3(0, 10, 0));
 			box->SetSize(Vector3(1, 5, 2));
@@ -85,10 +85,13 @@ namespace TikiEngine
 
 			// BoxCollider Runtime
 			//box->SetKinematicFlag(false);
-			box->SetTriggerFlag(true);
+			//box->SetTriggerFlag(true);
 			Vector3 boxSize = box->GetSize();
 			Vector3 boxCenter = box->GetCenter();
 
+			// RigidBodys won't work for non dynamic actors
+			//box->GetRigidBody().SetMass(10.0f);
+			//Single mass = box->GetRigidBody().GetMass();
 
 			return true;
 		}

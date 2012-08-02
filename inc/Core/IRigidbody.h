@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Core/Component.h"
+#include "Core/Object.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
-		class IRigidBody : public Component
+		class IRigidBody : public Object
 		{
 		public: 
-			IRigidBody(Engine* engine, GameObject* gameObject)
-				: Component(engine, gameObject, CT_Rigidbody)
+			IRigidBody()
+				: Object()
 			{
 			}
 

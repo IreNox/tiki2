@@ -57,8 +57,10 @@ namespace TikiEngine
 				return;
 
 			if (actor != 0)
+			{
 				DllMain::Scene->releaseActor(*actor);
 
+			}
 			// Create Box shape description.
 			NxBoxShapeDesc boxDesc;
 			boxDesc.dimensions = size;
@@ -77,13 +79,16 @@ namespace TikiEngine
 			{
 				// Triggers have no body description
 				//  TODO init RigidBody class here :)
+				NxBodyDesc bodyDesc;
+				bodyDesc.mass = 1;
+
 				if (isKinematic)
 				{
-					NxBodyDesc bodyDesc;
-					bodyDesc.mass = 10;
-					actorDescription.body = &bodyDesc;
+					bodyDesc.flags |= NX_BF_KINEMATIC;
 				}
 
+				if (isDynamic)
+					actorDescription.body = &bodyDesc;
 			}
 
 			actorDescription.shapes.pushBack(&boxDesc);
@@ -92,8 +97,9 @@ namespace TikiEngine
 
 			// finally, create the actor from description
 			actor = DllMain::Scene->createActor(actorDescription);
+			rigidBody.SetActor(actor);
 
-			// rest the defaults for recreation, else more and more shapes are added
+			// reset the defaults for recreation, else more and more shapes are added
 			actorDescription.setToDefault();
 		}
 	}
