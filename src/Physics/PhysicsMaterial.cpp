@@ -1,21 +1,21 @@
 #include "Physics/PhysicsMaterial.h"
+#include "Physics/DllMain.h"
 
 namespace TikiEngine
 {
 	namespace Physics
 	{
-		PhysicsMaterial::PhysicsMaterial(NxScene* setScene) : IPhysicsMaterial()
+		PhysicsMaterial::PhysicsMaterial() : IPhysicsMaterial()
 		{
-			scene = setScene;
 			desc.setToDefault();
-			material = scene->createMaterial(desc);
+			material = DllMain::Scene->createMaterial(desc);
 			index = material->getMaterialIndex();
 		}
 
 		PhysicsMaterial::~PhysicsMaterial()
 		{
 			// TODO : call release here from object? 
-			scene->releaseMaterial(*material);
+			DllMain::Scene->releaseMaterial(*material);
 			material = NULL;
 		}
 

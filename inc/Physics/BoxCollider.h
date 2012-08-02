@@ -16,7 +16,7 @@ namespace TikiEngine
 			 *  @param setCenter The center of the box, measured in the object's local space.
 			 *  @param setSize The size of the box, measured in the object's local space.
 			*/
-			BoxCollider(Engine* engine, GameObject* gameObject, NxScene* setScene, 
+			BoxCollider(Engine* engine, GameObject* gameObject, 
 						NxVec3 setCenter, NxVec3 setSize, bool setIsTrigger = false);
 			
 			/*! @brief Destructor */

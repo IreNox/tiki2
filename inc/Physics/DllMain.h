@@ -23,8 +23,8 @@ namespace TikiEngine
 		static Engine* Engine;
 
 		static PhysicsModule* Module;
-		static void* Device;
-		static void* Context;
+    static NxScene* Scene;
+    static NxPhysicsSDK* PhysicsSDK;
 
 		static void InitDll(TikiEngine::Engine* engine);
 

@@ -1,12 +1,15 @@
 #include "Physics/BoxCollider.h"
+#include "Core/TypeGlobals.h"
+#include "Physics/DllMain.h"
 
 namespace TikiEngine 
 {
 	namespace Physics
 	{
 
-		BoxCollider::BoxCollider(Engine* engine, GameObject* gameObject, NxScene* setScene, NxVec3 setCenter, NxVec3 setSize, bool setIsTrigger)
-				: Collider(engine, gameObject, setScene)
+		BoxCollider::BoxCollider(Engine* engine, GameObject* gameObject, 
+                             NxVec3 setCenter, NxVec3 setSize, bool setIsTrigger)
+				: Collider(engine, gameObject)
 		{
 			center = setCenter;
 			size = setSize;
@@ -15,12 +18,10 @@ namespace TikiEngine
 
 		BoxCollider::~BoxCollider()
 		{
-			if (material != NULL)
-				delete material;
-			material = NULL;
+      SafeRelease(&material);
 
 			if (actor != NULL)
-				scene->releaseActor(*actor);
+				DllMain::Scene->releaseActor(*actor);
 			actor = NULL;
 		}
 
@@ -32,7 +33,7 @@ namespace TikiEngine
 				boxDesc.localPose.t = NxVec3(0, size.y, 0);
 
 				// Create material from index
-				material = new PhysicsMaterial(scene);
+				material = new PhysicsMaterial();
 				material->SetRestitution(1.0f);
 				material->SetRestitution(0.5f);
 				material->SetRestitution(0.3f);
@@ -55,7 +56,7 @@ namespace TikiEngine
 				actorDescription.globalPose.t = center;
 
 				// finally, create the actor from description
-				actor = scene->createActor(actorDescription);
+				actor = DllMain::Scene->createActor(actorDescription);
 
 				if (actor == NULL)
 					return false;

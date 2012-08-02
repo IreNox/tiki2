@@ -52,5 +52,8 @@
     <ClCompile Include="src\Physics\BoxCollider.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
+    <ClCompile Include="src\Physics\Collider.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

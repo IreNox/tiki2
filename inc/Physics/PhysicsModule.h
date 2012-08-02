@@ -30,7 +30,7 @@ namespace TikiEngine
 			bool IsHardwarePresent();
 
 			/*! @brief retreives the current scene */
-			static NxScene* GetScene();
+			NxScene* GetScene();
 
 			void Begin();
 			void End();
@@ -46,10 +46,10 @@ namespace TikiEngine
 			NxPhysicsSDK* physicsSDK;
 
 			NxScene* scene; 
-			static NxScene* currentScene;
+			//static NxScene* currentScene;
 			
-			BoxCollider* box;
-			BoxCollider* box2;
+			//BoxCollider* box;
+			//BoxCollider* box2;
 		};
 	}
 }

@@ -16,7 +16,10 @@ namespace TikiEngine
 			}
 			virtual ~IPhysics() {}
 
-			virtual void DoWhatIWant() = 0;
+#if _DEBUG
+      virtual Mesh* CreateDebugMesh() = 0;
+#endif
+
 		};
 	}
 }

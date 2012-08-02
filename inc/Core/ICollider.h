@@ -17,7 +17,6 @@ namespace TikiEngine
 			{
 			}
 			virtual ~ICollider() {}
-
 		};
 	}
 }

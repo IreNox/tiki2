@@ -17,7 +17,7 @@ namespace TikiEngine
 
 		public:
 			/*! @brief Creates a new material. */
-			PhysicsMaterial(NxScene* setScene);
+			PhysicsMaterial();
 			~PhysicsMaterial();
 
 			/*! @brief The friction used when already moving. This value has to be between 0 and 1. */
@@ -38,7 +38,6 @@ namespace TikiEngine
 			UInt16 GetIndex();
 
 		private:
-			NxScene* scene;
 			UInt16 index;
 			NxMaterialDesc desc;
 			NxMaterial* material;

@@ -29,6 +29,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\BoxCollider.cpp" />
+    <ClCompile Include="src\Physics\Collider.cpp" />
     <ClCompile Include="src\Physics\DllMain.cpp" />
     <ClCompile Include="src\Physics\PhysicsMaterial.cpp" />
     <ClCompile Include="src\Physics\PhysicsModule.cpp" />

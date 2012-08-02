@@ -14,11 +14,7 @@ namespace TikiEngine
 		{
 
 		public:
-			 Collider(Engine* engine, GameObject* gameObject, NxScene* setScene) 
-				: ICollider(engine, gameObject) 
-			 { 
-				scene = setScene;
-			 }
+			 Collider(Engine* engine, GameObject* gameObject);
 			 virtual ~Collider() {}
 
 
@@ -54,9 +50,6 @@ namespace TikiEngine
 			 
 			 /*! @brief the main simulation object in the physics SDK. An actor is owned by and contained in a NxScene */
 			 NxActor* actor;
-
-			 /*! @brief The PhysX Scene, the collider belongs to */
-			 NxScene* scene;
 
 		};
 

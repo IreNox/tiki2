@@ -1,6 +1,7 @@
 
 
 #include "Physics/PhysicsModule.h"
+#include "Physics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -9,7 +10,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Physics;
 
 		// implement static member
-		NxScene* PhysicsModule::currentScene = NULL;
+		//NxScene* PhysicsModule::currentScene = NULL;
 
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine)
@@ -20,13 +21,13 @@ namespace TikiEngine
 
 		PhysicsModule::~PhysicsModule()
 		{
-			if (box != NULL)
-				delete box;
-			box = NULL;
+			//if (box != NULL)
+			//	delete box;
+			//box = NULL;
 
-			if (box2 != NULL)
-				delete box2;
-			box2 = NULL;
+			//if (box2 != NULL)
+			//	delete box2;
+			//box2 = NULL;
 
 			if (physicsSDK != NULL)
 			{
@@ -73,7 +74,7 @@ namespace TikiEngine
 				Console::Write("Error: Unable to create a PhysX scene, exiting the sample.");
 				return false;
 			}
-			currentScene = scene;
+			//currentScene = scene;
 
 
 
@@ -91,15 +92,19 @@ namespace TikiEngine
 
 			//bool hardware = IsHardwarePresent();
 
-			// Create
-			box = new BoxCollider(tikiEngine, 0, scene, 
-				NxVec3(0, 10, 0), NxVec3(2, 2 ,2));
-			box->GetReady();
+			//// Create
+			//box = new BoxCollider(tikiEngine, 0, scene, 
+			//	NxVec3(0, 10, 0), NxVec3(2, 2 ,2));
+			//box->GetReady();
 
-			// Create static Trigger
-			box2 = new BoxCollider(tikiEngine, 0, scene, 
-				NxVec3(5, 5, 0), NxVec3(1, 1 ,1), true);
-			box2->GetReady();
+			//// Create static Trigger
+			//box2 = new BoxCollider(tikiEngine, 0, scene, 
+			//	NxVec3(5, 5, 0), NxVec3(1, 1 ,1), true);
+			//box2->GetReady();
+
+
+      DllMain::Scene = scene;
+      DllMain::PhysicsSDK = physicsSDK;
 
 			return true;
 		}
@@ -111,7 +116,7 @@ namespace TikiEngine
 
 		NxScene* PhysicsModule::GetScene()
 		{
-			return currentScene; 
+			return scene; 
 		}
 
 
