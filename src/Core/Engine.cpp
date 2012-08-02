@@ -155,7 +155,7 @@ namespace TikiEngine
 				time,
 				DrawContext(
 					scene->GetMainCamera(),
-					0
+					graphics->GetBackBufferRenderTarget()
 				),
 				graphics
 			);

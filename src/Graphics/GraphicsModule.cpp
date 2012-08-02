@@ -299,9 +299,12 @@ namespace TikiEngine
 			deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
 
-			Matrices* matrices = matrixBuffer->Map();
-			*matrices = *args.Context.CurrentCamera->GetMatrices();
-			matrixBuffer->Unmap();
+			if (args.Context.CurrentCamera)
+			{
+				Matrices* matrices = matrixBuffer->Map();
+				*matrices = *args.Context.CurrentCamera->GetMatrices();
+				matrixBuffer->Unmap();
+			}
 		}
 
 		void GraphicsModule::End()
