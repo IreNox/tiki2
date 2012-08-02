@@ -32,10 +32,10 @@ namespace TikiEngine
 
 		protected:
 
+			void createInternal(UInt32 width, UInt32 height, UInt32 bindFlags);
+
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);
-
-		private:
 
 			ID3D11Texture2D* texture;
 			ID3D11ShaderResourceView* textureResource;

@@ -42,6 +42,11 @@ namespace TikiEngine
 		#pragma region Member - Create
 		void Texture::Create(UInt32 width, UInt32 height)
 		{
+			this->createInternal(width, height, 0);
+		}
+
+		void Texture::createInternal(UInt32 width, UInt32 height, UInt32 bindFlags)
+		{
 			if (this->GetReady()) return;
 
 			D3D11_TEXTURE2D_DESC desc;
@@ -54,12 +59,27 @@ namespace TikiEngine
 			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 			desc.SampleDesc.Count = 1;
 			desc.Usage = D3D11_USAGE_DEFAULT;
-			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+			desc.BindFlags = bindFlags | D3D11_BIND_SHADER_RESOURCE;
 
 			DllMain::Device->CreateTexture2D(
 				&desc,
 				0,
 				&texture
+			);
+			texture->GetDesc(&this->desc);
+
+			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
+			ZeroMemory(&srDesc, sizeof(srDesc));
+
+			srDesc.Format = desc.Format;
+			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			srDesc.Texture2D.MostDetailedMip = 0;
+			srDesc.Texture2D.MipLevels = 1;
+
+			DllMain::Device->CreateShaderResourceView(
+				texture,
+				&srDesc,
+				&textureResource
 			);
 		}
 
@@ -151,8 +171,6 @@ namespace TikiEngine
 
 		}
 		#pragma endregion
-
-
 	}
 }
 
