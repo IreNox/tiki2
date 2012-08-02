@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/IModule.h"
+#include "Core/Mesh.h"
 
 namespace TikiEngine
 {
@@ -16,9 +17,9 @@ namespace TikiEngine
 			}
 			virtual ~IPhysics() {}
 
-#if _DEBUG
-      virtual Mesh* CreateDebugMesh() = 0;
-#endif
+//#if _DEBUG
+//      virtual Mesh* CreateDebugMesh() = 0;
+//#endif
 
 		};
 	}
