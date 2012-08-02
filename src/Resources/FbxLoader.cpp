@@ -54,8 +54,15 @@ namespace TikiEngine
 			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
 			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
 
+			int bla = model->GetTextureUVCount(FbxLayerElement::eTextureDiffuse);
 			//FbxGeometryElement::EMappingMode map =  model->GetElementUV(0)->GetMappingMode(); //FbxGeometryElement::eByPolygonVertex
+			int uvIndexCount = model->GetElementUV(0)->GetIndexArray().GetCount();
+			int uvDirectCount = model->GetElementUV(0)->GetDirectArray().GetCount();
+			//model->GetElementUV(0)->RemapIndexTo(FbxLayerElement::eByControlPoint);
 			
+			
+			
+
 
 			UInt32 count = model->GetControlPointsCount();
 			UInt32 size = count * sizeof(DefaultVertex);
@@ -63,7 +70,7 @@ namespace TikiEngine
 			DefaultVertex *vertexData = new DefaultVertex[count];
 			ZeroMemory(vertexData, size);
 
-			for(int i = 0; i < model->GetControlPointsCount(); i++)
+			for(UInt32 i = 0; i < model->GetControlPointsCount(); i++)
 				ConvertToTiki(vertexArray[i], model->GetElementUV(0)->GetDirectArray().GetAt(i), (float*)&vertexData[i]);		
 
 			MeshIndexed* mesh2 = new MeshIndexed(engine);
