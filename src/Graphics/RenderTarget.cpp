@@ -19,6 +19,7 @@ namespace TikiEngine
 			renderTarget->GetResource(&res);
 
 			texture = (ID3D11Texture2D*)res;
+			texture->GetDesc(&desc);
 
 			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
 			ZeroMemory(&srDesc, sizeof(srDesc));
@@ -32,7 +33,7 @@ namespace TikiEngine
 				texture,
 				&srDesc,
 				&textureResource
-				);
+			);
 		}
 
 		RenderTarget::~RenderTarget()

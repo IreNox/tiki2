@@ -115,7 +115,6 @@ namespace TikiEngine
 			if (FAILED(r)) { return false; }
 
 			r = device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView);
-			renderTarget = new RenderTarget(engine, renderTargetView);
 			backBufferPtr->Release();
 
 			if (FAILED(r)) { return false; }
@@ -238,6 +237,7 @@ namespace TikiEngine
 
 			this->indexBuffer = new IndexBuffer(engine);
 			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
+			this->renderTarget = new RenderTarget(engine, renderTargetView);
 
 			inited = true;
 			return true;
