@@ -47,7 +47,6 @@ namespace TikiEngine
 					break;
 				}
 			} 
-			int blub = model->GetElementUV(0)->GetDirectArray().GetCount();
 
 			UINT polygonVertexCount = model->GetPolygonVertexCount();
 			UINT size = polygonVertexCount * sizeof(DefaultVertex);
@@ -68,16 +67,20 @@ namespace TikiEngine
 					indices.Add(counter);
 					indices.Add(counter+1);
 					indices.Add(counter+2);
+					
 				}else if(verticesInPolygon == 4)
 				{
-					indices.Add(counter+2);
+					indices.Add(counter);
 					indices.Add(counter+1); 
-					indices.Add(counter);
-
-					indices.Add(counter+3);
 					indices.Add(counter+2);
+					
+
 					indices.Add(counter);
+					indices.Add(counter+2);
+					indices.Add(counter+3);
+					
 				}
+
 
 				for(Int32 k = 0; k < verticesInPolygon; k++)
 				{
@@ -85,11 +88,18 @@ namespace TikiEngine
 
 
 					FbxVector4 pos = model->GetControlPointAt(position);
-					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(counter);
+
+					int uvIndex = model->GetElementUV(0)->GetIndexArray().GetAt(counter);
+					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+
+					int normalIndex = model->GetElementNormal(0)->GetIndexArray().GetAt(counter);
+					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(normalIndex);
+					
 
 					ConvertToTiki(
 						pos, 
-						uv, 
+						normals,
+						uv,
 						(float*)&vertexData[counter]);	
 
 					counter++;
@@ -110,41 +120,9 @@ namespace TikiEngine
 			delete indexBufferData;
 			indexBufferData = 0;
 
-			
-			//FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
-			//memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
-
-			//int bla = model->GetTextureUVCount(FbxLayerElement::eTextureDiffuse);
-			////FbxGeometryElement::EMappingMode map =  model->GetElementUV(0)->GetMappingMode(); //FbxGeometryElement::eByPolygonVertex
-			//int uvIndexCount = model->GetElementUV(0)->GetIndexArray().GetCount();
-			//int uvDirectCount = model->GetElementUV(0)->GetDirectArray().GetCount();
-			////model->GetElementUV(0)->RemapIndexTo(FbxLayerElement::eByControlPoint);
-			//
-			//
-			//
-
-
-			//UInt32 count = model->GetControlPointsCount();
-			//UInt32 size = count * sizeof(DefaultVertex);
-
-			//DefaultVertex *vertexData = new DefaultVertex[count];
-			//ZeroMemory(vertexData, size);
-
-			//for(UInt32 i = 0; i < model->GetControlPointsCount(); i++)
-			//	ConvertToTiki(vertexArray[i], model->GetElementUV(0)->GetDirectArray().GetAt(i), (float*)&vertexData[i]);		
-
-			//MeshIndexed* mesh2 = new MeshIndexed(engine);
-			//mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
-
-			//UInt32 *indices = (UInt32*)model->GetPolygonVertices();
-			//UInt32 indicesCount = model->GetPolygonCount();
-
-			//mesh2->SetIndexData(indices, indicesCount);
-			//mesh2->SetVertexDeclaration(DefaultVertex::Declaration,3);
-
 			root->Destroy(true);		
 
-			return meshIndexed;//mesh2;
+			return meshIndexed;
 		}
 
 		void FbxLoader::InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene)
@@ -202,17 +180,17 @@ namespace TikiEngine
 			return lStatus;
 		}
 
-		void FbxLoader::ConvertToTiki(const FbxVector4& vector, const FbxVector2& uv, float* output)
+		void FbxLoader::ConvertToTiki(const FbxVector4& vector, const FbxVector4& normals, const FbxVector2& uv, float* output)
 		{
 			//vertices
 			output[0] = (float)vector[0];
 			output[1] = (float)vector[1];
-			output[2] = (float)vector[2];
+			output[2] = (float)-vector[2];
 			//normals
-			/*
-			output[3] = (float)vector[0];
-			output[4] = (float)vector[1];
-			output[5] = (float)vector[2];*/
+			
+			output[3] = (float)normals[0];
+			output[4] = (float)normals[1];
+			output[5] = (float)-normals[2];
 			//uvs
 			output[6] = (float)uv[0];
 			output[7] = (float)(1-uv[1]);

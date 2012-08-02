@@ -33,7 +33,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Dice2.fbx"); //new MeshIndexed(engine);
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/jumppad_lowpoly.FBX"); //new MeshIndexed(engine);
 
 			//DefaultVertex vertices[] = {
 			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
@@ -65,7 +65,7 @@ namespace TikiEngine
 			//mesh->SetIndexData(indices, sizeof(indices));
 			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
 
-			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\DiceMap.jpg");
+			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
