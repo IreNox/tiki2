@@ -34,7 +34,7 @@ namespace TikiEngine
 
 			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
 			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
-			Vector4 ConvertToTiki(const FbxVector4& vector, float* output);
+			void ConvertToTiki(const FbxVector4& vector, const FbxVector2& uv, float* output);
 
 			FbxManager* fbxManager;
 			FbxScene* scene;

@@ -54,6 +54,8 @@ namespace TikiEngine
 			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
 			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
 
+			//FbxGeometryElement::EMappingMode map =  model->GetElementUV(0)->GetMappingMode(); //FbxGeometryElement::eByPolygonVertex
+			
 
 			UInt32 count = model->GetControlPointsCount();
 			UInt32 size = count * sizeof(DefaultVertex);
@@ -62,17 +64,16 @@ namespace TikiEngine
 			ZeroMemory(vertexData, size);
 
 			for(int i = 0; i < model->GetControlPointsCount(); i++)
-				ConvertToTiki(vertexArray[i], (float*)&vertexData[i]);		
+				ConvertToTiki(vertexArray[i], model->GetElementUV(0)->GetDirectArray().GetAt(i), (float*)&vertexData[i]);		
 
 			MeshIndexed* mesh2 = new MeshIndexed(engine);
 			mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
 
 			UInt32 *indices = (UInt32*)model->GetPolygonVertices();
-			UInt32 indicesCount = model->GetPolygonVertexCount();
+			UInt32 indicesCount = model->GetPolygonCount();
 
 			mesh2->SetIndexData(indices, indicesCount);
 			mesh2->SetVertexDeclaration(DefaultVertex::Declaration,3);
-			//TODO setIndexBuffer
 
 			root->Destroy(true);		
 
@@ -134,13 +135,25 @@ namespace TikiEngine
 			return lStatus;
 		}
 
-		Vector4 FbxLoader::ConvertToTiki(const FbxVector4& vector, float* output)
+		void FbxLoader::ConvertToTiki(const FbxVector4& vector, const FbxVector2& uv, float* output)
 		{
+			//vertices
 			output[0] = (float)vector[0];
 			output[1] = (float)vector[1];
 			output[2] = (float)vector[2];
+			//normals
+			/*
+			output[3] = (float)vector[0];
+			output[4] = (float)vector[1];
+			output[5] = (float)vector[2];*/
+			//uvs
+			output[6] = (float)uv[0];
+			output[7] = (float)uv[1];
 
-			return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
+
+
+
+			//return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
 		}
 
 	}
