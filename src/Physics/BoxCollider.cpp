@@ -6,63 +6,92 @@ namespace TikiEngine
 {
 	namespace Physics
 	{
-
-		BoxCollider::BoxCollider(Engine* engine, GameObject* gameObject, 
-                             NxVec3 setCenter, NxVec3 setSize, bool setIsTrigger)
-				: Collider(engine, gameObject)
+		BoxCollider::BoxCollider(Engine* engine, GameObject* gameObject)
+				: IBoxCollider(engine, gameObject)
 		{
-			center = setCenter;
-			size = setSize;
-			isTrigger = setIsTrigger;
+			size = NxVec3(NX_MAX_F32);
+			center = NxVec3(NX_MAX_F32);
+			isTrigger = false;
 		}
 
 		BoxCollider::~BoxCollider()
 		{
-      SafeRelease(&material);
+			//SafeRelease(&material);
 
-			if (actor != NULL)
+			if (actor != 0)
 				DllMain::Scene->releaseActor(*actor);
-			actor = NULL;
+			actor = 0;
+		}
+
+		#pragma region IBoxCollider Methods
+		Vector3 BoxCollider::GetCenter()
+		{
+			return Vector3(center.x, center.y, center.z);
+		}
+
+		Vector3 BoxCollider::GetSize()
+		{
+			return Vector3(size.x, size.y, size.z);
+		}
+
+		void BoxCollider::SetSize(const Vector3& size)
+		{
+			this->size = size.arr; //NxVec3(size.X, size.Y, size.Z);
+			UpdateData();
+		}
+
+		void BoxCollider::SetCenter(const Vector3& center)
+		{
+			this->center = center.arr;//NxVec3(center.X, center.Y, center.Z);
+			UpdateData();
 		}
 
 		bool BoxCollider::GetReady() 
+		{
+			return (size != NxVec3(NX_MAX_F32)) && (center != NxVec3(NX_MAX_F32));
+		}
+		#pragma endregion
+
+		void BoxCollider::UpdateData()
+		{
+			if (!this->GetReady()) 
+				return;
+
+			if (actor != 0)
+				DllMain::Scene->releaseActor(*actor);
+
+			// Create Box shape description.
+			NxBoxShapeDesc boxDesc;
+			boxDesc.dimensions = size;
+			boxDesc.localPose.t = NxVec3(0, size.y, 0);
+
+			// Create material from index
+			material.SetRestitution(1.0f);
+			material.SetDynamicFriction(0.5f);
+			material.SetStaticFriction(0.3f);
+			boxDesc.materialIndex = material.GetIndex();
+
+			// if we have a trigger shape, events are sent to the user
+			if (isTrigger)
+				boxDesc.shapeFlags |= NX_TRIGGER_ENABLE;
+			else
 			{
-				// Create Box shape description.
-				NxBoxShapeDesc boxDesc;
-				boxDesc.dimensions = size;
-				boxDesc.localPose.t = NxVec3(0, size.y, 0);
-
-				// Create material from index
-				material = new PhysicsMaterial();
-				material->SetRestitution(1.0f);
-				material->SetRestitution(0.5f);
-				material->SetRestitution(0.3f);
-				boxDesc.materialIndex = material->GetIndex();
-
-				// if we have a trigger shape, events are sent to the user
-				if (isTrigger)
-					boxDesc.shapeFlags |= NX_TRIGGER_ENABLE;
-				else
-				{
-					// Triggers have no body description
-					//  TODO init RigidBody class here :)
-					NxBodyDesc bodyDesc;
-					bodyDesc.mass = 10;
-					actorDescription.body = &bodyDesc;
-				}
-
-				actorDescription.shapes.pushBack(&boxDesc);
-				actorDescription.userData = (void*)this;	// associate with this object
-				actorDescription.globalPose.t = center;
-
-				// finally, create the actor from description
-				actor = DllMain::Scene->createActor(actorDescription);
-
-				if (actor == NULL)
-					return false;
-
-				return true;
+				// Triggers have no body description
+				//  TODO init RigidBody class here :)
+				NxBodyDesc bodyDesc;
+				bodyDesc.mass = 10;
+				actorDescription.body = &bodyDesc;
 			}
 
+			actorDescription.shapes.pushBack(&boxDesc);
+			actorDescription.userData = (void*)this;	// associate with this object
+			actorDescription.globalPose.t = center;
+
+			// finally, create the actor from description
+			actor = DllMain::Scene->createActor(actorDescription);
+
+			// rest the defaults for recreation, else more and more shapes are added
+			actorDescription.setToDefault();
+		}
 	}
 }

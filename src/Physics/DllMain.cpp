@@ -14,8 +14,8 @@ namespace TikiEngine
 	Engine* DllMain::Engine = 0;
 
 	PhysicsModule* DllMain::Module = 0;
-  NxScene* DllMain::Scene = 0;
-  NxPhysicsSDK* DllMain::PhysicsSDK = 0;
+	NxScene* DllMain::Scene = 0;
+	NxPhysicsSDK* DllMain::PhysicsSDK = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{

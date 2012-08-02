@@ -421,5 +421,8 @@
     <ClInclude Include="inc\Core\IShader.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IBoxCollider.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

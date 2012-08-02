@@ -7,7 +7,7 @@ namespace TikiEngine
 	{
 		PhysicsMaterial::PhysicsMaterial() : IPhysicsMaterial()
 		{
-			desc.setToDefault();
+			//desc.setToDefault();
 			material = DllMain::Scene->createMaterial(desc);
 			index = material->getMaterialIndex();
 		}

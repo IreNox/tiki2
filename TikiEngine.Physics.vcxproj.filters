@@ -32,9 +32,6 @@
     <ClInclude Include="inc\Physics\PhysicsMaterial.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\Collider.h">
-      <Filter>Headerdateien\Colliders</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Physics\BoxCollider.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
@@ -50,9 +47,6 @@
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\BoxCollider.cpp">
-      <Filter>Quelldateien\Colliders</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Physics\Collider.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>

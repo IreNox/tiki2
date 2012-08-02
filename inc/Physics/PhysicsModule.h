@@ -8,14 +8,14 @@
 #include "Physics/VRDSettings.h"
 
 
-#include "Physics/BoxCollider.h"
+//#include "Physics/BoxCollider.h"
 
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
-		using namespace TikiEngine::Physics;
+		//using namespace TikiEngine::Physics;
 
 		class PhysicsModule : public IPhysics
 		{
@@ -35,8 +35,6 @@ namespace TikiEngine
 			void Begin();
 			void End();
 
-			void DoWhatIWant();
-			
 			void Dispose();
 
 		private:
@@ -44,12 +42,9 @@ namespace TikiEngine
 
 			bool pause;
 			NxPhysicsSDK* physicsSDK;
-
 			NxScene* scene; 
-			//static NxScene* currentScene;
-			
 			//BoxCollider* box;
-			//BoxCollider* box2;
+
 		};
 	}
 }

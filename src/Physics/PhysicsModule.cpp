@@ -1,5 +1,3 @@
-
-
 #include "Physics/PhysicsModule.h"
 #include "Physics/DllMain.h"
 
@@ -7,10 +5,7 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		using namespace TikiEngine::Physics;
-
-		// implement static member
-		//NxScene* PhysicsModule::currentScene = NULL;
+		//using namespace TikiEngine::Physics;
 
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine)
@@ -21,26 +16,21 @@ namespace TikiEngine
 
 		PhysicsModule::~PhysicsModule()
 		{
-			//if (box != NULL)
-			//	delete box;
-			//box = NULL;
-
-			//if (box2 != NULL)
-			//	delete box2;
-			//box2 = NULL;
-
-			if (physicsSDK != NULL)
+			if (physicsSDK != 0)
 			{
 				// release scene
-				if (scene != NULL)
+				if (scene != 0)
 					physicsSDK->releaseScene(*scene);
-				scene = NULL;
+				scene = 0;
 
 				// release SDK
 				NxReleasePhysicsSDK(physicsSDK);
-				physicsSDK = NULL;
+				physicsSDK = 0;
 			}
+		}
 
+		void PhysicsModule::Dispose()
+		{
 		}
 
 		bool PhysicsModule::Initialize(EngineDescription& desc)
@@ -54,7 +44,7 @@ namespace TikiEngine
 
 			ErrorStream errorStream;
 			physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, &errorStream, sdkDesc, &errorCode);
-			if (physicsSDK == NULL)
+			if (physicsSDK == 0)
 			{
 				Console::Write("Unable to initialize the PhysX SDK, exiting." + errorStream.GetNxSDKCreateError(errorCode));
 				return false;
@@ -71,40 +61,26 @@ namespace TikiEngine
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == NULL)
 			{
-				Console::Write("Error: Unable to create a PhysX scene, exiting the sample.");
+				Console::Write("Error: Unable to create a PhysX scene, exiting.");
 				return false;
 			}
-			//currentScene = scene;
 
+			//bool hardware = IsHardwarePresent();
+			// assign the scene and physX sdks to dllMain
+			DllMain::Scene = scene;
+			DllMain::PhysicsSDK = physicsSDK;
 
-
-
-			// Create ground plane with material
+			// Create ground plane with material for testing
 			NxPlaneShapeDesc planeDesc;
-			//PhysicsMaterial mat;
-			//mat.SetDynamicFriction(0.2f);
-			//mat.SetStaticFriction(0.1f);
-			//mat.SetRestitution(1.0f);
-			//planeDesc.materialIndex = mat.GetIndex();
 			NxActorDesc actorDesc;
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			//bool hardware = IsHardwarePresent();
-
-			//// Create
-			//box = new BoxCollider(tikiEngine, 0, scene, 
-			//	NxVec3(0, 10, 0), NxVec3(2, 2 ,2));
-			//box->GetReady();
-
-			//// Create static Trigger
-			//box2 = new BoxCollider(tikiEngine, 0, scene, 
-			//	NxVec3(5, 5, 0), NxVec3(1, 1 ,1), true);
-			//box2->GetReady();
-
-
-      DllMain::Scene = scene;
-      DllMain::PhysicsSDK = physicsSDK;
+			//box = new BoxCollider(tikiEngine, 0);
+			//box->SetCenter(Vector3(0, 10, 0));
+			//box->SetSize(Vector3(1, 5, 2));
+			//box->SetCenter(Vector3(0, 5, 0));
+			//box->SetSize(Vector3(3, 1, 3));
 
 			return true;
 		}
@@ -118,7 +94,6 @@ namespace TikiEngine
 		{
 			return scene; 
 		}
-
 
 		void PhysicsModule::Begin()
 		{
@@ -160,12 +135,7 @@ namespace TikiEngine
 
 		}
 
-		void PhysicsModule::DoWhatIWant()
-		{
-		}
 
-		void PhysicsModule::Dispose()
-		{
-		}
+
 	}
 }
