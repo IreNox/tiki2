@@ -4,7 +4,7 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		Material::Material(Engine* engine)
 			: EngineObject(engine), shader(0)
@@ -21,15 +21,11 @@ namespace TikiEngine
 			shader->Apply();
 		}
 
-		void Material::UpdateDrawArgs(const DrawArgs& args)
+		void Material::UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject)
 		{
 			if (!this->GetReady()) return;
 
-			Matrix* worldMatrix = new Matrix(Matrix::Identity); //element->PRS.GetWorldMatrix();
-
-			shader->SetMatrix("worldMatrix", *worldMatrix);
-
-			delete(worldMatrix);
+			shader->ApplyVars(gameObject);
 		}
 
 		IShader* Material::GetShader()

@@ -6,7 +6,7 @@ namespace TikiEngine
 {
 	namespace Components
 	{
-#pragma region Class
+		#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
 			: Component(engine, gameObject, CT_Camera)
 		{
@@ -45,9 +45,14 @@ namespace TikiEngine
 		Camera::~Camera()
 		{
 		}
-#pragma endregion
+		#pragma endregion
 
 		#pragma region Member - Get
+		bool Camera::GetReady()
+		{
+			return true;
+		}
+
 		Matrices* Camera::GetMatrices()
 		{
 			return &matrices;

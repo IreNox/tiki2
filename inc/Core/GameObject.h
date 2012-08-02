@@ -12,7 +12,6 @@
 
 namespace TikiEngine
 {
-	using namespace TikiEngine::Graphics;
 	using namespace TikiEngine::Components;
 
 	class GameObject : public EngineObject

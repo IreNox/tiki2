@@ -5,10 +5,8 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
-		using namespace TikiEngine::Resources;
-
 		class Material : public EngineObject
 		{
 		public:
@@ -18,7 +16,7 @@ namespace TikiEngine
 
 			virtual void Apply();
 
-			virtual void UpdateDrawArgs(const DrawArgs& args);
+			virtual void UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject);
 
 			IShader* GetShader();
 			void SetShader(IShader* shader);

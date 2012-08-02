@@ -5,7 +5,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements()
+		: EngineObject(engine), elements(), mainCamera(0)
 	{
 	}
 
@@ -15,6 +15,13 @@ namespace TikiEngine
 		{
 			delete(elements[i]);
 		}
+	}
+	#pragma endregion
+
+	#pragma region Member
+	Camera* Scene::GetMainCamera()
+	{
+		return mainCamera;
 	}
 	#pragma endregion
 

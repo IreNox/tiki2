@@ -30,8 +30,8 @@ namespace TikiEngine
 
 		protected:
 
-			void loadFromStream(Stream* stream);
-			void saveToStream(Stream* stream);
+			void loadFromStream(wcstring fileName, Stream* stream);
+			void saveToStream(wcstring fileName, Stream* stream);
 
 		private:
 

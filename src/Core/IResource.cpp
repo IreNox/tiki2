@@ -24,7 +24,7 @@ namespace TikiEngine
 		{
 			FileStream* stream = new FileStream(fileName, FM_Read);
 
-			loadFromStream(stream);
+			loadFromStream(fileName, stream);
 
 			delete(stream);
 		}
@@ -33,7 +33,7 @@ namespace TikiEngine
 		{
 			FileStream* stream = new FileStream(fileName, FM_Write);
 
-			saveToStream(stream);
+			saveToStream(fileName, stream);
 
 			delete(stream);
 

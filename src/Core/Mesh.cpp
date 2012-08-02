@@ -74,12 +74,12 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Protected Member
-		void Mesh::loadFromStream(Stream* stream)
+		void Mesh::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			//TODO: load mesh
 		}
 
-		void Mesh::saveToStream(Stream* stream)
+		void Mesh::saveToStream(wcstring fileName, Stream* stream)
 		{
 			//TODO: save mesh
 		}

@@ -25,8 +25,8 @@ namespace TikiEngine
 
 		protected:
 
-			virtual void loadFromStream(Stream* stream) = 0;
-			virtual void saveToStream(Stream* stream) = 0;
+			virtual void loadFromStream(wcstring fileName, Stream* stream) = 0;
+			virtual void saveToStream(wcstring fileName, Stream* stream) = 0;
 		};
 	}
 }

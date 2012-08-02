@@ -40,7 +40,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
-		void Texture::loadFromStream(Stream* stream)
+		void Texture::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			UInt32 size = stream->GetLength();
 			Byte* data = new Byte[size];
@@ -69,7 +69,7 @@ namespace TikiEngine
 			texture->GetDesc(&desc);
 		}
 
-		void Texture::saveToStream(Stream* stream)
+		void Texture::saveToStream(wcstring fileName, Stream* stream)
 		{
 			ID3D10Blob* blob;
 

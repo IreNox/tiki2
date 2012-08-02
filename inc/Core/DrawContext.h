@@ -2,30 +2,25 @@
 
 namespace TikiEngine
 {
-	namespace Graphics
+	namespace Resources
 	{
 		class IRenderTarget;
 	}
-	using TikiEngine::Graphics::IRenderTarget;
+	using TikiEngine::Resources::IRenderTarget;
 
 	namespace Components
 	{
-		class ICamera;
+		class Camera;
 	}
-	using TikiEngine::Components::ICamera;
+	using TikiEngine::Components::Camera;
 
 	struct DrawContext
 	{
-		ICamera* Camera;
+		Camera* CurrentCamera;
 		IRenderTarget* RenderTarget;
 
-		DrawContext()
-			: Camera(0), RenderTarget(0)
-		{
-		}
-
-		DrawContext(ICamera* camera, IRenderTarget* renderTarget)
-			: Camera(camera), RenderTarget(renderTarget)
+		DrawContext(Camera* camera, IRenderTarget* renderTarget)
+			: CurrentCamera(camera), RenderTarget(renderTarget)
 		{
 		}
 

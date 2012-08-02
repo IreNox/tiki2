@@ -8,7 +8,6 @@ namespace TikiEngine
 {
 	namespace Objects
 	{
-		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Resources;
 

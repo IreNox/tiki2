@@ -13,7 +13,7 @@ namespace TikiEngine
 	{
 		using TikiEngine::Resources::IRenderTarget;
 
-		class Camera : Component
+		class Camera : public Component
 		{
 		public:
 
@@ -30,6 +30,8 @@ namespace TikiEngine
 
 			void SetProjectionMatrix(const Matrix& projection);
 			void SetRenderTarget(IRenderTarget* renderTarget);
+
+			bool GetReady();
 
 		private:
 

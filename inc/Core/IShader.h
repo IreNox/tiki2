@@ -7,8 +7,17 @@
 
 namespace TikiEngine
 {
+	class GameObject;
+
 	namespace Resources
 	{
+		enum ShaderType
+		{
+			ST_Object,
+			ST_PostProcess,
+			ST_Unknown = 0xFF
+		};
+
 		class IShader : public IResource
 		{
 		public:
@@ -23,6 +32,7 @@ namespace TikiEngine
 			virtual void SelectSubByName(string name) = 0;
 
 			virtual void Apply() = 0;
+			virtual void ApplyVars(GameObject* gameObject) = 0;
 
 			virtual Int32 GetInt(string key) = 0;
 			virtual Single GetSingle(string key) = 0;
@@ -40,6 +50,8 @@ namespace TikiEngine
 			virtual void SetVector4(string key, const Vector4& value) = 0;
 			virtual void SetMatrix(string key, const Matrix& value) = 0;
 			virtual void SetTexture(string key, ITexture* value) = 0;
+
+			virtual ShaderType GetShaderType() = 0;
 
 			virtual bool GetReady() = 0;
 		};

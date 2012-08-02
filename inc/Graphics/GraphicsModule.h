@@ -1,6 +1,9 @@
 #pragma once
 
-#include "Core\IGraphics.h"
+#include "Core/TypeGlobals.h"
+#include "Core/Matrices.h"
+
+#include "Core/IGraphics.h"
 #include "Core/Dictionary.h"
 
 #include <D3D11.h>
@@ -8,6 +11,7 @@
 
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
+#include "Graphics/ConstantBuffer.h"
 
 namespace TikiEngine
 {
@@ -23,10 +27,7 @@ namespace TikiEngine
 
 			bool Initialize(EngineDescription& desc);
 
-			void Begin();
-
-			void Draw();
-
+			void Begin(const DrawArgs& args);
 			void End();
 
 			void Dispose();
@@ -42,6 +43,8 @@ namespace TikiEngine
 
 			void* GetDevice();
 			void* GetDeviceContext();
+
+			ConstantBuffer<Matrices>* GetMatrixBuffer();
 
 			D3D11_VIEWPORT* GetViewPort();
 
@@ -69,6 +72,7 @@ namespace TikiEngine
 			ID3D11RasterizerState* rasterState;
 
 			float clearColor[4];
+			ConstantBuffer<Matrices>* matrixBuffer;
 
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;

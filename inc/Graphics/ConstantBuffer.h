@@ -14,7 +14,7 @@ namespace TikiEngine
 
 			#pragma region Class
 			ConstantBuffer(Engine* engine)
-				: engine(engine), buffer(0), context(engine->graphics->GetDeviceContext())
+				: engine(engine), buffer(0)
 			{
 				this->createBuffer();
 			}
@@ -34,7 +34,7 @@ namespace TikiEngine
 			{
 				D3D11_MAPPED_SUBRESOURCE mapped;
 
-				HRESULT r = context->Map(
+				HRESULT r = DllMain::Context->Map(
 					buffer,
 					0,
 					D3D11_MAP_WRITE_DISCARD,
@@ -52,7 +52,7 @@ namespace TikiEngine
 
 			void Unmap()
 			{
-				context->Unmap(buffer, 0);
+				DllMain::Context->Unmap(buffer, 0);
 			}
 
 			ID3D11Buffer* GetBuffer()
@@ -66,7 +66,6 @@ namespace TikiEngine
 			#pragma region Vars
 			Engine* engine;
 			ID3D11Buffer* buffer;
-			ID3D11DeviceContext* context;
 			#pragma endregion
 
 			#pragma region Member - CreateBuffer
@@ -80,11 +79,11 @@ namespace TikiEngine
 				desc.MiscFlags = 0;
 				desc.StructureByteStride = 0;
 
-				HRESULT r = engine->graphics->GetDevice()->CreateBuffer(
+				HRESULT r = DllMain::Device->CreateBuffer(
 					&desc,
 					0,
 					&buffer
-					);
+				);
 
 				if (FAILED(r)) 
 				{

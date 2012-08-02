@@ -15,6 +15,9 @@ namespace TikiEngine
 			{
 			}
 			virtual ~IGraphics() {}
+
+			void Begin() {}
+			virtual void Begin(const DrawArgs& args) = 0;
 						
 			virtual void* GetDevice() = 0;
 			virtual void* GetDeviceContext() = 0;

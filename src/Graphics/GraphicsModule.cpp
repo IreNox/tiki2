@@ -3,11 +3,14 @@
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dx11.lib")
 
-#include "Core\Engine.h"
-#include "Graphics\GraphicsModule.h"
-
+#include "Core/Engine.h"
 #include "Core/Console.h"
+
+#include "Graphics/GraphicsModule.h"
 #include "Graphics/DllMain.h"
+
+#include "Core/DrawArgs.h"
+#include "Core/Camera.h"
 
 namespace TikiEngine
 {
@@ -269,10 +272,11 @@ namespace TikiEngine
 
 			deviceContext->RSSetViewports(1, &viewPort);
 
-			this->indexBuffer = new IndexBuffer(this->engine);
-
 			DllMain::Device = device;
 			DllMain::Context = deviceContext;
+
+			this->indexBuffer = new IndexBuffer(engine);
+			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
 
 			inited = true;
 			return true;
@@ -288,6 +292,11 @@ namespace TikiEngine
 		void* GraphicsModule::GetDeviceContext()
 		{
 			return (void*)this->deviceContext;
+		}
+
+		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
+		{
+			return matrixBuffer;
 		}
 
 		D3D11_VIEWPORT* GraphicsModule::GetViewPort()
@@ -309,7 +318,7 @@ namespace TikiEngine
 				vertexBuffers.Add(
 					hash, 
 					new VertexBuffer(engine, decl)
-					);
+				);
 			}
 
 			return vertexBuffers.Get(hash);		
@@ -317,15 +326,15 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Draw
-		void GraphicsModule::Begin()
+		void GraphicsModule::Begin(const DrawArgs& args)
 		{
 			deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
-		}
 
-		void GraphicsModule::Draw()
-		{
+			Matrices* matrices = matrixBuffer->Map();
+			*matrices = *args.Context.CurrentCamera->GetMatrices();
 
+			matrixBuffer->Unmap();
 		}
 
 		void GraphicsModule::End()

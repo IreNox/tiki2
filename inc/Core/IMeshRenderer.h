@@ -9,7 +9,6 @@ namespace TikiEngine
 {
 	namespace Components
 	{
-		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Resources;
 
 		class IMeshRenderer : public Component

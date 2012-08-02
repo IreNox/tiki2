@@ -24,6 +24,7 @@ namespace TikiEngine
 			void SelectSubByName(string name);
 
 			void Apply();
+			void ApplyVars(GameObject* gameObject);
 
 			Int32 GetInt(string key);
 			Single GetSingle(string key);
@@ -42,6 +43,8 @@ namespace TikiEngine
 			void SetMatrix(string key, const Matrix& value);
 			void SetTexture(string key, ITexture* value);
 
+			ShaderType GetShaderType();
+
 			void* GetNativeResource();
 			bool GetReady();
 
@@ -49,6 +52,8 @@ namespace TikiEngine
 
 		protected:
 			
+			ShaderType type;
+
 			ID3D11Device* device;
 			ID3D11DeviceContext* context;
 
@@ -57,8 +62,8 @@ namespace TikiEngine
 			ID3DX11EffectPass* pass;
 			ID3DX11EffectTechnique* technique;
 
-			void loadFromStream(Stream* stream);
-			void saveToStream(Stream* stream);
+			void loadFromStream(wcstring fileName, Stream* stream);
+			void saveToStream(wcstring fileName, Stream* stream);
 		};
 	}
 }

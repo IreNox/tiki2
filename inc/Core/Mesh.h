@@ -36,8 +36,8 @@ namespace TikiEngine
 
 			List<InputElement> vertexDeclaration;
 
-			virtual void loadFromStream(Stream* stream);
-			virtual void saveToStream(Stream* stream);
+			virtual void loadFromStream(wcstring fileName, Stream* stream);
+			virtual void saveToStream(wcstring fileName, Stream* stream);
 		};
 	}
 }

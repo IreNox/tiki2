@@ -144,9 +144,16 @@ namespace TikiEngine
 			physics->End();
 			input->End();
 
-			DrawArgs drawArgs = DrawArgs(time, DrawContext(), graphics);
+			DrawArgs drawArgs = DrawArgs(
+				time,
+				DrawContext(
+					scene->GetMainCamera(),
+					0
+				),
+				graphics
+			);
 
-			graphics->Begin();
+			graphics->Begin(drawArgs);
 			this->Draw(drawArgs);
 			graphics->End();
 

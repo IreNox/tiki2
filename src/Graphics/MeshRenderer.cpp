@@ -79,7 +79,7 @@ namespace TikiEngine
 		{			
 			if (!this->GetReady()) return;
 
-			material->UpdateDrawArgs(args);
+			material->UpdateDrawArgs(args, gameObject);
 
 			data->Apply();
 			data->Draw();

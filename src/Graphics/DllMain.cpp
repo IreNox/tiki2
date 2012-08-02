@@ -10,7 +10,6 @@
 
 namespace TikiEngine
 {
-	using namespace TikiEngine::Graphics;
 	using namespace TikiEngine::Components;
 
 	TikiInfo DllMain::DllInfo = TikiInfo();

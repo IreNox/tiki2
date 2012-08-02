@@ -48,23 +48,29 @@ namespace TikiEngine
 			return effect;
 		}
 
+		ShaderType Shader::GetShaderType()
+		{
+			return type;
+		}
+
 		void Shader::Apply()
 		{
 			pass->Apply(0, context);
 		}
 
-		//void Shader::ApplyVars(Element* element)
-		//{
-		//	Matrix* worldMatrix = new Matrix(Matrix::Identity); //element->PRS.GetWorldMatrix();
+		void Shader::ApplyVars(GameObject* gameObject)
+		{
+			if (type == ST_Object)
+			{
+				//Matrix* worldMatrix = new Matrix(Matrix::Identity); //element->PRS.GetWorldMatrix();
 
-		//	this->GetVariable(
-		//		"worldMatrix"
-		//	).SetMatrix(
-		//		worldMatrix->Transpose()
-		//	);
+				this->SetMatrix("worldMatrix", Matrix::Identity);
 
-		//	delete(worldMatrix);
-		//}
+				//delete(worldMatrix);
+
+				//shader->setc
+			}
+		}
 
 		void Shader::CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash)
 		{
@@ -247,10 +253,25 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member
-		void Shader::loadFromStream(Stream* stream)
+		void Shader::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;
+
+			switch (fileName[0])
+			{
+			case 'o':
+			case 'O':
+				type = ST_Object;
+				break;
+			case 'p':
+			case 'P':
+				type = ST_PostProcess;
+				break;
+			default:
+				type = ST_Unknown;
+				break;
+			}
 
 			PInt size = stream->GetLength();
 			char* data = new char[size];
@@ -319,7 +340,7 @@ namespace TikiEngine
 			this->SelectSubByIndex(0);
 		}
 
-		void Shader::saveToStream(Stream* stream)
+		void Shader::saveToStream(wcstring fileName, Stream* stream)
 		{
 
 		}

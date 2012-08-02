@@ -26,8 +26,11 @@ namespace TikiEngine
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
+		Camera* GetMainCamera();
+
 	protected:
 
+		Camera* mainCamera;
 		List<GameObject*> elements;
 	};
 }

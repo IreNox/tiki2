@@ -8,10 +8,13 @@
 
 #include "Core/DefaultVertex.h"
 
+#include "Core/CameraObject.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
 
@@ -61,7 +64,7 @@ namespace TikiEngine
 
 			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\box_diffuse.jpg");
 
-			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\default.fx");
+			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
 
 			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
@@ -70,7 +73,11 @@ namespace TikiEngine
 
 			go->AddComponent(render);
 
+			CameraObject* co = new CameraObject(engine);
+
 			this->AddElement(go);
+			this->AddElement(co);
+
 			//Texture* texture = new Texture(
 			//	engine,
 			//	wstring(L"Data/Resources/box_diffuse.jpg")
@@ -87,6 +94,8 @@ namespace TikiEngine
 			//scene->AddElement(new TeeTriangle(engine));
 
 			Scene::Initialize(args);
+
+			mainCamera = co->GetCameraComponent();
 		}
 
 		void SceneTim::Draw(const DrawArgs& args)

@@ -10,7 +10,6 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Resources;
 
 		class IContentManager : public IModule
