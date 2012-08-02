@@ -8,21 +8,12 @@ namespace TikiEngine
 		CameraObject::CameraObject(Engine* engine)
 			: GameObject(engine)
 		{
+			camera = new Camera(engine, this);
+			this->AddComponent(camera);
 		}
 
 		CameraObject::~CameraObject()
 		{
-		}
-
-		bool CameraObject::Initialize(const InitializationArgs& args)
-		{
-			camera = new Camera(engine, this);
-
-			this->AddComponent(camera);
-
-			GameObject::Initialize(args);
-
-			return true;
 		}
 
 		Camera* CameraObject::GetCameraComponent()

@@ -14,8 +14,6 @@ namespace TikiEngine
 			CameraObject(Engine* engine);
 			~CameraObject();
 
-			bool Initialize(const InitializationArgs& args);
-
 			Camera* GetCameraComponent();
 
 		private:

@@ -8,7 +8,6 @@
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
-#include "Core/InitializationArgs.h"
 
 namespace TikiEngine
 {
@@ -23,7 +22,6 @@ namespace TikiEngine
 		GameObject(Engine* engine);
 		virtual ~GameObject();
 		
-		virtual bool Initialize(const InitializationArgs& args);
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
@@ -48,7 +46,9 @@ namespace TikiEngine
 			PInt hash = typeid(T).hash_code();
 			while (i < components.Count())
 			{
-				if (typeid(components[i]).hash_code() == hash)
+				PInt objHash = typeid(*components[i]).hash_code();
+
+				if (objHash == hash)
 				{
 					coms.Add((T*)components[i]);
 				}

@@ -18,8 +18,6 @@ namespace TikiEngine
 			Quad(Engine* engine);
 			~Quad();
 
-			bool Initialize(const InitializationArgs& args);
-
 		private:
 
 			Mesh* mesh;

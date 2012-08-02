@@ -77,6 +77,7 @@ namespace TikiEngine
 			go->AddComponent(render);
 
 			CameraObject* co = new CameraObject(engine);
+			mainCamera = co->GetCameraComponent();
 
 			this->AddElement(go);
 			this->AddElement(co);
@@ -97,8 +98,6 @@ namespace TikiEngine
 			//scene->AddElement(new TeeTriangle(engine));
 
 			Scene::Initialize(args);
-
-			mainCamera = co->GetCameraComponent();
 		}
 
 		void SceneTim::Draw(const DrawArgs& args)

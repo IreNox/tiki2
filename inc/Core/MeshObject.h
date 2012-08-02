@@ -14,8 +14,6 @@ namespace TikiEngine
 			MeshObject(Engine* engine);
 			virtual ~MeshObject();
 
-			virtual bool Initialize(const InitializationArgs& args);
-
 			virtual void Draw(const DrawArgs& args);
 			virtual void Update(const UpdateArgs& args);
 

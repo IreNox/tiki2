@@ -91,7 +91,7 @@ public:
 
 	void AddRange(T* src, Int32 offset, UInt32 length)
 	{
-		int index = getNewIndex(this->lengthData + length, true);
+		int index = getNewIndex(this->lengthData + (length - 1), true);
 
 		UInt32 i = 0;
 		while (i < length)

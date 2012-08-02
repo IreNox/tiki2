@@ -427,7 +427,7 @@
     <ClInclude Include="inc\Core\QuadObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
-    <ClInclude Include="IScript.h">
+    <ClInclude Include="inc\Core\IScript.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
   </ItemGroup>

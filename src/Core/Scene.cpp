@@ -28,10 +28,6 @@ namespace TikiEngine
 	#pragma region Member - Init
 	void Scene::Initialize(const InitializationArgs& args)
 	{
-		for (int i = 0; i < elements.Count(); i++)
-		{
-			elements[i]->Initialize(args);
-		}
 	}
 	#pragma endregion
 
