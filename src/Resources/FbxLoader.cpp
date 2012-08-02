@@ -43,48 +43,96 @@ namespace TikiEngine
 					}
 					break;
 				}
-			}
+			} 
 
-			if(!model->IsTriangleMesh())
-			{
-				FbxGeometryConverter converter(this->fbxManager);
-				model = converter.TriangulateMesh(model);
-			}
+			UINT polygonVertexCount = model->GetPolygonVertexCount();
+			UINT size = polygonVertexCount * sizeof(DefaultVertex);
 
-			FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
-			memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
-
-			int bla = model->GetTextureUVCount(FbxLayerElement::eTextureDiffuse);
-			//FbxGeometryElement::EMappingMode map =  model->GetElementUV(0)->GetMappingMode(); //FbxGeometryElement::eByPolygonVertex
-			int uvIndexCount = model->GetElementUV(0)->GetIndexArray().GetCount();
-			int uvDirectCount = model->GetElementUV(0)->GetDirectArray().GetCount();
-			//model->GetElementUV(0)->RemapIndexTo(FbxLayerElement::eByControlPoint);
-			
-			
-			
-
-
-			UInt32 count = model->GetControlPointsCount();
-			UInt32 size = count * sizeof(DefaultVertex);
-
-			DefaultVertex *vertexData = new DefaultVertex[count];
+			DefaultVertex *vertexData = new DefaultVertex[polygonVertexCount];
 			ZeroMemory(vertexData, size);
 
-			for(UInt32 i = 0; i < model->GetControlPointsCount(); i++)
-				ConvertToTiki(vertexArray[i], model->GetElementUV(0)->GetDirectArray().GetAt(i), (float*)&vertexData[i]);		
+			List<UInt32> indices = List<UInt32>();
 
-			MeshIndexed* mesh2 = new MeshIndexed(engine);
-			mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
+			Int32 counter = 0;
 
-			UInt32 *indices = (UInt32*)model->GetPolygonVertices();
-			UInt32 indicesCount = model->GetPolygonCount();
+			for(Int32 i = 0; i < model->GetPolygonCount(); i++)
+			{
+				Int32 verticesInPolygon = model->GetPolygonSize(i);
+				if(verticesInPolygon == 3)
+				{
+					indices.Add(counter);
+					indices.Add(counter+1);
+					indices.Add(counter+2);
+				}else if(verticesInPolygon == 4)
+				{
+					indices.Add(counter);
+					indices.Add(counter+1);
+					indices.Add(counter+2);
+					indices.Add(counter+1);
+					indices.Add(counter+2);
+					indices.Add(counter+3);
+				}
 
-			mesh2->SetIndexData(indices, indicesCount);
-			mesh2->SetVertexDeclaration(DefaultVertex::Declaration,3);
+				for(Int32 k = 0; k < verticesInPolygon;k++)
+				{
+					int position = model->GetPolygonVertex(i,k);
+
+					ConvertToTiki(
+						model->GetControlPointAt(position), 
+						model->GetElementUV(0)->GetDirectArray().GetAt(i), 
+						(float*)&vertexData[counter]);	
+					counter++;
+				}
+			}
+
+			UINT indexBufferSize = indices.Count();
+			UInt32 *indexBufferData = indices.ToArray();
+
+			MeshIndexed* meshIndexed = new MeshIndexed(engine);
+
+			meshIndexed->SetVertexData(vertexData, size);
+			meshIndexed->SetIndexData(indexBufferData, indexBufferSize);
+
+			delete vertexData;
+			vertexData = 0;
+			delete indexBufferData;
+			indexBufferData = 0;
+
+			
+			//FbxVector4 *vertexArray = new FbxVector4[model->GetControlPointsCount()];
+			//memcpy(vertexArray, model->GetControlPoints(), model->GetControlPointsCount() * sizeof(FbxVector4));
+
+			//int bla = model->GetTextureUVCount(FbxLayerElement::eTextureDiffuse);
+			////FbxGeometryElement::EMappingMode map =  model->GetElementUV(0)->GetMappingMode(); //FbxGeometryElement::eByPolygonVertex
+			//int uvIndexCount = model->GetElementUV(0)->GetIndexArray().GetCount();
+			//int uvDirectCount = model->GetElementUV(0)->GetDirectArray().GetCount();
+			////model->GetElementUV(0)->RemapIndexTo(FbxLayerElement::eByControlPoint);
+			//
+			//
+			//
+
+
+			//UInt32 count = model->GetControlPointsCount();
+			//UInt32 size = count * sizeof(DefaultVertex);
+
+			//DefaultVertex *vertexData = new DefaultVertex[count];
+			//ZeroMemory(vertexData, size);
+
+			//for(UInt32 i = 0; i < model->GetControlPointsCount(); i++)
+			//	ConvertToTiki(vertexArray[i], model->GetElementUV(0)->GetDirectArray().GetAt(i), (float*)&vertexData[i]);		
+
+			//MeshIndexed* mesh2 = new MeshIndexed(engine);
+			//mesh2->SetVertexData(vertexData, sizeof(DefaultVertex) * model->GetControlPointsCount());
+
+			//UInt32 *indices = (UInt32*)model->GetPolygonVertices();
+			//UInt32 indicesCount = model->GetPolygonCount();
+
+			//mesh2->SetIndexData(indices, indicesCount);
+			//mesh2->SetVertexDeclaration(DefaultVertex::Declaration,3);
 
 			root->Destroy(true);		
 
-			return mesh2;
+			return meshIndexed;//mesh2;
 		}
 
 		void FbxLoader::InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene)
