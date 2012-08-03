@@ -3,13 +3,6 @@
 
 #include "Core/Engine.h"
 
-//#include "Core/Texture.h"
-//#include "Graphics/DefaultShader.h"
-
-#include "Box.h"
-#include "Core/QuadObject.h"
-//#include "TeeTriangle.h"
-
 #include "Game/SceneTim.h"
 #include "Game/SceneMark.h"
 #include "Game/SceneAdrian.h"
@@ -21,7 +14,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA
-	//_CrtSetBreakAlloc(189);
+	_CrtSetBreakAlloc(427);
 
 	{
 		EngineDescription desc;

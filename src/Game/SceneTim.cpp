@@ -9,14 +9,11 @@
 
 #include "Core/DefaultVertex.h"
 
-#include "Core/LightObject.h"
-#include "Core/CameraObject.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
 
@@ -33,7 +30,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/jumppad_lowpoly.FBX"); //new MeshIndexed(engine);
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Normals.fbx"); //new MeshIndexed(engine);
 
 			//DefaultVertex vertices[] = {
 			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
@@ -78,12 +75,11 @@ namespace TikiEngine
 
 			this->AddElement(go);
 
-			LightObject* obj = new LightObject(engine);
-			obj->GetLight()->SetColor(Color::Green);
-			obj->GetLight()->SetRange(10);
-			obj->PRS.Position = Vector3(0, 2, 4);
+			light = new LightObject(engine);
+			light->GetLight()->SetColor(Color::Green);
+			light->GetLight()->SetRange(10);
 
-			this->AddElement(obj);
+			this->AddElement(light);
 			this->AddElement(new CameraObject(engine));
 
 			//Texture* texture = new Texture(
@@ -111,6 +107,12 @@ namespace TikiEngine
 
 		void SceneTim::Update(const UpdateArgs& args)
 		{
+			light->PRS.Position = Vector3(
+				sinf(args.Time.TotalTime / 5) * 5,
+				0,
+				cosf(args.Time.TotalTime / 5) * 5
+			);
+
 			Scene::Update(args);
 		}
 	}

@@ -17,8 +17,9 @@ namespace TikiEngine
 		struct Lights
 		{
 			float Count;
-			LightData Data[32];
 			LightProperties Props;
+
+			LightData Data[32];
 
 			Lights()
 				: Count(0), Props()

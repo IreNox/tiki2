@@ -2,10 +2,15 @@
 
 #include "Core/Scene.h"
 
+#include "Core/LightObject.h"
+#include "Core/CameraObject.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Objects;
+
 		class SceneTim : public Scene
 		{
 		public:
@@ -17,6 +22,10 @@ namespace TikiEngine
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+
+		private:
+
+			LightObject* light;
 		};
 	}
 }

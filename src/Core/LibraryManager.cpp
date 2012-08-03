@@ -85,10 +85,18 @@ namespace TikiEngine
 
 			FARPROC temp = GetProcAddress(libraryHandle, "GetTikiInfo");
 			GetTikiInfo getTikiInfo = (GetTikiInfo)temp;
-			if (getTikiInfo == 0) return 0;
+			if (getTikiInfo == 0)
+			{
+				FreeLibrary(libraryHandle);
+				return 0;
+			}
 
 			TikiInfo* info = getTikiInfo(engine);
-			if (info == 0) return 0;
+			if (info == 0)
+			{
+				FreeLibrary(libraryHandle);
+				return 0;
+			}
 
 			info->LibraryHandle = libraryHandle;
 

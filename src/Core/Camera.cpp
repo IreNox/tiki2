@@ -101,7 +101,7 @@ namespace TikiEngine
 
 			float g_fX = x;
 			float g_fY = y;
-			float g_fEyeDistance = 50;
+			float g_fEyeDistance = 10;
 
 			x += args.Input.MouseDistance.X;
 			y += args.Input.MouseDistance.Y;
@@ -109,6 +109,8 @@ namespace TikiEngine
 			Vector3 g_vAt = Vector3(0.01f, 0.01f, 0.01f);
 			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);
 			//float g_fEyeDistance = 5.0f;
+
+			//Quaternion quad = Quaternion::
 
 			Vector3 g_vEye = Vector3(
 				sinf(g_fX) * g_fEyeDistance,

@@ -37,16 +37,15 @@ cbuffer MatrixBuffer : register(b0)
 
 cbuffer LightBuffer : register(b1)
 {
-    int LightsCount;
-
-	Light Lights[32];
-
+    float LightsCount;
 	float DiffuseIntensity;
 	float AmbientIntensity;
 	float EmissiveIntensity;
 
 	float4 AmbientColor		: COLOR;
 	float4 EmissiveColor	: COLOR;
+
+	Light Lights[32];
 };
 
 Texture2D tex : register(t0);
@@ -86,22 +85,25 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
 	float4 termAmbient = AmbientColor * AmbientIntensity;
 	float4 termEmissive = EmissiveColor * EmissiveIntensity;
-	float3 termLight = float3(0, 0, 0);
+	float4 termLight = float4(0, 0, 0, 1);
 
 	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
 	
-	for (float i = 0; i < LightsCount; i++)
+	if (LightsCount != 0.0f)
 	{
-		float lighting = dot(
-			input.Normal,
-			normalize(Lights[i].Position - input.WorldPos)
-		);
-
-		termLight += Lights[i].Color * lighting;
+		for (float i = 0; i < LightsCount; i++)
+		{
+			float lighting = dot(
+				input.Normal,
+				normalize(Lights[i].Position - input.WorldPos)
+			);
+	
+			termLight.rgb += Lights[i].Color * lighting;
+		}
+	
+		termDiffuse *= termLight;
 	}
-
-	termDiffuse.rbg *= termLight.rgb;
-
+	
 	return saturate(termDiffuse + termAmbient + termEmissive);
 }
 
