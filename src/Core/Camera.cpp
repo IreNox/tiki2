@@ -101,7 +101,7 @@ namespace TikiEngine
 
 			float g_fX = x;
 			float g_fY = y;
-			float g_fEyeDistance = 50;
+			float g_fEyeDistance = 5;
 
 			x += args.Input.MouseDistance.X;
 			y += args.Input.MouseDistance.Y;
