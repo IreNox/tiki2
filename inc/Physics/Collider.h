@@ -8,11 +8,21 @@ namespace TikiEngine
 {
 	namespace Physics
 	{
+		enum ColliderState
+		{
+			CS_UNINITIALIZED,
+			CS_STATIC,
+			CS_DYNAMIC
+		};
+
 		class Collider
 		{
 		public: 
 			Collider();
 			virtual ~Collider() {}
+
+			bool GetDynamicFlag();
+			void SetDynamicFlag(bool dynamicFlag);
 
 			// These Methods can be used at runtime to raise Trigger flags
 			bool GetTriggerFlag();
@@ -22,12 +32,13 @@ namespace TikiEngine
 			void SetKinematicFlag(bool kinematicFlag);
 
 
+
 			RigidBody GetRigidBody() { return rigidBody;}
 
 		protected:
+			ColliderState state;
 			bool isTrigger;
 			bool isKinematic;	// check if we have rigid body
-			bool isDynamic;
 			RigidBody rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;

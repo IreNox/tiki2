@@ -6,14 +6,35 @@ namespace TikiEngine
 	{
 		Collider::Collider()
 		{
-			isDynamic = true;
+			actor = 0;
+			state = CS_UNINITIALIZED;
 			isTrigger = false;
 			isKinematic = false;
 		}
 
+
+		bool Collider::GetDynamicFlag()
+		{
+			if (state == CS_DYNAMIC)
+				return true;
+			else
+				return false;
+		}
+
+		
+		void Collider::SetDynamicFlag(bool dynamicFlag)
+		{
+			if (dynamicFlag)
+				state = CS_DYNAMIC;
+			else
+				state = CS_STATIC;
+		}
+
+
 		bool Collider::GetTriggerFlag()
 		{
 			return isTrigger;
+			//actor->getShapes()[0]->getFlag(NX_TRIGGER_ENABLE);
 		}
 
 		void Collider::SetTriggerFlag(bool triggerFlag)
@@ -23,7 +44,6 @@ namespace TikiEngine
 			for (unsigned int i = 0; i < actor->getNbShapes(); i++)
 			{
 				actor->getShapes()[i]->setFlag(NX_TRIGGER_ENABLE, isTrigger);
-
 			}
 		}
 

@@ -65,6 +65,9 @@ namespace TikiEngine
 				return false;
 			}
 
+			// TODO : if debug, set some Visualization Flags
+
+
 			//bool hardware = IsHardwarePresent();
 			// assign the scene and physX sdks to dllMain
 			DllMain::Scene = scene;
@@ -76,18 +79,34 @@ namespace TikiEngine
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			// BoxCollider init, by default they are static objects
+			// BoxCollider Unit Test:
+			// by default they can be set to static or dynamic objects
+			// everytime we change static to dynamic, or center/size, we recreate the Actor.
+			// When recreating, the class also keeps track if the Collider was a trigger or kinematic actor
+			// and raises the flags respectively.
 			box = new BoxCollider(tikiEngine, 0);
-			box->SetCenter(Vector3(0, 10, 0));
-			box->SetSize(Vector3(1, 5, 2));
 			box->SetCenter(Vector3(0, 5, 0));
-			box->SetSize(Vector3(3, 1, 3));
+			box->SetSize(Vector3(2, 2, 2));
+			box->SetDynamic(false);
+			
+			// BoxCollider flags that can be set at runtime:
 
-			// BoxCollider Runtime
-			//box->SetKinematicFlag(false);
+			// set Kinematic Trigger, kinematic actors must be specified as dynamic
+			box->SetDynamic(true);
+			box->SetTriggerFlag(true);
+			box->SetKinematicFlag(true);
+			// Create static trigger
 			//box->SetTriggerFlag(true);
-			Vector3 boxSize = box->GetSize();
+
+			// Create dynamic trigger, TODO: Handle Collision Groups, else collision detection won't work for the plane!
+			//box->SetDynamic(true);
+			//box->SetTriggerFlag(true);
+		
+
+			
 			Vector3 boxCenter = box->GetCenter();
+			Vector3 boxSize = box->GetSize();
+			bool isDynamic = box->GetDynamic();
 
 			// RigidBodys won't work for non dynamic actors
 			//box->GetRigidBody().SetMass(10.0f);

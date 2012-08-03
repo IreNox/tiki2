@@ -29,10 +29,12 @@ namespace TikiEngine
 
 			Vector3 GetCenter();
 			Vector3 GetSize();
-			
+			bool GetDynamic();
+
 			void SetCenter(const Vector3& center);
 			void SetSize(const Vector3& size);
-			
+			void SetDynamic(bool dynamicFlag);
+
 			bool GetReady();
 
 		private:

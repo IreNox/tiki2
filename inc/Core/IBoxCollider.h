@@ -18,6 +18,8 @@ namespace TikiEngine
 
 			virtual Vector3 GetSize() = 0;
 			virtual void SetSize(const Vector3& size) = 0;
+
+
 		};
 
 	}

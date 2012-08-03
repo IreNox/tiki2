@@ -33,6 +33,11 @@ namespace TikiEngine
 			return size.get(); 
 		}
 
+		bool BoxCollider::GetDynamic()
+		{
+			return GetDynamicFlag();
+		}
+
 		void BoxCollider::SetSize(const Vector3& size)
 		{
 			this->size = size.arr;
@@ -45,10 +50,19 @@ namespace TikiEngine
 			UpdateData();
 		}
 
+		void BoxCollider::SetDynamic(bool dynamicFlag)
+		{
+			SetDynamicFlag(dynamicFlag);
+			UpdateData();
+		}
+
 		bool BoxCollider::GetReady() 
 		{
-			return (size != NxVec3(NX_MAX_F32)) && (center != NxVec3(NX_MAX_F32));
+			return (size != NxVec3(NX_MAX_F32)) && 
+				   (center != NxVec3(NX_MAX_F32)) && 
+				   (state != CS_UNINITIALIZED);
 		}
+
 		#pragma endregion
 
 		void BoxCollider::UpdateData()
@@ -58,8 +72,9 @@ namespace TikiEngine
 
 			if (actor != 0)
 			{
+				// reset the defaults for recreating from actorDesc.
 				DllMain::Scene->releaseActor(*actor);
-
+				actorDescription.setToDefault();
 			}
 			// Create Box shape description.
 			NxBoxShapeDesc boxDesc;
@@ -72,23 +87,12 @@ namespace TikiEngine
 			material.SetStaticFriction(0.3f);
 			boxDesc.materialIndex = material.GetIndex();
 
-			// if we have a trigger shape, events are sent to the user
-			if (isTrigger)
-				boxDesc.shapeFlags |= NX_TRIGGER_ENABLE;
-			else
+			// if we are dynamic, we have a Rigid Body attached
+			if (state == CS_DYNAMIC)
 			{
-				// Triggers have no body description
-				//  TODO init RigidBody class here :)
 				NxBodyDesc bodyDesc;
 				bodyDesc.mass = 1;
-
-				if (isKinematic)
-				{
-					bodyDesc.flags |= NX_BF_KINEMATIC;
-				}
-
-				if (isDynamic)
-					actorDescription.body = &bodyDesc;
+				actorDescription.body = &bodyDesc;
 			}
 
 			actorDescription.shapes.pushBack(&boxDesc);
@@ -99,8 +103,9 @@ namespace TikiEngine
 			actor = DllMain::Scene->createActor(actorDescription);
 			rigidBody.SetActor(actor);
 
-			// reset the defaults for recreation, else more and more shapes are added
-			actorDescription.setToDefault();
+			// if this is or was a trigger or kinematic actor, raise the flags
+			SetTriggerFlag(isTrigger);
+			SetKinematicFlag(isKinematic);
 		}
 	}
 }

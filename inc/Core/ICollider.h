@@ -18,6 +18,13 @@ namespace TikiEngine
 			}
 			virtual ~ICollider() {}
 
+			
+			/* !@brief True if this Collider is dynamic, false otherwise */
+			virtual bool GetDynamic() = 0;
+			/* !@brief Set if the Collider should be dynamicor static */
+			virtual void SetDynamic(bool dynamicFlag) = 0;
+
+
 			 /*! @brief OnTriggerEnter is called when the Collider other enters the trigger. */
 			 //virtual void OnTriggerEnter(ICollider* other) = 0;
 
