@@ -98,8 +98,6 @@ namespace TikiEngine
 
 			Scene::Initialize(args);
 
-			mainCamera = co->GetCameraComponent();
-
 
 
 			//////////////////////////////////////////////
