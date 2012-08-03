@@ -11,14 +11,17 @@
 #include "Core/DrawArgs.h"
 #include "Core/Camera.h"
 
+#include "Core/GameObject.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
-			: IGraphics(engine), hWnd(0), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), renderTarget(0)
+			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
+			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), renderTarget(0),
+			matrixBuffer(0), lightBuffer(0)
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -60,7 +63,7 @@ namespace TikiEngine
 		{
 			if (inited) return false;
 
-			hWnd = desc.Window.hWnd;
+			HWND hWnd = desc.Window.hWnd;
 
 			RECT rect;
 			GetClientRect(hWnd, &rect);
@@ -211,7 +214,7 @@ namespace TikiEngine
 				Console::WriteError("Can't create RasterizerState", r);
 			}
 
-			//deviceContext->RSSetState(rasterState); //backfaceculling
+			deviceContext->RSSetState(rasterState); //backfaceculling
 
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
@@ -239,6 +242,7 @@ namespace TikiEngine
 			DllMain::Context = deviceContext;
 
 			this->indexBuffer = new IndexBuffer(engine);
+			this->lightBuffer = new ConstantBuffer<Lights>(engine);
 			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
 			this->renderTarget = new RenderTarget(engine, renderTargetView);
 
@@ -293,6 +297,31 @@ namespace TikiEngine
 			}
 
 			return vertexBuffers.Get(hash);		
+		}
+		#pragma endregion
+
+		#pragma region Member - Set
+		void GraphicsModule::SetLightChanged(List<Light*>* lights)
+		{
+			Lights* buf = lightBuffer->Map();
+
+			buf->Count = lights->Count();
+			if (buf->Count > 32) buf->Count = 32;
+
+			UInt32 i = 0;
+			while (i < buf->Count)
+			{
+				Light* l = lights->Get(i);
+
+				buf->Data[i].Range = l->GetRange();
+				buf->Data[i].Color = l->GetColor().ToVector3();
+				buf->Data[i].Position = l->GetGameObject()->PRS.Position;
+				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation * Vector3::ForwardRH;
+
+				i++;
+			}
+
+			lightBuffer->Unmap();
 		}
 		#pragma endregion
 

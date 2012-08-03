@@ -65,10 +65,11 @@ public:
 
 	T* ToArray()
 	{
-		T* arr = new T[lengthData+1];
+		UInt32 c = lengthData + 1; 
+		T* arr = new T[c];
 
 		int i = 0;
-		while (i <= lengthData)
+		while (i < c)
 		{
 			arr[i] = data[i];
 
@@ -91,7 +92,7 @@ public:
 
 	void AddRange(T* src, Int32 offset, UInt32 length)
 	{
-		int index = getNewIndex(this->lengthData + (length - 1), true);
+		int index = getNewIndex(this->lengthData + (length - 2), true);
 
 		UInt32 i = 0;
 		while (i < length)

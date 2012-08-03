@@ -38,6 +38,7 @@
     <ClInclude Include="inc\Graphics\DllMain.h" />
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
+    <ClInclude Include="inc\Graphics\Lights.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />

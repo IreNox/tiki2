@@ -221,6 +221,31 @@ Quaternion Quaternion::operator*(const Quaternion& rhs)
 	result.W = w * w2 - num4;
 	return result;
 }
+
+Vector3 Quaternion::operator *(const Vector3& point)
+{
+	Vector3 vector;
+
+	float num =   this->X *  2.0f;
+	float num2 =  this->Y * 2.0f;
+	float num3 =  this->Z * 2.0f;
+	float num4 =  this->X * num;
+	float num5 =  this->Y * num2;
+	float num6 =  this->Z * num3;
+	float num7 =  this->X * num2;
+	float num8 =  this->X * num3;
+	float num9 =  this->Y * num3;
+	float num10 = this->W * num;
+	float num11 = this->W * num2;
+	float num12 = this->W * num3;
+	vector.X = (((1.0f - (num5 + num6)) * point.X) + ((num7 - num12) * point.Y)) + ((num8 + num11) * point.Z);
+	vector.Y = (((num7 + num12) * point.X) + ((1.0f - (num4 + num6)) * point.Y)) + ((num9 - num10) * point.Z);
+	vector.Z = (((num8 - num11) * point.X) + ((num9 + num10) * point.Y)) + ((1.0f - (num4 + num5)) * point.Z);
+
+	return vector;
+}
+
+
 Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 {
 	return *this = *this * rhs;

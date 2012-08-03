@@ -5,7 +5,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements(), mainCamera(0)
+		: EngineObject(engine), elements(), lights(), cameras()
 	{
 	}
 
@@ -19,9 +19,14 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member
-	Camera* Scene::GetMainCamera()
+	List<Light*>* Scene::GetLights()
 	{
-		return mainCamera;
+		return &lights;
+	}
+
+	List<Camera*>* Scene::GetCameras()
+	{
+		return &cameras;
 	}
 	#pragma endregion
 
@@ -37,10 +42,10 @@ namespace TikiEngine
 		elements.Add(element);
 
 		UInt32 len = 0;
-		ILight** comLights = 0;
+		Light** comLights = 0;
 		Camera** comCameras = 0;
 
-		element->GetComponents<ILight>(&comLights, &len);
+		element->GetComponents<Light>(&comLights, &len);
 		if (comLights) lights.AddRange(comLights, 0, len);
 		delete(comLights);
 

@@ -11,7 +11,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, CT_Camera), x(0), y(0)
+			: Component(engine, gameObject, CT_Camera), renderTarget(0), matrices(), x(0), y(0)
 		{
 			//D3DXMATRIX matrix;
 			//D3D11_VIEWPORT* vp = engine->graphics->GetViewPort();

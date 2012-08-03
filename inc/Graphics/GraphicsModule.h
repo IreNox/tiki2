@@ -1,13 +1,12 @@
 #pragma once
 
 #include "Core/TypeGlobals.h"
-#include "Core/Matrices.h"
-
-#include "Core/IGraphics.h"
 #include "Core/Dictionary.h"
 
-#include <D3D11.h>
-#include <D3DX11.h>
+#include "Core/Matrices.h"
+#include "Graphics/Lights.h"
+
+#include "Core/IGraphics.h"
 
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
@@ -15,12 +14,16 @@
 
 #include "Graphics/RenderTarget.h"
 
+#include <D3D11.h>
+#include <D3DX11.h>
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using namespace TikiEngine::Buffer;
-
+		using namespace TikiEngine::Graphics;
+		
 		class GraphicsModule : public IGraphics
 		{
 		public:
@@ -48,10 +51,11 @@ namespace TikiEngine
 			IndexBuffer* GetIndexBuffer();
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl);
 
+			void SetLightChanged(List<Light*>* lights);
+
 			bool GetReady();
 
 		private:
-			HWND hWnd;
 
 			bool inited;
 
@@ -70,7 +74,9 @@ namespace TikiEngine
 			ID3D11RasterizerState* rasterState;
 
 			Color clearColor;
+			ConstantBuffer<Lights>* lightBuffer;
 			ConstantBuffer<Matrices>* matrixBuffer;
+
 
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;

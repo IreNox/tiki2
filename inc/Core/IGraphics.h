@@ -5,11 +5,14 @@
 #include "Core/ViewPort.h"
 #include "Core/IRenderTarget.h"
 
+#include "Core/Light.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using TikiEngine::Resources::IRenderTarget;
+		using TikiEngine::Components::Light;
 
 		class IGraphics : public IModule
 		{
@@ -30,6 +33,7 @@ namespace TikiEngine
 			virtual ViewPort* GetViewPort() = 0;
 			virtual IRenderTarget* GetBackBufferRenderTarget() = 0;
 
+			virtual void SetLightChanged(List<Light*>* lights) = 0;
 		};
 	}
 }

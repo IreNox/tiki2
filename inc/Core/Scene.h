@@ -4,7 +4,7 @@
 #include "Core/GameObject.h"
 #include "Core/EngineObject.h"
 
-#include "Core/ILight.h"
+#include "Core/Light.h"
 #include "Core/Camera.h"
 
 #include "Core/DrawArgs.h"
@@ -31,15 +31,14 @@ namespace TikiEngine
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
-		Camera* GetMainCamera();
+		List<Light*>* GetLights();
+		List<Camera*>* GetCameras();
 
 	protected:
 
-		Camera* mainCamera;
-
 		List<GameObject*> elements;
 
-		List<ILight*> lights;
+		List<Light*> lights;
 		List<Camera*> cameras;
 	};
 }

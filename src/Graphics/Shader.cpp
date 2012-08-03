@@ -292,8 +292,6 @@ namespace TikiEngine
 					if (errorBlob)
 					{
 						char* error = (char*)errorBlob->GetBufferPointer();
-						SafeRelease(&errorBlob);
-
 						Console::WriteError("Failed to compile effect. %s\n" + (string)error, r);
 					}
 					else

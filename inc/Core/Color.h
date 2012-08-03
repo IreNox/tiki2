@@ -1,5 +1,8 @@
 #pragma once
 
+#include "Core/Vector3.h"
+#include "Core/Vector4.h"
+
 struct Color
 {
 	union
@@ -26,6 +29,16 @@ struct Color
 
 	~Color()
 	{
+	}
+
+	Vector3 ToVector3()
+	{
+		return Vector3(R, G, B);
+	}
+
+	Vector4 ToVector4()
+	{
+		return Vector4(R, G, B, A);
 	}
 
 	static Color TransparentBlack;

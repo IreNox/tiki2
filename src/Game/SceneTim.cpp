@@ -3,14 +3,14 @@
 
 #include "Core/IMeshRenderer.h"
 #include "Core/LibraryManager.h"
+#include "Core/IContentManager.h"
 
 #include "Core/MeshIndexed.h"
 
 #include "Core/DefaultVertex.h"
 
+#include "Core/LightObject.h"
 #include "Core/CameraObject.h"
-
-#include "Core/IContentManager.h"
 
 namespace TikiEngine
 {
@@ -76,11 +76,9 @@ namespace TikiEngine
 
 			go->AddComponent(render);
 
-			CameraObject* co = new CameraObject(engine);
-			mainCamera = co->GetCameraComponent();
-
 			this->AddElement(go);
-			this->AddElement(co);
+			this->AddElement(new LightObject(engine));
+			this->AddElement(new CameraObject(engine));
 
 			//Texture* texture = new Texture(
 			//	engine,

@@ -118,5 +118,8 @@
     <ClInclude Include="inc\Graphics\RenderTarget.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\Lights.h">
+      <Filter>Headerdateien\Internal</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

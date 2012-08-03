@@ -3,8 +3,6 @@
 #include "Core/TypeDef.h"
 #include "Core/Vector3.h"
 
-class Vector3;
-
 class Quaternion
 {
 public:
@@ -55,6 +53,7 @@ public:
 	Quaternion& operator -=	(const Quaternion& rhs);
 
 	Quaternion  operator *	(const Quaternion& rhs);
+	Vector3     operator *  (const Vector3& rhs);
 	Quaternion& operator *=	(const Quaternion& rhs);
 	Quaternion  operator /	(const Quaternion& rhs);
 	Quaternion& operator /=	(const Quaternion& rhs);

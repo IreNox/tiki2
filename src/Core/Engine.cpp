@@ -149,18 +149,28 @@ namespace TikiEngine
 			physics->End();
 			input->End();
 
-			DrawArgs drawArgs = DrawArgs(
-				time,
-				DrawContext(
-					scene->GetMainCamera(),
-					graphics->GetBackBufferRenderTarget()
-				),
-				graphics
-			);
+			graphics->SetLightChanged(scene->GetLights());
 
-			graphics->Begin(drawArgs);
-			this->Draw(drawArgs);
-			graphics->End();
+			UInt32 i = 0;
+			while (i < scene->GetCameras()->Count())
+			{
+				Camera* camera = scene->GetCameras()->Get(i);
+
+				DrawArgs drawArgs = DrawArgs(
+					time,
+					DrawContext(
+						camera,
+						(camera->GetRenderTarget() ? camera->GetRenderTarget() : graphics->GetBackBufferRenderTarget())
+					),
+					graphics
+				);
+
+				graphics->Begin(drawArgs);
+				this->Draw(drawArgs);
+				graphics->End();
+
+				i++;
+			}
 
 			if (args.Input.GetKey(KEY_ESCAPE))
 			{

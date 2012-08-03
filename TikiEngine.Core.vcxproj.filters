@@ -188,6 +188,12 @@
     <ClCompile Include="src\Core\Color.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Light.cpp">
+      <Filter>Quelldateien\Engine\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\LightObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -325,9 +331,6 @@
     <ClInclude Include="inc\Core\ICollider.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ILight.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Component.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
@@ -369,9 +372,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\LibraryManager.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Matrices.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
       <Filter>Headerdateien\Core\Input</Filter>
@@ -429,6 +429,18 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IScript.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Light.h">
+      <Filter>Headerdateien\Engine\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrices.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Matrices.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LightProperties.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
