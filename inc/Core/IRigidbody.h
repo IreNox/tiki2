@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Object.h"
+#include "Vector3.h"
 
 namespace TikiEngine
 {
@@ -19,19 +20,17 @@ namespace TikiEngine
 			virtual void SetMass(Single mass) = 0;
 			virtual Single GetMass() = 0;
 
-			//virtual void SetDrag(Single drag) = 0;
-			//virtual Single GetDrag() = 0;
+			virtual void SetVelocity(const Vector3& linearVelocity) = 0;
+			virtual Vector3 GetVelocity() = 0;
 
-			//virtual void SetAngularDrag(Single angularDrag) = 0;
-			//virtual Single GetAngularDrag() = 0;
+			virtual void SetAngularVelocity(const Vector3& angularVelocity) = 0;
+			virtual Vector3 GetAngularVelocity() = 0;
 
 			//virtual void SetUseGravity(bool useGravity) = 0;
 			//virtual bool UseGravity() = 0;
 
-			//virtual void SetKinematic(bool kinematicFlag) = 0;
-			//virtual bool IsKinematic() = 0;
 
-			// INterpolate Mode
+			// Interpolate Mode
 
 			// Collision Detection Mode
 

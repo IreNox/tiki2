@@ -81,20 +81,26 @@ namespace TikiEngine
 
 			// BoxCollider Unit Test:
 			// by default they can be set to static or dynamic objects
-			// everytime we change static to dynamic, or center/size, we recreate the Actor.
+			// every time we change static to dynamic, or center/size, we recreate the Actor.
 			// When recreating, the class also keeps track if the Collider was a trigger or kinematic actor
 			// and raises the flags respectively.
+			PhysicsMaterial* material = new PhysicsMaterial();
+			material->SetRestitution(1.0f);
+			material->SetDynamicFriction(0.5f);
+			material->SetStaticFriction(0.3f);
+
 			box = new BoxCollider(tikiEngine, 0);
+			box->SetMaterial(material->GetIndex());
 			box->SetCenter(Vector3(0, 5, 0));
 			box->SetSize(Vector3(2, 2, 2));
-			box->SetDynamic(false);
-			
+			box->SetDynamic(true);
+
 			// BoxCollider flags that can be set at runtime:
 
 			// set Kinematic Trigger, kinematic actors must be specified as dynamic
-			box->SetDynamic(true);
-			box->SetTriggerFlag(true);
-			box->SetKinematicFlag(true);
+			//box->SetDynamic(true);
+			//box->SetTriggerFlag(true);
+			//box->SetKinematicFlag(true);
 			// Create static trigger
 			//box->SetTriggerFlag(true);
 
@@ -108,9 +114,12 @@ namespace TikiEngine
 			Vector3 boxSize = box->GetSize();
 			bool isDynamic = box->GetDynamic();
 
-			// RigidBodys won't work for non dynamic actors
-			//box->GetRigidBody().SetMass(10.0f);
-			//Single mass = box->GetRigidBody().GetMass();
+			// Test RigidBody
+			if (isDynamic)
+			{
+				box->GetRigidBody().SetMass(10);
+				Single mass = box->GetRigidBody().GetMass();
+			}
 
 			return true;
 		}

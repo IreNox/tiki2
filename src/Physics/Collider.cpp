@@ -6,12 +6,19 @@ namespace TikiEngine
 	{
 		Collider::Collider()
 		{
+			materialIndex = -1;
 			actor = 0;
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
 			isKinematic = false;
 		}
 
+		#pragma region ICollider Methods
+
+		void Collider::SetMaterialIndex(int index)
+		{
+			materialIndex = index;
+		}
 
 		bool Collider::GetDynamicFlag()
 		{
@@ -62,6 +69,7 @@ namespace TikiEngine
 				actor->clearBodyFlag(NX_BF_KINEMATIC);
 
 		}
+		#pragma endregion
 
 	}
 }

@@ -23,19 +23,30 @@ namespace TikiEngine
 			/*! @brief Destructor */
 			~BoxCollider();
 			
-			void Update(const UpdateArgs& args) {}
-			void Draw(const DrawArgs& args) {}
+			// ICollider Methods
+			void SetMaterial(int index);
 
-
-			Vector3 GetCenter();
-			Vector3 GetSize();
 			bool GetDynamic();
-
-			void SetCenter(const Vector3& center);
-			void SetSize(const Vector3& size);
 			void SetDynamic(bool dynamicFlag);
 
+			bool GetTrigger();
+			void SetTrigger(bool triggerFlag);
+
+			bool GetKinematic();
+			void SetKinematic(bool kinematicFlag);
+
+
+			// IBoxCollider
+			Vector3 GetCenter();
+			void SetCenter(const Vector3& center);
+
+			Vector3 GetSize();
+			void SetSize(const Vector3& size);
+
 			bool GetReady();
+
+			void Update(const UpdateArgs& args) {}
+			void Draw(const DrawArgs& args) {}
 
 		private:
 			/*! @brief (re)Initialize BoxCollider */

@@ -22,32 +22,16 @@ namespace TikiEngine
 			actor = 0;
 		}
 
-		#pragma region IBoxCollider Methods
-		Vector3 BoxCollider::GetCenter()
+		#pragma region ICollider Methods
+		void BoxCollider::SetMaterial(int index)
 		{
-			return center.get();
-		}
-
-		Vector3 BoxCollider::GetSize()
-		{
-			return size.get(); 
+			SetMaterialIndex(index);
+			UpdateData();
 		}
 
 		bool BoxCollider::GetDynamic()
 		{
 			return GetDynamicFlag();
-		}
-
-		void BoxCollider::SetSize(const Vector3& size)
-		{
-			this->size = size.arr;
-			UpdateData();
-		}
-
-		void BoxCollider::SetCenter(const Vector3& center)
-		{
-			this->center = center.arr;
-			UpdateData();
 		}
 
 		void BoxCollider::SetDynamic(bool dynamicFlag)
@@ -56,11 +40,60 @@ namespace TikiEngine
 			UpdateData();
 		}
 
+		bool BoxCollider::GetTrigger()
+		{
+			return GetTriggerFlag();
+		}
+
+		// don't update here, just raise the flag after recreation
+		void BoxCollider::SetTrigger(bool triggerFlag)
+		{
+			SetTriggerFlag(triggerFlag);
+		}
+
+		bool BoxCollider::GetKinematic()
+		{
+			return GetKinematicFlag();
+		}
+
+		// don't update here, just raise the flag after recreation
+		void BoxCollider::SetKinematic(bool kinematicFlag)
+		{
+			SetKinematicFlag(kinematicFlag);
+		}
+		#pragma endregion
+
+		#pragma region IBoxCollider Methods
+		Vector3 BoxCollider::GetSize()
+		{
+			return size.get(); 
+		}
+
+		void BoxCollider::SetSize(const Vector3& size)
+		{
+			this->size = size.arr;
+			UpdateData();
+		}
+
+		Vector3 BoxCollider::GetCenter()
+		{
+			return center.get();
+		}
+
+		void BoxCollider::SetCenter(const Vector3& center)
+		{
+			this->center = center.arr;
+			UpdateData();
+		}
+
+
+
 		bool BoxCollider::GetReady() 
 		{
 			return (size != NxVec3(NX_MAX_F32)) && 
 				   (center != NxVec3(NX_MAX_F32)) && 
-				   (state != CS_UNINITIALIZED);
+				   (state != CS_UNINITIALIZED) &&
+				   (materialIndex != -1);
 		}
 
 		#pragma endregion
@@ -82,26 +115,22 @@ namespace TikiEngine
 			boxDesc.localPose.t = NxVec3(0, size.y, 0);
 
 			// Create material from index
-			material.SetRestitution(1.0f);
-			material.SetDynamicFriction(0.5f);
-			material.SetStaticFriction(0.3f);
-			boxDesc.materialIndex = material.GetIndex();
+			boxDesc.materialIndex = materialIndex;
 
 			// if we are dynamic, we have a Rigid Body attached
 			if (state == CS_DYNAMIC)
-			{
-				NxBodyDesc bodyDesc;
-				bodyDesc.mass = 1;
-				actorDescription.body = &bodyDesc;
-			}
+				actorDescription.body = rigidBody.GetDescription();
 
 			actorDescription.shapes.pushBack(&boxDesc);
-			actorDescription.userData = (void*)this;	// associate with this object
+			actorDescription.userData = (void*)this;	// associate the actor with this object
 			actorDescription.globalPose.t = center;
 
 			// finally, create the actor from description
 			actor = DllMain::Scene->createActor(actorDescription);
-			rigidBody.SetActor(actor);
+
+			// (re) set the actor object the rigidBody belongs to if this is a dynamic actor.
+			if (state == CS_DYNAMIC)
+				rigidBody.SetActor(actor);
 
 			// if this is or was a trigger or kinematic actor, raise the flags
 			SetTriggerFlag(isTrigger);

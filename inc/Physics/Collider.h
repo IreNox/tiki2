@@ -21,6 +21,8 @@ namespace TikiEngine
 			Collider();
 			virtual ~Collider() {}
 
+			void SetMaterialIndex(int index);
+
 			bool GetDynamicFlag();
 			void SetDynamicFlag(bool dynamicFlag);
 
@@ -31,7 +33,7 @@ namespace TikiEngine
 			bool GetKinematicFlag();
 			void SetKinematicFlag(bool kinematicFlag);
 
-
+		
 
 			RigidBody GetRigidBody() { return rigidBody;}
 
@@ -42,7 +44,8 @@ namespace TikiEngine
 			RigidBody rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;
-			PhysicsMaterial material;
+			int materialIndex;
+			
 		};
 	}
 }
