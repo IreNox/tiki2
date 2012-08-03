@@ -1,6 +1,9 @@
 #pragma once
 
 #include "Core/TypeDef.h"
+#include "Core/Vector3.h"
+
+class Vector3;
 
 class Quaternion
 {
@@ -39,9 +42,9 @@ public:
 	static Quaternion Slerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount);
 	static Quaternion Lerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount);
 
-	//static Quaternion CreateFromAxisAngle(Quaternion quat)
-	//static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll)
-	//static Quaternion CreateFromRotationMatrix(Matrix matrix)
+	static Quaternion CreateFromAxisAngle(const Vector3& axis, float angle);
+	static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll);
+		//static Quaternion CreateFromRotationMatrix(Matrix matrix)
 
 	bool operator == (const Quaternion& rhs);
 	bool operator != (const Quaternion& rhs);

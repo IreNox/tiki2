@@ -254,5 +254,37 @@ Quaternion& Quaternion::operator/=(const Quaternion& rhs)
 	return *this = *this / rhs;
 }
 
+Quaternion Quaternion::CreateFromAxisAngle( const Vector3& axis, float angle )
+{
+	float num = angle * 0.5;
+	float num2 = sinf(num);
+	float w = cosf(num);
+	Quaternion result;
+	result.X = axis.X * num2;
+	result.Y = axis.Y * num2;
+	result.Z = axis.Z * num2;
+	result.W = w;
+	return result;
+}
+
+Quaternion Quaternion::CreateFromYawPitchRoll( float yaw, float pitch, float roll )
+{
+	float num = roll * 0.5;
+	float num2 = sinf(num);
+	float num3 = cosf(num);
+	float num4 = pitch * 0.5;
+	float num5 = sinf(num4);
+	float num6 = cosf(num4);
+	float num7 = yaw * 0.5;
+	float num8 = sinf(num7);
+	float num9 = cosf(num7);
+	Quaternion result;
+	result.X = num9 * num5 * num3 + num8 * num6 * num2;
+	result.Y = num8 * num6 * num3 - num9 * num5 * num2;
+	result.Z = num9 * num6 * num2 - num8 * num5 * num3;
+	result.W = num9 * num6 * num3 + num8 * num5 * num2;
+	return result;
+}
+
 
 #pragma endregion
