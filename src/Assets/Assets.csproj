@@ -44,6 +44,9 @@
     <None Include="Data\Resources\jumppad_lowpoly.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Resources\Normals.fbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Data\Resources\box_diffuse.jpg">

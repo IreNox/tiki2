@@ -33,7 +33,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/jumppad_lowpoly.FBX"); //new MeshIndexed(engine);
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Normals.fbx"); //new MeshIndexed(engine);
 
 			//DefaultVertex vertices[] = {
 			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},

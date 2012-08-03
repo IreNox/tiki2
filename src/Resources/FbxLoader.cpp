@@ -92,8 +92,7 @@ namespace TikiEngine
 					int uvIndex = model->GetElementUV(0)->GetIndexArray().GetAt(counter);
 					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
 
-					int normalIndex = model->GetElementNormal(0)->GetIndexArray().GetAt(counter);
-					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(normalIndex);
+					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(counter);
 					
 
 					ConvertToTiki(
