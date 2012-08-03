@@ -332,6 +332,11 @@ namespace TikiEngine
 					"MatrixBuffer",
 					DllMain::Module->GetMatrixBuffer()->GetBuffer()
 				);
+
+				this->SetConstantBuffer(
+					"LightBuffer",
+					DllMain::Module->GetLightBuffer()->GetBuffer()
+				);
 				break;
 			case 'p':
 			case 'P':

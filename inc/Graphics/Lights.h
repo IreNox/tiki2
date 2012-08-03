@@ -16,9 +16,14 @@ namespace TikiEngine
 
 		struct Lights
 		{
-			UInt32 Count;
+			float Count;
 			LightData Data[32];
 			LightProperties Props;
+
+			Lights()
+				: Count(0), Props()
+			{
+			}
 		};
 	}
 }

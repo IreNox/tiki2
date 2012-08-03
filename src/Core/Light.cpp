@@ -47,7 +47,7 @@ namespace TikiEngine
 			return range;
 		}
 
-		void Light::SetType(float range)
+		void Light::SetRange(float range)
 		{
 			this->range = range;
 		}

@@ -279,6 +279,11 @@ namespace TikiEngine
 			return indexBuffer;
 		}
 
+		ConstantBuffer<Lights>* GraphicsModule::GetLightBuffer()
+		{
+			return lightBuffer;
+		}
+
 		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
 		{
 			return matrixBuffer;
@@ -304,6 +309,7 @@ namespace TikiEngine
 		void GraphicsModule::SetLightChanged(List<Light*>* lights)
 		{
 			Lights* buf = lightBuffer->Map();
+			*buf = Lights();
 
 			buf->Count = lights->Count();
 			if (buf->Count > 32) buf->Count = 32;

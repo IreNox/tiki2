@@ -29,7 +29,7 @@ namespace TikiEngine
 			void SetColor(const Color& color);
 
 			float GetRange() const;
-			void SetType(float range);
+			void SetRange(float range);
 
 			LightType GetType() const;
 			void SetType(LightType type);

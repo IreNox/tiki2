@@ -90,7 +90,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
 	
-	for (int i = 0; i < LightsCount; i++)
+	for (float i = 0; i < LightsCount; i++)
 	{
 		float lighting = dot(
 			input.Normal,

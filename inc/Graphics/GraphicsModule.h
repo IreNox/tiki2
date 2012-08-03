@@ -46,6 +46,7 @@ namespace TikiEngine
 			ViewPort* GetViewPort();
 			IRenderTarget* GetBackBufferRenderTarget();
 
+			ConstantBuffer<Lights>* GetLightBuffer();
 			ConstantBuffer<Matrices>* GetMatrixBuffer();
 
 			IndexBuffer* GetIndexBuffer();
