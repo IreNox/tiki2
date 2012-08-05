@@ -2,7 +2,7 @@
 
 #include "Core/IRigidBody.h"
 #include "PhysX/Physics/NxPhysics.h"
-//#include "Core/Vector3.h"
+
 
 namespace TikiEngine 
 {
@@ -20,6 +20,9 @@ namespace TikiEngine
 			NxBodyDesc* GetDescription();
 			void SetActor(NxActor* setActor);
 
+			void SetKinematic(bool kinematicFlag);
+			bool GetKinematic();
+
 			void SetMass(Single mass);
 			Single GetMass();
 
@@ -28,11 +31,15 @@ namespace TikiEngine
 
 			void SetAngularVelocity(const Vector3& angularVelocity);
 			Vector3 GetAngularVelocity();
-
+			
+			void MovePosition(const Vector3& pos);
+			void MoveRotation(const Quaternion& quat);
 
 		private:
 			NxBodyDesc bodyDescription;
 			NxActor* actor;
+
+			bool isKinematic;
 
 			Single mass;
 			Vector3 velocity;

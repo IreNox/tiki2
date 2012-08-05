@@ -38,6 +38,7 @@ public:
 
 		std::string error(message);
 		Console::Write(error);
+		Console::Write("\n");
 
 	}
 

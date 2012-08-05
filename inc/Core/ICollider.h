@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Component.h"
-#include "IPhysicsMaterial.h"
+#include "Core/IRigidBody.h"
 
 namespace TikiEngine
 {
@@ -32,11 +32,8 @@ namespace TikiEngine
 			/*! @brief Set if the collider is a trigger or not */
 			virtual void SetTrigger(bool triggerFlag) = 0;
 
-			/*! @brief is this a kinematic actor? */
-			virtual bool GetKinematic() = 0;
-			/* !@brief Set if this actor should be dynamic. The Collider must be dynamic if this is set to true! */
-			virtual void SetKinematic(bool kinematicFlag) = 0;
-
+			/* !@brief gets the underlying Rigid Body if this is a dynamic actor! So ensure that this collider is set to Dynamic before! */
+			virtual IRigidBody* GetRigidBody() = 0;
 
 			 /*! @brief OnTriggerEnter is called when the Collider other enters the trigger. */
 			 //virtual void OnTriggerEnter(ICollider* other) = 0;

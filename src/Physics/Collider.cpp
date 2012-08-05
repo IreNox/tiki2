@@ -10,7 +10,7 @@ namespace TikiEngine
 			actor = 0;
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
-			isKinematic = false;
+			//isKinematic = false;
 		}
 
 		#pragma region ICollider Methods
@@ -52,22 +52,6 @@ namespace TikiEngine
 			{
 				actor->getShapes()[i]->setFlag(NX_TRIGGER_ENABLE, isTrigger);
 			}
-		}
-
-		bool Collider::GetKinematicFlag()
-		{
-			return isKinematic;
-		}
-
-		void Collider::SetKinematicFlag(bool kinematicFlag)
-		{
-			this->isKinematic = kinematicFlag;
-
-			if (isKinematic)
-				actor->raiseBodyFlag(NX_BF_KINEMATIC);
-			else
-				actor->clearBodyFlag(NX_BF_KINEMATIC);
-
 		}
 		#pragma endregion
 

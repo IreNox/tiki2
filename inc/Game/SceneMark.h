@@ -2,6 +2,8 @@
 
 #include "Core/Scene.h"
 
+#include "Core/IBoxCollider.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -17,6 +19,10 @@ namespace TikiEngine
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+
+		private:
+			IBoxCollider* box;
+
 		};
 	}
 }

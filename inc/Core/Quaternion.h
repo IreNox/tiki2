@@ -7,14 +7,17 @@ class Quaternion
 {
 public:
 
-	struct  
+	union
 	{
-		float X;
-		float Y;
-		float Z;
-		float W;
+		struct  
+		{
+			float X;
+			float Y;
+			float Z;
+			float W;
+		};
+		float arr[4];
 	};
-
 	Quaternion(void);
 	Quaternion(float x, float y, float z, float w);
 	~Quaternion();

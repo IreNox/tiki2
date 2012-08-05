@@ -21,26 +21,22 @@ namespace TikiEngine
 			Collider();
 			virtual ~Collider() {}
 
+			// TODO: is this the right way to downcast?
+			IRigidBody* GetBody() { return &rigidBody;}
+
+		protected:
 			void SetMaterialIndex(int index);
 
 			bool GetDynamicFlag();
 			void SetDynamicFlag(bool dynamicFlag);
 
-			// These Methods can be used at runtime to raise Trigger flags
+			// These Methods can be used at runtime to raise Trigger or kinematic flags
 			bool GetTriggerFlag();
 			void SetTriggerFlag(bool triggerFlag);
-
-			bool GetKinematicFlag();
-			void SetKinematicFlag(bool kinematicFlag);
-
-		
-
-			RigidBody GetRigidBody() { return rigidBody;}
 
 		protected:
 			ColliderState state;
 			bool isTrigger;
-			bool isKinematic;	// check if we have rigid body
 			RigidBody rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;

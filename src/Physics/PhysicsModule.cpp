@@ -5,8 +5,6 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		using namespace TikiEngine::Physics;
-
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine)
 		{
@@ -61,7 +59,7 @@ namespace TikiEngine
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == NULL)
 			{
-				Console::Write("Error: Unable to create a PhysX scene, exiting.");
+				Console::Write("Error: Unable to create a PhysX scene, exiting. \n");
 				return false;
 			}
 
@@ -79,48 +77,6 @@ namespace TikiEngine
 			actorDesc.shapes.pushBack(&planeDesc);
 			scene->createActor(actorDesc);
 
-			// BoxCollider Unit Test:
-			// by default they can be set to static or dynamic objects
-			// every time we change static to dynamic, or center/size, we recreate the Actor.
-			// When recreating, the class also keeps track if the Collider was a trigger or kinematic actor
-			// and raises the flags respectively.
-			PhysicsMaterial* material = new PhysicsMaterial();
-			material->SetRestitution(1.0f);
-			material->SetDynamicFriction(0.5f);
-			material->SetStaticFriction(0.3f);
-
-			box = new BoxCollider(tikiEngine, 0);
-			box->SetMaterial(material->GetIndex());
-			box->SetCenter(Vector3(0, 5, 0));
-			box->SetSize(Vector3(2, 2, 2));
-			box->SetDynamic(true);
-
-			// BoxCollider flags that can be set at runtime:
-
-			// set Kinematic Trigger, kinematic actors must be specified as dynamic
-			//box->SetDynamic(true);
-			//box->SetTriggerFlag(true);
-			//box->SetKinematicFlag(true);
-			// Create static trigger
-			//box->SetTriggerFlag(true);
-
-			// Create dynamic trigger, TODO: Handle Collision Groups, else collision detection won't work for the plane!
-			//box->SetDynamic(true);
-			//box->SetTriggerFlag(true);
-		
-
-			
-			Vector3 boxCenter = box->GetCenter();
-			Vector3 boxSize = box->GetSize();
-			bool isDynamic = box->GetDynamic();
-
-			// Test RigidBody
-			if (isDynamic)
-			{
-				box->GetRigidBody().SetMass(10);
-				Single mass = box->GetRigidBody().GetMass();
-			}
-
 			return true;
 		}
 
@@ -136,6 +92,13 @@ namespace TikiEngine
 
 		void PhysicsModule::Begin()
 		{
+
+
+		}
+
+		void PhysicsModule::End()
+		{
+
 			if (scene && !pause)
 			{
 				// the new method to start the SDK
@@ -145,15 +108,7 @@ namespace TikiEngine
 				// in here we can do computations which depend only on the old state of the scene "actors". 
 				// Writing to the scene is not allowed. Write calls in here are skipped.
 
-				// ... 
-			}
 
-		}
-
-		void PhysicsModule::End()
-		{
-			if (scene && !pause)
-			{
 				// method to sync with the SDK after it has finished.it waits (non)blocking for the end of a given NxSimulationStatus, 
 				// if the end is reached it swaps the buffers, fires the callbacks and removes the writelock, 
 				// if all simulations of the scene have reached its end. at the moment there is only a NX_RIGID_BODY_FINISHED status.

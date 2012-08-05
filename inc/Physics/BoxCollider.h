@@ -24,6 +24,7 @@ namespace TikiEngine
 			~BoxCollider();
 			
 			// ICollider Methods
+			IRigidBody* GetRigidBody();
 			void SetMaterial(int index);
 
 			bool GetDynamic();
@@ -32,8 +33,8 @@ namespace TikiEngine
 			bool GetTrigger();
 			void SetTrigger(bool triggerFlag);
 
-			bool GetKinematic();
-			void SetKinematic(bool kinematicFlag);
+			//bool GetKinematic();
+			//void SetKinematic(bool kinematicFlag);
 
 
 			// IBoxCollider

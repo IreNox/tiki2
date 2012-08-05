@@ -7,6 +7,7 @@ namespace TikiEngine
 		RigidBody::RigidBody()
 			: IRigidBody()
 		{
+			isKinematic = false;
 
 			mass = 1;
 			bodyDescription.mass = mass;
@@ -31,6 +32,23 @@ namespace TikiEngine
 		void RigidBody::SetActor(NxActor* setActor)
 		{
 			this->actor = setActor;
+		}
+
+
+		bool RigidBody::GetKinematic()
+		{
+			return isKinematic;
+		}
+
+		void RigidBody::SetKinematic(bool kinematicFlag)
+		{
+			this->isKinematic = kinematicFlag;
+
+			if (isKinematic)
+				actor->raiseBodyFlag(NX_BF_KINEMATIC);
+			else
+				actor->clearBodyFlag(NX_BF_KINEMATIC);
+
 		}
 
 		void RigidBody::SetMass(Single mass)
@@ -67,6 +85,28 @@ namespace TikiEngine
 			return angularVelocity;
 		}
 
+
+		void RigidBody::MovePosition(const Vector3& pos)
+		{
+			if (isKinematic)
+			{
+				// get world space position
+				NxVec3 globalPos = actor->getGlobalPosition();
+				globalPos += (NxVec3)pos.arr;
+				actor->moveGlobalPosition(globalPos);
+			}
+		}
+
+		void RigidBody::MoveRotation(const Quaternion& quat)
+		{
+			if (isKinematic)
+			{
+
+				NxQuat globalOrient = actor->getGlobalOrientationQuat();
+				globalOrient += (NxQuat)quat.arr;
+				actor->moveGlobalOrientationQuat(globalOrient);
+			}
+		}
 
 
 	}

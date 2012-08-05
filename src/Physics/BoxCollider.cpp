@@ -23,6 +23,11 @@ namespace TikiEngine
 		}
 
 		#pragma region ICollider Methods
+		IRigidBody* BoxCollider::GetRigidBody()
+		{
+			return GetBody();
+		}
+
 		void BoxCollider::SetMaterial(int index)
 		{
 			SetMaterialIndex(index);
@@ -50,17 +55,6 @@ namespace TikiEngine
 		{
 			SetTriggerFlag(triggerFlag);
 		}
-
-		bool BoxCollider::GetKinematic()
-		{
-			return GetKinematicFlag();
-		}
-
-		// don't update here, just raise the flag after recreation
-		void BoxCollider::SetKinematic(bool kinematicFlag)
-		{
-			SetKinematicFlag(kinematicFlag);
-		}
 		#pragma endregion
 
 		#pragma region IBoxCollider Methods
@@ -85,8 +79,6 @@ namespace TikiEngine
 			this->center = center.arr;
 			UpdateData();
 		}
-
-
 
 		bool BoxCollider::GetReady() 
 		{
@@ -134,7 +126,7 @@ namespace TikiEngine
 
 			// if this is or was a trigger or kinematic actor, raise the flags
 			SetTriggerFlag(isTrigger);
-			SetKinematicFlag(isKinematic);
+			//SetKinematicFlag(rigidBody.GetKinematic());
 		}
 	}
 }

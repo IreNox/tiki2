@@ -1,6 +1,6 @@
 
 #include "Physics/DllMain.h"
-#include "Core/ICollider.h"
+#include "Physics/BoxCollider.h"
 
 #include <typeinfo.h>
 
@@ -8,6 +8,7 @@ namespace TikiEngine
 {
 	using namespace TikiEngine::Modules;
 	using namespace TikiEngine::Components;
+	using namespace TikiEngine::Physics;
 
 	TikiInfo DllMain::DllInfo = TikiInfo();
 
@@ -27,7 +28,11 @@ namespace TikiEngine
 
 		DllInfo.Modules.Add(typeid(IPhysics).hash_code());
 
-		DllInfo.Components.Add(typeid(ICollider).hash_code());
+		
+		//DllInfo.Components.Add(typeid(ICollider).hash_code());
+		DllInfo.Components.Add(typeid(IBoxCollider).hash_code());
+
+		
 	}
 
 	IModule* DllMain::CreateModule(IntPtr hash)
@@ -42,9 +47,13 @@ namespace TikiEngine
 
 	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
 	{
-		if (hash == typeid(ICollider).hash_code())
-		{
+		//if (hash == typeid(ICollider).hash_code())
+		//{
 			//return new MeshRenderer(DllMain::Engine, gameObject);
+		//}
+		if (hash == typeid(IBoxCollider).hash_code())
+		{
+			return new BoxCollider(DllMain::Engine, gameObject);
 		}
 
 		return 0;
