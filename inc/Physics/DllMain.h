@@ -23,12 +23,13 @@ namespace TikiEngine
 		static Engine* Engine;
 
 		static PhysicsModule* Module;
-    static NxScene* Scene;
-    static NxPhysicsSDK* PhysicsSDK;
+	    static NxScene* Scene;
+		static NxPhysicsSDK* PhysicsSDK;
 
 		static void InitDll(TikiEngine::Engine* engine);
 
 		static IModule* CreateModule(IntPtr);
+		static IResource* CreateResource(IntPtr);
 		static Component* CreateComponent(IntPtr, GameObject* gameObject);
 
 	private:

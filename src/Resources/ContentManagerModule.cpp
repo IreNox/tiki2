@@ -72,6 +72,11 @@ namespace TikiEngine
 				value = fbxLoader->LoadMesh(fileName);
 				loadFile = false;
 			}
+			else if (hash == typeid(IPhysicsMaterial).hash_code())
+			{
+				value = engine->librarys->CreateResource<IPhysicsMaterial>();
+			}
+
 
 			if (loadFile && value != 0)
 			{
@@ -115,6 +120,15 @@ namespace TikiEngine
 			);
 
 			return mat;
+		}
+
+		IPhysicsMaterial* ContentManagerModule::LoadPhysicsMaterial(const wstring& name)
+		{
+			return (IPhysicsMaterial*)this->Load(
+				typeid(IPhysicsMaterial).hash_code(), 
+				name
+			);
+
 		}
 		#pragma endregion
 

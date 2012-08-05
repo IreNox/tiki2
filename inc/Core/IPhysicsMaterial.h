@@ -1,15 +1,17 @@
 #pragma once
 
-#include "Core/Object.h"
+#include "Core/IResource.h"
 
 namespace TikiEngine
 {
-	namespace Components
+	namespace Resources
 	{
-		class IPhysicsMaterial : public Object
+		class IPhysicsMaterial : public IResource
 		{
 		public:
-			IPhysicsMaterial() : Object() {}
+			IPhysicsMaterial(Engine* engine) 
+				: IResource(engine) {}
+
 			virtual ~IPhysicsMaterial() {}
 
 			virtual void SetDynamicFriction(Single dynFriction) = 0;

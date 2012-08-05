@@ -6,10 +6,13 @@
 
 //#include "assert.h"
 
+#include "Core/IPhysicsMaterial.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
+
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
 		{
@@ -31,16 +34,15 @@ namespace TikiEngine
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
 
-			// TODO:
-			//PhysicsMaterial* material = new PhysicsMaterial();
-			//material->SetRestitution(1.0f);
-			//material->SetDynamicFriction(0.5f);
-			//material->SetStaticFriction(0.3f);
+			IPhysicsMaterial* material; 
+			material = engine->content->LoadPhysicsMaterial(L"TODO");
+			material->SetRestitution(1.0f);
+			material->SetDynamicFriction(0.5f);
+			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
 			// init
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			//box->SetMaterial(material->GetIndex());
-			box->SetMaterial(0);		// 0 = default material
+			box->SetMaterial(material->GetIndex()); // 0 = default material	
 			box->SetCenter(Vector3(5, 5, 0));
 			box->SetSize(Vector3(1, 1, 1));
 			box->SetDynamic(true);
@@ -66,9 +68,9 @@ namespace TikiEngine
 			{
 				// set some mass, this won't affect kinematic actors.
 				box->GetRigidBody()->SetMass(5);
-				//assert(box->GetRigidBody()->GetMass() == 10);
+				//assert(box->GetRigidBody()->GetMass() == 5);
 
-				// case when we have a dynamic actor
+				// case when we have a kinematic actor
 				if (!box->GetRigidBody()->GetKinematic())
 				{
 					// give this tiny box a force pointing upwards

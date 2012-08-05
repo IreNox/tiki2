@@ -26,6 +26,7 @@ namespace TikiEngine
 			Mesh* LoadFbxMesh(const wstring& name);
 			ITexture* LoadTexture(const wstring& name);
 			Material* LoadMaterial(const wstring& name);
+			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
 
 			wstring GetWorkingPath();
 			wstring GetRealFilePath(wstring fileName);

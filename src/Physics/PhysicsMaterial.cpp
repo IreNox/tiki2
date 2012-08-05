@@ -5,7 +5,8 @@ namespace TikiEngine
 {
 	namespace Physics
 	{
-		PhysicsMaterial::PhysicsMaterial() : IPhysicsMaterial()
+		PhysicsMaterial::PhysicsMaterial(Engine* engine) 
+			: IPhysicsMaterial(engine)
 		{
 			//desc.setToDefault();
 			material = DllMain::Scene->createMaterial(desc);
