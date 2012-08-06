@@ -46,7 +46,7 @@ namespace TikiEngine
 			box->SetCenter(Vector3(5, 5, 0));
 			box->SetSize(Vector3(1, 1, 1));
 			box->SetDynamic(true);
-			//box->GetRigidBody()->SetKinematic(true);
+			box->GetRigidBody()->SetKinematic(true);
 
 			// BoxCollider flags that can be set at runtime:
 
@@ -74,10 +74,10 @@ namespace TikiEngine
 				if (!box->GetRigidBody()->GetKinematic())
 				{
 					// give this tiny box a force pointing upwards
-					box->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
+					//box->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
 
 					// and set an angular velocity on the Y-Axis
-					box->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
+					//box->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
 				}
 
 
@@ -100,8 +100,18 @@ namespace TikiEngine
 			if (box->GetDynamic())
 			{
 				// if it is kinematic, use following functions to move/rotate:
-				box->GetRigidBody()->MovePosition(Vector3(0, 0.0005f, 0));
-				box->GetRigidBody()->MoveRotation(Quaternion(0, 0.0005f, 0, 0));
+
+				//box->GetRigidBody()->MovePosition(Vector3(0, 0.0005f, 0));
+				
+				Vector3 eulerAngles(0.01f, 0.01f, 0.01f);
+
+				Quaternion q1 = q1.CreateFromAxisAngle(Vector3(1, 0, 0), eulerAngles.X);
+				Quaternion q2 = q2.CreateFromAxisAngle(Vector3(0, 1, 0), eulerAngles.Y);
+				Quaternion q3 = q3.CreateFromAxisAngle(Vector3(0, 0, 1), eulerAngles.Z);
+
+				// PhysX does its rotations in a right-handed manner. 
+				box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
+				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
 			}
 
 			Scene::Update(args);

@@ -102,9 +102,19 @@ namespace TikiEngine
 			if (isKinematic)
 			{
 
+				Vector3 eulerAngles(0.01f, 0.05f, 0.0f);
+				
+				NxQuat q1(eulerAngles.X, NxVec3(1, 0, 0));
+				NxQuat q2(eulerAngles.Y, NxVec3(0, 1, 0));
+				NxQuat q3(eulerAngles.Z, NxVec3(0, 0, 1));
 				NxQuat globalOrient = actor->getGlobalOrientationQuat();
-				globalOrient += (NxQuat)quat.arr;
-				actor->moveGlobalOrientationQuat(globalOrient);
+
+				NxQuat q;
+				q.setXYZW(quat.X, quat.Y, quat.Z, quat.W);
+				actor->moveGlobalOrientationQuat(q * globalOrient);
+
+				//actor->moveGlobalOrientationQuat(q3 * q2 * q1 * globalOrient); // Use global axes
+				//actor->moveGlobalOrientationQuat(globalOrient * q1 * q2 * q3);   // Use local axes
 			}
 		}
 
