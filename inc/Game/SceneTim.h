@@ -5,6 +5,8 @@
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
 
+#include "Core/IBoxCollider.h"
+
 namespace TikiEngine
 {
 	namespace Game

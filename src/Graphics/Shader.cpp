@@ -259,9 +259,9 @@ namespace TikiEngine
 			ID3D10Blob *blob = 0;
 			ID3D10Blob *errorBlob = 0;
 
-			PInt size = stream->GetLength();
+			UPInt size = stream->GetLength();
 			char* data = new char[size];
-			stream->Read(data, 0, size);
+			stream->Read(data, 0, (UInt32)size);
 
 			HRESULT r = D3DX11CompileFromMemory(
 				data,
@@ -271,15 +271,13 @@ namespace TikiEngine
 				0,
 				0,
 				"fx_5_0",
-				D3D10_SHADER_ENABLE_STRICTNESS,
+				0, //D3D10_SHADER_ENABLE_STRICTNESS,
 				0,
 				0,
 				&blob,
 				&errorBlob,
 				0
 			);
-
-			delete[](data);
 
 			if (FAILED(r))
 			{
@@ -302,6 +300,8 @@ namespace TikiEngine
 
 				throw "Shader: .ctor: An error was corrupted.";
 			}
+
+			delete[](data);
 
 			r = D3DX11CreateEffectFromMemory(
 				blob->GetBufferPointer(),

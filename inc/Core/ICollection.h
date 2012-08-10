@@ -19,5 +19,5 @@ public:
 
 	virtual bool Contains(T item) = 0;
 	
-	virtual int Count() = 0;
+	virtual UInt32 Count() = 0;
 };

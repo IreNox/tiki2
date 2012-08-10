@@ -75,9 +75,6 @@
     <Filter Include="Headerdateien\Core\Args/States">
       <UniqueIdentifier>{bdc712d0-b742-40b9-9b6d-a8bc9f281755}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Input">
-      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Interfaces">
       <UniqueIdentifier>{2ded2737-277b-45af-8c66-93baa7bfb5c8}</UniqueIdentifier>
     </Filter>
@@ -98,6 +95,21 @@
     </Filter>
     <Filter Include="Quelldateien\Core\Resources">
       <UniqueIdentifier>{c39f976e-b6f1-48d2-b284-2b8809b90e9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\GameObjects\Basic">
+      <UniqueIdentifier>{200d2000-146e-40b6-8320-449acaa72980}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Engine\GameObjects\Debug">
+      <UniqueIdentifier>{fada5754-6a9b-4785-bf4c-6b9b5a9c69c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Engine\GameObjects\Basic">
+      <UniqueIdentifier>{525a7a6e-9ebe-4c79-af72-43ca91d6da0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Engine\GameObjects\Debug">
+      <UniqueIdentifier>{11639179-7cc6-4e65-be2f-f8a2ff95ecac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Enums">
+      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -143,23 +155,14 @@
     <ClCompile Include="src\Core\SimpleVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\CameraObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\QuadObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Window.cpp">
       <Filter>Quelldateien\Engine\Modules</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\LibraryManager.cpp">
       <Filter>Quelldateien\Engine\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\MeshObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\GameObject.cpp">
       <Filter>Quelldateien\Engine\GameObjects</Filter>
@@ -191,8 +194,23 @@
     <ClCompile Include="src\Core\Light.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\CameraObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\QuadObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\LightObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects</Filter>
+      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MeshObject.cpp">
+      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\DebugPhysicsRenderer.cpp">
+      <Filter>Quelldateien\Engine\GameObjects\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ColorVertex.cpp">
+      <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -361,20 +379,11 @@
     <ClInclude Include="inc\Core\InputElement.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\CameraObject.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\MeshObject.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\LightObject.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\LibraryManager.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
-      <Filter>Headerdateien\Core\Input</Filter>
+      <Filter>Headerdateien\Core\Enums</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\GameTime.h">
       <Filter>Headerdateien\Core\Args/States</Filter>
@@ -424,23 +433,41 @@
     <ClInclude Include="inc\Core\IBoxCollider.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\QuadObject.h">
-      <Filter>Headerdateien\Engine\GameObjects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IScript.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Matrices.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\Matrices.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\LightProperties.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrices.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CameraObject.h">
+      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LightObject.h">
+      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\MeshObject.h">
+      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\QuadObject.h">
+      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DebugPhysicsRenderer.h">
+      <Filter>Headerdateien\Engine\GameObjects\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\PrimitiveTopologies.h">
+      <Filter>Headerdateien\Core\Enums</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ColorVertex.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

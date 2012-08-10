@@ -60,7 +60,7 @@ namespace TikiEngine
 		{
 			List<TikiInfo*> infos = loadedLibrarys.GetValues();
 
-			int i = 0;			
+			UInt32 i = 0;			
 			TikiInfo* info = 0;
 
 			while (i < infos.Count())
@@ -100,7 +100,7 @@ namespace TikiEngine
 
 			info->LibraryHandle = libraryHandle;
 
-			int i = 0;
+			UInt32 i = 0;
 			while (i < info->Modules.Count())
 			{
 				if (!defaultLibrarys.ContainsKey(info->Modules[i]))

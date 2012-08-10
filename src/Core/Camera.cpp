@@ -38,7 +38,7 @@ namespace TikiEngine
 
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
 				MATH_PI / 4,				
-				(vp->Width / vp->Width),
+				(float)vp->Width / vp->Width,
 				0.01f,
 				1000.0f
 			));

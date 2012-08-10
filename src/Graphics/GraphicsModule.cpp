@@ -49,7 +49,7 @@ namespace TikiEngine
 			SafeRelease(&indexBuffer);
 
 			auto values = vertexBuffers.GetValues();
-			for (int i = 0; i < values.Count(); i++)
+			for (UInt32 i = 0; i < values.Count(); i++)
 			{
 				delete(values[i]);
 			}
@@ -227,10 +227,10 @@ namespace TikiEngine
 			viewPort.TopLeftY = 0;
 			
 			this->viewPort = ViewPort(
-				viewPort.TopLeftX,
-				viewPort.TopLeftY,
-				viewPort.Width,
-				viewPort.Height,
+				(Int32)viewPort.TopLeftX,
+				(Int32)viewPort.TopLeftY,
+				(Int32)viewPort.Width,
+				(Int32)viewPort.Height,
 				viewPort.MinDepth,
 				viewPort.MaxDepth
 			);
@@ -311,7 +311,7 @@ namespace TikiEngine
 			Lights* buf = lightBuffer->Map();
 			*buf = Lights();
 
-			buf->Count = lights->Count();
+			buf->Count = (float)lights->Count();
 			if (buf->Count > 32) buf->Count = 32;
 
 			UInt32 i = 0;

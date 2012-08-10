@@ -11,9 +11,9 @@ namespace TikiEngine
 
 	Scene::~Scene()
 	{
-		for (int i = 0; i< elements.Count(); i++)
+		for (UInt32 i = 0; i< elements.Count(); i++)
 		{
-			delete(elements[i]);
+			elements[i]->Release();
 		}
 	}
 	#pragma endregion
@@ -40,6 +40,7 @@ namespace TikiEngine
 	GameObject* Scene::AddElement(GameObject* element)
 	{
 		elements.Add(element);
+		element->AddRef();
 
 		UInt32 len = 0;
 		Light** comLights = 0;
@@ -79,7 +80,7 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-		for (int i = 0; i < elements.Count(); i++)
+		for (UInt32 i = 0; i < elements.Count(); i++)
 		{
 			elements[i]->Draw(args);
 		}
@@ -87,7 +88,7 @@ namespace TikiEngine
 
 	void Scene::Update(const UpdateArgs& args)
 	{
-		for (int i = 0; i < elements.Count(); i++)
+		for (UInt32 i = 0; i < elements.Count(); i++)
 		{
 			elements[i]->Update(args);
 		}

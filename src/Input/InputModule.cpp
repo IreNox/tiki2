@@ -46,6 +46,8 @@ namespace TikiEngine
 
 			this->initDevice(&keyboard, GUID_SysKeyboard, &c_dfDIKeyboard);
 			this->initDevice(&mouse, GUID_SysMouse, &c_dfDIMouse);
+			
+			//ShowCursor(true);
 
 			return true;
 		}

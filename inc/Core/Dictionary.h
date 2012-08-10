@@ -57,7 +57,7 @@ public:
 
 	bool ContainsKey(TKey key)
 	{
-		for (int i = 0; i < this->Count(); i++)
+		for (UInt32 i = 0; i < this->Count(); i++)
 		{
 			if (List::Get(i).GetKey() == key) return true;
 		}
@@ -83,23 +83,25 @@ public:
 	#pragma region Member - Get Lists
 	List<TKey> GetKeys()
 	{
-		TKey* data = new TKey[this->Count()];
+		List<TKey>* list = new List<TKey>();
 
-		for (int i = 0; i < this->Count(); i++)
+		for (UInt32 i = 0; i < this->Count(); i++)
 		{
-			data[i] = List::Get(i).GetKey();
+			list->Add(
+				data[i].GetKey()
+			);
 		}
 
-		delete(data);
+		list->IsReadOnly = true;
 
-		return List<TKey>(data, this->Count(), true);
+		return *list;
 	}
 
 	List<TValue> GetValues()
 	{
 		List<TValue>* list = new List<TValue>();
 
-		for (int i = 0; i < lengthData; i++)
+		for (UInt32 i = 0; i < this->Count(); i++)
 		{
 			list->Add(
 				data[i].GetValue()
@@ -113,7 +115,7 @@ public:
 	#pragma endregion
 
 	#pragma region Member - Data
-	int Count()
+	UInt32 Count()
 	{
 		return List::Count();
 	}
@@ -121,7 +123,12 @@ public:
 	IEnumerator<KeyValuePair<TKey, TValue>>* GetEnumerator()
 	{
 		return List::GetEnumerator();
-	}  
+	} 
+
+	KeyValuePair<TKey, TValue> Get(UInt32 index)
+	{
+		return List::Get(index);
+	}
 
 	TValue Get(TKey key)
 	{
@@ -145,7 +152,7 @@ private:
 	#pragma region Private Member
 	int _keyToIndex(TKey key)
 	{
-		for (int i = 0; i < this->Count(); i++)
+		for (UInt32 i = 0; i < this->Count(); i++)
 		{
 			if (List::Get(i).GetKey() == key) return i;
 		}

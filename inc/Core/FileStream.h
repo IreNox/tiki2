@@ -27,13 +27,13 @@ namespace TikiEngine
 			void Close();
 
 			Byte ReadByte();
-			void Read(void* data, Int32 offset, UInt32 bytesCount);
+			void Read(void* data, Int32 offset, UPInt bytesCount);
 
 			void WriteByte(Byte byte);
-			void Write(void* data, Int32 offset, UInt32 bytesCount);
+			void Write(void* data, Int32 offset, UPInt bytesCount);
 
-			PInt GetLength();
-			void SetLength(PInt len);
+			UPInt GetLength();
+			void SetLength(UPInt len);
 
 			Int64 GetPosition();
 			void SetPosition(Int64 pos);

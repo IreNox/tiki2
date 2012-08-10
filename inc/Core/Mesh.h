@@ -4,7 +4,7 @@
 
 #include "Core/IResource.h"
 #include "Core/InputElement.h"
-
+#include "Core/PrimitiveTopologies.h"
 
 namespace TikiEngine
 {
@@ -19,8 +19,12 @@ namespace TikiEngine
 			Mesh(Engine* engine);
 			~Mesh();
 
-			void SetVertexData(void* data, UInt32 dataLength);
 			void GetVertexData(void** data, UInt32* dataLength);
+			void SetVertexData(void* data, UInt32 dataLength);
+
+			/*! @brief Get the Primitive Topology. Default value is PT_TriangleList. */ 
+			PrimitiveTopologies GetPrimitiveTopology();
+			void SetPrimitiveTopology(PrimitiveTopologies pt);
 
 			List<InputElement>* GetVertexDeclaration();
 			void SetVertexDeclaration(InputElement* elements, UInt32 count);
@@ -33,6 +37,8 @@ namespace TikiEngine
 
 			void* vertexData;
 			UInt32 vertexDataLength;
+
+			PrimitiveTopologies topology;
 
 			List<InputElement> vertexDeclaration;
 

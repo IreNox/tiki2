@@ -85,7 +85,7 @@ namespace TikiEngine
 
 		void Texture::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			UInt32 size = stream->GetLength();
+			UPInt size = stream->GetLength();
 			Byte* data = new Byte[size];
 
 			stream->Read(data, 0, size);

@@ -7,6 +7,8 @@
 #include "Physics/ErrorStream.h"
 #include "Physics/VRDSettings.h"
 
+#include "Core/ColorVertex.h"
+
 
 //#include "Physics/BoxCollider.h"
 
@@ -15,6 +17,8 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
+		using namespace TikiEngine::Vertices;
+
 		//using namespace TikiEngine::Physics;
 
 		class PhysicsModule : public IPhysics
@@ -29,8 +33,12 @@ namespace TikiEngine
 			/*! @brief  detect if GPU PhysX acceleration is available by querying for the version of the hardware */
 			bool IsHardwarePresent();
 
-			/*! @brief retreives the current scene */
+			/*! @brief retrieves the current scene */
 			NxScene* GetScene();
+
+#if _DEBUG
+			void FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list);
+#endif
 
 			void Begin();
 			void End();
@@ -44,6 +52,11 @@ namespace TikiEngine
 			NxPhysicsSDK* physicsSDK;
 			NxScene* scene; 
 			//BoxCollider* box;
+
+#if _DEBUG
+			Mesh* debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology);
+			void debugFillVertex(ColorVertex& vertex, const NxVec3& pos, const NxU32& color);
+#endif
 
 		};
 	}

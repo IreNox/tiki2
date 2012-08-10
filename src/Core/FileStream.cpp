@@ -55,7 +55,7 @@ namespace TikiEngine
 			return byte;
 		}
 
-		void FileStream::Read(void* data, Int32 offset, UInt32 bytesCount)
+		void FileStream::Read(void* data, Int32 offset, UPInt bytesCount)
 		{
 			Byte* ptr = (Byte*)data;
 			ptr += offset;
@@ -70,7 +70,7 @@ namespace TikiEngine
 			fwrite(&byte, 1, 1, handle);
 		}
 
-		void FileStream::Write(void* data, Int32 offset, UInt32 bytesCount)
+		void FileStream::Write(void* data, Int32 offset, UPInt bytesCount)
 		{
 			Byte* ptr = (Byte*)data;
 			ptr += offset;
@@ -80,7 +80,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Properties
-		PInt FileStream::GetLength()
+		UPInt FileStream::GetLength()
 		{
 			Int64 pos = this->GetPosition();
 			fseek(handle, 0, SEEK_END);
@@ -91,7 +91,7 @@ namespace TikiEngine
 			return size;
 		}
 
-		void FileStream::SetLength(PInt len)
+		void FileStream::SetLength(UPInt len)
 		{
 			throw "Not supported";
 		}

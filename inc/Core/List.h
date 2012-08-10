@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/TypeDef.h"
 #include "IList.h"
 
 template <class T>
@@ -38,7 +39,7 @@ public:
 	#pragma endregion
 
 	#pragma region Member
-	int Count()
+	UInt32 Count()
 	{
 		return this->lengthData + 1;
 	}
@@ -68,7 +69,7 @@ public:
 		UInt32 c = lengthData + 1; 
 		T* arr = new T[c];
 
-		int i = 0;
+		UInt32 i = 0;
 		while (i < c)
 		{
 			arr[i] = data[i];
@@ -104,13 +105,13 @@ public:
 		}
 	}
 
-	void Insert(int index, T item)
+	void Insert(UInt32 index, T item)
 	{
 		if (this->IsReadOnly) return;
 
-		for (int i = this->lengthArr; i > index; i--)
+		for (UInt32 i = this->lengthArr; i > index; i--)
 		{
-			bool use = (i < this->lengthData + 2);
+			bool use = (i < this->Count() + 1);
 			int newIndex = getNewIndex(i - 1, use);
 
 			if (use)
@@ -141,20 +142,18 @@ public:
 		return false;
 	}
 
-	void RemoveAt(int index)
+	void RemoveAt(UInt32 index)
 	{
 		if (this->IsReadOnly) return;
 
-		if (index > this->lengthData)
+		if ((Int32)index > this->lengthData)
 		{
 			return;
 		}
 
-		this->lengthData--;
-
-		for (int i = index; i < this->lengthArr; i++)
+		for (UInt32 i = index; i < this->Count(); i++)
 		{
-			bool use = (i < this->lengthData + 1);
+			bool use = (i < (UInt32)(this->lengthData + 1));
 			int newIndex = getNewIndex(i - 1, use);
 
 			if (use)
@@ -164,6 +163,8 @@ public:
 				this->data[newIndex] = value;
 			}
 		}
+
+		this->lengthData--;
 	}  
 	#pragma endregion
 
@@ -222,7 +223,7 @@ public:
 		}
 
 	private:
-		int index;
+		UInt32 index;
 		List<T>* list;
 	};
 	#pragma endregion
@@ -230,8 +231,8 @@ public:
 protected:
 
 	T* data;
-	int lengthArr;
-	int lengthData;  
+	UInt32 lengthArr;
+	Int32 lengthData;
 
 private:
 
@@ -241,9 +242,9 @@ private:
 		return this->lengthArr * 2;
 	}
 
-	int getNewIndex(int in, bool used)
+	int getNewIndex(UInt32 in, bool used)
 	{
-		int index = in + 1;
+		UInt32 index = in + 1;
 
 		if (index > this->lengthArr - 1)
 		{
@@ -261,7 +262,7 @@ private:
 			this->lengthArr = size;
 		}
 
-		if (index > this->lengthData && used) this->lengthData = index;
+		if ((Int32)index > this->lengthData && used) this->lengthData = index;
 
 		return index;
 	}

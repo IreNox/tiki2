@@ -13,10 +13,10 @@ public:
 
 	virtual void Clear() = 0;
 
-	virtual void Insert(int index, T item) = 0;
-	virtual void RemoveAt(int index) = 0;
+	virtual void Insert(UInt32 index, T item) = 0;
+	virtual void RemoveAt(UInt32 index) = 0;
 
-	virtual int IndexOf(T item) = 0;
+	virtual Int32 IndexOf(T item) = 0;
 
 	virtual T* ToArray() = 0;
 

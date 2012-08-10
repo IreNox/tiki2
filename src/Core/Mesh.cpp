@@ -8,7 +8,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Mesh::Mesh(Engine* engine)
-			: IResource(engine), vertexData(0), vertexDataLength(0), vertexDeclaration()
+			: IResource(engine), vertexData(0), vertexDataLength(0), vertexDeclaration(), topology(PT_TriangleList)
 		{
 		}
 
@@ -53,6 +53,16 @@ namespace TikiEngine
 		{
 			*data = vertexData;
 			*dataLength = vertexDataLength;
+		}
+
+		PrimitiveTopologies Mesh::GetPrimitiveTopology()
+		{
+			return topology;
+		}
+
+		void Mesh::SetPrimitiveTopology(PrimitiveTopologies pt)
+		{
+			topology = pt;
 		}
 
 		List<InputElement>* Mesh::GetVertexDeclaration()

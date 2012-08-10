@@ -68,7 +68,7 @@ namespace TikiEngine
 			elementSize = 0;
 			D3D11_INPUT_ELEMENT_DESC* elements = new D3D11_INPUT_ELEMENT_DESC[decl->Count()];
 
-			int i = 0;
+			UInt32 i = 0;
 			while (i < decl->Count())
 			{
 				InputElement input = decl->Get(i);

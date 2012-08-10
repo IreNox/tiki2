@@ -5,6 +5,7 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
+		#pragma region Class
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine)
 		{
@@ -13,6 +14,10 @@ namespace TikiEngine
 		}
 
 		PhysicsModule::~PhysicsModule()
+		{
+		}
+
+		void PhysicsModule::Dispose()
 		{
 			if (physicsSDK != 0)
 			{
@@ -26,11 +31,9 @@ namespace TikiEngine
 				physicsSDK = 0;
 			}
 		}
+		#pragma endregion
 
-		void PhysicsModule::Dispose()
-		{
-		}
-
+		#pragma region Init
 		bool PhysicsModule::Initialize(EngineDescription& desc)
 		{
 			Console::Write("Initializing");
@@ -79,6 +82,7 @@ namespace TikiEngine
 
 			return true;
 		}
+		#pragma endregion
 
 		bool PhysicsModule::IsHardwarePresent()
 		{
@@ -125,11 +129,116 @@ namespace TikiEngine
 			// then we can use isWritable() to test if we fetched  all simulation results and made the scene writable again.
 			// Since there is only one status flag it is obvious that we fetched everything and the scene is writable.
 			NX_ASSERT(scene->isWritable());
-
-
 		}
 
+#pragma region Debug
+#if _DEBUG
+		void PhysicsModule::FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list)
+		{
+			const NxDebugRenderable* debug = scene->getDebugRenderable();
 
+			NxU32 i = 0;
+			NxU32 count = debug->getNbPoints();
+			if (count > 0)
+			{
+				Mesh* mesh = debugCheckMesh(list, PT_PointList);
+				ColorVertex* vertices = new ColorVertex[count * 1];
+
+				const NxDebugPoint* points = debug->getPoints();
+
+				while (i < count)
+				{
+					UInt32 index = i * 2;
+					const NxDebugPoint* point = points + i;
+
+					debugFillVertex(vertices[index + 0], point->p, point->color);
+
+					i++;
+				}
+
+				mesh->SetVertexData(vertices, sizeof(ColorVertex) * count);
+				delete(vertices);
+			}
+
+			i = 0;
+			count = debug->getNbLines();
+			if (count > 0)
+			{
+				Mesh* mesh = debugCheckMesh(list, PT_LineList);
+				ColorVertex* vertices = new ColorVertex[count * 2];
+
+				const NxDebugLine* lines = debug->getLines();
+
+				while (i < count)
+				{
+					UInt32 index = i * 2;
+					const NxDebugLine* line = lines + i;
+
+					debugFillVertex(vertices[index + 0], line->p0, line->color);
+					debugFillVertex(vertices[index + 1], line->p1, line->color);
+
+					i++;
+				}
+
+				mesh->SetVertexData(vertices, sizeof(ColorVertex) * count);
+				delete(vertices);
+			}
+
+			i = 0;
+			count = debug->getNbTriangles();
+			if (count > 0)
+			{
+				Mesh* mesh = debugCheckMesh(list, PT_TriangleList);
+				ColorVertex* vertices = new ColorVertex[count * 3];
+
+				const NxDebugTriangle* triangles = debug->getTriangles();
+
+				while (i< count)
+				{
+					UInt32 index = i * 2;
+					const NxDebugTriangle* triangle = triangles + i;
+
+					debugFillVertex(vertices[index + 0], triangle->p0, triangle->color);
+					debugFillVertex(vertices[index + 1], triangle->p1, triangle->color);
+					debugFillVertex(vertices[index + 2], triangle->p2, triangle->color);
+
+					i++;
+				}
+			}
+		}
+
+		Mesh* PhysicsModule::debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology)
+		{
+			Mesh* mesh = 0;
+
+			if (list->ContainsKey(topology))
+			{
+				mesh = list->Get(topology);
+			}
+			else
+			{
+				mesh = new Mesh(engine);
+				mesh->SetVertexDeclaration(ColorVertex::Declaration, 2);
+				mesh->SetPrimitiveTopology(topology);
+
+				list->Add(topology, mesh);
+			}
+
+			return mesh;
+		}
+
+		void PhysicsModule::debugFillVertex(ColorVertex& vertex, const NxVec3& pos, const NxU32& color)
+		{
+			vertex.Position[0] = pos.x;
+			vertex.Position[1] = pos.y;
+			vertex.Position[2] = pos.z;
+			vertex.Color[0]	= (float)((color>>16)&0xff)/255.0f;
+			vertex.Color[1]	= (float)((color>>8)&0xff)/255.0f;
+			vertex.Color[2]	= (float)(color&0xff)/255.0f;
+			vertex.Color[3]	= 1.0f;
+		}
+#endif
+#pragma endregion
 
 	}
 }

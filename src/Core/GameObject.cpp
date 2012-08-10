@@ -10,15 +10,15 @@ namespace TikiEngine
 
 	GameObject::~GameObject()
 	{
-		for (int i = 0; i < components.Count(); i++)
+		for (UInt32 i = 0; i < components.Count(); i++)
 		{
-			delete(components[i]);
+			components[i]->Release();
 		}
 	}
 
 	void GameObject::Draw(const DrawArgs& args)
 	{
-		for (int i = 0; i < components.Count(); i++)
+		for (UInt32 i = 0; i < components.Count(); i++)
 		{
 			components[i]->Draw(args);
 		}
@@ -26,7 +26,7 @@ namespace TikiEngine
 
 	void GameObject::Update(const UpdateArgs& args)
 	{
-		for (int i = 0; i < components.Count(); i++)
+		for (UInt32 i = 0; i < components.Count(); i++)
 		{
 			components[i]->Update(args);
 		}
@@ -35,12 +35,13 @@ namespace TikiEngine
 	void GameObject::AddComponent(Component* comp)
 	{
 		components.Add(comp);
+		comp->AddRef();
 	}
 
 	Component* GameObject::GetComponent(IntPtr hash)
 	{
-		int i = 0;
-		int c = components.Count();
+		UInt32 i = 0;
+		UInt32 c = components.Count();
 		while (i < c)
 		{
 			if ( typeid(components[i]).hash_code() == hash) return components[i];

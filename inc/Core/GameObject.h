@@ -42,7 +42,7 @@ namespace TikiEngine
 		{
 			List<T*> coms = List<T*>();
 
-			int i = 0;
+			UInt32 i = 0;
 			PInt hash = typeid(T).hash_code();
 			while (i < components.Count())
 			{

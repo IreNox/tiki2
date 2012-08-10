@@ -41,13 +41,18 @@ namespace TikiEngine
 				&offset
 			);
 
-			DllMain::Context->IASetIndexBuffer(
-				this->indexBuffer->GetBuffer(),
-				DXGI_FORMAT_R32_UINT,
-				0
-			);
+			if (useIndex)
+			{
+				DllMain::Context->IASetIndexBuffer(
+					this->indexBuffer->GetBuffer(),
+					DXGI_FORMAT_R32_UINT,
+					0
+				);
+			}
 
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			DllMain::Context->IASetPrimitiveTopology(
+				D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST //(D3D11_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology()
+			);
 
 			decl->Apply();
 			shader->Apply();
