@@ -7,11 +7,14 @@
 //#include "assert.h"
 
 #include "Core/IPhysicsMaterial.h"
+#include "Core/DebugPhysicsRenderer.h"
+#include "Core/CameraObject.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Objects;
 
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
@@ -43,10 +46,23 @@ namespace TikiEngine
 			// init
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
 			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(5, 5, 0));
+			box->SetCenter(Vector3(0, 1, 0));
 			box->SetSize(Vector3(1, 1, 1));
-			box->SetDynamic(true);
-			box->GetRigidBody()->SetKinematic(true);
+			box->SetDynamic(false);
+			//box->GetRigidBody()->SetKinematic(true);
+			this->AddElement(go);
+			//go->Release();
+
+			go = new CameraObject(engine);
+			this->AddElement(go);
+			//go->Release();
+
+			go = new DebugPhysicRenderer(engine);
+			this->AddElement(go);
+			//go->Release();
+
+
+
 
 			// BoxCollider flags that can be set at runtime:
 

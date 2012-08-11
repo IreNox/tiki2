@@ -66,8 +66,17 @@ namespace TikiEngine
 				return false;
 			}
 
-			// TODO : if debug, set some Visualization Flags
-
+			// set some Visualization Flags, else debugRendering won't work.
+#if _DEBUG
+			physicsSDK->setParameter(NX_SKIN_WIDTH, 0.025f);
+			physicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1.0f);
+			physicsSDK->setParameter(NX_VISUALIZE_COLLISION_SHAPES, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_POINT, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_NORMAL, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_FORCE, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_BODY_LIN_VELOCITY, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_BODY_ANG_FORCE, 1);
+#endif
 
 			//bool hardware = IsHardwarePresent();
 			// assign the scene and physX sdks to dllMain
