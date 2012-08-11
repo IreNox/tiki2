@@ -4,17 +4,24 @@
 
 namespace TikiEngine
 {
-	namespace Components
+	namespace Scripts
 	{
+		using namespace TikiEngine::Components;
+
 		class IScript : public Component
 		{
 		public:
 
-			IScript(Engine* engine)
-				: Component(engine)
+			IScript(Engine* engine, GameObject* gameObject)
+				: Component(engine, gameObject, CT_Script)
 			{
 			}
 			~IScript() {}
+
+			bool GetReady()
+			{
+				return true;
+			}
 		};
 	}
 }

@@ -5,35 +5,16 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include "Core/GameObject.h"
+
 namespace TikiEngine
 {
 	namespace Components
 	{
 		#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, CT_Camera), renderTarget(0), matrices(), x(0), y(0)
+			: Component(engine, gameObject, CT_Camera), renderTarget(0), matrices()
 		{
-			//D3DXMATRIX matrix;
-			//D3D11_VIEWPORT* vp = engine->graphics->GetViewPort();
-
-			//D3DXMatrixPerspectiveFovLH(
-			//	&matrix,
-			//	D3DX_PI / 4,
-			//	(vp->Width / vp->Height),
-			//	0.01f,
-			//	10000.0f
-			//);
-
-			//D3DXMatrixPerspectiveOffCenterLH(
-			//	&matrix,
-			//	0,
-			//	vp->Width,
-			//	vp->Height,
-			//	0,
-			//	0.01f,
-			//	100.0f
-			//);
-
 			ViewPort* vp = &engine->GetEngineDescription()->Graphics.ViewPort;
 
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
@@ -42,8 +23,6 @@ namespace TikiEngine
 				0.01f,
 				1000.0f
 			));
-
-			//this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
 		}
 
 		Camera::~Camera()
@@ -97,51 +76,11 @@ namespace TikiEngine
 
 		void Camera::Update(const UpdateArgs& args)
 		{
-			//D3DXMATRIX matrix;
-
-			float g_fX = x;
-			float g_fY = y;
-			float g_fEyeDistance = 10;
-
-			x += args.Input.MouseDistance.X;
-			y += args.Input.MouseDistance.Y;
-
-			Vector3 g_vAt = Vector3(0.01f, 0.01f, 0.01f);
-			Vector3 g_vUp = Vector3(0.0f, 1.0f, 0.0f);
-			//float g_fEyeDistance = 5.0f;
-
-			//Quaternion quad = Quaternion::
-
-			Vector3 g_vEye = Vector3(
-				sinf(g_fX) * g_fEyeDistance,
-				cosf(g_fY) * g_fEyeDistance,
-				(cosf(g_fX) * sinf(g_fY)) * g_fEyeDistance
-			);
-
-			//D3DXMatrixLookAtLH(
-			//	&matrix,
-			//	&g_vEye,
-			//	&g_vAt,
-			//	&g_vUp
-			//);
-
-			//D3DXMatrixLookAtLH(
-			//	&matrix,
-			//	this->PRS.Position.ToD3DXVector3(),
-			//	&D3DXVECTOR3(0, 0, 0),
-			//	&D3DXVECTOR3(0, 1, 0)
-			//);
-
 			this->matrices.ViewMatrix = Matrix::Transpose(Matrix::CreateLookAt(
-				g_vEye,
-				g_vAt,
-				g_vUp
+				gameObject->PRS.Position,
+				gameObject->PRS.Position + gameObject->PRS.GetForward(),
+				Vector3::Up
 			));
-
-			//Matrices* data = matrixBuffer->Map();
-			//data->ViewMatrix = matrices.ViewMatrix.Transpose();
-			//data->ProjectionMatrix = matrices.ProjectionMatrix.Transpose();
-			//matrixBuffer->Unmap();
 		}
 		#pragma endregion
 	}

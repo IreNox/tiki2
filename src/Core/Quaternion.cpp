@@ -281,7 +281,7 @@ Quaternion& Quaternion::operator/=(const Quaternion& rhs)
 
 Quaternion Quaternion::CreateFromAxisAngle( const Vector3& axis, float angle )
 {
-	float num = angle * 0.5;
+	float num = angle * 0.5f;
 	float num2 = sinf(num);
 	float w = cosf(num);
 	Quaternion result;
@@ -294,13 +294,13 @@ Quaternion Quaternion::CreateFromAxisAngle( const Vector3& axis, float angle )
 
 Quaternion Quaternion::CreateFromYawPitchRoll( float yaw, float pitch, float roll )
 {
-	float num = roll * 0.5;
+	float num = roll * 0.5f;
 	float num2 = sinf(num);
 	float num3 = cosf(num);
-	float num4 = pitch * 0.5;
+	float num4 = pitch * 0.5f;
 	float num5 = sinf(num4);
 	float num6 = cosf(num4);
-	float num7 = yaw * 0.5;
+	float num7 = yaw * 0.5f;
 	float num8 = sinf(num7);
 	float num9 = cosf(num7);
 	Quaternion result;

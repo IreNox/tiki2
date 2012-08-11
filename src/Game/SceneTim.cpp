@@ -10,15 +10,16 @@
 #include "Core/IBoxCollider.h"
 #include "Core/DebugPhysicsRenderer.h"
 
-#include "Core/MeshIndexed.h"
+//#include "Core/MeshIndexed.h"
+//#include "Core/DefaultVertex.h"
 
-#include "Core/DefaultVertex.h"
-
+#include "Game/CameraFly.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Scripts;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
 
@@ -62,6 +63,12 @@ namespace TikiEngine
 			light->Release();
 
 			go = new CameraObject(engine);
+			go->PRS.Position.Z = 5.0f;
+
+			CameraFly* fly = new CameraFly(engine, go);
+			go->AddComponent(fly);
+			fly->Release();
+
 			this->AddElement(go);
 			go->Release();
 

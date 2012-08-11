@@ -7,7 +7,7 @@ namespace TikiEngine
 		enum ComponentType
 		{
 			CT_Unknown,
-			CT_Behavior,
+			CT_Script,
 			CT_Camera,
 			CT_Collider,
 			CT_Light,

@@ -15,6 +15,12 @@
     <Filter Include="Quelldateien\Scene">
       <UniqueIdentifier>{4292490b-2072-4845-8a69-16a70d2c88ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Scripts">
+      <UniqueIdentifier>{f06ad67d-c0ee-4496-a4c1-7b49b6772397}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Scripts">
+      <UniqueIdentifier>{354f881f-7a4e-445d-bb8b-0ac05e1c04d1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game\Box.h">
@@ -31,6 +37,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\SceneAdrian.h">
       <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\CameraFly.h">
+      <Filter>Headerdateien\Scripts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +60,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\SceneAdrian.cpp">
       <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\CameraFly.cpp">
+      <Filter>Quelldateien\Scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -20,4 +20,19 @@ namespace TikiEngine
 
 		*worldMatrix = rot * scale * trans;
 	}
+
+	Vector3 Transform::GetForward()
+	{
+		return this->Rotation * Vector3::ForwardRH;
+	}
+
+	Vector3 Transform::GetUp()
+	{
+		return this->Rotation * Vector3::Up;
+	}
+
+	Vector3 Transform::GetLeft()
+	{
+		return this->Rotation * Vector3::Left;
+	}
 }

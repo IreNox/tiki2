@@ -26,13 +26,13 @@ namespace TikiEngine
 		virtual void Update(const UpdateArgs& args);
 
 		void AddComponent(Component* comp);
-		Component* GetComponent(IntPtr hash);
+		Component* GetComponent(PInt hash);
 
 		#pragma region Member - GetElement
 		template <class T>
-		Component* GetComponent()
+		T* GetComponent()
 		{
-			return this->GetComponent(
+			return (T*)this->GetComponent(
 				typeid(T).hash_code()
 			);
 		}

@@ -35,9 +35,6 @@ namespace TikiEngine
 
 		private:
 
-			float x;
-			float y;
-
 			Matrices matrices;
 			IRenderTarget* renderTarget;
 

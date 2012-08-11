@@ -28,17 +28,17 @@ namespace TikiEngine
 			memcpy(
 				this->keyboardState,
 				keyboardState,
-				sizeof(keyboardState)
+				sizeof(Byte) * 256
 			);
 		}
 
-		bool GetKey(Key keyCode)
+		bool GetKey(Key keyCode) const
 		{
 			return (keyboardState[keyCode] & 0x80) != 0;
 		}
 
 	private:
 
-		unsigned char keyboardState[256];
+		Byte keyboardState[256];
 	};
 }

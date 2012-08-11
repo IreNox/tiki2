@@ -38,13 +38,15 @@ namespace TikiEngine
 		comp->AddRef();
 	}
 
-	Component* GameObject::GetComponent(IntPtr hash)
+	Component* GameObject::GetComponent(PInt hash)
 	{
 		UInt32 i = 0;
 		UInt32 c = components.Count();
 		while (i < c)
 		{
-			if ( typeid(components[i]).hash_code() == hash) return components[i];
+			PInt curHash = typeid(*components[i]).hash_code();
+
+			if (curHash == hash) return components[i];
 
 			i++;
 		}

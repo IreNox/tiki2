@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
@@ -27,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Box.cpp" />
+    <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
     <ClCompile Include="src\Game\SceneMark.cpp" />

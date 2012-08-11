@@ -18,5 +18,10 @@ namespace TikiEngine
 		~Transform();
 
 		void FillWorldMatrix(Matrix* worldMatrix) const;
+
+		Vector3 GetForward();
+		Vector3 GetUp();
+		Vector3 GetLeft();
+
 	};
 }
