@@ -77,6 +77,9 @@
     <ClCompile Include="src\Graphics\RenderTarget.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Quad.cpp">
+      <Filter>Quelldateien\Internal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -119,6 +122,9 @@
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Lights.h">
+      <Filter>Headerdateien\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Quad.h">
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
   </ItemGroup>

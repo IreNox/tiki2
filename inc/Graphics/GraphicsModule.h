@@ -8,6 +8,8 @@
 
 #include "Core/IGraphics.h"
 
+#include "Graphics/Quad.h"
+
 #include "Graphics/IndexBuffer.h"
 #include "Graphics/VertexBuffer.h"
 #include "Graphics/ConstantBuffer.h"
@@ -21,7 +23,6 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		using namespace TikiEngine::Buffer;
 		using namespace TikiEngine::Graphics;
 		
 		class GraphicsModule : public IGraphics
@@ -44,7 +45,7 @@ namespace TikiEngine
 			void* GetDeviceContext();
 
 			ViewPort* GetViewPort();
-			IRenderTarget* GetBackBufferRenderTarget();
+			IRenderTarget* GetScreenBuffer();
 
 			ConstantBuffer<Lights>* GetLightBuffer();
 			ConstantBuffer<Matrices>* GetMatrixBuffer();
@@ -53,6 +54,7 @@ namespace TikiEngine
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl);
 
 			void SetLightChanged(List<Light*>* lights);
+			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 
 			bool GetReady();
 
@@ -65,7 +67,6 @@ namespace TikiEngine
 
 			IDXGISwapChain* swapChain;
 			ID3D11RenderTargetView* renderTargetView;
-			RenderTarget* renderTarget;
 
 			ID3D11Texture2D* depthStencilBuffer;
 			ID3D11DepthStencilView* depthStencilView;
@@ -77,10 +78,20 @@ namespace TikiEngine
 			Color clearColor;
 			ConstantBuffer<Lights>* lightBuffer;
 			ConstantBuffer<Matrices>* matrixBuffer;
-
-
+			
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;
+
+			List<ID3D11RenderTargetView*> renderTargets;
+
+			RenderTarget* rtScreen;
+			RenderTarget* rtBackBuffer;
+
+			Quad* quadPostProcess;
+
+			bool initDirectX(EngineDescription& desc);
+			bool initEngine(EngineDescription& desc);
+
 		};
 	}
 }

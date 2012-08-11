@@ -48,7 +48,7 @@ cbuffer LightBuffer : register(b1)
 	Light Lights[32];
 };
 
-Texture2D tex : register(t0);
+Texture2D tex; // : register(t0);
 
 SamplerState sam : register(s0)
 {    

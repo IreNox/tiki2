@@ -21,6 +21,26 @@ namespace TikiEngine
 
 		}
 
+		Texture::Texture(Engine* engine, ID3D11Texture2D* tex)
+			: ITexture(engine), texture(tex)
+		{
+			tex->GetDesc(&desc);
+
+			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
+			ZeroMemory(&srDesc, sizeof(srDesc));
+
+			srDesc.Format = desc.Format;
+			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+			srDesc.Texture2D.MostDetailedMip = 0;
+			srDesc.Texture2D.MipLevels = 1;
+
+			DllMain::Device->CreateShaderResourceView(
+				tex,
+				&srDesc,
+				&textureResource
+			);
+		}
+
 		Texture::~Texture()
 		{
 			SafeRelease(&texture);
@@ -56,7 +76,7 @@ namespace TikiEngine
 			desc.Height = height;
 			desc.MipLevels = 1;
 			desc.ArraySize = 1;
-			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			desc.SampleDesc.Count = 1;
 			desc.Usage = D3D11_USAGE_DEFAULT;
 			desc.BindFlags = bindFlags | D3D11_BIND_SHADER_RESOURCE;
@@ -126,7 +146,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't load Texture", r);
+				Console::WriteError("Can't save Texture", r);
 			}
 
 			stream->Write(
@@ -159,7 +179,7 @@ namespace TikiEngine
 			{
 				for (UINT j = 0; j < desc.Height; j++)
 				{
-					//What code goes here to set the colour value for each pixel?    
+					//What code goes here to set the color value for each pixel?    
 				}
 			}
 

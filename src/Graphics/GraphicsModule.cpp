@@ -3,6 +3,7 @@
 #pragma comment(lib, "d3dx11.lib")
 
 #include "Core/Engine.h"
+#include "Core/IContentManager.h"
 #include "Core/Console.h"
 
 #include "Graphics/GraphicsModule.h"
@@ -20,8 +21,8 @@ namespace TikiEngine
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), renderTarget(0),
-			matrixBuffer(0), lightBuffer(0)
+			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
+			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets()
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -37,7 +38,9 @@ namespace TikiEngine
 				swapChain->SetFullscreenState(false, NULL);
 			}
 
-			SafeRelease(&renderTarget);
+			SafeRelease(&rtScreen);
+			SafeRelease(&rtBackBuffer);
+			SafeRelease(&quadPostProcess);
 			SafeRelease(&rasterState);
 			SafeRelease(&depthStencilView);
 			SafeRelease(&depthStencilState);
@@ -63,10 +66,144 @@ namespace TikiEngine
 		{
 			if (inited) return false;
 
-			HWND hWnd = desc.Window.hWnd;
+			bool ok = true;
 
+			if (ok) ok &= initDirectX(desc);
+			if (ok) ok &= initEngine(desc);
+
+			inited = ok;
+			return ok;
+		}
+		#pragma endregion
+
+		#pragma region Member - Get
+		void* GraphicsModule::GetDevice()
+		{
+			return (void*)this->device;
+		}
+
+		void* GraphicsModule::GetDeviceContext()
+		{
+			return (void*)this->deviceContext;
+		}
+
+		ViewPort* GraphicsModule::GetViewPort()
+		{
+			return &viewPort;
+		}
+
+		IRenderTarget* GraphicsModule::GetScreenBuffer()
+		{
+			return rtScreen;
+		}
+		#pragma endregion
+
+		#pragma region Member - Get - Buffer
+		IndexBuffer* GraphicsModule::GetIndexBuffer()
+		{
+			return indexBuffer;
+		}
+
+		ConstantBuffer<Lights>* GraphicsModule::GetLightBuffer()
+		{
+			return lightBuffer;
+		}
+
+		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
+		{
+			return matrixBuffer;
+		}
+
+		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl)
+		{
+			ULONG hash = decl->GetDeclarationHash();
+
+			if (!vertexBuffers.ContainsKey(hash))
+			{
+				vertexBuffers.Add(
+					hash, 
+					new VertexBuffer(engine, decl)
+					);
+			}
+
+			return vertexBuffers.Get(hash);		
+		}
+		#pragma endregion
+
+		#pragma region Member - Set
+		void GraphicsModule::SetLightChanged(List<Light*>* lights)
+		{
+			Lights* buf = lightBuffer->Map();
+			*buf = Lights();
+
+			buf->Count = (float)lights->Count();
+			if (buf->Count > 32) buf->Count = 32;
+
+			UInt32 i = 0;
+			while (i < buf->Count)
+			{
+				Light* l = lights->Get(i);
+
+				buf->Data[i].Range = l->GetRange();
+				buf->Data[i].Color = l->GetColor().ToVector3();
+				buf->Data[i].Position = l->GetGameObject()->PRS.Position;
+				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation * Vector3::ForwardRH;
+
+				i++;
+			}
+
+			lightBuffer->Unmap();
+		}
+
+		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target)
+		{
+			while (slot >= renderTargets.Count())
+			{
+				renderTargets.Add(0);
+			}
+
+			renderTargets[slot] = target;
+
+			ID3D11RenderTargetView** targets = renderTargets.ToArray();
+
+			deviceContext->OMSetRenderTargets(
+				renderTargets.Count(),
+				targets,
+				depthStencilView
+			);
+
+			delete[](targets);
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw
+		void GraphicsModule::Begin(const DrawArgs& args)
+		{
+			rtScreen->Apply(0);
+			rtScreen->Clear(clearColor);
+			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
+
+			if (args.Context.CurrentCamera)
+			{
+				Matrices* matrices = matrixBuffer->Map();
+				*matrices = *args.Context.CurrentCamera->GetMatrices();
+				matrixBuffer->Unmap();
+			}
+		}
+
+		void GraphicsModule::End()
+		{
+			quadPostProcess->Draw();
+
+			swapChain->Present(0, 0);
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - DirectX
+		bool GraphicsModule::initDirectX(EngineDescription& desc)
+		{
 			RECT rect;
-			GetClientRect(hWnd, &rect);
+			GetClientRect(desc.Window.hWnd, &rect);
 
 			DXGI_SWAP_CHAIN_DESC swapDesc;
 			ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
@@ -78,7 +215,7 @@ namespace TikiEngine
 			swapDesc.BufferDesc.RefreshRate.Denominator = 1;
 			swapDesc.BufferDesc.RefreshRate.Numerator = 60;
 			swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-			swapDesc.OutputWindow = hWnd;
+			swapDesc.OutputWindow = desc.Window.hWnd;
 			swapDesc.SampleDesc.Count = 1;
 			swapDesc.SampleDesc.Quality = 0;
 			swapDesc.Windowed = true;
@@ -100,7 +237,7 @@ namespace TikiEngine
 				&device,
 				&level,
 				&deviceContext
-				);
+			);
 
 			if (FAILED(r)) { return false; }
 
@@ -207,14 +344,14 @@ namespace TikiEngine
 			r = device->CreateRasterizerState(
 				&rasterDesc,
 				&rasterState
-			);
+				);
 
 			if(FAILED(r))
 			{
 				Console::WriteError("Can't create RasterizerState", r);
 			}
 
-			deviceContext->RSSetState(rasterState); //backfaceculling
+			deviceContext->RSSetState(rasterState); // back face culling
 
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
@@ -225,7 +362,7 @@ namespace TikiEngine
 			viewPort.MaxDepth = 1.0f;
 			viewPort.TopLeftX = 0;
 			viewPort.TopLeftY = 0;
-			
+
 			this->viewPort = ViewPort(
 				(Int32)viewPort.TopLeftX,
 				(Int32)viewPort.TopLeftY,
@@ -233,121 +370,41 @@ namespace TikiEngine
 				(Int32)viewPort.Height,
 				viewPort.MinDepth,
 				viewPort.MaxDepth
-			);
+				);
 			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
 
+			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - Engine
+		bool GraphicsModule::initEngine(EngineDescription& desc)
+		{
 			DllMain::Device = device;
 			DllMain::Context = deviceContext;
 
 			this->indexBuffer = new IndexBuffer(engine);
 			this->lightBuffer = new ConstantBuffer<Lights>(engine);
 			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
-			this->renderTarget = new RenderTarget(engine, renderTargetView);
 
-			inited = true;
+			this->rtBackBuffer = new RenderTarget(engine, renderTargetView);
+
+			this->rtScreen = new RenderTarget(engine);
+			this->rtScreen->Create(rtBackBuffer->GetWidth(), rtBackBuffer->GetHeight());
+
+			IShader* shader = new Shader(engine);
+			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
+			shader->SetTexture("tex", rtScreen);
+
+			quadPostProcess = new Quad(engine);
+			quadPostProcess->SetShader(shader);
+			quadPostProcess->SetRenderTarget(rtBackBuffer);
+
+			SafeRelease(&shader);
+
 			return true;
-		}
-		#pragma endregion
-
-		#pragma region Member - Get
-		void* GraphicsModule::GetDevice()
-		{
-			return (void*)this->device;
-		}
-
-		void* GraphicsModule::GetDeviceContext()
-		{
-			return (void*)this->deviceContext;
-		}
-
-		ViewPort* GraphicsModule::GetViewPort()
-		{
-			return &viewPort;
-		}
-
-		IRenderTarget* GraphicsModule::GetBackBufferRenderTarget()
-		{
-			return renderTarget;
-		}
-		#pragma endregion
-
-		#pragma region Member - Get - Buffer
-		IndexBuffer* GraphicsModule::GetIndexBuffer()
-		{
-			return indexBuffer;
-		}
-
-		ConstantBuffer<Lights>* GraphicsModule::GetLightBuffer()
-		{
-			return lightBuffer;
-		}
-
-		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
-		{
-			return matrixBuffer;
-		}
-
-		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl)
-		{
-			ULONG hash = decl->GetDeclarationHash();
-
-			if (!vertexBuffers.ContainsKey(hash))
-			{
-				vertexBuffers.Add(
-					hash, 
-					new VertexBuffer(engine, decl)
-					);
-			}
-
-			return vertexBuffers.Get(hash);		
-		}
-		#pragma endregion
-
-		#pragma region Member - Set
-		void GraphicsModule::SetLightChanged(List<Light*>* lights)
-		{
-			Lights* buf = lightBuffer->Map();
-			*buf = Lights();
-
-			buf->Count = (float)lights->Count();
-			if (buf->Count > 32) buf->Count = 32;
-
-			UInt32 i = 0;
-			while (i < buf->Count)
-			{
-				Light* l = lights->Get(i);
-
-				buf->Data[i].Range = l->GetRange();
-				buf->Data[i].Color = l->GetColor().ToVector3();
-				buf->Data[i].Position = l->GetGameObject()->PRS.Position;
-				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation * Vector3::ForwardRH;
-
-				i++;
-			}
-
-			lightBuffer->Unmap();
-		}
-		#pragma endregion
-
-		#pragma region Member - Draw
-		void GraphicsModule::Begin(const DrawArgs& args)
-		{
-			deviceContext->ClearRenderTargetView(renderTargetView, clearColor.arr);
-			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
-
-			if (args.Context.CurrentCamera)
-			{
-				Matrices* matrices = matrixBuffer->Map();
-				*matrices = *args.Context.CurrentCamera->GetMatrices();
-				matrixBuffer->Unmap();
-			}
-		}
-
-		void GraphicsModule::End()
-		{
-			swapChain->Present(0, 0);
 		}
 		#pragma endregion
 	}

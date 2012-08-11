@@ -5,7 +5,7 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		template <class T>
 		class ConstantBuffer
@@ -21,11 +21,7 @@ namespace TikiEngine
 
 			~ConstantBuffer()
 			{
-				if (buffer != 0)
-				{
-					buffer->Release();
-					buffer = 0;
-				}
+				SafeRelease(&buffer);
 			}
 			#pragma endregion
 

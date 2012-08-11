@@ -6,7 +6,7 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		#pragma region Class
 		IndexBuffer::IndexBuffer(Engine* engine)

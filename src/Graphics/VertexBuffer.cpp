@@ -7,9 +7,14 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		#pragma region Class
+		VertexBuffer::VertexBuffer(Engine* engine, UInt32 vertexSize)
+			: Buffer(engine, vertexSize)
+		{		
+		}
+
 		VertexBuffer::VertexBuffer(Engine* engine, VertexDeclaration* decl)
 			: Buffer(engine, decl->GetElementSize())
 		{

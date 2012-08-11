@@ -31,7 +31,7 @@ namespace TikiEngine
 			virtual void* GetDeviceContext() = 0;
 
 			virtual ViewPort* GetViewPort() = 0;
-			virtual IRenderTarget* GetBackBufferRenderTarget() = 0;
+			virtual IRenderTarget* GetScreenBuffer() = 0;
 
 			virtual void SetLightChanged(List<Light*>* lights) = 0;
 		};

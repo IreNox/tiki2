@@ -304,9 +304,6 @@
     <ClInclude Include="inc\Core\InitializationArgs.h">
       <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\EngineObject.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\InputDescription.h">
       <Filter>Headerdateien\Core\Descriptions</Filter>
     </ClInclude>
@@ -468,6 +465,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\ColorVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EngineObject.h">
+      <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

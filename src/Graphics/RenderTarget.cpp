@@ -8,32 +8,18 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		RenderTarget::RenderTarget(Engine* engine)
-			: IRenderTarget(engine), Texture(engine), renderTarget(0)
+			: IRenderTarget(engine), renderTarget(0), texture(0)
 		{
 		}
 
 		RenderTarget::RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget)
-			: IRenderTarget(engine), Texture(engine), renderTarget(renderTarget)
+			: IRenderTarget(engine), renderTarget(renderTarget), texture(0)
 		{
 			ID3D11Resource* res = 0;
 			renderTarget->GetResource(&res);
 
-			texture = (ID3D11Texture2D*)res;
-			texture->GetDesc(&desc);
-
-			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
-			ZeroMemory(&srDesc, sizeof(srDesc));
-
-			srDesc.Format = desc.Format;
-			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-			srDesc.Texture2D.MostDetailedMip = 0;
-			srDesc.Texture2D.MipLevels = 1;
-
-			DllMain::Device->CreateShaderResourceView(
-				texture,
-				&srDesc,
-				&textureResource
-			);
+			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
+			texture = new Texture(engine, tex);
 		}
 
 		RenderTarget::~RenderTarget()
@@ -42,62 +28,73 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
+		void RenderTarget::Apply(UInt32 slot)
+		{
+			DllMain::Module->SetRenderTarget(slot, renderTarget);
+		}
+
+		void RenderTarget::Clear(const Color& color)
+		{
+			DllMain::Context->ClearRenderTargetView(renderTarget, color.arr);
+		}
+
 		Int32 RenderTarget::GetWidth()
 		{
-			return Texture::GetWidth();
+			return texture->GetWidth();
 		}
 
 		Int32 RenderTarget::GetHeight()
 		{
-			return Texture::GetHeight();
+			return texture->GetHeight();
 		}
 
 		void RenderTarget::GetData(Int32 format, void** data)
 		{
-			Texture::GetData(format, data);
+			texture->GetData(format, data);
 		}
 
 		void RenderTarget::SetData(Int32 format, void* data, UInt32 dataLength)
 		{
-			Texture::SetData(format, data, dataLength);
+			texture->SetData(format, data, dataLength);
 		}
 
 		void* RenderTarget::GetNativeResource()
 		{
-			return Texture::GetNativeResource();
+			return texture->GetNativeResource();
 		}
 
 		bool RenderTarget::GetReady()
 		{
-			return Texture::GetReady() && (renderTarget != 0);
-		}
-		#pragma endregion
-
-		#pragma region Member - Object
-		UInt32 RenderTarget::AddRef()
-		{
-			Texture::AddRef();
-			return IRenderTarget::AddRef();
-		}
-
-		UInt32 RenderTarget::Release()
-		{
-			Texture::Release();
-			return IRenderTarget::Release();
+			return texture != 0 && texture->GetReady() && (renderTarget != 0);
 		}
 		#pragma endregion
 
 		#pragma region Member - Create
 		void RenderTarget::Create(UInt32 width, UInt32 height)
 		{
-			Texture::createInternal(width, height, D3D11_BIND_RENDER_TARGET);
-		}
-		#pragma endregion
+			if (this->GetReady()) return;
 
-		#pragma region Protected Member
-		void RenderTarget::loadFromStream(wcstring fileName, Stream* stream)
-		{
-			Texture::loadFromStream(fileName, stream);
+			ID3D11Texture2D* texture;
+
+			D3D11_TEXTURE2D_DESC desc;
+			ZeroMemory(&desc, sizeof(desc));
+
+			desc.Width = width;
+			desc.Height = height;
+			desc.MipLevels = 1;
+			desc.ArraySize = 1;
+			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			desc.SampleDesc.Count = 1;
+			desc.Usage = D3D11_USAGE_DEFAULT;
+			desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+			DllMain::Device->CreateTexture2D(
+				&desc,
+				0,
+				&texture
+			);
+						
+			this->texture = new Texture(engine, texture);
 
 			D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
 			rtDesc.Format = desc.Format;
@@ -110,10 +107,28 @@ namespace TikiEngine
 				&renderTarget
 			);
 		}
+		#pragma endregion
+
+		#pragma region Protected Member
+		void RenderTarget::loadFromStream(wcstring fileName, Stream* stream)
+		{
+			//texture->loadFromStream(fileName, stream);
+
+			//D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
+			//rtDesc.Format = desc.Format;
+			//rtDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+			//rtDesc.Texture2D.MipSlice = 0;
+
+			//DllMain::Device->CreateRenderTargetView(
+			//	texture->GetNativeResource(),
+			//	&rtDesc,
+			//	&renderTarget
+			//);
+		}
 
 		void RenderTarget::saveToStream(wcstring fileName, Stream* stream)
 		{
-			Texture::saveToStream(fileName, stream);
+			//texture->saveToStream(fileName, stream);
 		}
 		#pragma endregion
 	}

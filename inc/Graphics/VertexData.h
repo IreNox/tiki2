@@ -13,7 +13,7 @@ namespace TikiEngine
 {
 	namespace Vertices
 	{
-		using namespace TikiEngine::Buffer;
+		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Resources;
 
 		class VertexData : public EngineObject
@@ -49,7 +49,7 @@ namespace TikiEngine
 			Shader* shader;
 			VertexDeclaration* decl;
 
-			void setData(TikiEngine::Buffer::Buffer* buffer, void* data, UInt32 size, bool* allocated, UInt32* index, UInt32* count);
+			void setData(Buffer* buffer, void* data, UInt32 size, bool* allocated, UInt32* index, UInt32* count);
 		};
 	}
 }

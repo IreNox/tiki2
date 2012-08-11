@@ -4,7 +4,7 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		class IndexBuffer : public Buffer
 		{

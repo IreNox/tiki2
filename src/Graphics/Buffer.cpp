@@ -7,7 +7,7 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		#pragma region Class
 		Buffer::Buffer(Engine* engine, UInt32 size)

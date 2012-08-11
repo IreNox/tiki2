@@ -160,7 +160,7 @@ namespace TikiEngine
 					time,
 					DrawContext(
 						camera,
-						(camera->GetRenderTarget() ? camera->GetRenderTarget() : graphics->GetBackBufferRenderTarget())
+						(camera->GetRenderTarget() ? camera->GetRenderTarget() : graphics->GetScreenBuffer())
 					),
 					graphics
 				);

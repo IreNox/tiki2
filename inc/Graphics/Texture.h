@@ -16,6 +16,7 @@ namespace TikiEngine
 		public:
 
 			Texture(Engine* engine);
+			Texture(Engine* engine, ID3D11Texture2D* tex);
 			~Texture();
 
 			void Create(UInt32 width, UInt32 height);

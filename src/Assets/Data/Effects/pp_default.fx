@@ -1,4 +1,4 @@
-﻿/////////////
+/////////////
 // GLOBALS //
 /////////////
 
@@ -44,7 +44,9 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-    return tex.Sample(sam, input.UV);
+	float4 color = tex.Sample(sam, input.UV);
+
+    return color;
 }
 
 technique11 basic

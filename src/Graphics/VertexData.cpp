@@ -8,7 +8,7 @@ namespace TikiEngine
 {
 	namespace Vertices
 	{
-		using namespace TikiEngine::Buffer;
+		using namespace TikiEngine::Graphics;
 
 		#pragma region Class
 		VertexData::VertexData(Engine* engine)
@@ -151,7 +151,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member
-		void VertexData::setData(TikiEngine::Buffer::Buffer* buffer, void* data, UINT size, bool* allocated, UINT* index, UINT* count)
+		void VertexData::setData(Buffer* buffer, void* data, UINT size, bool* allocated, UINT* index, UINT* count)
 		{
 			UINT newCount = size / buffer->GetElementSize();
 

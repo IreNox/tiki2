@@ -7,7 +7,7 @@
 
 namespace TikiEngine
 {
-	namespace Buffer
+	namespace Graphics
 	{
 		using namespace Vertices;
 

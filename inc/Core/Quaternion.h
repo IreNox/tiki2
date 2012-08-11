@@ -44,8 +44,19 @@ public:
 	static Quaternion Lerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount);
 
 	static Quaternion CreateFromAxisAngle(const Vector3& axis, float angle);
+
+	/*!
+	 * @brief Create Quaternion from Euler angle
+	 *
+	 * @param yaw Y Axis
+	 * @param patch X Axis
+	 * @param roll Z Axis
+	 *
+	 * @return New Quaternion		
+	 */
 	static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll);
-		//static Quaternion CreateFromRotationMatrix(Matrix matrix)
+	
+	//static Quaternion CreateFromRotationMatrix(Matrix matrix)
 
 	bool operator == (const Quaternion& rhs);
 	bool operator != (const Quaternion& rhs);

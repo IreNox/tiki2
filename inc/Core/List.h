@@ -176,15 +176,25 @@ public:
 	#pragma endregion
 
 	#pragma region Indexer
-	T Get(int index)
+	T Get(const int index) const
 	{
 		return this->data[index];
 	}
 
-	T operator[](int index)
+	void Set(const int index, T value)
+	{
+		this->data[index] = value;
+	}
+
+	T operator[](const int index) const
 	{
 		return this->data[index];
 	}  
+
+	T& operator[](const int index)
+	{
+		return this->data[index];
+	} 
 	#pragma endregion
 
 	#pragma region Class - Enumerator
