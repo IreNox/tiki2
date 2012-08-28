@@ -29,7 +29,6 @@ namespace TikiEngine
 
 			ID3D11Buffer* buffer;
 
-			virtual void fillBufferDesc(D3D11_BUFFER_DESC* desc) = 0;
 			virtual ID3D11Buffer* createBuffer(UInt32 size, void* data) = 0;
 
 		private:
@@ -37,8 +36,6 @@ namespace TikiEngine
 			UINT bufferUsage;
 
 			UINT elementSize;
-
-			D3D11_BUFFER_DESC bufferDesc;
 
 			void writeBuffer(void* addData, UInt32 dataSize, UInt32 index);
 			void resizeBuffer(void* addData, UInt32 dataSize);

@@ -72,6 +72,16 @@ namespace TikiEngine
 
 			updateData();
 		}
+
+		bool MeshRenderer::GetDynamic()
+		{
+			return data->GetDynamic();
+		}
+
+		void MeshRenderer::SetDynamic(bool dynamic)
+		{
+			data->SetDynamic(dynamic);
+		}
 		#pragma endregion
 
 		#pragma region Member - Draw/Update

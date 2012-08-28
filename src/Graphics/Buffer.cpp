@@ -70,16 +70,6 @@ namespace TikiEngine
 				this->writeBuffer(data, size, this->bufferUsage);
 				this->bufferUsage += size;
 			}
-
-			bufferDesc = D3D11_BUFFER_DESC();
-			bufferDesc.ByteWidth = this->bufferSize;
-			bufferDesc.Usage = D3D11_USAGE_DEFAULT;
-			bufferDesc.BindFlags = 0;
-			bufferDesc.CPUAccessFlags = 0;
-			bufferDesc.MiscFlags = 0;
-			bufferDesc.StructureByteStride = this->elementSize;
-
-			this->fillBufferDesc(&bufferDesc);
 		}
 		#pragma endregion
 
@@ -152,6 +142,12 @@ namespace TikiEngine
 			this->bufferUsage += dataSize;
 
 			buffer = this->createBuffer(size, newData);
+
+			if (buffer == 0)
+			{
+				Console::WriteError("Can't create Buffer", 0);
+			}
+
 			delete(newData);
 		}
 		#pragma endregion

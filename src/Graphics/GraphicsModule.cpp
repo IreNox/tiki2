@@ -114,16 +114,16 @@ namespace TikiEngine
 			return matrixBuffer;
 		}
 
-		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl)
+		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl, bool dynamic)
 		{
-			ULONG hash = decl->GetDeclarationHash();
+			ULONG hash = decl->GetDeclarationHash() + dynamic;
 
 			if (!vertexBuffers.ContainsKey(hash))
 			{
 				vertexBuffers.Add(
-					hash, 
-					new VertexBuffer(engine, decl)
-					);
+					hash,
+					new VertexBuffer(engine, decl, dynamic)
+				);
 			}
 
 			return vertexBuffers.Get(hash);		

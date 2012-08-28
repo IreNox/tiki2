@@ -10,13 +10,13 @@ namespace TikiEngine
 	namespace Graphics
 	{
 		#pragma region Class
-		VertexBuffer::VertexBuffer(Engine* engine, UInt32 vertexSize)
-			: Buffer(engine, vertexSize)
+		VertexBuffer::VertexBuffer(Engine* engine, UInt32 vertexSize, bool dynamic)
+			: Buffer(engine, vertexSize), dynamic(dynamic)
 		{		
 		}
 
-		VertexBuffer::VertexBuffer(Engine* engine, VertexDeclaration* decl)
-			: Buffer(engine, decl->GetElementSize())
+		VertexBuffer::VertexBuffer(Engine* engine, VertexDeclaration* decl, bool dynamic)
+			: Buffer(engine, decl->GetElementSize()), dynamic(dynamic)
 		{
 		}
 
@@ -25,23 +25,25 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member
-		void VertexBuffer::fillBufferDesc(D3D11_BUFFER_DESC* desc)
-		{
-			desc->BindFlags = D3D11_BIND_VERTEX_BUFFER;
-		}
-		#pragma endregion
-
 		#pragma region Member - CreateBuffer
 		ID3D11Buffer* VertexBuffer::createBuffer(UINT size, void* data)
 		{
 			D3D11_BUFFER_DESC desc;
-			desc.Usage = D3D11_USAGE_DEFAULT;
 			desc.ByteWidth = size;
 			desc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-			desc.CPUAccessFlags = 0; //D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_FLAG::D3D11_CPU_ACCESS_WRITE;
 			desc.MiscFlags = 0;
 			desc.StructureByteStride = 0;
+
+			if (dynamic)
+			{
+				desc.Usage = D3D11_USAGE_DYNAMIC;
+				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			}
+			else
+			{
+				desc.Usage = D3D11_USAGE_DEFAULT;
+				desc.CPUAccessFlags = 0;
+			}
 
 			D3D11_SUBRESOURCE_DATA initData;
 			initData.pSysMem = data;

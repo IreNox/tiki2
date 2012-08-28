@@ -51,7 +51,7 @@ namespace TikiEngine
 			ConstantBuffer<Matrices>* GetMatrixBuffer();
 
 			IndexBuffer* GetIndexBuffer();
-			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl);
+			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
 
 			void SetLightChanged(List<Light*>* lights);
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);

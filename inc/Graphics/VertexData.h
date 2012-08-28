@@ -29,7 +29,12 @@ namespace TikiEngine
 			Mesh* GetMesh();
 			void SetData(Mesh* mesh, Shader* material);
 
+			bool GetDynamic();
+			void SetDynamic(bool dynamic);
+
 		private:
+
+			bool dynamic;
 
 			UInt32 indexIndex;
 			UInt32 indexVertex;

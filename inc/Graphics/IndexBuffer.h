@@ -13,7 +13,7 @@ namespace TikiEngine
 			~IndexBuffer();
 
 		protected:
-			void fillBufferDesc(D3D11_BUFFER_DESC* desc);
+
 			ID3D11Buffer* createBuffer(UINT size, void* data);
 		};
 	}

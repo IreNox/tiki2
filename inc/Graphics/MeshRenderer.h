@@ -30,6 +30,9 @@ namespace TikiEngine
 			void SetMesh(Mesh* mesh);
 			void SetMaterial(Material* material);
 
+			bool GetDynamic();
+			void SetDynamic(bool dynamic);
+
 			bool GetReady();
 
 		private:

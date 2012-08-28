@@ -12,7 +12,7 @@ namespace TikiEngine
 
 		#pragma region Class
 		VertexData::VertexData(Engine* engine)
-			: EngineObject(engine), mesh(0), decl(0), shader(0), indexBuffer(0), vertexBuffer(0), allocatedIndex(false), allocatedVertex(false)
+			: EngineObject(engine), mesh(0), decl(0), shader(0), indexBuffer(0), vertexBuffer(0), allocatedIndex(false), allocatedVertex(false), dynamic(false)
 		{
 		}
 		
@@ -23,6 +23,26 @@ namespace TikiEngine
 			if (shader != 0) shader->Release();
 			if (indexBuffer != 0) indexBuffer->Release();
 			if (vertexBuffer != 0) vertexBuffer->Release();
+		}
+		#pragma endregion
+
+		#pragma region Member
+		bool VertexData::GetDynamic()
+		{
+			return dynamic;
+		}
+
+		void VertexData::SetDynamic(bool dynamic)
+		{
+			this->dynamic = dynamic;
+
+			if (vertexBuffer != 0)
+			{
+				vertexBuffer->Release();
+
+				vertexBuffer = DllMain::Module->GetVertexBuffer(decl, dynamic);
+				vertexBuffer->AddRef();
+			}
 		}
 		#pragma endregion
 
@@ -102,7 +122,7 @@ namespace TikiEngine
 				indexBuffer = DllMain::Module->GetIndexBuffer();
 				indexBuffer->AddRef();
 
-				vertexBuffer = DllMain::Module->GetVertexBuffer(decl);
+				vertexBuffer = DllMain::Module->GetVertexBuffer(decl, dynamic);
 				vertexBuffer->AddRef();
 			}
 

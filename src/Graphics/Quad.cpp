@@ -31,7 +31,7 @@ namespace TikiEngine
 		{
 			UInt32 temp;
 
-			vertexBuffer = new VertexBuffer(engine, sizeof(PostProcessVertex));
+			vertexBuffer = new VertexBuffer(engine, sizeof(PostProcessVertex), false);
 			vertexBuffer->Allocate(
 				Quad::quadVertices,
 				6,

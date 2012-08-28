@@ -15,7 +15,7 @@ namespace TikiEngine
 			renderer.Add(PT_LineList, engine->librarys->CreateComponent<IMeshRenderer>(this));
 			renderer.Add(PT_PointList, engine->librarys->CreateComponent<IMeshRenderer>(this));
 			renderer.Add(PT_TriangleList, engine->librarys->CreateComponent<IMeshRenderer>(this));
-
+			
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_color.fx");
 
 			List<IMeshRenderer*> values = renderer.GetValues();
@@ -23,6 +23,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < values.Count())
 			{
+				values[i]->SetDynamic(true);
 				values[i]->SetMaterial(mat);
 
 				i++;
