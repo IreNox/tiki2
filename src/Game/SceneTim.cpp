@@ -36,8 +36,8 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Normals.fbx");
-			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\jumppad_diff.jpg");
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/balls_test2.fbx");
+			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
@@ -56,14 +56,14 @@ namespace TikiEngine
 			go->Release();
 
 			light = new LightObject(engine);
-			light->GetLight()->SetColor(Color::Green);
-			light->GetLight()->SetRange(10);
+			light->GetLight()->SetColor(Color(0.8f, 0.8f, 0.8f, 0.8f));
+			light->GetLight()->SetRange(7.5f);
 
 			this->AddElement(light);
 			light->Release();
 
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 5.0f;
+			go->PRS.Position.Z = 40.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
 			go->AddComponent(fly);
@@ -154,9 +154,9 @@ namespace TikiEngine
 		void SceneTim::Update(const UpdateArgs& args)
 		{
 			light->PRS.Position = Vector3(
-				sinf((float)args.Time.TotalTime / 5) * 5,
+				sinf((float)args.Time.TotalTime / 5) * 50,
 				0,
-				cosf((float)args.Time.TotalTime / 5) * 5
+				cosf((float)args.Time.TotalTime / 5) * 50
 			);
 
 			Scene::Update(args);

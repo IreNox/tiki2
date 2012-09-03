@@ -5,7 +5,7 @@ struct Light
 {
 	float3 Position;
 	float3 Direction;
-	float3 Color;
+	float4 Color;
 	float Range;
 };
 
@@ -93,13 +93,13 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	{
 		for (float i = 0; i < LightsCount; i++)
 		{
-			float lighting = dot(
-				input.Normal,
-				normalize(Lights[i].Position - input.WorldPos)
-			);
-	
-			termLight.rgb += Lights[i].Color * lighting;
-		}
+			float3 lightDir = normalize(Lights[i].Position - input.WorldPos);
+
+			float lighting = dot(input.Normal, lightDir);	
+			lighting *= (Lights[i].Range / dot(lightDir, lightDir));
+
+			termLight += Lights[i].Color * lighting;
+		}		
 	
 		termDiffuse *= termLight;
 	}

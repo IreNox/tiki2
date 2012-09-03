@@ -10,7 +10,7 @@ namespace TikiEngine
 		{
 			Vector3 Position;
 			Vector3 Direction;
-			Vector3 Color;
+			Vector4 Color;
 			float Range;
 		};
 

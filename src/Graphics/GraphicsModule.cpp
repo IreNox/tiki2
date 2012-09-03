@@ -145,7 +145,7 @@ namespace TikiEngine
 				Light* l = lights->Get(i);
 
 				buf->Data[i].Range = l->GetRange();
-				buf->Data[i].Color = l->GetColor().ToVector3();
+				buf->Data[i].Color = l->GetColor().ToVector4();
 				buf->Data[i].Position = l->GetGameObject()->PRS.Position;
 				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation * Vector3::ForwardRH;
 

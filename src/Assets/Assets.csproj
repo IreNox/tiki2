@@ -35,16 +35,22 @@
     <None Include="Data\Effects\pp_default.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Resources\Dice2.fbx">
+    <None Include="Data\Resources\Models\balls_test.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Resources\jumppad_diff.tga">
+    <None Include="Data\Resources\Models\balls_test2.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Resources\jumppad_lowpoly.FBX">
+    <None Include="Data\Resources\Models\Dice2.fbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Resources\Normals.fbx">
+    <None Include="Data\Resources\Textures\jumppad_diff.tga">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Resources\Models\jumppad_lowpoly.FBX">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Resources\Models\Normals.fbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
@@ -52,13 +58,13 @@
     <Content Include="Data\Effects\os_color.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Resources\box_diffuse.jpg">
+    <Content Include="Data\Resources\Textures\box_diffuse.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Resources\DiceMap.jpg">
+    <Content Include="Data\Resources\Textures\DiceMap.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Data\Resources\jumppad_diff.jpg">
+    <Content Include="Data\Resources\Textures\jumppad_diff.jpg">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
