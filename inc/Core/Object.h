@@ -6,35 +6,11 @@ class Object
 {
 public:
 
-	Object()
-		: refCount(1)
-	{	
-	}
+	Object();
+	virtual ~Object();
 
-	virtual ~Object()
-	{
-		//if (refCount > 0)
-		//{
-		//	throw "Used object destroyed.";
-		//}
-	}
-
-	UInt32 AddRef()
-	{
-		return ++refCount;
-	}
-
-	UInt32 Release()
-	{
-		refCount--;
-
-		if (refCount == 0)
-		{
-			delete this;
-		}
-
-		return refCount;
-	}
+	UInt32 AddRef();
+	UInt32 Release();
 
 private:
 

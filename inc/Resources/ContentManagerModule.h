@@ -36,6 +36,9 @@ namespace TikiEngine
 			wstring workingPath;
 
 			FbxLoader *fbxLoader;
+
+			//Dictionary<UInt32, Object*> loadedResources;
+
 		};
 	}
 }

@@ -39,6 +39,7 @@
     <ClCompile Include="src\Core\Mesh.cpp" />
     <ClCompile Include="src\Core\MeshIndexed.cpp" />
     <ClCompile Include="src\Core\MeshObject.cpp" />
+    <ClCompile Include="src\Core\Object.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
     <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />

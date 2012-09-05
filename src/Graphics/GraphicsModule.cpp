@@ -38,9 +38,21 @@ namespace TikiEngine
 				swapChain->SetFullscreenState(false, NULL);
 			}
 
+			SafeRelease(&indexBuffer);
+
+			auto values = vertexBuffers.GetValues();
+			for (UInt32 i = 0; i < values.Count(); i++)
+			{
+				SafeRelease(&values[i]);
+			}
+
 			SafeRelease(&rtScreen);
 			SafeRelease(&rtBackBuffer);
 			SafeRelease(&quadPostProcess);
+
+			SafeDelete(&matrixBuffer);
+			SafeDelete(&lightBuffer);
+
 			SafeRelease(&rasterState);
 			SafeRelease(&depthStencilView);
 			SafeRelease(&depthStencilState);
@@ -49,13 +61,6 @@ namespace TikiEngine
 			SafeRelease(&deviceContext);
 			SafeRelease(&device);
 			SafeRelease(&swapChain);
-			SafeRelease(&indexBuffer);
-
-			auto values = vertexBuffers.GetValues();
-			for (UInt32 i = 0; i < values.Count(); i++)
-			{
-				delete(values[i]);
-			}
 
 			inited = false;
 		}

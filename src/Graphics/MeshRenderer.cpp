@@ -14,8 +14,8 @@ namespace TikiEngine
 
 		MeshRenderer::~MeshRenderer()
 		{
-			if (mesh != 0) mesh->Release();
-			if (material != 0) material->Release();
+			SafeRelease(&mesh);
+			SafeRelease(&material);
 
 			delete(data);
 		}
@@ -41,34 +41,20 @@ namespace TikiEngine
 
 		void MeshRenderer::SetMesh(Mesh* mesh)
 		{
-			if (this->mesh != 0)
-			{
-				this->mesh->Release();
-			}
+			SafeRelease(&this->mesh);
 
 			this->mesh = mesh;
-
-			if (this->mesh != 0)
-			{
-				this->mesh->AddRef();
-			}
+			SafeAddRef(&this->mesh);
 
 			updateData();
 		}
 
 		void MeshRenderer::SetMaterial(Material* material)
 		{
-			if (this->material != 0)
-			{
-				this->material->Release();
-			}
+			SafeRelease(&this->material);
 
 			this->material = material;
-
-			if (this->material != 0)
-			{
-				this->material->AddRef();
-			}
+			SafeAddRef(&this->material);
 
 			updateData();
 		}

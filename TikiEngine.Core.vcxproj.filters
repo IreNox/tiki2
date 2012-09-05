@@ -212,6 +212,9 @@
     <ClCompile Include="src\Core\ColorVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Object.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">

@@ -24,6 +24,8 @@ namespace TikiEngine
 
 		RenderTarget::~RenderTarget()
 		{
+			SafeRelease(&renderTarget);
+			SafeRelease(&texture);
 		}
 		#pragma endregion
 

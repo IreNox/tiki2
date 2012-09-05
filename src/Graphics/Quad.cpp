@@ -42,6 +42,7 @@ namespace TikiEngine
 		Quad::~Quad()
 		{
 			SafeRelease(&shader);
+			SafeRelease(&inputLayout);
 			SafeRelease(&renderTarget);
 			SafeRelease(&vertexBuffer);
 		}

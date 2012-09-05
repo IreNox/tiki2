@@ -13,6 +13,7 @@ namespace TikiEngine
 
 		MeshIndexed::~MeshIndexed()
 		{
+			SafeDelete(&indexData);
 		}
 		#pragma endregion
 
@@ -26,11 +27,7 @@ namespace TikiEngine
 		#pragma region Member - Get/Set
 		void MeshIndexed::SetIndexData(UInt32* data, UInt32 count)
 		{
-			if (indexData != 0)
-			{
-				delete(indexData);
-				indexData = 0;
-			}
+			SafeDelete(&indexData);
 
 			indexData = new UInt32[count];
 			indexCount = count;

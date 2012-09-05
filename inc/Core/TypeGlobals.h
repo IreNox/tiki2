@@ -12,6 +12,16 @@ inline void SafeAddRef(T** ptr)
 }
 
 template <class T>
+inline void SafeDelete(T** ptr)
+{
+	if (*ptr)
+	{
+		delete(*ptr);
+		(*ptr) = 0;
+	}
+}
+
+template <class T>
 inline void SafeRelease(T** ptr)
 {
 	if (*ptr)

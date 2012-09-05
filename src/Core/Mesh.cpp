@@ -14,11 +14,7 @@ namespace TikiEngine
 
 		Mesh::~Mesh()
 		{
-			if (this->vertexData != 0)
-			{
-				delete(this->vertexData);
-				this->vertexData = 0;
-			}	
+			SafeDelete(&vertexData);
 		}
 		#pragma endregion
 
@@ -37,11 +33,7 @@ namespace TikiEngine
 		#pragma region Member - Get/Set
 		void Mesh::SetVertexData(void* data, UInt32 dataLength)
 		{
-			if (vertexData != 0)
-			{
-				delete(vertexData);
-				vertexData = 0;
-			}
+			SafeDelete(&vertexData);
 
 			vertexData = new Byte[dataLength];
 			vertexDataLength = dataLength;

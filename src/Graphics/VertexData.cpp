@@ -18,11 +18,11 @@ namespace TikiEngine
 		
 		VertexData::~VertexData()
 		{
-			if (mesh != 0) mesh->Release();
-			if (decl != 0) decl->Release();
-			if (shader != 0) shader->Release();
-			if (indexBuffer != 0) indexBuffer->Release();
-			if (vertexBuffer != 0) vertexBuffer->Release();
+			SafeRelease(&mesh);
+			SafeRelease(&decl);
+			SafeRelease(&shader);
+			SafeRelease(&indexBuffer);
+			SafeRelease(&vertexBuffer);
 		}
 		#pragma endregion
 
@@ -101,11 +101,11 @@ namespace TikiEngine
 
 			if (mesh != inMesh || shader != inShader)
 			{
-				if (mesh != 0) mesh->Release();
-				if (decl != 0) decl->Release();
-				if (shader != 0) shader->Release();
-				if (indexBuffer != 0) indexBuffer->Release();
-				if (vertexBuffer != 0) vertexBuffer->Release();
+				SafeRelease(&mesh);
+				SafeRelease(&decl);
+				SafeRelease(&shader);
+				SafeRelease(&indexBuffer);
+				SafeRelease(&vertexBuffer);
 
 				mesh = inMesh;
 				mesh->AddRef();

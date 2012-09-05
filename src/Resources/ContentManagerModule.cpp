@@ -18,9 +18,7 @@ namespace TikiEngine
 		{
 			wchar_t cd[MAX_PATH];
 			_wgetcwd(cd, MAX_PATH);
-			workingPath = cd;
-
-			
+			workingPath = cd;			
 		}
 
 		ContentManagerModule::~ContentManagerModule()
@@ -46,9 +44,9 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
-			//delete fbxLoader;
-			//fbxLoader = 0;
-			SafeRelease(&this->fbxLoader);
+			SafeRelease(&fbxLoader);
+			
+			//auto objects = loadedResources.GetValues();
 		}
 		#pragma endregion
 
@@ -76,8 +74,7 @@ namespace TikiEngine
 			{
 				value = engine->librarys->CreateResource<IPhysicsMaterial>();
 			}
-
-
+			
 			if (loadFile && value != 0)
 			{
 				value->LoadFromFile(fileName.c_str());

@@ -14,7 +14,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA
-	//_CrtSetBreakAlloc(536);
+	_CrtSetBreakAlloc(32904);
 
 	{
 		EngineDescription desc;
@@ -33,7 +33,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			if (name == L"tim.boden" || name == L"Der Hans von Morgen")
+			if (name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim")
 			{
 				engine->scene = new SceneTim(engine);
 			}
@@ -52,12 +52,15 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			engine->Run();
 		}
-
-
+		
 		delete(engine);
 	}
 
+#if _DEBUG
+	OutputDebugString(L"==Memory Leaks Begin==\n");
 	_CrtDumpMemoryLeaks();
+	OutputDebugString(L"==Memory Leaks End==\n");
+#endif
 
 	return 0;
 }
