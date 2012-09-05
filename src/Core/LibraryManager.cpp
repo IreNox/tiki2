@@ -58,19 +58,21 @@ namespace TikiEngine
 
 		void LibraryManager::Dispose()
 		{
-			List<TikiInfo*> infos = loadedLibrarys.GetValues();
+			List<TikiInfo*>* infos = loadedLibrarys.GetValues();
 
 			UInt32 i = 0;			
 			TikiInfo* info = 0;
 
-			while (i < infos.Count())
+			while (i < infos->Count())
 			{
-				info = infos[i];
+				info = infos->Get(i);
 
 				FreeLibrary(info->LibraryHandle);
 
 				i++;
 			}
+
+			delete(infos);
 		}
 
 		TikiInfo* LibraryManager::loadLibrary(Engine* engine, wstring libraryName)

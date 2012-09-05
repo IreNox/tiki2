@@ -18,8 +18,8 @@ public:
 
 	virtual bool TryGetValue(TKey key, TValue* value) = 0;
 
-	virtual List<TKey> GetKeys() = 0;
-	virtual List<TValue> GetValues() = 0;
+	virtual List<TKey>* GetKeys() = 0;
+	virtual List<TValue>* GetValues() = 0;
 
 	//virtual TValue operator[](TKey key) = 0;
 };

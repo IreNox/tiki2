@@ -81,7 +81,7 @@ public:
 	#pragma endregion
 
 	#pragma region Member - Get Lists
-	List<TKey> GetKeys()
+	List<TKey>* GetKeys()
 	{
 		List<TKey>* list = new List<TKey>();
 
@@ -94,10 +94,10 @@ public:
 
 		list->IsReadOnly = true;
 
-		return *list;
+		return list;
 	}
 
-	List<TValue> GetValues()
+	List<TValue>* GetValues()
 	{
 		List<TValue>* list = new List<TValue>();
 
@@ -110,7 +110,7 @@ public:
 
 		list->IsReadOnly = true;
 
-		return *list;
+		return list;
 	}  
 	#pragma endregion
 

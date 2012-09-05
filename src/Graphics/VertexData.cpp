@@ -70,9 +70,8 @@ namespace TikiEngine
 				);
 			}
 
-			DllMain::Context->IASetPrimitiveTopology(
-				D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST //(D3D11_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology()
-			);
+			D3D11_PRIMITIVE_TOPOLOGY pt = (D3D11_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology();
+			DllMain::Context->IASetPrimitiveTopology(pt);
 
 			decl->Apply();
 			shader->Apply();

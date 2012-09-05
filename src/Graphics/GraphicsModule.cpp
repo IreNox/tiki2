@@ -41,10 +41,13 @@ namespace TikiEngine
 			SafeRelease(&indexBuffer);
 
 			auto values = vertexBuffers.GetValues();
-			for (UInt32 i = 0; i < values.Count(); i++)
+			for (UInt32 i = 0; i < values->Count(); i++)
 			{
-				SafeRelease(&values[i]);
+				VertexBuffer* buffer = values->Get(i);
+
+				SafeRelease(&buffer);
 			}
+			delete(values);
 
 			SafeRelease(&rtScreen);
 			SafeRelease(&rtBackBuffer);

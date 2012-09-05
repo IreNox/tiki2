@@ -97,7 +97,7 @@ namespace TikiEngine
 			vertexBuffer->Apply(0);
 
 			DllMain::Context->IASetInputLayout(inputLayout);
-
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			DllMain::Context->Draw(6, 0);
 		}
 		#pragma endregion

@@ -15,16 +15,16 @@ namespace TikiEngine
 			renderer.Add(PT_LineList, engine->librarys->CreateComponent<IMeshRenderer>(this));
 			renderer.Add(PT_PointList, engine->librarys->CreateComponent<IMeshRenderer>(this));
 			renderer.Add(PT_TriangleList, engine->librarys->CreateComponent<IMeshRenderer>(this));
-			
+
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_color.fx");
 
-			List<IMeshRenderer*> values = renderer.GetValues();
+			List<IMeshRenderer*>* values = renderer.GetValues();
 
 			UInt32 i = 0;
-			while (i < values.Count())
+			while (i < values->Count())
 			{
-				values[i]->SetDynamic(true);
-				values[i]->SetMaterial(mat);
+				values->Get(i)->SetDynamic(true);
+				values->Get(i)->SetMaterial(mat);
 
 				i++;
 			}
@@ -36,33 +36,37 @@ namespace TikiEngine
 
 		void DebugPhysicRenderer::Draw(const DrawArgs& args)
 		{
-			List<IMeshRenderer*> values = renderer.GetValues();
-		
+			List<IMeshRenderer*>* values = renderer.GetValues();
+
 			UInt32 i = 0;
-			while (i < values.Count())
+			while (i < values->Count())
 			{
-				values[i]->Draw(args);
+				values->Get(i)->Draw(args);
 
 				i++;
 			}
+
+			delete(values);
 		}
 
 		void DebugPhysicRenderer::Update(const UpdateArgs& args)
 		{
 			engine->physics->FillDebugMesh(&meshes);
-			
-			List<PrimitiveTopologies> keys = meshes.GetKeys();
+
+			List<PrimitiveTopologies>* keys = meshes.GetKeys();
 
 			UInt32 i = 0;
-			while (i < keys.Count())
+			while (i < keys->Count())
 			{
-				IMeshRenderer* render = renderer.Get(keys[i]);
+				IMeshRenderer* render = renderer.Get(keys->Get(i));
 
-				render->SetMesh(meshes.Get(keys[i]));
+				render->SetMesh(meshes.Get(keys->Get(i)));
 				render->Update(args);
 
 				i++;
 			}
+
+			delete(keys);
 		}
 	}
 }
