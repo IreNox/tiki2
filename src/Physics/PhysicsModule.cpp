@@ -71,6 +71,7 @@ namespace TikiEngine
 			physicsSDK->setParameter(NX_SKIN_WIDTH, 0.025f);
 			physicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1.0f);
 			physicsSDK->setParameter(NX_VISUALIZE_COLLISION_SHAPES, 1);
+			physicsSDK->setParameter(NX_VISUALIZE_ACTOR_AXES, 1);
 			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_POINT, 1);
 			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_NORMAL, 1);
 			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_FORCE, 1);
@@ -239,8 +240,8 @@ namespace TikiEngine
 		void PhysicsModule::debugFillVertex(ColorVertex& vertex, const NxVec3& pos, const NxU32& color)
 		{
 			vertex.Position[0] = pos.x;
-			vertex.Position[1] = pos.z;
-			vertex.Position[2] = pos.y;
+			vertex.Position[1] = pos.y;
+			vertex.Position[2] = pos.z;
 			vertex.Color[0]	= (float)((color>>16)&0xff)/255.0f;
 			vertex.Color[1]	= (float)((color>>8)&0xff)/255.0f;
 			vertex.Color[2]	= (float)(color&0xff)/255.0f;

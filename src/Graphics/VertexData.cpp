@@ -176,9 +176,16 @@ namespace TikiEngine
 
 			if (*allocated)
 			{
-				if (newCount != *count)
+				if (newCount > *count)
 				{
-					throw "SetData -> new size not equals";
+					UInt32 tmp = 0;
+					UInt32 addCount = newCount - *count;
+
+					buffer->Allocate(
+						data,
+						addCount,
+						&tmp
+					);
 				}
 
 				buffer->Copy(

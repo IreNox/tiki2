@@ -112,29 +112,29 @@ namespace TikiEngine
 			char* newData = new char[size];
 			ZeroMemory(newData, size);
 
-			if (buffer != NULL)
-			{
-				D3D11_MAPPED_SUBRESOURCE mapped;
-				mapped.pData = 0;
-				mapped.RowPitch = 0;
-				mapped.DepthPitch = 0;
+			//if (buffer != NULL)
+			//{
+			//	D3D11_MAPPED_SUBRESOURCE mapped;
+			//	mapped.pData = 0;
+			//	mapped.RowPitch = 0;
+			//	mapped.DepthPitch = 0;
 
-				DllMain::Context->Map(
-					buffer,
-					0,
-					D3D11_MAP_READ,
-					0,
-					&mapped
-				);
+			//	DllMain::Context->Map(
+			//		buffer,
+			//		0,
+			//		D3D11_MAP_READ,
+			//		0,
+			//		&mapped
+			//	);
 
-				index = this->bufferUsage;
-				memcpy(newData, mapped.pData, this->bufferUsage);
+			//	index = this->bufferUsage;
+			//	memcpy(newData, mapped.pData, this->bufferUsage);
 
-				DllMain::Context->Unmap(buffer, 0);
+			//	DllMain::Context->Unmap(buffer, 0);
 
-				buffer->Release();
-				buffer = 0;
-			}
+			//	buffer->Release();
+			//	buffer = 0;
+			//}
 
 			memcpy(newData + index, addData, dataSize);
 			

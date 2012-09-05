@@ -24,7 +24,7 @@ Object::~Object()
 UInt32 Object::AddRef()
 {
 #if _DEBUG
-	wstring text = L"AddRef: " + StringAtoW(typeid(this).name());
+	wstring text = L"AddRef: " + StringAtoW(typeid(this).name()) + L"\n";
 	OutputDebugString(text.c_str());
 #endif
 
@@ -34,7 +34,7 @@ UInt32 Object::AddRef()
 UInt32 Object::Release()
 {
 #if _DEBUG
-	wstring text = L"Release: " + StringAtoW(typeid(this).name());
+	wstring text = L"Release: " + StringAtoW(typeid(this).name()) + L"\n";
 	OutputDebugString(text.c_str());
 #endif
 

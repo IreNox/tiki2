@@ -48,11 +48,11 @@ namespace TikiEngine
 
 			// init
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			box->SetMaterial(0); // 0 = default material	
-			box->SetCenter(Vector3(0, 0, 0));
+			box->SetMaterial(material->GetIndex()); // 0 = default material	
+			box->SetCenter(Vector3(0, 5, 0));
 			box->SetSize(Vector3(1, 1, 1));
-			box->SetDynamic(false);
-			//box->GetRigidBody()->SetKinematic(true);
+			box->SetDynamic(true);
+			box->GetRigidBody()->SetKinematic(true);
 			this->AddElement(go);
 			go->Release();
 
@@ -135,8 +135,9 @@ namespace TikiEngine
 				Quaternion q3 = q3.CreateFromAxisAngle(Vector3(0, 0, 1), eulerAngles.Z);
 
 				// PhysX does its rotations in a right-handed manner. 
-				box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
+				//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
 				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
+				box->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, args.Time.ElapsedTime));
 			}
 
 			Scene::Update(args);

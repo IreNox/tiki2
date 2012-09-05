@@ -104,7 +104,7 @@ namespace TikiEngine
 			// Create Box shape description.
 			NxBoxShapeDesc boxDesc;
 			boxDesc.dimensions = size;
-			boxDesc.localPose.t = NxVec3(0, size.y, 0);
+			//boxDesc.localPose.t = NxVec3(0, size.y, 0);
 
 			// Create material from index
 			boxDesc.materialIndex = materialIndex;
