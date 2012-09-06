@@ -23,8 +23,10 @@ namespace TikiEngine
 			 */
 			ViewPort ViewPort;
 
+			UInt32 AdapterIndex;
+
 			GaphicsDescription()
-				: Width(800), Height(600)
+				: Width(800), Height(600), AdapterIndex(0)
 			{
 			}
 		};

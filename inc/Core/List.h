@@ -39,12 +39,12 @@ public:
 	#pragma endregion
 
 	#pragma region Member
-	UInt32 Count()
+	UInt32 Count() const
 	{
 		return this->lengthData + 1;
 	}
 
-	int IndexOf(T item)
+	int IndexOf(T item) const
 	{
 		for (int i = 0; i < this->lengthData; i++)
 		{
@@ -59,12 +59,12 @@ public:
 		this->lengthData = -1;
 	}
 
-	bool Contains(T item)
+	bool Contains(T item) const
 	{
 		return (this->IndexOf(item) != -1);
 	}
 
-	T* ToArray()
+	T* ToArray() const
 	{
 		UInt32 c = lengthData + 1; 
 		T* arr = new T[c];
@@ -169,7 +169,7 @@ public:
 	#pragma endregion
 
 	#pragma region Member - Enumerator
-	IEnumerator<T>* GetEnumerator()
+	IEnumerator<T>* GetEnumerator() const
 	{
 		return new Enumerator<T>(this);
 	}
@@ -202,7 +202,7 @@ public:
 	class Enumerator : public IEnumerator<T>
 	{
 	public:
-		Enumerator(List<T>* list)
+		Enumerator(const List<T>* list)
 			: list(list), index(0)
 		{
 		}
@@ -211,7 +211,7 @@ public:
 		{
 		};
 
-		T Current()
+		T Current() const
 		{
 			return list->Get(index);
 		}
@@ -234,7 +234,7 @@ public:
 
 	private:
 		UInt32 index;
-		List<T>* list;
+		const List<T>* list;
 	};
 	#pragma endregion
 

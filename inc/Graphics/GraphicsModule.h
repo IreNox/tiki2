@@ -53,6 +53,12 @@ namespace TikiEngine
 			IndexBuffer* GetIndexBuffer();
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
 
+			void AddPostProcess(PostProcess* postProcess);
+			void RemovePostProcess(PostProcess* postProcess);
+
+			void AddScreenSizeRenderTarget(RenderTarget* target);
+			void RemoveScreenSizeRenderTarget(RenderTarget* target);
+
 			void SetLightChanged(List<Light*>* lights);
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 
@@ -61,6 +67,10 @@ namespace TikiEngine
 		private:
 
 			bool inited;
+			GameTime currentTime;
+
+			IDXGIFactory* factory;
+			IDXGIAdapter* adapter;
 
 			ID3D11Device* device;
 			ID3D11DeviceContext* deviceContext;
@@ -73,7 +83,7 @@ namespace TikiEngine
 			ID3D11DepthStencilState* depthStencilState;
 
 			ViewPort viewPort; 
-			ID3D11RasterizerState* rasterState;
+			ID3D11RasterizerState* rasterStateBackfaces;
 
 			Color clearColor;
 			ConstantBuffer<Lights>* lightBuffer;
@@ -87,10 +97,15 @@ namespace TikiEngine
 			RenderTarget* rtScreen;
 			RenderTarget* rtBackBuffer;
 
-			Quad* quadPostProcess;
+			PostProcess* defaultPostProcess;
+			List<PostProcess*> postProcesses;
+			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
 
+			bool initSelectAdapter(EngineDescription& desc);
 			bool initDirectX(EngineDescription& desc);
 			bool initEngine(EngineDescription& desc);
+
+			void drawPostProcess(PostProcess* postProcess);
 
 		};
 	}

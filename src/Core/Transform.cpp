@@ -18,7 +18,7 @@ namespace TikiEngine
 		Matrix scale = Matrix::CreateScaleMatrix(this->Scale);
 		Matrix trans = Matrix::CreateTranslation(this->Position);
 
-		*worldMatrix = rot * scale * trans;
+		*worldMatrix = scale * rot * trans;
 	}
 
 	Vector3 Transform::GetForward()

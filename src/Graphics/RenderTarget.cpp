@@ -24,6 +24,8 @@ namespace TikiEngine
 
 		RenderTarget::~RenderTarget()
 		{
+			DllMain::Module->RemoveScreenSizeRenderTarget(this);
+
 			SafeRelease(&renderTarget);
 			SafeRelease(&texture);
 		}
@@ -108,6 +110,16 @@ namespace TikiEngine
 				&rtDesc,
 				&renderTarget
 			);
+		}
+
+		void RenderTarget::CreateScreenSize()
+		{
+			this->Create(
+				DllMain::Module->GetViewPort()->Width,
+				DllMain::Module->GetViewPort()->Height
+			);
+
+			DllMain::Module->AddScreenSizeRenderTarget(this);
 		}
 		#pragma endregion
 

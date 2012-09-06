@@ -21,6 +21,12 @@
     <Filter Include="Headerdateien\Scripts">
       <UniqueIdentifier>{354f881f-7a4e-445d-bb8b-0ac05e1c04d1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Effects">
+      <UniqueIdentifier>{71a92541-ad33-4dde-a8d2-a1a48b14512a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Effects">
+      <UniqueIdentifier>{11762833-c888-4f3a-bab3-a3f9c86d6d26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Game\Box.h">
@@ -40,6 +46,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\CameraFly.h">
       <Filter>Headerdateien\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PPBlur.h">
+      <Filter>Headerdateien\Effects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\CameraFly.cpp">
       <Filter>Quelldateien\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PPBlur.cpp">
+      <Filter>Quelldateien\Effects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

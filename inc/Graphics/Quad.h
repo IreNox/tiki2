@@ -26,15 +26,14 @@ namespace TikiEngine
 			IShader* GetShader();
 			void SetShader(IShader* shader);
 
-			IRenderTarget* GetRenderTerget();
-			void SetRenderTarget(IRenderTarget* renderTarget);
+			void SetInput(const Dictionary<IRenderTarget*, string>* input);
+			void SetOutput(const Dictionary<IRenderTarget*, UInt32>* output);
 
 			void Draw();
 
 		private:
 
 			Shader* shader;
-			RenderTarget* renderTarget;
 
 			VertexBuffer* vertexBuffer;
 

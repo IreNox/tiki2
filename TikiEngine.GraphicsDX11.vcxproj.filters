@@ -97,9 +97,6 @@
     <ClInclude Include="inc\Graphics\Shader.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\d3dx11effect.h">
-      <Filter>Headerdateien\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\VertexData.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
@@ -125,6 +122,9 @@
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Quad.h">
+      <Filter>Headerdateien\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\d3dx11effect.h">
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
   </ItemGroup>

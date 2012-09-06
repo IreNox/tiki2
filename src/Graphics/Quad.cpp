@@ -26,8 +26,8 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Class
-		Quad::Quad(Engine* Engine)
-			: EngineObject(engine), vertexBuffer(0), shader(0), inputLayout(0), renderTarget(0)
+		Quad::Quad(Engine* engine)
+			: EngineObject(engine), vertexBuffer(0), shader(0), inputLayout(0)
 		{
 			UInt32 temp;
 
@@ -43,12 +43,11 @@ namespace TikiEngine
 		{
 			SafeRelease(&shader);
 			SafeRelease(&inputLayout);
-			SafeRelease(&renderTarget);
 			SafeRelease(&vertexBuffer);
 		}
 		#pragma endregion
 
-		#pragma region Member - Get/Set
+		#pragma region Member - Shader
 		IShader* Quad::GetShader()
 		{
 			return shader;
@@ -74,30 +73,43 @@ namespace TikiEngine
 				);
 			}
 		}
+		#pragma endregion
 
-		IRenderTarget* Quad::GetRenderTerget()
+		#pragma region Member - RenderTargets
+		void Quad::SetInput(const Dictionary<IRenderTarget*, string>* input)
 		{
-			return renderTarget;
+			UInt32 i = 0;
+			while (i < input->Count())
+			{
+				auto kvp  = input->Get(i);
+				shader->SetTexture(kvp.GetValue(), kvp.GetKey());
+
+				i++;
+			}
 		}
 
-		void Quad::SetRenderTarget(IRenderTarget* renderTarget)
+		void Quad::SetOutput(const Dictionary<IRenderTarget*, UInt32>* output)
 		{
-			SafeRelease(&this->renderTarget);
+			UInt32 i = 0;
+			while (i < output->Count())
+			{
+				auto kvp  = output->Get(i);
+				kvp.GetKey()->Apply(kvp.GetValue());
 
-			this->renderTarget = (RenderTarget*)renderTarget;
-			SafeAddRef(&this->renderTarget);
+				i++;
+			}
 		}
 		#pragma endregion
 
-		#pragma region Member - Draw
+		#pragma region Member - Apply/Draw
 		void Quad::Draw()
 		{
-			renderTarget->Apply(0);
 			shader->Apply();
 			vertexBuffer->Apply(0);
 
 			DllMain::Context->IASetInputLayout(inputLayout);
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
 			DllMain::Context->Draw(6, 0);
 		}
 		#pragma endregion

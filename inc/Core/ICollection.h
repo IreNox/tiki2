@@ -17,7 +17,7 @@ public:
 	virtual void Add(T item) = 0;
 	virtual bool Remove(T item) = 0;
 
-	virtual bool Contains(T item) = 0;
+	virtual bool Contains(T item) const = 0;
 	
-	virtual UInt32 Count() = 0;
+	virtual UInt32 Count() const = 0;
 };

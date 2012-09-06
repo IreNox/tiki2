@@ -20,9 +20,10 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
-			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterState(0), device(0),
+			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
-			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets()
+			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets(), postProcesses(), postProcessPassQuads(),
+			defaultPostProcess(0), currentTime(0, 0)
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -51,12 +52,20 @@ namespace TikiEngine
 
 			SafeRelease(&rtScreen);
 			SafeRelease(&rtBackBuffer);
-			SafeRelease(&quadPostProcess);
+
+			this->RemovePostProcess(defaultPostProcess);
+
+			UInt32 i = 0;
+			while (i < postProcesses.Count())
+			{
+				this->RemovePostProcess(postProcesses[i]);
+				i++;
+			}
 
 			SafeDelete(&matrixBuffer);
 			SafeDelete(&lightBuffer);
 
-			SafeRelease(&rasterState);
+			SafeRelease(&rasterStateBackfaces);
 			SafeRelease(&depthStencilView);
 			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilBuffer);
@@ -64,6 +73,9 @@ namespace TikiEngine
 			SafeRelease(&deviceContext);
 			SafeRelease(&device);
 			SafeRelease(&swapChain);
+
+			SafeRelease(&adapter);
+			SafeRelease(&factory);
 
 			inited = false;
 		}
@@ -76,6 +88,7 @@ namespace TikiEngine
 
 			bool ok = true;
 
+			if (ok) ok &= initSelectAdapter(desc);
 			if (ok) ok &= initDirectX(desc);
 			if (ok) ok &= initEngine(desc);
 
@@ -187,6 +200,8 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GraphicsModule::Begin(const DrawArgs& args)
 		{
+			currentTime = args.Time;
+
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
@@ -201,9 +216,81 @@ namespace TikiEngine
 
 		void GraphicsModule::End()
 		{
-			quadPostProcess->Draw();
+			UInt32 i = 0;
+			while (i < postProcesses.Count())
+			{
+				drawPostProcess(postProcesses[i]);
+
+				i++;
+			}
+			drawPostProcess(defaultPostProcess);
 
 			swapChain->Present(0, 0);
+		}
+		#pragma endregion
+
+		#pragma region Member - Add/Remove
+		void GraphicsModule::AddPostProcess(PostProcess* postProcess)
+		{
+			postProcesses.Add(postProcess);
+			SafeAddRef(&postProcess);
+		}
+
+		void GraphicsModule::RemovePostProcess(PostProcess* postProcess)
+		{
+			postProcesses.Remove(postProcess);
+
+			const List<PostProcessPass*>* passes = postProcess->GetPasses();
+
+			UInt32 i = 0;
+			while (i < passes->Count())
+			{
+				PostProcessPass* pass = passes->Get(i);
+
+				if (postProcessPassQuads.ContainsKey(pass))
+				{
+					Quad* quad = postProcessPassQuads[pass];
+					SafeRelease(&quad);
+
+					postProcessPassQuads.Remove(pass);
+				}
+
+				i++;
+			}
+
+			SafeRelease(&postProcess);
+		}
+
+		void GraphicsModule::AddScreenSizeRenderTarget(RenderTarget* target)
+		{
+		}
+
+		void GraphicsModule::RemoveScreenSizeRenderTarget(RenderTarget* target)
+		{
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - SelectAdapter
+		bool GraphicsModule::initSelectAdapter(EngineDescription& desc)
+		{
+			HRESULT r = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
+			if(FAILED(r))
+			{
+				return false;
+			}
+
+			r = factory->EnumAdapters(desc.Graphics.AdapterIndex, &adapter);
+			if(FAILED(r))
+			{
+				r = factory->EnumAdapters(0, &adapter);
+
+				if(FAILED(r))
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
 		#pragma endregion
 
@@ -351,15 +438,15 @@ namespace TikiEngine
 
 			r = device->CreateRasterizerState(
 				&rasterDesc,
-				&rasterState
-				);
+				&rasterStateBackfaces
+			);
 
 			if(FAILED(r))
 			{
 				Console::WriteError("Can't create RasterizerState", r);
 			}
 
-			deviceContext->RSSetState(rasterState); // back face culling
+			deviceContext->RSSetState(rasterStateBackfaces); // back face culling
 
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
@@ -404,15 +491,54 @@ namespace TikiEngine
 
 			IShader* shader = new Shader(engine);
 			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
-			shader->SetTexture("tex", rtScreen);
 
-			quadPostProcess = new Quad(engine);
-			quadPostProcess->SetShader(shader);
-			quadPostProcess->SetRenderTarget(rtBackBuffer);
+			PostProcessPass* pass = new PostProcessPass(engine, shader);
+			pass->AddInput("tex", rtScreen);
+			pass->AddOutput(0, rtBackBuffer);
 
+			defaultPostProcess = new PostProcess(engine);
+			defaultPostProcess->AddPass(pass);
+
+			SafeRelease(&pass);
 			SafeRelease(&shader);
 
 			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Draw - PostProcess
+		void GraphicsModule::drawPostProcess(PostProcess* postProcess)
+		{
+			const List<PostProcessPass*>* passes = postProcess->GetPasses();
+
+			UInt32 i = 0;
+			while (i < passes->Count())
+			{
+				PostProcessPass* pass = passes->Get(i);
+				Quad* quad = 0;
+
+				if (!postProcessPassQuads.ContainsKey(pass))
+				{
+					quad = new Quad(engine);
+					quad->SetShader(pass->GetShader());
+					postProcessPassQuads.Add(pass, quad);
+				}
+				else
+				{
+					quad = postProcessPassQuads[pass];
+				}
+
+				postProcess->UpdatePass(i, currentTime);
+				pass->UpdateVars(currentTime);
+
+				quad->SetOutput(pass->GetOutput());				
+				quad->SetInput(pass->GetInput());
+
+				DllMain::Context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
+				quad->Draw();
+
+				i++;
+			}
 		}
 		#pragma endregion
 	}

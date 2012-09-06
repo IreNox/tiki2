@@ -30,11 +30,7 @@ namespace TikiEngine
 
 	Engine::~Engine()
 	{
-		if (scene != 0)
-		{
-			delete(scene);
-			scene = 0;
-		}
+		SafeRelease(&scene);
 
 		loadedModules.Remove(librarys);
 
@@ -42,13 +38,13 @@ namespace TikiEngine
 		while (i >= 0)
 		{
 			loadedModules[i]->Dispose();
-			delete(loadedModules[i]);
+			SafeRelease(&loadedModules[i]);
 
 			i--;
 		}
 		
 		librarys->Dispose();
-		delete(librarys);
+		SafeRelease(&librarys);
 	}
 	#pragma endregion
 

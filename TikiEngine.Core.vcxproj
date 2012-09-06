@@ -40,6 +40,8 @@
     <ClCompile Include="src\Core\MeshIndexed.cpp" />
     <ClCompile Include="src\Core\MeshObject.cpp" />
     <ClCompile Include="src\Core\Object.cpp" />
+    <ClCompile Include="src\Core\PostProcess.cpp" />
+    <ClCompile Include="src\Core\PostProcessPass.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
     <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />
@@ -74,6 +76,8 @@
     <ClInclude Include="inc\Core\IScript.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />
     <ClInclude Include="inc\Core\Matrices.h" />
+    <ClInclude Include="inc\Core\PostProcess.h" />
+    <ClInclude Include="inc\Core\PostProcessPass.h" />
     <ClInclude Include="inc\Core\PrimitiveTopologies.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />

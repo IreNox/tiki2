@@ -56,6 +56,17 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+
+			go = new GameObject(engine);
+			box = engine->librarys->CreateComponent<IBoxCollider>(go);
+			box->SetMaterial(material->GetIndex()); // 0 = default material	
+			box->SetCenter(Vector3(5, 0, 0));
+			box->SetSize(Vector3(1, 1, 1));
+			box->SetDynamic(true);
+			box->GetRigidBody()->SetKinematic(true);
+			this->AddElement(go);
+			go->Release();
+
 			go = new CameraObject(engine);
 			go->PRS.Position = Vector3(0, 0, 5);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);

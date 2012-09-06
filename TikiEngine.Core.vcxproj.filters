@@ -215,6 +215,12 @@
     <ClCompile Include="src\Core\Object.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\PostProcess.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\PostProcessPass.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -471,6 +477,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\EngineObject.h">
       <Filter>Headerdateien\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\PostProcess.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\PostProcessPass.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

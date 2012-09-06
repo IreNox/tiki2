@@ -18,6 +18,7 @@ namespace TikiEngine
 			~RenderTarget();
 
 			void Create(UInt32 width, UInt32 height);
+			void CreateScreenSize();
 
 			void Apply(UInt32 slot);
 			void Clear(const Color& color);

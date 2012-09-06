@@ -120,6 +120,8 @@ namespace TikiEngine
 				0
 			);
 
+			delete[](data);
+
 			if (FAILED(r))
 			{
 				Console::WriteError("Can't load Texture", r);

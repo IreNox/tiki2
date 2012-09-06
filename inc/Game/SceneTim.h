@@ -28,6 +28,8 @@ namespace TikiEngine
 		private:
 
 			LightObject* light;
+
+			ITexture* tex;
 		};
 	}
 }

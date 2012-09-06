@@ -12,6 +12,20 @@ inline void SafeAddRef(T** ptr)
 }
 
 template <class T>
+inline void SafeAddRef(T* src, T** dst)
+{
+	if (src)
+	{
+		src->AddRef();
+		(*dst) = src;
+	}
+	else
+	{
+		(*dst) = 0;
+	}
+}
+
+template <class T>
 inline void SafeDelete(T** ptr)
 {
 	if (*ptr)

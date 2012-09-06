@@ -10,16 +10,19 @@
 #include "Core/IBoxCollider.h"
 #include "Core/DebugPhysicsRenderer.h"
 
-//#include "Core/MeshIndexed.h"
-//#include "Core/DefaultVertex.h"
+#include "Game/PPBlur.h"
 
 #include "Game/CameraFly.h"
+
+#include "Core/Engine.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
 		using namespace TikiEngine::Scripts;
+		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
 
@@ -30,6 +33,7 @@ namespace TikiEngine
 
 		SceneTim::~SceneTim()
 		{
+			SafeRelease(&tex);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
@@ -37,7 +41,7 @@ namespace TikiEngine
 			GameObject* go = new GameObject(engine);
 
 			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/balls_test2.fbx");
-			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
+			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
@@ -72,6 +76,8 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+
+			engine->graphics->AddPostProcess(new PPBlur(engine));
 
 
 			//////////////////////////////////////////////////////////////////////////

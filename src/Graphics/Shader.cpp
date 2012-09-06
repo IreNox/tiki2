@@ -226,23 +226,20 @@ namespace TikiEngine
 
 		void Shader::SetVector2(string key, const Vector2& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
-
-			cv->SetFloatArray((float*)&value, 0, 2);
+			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			cv->SetFloatVector(value.arr);
 		}
 
 		void Shader::SetVector3(string key, const Vector3& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
-
-			cv->SetFloatArray((float*)&value, 0, 3);
+			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			cv->SetFloatVector(value.arr);
 		}
 
 		void Shader::SetVector4(string key, const Vector4& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
-
-			cv->SetFloatArray((float*)&value, 0, 4);
+			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			cv->SetFloatVector(value.arr);
 		}
 
 		void Shader::SetTexture(string key, ITexture* texture)

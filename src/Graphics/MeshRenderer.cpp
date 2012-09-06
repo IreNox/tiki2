@@ -16,8 +16,7 @@ namespace TikiEngine
 		{
 			SafeRelease(&mesh);
 			SafeRelease(&material);
-
-			delete(data);
+			SafeRelease(&data);
 		}
 		#pragma endregion
 

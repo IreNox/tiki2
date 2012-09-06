@@ -14,12 +14,12 @@ public:
 	virtual void Add(TKey key, TValue value) = 0;
 	virtual bool Remove(TKey key) = 0;
 
-	virtual bool ContainsKey(TKey key) = 0;
+	virtual bool ContainsKey(TKey key) const = 0;
 
-	virtual bool TryGetValue(TKey key, TValue* value) = 0;
+	virtual bool TryGetValue(TKey key, TValue* value) const = 0;
 
-	virtual List<TKey>* GetKeys() = 0;
-	virtual List<TValue>* GetValues() = 0;
+	virtual List<TKey>* GetKeys() const = 0;
+	virtual List<TValue>* GetValues() const = 0;
 
 	//virtual TValue operator[](TKey key) = 0;
 };

@@ -6,11 +6,14 @@
 #include "Core/IRenderTarget.h"
 
 #include "Core/Light.h"
+#include "Core/PostProcess.h"
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using TikiEngine::Graphics::PostProcess;
+		using TikiEngine::Graphics::PostProcessPass;
 		using TikiEngine::Resources::IRenderTarget;
 		using TikiEngine::Components::Light;
 
@@ -29,6 +32,9 @@ namespace TikiEngine
 						
 			virtual void* GetDevice() = 0;
 			virtual void* GetDeviceContext() = 0;
+
+			virtual void AddPostProcess(PostProcess* postProcess) = 0;
+			virtual void RemovePostProcess(PostProcess* postProcess) = 0;
 
 			virtual ViewPort* GetViewPort() = 0;
 			virtual IRenderTarget* GetScreenBuffer() = 0;
