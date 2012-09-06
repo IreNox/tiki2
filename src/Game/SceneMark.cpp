@@ -27,6 +27,7 @@ namespace TikiEngine
 		SceneMark::~SceneMark()
 		{
 			delete box;
+			delete material;
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -40,7 +41,7 @@ namespace TikiEngine
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
 
-			IPhysicsMaterial* material; 
+			//IPhysicsMaterial* material; 
 			material = engine->content->LoadPhysicsMaterial(L"TODO");
 			material->SetRestitution(1.0f);
 			material->SetDynamicFriction(0.5f);
@@ -52,7 +53,7 @@ namespace TikiEngine
 			box->SetCenter(Vector3(0, 5, 0));
 			box->SetSize(Vector3(1, 1, 1));
 			box->SetDynamic(true);
-			box->GetRigidBody()->SetKinematic(true);
+			//box->GetRigidBody()->SetKinematic(true);
 			this->AddElement(go);
 			go->Release();
 

@@ -484,5 +484,8 @@
     <ClInclude Include="inc\Core\PostProcessPass.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\ICharacterController.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

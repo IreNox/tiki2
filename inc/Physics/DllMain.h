@@ -25,6 +25,7 @@ namespace TikiEngine
 		static PhysicsModule* Module;
 	    static NxScene* Scene;
 		static NxPhysicsSDK* PhysicsSDK;
+		static NxControllerManager* ControllerManager;
 
 		static void InitDll(TikiEngine::Engine* engine);
 

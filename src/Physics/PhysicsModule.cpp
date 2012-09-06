@@ -10,7 +10,7 @@ namespace TikiEngine
 			: IPhysics(engine)
 		{
 			pause = false;
-			tikiEngine = engine;
+			userAllocator = 0;
 		}
 
 		PhysicsModule::~PhysicsModule()
@@ -21,6 +21,11 @@ namespace TikiEngine
 		{
 			if (physicsSDK != 0)
 			{
+				// release ControllerManager
+				if (controllerManager != 0)
+					NxReleaseControllerManager(controllerManager);
+				controllerManager = 0;
+
 				// release scene
 				if (scene != 0)
 					physicsSDK->releaseScene(*scene);
@@ -29,6 +34,14 @@ namespace TikiEngine
 				// release SDK
 				NxReleasePhysicsSDK(physicsSDK);
 				physicsSDK = 0;
+
+				// release allocator
+				if(userAllocator != NULL)
+				{
+					delete userAllocator;
+					userAllocator = NULL;
+				}
+
 			}
 		}
 		#pragma endregion
@@ -36,7 +49,11 @@ namespace TikiEngine
 		#pragma region Init
 		bool PhysicsModule::Initialize(EngineDescription& desc)
 		{
-			Console::Write("Initializing");
+			Console::Write("Initializing PhysicsModule");
+
+			if (!userAllocator)
+				userAllocator = new UserAllocator();
+
 
 			// init PhysX SDK
 			NxPhysicsSDKDesc sdkDesc;
@@ -44,7 +61,7 @@ namespace TikiEngine
 			NxSDKCreateError errorCode = NXCE_NO_ERROR;
 
 			ErrorStream errorStream;
-			physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, NULL, &errorStream, sdkDesc, &errorCode);
+			physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, userAllocator, &errorStream, sdkDesc, &errorCode);
 			if (physicsSDK == 0)
 			{
 				Console::Write("Unable to initialize the PhysX SDK, exiting." + errorStream.GetNxSDKCreateError(errorCode));
@@ -80,9 +97,13 @@ namespace TikiEngine
 #endif
 
 			//bool hardware = IsHardwarePresent();
-			// assign the scene and physX sdks to dllMain
+			// assign statics to dllMain
 			DllMain::Scene = scene;
 			DllMain::PhysicsSDK = physicsSDK;
+
+			// Also create the controller Manager.
+			controllerManager = NxCreateControllerManager(userAllocator);
+			DllMain::ControllerManager = controllerManager;
 
 			// Create ground plane with material for testing
 			NxPlaneShapeDesc planeDesc;
@@ -139,6 +160,16 @@ namespace TikiEngine
 			// then we can use isWritable() to test if we fetched  all simulation results and made the scene writable again.
 			// Since there is only one status flag it is obvious that we fetched everything and the scene is writable.
 			NX_ASSERT(scene->isWritable());
+
+			// Update controllers!
+			NxReal maxTimestep;
+			NxTimeStepMethod method;
+			NxU32 maxIter;
+			NxU32 numSubSteps;
+			scene->getTiming(maxTimestep, maxIter, method, &numSubSteps);
+			if(numSubSteps)
+				controllerManager->updateControllers();
+
 		}
 
 #pragma region Debug

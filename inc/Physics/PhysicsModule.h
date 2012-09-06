@@ -3,23 +3,19 @@
 #include "Core/IPhysics.h"
 
 #include "PhysX/Physics/NxPhysics.h"
+#include "PhysX/NxCharacter/ControllerManager.h"
 
 #include "Physics/ErrorStream.h"
 #include "Physics/VRDSettings.h"
+#include "Physics/UserAllocator.h"
 
 #include "Core/ColorVertex.h"
-
-
-//#include "Physics/BoxCollider.h"
-
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using namespace TikiEngine::Vertices;
-
-		//using namespace TikiEngine::Physics;
 
 		class PhysicsModule : public IPhysics
 		{
@@ -46,12 +42,11 @@ namespace TikiEngine
 			void Dispose();
 
 		private:
-			Engine* tikiEngine;
-
 			bool pause;
 			NxPhysicsSDK* physicsSDK;
 			NxScene* scene; 
-			//BoxCollider* box;
+			NxControllerManager* controllerManager;
+			UserAllocator* userAllocator;
 
 #if _DEBUG
 			Mesh* debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology);

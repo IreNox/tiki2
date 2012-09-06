@@ -3,6 +3,7 @@
 #include "Core/Scene.h"
 
 #include "Core/IBoxCollider.h"
+#include "Core/ICharacterController.h"
 
 namespace TikiEngine
 {
@@ -22,7 +23,8 @@ namespace TikiEngine
 
 		private:
 			IBoxCollider* box;
-
+			IPhysicsMaterial* material; 
+			ICharacterController* controller;
 		};
 	}
 }
