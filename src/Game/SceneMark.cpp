@@ -47,7 +47,7 @@ namespace TikiEngine
 			material->SetDynamicFriction(0.5f);
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
-			// init
+			// init BoxColliders
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
 			box->SetMaterial(material->GetIndex()); // 0 = default material	
 			box->SetCenter(Vector3(0, 5, 0));
@@ -67,6 +67,18 @@ namespace TikiEngine
 			box->GetRigidBody()->SetKinematic(true);
 			this->AddElement(go);
 			go->Release();
+
+			// init CharacterController
+			go = new GameObject(engine);
+			controller = engine->librarys->CreateComponent<ICharacterController>(go);
+			controller->SetCenter(Vector3(0, 5, 0));
+			controller->SetRadius(0.25f);
+			controller->SetHeight(1.0f);
+			controller->SetSlopeLimit(45.0f);
+			controller->SetStepOffset(0.5f);
+			this->AddElement(go);
+			go->Release();
+
 
 			go = new CameraObject(engine);
 			go->PRS.Position = Vector3(0, 0, 5);

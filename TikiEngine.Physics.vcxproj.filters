@@ -44,6 +44,9 @@
     <ClInclude Include="inc\Physics\UserAllocator.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\CharacterController.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -66,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="src\Physics\UserAllocator.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\CharacterController.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

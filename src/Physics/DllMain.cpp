@@ -2,6 +2,7 @@
 #include "Physics/DllMain.h"
 #include "Physics/BoxCollider.h"
 #include "Physics/PhysicsMaterial.h"
+#include "Physics/CharacterController.h"
 
 #include <typeinfo.h>
 
@@ -33,8 +34,8 @@ namespace TikiEngine
 
 		DllInfo.Resources.Add(typeid(IPhysicsMaterial).hash_code());
 
-		//DllInfo.Components.Add(typeid(ICollider).hash_code());
 		DllInfo.Components.Add(typeid(IBoxCollider).hash_code());
+		DllInfo.Components.Add(typeid(ICharacterController).hash_code());
 
 		
 	}
@@ -65,6 +66,10 @@ namespace TikiEngine
 		if (hash == typeid(IBoxCollider).hash_code())
 		{
 			return new BoxCollider(DllMain::Engine, gameObject);
+		}
+		else if (hash == typeid(ICharacterController).hash_code())
+		{
+			return new CharacterController(DllMain::Engine, gameObject);
 		}
 
 		return 0;
