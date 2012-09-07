@@ -11,6 +11,10 @@ namespace TikiEngine
 		{
 			pause = false;
 			userAllocator = 0;
+			physicsSDK = 0;
+			scene = 0;
+			controllerManager = 0;
+			userAllocator = 0;
 		}
 
 		PhysicsModule::~PhysicsModule()
@@ -77,7 +81,7 @@ namespace TikiEngine
 			NxSceneDesc sceneDesc;
 			sceneDesc.gravity = NxVec3(0.0f, -9.81f, 0.0f);
 			scene = physicsSDK->createScene(sceneDesc);
-			if (scene == NULL)
+			if (scene == 0)
 			{
 				Console::Write("Error: Unable to create a PhysX scene, exiting. \n");
 				return false;
@@ -104,12 +108,6 @@ namespace TikiEngine
 			// Also create the controller Manager.
 			controllerManager = NxCreateControllerManager(userAllocator);
 			DllMain::ControllerManager = controllerManager;
-
-			// Create ground plane with material for testing
-			NxPlaneShapeDesc planeDesc;
-			NxActorDesc actorDesc;
-			actorDesc.shapes.pushBack(&planeDesc);
-			scene->createActor(actorDesc);
 
 			return true;
 		}

@@ -6,6 +6,14 @@ namespace TikiEngine
 {
 	namespace Components
 	{
+		/* !@brief Summary of collisions that occurred during the Move */
+		enum CollisionFlags
+		{
+			CF_Sides	= (1<<0),	// 2^0, bit 0. Character is colliding to the sides.
+			CF_Up		= (1<<1),	// 2^1, bit 1. Character has collision above.
+			CF_Down		= (1<<2),	// 2^2, bit 2. Character has collision below.
+		};
+
 		class ICharacterController : public ICollider
 		{
 		public:
@@ -33,6 +41,8 @@ namespace TikiEngine
 			virtual Single GetStepOffset() = 0;
 			virtual void SetStepOffset(Single stepOffset) = 0;
 
+			/* !@brief Attempts to move the controller by motion, the motion will only be constrained by collisions. returns the collision flags */
+			virtual CollisionFlags Move(const Vector3& displacement) = 0;
 
 		};
 

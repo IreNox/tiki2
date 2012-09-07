@@ -10,11 +10,9 @@ namespace TikiEngine
 			actor = 0;
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
-			//isKinematic = false;
 		}
 
 		#pragma region ICollider Methods
-
 		void Collider::SetMaterialIndex(int index)
 		{
 			materialIndex = index;
@@ -49,11 +47,19 @@ namespace TikiEngine
 			this->isTrigger = triggerFlag;
 
 			for (unsigned int i = 0; i < actor->getNbShapes(); i++)
-			{
 				actor->getShapes()[i]->setFlag(NX_TRIGGER_ENABLE, isTrigger);
-			}
+		}
+
+		void Collider::SetCollisionGroup(UInt32 group)
+		{
+			if (actor == 0)
+				return;
+
+			for (unsigned int i = 0; i < actor->getNbShapes(); i++)
+				actor->getShapes()[i]->setGroup(group);
+
+			//actor->setGroup(group);
 		}
 		#pragma endregion
-
 	}
 }

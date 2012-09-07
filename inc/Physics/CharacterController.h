@@ -25,6 +25,8 @@ namespace TikiEngine
 			bool GetTrigger();
 			void SetTrigger(bool triggerFlag);
 
+			void SetGroup(CollisionGroups group);
+
 			// ICharacterController Methods
 			Vector3 GetCenter();
 			void SetCenter(const Vector3& center);
@@ -41,7 +43,7 @@ namespace TikiEngine
 			Single GetStepOffset();
 			void SetStepOffset(Single stepOffset);
 
-
+			CollisionFlags Move(const Vector3& displacement);
 
 			// Component Methods
 			bool GetReady();
@@ -61,6 +63,8 @@ namespace TikiEngine
 			Single height;
 			Single slopeLimit;
 			Single stepOffset;
+
+			UInt32 collisionFlags;
 		};
 	}
 }

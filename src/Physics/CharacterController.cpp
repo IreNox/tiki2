@@ -41,7 +41,7 @@ namespace TikiEngine
 
 		bool CharacterController::GetDynamic()
 		{
-			// controllers are always dynamic!
+			// controllers are always dynamic kinematic actors!
 			return true;
 		}
 
@@ -53,13 +53,21 @@ namespace TikiEngine
 
 		bool CharacterController::GetTrigger()
 		{
-			return GetTriggerFlag();
+			return false;
+			//return GetTriggerFlag();
 		}
 
 		void CharacterController::SetTrigger(bool triggerFlag)
 		{
-			SetTriggerFlag(triggerFlag);
+			// not supported by physX?
+			//SetTriggerFlag(triggerFlag);
 		}
+
+		void CharacterController::SetGroup(CollisionGroups group)
+		{
+			SetCollisionGroup(group);
+		}
+
 		#pragma endregion
 
 		#pragma region ICharacterController Methods
@@ -119,6 +127,19 @@ namespace TikiEngine
 		}
 
 
+		CollisionFlags CharacterController::Move(const Vector3& displacement)
+		{
+			NxU32 activeGroups = (1<<CG_Collidable_Non_Pushable) | 
+								 (1<<CG_Collidable_Pushable);
+
+			NxF32 minDist = 0.000001f;
+			controller->move(displacement.arr, activeGroups, 
+							 minDist, collisionFlags);
+
+			return (CollisionFlags)collisionFlags;
+
+		}
+
 		#pragma endregion
 
 		bool CharacterController::GetReady() 
@@ -147,7 +168,7 @@ namespace TikiEngine
 			desc.height		 = height;
 			desc.upDirection = NX_Y;
 			desc.slopeLimit	 = cosf(NxMath::degToRad(slopeLimit));
-			desc.skinWidth	 = radius * 0.10f; //0.025;
+			desc.skinWidth	 = radius * 0.10f; // make it 10% of radius, gives best results (unity doc)
 			desc.stepOffset	 = stepOffset;
 			desc.callback	 = 0; //TODO : &controllerHitReport;
 			desc.userData	 = (void*)this;	

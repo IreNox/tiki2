@@ -14,10 +14,7 @@ namespace TikiEngine
 		class BoxCollider : public Collider, public IBoxCollider 
 		{
 		public:
-			/*! @brief Create BoxCollider 
-			 *  @param setCenter The center of the box, measured in the object's local space.
-			 *  @param setSize The size of the box, measured in the object's local space.
-			*/
+			/*! @brief Create BoxCollider */
 			BoxCollider(Engine* engine, GameObject* gameObject);
 
 			/*! @brief Destructor */
@@ -33,8 +30,7 @@ namespace TikiEngine
 			bool GetTrigger();
 			void SetTrigger(bool triggerFlag);
 
-			//bool GetKinematic();
-			//void SetKinematic(bool kinematicFlag);
+			void SetGroup(CollisionGroups group);
 
 
 			// IBoxCollider
@@ -44,6 +40,7 @@ namespace TikiEngine
 			Vector3 GetSize();
 			void SetSize(const Vector3& size);
 
+			// Component
 			bool GetReady();
 
 			void Update(const UpdateArgs& args) {}

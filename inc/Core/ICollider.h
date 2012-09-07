@@ -3,10 +3,18 @@
 #include "Core/Component.h"
 #include "Core/IRigidBody.h"
 
+
 namespace TikiEngine
 {
 	namespace Components
 	{
+		enum CollisionGroups
+		{
+			CG_Non_Collidable,
+			CG_Collidable_Non_Pushable,
+			CG_Collidable_Pushable
+		};
+
 		/*! @brief An Interface of all colliders. */
 		class ICollider : public Component
 		{
@@ -35,13 +43,16 @@ namespace TikiEngine
 			/* !@brief gets the underlying Rigid Body if this is a dynamic actor! So ensure that this collider is set to Dynamic before! */
 			virtual IRigidBody* GetRigidBody() = 0;
 
-			 /*! @brief OnTriggerEnter is called when the Collider other enters the trigger. */
+			/* !@brief Sets the collision group */
+			virtual void SetGroup(CollisionGroups group) = 0;
+
+			 /* !@brief OnTriggerEnter is called when the Collider other enters the trigger. */
 			 //virtual void OnTriggerEnter(ICollider* other) = 0;
 
-			 /*! @brief OnTriggerExit is called when the Collider other has stopped touching the trigger. */
+			 /* !@brief OnTriggerExit is called when the Collider other has stopped touching the trigger. */
 			 //virtual void OnTriggerExit(ICollider* other) = 0;
 
-			 /*! @brief OnTriggerStay is called almost all the frames for every Collider other that is touching the trigger. */
+			 /* !@brief OnTriggerStay is called almost all the frames for every Collider other that is touching the trigger. */
 			 //virtual void OnTriggerStay(ICollider* other) = 0;
 
 		};

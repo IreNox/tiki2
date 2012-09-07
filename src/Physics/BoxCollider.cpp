@@ -55,6 +55,11 @@ namespace TikiEngine
 		{
 			SetTriggerFlag(triggerFlag);
 		}
+
+		void BoxCollider::SetGroup(CollisionGroups group)
+		{
+			SetCollisionGroup(group);
+		}
 		#pragma endregion
 
 		#pragma region IBoxCollider Methods
@@ -87,7 +92,6 @@ namespace TikiEngine
 				   (state != CS_UNINITIALIZED) &&
 				   (materialIndex != -1);
 		}
-
 		#pragma endregion
 
 		void BoxCollider::UpdateData()
@@ -104,7 +108,6 @@ namespace TikiEngine
 			// Create Box shape description.
 			NxBoxShapeDesc boxDesc;
 			boxDesc.dimensions = size;
-			//boxDesc.localPose.t = NxVec3(0, size.y, 0);
 
 			// Create material from index
 			boxDesc.materialIndex = materialIndex;

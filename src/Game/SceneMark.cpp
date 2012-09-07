@@ -27,6 +27,7 @@ namespace TikiEngine
 		SceneMark::~SceneMark()
 		{
 			delete box;
+			delete controller;
 			delete material;
 		}
 
@@ -43,25 +44,37 @@ namespace TikiEngine
 
 			//IPhysicsMaterial* material; 
 			material = engine->content->LoadPhysicsMaterial(L"TODO");
-			material->SetRestitution(1.0f);
-			material->SetDynamicFriction(0.5f);
+			material->SetRestitution(0.7f);
+			material->SetDynamicFriction(0.7f);
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
-			// init BoxColliders
+			// init dynamic BoxCollider
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
 			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(0, 5, 0));
+			box->SetCenter(Vector3(0, 3, -4));
 			box->SetSize(Vector3(1, 1, 1));
 			box->SetDynamic(true);
-			//box->GetRigidBody()->SetKinematic(true);
+			// assign collision groups after object is created, else it won't work!
+			box->SetGroup(CG_Collidable_Pushable);
 			this->AddElement(go);
 			go->Release();
 
-
+			// init box plane
 			go = new GameObject(engine);
 			box = engine->librarys->CreateComponent<IBoxCollider>(go);
 			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(5, 0, 0));
+			box->SetCenter(Vector3(0, 0, 0));
+			box->SetSize(Vector3(10, 0.1f, 10));
+			box->SetDynamic(false);
+			box->SetGroup(CG_Collidable_Non_Pushable);
+			this->AddElement(go);
+			go->Release();
+
+			// Init kinematic actor
+			go = new GameObject(engine);
+			box = engine->librarys->CreateComponent<IBoxCollider>(go);
+			box->SetMaterial(material->GetIndex()); // 0 = default material	
+			box->SetCenter(Vector3(0, 5, 0));
 			box->SetSize(Vector3(1, 1, 1));
 			box->SetDynamic(true);
 			box->GetRigidBody()->SetKinematic(true);
@@ -76,12 +89,13 @@ namespace TikiEngine
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
+			controller->SetGroup(CG_Collidable_Non_Pushable);
 			this->AddElement(go);
 			go->Release();
 
 
 			go = new CameraObject(engine);
-			go->PRS.Position = Vector3(0, 0, 5);
+			go->PRS.Position = Vector3(0, 3, 7);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
 			this->AddElement(go);
 			go->Release();
@@ -144,12 +158,28 @@ namespace TikiEngine
 
 		void SceneMark::Update(const UpdateArgs& args)
 		{
+			// Update Controller movement
+			Vector3 displacement(0, -9.8f, 0);
+			if (args.Input.GetKey(KEY_I))
+				displacement -= Vector3(0, 0, 1);
+			if (args.Input.GetKey(KEY_K))
+				displacement += Vector3(0, 0, 1);
+			if (args.Input.GetKey(KEY_J))
+				displacement -= Vector3(1, 0, 0);
+			if (args.Input.GetKey(KEY_L))
+				displacement += Vector3(1, 0, 0);
 
-			// if we have a dynamic actor
-			if (box->GetDynamic())
+			// we can also determine which parts of the collider collided with another one.
+			CollisionFlags cf;
+			cf = controller->Move(displacement * args.Time.ElapsedTime);
+			bool isGrounded = cf & CF_Down;
+			bool collidedSides = cf & CF_Sides;
+			bool collidedAbove = cf & CF_Up;
+
+				// if it is dynamic and also kinematic, use following functions to move/rotate:
+			if (box->GetDynamic() && box->GetRigidBody()->GetKinematic())
 			{
-				// if it is kinematic, use following functions to move/rotate:
-
+			
 				//box->GetRigidBody()->MovePosition(Vector3(0, 0.0005f, 0));
 				
 				Vector3 eulerAngles(0.01f, 0.01f, 0.01f);
