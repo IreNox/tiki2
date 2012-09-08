@@ -9,9 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Headerdateien\Vertex">
-      <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Internal">
       <UniqueIdentifier>{8d8958a3-9884-4db2-80ae-b47347c8f79b}</UniqueIdentifier>
     </Filter>
@@ -41,6 +38,9 @@
     </Filter>
     <Filter Include="Quelldateien\Components">
       <UniqueIdentifier>{694c8d5b-cfc6-4977-9fe4-714521dafeef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Modules">
+      <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -80,6 +80,9 @@
     <ClCompile Include="src\Graphics\Quad.cpp">
       <Filter>Quelldateien\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\SpriteBatchModule.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -112,9 +115,6 @@
     <ClInclude Include="inc\Graphics\MeshRenderer.h">
       <Filter>Headerdateien\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\GraphicsModule.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\RenderTarget.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
@@ -126,6 +126,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\d3dx11effect.h">
       <Filter>Headerdateien\Internal</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\GraphicsModule.h">
+      <Filter>Headerdateien\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
+      <Filter>Headerdateien\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

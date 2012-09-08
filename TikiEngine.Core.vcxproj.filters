@@ -487,5 +487,14 @@
     <ClInclude Include="inc\Core\ICharacterController.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\ISpriteBatch.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Point.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Rectangle.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

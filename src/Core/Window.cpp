@@ -7,7 +7,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Window::Window(Engine* engine)
-			: IModule(engine)
+			: IModule(engine), hWnd(0), hInst(0)
 		{
 			ZeroMemory(&msg, sizeof(MSG));
 		}
@@ -20,15 +20,14 @@ namespace TikiEngine
 		#pragma region Member - Init
 		bool Window::Initialize(EngineDescription& desc)
 		{
+			this->hInst = desc.hInst;
+
 			WNDCLASSEX win = WNDCLASSEX();
-
-			hInst = desc.hInst;
-
-			win.hInstance = hInst;
-			win.lpfnWndProc = &Window::WndProc;
-			win.lpszClassName = desc.Window.WindowClass;
-			win.cbSize = sizeof(WNDCLASSEX);
-			win.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
+			win.hInstance		= hInst;
+			win.lpfnWndProc		= &Window::WndProc;
+			win.lpszClassName	= desc.Window.WindowClass;
+			win.cbSize			= sizeof(WNDCLASSEX);
+			win.hbrBackground	= (HBRUSH)COLOR_WINDOWFRAME;
 
 			HRESULT r = RegisterClassEx(&win);
 
@@ -75,7 +74,7 @@ namespace TikiEngine
 
 		bool Window::GetReady()
 		{
-			return (msg.message != WM_QUIT);
+			return (hWnd != 0) && (hInst != 0) && (msg.message != WM_QUIT);
 		}
 
 		void Window::Dispose()
@@ -119,6 +118,5 @@ namespace TikiEngine
 			return 0;
 		}
 		#pragma endregion
-
 	}
 }

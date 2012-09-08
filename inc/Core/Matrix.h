@@ -2,7 +2,6 @@
 
 #include "Core/Vector4.h"
 
-
 class Vector3;
 class Quaternion;
 
