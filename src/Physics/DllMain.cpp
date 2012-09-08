@@ -16,7 +16,7 @@ namespace TikiEngine
 
 	Engine* DllMain::Engine = 0;
 
-	PhysicsModule* DllMain::Module = 0;
+	PhysicsModule* DllMain::ModuleGraphics = 0;
 	NxScene* DllMain::Scene = 0;
 	NxPhysicsSDK* DllMain::PhysicsSDK = 0;
 	NxControllerManager* DllMain::ControllerManager = 0;
@@ -24,7 +24,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new PhysicsModule(engine);
+		DllMain::ModuleGraphics = new PhysicsModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
@@ -47,7 +47,7 @@ namespace TikiEngine
 			return 0;
 		}
 
-		return DllMain::Module;
+		return DllMain::ModuleGraphics;
 	}
 
 	IResource* DllMain::CreateResource(IntPtr hash)

@@ -13,6 +13,7 @@
 #include "Core/IInput.h"
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
+#include "Core/ISpriteBatch.h"
 
 #include "Core/GameTime.h"
 #include "Core/DrawContext.h"
@@ -24,7 +25,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Engine::Engine()
-		: scene(0), loadedModules()
+		: scene(0), loadedModules(), audio(0), input(0), physics(0), graphics(0), sprites(0), content(0)
 	{
 	}
 
@@ -78,6 +79,13 @@ namespace TikiEngine
 		if (!initModule(graphics))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Direct3D.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
+		sprites = librarys->CreateModule<ISpriteBatch>();
+		if (!initModule(sprites))
+		{
+			MessageBox(window->GetHWND(), L"Can't init SpriteBatch.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
@@ -162,7 +170,9 @@ namespace TikiEngine
 				);
 
 				graphics->Begin(drawArgs);
+				sprites->Begin();
 				this->Draw(drawArgs);
+				sprites->End();
 				graphics->End();
 
 				i++;

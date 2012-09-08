@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/Vector2.h"
+
 namespace TikiEngine
 {
 	struct ViewPort
@@ -21,6 +23,14 @@ namespace TikiEngine
 		ViewPort(int x, int y, int width, int height, float minDepth, float maxDepth)
 			: X(x), Y(y), Width(width), Height(height), MinDepth(minDepth), MaxDepth(maxDepth)
 		{
+		}
+
+		Vector2 GetSize()
+		{
+			return Vector2(
+				(float)this->Width,
+				(float)this->Height
+			);
 		}
 	};
 }

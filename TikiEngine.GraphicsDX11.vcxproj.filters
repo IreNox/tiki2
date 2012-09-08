@@ -83,6 +83,9 @@
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp">
+      <Filter>Quelldateien\Internal\Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -132,6 +135,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
       <Filter>Headerdateien\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SpriteBatchVertex.h">
+      <Filter>Headerdateien\Internal\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DynamicBuffer.h">
+      <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

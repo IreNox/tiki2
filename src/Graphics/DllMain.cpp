@@ -7,6 +7,9 @@
 
 #include "Graphics/MeshRenderer.h"
 
+#include "Graphics/GraphicsModule.h"
+#include "Graphics/SpriteBatchModule.h"
+
 #include <typeinfo.h>
 
 namespace TikiEngine
@@ -17,20 +20,24 @@ namespace TikiEngine
 	
 	Engine* DllMain::Engine = 0;
 
-	GraphicsModule* DllMain::Module = 0;
+	GraphicsModule* DllMain::ModuleGraphics = 0;
+	SpriteBatchModule* DllMain::ModuleSpriteBatch = 0;
+
 	ID3D11Device* DllMain::Device = 0;
 	ID3D11DeviceContext* DllMain::Context = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new GraphicsModule(engine);
+		DllMain::ModuleGraphics = new GraphicsModule(engine);
+		DllMain::ModuleSpriteBatch = new SpriteBatchModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
 
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
+		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
 
 		DllInfo.Resources.Add(typeid(IShader).hash_code());
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
@@ -41,12 +48,16 @@ namespace TikiEngine
 
 	IModule* DllMain::CreateModule(IntPtr hash)
 	{
-		if (hash != typeid(IGraphics).hash_code())
+		if (hash == typeid(IGraphics).hash_code())
 		{
-			return 0;
+			return DllMain::ModuleGraphics;
+		}
+		else if (hash == typeid(ISpriteBatch).hash_code())
+		{
+			return DllMain::ModuleSpriteBatch;
 		}
 
-		return DllMain::Module;
+		return 0;
 	}
 
 	IResource* DllMain::CreateResource(IntPtr hash)

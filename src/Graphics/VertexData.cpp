@@ -3,6 +3,7 @@
 #include "Graphics/VertexData.h"
 
 #include "Graphics/DllMain.h"
+#include "Graphics/GraphicsModule.h"
 
 namespace TikiEngine
 {
@@ -40,7 +41,7 @@ namespace TikiEngine
 			{
 				vertexBuffer->Release();
 
-				vertexBuffer = DllMain::Module->GetVertexBuffer(decl, dynamic);
+				vertexBuffer = DllMain::ModuleGraphics->GetVertexBuffer(decl, dynamic);
 				vertexBuffer->AddRef();
 			}
 		}
@@ -118,10 +119,10 @@ namespace TikiEngine
 				shader = inShader;
 				shader->AddRef();
 
-				indexBuffer = DllMain::Module->GetIndexBuffer();
+				indexBuffer = DllMain::ModuleGraphics->GetIndexBuffer();
 				indexBuffer->AddRef();
 
-				vertexBuffer = DllMain::Module->GetVertexBuffer(decl, dynamic);
+				vertexBuffer = DllMain::ModuleGraphics->GetVertexBuffer(decl, dynamic);
 				vertexBuffer->AddRef();
 			}
 

@@ -171,10 +171,10 @@ namespace TikiEngine
 
 			// we can also determine which parts of the collider collided with another one.
 			CollisionFlags cf;
-			cf = controller->Move(displacement * args.Time.ElapsedTime);
-			bool isGrounded = cf & CF_Down;
-			bool collidedSides = cf & CF_Sides;
-			bool collidedAbove = cf & CF_Up;
+			cf = controller->Move(displacement * (float)args.Time.ElapsedTime);
+			bool isGrounded = (cf & CF_Down) != 0;
+			bool collidedSides = (cf & CF_Sides) != 0;
+			bool collidedAbove = (cf & CF_Up) != 0;
 
 				// if it is dynamic and also kinematic, use following functions to move/rotate:
 			if (box->GetDynamic() && box->GetRigidBody()->GetKinematic())
@@ -191,7 +191,7 @@ namespace TikiEngine
 				// PhysX does its rotations in a right-handed manner. 
 				//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
 				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
-				box->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, args.Time.ElapsedTime));
+				box->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
 
 			Scene::Update(args);

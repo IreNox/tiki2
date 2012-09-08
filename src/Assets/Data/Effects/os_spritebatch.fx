@@ -5,23 +5,20 @@ struct Light
 {
 	float3 Position;
 	float3 Direction;
-	float4 Color;
+	float3 Color;
 	float Range;
 };
 
 struct VS_INPUT
 {
-    float3 Pos	  : POSITION;
-	float3 Normal : NORMAL;
-	float2 UV	  : TEXCOORD;
+    float3 Pos	: POSITION;
+	float3 UV	: TEXCOORD0;
 };
 
 struct PS_INPUT
 {
-    float4 Pos		: SV_POSITION;
-	float3 WorldPos	: POSITION0;
-	float3 Normal	: NORMAL;
-    float2 UV		: TEXCOORD0;
+    float4 Pos	: SV_POSITION;
+	float3 UV	: TEXCOORD0;
 };
 
 /////////////
@@ -49,7 +46,7 @@ cbuffer LightBuffer : register(b1)
 	Light Lights[32];
 };
 
-Texture2D tex; // : register(t0);
+Texture2DArray tex;
 
 SamplerState sam : register(s0)
 {    
@@ -66,15 +63,8 @@ PS_INPUT VS_Main(VS_INPUT input)
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
-    output.Pos = mul(output.Pos, worldMatrix);
-	output.WorldPos = output.Pos.xyz;
-
-    output.Pos = mul(output.Pos, viewMatrix);
-    output.Pos = mul(output.Pos, projectionMatrix);
-    
-	output.Normal = mul(input.Normal, worldMatrixInverseTranspose);
-    output.UV = input.UV;
-    
+	output.UV = input.UV;
+	    
     return output;
 }
 
@@ -83,29 +73,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
-	float4 termAmbient = AmbientColor * AmbientIntensity;
-	float4 termEmissive = EmissiveColor * EmissiveIntensity;
-	float4 termLight = float4(0, 0, 0, 1);
-
-	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
-	
-	if (LightsCount != 0.0f)
-	{
-		for (float i = 0; i < LightsCount; i++)
-		{
-			float3 lightDir = normalize(Lights[i].Position - input.WorldPos);
-
-			float lighting = dot(input.Normal, lightDir);	
-			lighting *= (Lights[i].Range / dot(lightDir, lightDir));
-
-			termLight += Lights[i].Color * lighting;
-		}		
-	
-		termDiffuse *= termLight;
-	}
-	
-	return saturate(termDiffuse + termAmbient + termEmissive);
+	return tex.Sample(sam, input.UV);
 }
 
 technique11 basic

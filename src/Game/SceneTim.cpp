@@ -16,6 +16,7 @@
 
 #include "Core/Engine.h"
 #include "Core/IGraphics.h"
+#include "Core/ISpriteBatch.h"
 
 namespace TikiEngine
 {
@@ -62,6 +63,7 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(0.8f, 0.8f, 0.8f, 0.8f));
 			light->GetLight()->SetRange(7.5f);
+			light->PRS.Position = Vector3(50, 0, 0);
 
 			this->AddElement(light);
 			light->Release();
@@ -77,7 +79,7 @@ namespace TikiEngine
 			go->Release();
 
 
-			engine->graphics->AddPostProcess(new PPBlur(engine));
+			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
 
 			//////////////////////////////////////////////////////////////////////////
@@ -155,6 +157,11 @@ namespace TikiEngine
 		void SceneTim::Draw(const DrawArgs& args)
 		{
 			Scene::Draw(args);
+
+			engine->sprites->Draw(
+				tex,
+				Vector2(25, 25)
+			);
 		}
 
 		void SceneTim::Update(const UpdateArgs& args)
@@ -163,7 +170,9 @@ namespace TikiEngine
 				sinf((float)args.Time.TotalTime / 5) * 50,
 				0,
 				cosf((float)args.Time.TotalTime / 5) * 50
-			);
+				);
+
+			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
 
 			Scene::Update(args);
 		}

@@ -94,6 +94,9 @@ namespace TikiEngine
 				case IST_Binormal:
 					element.SemanticName = "BINORMAL";
 					break;
+				case IST_SV_RenderTargetArrayIndex:
+					element.SemanticName = "SV_RenderTargetArrayIndex";
+					break;
 				}
 				element.SemanticIndex = input.SemanticIndex;
 

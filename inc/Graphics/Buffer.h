@@ -14,11 +14,12 @@ namespace TikiEngine
 		class Buffer : public EngineObject
 		{
 		public:
+
 			Buffer(Engine* engine, UInt32 size);
 			virtual ~Buffer();
 
 			void Apply(UInt32 offset) const;
-
+			
 			void Copy(void* data, UInt32 size, UInt32 index);
 			void Allocate(void* data, UInt32 count, UInt32* index);
 
@@ -32,6 +33,7 @@ namespace TikiEngine
 			virtual ID3D11Buffer* createBuffer(UInt32 size, void* data) = 0;
 
 		private:
+
 			UINT bufferSize;
 			UINT bufferUsage;
 
@@ -39,6 +41,7 @@ namespace TikiEngine
 
 			void writeBuffer(void* addData, UInt32 dataSize, UInt32 index);
 			void resizeBuffer(void* addData, UInt32 dataSize);
+
 		};
 	}
 }

@@ -25,6 +25,7 @@ struct PS_INPUT
 // GLOBALS //
 /////////////
 matrix worldMatrix;
+matrix worldMatrixInverseTranspose;
 
 cbuffer MatrixBuffer : register(b0)
 {

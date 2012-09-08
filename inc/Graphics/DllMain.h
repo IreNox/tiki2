@@ -3,8 +3,6 @@
 #include "Core/TikiInfo.h"
 #include "Core/Dictionary.h"
 
-#include "Graphics/GraphicsModule.h"
-
 #include "D3D11.h"
 #include "D3DX11.h"
 
@@ -13,8 +11,15 @@ using TikiEngine::TikiInfo;
 
 namespace TikiEngine
 {
+	namespace Modules
+	{
+		class GraphicsModule;
+		class SpriteBatchModule;
+	}
+
 	using TikiEngine::Modules::IModule;
 	using TikiEngine::Modules::GraphicsModule;
+	using TikiEngine::Modules::SpriteBatchModule;
 	using TikiEngine::Components::Component;
 
 	class DllMain
@@ -25,7 +30,9 @@ namespace TikiEngine
 
 		static Engine* Engine;
 
-		static GraphicsModule* Module;
+		static GraphicsModule* ModuleGraphics;
+		static SpriteBatchModule* ModuleSpriteBatch;
+
 		static ID3D11Device* Device;
 		static ID3D11DeviceContext* Context;
 

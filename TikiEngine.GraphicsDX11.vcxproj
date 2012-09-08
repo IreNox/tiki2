@@ -28,6 +28,7 @@
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp" />
+    <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\VertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\VertexData.cpp" />
@@ -38,6 +39,7 @@
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
+    <ClInclude Include="inc\Graphics\DynamicBuffer.h" />
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
     <ClInclude Include="inc\Graphics\Lights.h" />
@@ -46,6 +48,7 @@
     <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h" />
+    <ClInclude Include="inc\Graphics\SpriteBatchVertex.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />
     <ClInclude Include="inc\Graphics\VertexData.h" />

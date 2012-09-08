@@ -21,6 +21,7 @@ namespace TikiEngine
 		class IInput;
 		class IPhysics;
 		class IGraphics;
+		class ISpriteBatch;
 		class IContentManager;
 	}
 
@@ -35,6 +36,7 @@ namespace TikiEngine
 		IInput* input;
 		IPhysics* physics;
 		IGraphics* graphics;
+		ISpriteBatch* sprites;
 		IContentManager* content;
 
 		Window* window;

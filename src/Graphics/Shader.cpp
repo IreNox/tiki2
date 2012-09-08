@@ -6,6 +6,7 @@
 #include "Core/Console.h"
 #include "Core/HelperHash.h"
 #include "Core/HelperPath.h"
+#include "Core/GameObject.h"
 
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
@@ -15,6 +16,7 @@
 #include <D3Dcompiler.h>
 
 #include "Graphics/DllMain.h"
+#include "Graphics/GraphicsModule.h"
 
 namespace TikiEngine
 {
@@ -63,13 +65,16 @@ namespace TikiEngine
 		{
 			if (type == ST_Object)
 			{
-				//Matrix* worldMatrix = new Matrix(Matrix::Identity); //element->PRS.GetWorldMatrix();
+				Matrix worldMatrix = Matrix();
+				gameObject->PRS.FillWorldMatrix(&worldMatrix);
 
-				this->SetMatrix("worldMatrix", Matrix::Identity);
+				this->SetMatrix("worldMatrix", worldMatrix);
 
-				//delete(worldMatrix);
+				worldMatrix = Matrix::Transpose(
+					Matrix::Invert(worldMatrix)
+				);
 
-				//shader->setc
+				this->SetMatrix("worldMatrixInverseTranspose", worldMatrix);				
 			}
 		}
 
@@ -248,6 +253,26 @@ namespace TikiEngine
 				(ID3D11ShaderResourceView*)texture->GetNativeResource()
 			);
 		}
+
+		void Shader::SetTextureArray(string key, List<ITexture*>* array)
+		{
+			ID3D11ShaderResourceView** data = new ID3D11ShaderResourceView*[array->Count()];
+
+			UInt32 i = 0;
+			while (i < array->Count())
+			{
+				data[i] = (ID3D11ShaderResourceView*)array->Get(i)->GetNativeResource();
+				i++;
+			}
+
+			effect->GetVariableByName(key.c_str())->AsShaderResource()->SetResourceArray(
+				data,
+				0,
+				array->Count()
+			);
+
+			delete(data);
+		}
 		#pragma endregion
 
 		#pragma region Private Member
@@ -327,12 +352,12 @@ namespace TikiEngine
 
 				this->SetConstantBuffer(
 					"MatrixBuffer",
-					DllMain::Module->GetMatrixBuffer()->GetBuffer()
+					DllMain::ModuleGraphics->GetMatrixBuffer()->GetBuffer()
 				);
 
 				this->SetConstantBuffer(
 					"LightBuffer",
-					DllMain::Module->GetLightBuffer()->GetBuffer()
+					DllMain::ModuleGraphics->GetLightBuffer()->GetBuffer()
 				);
 				break;
 			case 'p':

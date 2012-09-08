@@ -22,7 +22,7 @@ namespace TikiEngine
 
 		static Engine* Engine;
 
-		static PhysicsModule* Module;
+		static PhysicsModule* ModuleGraphics;
 	    static NxScene* Scene;
 		static NxPhysicsSDK* PhysicsSDK;
 		static NxControllerManager* ControllerManager;

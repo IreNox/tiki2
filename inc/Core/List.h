@@ -13,18 +13,17 @@ public:
 	{
 	}
 
-	List(T* data, int count, bool readOnly)
-		: lengthArr(count)
+	List(T* data, UInt32 count, bool readOnly)
+		: lengthData(count - 1), lengthArr(2)
 	{
 		this->IsReadOnly = readOnly;
 
-		lengthData = 2;
-		while (lengthData < count)
+		while (lengthArr < count)
 		{
-			lengthData = getNextSize();
+			lengthArr = getNextSize();
 		}
 
-		this->data = new T[lengthData];
+		this->data = new T[lengthArr];
 
 		for (int i = 0; i < count; i++)
 		{
@@ -46,7 +45,7 @@ public:
 
 	int IndexOf(T item) const
 	{
-		for (int i = 0; i < this->lengthData; i++)
+		for (int i = 0; i < this->lengthData + 1; i++)
 		{
 			if (this->data[i] == item) return i;
 		}

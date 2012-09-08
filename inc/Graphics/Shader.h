@@ -17,9 +17,6 @@ namespace TikiEngine
 			Shader(Engine* engine);
 			~Shader();
 
-			void LoadFromFile(wstring fileName);
-			void CompileFromFile(wstring fileName);
-
 			void SelectSubByIndex(UInt32 index);
 			void SelectSubByName(string name);
 
@@ -44,6 +41,7 @@ namespace TikiEngine
 			void SetVector4(string key, const Vector4& value);
 			void SetMatrix(string key, const Matrix& value);
 			void SetTexture(string key, ITexture* value);
+			void SetTextureArray(string key, List<ITexture*>* array);
 
 			ShaderType GetShaderType();
 

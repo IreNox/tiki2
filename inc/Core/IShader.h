@@ -50,6 +50,7 @@ namespace TikiEngine
 			virtual void SetVector4(string key, const Vector4& value) = 0;
 			virtual void SetMatrix(string key, const Matrix& value) = 0;
 			virtual void SetTexture(string key, ITexture* value) = 0;
+			virtual void SetTextureArray(string key, List<ITexture*>* array) = 0;
 
 			virtual ShaderType GetShaderType() = 0;
 

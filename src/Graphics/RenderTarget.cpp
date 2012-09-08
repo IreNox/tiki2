@@ -1,6 +1,8 @@
 
 #include "Graphics/RenderTarget.h"
+
 #include "Graphics/DllMain.h"
+#include "Graphics/GraphicsModule.h"
 
 namespace TikiEngine
 {
@@ -24,7 +26,7 @@ namespace TikiEngine
 
 		RenderTarget::~RenderTarget()
 		{
-			DllMain::Module->RemoveScreenSizeRenderTarget(this);
+			DllMain::ModuleGraphics->RemoveScreenSizeRenderTarget(this);
 
 			SafeRelease(&renderTarget);
 			SafeRelease(&texture);
@@ -34,7 +36,7 @@ namespace TikiEngine
 		#pragma region Member
 		void RenderTarget::Apply(UInt32 slot)
 		{
-			DllMain::Module->SetRenderTarget(slot, renderTarget);
+			DllMain::ModuleGraphics->SetRenderTarget(slot, renderTarget);
 		}
 
 		void RenderTarget::Clear(const Color& color)
@@ -115,11 +117,11 @@ namespace TikiEngine
 		void RenderTarget::CreateScreenSize()
 		{
 			this->Create(
-				DllMain::Module->GetViewPort()->Width,
-				DllMain::Module->GetViewPort()->Height
+				DllMain::ModuleGraphics->GetViewPort()->Width,
+				DllMain::ModuleGraphics->GetViewPort()->Height
 			);
 
-			DllMain::Module->AddScreenSizeRenderTarget(this);
+			DllMain::ModuleGraphics->AddScreenSizeRenderTarget(this);
 		}
 		#pragma endregion
 

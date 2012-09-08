@@ -14,7 +14,8 @@ namespace TikiEngine
 			IST_TexCoord,
 			IST_Tangent,
 			IST_Color,
-			IST_Binormal
+			IST_Binormal,
+			IST_SV_RenderTargetArrayIndex
 		};
 
 		enum InputElementFormat
