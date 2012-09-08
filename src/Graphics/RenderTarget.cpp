@@ -54,6 +54,11 @@ namespace TikiEngine
 			return texture->GetHeight();
 		}
 
+		Vector2 RenderTarget::GetSize()
+		{
+			return texture->GetSize();
+		}
+
 		void RenderTarget::GetData(Int32 format, void** data)
 		{
 			texture->GetData(format, data);

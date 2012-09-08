@@ -20,8 +20,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		EngineDescription desc;
 
 		desc.hInst = hInst;
-		desc.Window.Width = 800;
-		desc.Window.Height = 600;
+		desc.Window.Width = 1100;
+		desc.Window.Height = 750;
 
 		Engine* engine = new Engine();
 		

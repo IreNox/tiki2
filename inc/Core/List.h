@@ -25,7 +25,7 @@ public:
 
 		this->data = new T[lengthArr];
 
-		for (int i = 0; i < count; i++)
+		for (UInt32 i = 0; i < count; i++)
 		{
 			this->data[i] = data[i];
 		}

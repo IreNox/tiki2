@@ -53,6 +53,12 @@ namespace TikiEngine
 		{
 			vertices.Clear();
 			textures.Clear();
+
+			screenSize = DllMain::ModuleGraphics->GetViewPort()->GetSize();
+			pixelSize = Vector2(
+				2.0f / screenSize.X,
+				2.0f / screenSize.Y
+			);
 		}
 
 		void SpriteBatchModule::End()
@@ -97,20 +103,6 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position)
 		{
-			float index = 0;
-
-			if (!textures.Contains(texture))
-			{
-				textures.Add(texture);
-				index = (float)textures.IndexOf(texture);
-			}
-
-			Vector2 screenSize = DllMain::ModuleGraphics->GetViewPort()->GetSize();
-			Vector2 pixelSize = Vector2(
-				2.0f / screenSize.X,
-				2.0f / screenSize.Y
-			);
-
 			Vector2 tl = Vector2(
 				-1.0f + (position.X * pixelSize.X),
 				1.0f - (position.Y * pixelSize.Y)
@@ -121,11 +113,104 @@ namespace TikiEngine
 				tl.Y - (pixelSize.Y * texture->GetHeight())
 			);
 
+			drawInternal(
+				texture,
+				Vector3(tl.X, tl.Y, 0.0f),
+				Vector3(br.X, tl.Y, 0.0f),
+				Vector3(tl.X, br.Y, 0.0f),
+				Vector3(br.X, br.Y, 0.0f)
+			);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect)
+		{
+			Vector2 tl = Vector2(
+				-1.0f + (destRect.X * pixelSize.X),
+				1.0f - (destRect.Y * pixelSize.Y)
+			);
+
+			Vector2 br = Vector2(
+				tl.X + (pixelSize.X * destRect.Width),
+				tl.Y - (pixelSize.Y * destRect.Height)
+			);
+
+			drawInternal(
+				texture,
+				Vector3(tl.X, tl.Y, 0.0f),
+				Vector3(br.X, tl.Y, 0.0f),
+				Vector3(tl.X, br.Y, 0.0f),
+				Vector3(br.X, br.Y, 0.0f)
+			);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth)
+		{
+			this->Draw(
+				texture,
+				position,
+				rotation,
+				origin,
+				Vector2(scale),
+				layerDepth
+			);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth)
+		{
+			Vector3 origin3 = Vector3(origin, 0);
+			Vector3 size = Vector3(texture->GetSize(), 0);
+			
+			Vector3 tl = Vector3(0.0f,   0.0f,   0.0f) - origin3;
+			Vector3 tr = Vector3(size.X, 0.0f,   0.0f) - origin3;
+			Vector3 bl = Vector3(0.0f,   size.Y, 0.0f) - origin3;
+			Vector3 br = Vector3(size.X, size.Y, 0.0f) - origin3;
+
+			tl = Vector3(tl.X * scale.X, tl.Y * scale.Y, layerDepth);
+			tr = Vector3(tr.X * scale.X, tr.Y * scale.Y, layerDepth);
+			bl = Vector3(bl.X * scale.X, bl.Y * scale.Y, layerDepth);
+			br = Vector3(br.X * scale.X, br.Y * scale.Y, layerDepth);
+
+			Quaternion rot = Quaternion::CreateFromYawPitchRoll(0, 0, rotation);
+			tl = rot * tl;
+			tr = rot * tr;
+			bl = rot * bl;
+			br = rot * br;
+
+			Vector3 position3 = Vector3(position, 0.0f);
+			tl = transformPoint(tl + position3);
+			tr = transformPoint(tr + position3);
+			bl = transformPoint(bl + position3);
+			br = transformPoint(br + position3);
+
+			drawInternal(texture, tl, tr, bl, br);
+		}
+		#pragma endregion
+
+		#pragma region Private Member
+		Vector3 SpriteBatchModule::transformPoint(Vector3 point)
+		{
+			return Vector3(
+				-1.0f + (point.X * pixelSize.X),
+				 1.0f - (point.Y * pixelSize.Y),
+				 0.0f
+			);
+		}
+
+		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br)
+		{
+			float index = 0;
+
+			if (!textures.Contains(texture))
+			{
+				textures.Add(texture);
+				index = (float)textures.IndexOf(texture);
+			}
+
 			SpriteBatchVertex vertex[4] = {
-				{ tl.X, tl.Y, 0.0f, 0.0f, 0.0f, index }, // TL
-				{ br.X, tl.Y, 0.0f, 1.0f, 0.0f, index }, // TR
-				{ tl.X, br.Y, 0.0f, 0.0f, 1.0f, index }, // BL
-				{ br.X, br.Y, 0.0f, 1.0f, 1.0f, index }, // BR
+				{ tl.X, tl.Y, tl.Z, 0.0f, 0.0f, index }, // TL
+				{ tr.X, tr.Y, tr.Z, 1.0f, 0.0f, index }, // TR
+				{ bl.X, bl.Y, bl.Z, 0.0f, 1.0f, index }, // BL
+				{ br.X, br.Y, br.Z, 1.0f, 1.0f, index }, // BR
 			};
 
 			vertices.Add(vertex[0]);
@@ -134,21 +219,6 @@ namespace TikiEngine
 			vertices.Add(vertex[1]);
 			vertices.Add(vertex[2]);
 			vertices.Add(vertex[3]);
-		}
-
-		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destinationRectangle)
-		{
-
-		}
-
-		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth)
-		{
-
-		}
-
-		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth)
-		{
-
 		}
 		#pragma endregion
 	}

@@ -172,6 +172,14 @@ namespace TikiEngine
 			return desc.Height;
 		}
 
+		Vector2 Texture::GetSize()
+		{
+			return Vector2(
+				(float)desc.Width,
+				(float)desc.Height
+			);
+		}
+
 		void Texture::GetData(Int32 format, void** data)
 		{
 			D3D11_MAPPED_SUBRESOURCE mapped;

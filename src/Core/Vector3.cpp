@@ -12,6 +12,11 @@ Vector3::Vector3(float all)
 {
 }
 
+Vector3::Vector3(Vector2 v, float z)
+	: X(v.X), Y(v.Y), Z(z)
+{
+}
+
 Vector3::Vector3(float x, float y, float z)
 	: X(x), Y(y), Z(z)
 {
@@ -47,7 +52,7 @@ void Vector3::Negate()
 	this->Y = -this->Y;
 	this->Z = -this->Z;
 }
-#pragma endregion Methods
+#pragma endregion
 
 #pragma region static Methods
 float Vector3::Dot(const Vector3& vector1, const Vector3& vector2)

@@ -42,7 +42,7 @@ namespace TikiEngine
 			GameObject* go = new GameObject(engine);
 
 			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/balls_test2.fbx");
-			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
+			tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
@@ -160,7 +160,20 @@ namespace TikiEngine
 
 			engine->sprites->Draw(
 				tex,
-				Vector2(25, 25)
+				Vector2(400, 400),
+				args.Time.TotalTime,
+				Vector2(256, 256),
+				Vector2(0.5f),
+				2
+			);
+
+			engine->sprites->Draw(
+				tex,
+				Vector2(300, 300),
+				args.Time.TotalTime,
+				Vector2(256, 256),
+				Vector2(1),
+				1
 			);
 		}
 
@@ -170,7 +183,7 @@ namespace TikiEngine
 				sinf((float)args.Time.TotalTime / 5) * 50,
 				0,
 				cosf((float)args.Time.TotalTime / 5) * 50
-				);
+			);
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
 

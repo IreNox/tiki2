@@ -42,7 +42,12 @@ namespace TikiEngine
 			List<ITexture*> textures;
 			List<SpriteBatchVertex> vertices;
 
-			void drawInternal(ITexture* texture, const Vector2& position, const Vector2& size, const Vector2& origin, float rotation);
+			Vector2 pixelSize;
+			Vector2 screenSize;
+
+			Vector3 transformPoint(Vector3 point);
+
+			void drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br);
 
 		};
 	}

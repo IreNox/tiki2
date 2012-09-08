@@ -1,6 +1,8 @@
 #pragma once
 
-#include "Matrix.h"
+#include "Core/Matrix.h"
+#include "Core/Vector2.h"
+
 #include <Math.h>
 
 class Vector3
@@ -20,6 +22,7 @@ public:
 	Vector3(void);
 	Vector3(float all);
 	Vector3(float* arr);
+	Vector3(Vector2 v, float z);
 	Vector3(float x, float y, float z);
 
 	~Vector3(void);
