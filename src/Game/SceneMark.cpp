@@ -26,7 +26,9 @@ namespace TikiEngine
 
 		SceneMark::~SceneMark()
 		{
-			delete box;
+			delete kinematicBox;
+			delete staticBox;
+			delete dynamicBox;
 			delete controller;
 			delete material;
 		}
@@ -49,35 +51,35 @@ namespace TikiEngine
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
 			// init dynamic BoxCollider
-			box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(0, 3, -4));
-			box->SetSize(Vector3(1, 1, 1));
-			box->SetDynamic(true);
+			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			dynamicBox->SetCenter(Vector3(0, 3, -4));
+			dynamicBox->SetSize(Vector3(1, 1, 1));
+			dynamicBox->SetDynamic(true);
 			// assign collision groups after object is created, else it won't work!
-			box->SetGroup(CG_Collidable_Pushable);
+			dynamicBox->SetGroup(CG_Collidable_Pushable);
 			this->AddElement(go);
 			go->Release();
 
 			// init box plane
 			go = new GameObject(engine);
-			box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(0, 0, 0));
-			box->SetSize(Vector3(10, 0.1f, 10));
-			box->SetDynamic(false);
-			box->SetGroup(CG_Collidable_Non_Pushable);
+			staticBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+			staticBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			staticBox->SetCenter(Vector3(0, 0, 0));
+			staticBox->SetSize(Vector3(10, 0.1f, 10));
+			staticBox->SetDynamic(false);
+			staticBox->SetGroup(CG_Collidable_Non_Pushable);
 			this->AddElement(go);
 			go->Release();
 
 			// Init kinematic actor
 			go = new GameObject(engine);
-			box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			box->SetMaterial(material->GetIndex()); // 0 = default material	
-			box->SetCenter(Vector3(0, 5, 0));
-			box->SetSize(Vector3(1, 1, 1));
-			box->SetDynamic(true);
-			box->GetRigidBody()->SetKinematic(true);
+			kinematicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+			kinematicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			kinematicBox->SetCenter(Vector3(0, 5, 0));
+			kinematicBox->SetSize(Vector3(1, 1, 1));
+			kinematicBox->SetDynamic(true);
+			kinematicBox->GetRigidBody()->SetKinematic(true);
 			this->AddElement(go);
 			go->Release();
 
@@ -127,14 +129,14 @@ namespace TikiEngine
 			//box->SetTrigger(true);
 
 			// Test if the box is dynamic to move it around
-			if (box->GetDynamic())
+			if (kinematicBox->GetDynamic())
 			{
 				// set some mass, this won't affect kinematic actors.
-				box->GetRigidBody()->SetMass(5);
+				kinematicBox->GetRigidBody()->SetMass(5);
 				//assert(box->GetRigidBody()->GetMass() == 5);
 
 				// case when we have a kinematic actor
-				if (!box->GetRigidBody()->GetKinematic())
+				if (!kinematicBox->GetRigidBody()->GetKinematic())
 				{
 					// give this tiny box a force pointing upwards
 					//box->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
@@ -177,7 +179,7 @@ namespace TikiEngine
 			bool collidedAbove = (cf & CF_Up) != 0;
 
 				// if it is dynamic and also kinematic, use following functions to move/rotate:
-			if (box->GetDynamic() && box->GetRigidBody()->GetKinematic())
+			if (kinematicBox->GetDynamic() && kinematicBox->GetRigidBody()->GetKinematic())
 			{
 			
 				//box->GetRigidBody()->MovePosition(Vector3(0, 0.0005f, 0));
@@ -191,7 +193,7 @@ namespace TikiEngine
 				// PhysX does its rotations in a right-handed manner. 
 				//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
 				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
-				box->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
+				kinematicBox->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
 
 			Scene::Update(args);

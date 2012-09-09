@@ -22,7 +22,10 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 		private:
-			IBoxCollider* box;
+			IBoxCollider* dynamicBox;
+			IBoxCollider* staticBox;
+			IBoxCollider* kinematicBox;
+
 			IPhysicsMaterial* material; 
 			ICharacterController* controller;
 		};
