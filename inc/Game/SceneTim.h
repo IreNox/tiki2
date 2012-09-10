@@ -5,7 +5,7 @@
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
 
-#include "Core/IBoxCollider.h"
+#include "Core/IFont.h"
 
 namespace TikiEngine
 {
@@ -26,6 +26,8 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 		private:
+
+			IFont* font;
 
 			LightObject* light;
 

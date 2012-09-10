@@ -3,7 +3,6 @@
 #include "Core/ISpriteBatch.h"
 #include "Core/IRenderTarget.h"
 
-#include "Graphics/Font.h"
 #include "Graphics/Shader.h"
 #include "Graphics/DynamicBuffer.h"
 #include "Graphics/VertexDeclaration.h"
@@ -38,11 +37,9 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth);
 			
-			void DrawString(wstring font, wstring text, const Vector2& position);
+			void DrawString(IFont* font, wstring text, const Vector2& position);
 
 		private:
-
-			Font* font;
 
 			Shader* shader;
 			VertexDeclaration* declaration;

@@ -496,5 +496,8 @@
     <ClInclude Include="inc\Core\ISphereCollider.h">
       <Filter>Headerdateien\Interfaces\Extern Components</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IFont.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

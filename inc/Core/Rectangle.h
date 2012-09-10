@@ -30,5 +30,10 @@ namespace TikiEngine
 
 		~Rectangle() {}
 
+		bool operator==(const Rectangle& rhs)
+		{
+			return (this->X == rhs.X) && (this->Y == rhs.Y) && (this->Width == rhs.Width) && (this->Height == rhs.Height);
+		}
+
 	};
 }

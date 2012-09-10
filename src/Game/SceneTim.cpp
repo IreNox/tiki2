@@ -35,6 +35,7 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			SafeRelease(&tex);
+			SafeRelease(&font);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
@@ -151,6 +152,8 @@ namespace TikiEngine
 			//mesh->SetIndexData(indices, sizeof(indices));
 			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
 
+			font = engine->librarys->CreateResource<IFont>();
+
 			Scene::Initialize(args);
 		}
 
@@ -158,7 +161,7 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			engine->sprites->DrawString(L"Arial", L"BlaBla", Vector2(100, 100));
+			engine->sprites->DrawString(font, L"BlaBla", Vector2(100, 100));
 
 			/*engine->sprites->Draw(
 				tex,

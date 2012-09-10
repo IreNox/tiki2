@@ -1,6 +1,7 @@
 
 #include "Graphics/DllMain.h"
 
+#include "Graphics/Font.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 #include "Graphics/RenderTarget.h"
@@ -39,6 +40,7 @@ namespace TikiEngine
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
 
+		DllInfo.Resources.Add(typeid(IFont).hash_code());
 		DllInfo.Resources.Add(typeid(IShader).hash_code());
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
@@ -62,7 +64,11 @@ namespace TikiEngine
 
 	IResource* DllMain::CreateResource(IntPtr hash)
 	{
-		if (hash == typeid(IShader).hash_code())
+		if (hash == typeid(IFont).hash_code())
+		{
+			return new Font(DllMain::Engine);
+		}
+		else if (hash == typeid(IShader).hash_code())
 		{
 			return new Shader(DllMain::Engine);
 		}

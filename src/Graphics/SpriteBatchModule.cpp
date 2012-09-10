@@ -11,7 +11,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SpriteBatchModule::SpriteBatchModule(Engine* engine)
-			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), vertices(), font(0)
+			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), vertices()
 		{
 		}
 
@@ -227,22 +227,18 @@ namespace TikiEngine
 		#pragma endregion
 		
 		#pragma region Member - DrawString
-		void SpriteBatchModule::DrawString(wstring font, wstring text, const Vector2& position)
+		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position)
 		{
-			if (this->font == 0)
+			UInt32 i = 0;
+			float width = 0;
+			Vector2 pos = position;
+			while (i < text.length())
 			{
-				this->font = new Font(engine);
-				this->font->Create(
-					0 //font.c_str()
-				);
+				width = font->DrawChar(text[i], pos);
+
+				pos.X += width;
+				i++;
 			}
-
-			this->Draw(
-				this->font->GetTexture(),
-				position
-			);
-
-			//delete(font2);
 		}
 		#pragma endregion
 
