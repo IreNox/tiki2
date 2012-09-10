@@ -16,7 +16,6 @@
 #include "Core/ISpriteBatch.h"
 
 #include "Core/GameTime.h"
-#include "Core/DrawContext.h"
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
@@ -117,6 +116,7 @@ namespace TikiEngine
 	#pragma region Member - Run
 	void Engine::Run()
 	{
+		int wait = 0;
 		LARGE_INTEGER freq;
 		LARGE_INTEGER last;
 		LARGE_INTEGER current;
@@ -162,13 +162,11 @@ namespace TikiEngine
 
 				DrawArgs drawArgs = DrawArgs(
 					time,
-					DrawContext(
-						camera,
-						(camera->GetRenderTarget() ? camera->GetRenderTarget() : graphics->GetScreenBuffer())
-					),
-					graphics
+					camera,
+					graphics,
+					sprites
 				);
-
+				
 				graphics->Begin(drawArgs);
 				sprites->Begin();
 				this->Draw(drawArgs);
@@ -184,6 +182,12 @@ namespace TikiEngine
 			}
 
 			window->End();
+
+			float fps = 1.0f / elapsedTime;
+			wait += (fps > 70.0f ? 1 : -1);
+			wait = abs(wait);
+
+			Sleep(wait);
 		}
 	}
 	#pragma endregion

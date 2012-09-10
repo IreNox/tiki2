@@ -319,9 +319,6 @@
     <ClInclude Include="inc\Core\Color.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\DrawContext.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\ViewPort.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>

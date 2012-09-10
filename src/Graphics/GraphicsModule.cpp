@@ -210,10 +210,10 @@ namespace TikiEngine
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
 
-			if (args.Context.CurrentCamera)
+			if (args.CurrentCamera)
 			{
 				Matrices* matrices = matrixBuffer->Map();
-				*matrices = *args.Context.CurrentCamera->GetMatrices();
+				*matrices = *args.CurrentCamera->GetMatrices();
 				matrixBuffer->Unmap();
 			}
 		}
