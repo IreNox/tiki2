@@ -36,7 +36,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/Normals.fbx");
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/humanoid.fbx");
 
 			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 

@@ -89,8 +89,15 @@ namespace TikiEngine
 
 					FbxVector4 pos = model->GetControlPointAt(position);
 
-					int uvIndex = model->GetElementUV(0)->GetIndexArray().GetAt(counter);
-					FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+					bool hasUVInformation = model->GetElementUVCount() != 0;
+
+					FbxVector2 uv = FbxVector2(0,0);
+					if(hasUVInformation)
+					{
+						int uvIndex = model->GetElementUV(0)->GetIndexArray().GetAt(counter);
+						FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+					}
+
 
 					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(counter);
 					
