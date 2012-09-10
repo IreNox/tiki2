@@ -40,7 +40,7 @@ namespace TikiEngine
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
 			GameObject* go = new GameObject(engine);
-
+			
 			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/balls_test2.fbx");
 			tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
 
@@ -158,7 +158,9 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			engine->sprites->Draw(
+			engine->sprites->DrawString(L"Arial", L"BlaBla", Vector2(100, 100));
+
+			/*engine->sprites->Draw(
 				tex,
 				Vector2(400, 400),
 				args.Time.TotalTime,
@@ -174,7 +176,7 @@ namespace TikiEngine
 				Vector2(256, 256),
 				Vector2(1),
 				1
-			);
+			);*/
 		}
 
 		void SceneTim::Update(const UpdateArgs& args)

@@ -21,7 +21,7 @@ namespace TikiEngine
 			renderTarget->GetResource(&res);
 
 			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
-			texture = new Texture(engine, tex);
+			texture = new Texture(engine, tex, false);
 		}
 
 		RenderTarget::~RenderTarget()
@@ -59,6 +59,11 @@ namespace TikiEngine
 			return texture->GetSize();
 		}
 
+		bool RenderTarget::GetDynamic()
+		{
+			return texture->GetDynamic();
+		}
+
 		void RenderTarget::GetData(Int32 format, void** data)
 		{
 			texture->GetData(format, data);
@@ -81,7 +86,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
-		void RenderTarget::Create(UInt32 width, UInt32 height)
+		void RenderTarget::Create(UInt32 width, UInt32 height, bool dynamic)
 		{
 			if (this->GetReady()) return;
 
@@ -96,8 +101,18 @@ namespace TikiEngine
 			desc.ArraySize = 1;
 			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			desc.SampleDesc.Count = 1;
-			desc.Usage = D3D11_USAGE_DEFAULT;
 			desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
+
+			if (dynamic)
+			{
+				desc.Usage = D3D11_USAGE_DYNAMIC;
+				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			}
+			else
+			{
+				desc.Usage = D3D11_USAGE_DEFAULT;
+				desc.CPUAccessFlags = 0;
+			}
 
 			DllMain::Device->CreateTexture2D(
 				&desc,
@@ -105,7 +120,7 @@ namespace TikiEngine
 				&texture
 			);
 						
-			this->texture = new Texture(engine, texture);
+			this->texture = new Texture(engine, texture, dynamic);
 
 			D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
 			rtDesc.Format = desc.Format;
@@ -123,7 +138,8 @@ namespace TikiEngine
 		{
 			this->Create(
 				DllMain::ModuleGraphics->GetViewPort()->Width,
-				DllMain::ModuleGraphics->GetViewPort()->Height
+				DllMain::ModuleGraphics->GetViewPort()->Height,
+				false
 			);
 
 			DllMain::ModuleGraphics->AddScreenSizeRenderTarget(this);

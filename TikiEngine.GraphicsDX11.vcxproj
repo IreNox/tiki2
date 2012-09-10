@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
+    <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\GraphicsModule.cpp" />
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
@@ -39,6 +40,7 @@
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
+    <ClInclude Include="inc\Graphics\Font.h" />
     <ClInclude Include="inc\Graphics\DynamicBuffer.h" />
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />

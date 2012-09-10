@@ -16,10 +16,10 @@ namespace TikiEngine
 		public:
 
 			Texture(Engine* engine);
-			Texture(Engine* engine, ID3D11Texture2D* tex);
+			Texture(Engine* engine, ID3D11Texture2D* tex, bool dynamic);
 			~Texture();
 
-			void Create(UInt32 width, UInt32 height);
+			void Create(UInt32 width, UInt32 height, bool dynamic);
 
 			Int32 GetWidth();
 			Int32 GetHeight();
@@ -28,16 +28,19 @@ namespace TikiEngine
 			void GetData(Int32 format, void** data);
 			void SetData(Int32 format, void* data, UInt32 dataLength);
 
+			bool GetDynamic();
 			void* GetNativeResource();
 
 			bool GetReady();
 
 		protected:
 
-			void createInternal(UInt32 width, UInt32 height, UInt32 bindFlags);
+			void createInternal(UInt32 width, UInt32 height, bool dynamic);
 
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);
+
+			bool dynamic;
 
 			ID3D11Texture2D* texture;
 			ID3D11ShaderResourceView* textureResource;

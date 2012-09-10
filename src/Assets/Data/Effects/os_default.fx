@@ -84,9 +84,9 @@ PS_INPUT VS_Main(VS_INPUT input)
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
 	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
-	float4 termAmbient = AmbientColor * AmbientIntensity;
-	float4 termEmissive = EmissiveColor * EmissiveIntensity;
-	float4 termLight = float4(0, 0, 0, 1);
+	float3 termAmbient = AmbientColor.rgb * AmbientIntensity;
+	float3 termEmissive = EmissiveColor.rgb * EmissiveIntensity;
+	float3 termLight = float3(0, 0, 0);
 
 	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
 	
@@ -102,10 +102,13 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			termLight += Lights[i].Color * lighting;
 		}		
 	
-		termDiffuse *= termLight;
+		termDiffuse.rgb *= termLight;
 	}
 	
-	return saturate(termDiffuse + termAmbient + termEmissive);
+	return float4(
+		saturate(termDiffuse.rgb + termAmbient + termEmissive),
+		termDiffuse.a
+	);
 }
 
 technique11 basic

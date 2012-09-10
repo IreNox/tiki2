@@ -54,6 +54,7 @@ namespace TikiEngine
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
 
 			void AddPostProcess(PostProcess* postProcess);
+			void AddDefaultProcessTarget(string varName, IRenderTarget* target);
 			void RemovePostProcess(PostProcess* postProcess);
 
 			void AddScreenSizeRenderTarget(RenderTarget* target);
@@ -81,8 +82,10 @@ namespace TikiEngine
 			ID3D11Texture2D* depthStencilBuffer;
 			ID3D11DepthStencilView* depthStencilView;
 			ID3D11DepthStencilState* depthStencilState;
+			ID3D11DepthStencilState* depthStencilStateDisable;
 
 			ViewPort viewPort; 
+			ID3D11BlendState* alphaBlendState;
 			ID3D11RasterizerState* rasterStateBackfaces;
 
 			Color clearColor;

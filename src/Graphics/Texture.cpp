@@ -16,13 +16,16 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Texture::Texture(Engine* engine)
-			: ITexture(engine)
+			: ITexture(engine), texture(0), textureResource(0), dynamic(false)
 		{
-
+			ZeroMemory(
+				&desc,
+				sizeof(D3D11_TEXTURE2D_DESC)
+			);
 		}
 
-		Texture::Texture(Engine* engine, ID3D11Texture2D* tex)
-			: ITexture(engine), texture(tex)
+		Texture::Texture(Engine* engine, ID3D11Texture2D* tex, bool dynamic)
+			: ITexture(engine), texture(tex), dynamic(dynamic)
 		{
 			tex->GetDesc(&desc);
 
@@ -48,6 +51,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
+		bool Texture::GetDynamic()
+		{
+			return dynamic;
+		}
+
 		void* Texture::GetNativeResource()
 		{
 			return (void*)textureResource;
@@ -60,17 +68,16 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
-		void Texture::Create(UInt32 width, UInt32 height)
+		void Texture::Create(UInt32 width, UInt32 height, bool dynamic)
 		{
-			this->createInternal(width, height, 0);
+			this->createInternal(width, height, dynamic);
 		}
 
-		void Texture::createInternal(UInt32 width, UInt32 height, UInt32 bindFlags)
+		void Texture::createInternal(UInt32 width, UInt32 height, bool dynamic)
 		{
 			if (this->GetReady()) return;
 
-			D3D11_TEXTURE2D_DESC desc;
-			ZeroMemory(&desc, sizeof(desc));
+			this->dynamic = dynamic;
 
 			desc.Width = width;
 			desc.Height = height;
@@ -78,8 +85,18 @@ namespace TikiEngine
 			desc.ArraySize = 1;
 			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 			desc.SampleDesc.Count = 1;
-			desc.Usage = D3D11_USAGE_DEFAULT;
-			desc.BindFlags = bindFlags | D3D11_BIND_SHADER_RESOURCE;
+			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+			if (dynamic)
+			{
+				desc.Usage = D3D11_USAGE_DYNAMIC;
+				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+			}
+			else
+			{
+				desc.Usage = D3D11_USAGE_DEFAULT;
+				desc.CPUAccessFlags = 0;
+			}
 
 			DllMain::Device->CreateTexture2D(
 				&desc,

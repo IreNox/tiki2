@@ -17,7 +17,7 @@ namespace TikiEngine
 			RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget);
 			~RenderTarget();
 
-			void Create(UInt32 width, UInt32 height);
+			void Create(UInt32 width, UInt32 height, bool dynamic);
 			void CreateScreenSize();
 
 			void Apply(UInt32 slot);
@@ -26,6 +26,8 @@ namespace TikiEngine
 			Int32 GetWidth();
 			Int32 GetHeight();
 			Vector2 GetSize();
+
+			bool GetDynamic();
 
 			void GetData(Int32 format, void** data);
 			void SetData(Int32 format, void* data, UInt32 dataLength);

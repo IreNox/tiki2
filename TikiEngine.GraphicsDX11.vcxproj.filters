@@ -86,6 +86,9 @@
     <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp">
       <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\Font.cpp">
+      <Filter>Quelldateien\Internal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -141,6 +144,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DynamicBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Font.h">
+      <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

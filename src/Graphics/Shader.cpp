@@ -271,7 +271,7 @@ namespace TikiEngine
 				array->Count()
 			);
 
-			delete(data);
+			delete[](data);
 		}
 		#pragma endregion
 

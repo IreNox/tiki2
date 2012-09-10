@@ -1,7 +1,9 @@
 
 #include "Core/TypeGlobals.h"
-#include "Graphics/SpriteBatchModule.h"
+
+#include "Graphics/RenderTarget.h"
 #include "Graphics/GraphicsModule.h"
+#include "Graphics/SpriteBatchModule.h"
 
 namespace TikiEngine
 {
@@ -9,7 +11,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SpriteBatchModule::SpriteBatchModule(Engine* engine)
-			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), vertices()
+			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), vertices(), font(0)
 		{
 		}
 
@@ -26,6 +28,10 @@ namespace TikiEngine
 
 			shader = new Shader(engine);
 			shader->LoadFromFile(L"Data/Effects/os_spritebatch.fx");
+
+			renderTarget = new RenderTarget(engine);
+			renderTarget->CreateScreenSize();
+			DllMain::ModuleGraphics->AddDefaultProcessTarget("spriteBatch", renderTarget);
 
 			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, 2, true);
 
@@ -96,6 +102,8 @@ namespace TikiEngine
 			shader->Apply();
 			declaration->Apply();
 
+			renderTarget->Clear(Color::TransparentBlack);
+			renderTarget->Apply(0);
 			DllMain::Context->Draw(count, 0);
 		}
 		#pragma endregion
@@ -103,9 +111,8 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position)
 		{
-			Vector2 tl = Vector2(
-				-1.0f + (position.X * pixelSize.X),
-				1.0f - (position.Y * pixelSize.Y)
+			Vector3 tl = transformPoint(
+				Vector3(position.X, position.Y, 0.0f)
 			);
 
 			Vector2 br = Vector2(
@@ -115,31 +122,64 @@ namespace TikiEngine
 
 			drawInternal(
 				texture,
-				Vector3(tl.X, tl.Y, 0.0f),
+				tl,
 				Vector3(br.X, tl.Y, 0.0f),
 				Vector3(tl.X, br.Y, 0.0f),
-				Vector3(br.X, br.Y, 0.0f)
+				Vector3(br.X, br.Y, 0.0f),
+				Vector4(0.0f, 0.0f, 1.0f, 1.0f)
 			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect)
 		{
-			Vector2 tl = Vector2(
-				-1.0f + (destRect.X * pixelSize.X),
-				1.0f - (destRect.Y * pixelSize.Y)
-			);
+			Vector3 tl = transformPoint(
+				Vector3(destRect.X, destRect.Y, 0.0f)
+			); 
 
-			Vector2 br = Vector2(
+			Vector3 br = Vector3(
 				tl.X + (pixelSize.X * destRect.Width),
-				tl.Y - (pixelSize.Y * destRect.Height)
+				tl.Y - (pixelSize.Y * destRect.Height),
+				0.0f
 			);
 
 			drawInternal(
 				texture,
-				Vector3(tl.X, tl.Y, 0.0f),
+				tl,
 				Vector3(br.X, tl.Y, 0.0f),
 				Vector3(tl.X, br.Y, 0.0f),
-				Vector3(br.X, br.Y, 0.0f)
+				br,
+				Vector4(0.0f, 0.0f, 1.0f, 1.0f)
+			);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect, const Rectangle& srcRect)
+		{
+			Vector3 tl = transformPoint(
+				Vector3(destRect.X, destRect.Y, 0.0f)
+			); 
+
+			Vector3 br = Vector3(
+				tl.X + (pixelSize.X * destRect.Width),
+				tl.Y - (pixelSize.Y * destRect.Height),
+				0.0f
+			);
+
+			Vector2 size = texture->GetSize();
+
+			Vector4 texCorrd = Vector4(
+				(float)srcRect.X / size.X,
+				(float)srcRect.Y / size.Y,
+				(float)(srcRect.X + srcRect.Width) / size.X,
+				(float)(srcRect.Y + srcRect.Height) / size.Y
+			);
+
+			drawInternal(
+				texture,
+				tl,
+				Vector3(br.X, tl.Y, 0.0f),
+				Vector3(tl.X, br.Y, 0.0f),
+				br,
+				texCorrd
 			);
 		}
 
@@ -182,7 +222,27 @@ namespace TikiEngine
 			bl = transformPoint(bl + position3);
 			br = transformPoint(br + position3);
 
-			drawInternal(texture, tl, tr, bl, br);
+			drawInternal(texture, tl, tr, bl, br, Vector4(0.0f, 0.0f, 1.0f, 1.0f));
+		}
+		#pragma endregion
+		
+		#pragma region Member - DrawString
+		void SpriteBatchModule::DrawString(wstring font, wstring text, const Vector2& position)
+		{
+			if (this->font == 0)
+			{
+				this->font = new Font(engine);
+				this->font->Create(
+					0 //font.c_str()
+				);
+			}
+
+			this->Draw(
+				this->font->GetTexture(),
+				position
+			);
+
+			//delete(font2);
 		}
 		#pragma endregion
 
@@ -196,7 +256,7 @@ namespace TikiEngine
 			);
 		}
 
-		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br)
+		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCoord)
 		{
 			float index = 0;
 
@@ -207,10 +267,10 @@ namespace TikiEngine
 			}
 
 			SpriteBatchVertex vertex[4] = {
-				{ tl.X, tl.Y, tl.Z, 0.0f, 0.0f, index }, // TL
-				{ tr.X, tr.Y, tr.Z, 1.0f, 0.0f, index }, // TR
-				{ bl.X, bl.Y, bl.Z, 0.0f, 1.0f, index }, // BL
-				{ br.X, br.Y, br.Z, 1.0f, 1.0f, index }, // BR
+				{ tl.X, tl.Y, tl.Z, texCoord.X, texCoord.Y, index }, // TL
+				{ tr.X, tr.Y, tr.Z, texCoord.Z, texCoord.Y, index }, // TR
+				{ bl.X, bl.Y, bl.Z, texCoord.X, texCoord.W, index }, // BL
+				{ br.X, br.Y, br.Z, texCoord.Z, texCoord.W, index }, // BR
 			};
 
 			vertices.Add(vertex[0]);
