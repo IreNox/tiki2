@@ -29,6 +29,10 @@ namespace TikiEngine
 
 
 			virtual void SetMaterial(int index) = 0;
+
+			/* !@brief This will offset the Capsule Collider in world space. */
+			virtual Vector3 GetCenter() = 0;
+			virtual void SetCenter(const Vector3& center) = 0;
 			
 			/* !@brief True if this Collider is dynamic, false otherwise */
 			virtual bool GetDynamic() = 0;
@@ -45,6 +49,8 @@ namespace TikiEngine
 
 			/* !@brief Sets the collision group */
 			virtual void SetGroup(CollisionGroups group) = 0;
+
+
 
 			 /* !@brief OnTriggerEnter is called when the Collider other enters the trigger. */
 			 //virtual void OnTriggerEnter(ICollider* other) = 0;

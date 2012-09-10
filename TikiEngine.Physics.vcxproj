@@ -27,6 +27,7 @@
     <ClInclude Include="inc\Physics\PhysicsMaterial.h" />
     <ClInclude Include="inc\Physics\PhysicsModule.h" />
     <ClInclude Include="inc\Physics\RigidBody.h" />
+    <ClInclude Include="inc\Physics\SphereCollider.h" />
     <ClInclude Include="inc\Physics\UserAllocator.h" />
     <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <ClCompile Include="src\Physics\PhysicsMaterial.cpp" />
     <ClCompile Include="src\Physics\PhysicsModule.cpp" />
     <ClCompile Include="src\Physics\RigidBody.cpp" />
+    <ClCompile Include="src\Physics\SphereCollider.cpp" />
     <ClCompile Include="src\Physics\UserAllocator.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

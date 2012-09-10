@@ -19,6 +19,9 @@ namespace TikiEngine
 			IRigidBody* GetRigidBody();
 			void SetMaterial(int index);
 
+			Vector3 GetCenter();
+			void SetCenter(const Vector3& center);
+
 			bool GetDynamic();
 			void SetDynamic(bool dynamicFlag);
 
@@ -28,8 +31,7 @@ namespace TikiEngine
 			void SetGroup(CollisionGroups group);
 
 			// ICharacterController Methods
-			Vector3 GetCenter();
-			void SetCenter(const Vector3& center);
+
 
 			Single GetRadius();
 			void SetRadius(Single radius); 
@@ -58,7 +60,6 @@ namespace TikiEngine
 		private:
 			NxCapsuleControllerDesc desc;
 			NxController* controller;
-			NxVec3 center;
 			Single radius;
 			Single height;
 			Single slopeLimit;

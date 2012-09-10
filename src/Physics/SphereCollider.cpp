@@ -1,4 +1,4 @@
-#include "Physics/BoxCollider.h"
+#include "Physics/SphereCollider.h"
 #include "Core/TypeGlobals.h"
 #include "Physics/DllMain.h"
 
@@ -6,13 +6,13 @@ namespace TikiEngine
 {
 	namespace Physics
 	{
-		BoxCollider::BoxCollider(Engine* engine, GameObject* gameObject)
-				: IBoxCollider(engine, gameObject)
+		SphereCollider::SphereCollider(Engine* engine, GameObject* gameObject)
+				: ISphereCollider(engine, gameObject)
 		{
-			size = NxVec3(NX_MAX_F32);
+			radius = NX_MAX_F32;
 		}
 
-		BoxCollider::~BoxCollider()
+		SphereCollider::~SphereCollider()
 		{
 			if (actor != 0)
 				DllMain::Scene->releaseActor(*actor);
@@ -20,79 +20,80 @@ namespace TikiEngine
 		}
 
 		#pragma region ICollider Methods
-		IRigidBody* BoxCollider::GetRigidBody()
+		IRigidBody* SphereCollider::GetRigidBody()
 		{
 			return GetBody();
 		}
 
-		void BoxCollider::SetMaterial(int index)
+		void SphereCollider::SetMaterial(int index)
 		{
 			SetMaterialIndex(index);
 			UpdateData();
 		}
 
-		Vector3 BoxCollider::GetCenter()
+		Vector3 SphereCollider::GetCenter()
 		{
 			return GetCenterPos();
 		}
 
-		void BoxCollider::SetCenter(const Vector3& center)
+		void SphereCollider::SetCenter(const Vector3& center)
 		{
 			SetCenterPos(center);
 			UpdateData();
 		}
 
-		bool BoxCollider::GetDynamic()
+		bool SphereCollider::GetDynamic()
 		{
 			return GetDynamicFlag();
 		}
 
-		void BoxCollider::SetDynamic(bool dynamicFlag)
+		void SphereCollider::SetDynamic(bool dynamicFlag)
 		{
 			SetDynamicFlag(dynamicFlag);
 			UpdateData();
 		}
 
-		bool BoxCollider::GetTrigger()
+		bool SphereCollider::GetTrigger()
 		{
 			return GetTriggerFlag();
 		}
 
-		void BoxCollider::SetTrigger(bool triggerFlag)
+		void SphereCollider::SetTrigger(bool triggerFlag)
 		{
 			SetTriggerFlag(triggerFlag);
 		}
 
-		void BoxCollider::SetGroup(CollisionGroups group)
+		void SphereCollider::SetGroup(CollisionGroups group)
 		{
 			SetCollisionGroup(group);
 		}
 		#pragma endregion
 
 		#pragma region IBoxCollider Methods
-		Vector3 BoxCollider::GetSize()
+		Single SphereCollider::GetRadius()
 		{
-			return size.get(); 
+			if (actor != 0)
+				return actor->getShapes()[0]->isSphere()->getRadius();
+			else 
+				return radius; 
 		}
 
-		void BoxCollider::SetSize(const Vector3& size)
+		void SphereCollider::SetRadius(Single radius)
 		{
-			this->size = size.arr;
+			this->radius = radius;
 			UpdateData();
 		}
 
-
-
-		bool BoxCollider::GetReady() 
+		bool SphereCollider::GetReady() 
 		{
-			return (size != NxVec3(NX_MAX_F32)) && 
-				   (center != NxVec3(NX_MAX_F32)) && 
-				   (state != CS_UNINITIALIZED) &&
-				   (materialIndex != -1);
+			return radius != NX_MAX_F32 && 
+				   center != NxVec3(NX_MAX_F32) && 
+				   state != CS_UNINITIALIZED &&
+				   materialIndex != -1;
 		}
 		#pragma endregion
 
-		void BoxCollider::UpdateData()
+		void SphereCollider::UpdateData()
 		{
 			if (!this->GetReady()) 
 				return;
@@ -104,17 +105,17 @@ namespace TikiEngine
 				actorDescription.setToDefault();
 			}
 			// Create Box shape description.
-			NxBoxShapeDesc boxDesc;
-			boxDesc.dimensions = size;
+			NxSphereShapeDesc sphereDesc;
+			sphereDesc.radius = radius;
 
 			// Create material from index
-			boxDesc.materialIndex = materialIndex;
+			sphereDesc.materialIndex = materialIndex;
 
 			// if we are dynamic, we have a Rigid Body attached
 			if (state == CS_DYNAMIC)
 				actorDescription.body = rigidBody.GetDescription();
 
-			actorDescription.shapes.pushBack(&boxDesc);
+			actorDescription.shapes.pushBack(&sphereDesc);
 			actorDescription.userData = (void*)this;	// associate the actor with this object
 			actorDescription.globalPose.t = center;
 

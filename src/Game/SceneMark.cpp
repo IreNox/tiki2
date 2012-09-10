@@ -29,6 +29,7 @@ namespace TikiEngine
 			delete kinematicBox;
 			delete staticBox;
 			delete dynamicBox;
+			delete triggerSphere;
 			delete controller;
 			delete material;
 		}
@@ -83,6 +84,18 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+			// init static sphere trigger 
+			go = new GameObject(engine);
+			triggerSphere = engine->librarys->CreateComponent<ISphereCollider>(go);
+			triggerSphere->SetMaterial(material->GetIndex()); // 0 = default material	
+			triggerSphere->SetCenter(Vector3(3, 2, 0));
+			triggerSphere->SetRadius(1.0f);
+			triggerSphere->SetDynamic(false);
+			triggerSphere->SetTrigger(true);
+			triggerSphere->SetGroup(CG_Collidable_Non_Pushable);
+			this->AddElement(go);
+			go->Release();
+
 			// init CharacterController
 			go = new GameObject(engine);
 			controller = engine->librarys->CreateComponent<ICharacterController>(go);
@@ -129,24 +142,17 @@ namespace TikiEngine
 			//box->SetTrigger(true);
 
 			// Test if the box is dynamic to move it around
-			if (kinematicBox->GetDynamic())
+			if (dynamicBox->GetDynamic())
 			{
 				// set some mass, this won't affect kinematic actors.
-				kinematicBox->GetRigidBody()->SetMass(5);
+				dynamicBox->GetRigidBody()->SetMass(5);
 				//assert(box->GetRigidBody()->GetMass() == 5);
 
-				// case when we have a kinematic actor
-				if (!kinematicBox->GetRigidBody()->GetKinematic())
-				{
-					// give this tiny box a force pointing upwards
-					//box->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
+				// give this tiny box a force pointing upwards
+				dynamicBox->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
 
-					// and set an angular velocity on the Y-Axis
-					//box->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
-				}
-
-
-
+				// and set an angular velocity on the Y-Axis
+				dynamicBox->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
 			}
 
 			Scene::Initialize(args);

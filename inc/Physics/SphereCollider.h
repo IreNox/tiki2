@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Physics/Collider.h"
-#include "Core/IBoxCollider.h"
+#include "Core/ISphereCollider.h"
 
 namespace TikiEngine 
 {
@@ -9,14 +9,14 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		class BoxCollider : public Collider, public IBoxCollider 
+		class SphereCollider : public Collider, public ISphereCollider 
 		{
 		public:
 			/*! @brief Create BoxCollider */
-			BoxCollider(Engine* engine, GameObject* gameObject);
+			SphereCollider(Engine* engine, GameObject* gameObject);
 
 			/*! @brief Destructor */
-			~BoxCollider();
+			~SphereCollider();
 			
 			// ICollider Methods
 			IRigidBody* GetRigidBody();
@@ -34,9 +34,9 @@ namespace TikiEngine
 			void SetGroup(CollisionGroups group);
 
 
-			// IBoxCollider
-			Vector3 GetSize();
-			void SetSize(const Vector3& size);
+			// ISphereCollider
+			Single GetRadius();
+			void SetRadius(Single radius);
 
 			// Component
 			bool GetReady();
@@ -44,11 +44,11 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args) {}
 
 		private:
-			/*! @brief (re)Initialize BoxCollider */
+			/*! @brief (re)Initialize SphereCollider */
 			void UpdateData();
 
 		private:
-			NxVec3 size;
+			Single radius;
 
 		};
 

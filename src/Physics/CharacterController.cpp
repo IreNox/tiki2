@@ -10,7 +10,6 @@ namespace TikiEngine
 		{
 			controller = 0;
 			
-			center = NxVec3(NX_MAX_F32);
 			radius = FLT_MAX;
 			height = FLT_MAX;
 			slopeLimit = FLT_MAX;
@@ -37,6 +36,17 @@ namespace TikiEngine
 			// not supported
 			//SetMaterialIndex(index);
 			//UpdateData();
+		}
+
+		Vector3 CharacterController::GetCenter()
+		{
+			return GetCenterPos();
+		}
+
+		void CharacterController::SetCenter(const Vector3& center)
+		{
+			SetCenterPos(center);
+			UpdateData();
 		}
 
 		bool CharacterController::GetDynamic()
@@ -71,17 +81,6 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region ICharacterController Methods
-		Vector3 CharacterController::GetCenter()
-		{
-			return center.get();
-		}
-
-		void CharacterController::SetCenter(const Vector3& center)
-		{
-			this->center = center.arr;
-			UpdateData();
-		}
-
 		Single CharacterController::GetRadius()
 		{
 			return radius;

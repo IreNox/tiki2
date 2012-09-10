@@ -493,5 +493,8 @@
     <ClInclude Include="inc\Core\Rectangle.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\ISphereCollider.h">
+      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -22,10 +22,13 @@ namespace TikiEngine
 			virtual ~Collider() {}
 
 			// TODO: is this the right way to downcast?
-			IRigidBody* GetBody() { return &rigidBody;}
+			IRigidBody* GetBody() { return &rigidBody; }
 
 		protected:
 			void SetMaterialIndex(int index);
+
+			Vector3 GetCenterPos();
+			void SetCenterPos(const Vector3& center);
 
 			bool GetDynamicFlag();
 			void SetDynamicFlag(bool dynamicFlag);
@@ -37,6 +40,8 @@ namespace TikiEngine
 			void SetCollisionGroup(UInt32 group);
 
 
+
+
 		protected:
 			ColliderState state;
 			bool isTrigger;
@@ -45,6 +50,7 @@ namespace TikiEngine
 			NxActorDesc actorDescription;
 			int materialIndex;
 			
+			NxVec3 center;
 		};
 	}
 }

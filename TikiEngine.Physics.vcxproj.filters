@@ -47,6 +47,9 @@
     <ClInclude Include="inc\Physics\CharacterController.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\SphereCollider.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -71,6 +74,9 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\CharacterController.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\SphereCollider.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>

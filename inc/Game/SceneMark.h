@@ -3,7 +3,9 @@
 #include "Core/Scene.h"
 
 #include "Core/IBoxCollider.h"
+#include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
+
 
 namespace TikiEngine
 {
@@ -25,6 +27,8 @@ namespace TikiEngine
 			IBoxCollider* dynamicBox;
 			IBoxCollider* staticBox;
 			IBoxCollider* kinematicBox;
+
+			ISphereCollider* triggerSphere;
 
 			IPhysicsMaterial* material; 
 			ICharacterController* controller;

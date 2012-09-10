@@ -74,6 +74,7 @@
     <ClInclude Include="inc\Core\HelperPath.h" />
     <ClInclude Include="inc\Core\ICharacterController.h" />
     <ClInclude Include="inc\Core\IScript.h" />
+    <ClInclude Include="inc\Core\ISphereCollider.h" />
     <ClInclude Include="inc\Core\ISpriteBatch.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />
     <ClInclude Include="inc\Core\Matrices.h" />

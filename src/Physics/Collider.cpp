@@ -10,12 +10,26 @@ namespace TikiEngine
 			actor = 0;
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
+			center = NxVec3(NX_MAX_F32);
 		}
 
 		#pragma region ICollider Methods
 		void Collider::SetMaterialIndex(int index)
 		{
 			materialIndex = index;
+		}
+
+		Vector3 Collider::GetCenterPos()
+		{
+			if (actor != 0)
+				return actor->getGlobalPosition().get();
+			else
+				return center.get();
+		}
+
+		void Collider::SetCenterPos(const Vector3& center)
+		{
+			this->center = center.arr;
 		}
 
 		bool Collider::GetDynamicFlag()
@@ -38,8 +52,10 @@ namespace TikiEngine
 
 		bool Collider::GetTriggerFlag()
 		{
+			/*if (actor != 0)
+				return actor->getShapes()[0]->getFlag(NX_TRIGGER_ENABLE) != 0;
+			else*/
 			return isTrigger;
-			//actor->getShapes()[0]->getFlag(NX_TRIGGER_ENABLE);
 		}
 
 		void Collider::SetTriggerFlag(bool triggerFlag)
@@ -57,8 +73,6 @@ namespace TikiEngine
 
 			for (unsigned int i = 0; i < actor->getNbShapes(); i++)
 				actor->getShapes()[i]->setGroup(group);
-
-			//actor->setGroup(group);
 		}
 		#pragma endregion
 	}
