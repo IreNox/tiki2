@@ -12,10 +12,13 @@
 
 #include "Core/IContentManager.h"
 
+#include "Game/CameraFly.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Scripts;
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
@@ -33,89 +36,38 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Normals.fbx"); //new MeshIndexed(engine);
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/Normals.fbx");
 
-			//DefaultVertex vertices[] = {
-			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-			//	{ 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-			//	{ 1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-			//	{-1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f},
-			//	{-1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-			//	{ 1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-			//	{ 1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-			//	{-1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f}
-			//};
+			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
-			//UINT indices[] = {
-			//	0, 1, 2,
-			//	0, 2, 3,
-			//	4, 0, 3,
-			//	4, 3, 7,
-			//	1, 5, 6,
-			//	1, 6, 2,
-			//	3, 4, 6,
-			//	3, 6, 7,
-			//	4, 5, 1,
-			//	4, 1, 0,
-			//	5, 4, 7,
-			//	5, 7, 6
-			//};
+			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
 
-			//mesh->SetVertexData(vertices, sizeof(vertices));
-			//mesh->SetIndexData(indices, sizeof(indices));
-			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
-
-			ITexture* tex = engine->content->LoadTexture(L"Data\\Resources\\jumppad_diff.jpg");
-
-			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
 
 			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
 			render->SetMesh(mesh);
 			render->SetMaterial(mat);
 
-			go->AddComponent(render);
+			mat->Release();
+			mesh->Release();
 
-			CameraObject* co = new CameraObject(engine);
+			go->AddComponent(render);
+			render->Release();
 
 			this->AddElement(go);
-			this->AddElement(co);
+			go->Release();
 
-			//Texture* texture = new Texture(
-			//	engine,
-			//	wstring(L"Data/Resources/box_diffuse.jpg")
-			//);
+			go = new CameraObject(engine);
+			go->PRS.Position.Z = 40.0f;
 
-			//Shader* shader = new DefaultShader(engine);
-			//shader->GetVariable("tex").SetTexture(texture);
+			CameraFly* fly = new CameraFly(engine, go);
+			go->AddComponent(fly);
+			fly->Release();
 
-			//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
-			//Quad* quad = new Quad(engine, shaderPP);
-
-
-			//engine->scene->AddElement(new Box(engine, shader));
-			//scene->AddElement(new TeeTriangle(engine));
+			this->AddElement(go);
+			go->Release();
 
 			Scene::Initialize(args);
-
-
-
-			//////////////////////////////////////////////
-
-			//CameraObject* co = new CameraObject(engine);
-			//this->AddElement(co);
-
-			//Mesh *mesh = engine->content->LoadFbxMesh(L"Data\\Resources\\Dice2.fbx");
-
-			//if(mesh != 0)
-			//{
-			//	delete(mesh);
-			//	mesh = 0;
-			//}
-
-			//Scene::Initialize(args);
-
-			//mainCamera = co->GetCameraComponent();
 		}
 
 		void SceneAdrian::Draw(const DrawArgs& args)
