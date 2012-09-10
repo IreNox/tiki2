@@ -38,7 +38,7 @@ namespace TikiEngine
 
 			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/humanoid.fbx");
 
-			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
+			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/checker.png");
 
 			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
 

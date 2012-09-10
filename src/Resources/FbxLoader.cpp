@@ -23,6 +23,19 @@ namespace TikiEngine
 			}
 
 		}
+		int FbxLoader::CountNodes(FbxNode* node, FbxNodeAttribute::EType type)
+		{
+			int result = 0;
+			FbxNodeAttribute *attribute = node->GetNodeAttribute();
+
+			if(attribute != false && attribute->GetAttributeType() == type)
+				result = 1;
+
+			for(int i = 0; i < node->GetChildCount();i++)
+				result += CountNodes(node->GetChild(i), type);
+
+			return result;
+		}
 
 		Mesh* FbxLoader::LoadMesh(const wstring& name)
 		{
@@ -32,19 +45,27 @@ namespace TikiEngine
 			FbxNode *mesh = NULL;
 			FbxMesh *model = NULL;
 
-			
+			int bones = this->CountNodes(root, FbxNodeAttribute::eSkeleton);
+			int meshes = this->CountNodes(root, FbxNodeAttribute::eMesh);
+
+			int poses = scene->GetPoseCount();
+			int poses2 = scene->GetCharacterPoseCount();
 
 			for(int i = 0; i < root->GetChildCount(); i++)
 			{
 				FbxNode *child = root->GetChild(i);
-				if(child->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
+
+				FbxNodeAttribute::EType nodeType = child->GetNodeAttribute()->GetAttributeType();
+
+				if(nodeType == FbxNodeAttribute::eMesh)
 				{
+					
 					mesh = root->GetChild(i);
 					if(mesh->GetMesh() != NULL)
 					{
 						model = mesh->GetMesh();
 					}
-					break;
+					//break;
 				}
 			} 
 
@@ -58,34 +79,26 @@ namespace TikiEngine
 
 			UINT32 counter = 0;
 
-			for(Int32 i = 0; i < model->GetPolygonCount(); i++)
+			for(Int32 i = 0; i < polygonVertexCount; i++)
 			{
 				Int32 verticesInPolygon = model->GetPolygonSize(i);
 
-				if(verticesInPolygon == 3)
-				{
-					indices.Add(counter);
-					indices.Add(counter+1);
-					indices.Add(counter+2);
-					
-				}else if(verticesInPolygon == 4)
-				{
-					indices.Add(counter);
-					indices.Add(counter+1); 
-					indices.Add(counter+2);
-					
 
+				indices.Add(counter);
+				indices.Add(counter+1);
+				indices.Add(counter+2);
+					
+				if(verticesInPolygon == 4)
+				{
 					indices.Add(counter);
 					indices.Add(counter+2);
-					indices.Add(counter+3);
-					
+					indices.Add(counter+3);	
 				}
 
 
 				for(Int32 k = 0; k < verticesInPolygon; k++)
 				{
 					int position = model->GetPolygonVertex(i,k);
-
 
 					FbxVector4 pos = model->GetControlPointAt(position);
 
@@ -95,7 +108,7 @@ namespace TikiEngine
 					if(hasUVInformation)
 					{
 						int uvIndex = model->GetElementUV(0)->GetIndexArray().GetAt(counter);
-						FbxVector2 uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+						uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
 					}
 
 
@@ -111,7 +124,14 @@ namespace TikiEngine
 					counter++;
 				}
 			}
-			int bla = indices.Get(35);
+
+			const bool lHasVertexCache = model->GetDeformerCount(FbxDeformer::eVertexCache) &&
+				(static_cast<FbxVertexCacheDeformer*>(model->GetDeformer(0, FbxDeformer::eVertexCache)))->IsActive();
+			const bool lHasShape = model->GetShapeCount() > 0;
+			const bool lHasSkin = model->GetDeformerCount(FbxDeformer::eSkin) > 0;
+			const bool lHasDeformation = lHasVertexCache || lHasShape || lHasSkin;
+			
+
 			UINT indexBufferSize = indices.Count();
 			UInt32 *indexBufferData = indices.ToArray();
 

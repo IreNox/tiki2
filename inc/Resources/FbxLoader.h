@@ -35,6 +35,7 @@ namespace TikiEngine
 			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
 			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
 			void ConvertToTiki(const FbxVector4& vector,const FbxVector4& normals, const FbxVector2& uv, float* output);
+			int CountNodes(FbxNode* node, FbxNodeAttribute::EType type);
 
 			FbxManager* fbxManager;
 			FbxScene* scene;
