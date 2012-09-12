@@ -87,7 +87,7 @@
       <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Font.cpp">
-      <Filter>Quelldateien\Internal</Filter>
+      <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,7 +146,7 @@
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Font.h">
-      <Filter>Headerdateien\Internal</Filter>
+      <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

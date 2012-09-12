@@ -18,30 +18,30 @@ namespace TikiEngine
 			~Shader();
 
 			void SelectSubByIndex(UInt32 index);
-			void SelectSubByName(string name);
+			void SelectSubByName(cstring name);
 
 			void Apply();
 			void ApplyVars(GameObject* gameObject);
 
-			void SetConstantBuffer(const char* key, ID3D11Buffer* constantBuffer);
+			void SetConstantBuffer(cstring key, ID3D11Buffer* constantBuffer);
 
-			Int32 GetInt(string key);
-			Single GetSingle(string key);
-			Boolean GetBoolean(string key);
-			Vector2 GetVector2(string key);
-			Vector3 GetVector3(string key);
-			Vector4 GetVector4(string key);
-			Matrix GetMatrix(string key);
+			Int32 GetInt(cstring key);
+			Single GetSingle(cstring key);
+			Boolean GetBoolean(cstring key);
+			Vector2 GetVector2(cstring key);
+			Vector3 GetVector3(cstring key);
+			Vector4 GetVector4(cstring key);
+			Matrix GetMatrix(cstring key);
 
-			void SetInt(string key, Int32 value);
-			void SetSingle(string key, Single value);
-			void SetBoolean(string key, Boolean value);
-			void SetVector2(string key, const Vector2& value);
-			void SetVector3(string key, const Vector3& value);
-			void SetVector4(string key, const Vector4& value);
-			void SetMatrix(string key, const Matrix& value);
-			void SetTexture(string key, ITexture* value);
-			void SetTextureArray(string key, List<ITexture*>* array);
+			void SetInt(cstring key, Int32 value);
+			void SetSingle(cstring key, Single value);
+			void SetBoolean(cstring key, Boolean value);
+			void SetVector2(cstring key, const Vector2& value);
+			void SetVector3(cstring key, const Vector3& value);
+			void SetVector4(cstring key, const Vector4& value);
+			void SetMatrix(cstring key, const Matrix& value);
+			void SetTexture(cstring key, ITexture* value);
+			void SetTextureArray(cstring key, List<ITexture*>* array);
 
 			ShaderType GetShaderType();
 

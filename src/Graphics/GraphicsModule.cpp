@@ -24,13 +24,30 @@ namespace TikiEngine
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
 			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets(), postProcesses(), postProcessPassQuads(),
-			defaultPostProcess(0), currentTime(0, 0), alphaBlendState(0), depthStencilStateDisable(0)
+			defaultPostProcess(0), currentTime(0, 0), alphaBlendState(0), depthStencilStateDisable(0),
+			screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0)
 		{
 			clearColor = Color::TikiBlue;
 		}
 
 		GraphicsModule::~GraphicsModule()
 		{
+		}
+		#pragma endregion
+
+		#pragma region Member - Init/Dispose
+		bool GraphicsModule::Initialize(EngineDescription& desc)
+		{
+			if (inited) return false;
+
+			bool ok = true;
+
+			if (ok) ok &= initSelectAdapter(desc);
+			if (ok) ok &= initDirectX(desc);
+			if (ok) ok &= initEngine(desc);
+
+			inited = ok;
+			return ok;
 		}
 
 		void GraphicsModule::Dispose()
@@ -81,22 +98,6 @@ namespace TikiEngine
 			SafeRelease(&factory);
 
 			inited = false;
-		}
-		#pragma endregion
-
-		#pragma region Init
-		bool GraphicsModule::Initialize(EngineDescription& desc)
-		{
-			if (inited) return false;
-
-			bool ok = true;
-
-			if (ok) ok &= initSelectAdapter(desc);
-			if (ok) ok &= initDirectX(desc);
-			if (ok) ok &= initEngine(desc);
-
-			inited = ok;
-			return ok;
 		}
 		#pragma endregion
 
@@ -158,7 +159,7 @@ namespace TikiEngine
 		void GraphicsModule::SetLightChanged(List<Light*>* lights)
 		{
 			Lights* buf = lightBuffer->Map();
-			*buf = Lights();
+			buf->Props = LightProperties();
 
 			buf->Count = (float)lights->Count();
 			if (buf->Count > 32) buf->Count = 32;
@@ -242,7 +243,7 @@ namespace TikiEngine
 			SafeAddRef(&postProcess);
 		}
 
-		void GraphicsModule::AddDefaultProcessTarget(string varName, IRenderTarget* target)
+		void GraphicsModule::AddDefaultProcessTarget(cstring varName, IRenderTarget* target)
 		{
 			defaultPostProcess->GetPasses()->Get(0)->AddInput(varName, target);
 		}
@@ -274,10 +275,12 @@ namespace TikiEngine
 
 		void GraphicsModule::AddScreenSizeRenderTarget(RenderTarget* target)
 		{
+			screenSizeRenderTargets.Add(target);
 		}
 
 		void GraphicsModule::RemoveScreenSizeRenderTarget(RenderTarget* target)
 		{
+			screenSizeRenderTargets.Remove(target);
 		}
 		#pragma endregion
 

@@ -76,7 +76,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - RenderTargets
-		void Quad::SetInput(const Dictionary<IRenderTarget*, string>* input)
+		void Quad::SetInput(const Dictionary<IRenderTarget*, cstring>* input)
 		{
 			UInt32 i = 0;
 			while (i < input->Count())

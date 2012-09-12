@@ -183,11 +183,11 @@ namespace TikiEngine
 
 			window->End();
 
-			float fps = 1.0f / elapsedTime;
-			wait += (fps > 70.0f ? 1 : -1);
-			wait = abs(wait);
+			//float fps = 1.0f / elapsedTime;
+			//wait += (fps > 70.0f ? 1 : -1);
+			//wait = abs(wait);
 
-			Sleep(wait);
+			//Sleep(wait);
 		}
 	}
 	#pragma endregion

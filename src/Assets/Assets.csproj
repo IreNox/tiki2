@@ -65,6 +65,9 @@
     <None Include="Data\Resources\Models\test_animation2.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Resources\Models\tim_test.FBX">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Resources\Textures\jumppad_diff.tga">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

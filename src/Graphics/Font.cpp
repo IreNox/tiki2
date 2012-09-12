@@ -72,12 +72,17 @@ namespace TikiEngine
 
 				DllMain::ModuleSpriteBatch->Draw(
 					texture,
-					Rectangle(pos.X, pos.Y, r.Width, r.Height),
+					Rectangle(
+						(int)pos.Y,
+						(int)pos.Y,
+						(int)r.Width,
+						(int)r.Height
+					),
 					r
 				);
 			}
 
-			return r.Width;
+			return (float)r.Width;
 		}
 		#pragma endregion
 
@@ -101,10 +106,10 @@ namespace TikiEngine
 			GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
 			wcstring chars = L" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"§$%&/()=?,.-;:_#'+*~<>|";
-			UInt32 len = wcslen(chars);
+			PInt len = wcslen(chars);
 
 			Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
-			pixelHeight = (int)ceil(font->GetHeight(96));
+			pixelHeight = (UInt32)ceil(font->GetHeight(96));
 
 			*width = 512;
 			*height = 512;
@@ -117,7 +122,7 @@ namespace TikiEngine
 			Bitmap* bmp = new Bitmap(*width, *height, stride, PixelFormat32bppARGB, (BYTE*)*pixels);
 			Gdiplus::Graphics* g = Gdiplus::Graphics::FromImage(bmp);
 
-			SolidBrush* bg = new SolidBrush(Gdiplus::Color(255.0f, 255.0f, 0.0f, 0.0f));				
+			SolidBrush* bg = new SolidBrush(Gdiplus::Color(255, 255, 0, 0));
 			SolidBrush* black = new SolidBrush(Gdiplus::Color::Black);
 			
 			g->FillRectangle(
@@ -169,8 +174,8 @@ namespace TikiEngine
 					Rectangle(
 						(int)pos.X,
 						(int)pos.Y,
-						charSize.Width - spaceWidth,
-						pixelHeight
+						(int)(charSize.Width - spaceWidth),
+						(int)pixelHeight
 					)
 				);
 

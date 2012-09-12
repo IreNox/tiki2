@@ -42,8 +42,8 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/balls_test2.fbx");
-			tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/tim_test.FBX");
+			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
@@ -83,76 +83,8 @@ namespace TikiEngine
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
 
-			//////////////////////////////////////////////////////////////////////////
-			// OLD
-			//////////////////////////////////////////////////////////////////////////
-			//go = new GameObject(engine);
-
-			//IPhysicsMaterial* material; 
-			//material = engine->content->LoadPhysicsMaterial(L"TODO");
-			//material->SetRestitution(1.0f);
-			//material->SetDynamicFriction(0.5f);
-			//material->SetStaticFriction(0.5f); // static friction may be higher than 1.
-
-			//// init
-			//IBoxCollider* box = engine->librarys->CreateComponent<IBoxCollider>(go);
-			//box->SetMaterial(material->GetIndex()); // 0 = default material	
-			//box->SetCenter(Vector3(5, 5, 0));
-			//box->SetSize(Vector3(1, 1, 1));
-			//box->SetDynamic(true);
-			//box->GetRigidBody()->SetKinematic(true);
-			//	
-			//this->AddElement(go);
-
-			//go = new DebugPhysicRenderer(engine);
-			//this->AddElement(go);
-
-			//Texture* texture = new Texture(
-			//	engine,
-			//	wstring(L"Data/Resources/box_diffuse.jpg")
-			//);
-
-			//Shader* shader = new DefaultShader(engine);
-			//shader->GetVariable("tex").SetTexture(texture);
-
-			//Shader* shaderPP = new Shader(engine, L"Data/Effects/pp_default.fx");
-			//Quad* quad = new Quad(engine, shaderPP);
-
-
-			//engine->scene->AddElement(new Box(engine, shader));
-			//scene->AddElement(new TeeTriangle(engine));
-
-			//DefaultVertex vertices[] = {
-			//	{-1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-			//	{ 1.0f, -1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-			//	{ 1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-			//	{-1.0f,  1.0f, -1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f},
-			//	{-1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f},
-			//	{ 1.0f, -1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f},
-			//	{ 1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f},
-			//	{-1.0f,  1.0f,  1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f}
-			//};
-
-			//UINT indices[] = {
-			//	0, 1, 2,
-			//	0, 2, 3,
-			//	4, 0, 3,
-			//	4, 3, 7,
-			//	1, 5, 6,
-			//	1, 6, 2,
-			//	3, 4, 6,
-			//	3, 6, 7,
-			//	4, 5, 1,
-			//	4, 1, 0,
-			//	5, 4, 7,
-			//	5, 7, 6
-			//};
-
-			//mesh->SetVertexData(vertices, sizeof(vertices));
-			//mesh->SetIndexData(indices, sizeof(indices));
-			//mesh->SetVertexDeclaration(DefaultVertex::Declaration, 3);
-
 			font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 16.0f);
 
 			Scene::Initialize(args);
 		}

@@ -54,10 +54,10 @@ namespace TikiEngine
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
 
 			void AddPostProcess(PostProcess* postProcess);
-			void AddDefaultProcessTarget(string varName, IRenderTarget* target);
-			void RemovePostProcess(PostProcess* postProcess);
-
+			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
 			void AddScreenSizeRenderTarget(RenderTarget* target);
+
+			void RemovePostProcess(PostProcess* postProcess);
 			void RemoveScreenSizeRenderTarget(RenderTarget* target);
 
 			void SetLightChanged(List<Light*>* lights);
@@ -99,6 +99,7 @@ namespace TikiEngine
 
 			RenderTarget* rtScreen;
 			RenderTarget* rtBackBuffer;
+			List<RenderTarget*> screenSizeRenderTargets;
 
 			PostProcess* defaultPostProcess;
 			List<PostProcess*> postProcesses;

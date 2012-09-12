@@ -29,12 +29,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Game\Box.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Game\TeeTriangle.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\SceneTim.h">
       <Filter>Headerdateien\Scenes</Filter>
     </ClInclude>
@@ -52,13 +46,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Game\Box.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\Main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\TeeTriangle.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SceneTim.cpp">

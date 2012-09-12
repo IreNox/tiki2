@@ -12,16 +12,22 @@ struct Light
 struct VS_INPUT
 {
     float3 Pos	  : POSITION;
-	float3 Normal : NORMAL;
 	float2 UV	  : TEXCOORD;
+
+	float3 Normal	: NORMAL;
+	float3 Binormal	: BINORMAL;
+	float3 Tangent	: TANGENT;
 };
 
 struct PS_INPUT
 {
     float4 Pos		: SV_POSITION;
 	float3 WorldPos	: POSITION0;
-	float3 Normal	: NORMAL;
     float2 UV		: TEXCOORD0;
+
+	float3 Normal	: NORMAL;
+	float3 Binormal	: BINORMAL;
+	float3 Tangent	: TANGENT;
 };
 
 /////////////
@@ -72,7 +78,7 @@ PS_INPUT VS_Main(VS_INPUT input)
     output.Pos = mul(output.Pos, viewMatrix);
     output.Pos = mul(output.Pos, projectionMatrix);
     
-	output.Normal = mul(input.Normal, worldMatrixInverseTranspose);
+	output.Normal = normalize(mul(input.Normal, worldMatrixInverseTranspose));
     output.UV = input.UV;
     
     return output;

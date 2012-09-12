@@ -10,10 +10,14 @@ namespace TikiEngine
 		struct DefaultVertex
 		{
 			Single Position[3];
-			Single Normal[3];
 			Single UV[2];
 
-			static InputElement Declaration[3];
+			Single Normal[3];
+			Single Binormal[3];
+			Single Tangent[3];
+
+			static UInt32 DeclCount;
+			static InputElement Declaration[5];
 		};
 	}
 }

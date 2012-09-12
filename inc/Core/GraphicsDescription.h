@@ -19,6 +19,11 @@ namespace TikiEngine
 			int Height;
 
 			/*!
+			 * @brief VSync enabled.
+			 */
+			bool VSync;
+
+			/*!
 			 * @brief The Graphics ViewPort.
 			 */
 			ViewPort ViewPort;

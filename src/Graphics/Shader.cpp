@@ -32,11 +32,7 @@ namespace TikiEngine
 
 		Shader::~Shader()
 		{
-			if (effect != 0)
-			{
-				effect->Release();
-				effect = 0;
-			}
+			SafeRelease(&effect);
 		}
 		#pragma endregion
 
@@ -110,14 +106,14 @@ namespace TikiEngine
 			pass = technique->GetPassByIndex(index);
 		}
 
-		void Shader::SelectSubByName(string name)
+		void Shader::SelectSubByName(cstring name)
 		{
-			pass = technique->GetPassByName(name.c_str());
+			pass = technique->GetPassByName(name);
 		}
 		#pragma endregion
 
 		#pragma region Member - Variable
-		void Shader::SetConstantBuffer(const char* key, ID3D11Buffer* constantBuffer)
+		void Shader::SetConstantBuffer(cstring key, ID3D11Buffer* constantBuffer)
 		{
 			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(constantBuffer);
 
@@ -129,70 +125,70 @@ namespace TikiEngine
 		#pragma endregion
 		
 		#pragma region Member - Variable - Get
-		int Shader::GetInt(string key)
+		int Shader::GetInt(cstring key)
 		{
 			int value = 0;
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetInt(&value);
 
 			return value;
 		}
 
-		bool Shader::GetBoolean(string key)
+		bool Shader::GetBoolean(cstring key)
 		{
 			int value = 0;
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetBool(&value);
 
 			return (value ? true : false);
 		}
 
-		float Shader::GetSingle(string key)
+		float Shader::GetSingle(cstring key)
 		{
 			float* value = 0;
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetFloat(value);
 
 			return *value;
 		}
 
-		Matrix Shader::GetMatrix(string key)
+		Matrix Shader::GetMatrix(cstring key)
 		{
 			float data[16];
-			auto matrix = effect->GetVariableByName(key.c_str())->AsMatrix();
+			auto matrix = effect->GetVariableByName(key)->AsMatrix();
 
 			matrix->GetMatrix(data);
 
 			return Matrix(data);
 		}
 
-		Vector2 Shader::GetVector2(string key)
+		Vector2 Shader::GetVector2(cstring key)
 		{
 			float data[2];
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetFloatArray(data, 0, 2);
 
 			return Vector2(data);
 		}
 
-		Vector3 Shader::GetVector3(string key)
+		Vector3 Shader::GetVector3(cstring key)
 		{
 			float data[3];
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetFloatArray(data, 0, 3);
 
 			return Vector3(data);
 		}
 
-		Vector4 Shader::GetVector4(string key)
+		Vector4 Shader::GetVector4(cstring key)
 		{
 			float data[4];
-			auto scalar = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto scalar = effect->GetVariableByName(key)->AsScalar();
 
 			scalar->GetFloatArray(data, 0, 4);
 
@@ -201,60 +197,60 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Variable - Set
-		void Shader::SetInt(string key, int value)
+		void Shader::SetInt(cstring key, int value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto cv = effect->GetVariableByName(key)->AsScalar();
 
 			cv->SetInt(value);
 		}
 
-		void Shader::SetBoolean(string key, Boolean value)
+		void Shader::SetBoolean(cstring key, Boolean value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto cv = effect->GetVariableByName(key)->AsScalar();
 
 			cv->SetBool(value);
 		}
 
-		void Shader::SetSingle(string key, Single value)
+		void Shader::SetSingle(cstring key, Single value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsScalar();
+			auto cv = effect->GetVariableByName(key)->AsScalar();
 
 			cv->SetFloat(value);
 		}
 
-		void Shader::SetMatrix(string key, const Matrix& value)
+		void Shader::SetMatrix(cstring key, const Matrix& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsMatrix();
-
-			cv->SetMatrix((float*)&value);
+			effect->GetVariableByName(key)->AsMatrix()->SetMatrix(
+				value.n
+			);
 		}
 
-		void Shader::SetVector2(string key, const Vector2& value)
+		void Shader::SetVector2(cstring key, const Vector2& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			auto cv = effect->GetVariableByName(key)->AsVector();
 			cv->SetFloatVector(value.arr);
 		}
 
-		void Shader::SetVector3(string key, const Vector3& value)
+		void Shader::SetVector3(cstring key, const Vector3& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			auto cv = effect->GetVariableByName(key)->AsVector();
 			cv->SetFloatVector(value.arr);
 		}
 
-		void Shader::SetVector4(string key, const Vector4& value)
+		void Shader::SetVector4(cstring key, const Vector4& value)
 		{
-			auto cv = effect->GetVariableByName(key.c_str())->AsVector();
+			auto cv = effect->GetVariableByName(key)->AsVector();
 			cv->SetFloatVector(value.arr);
 		}
 
-		void Shader::SetTexture(string key, ITexture* texture)
+		void Shader::SetTexture(cstring key, ITexture* texture)
 		{
-			effect->GetVariableByName(key.c_str())->AsShaderResource()->SetResource(
+			effect->GetVariableByName(key)->AsShaderResource()->SetResource(
 				(ID3D11ShaderResourceView*)texture->GetNativeResource()
 			);
 		}
 
-		void Shader::SetTextureArray(string key, List<ITexture*>* array)
+		void Shader::SetTextureArray(cstring key, List<ITexture*>* array)
 		{
 			ID3D11ShaderResourceView** data = new ID3D11ShaderResourceView*[array->Count()];
 
@@ -265,7 +261,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			effect->GetVariableByName(key.c_str())->AsShaderResource()->SetResourceArray(
+			effect->GetVariableByName(key)->AsShaderResource()->SetResourceArray(
 				data,
 				0,
 				array->Count()

@@ -49,7 +49,7 @@ namespace TikiEngine
 			return shader;
 		}
 
-		const Dictionary<IRenderTarget*, string>* PostProcessPass::GetInput()
+		const Dictionary<IRenderTarget*, cstring>* PostProcessPass::GetInput()
 		{
 			return &inputTargets;
 		}
@@ -61,7 +61,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Add/Remove
-		void PostProcessPass::AddInput(string varName, IRenderTarget* target)
+		void PostProcessPass::AddInput(cstring varName, IRenderTarget* target)
 		{
 			inputTargets.Add(target, varName);
 			SafeAddRef(&target);
