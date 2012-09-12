@@ -73,7 +73,7 @@ namespace TikiEngine
 				DllMain::ModuleSpriteBatch->Draw(
 					texture,
 					Rectangle(
-						(int)pos.Y,
+						(int)pos.X,
 						(int)pos.Y,
 						(int)r.Width,
 						(int)r.Height
