@@ -67,7 +67,7 @@ namespace TikiEngine
 			}
 			else if (hash == typeid(Mesh).hash_code())
 			{
-				value = fbxLoader->LoadSkeleton(fileName);//LoadMesh(fileName);
+				value = fbxLoader->LoadSkeleton(fileName); //fbxLoader->LoadMesh(fileName);
 				loadFile = false;
 			}
 			else if (hash == typeid(IPhysicsMaterial).hash_code())

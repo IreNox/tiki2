@@ -5,10 +5,9 @@ namespace TikiEngine
 	namespace Resources
 	{
 		FbxLoader::FbxLoader(Engine* engine)
-			: EngineObject(engine), fbxManager(0), scene(0)
+			: EngineObject(engine), fbxManager(0), scene(0), skeletonList()
 		{
 			this->InitializeSdkObjects(this->fbxManager, this->scene);
-			this->skeletonList = List<FbxVector4>();
 		}
 
 		FbxLoader::~FbxLoader()
@@ -81,7 +80,7 @@ namespace TikiEngine
 
 			FbxNode *root = scene->GetRootNode();
 
-			HandleNodeRecursive(root, FBXSDK_TIME_INFINITE, GetGlobalPositionFbx(root));
+			HandleNodeRecursive(root, FBXSDK_TIME_ONE_SECOND, GetGlobalPositionFbx(root));
 
 			UINT skeletonCount = this->skeletonList.Count();
 			UINT size = skeletonCount * sizeof(DefaultVertex);
@@ -93,7 +92,7 @@ namespace TikiEngine
 
 			for(int i = 0; i < skeletonCount; i++)
 			{
-				ConvertToTiki(skeletonList.Get(i), FbxVector4(), FbxVector4(), FbxVector4(), FbxVector2(), &vertexData[i]);
+				ConvertToTiki(skeletonList[i], FbxVector4(), FbxVector4(), FbxVector4(), FbxVector2(), &vertexData[i]);
 				indices.Add(i);
 			}
 				
@@ -104,7 +103,7 @@ namespace TikiEngine
 
 			meshIndexed->SetVertexData(vertexData, size);
 			meshIndexed->SetIndexData(indexBufferData, indexBufferSize);
-			meshIndexed->SetVertexDeclaration(DefaultVertex::Declaration,3);
+			meshIndexed->SetVertexDeclaration(DefaultVertex::Declaration,5);
 			meshIndexed->SetPrimitiveTopology(PT_LineList);
 
 			delete vertexData;
@@ -199,13 +198,13 @@ namespace TikiEngine
 						uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
 					}
 
-					FbxLayerElementArrayTemplate<FbxVector4>* arr;
+					//FbxLayerElementArrayTemplate<FbxVector4>* arr;
 
-					bool test = model->GetBinormals(&arr);
+					//bool test = model->GetBinormals(&arr);
 
 					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(counter);
-					FbxVector4 binormal = arr->GetAt(counter); // bn->GetDirectArray().GetAt(counter);
-					FbxVector4 tangent = model->GetElementTangent(0)->GetDirectArray().GetAt(counter);
+					FbxVector4 binormal = FbxVector4(); //arr->GetAt(counter); // bn->GetDirectArray().GetAt(counter);
+					FbxVector4 tangent = FbxVector4(); //model->GetElementTangent(0)->GetDirectArray().GetAt(counter);
 
 					ConvertToTiki(
 						pos, 
@@ -286,8 +285,8 @@ namespace TikiEngine
 				pNode->GetParent()->GetNodeAttribute() &&
 				pNode->GetParent()->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 			{
-	/*			this->skeletonList.Add(ConvertToTiki(pParentGlobalPosition.GetT()));
-				this->skeletonList.Add(ConvertToTiki(pGlobalPosition.GetT()));*/
+				//this->skeletonList.Add(ConvertToTiki(pParentGlobalPosition.GetT()));
+				//this->skeletonList.Add(ConvertToTiki(pGlobalPosition.GetT()));
 				this->skeletonList.Add(pParentGlobalPosition.GetT());
 				this->skeletonList.Add(pGlobalPosition.GetT());
 			}
