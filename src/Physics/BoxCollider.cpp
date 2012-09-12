@@ -2,6 +2,8 @@
 #include "Core/TypeGlobals.h"
 #include "Physics/DllMain.h"
 
+#include "Core/GameObject.h"
+
 namespace TikiEngine 
 {
 	namespace Physics
@@ -128,6 +130,15 @@ namespace TikiEngine
 			// if this is or was a trigger or kinematic actor, raise the flags
 			SetTriggerFlag(isTrigger);
 			//SetKinematicFlag(rigidBody.GetKinematic());
+		}
+
+		void BoxCollider::Update(const UpdateArgs& args)
+		{
+			NxVec3 pos = actor->getGlobalPosition();			
+			gameObject->PRS.Position = Vector3(pos.x, pos.y, pos.z);
+
+			NxQuat rot = actor->getGlobalOrientationQuat();
+			gameObject->PRS.Rotation = Quaternion(rot.x, rot.y, rot.z, rot.w);
 		}
 	}
 }

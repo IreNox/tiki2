@@ -40,7 +40,7 @@ namespace TikiEngine
 
 			// Component
 			bool GetReady();
-			void Update(const UpdateArgs& args) {}
+			void Update(const UpdateArgs& args);
 			void Draw(const DrawArgs& args) {}
 
 		private:
