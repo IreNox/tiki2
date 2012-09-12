@@ -11,6 +11,9 @@
 #include "Core/CameraObject.h"
 
 #include "Game/CameraFly.h"
+#include "Core/ISpriteBatch.h"
+#include <sstream>
+
 
 namespace TikiEngine
 {
@@ -32,6 +35,8 @@ namespace TikiEngine
 			delete triggerSphere;
 			delete controller;
 			delete material;
+			
+			SafeRelease(&font);
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -123,6 +128,8 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+			font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 10);
 
 
 
@@ -160,6 +167,10 @@ namespace TikiEngine
 
 		void SceneMark::Draw(const DrawArgs& args)
 		{
+			std::wostringstream s;
+			s << "Controller Position: (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
+			wstring str = s.str();
+			engine->sprites->DrawString(font, str, Vector2(10, 40));
 
 			Scene::Draw(args);
 		}

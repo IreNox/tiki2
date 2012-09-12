@@ -7,6 +7,8 @@
 #include "Core/ICharacterController.h"
 
 
+#include "Core/IFont.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -32,6 +34,8 @@ namespace TikiEngine
 
 			IPhysicsMaterial* material; 
 			ICharacterController* controller;
+
+			IFont* font;
 		};
 	}
 }
