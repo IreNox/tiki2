@@ -62,10 +62,16 @@ namespace TikiEngine
 			{
 				IntPtr hash;
 				TikiInfo* info = getDefault<T>(&hash);
+				T* comp = 0;
 
 				if (info != 0)
 				{
-					return (T*)info->FuncTikiComponent(hash, gameObject);
+					comp = (T*)info->FuncTikiComponent(hash, gameObject);
+				}
+
+				if (comp != 0)
+				{
+					gameObject->AddComponent(comp);
 				}
 
 				return 0;
