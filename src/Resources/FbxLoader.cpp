@@ -8,7 +8,9 @@ namespace TikiEngine
 			: EngineObject(engine), fbxManager(0), scene(0)
 		{
 			this->InitializeSdkObjects(this->fbxManager, this->scene);
+			this->skeletonList = List<FbxVector4>();
 		}
+
 		FbxLoader::~FbxLoader()
 		{
 			if(this->scene)
@@ -23,18 +25,96 @@ namespace TikiEngine
 			}
 
 		}
+
 		int FbxLoader::CountNodes(FbxNode* node, FbxNodeAttribute::EType type)
 		{
 			int result = 0;
 			FbxNodeAttribute *attribute = node->GetNodeAttribute();
-
-			if(attribute != false && attribute->GetAttributeType() == type)
+			
+			if(attribute  && attribute->GetAttributeType() == type)
 				result = 1;
+			//if(attribute && attribute->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+			//{
+
+			//	
+			//}
 
 			for(int i = 0; i < node->GetChildCount();i++)
 				result += CountNodes(node->GetChild(i), type);
 
 			return result;
+		}
+
+		void FbxLoader::InitializeAnimationStack()
+		{
+			scene->FillAnimStackNameArray(this->mAnimStackNameArray);
+		}
+
+		bool FbxLoader::SetCurrentAnimStack(int pIndex)
+		{
+			const int lAnimStackCount = mAnimStackNameArray.GetCount();
+			if (!lAnimStackCount || pIndex >= lAnimStackCount)
+			{
+				return false;
+			}
+
+			FbxAnimStack* lCurrentAnimationStack = this->scene->FindMember<FbxAnimStack>(mAnimStackNameArray[pIndex]->Buffer());
+			//// select the base layer from the animation stack
+			if (lCurrentAnimationStack == NULL)
+			{
+				// this is a problem. The anim stack should be found in the scene!
+				return false;
+			}
+
+			mCurrentAnimLayer = lCurrentAnimationStack->GetMember<FbxAnimLayer>();
+			scene->GetEvaluator()->SetContext(lCurrentAnimationStack);
+
+			return true;
+		}
+
+		Mesh* FbxLoader::LoadSkeleton(const wstring& name)
+		{
+			bool result = LoadScene(fbxManager, scene, name);
+
+			InitializeAnimationStack();
+			SetCurrentAnimStack(0);
+
+			FbxNode *root = scene->GetRootNode();
+
+			HandleNodeRecursive(root, FBXSDK_TIME_INFINITE, GetGlobalPositionFbx(root));
+
+			UINT skeletonCount = this->skeletonList.Count();
+			UINT size = skeletonCount * sizeof(DefaultVertex);
+
+			DefaultVertex *vertexData = new DefaultVertex[skeletonCount];
+			ZeroMemory(vertexData, size);
+
+			List<UInt32> indices = List<UInt32>();
+
+			for(int i = 0; i < skeletonCount; i++)
+			{
+				ConvertToTiki(skeletonList.Get(i), FbxVector4(), FbxVector2(), (float*)&vertexData[i]);
+				indices.Add(i);
+			}
+				
+			UINT indexBufferSize = indices.Count();
+			UInt32 *indexBufferData = indices.ToArray();
+
+			MeshIndexed* meshIndexed = new MeshIndexed(engine);
+
+			meshIndexed->SetVertexData(vertexData, size);
+			meshIndexed->SetIndexData(indexBufferData, indexBufferSize);
+			meshIndexed->SetVertexDeclaration(DefaultVertex::Declaration,3);
+			meshIndexed->SetPrimitiveTopology(PT_LineList);
+
+			delete vertexData;
+			vertexData = 0;
+			delete indexBufferData;
+			indexBufferData = 0;
+
+			root->Destroy(true);		
+
+			return meshIndexed;
 		}
 
 		Mesh* FbxLoader::LoadMesh(const wstring& name)
@@ -45,11 +125,18 @@ namespace TikiEngine
 			FbxNode *mesh = NULL;
 			FbxMesh *model = NULL;
 
-			int bones = this->CountNodes(root, FbxNodeAttribute::eSkeleton);
-			int meshes = this->CountNodes(root, FbxNodeAttribute::eMesh);
+			//FbxArray<FbxString*> mAnimStackNameArray;
+			//scene->FillAnimStackNameArray(mAnimStackNameArray);
 
-			int poses = scene->GetPoseCount();
-			int poses2 = scene->GetCharacterPoseCount();
+			//int countehhjhnr = mAnimStackNameArray.GetCount();
+
+			//const char * animationName = scene->ActiveAnimStackName.GetNameAsCStr();
+
+			//int rootchildcount = root->GetChildCount();
+
+			//int bones = this->CountNodes(root, FbxNodeAttribute::eSkeleton);
+			//int meshes = this->CountNodes(root, FbxNodeAttribute::eMesh);
+
 
 			for(int i = 0; i < root->GetChildCount(); i++)
 			{
@@ -65,9 +152,10 @@ namespace TikiEngine
 					{
 						model = mesh->GetMesh();
 					}
-					//break;
+					break;
 				}
 			} 
+			
 
 			UINT polygonVertexCount = model->GetPolygonVertexCount();
 			UINT size = polygonVertexCount * sizeof(DefaultVertex);
@@ -125,11 +213,11 @@ namespace TikiEngine
 				}
 			}
 
-			const bool lHasVertexCache = model->GetDeformerCount(FbxDeformer::eVertexCache) &&
-				(static_cast<FbxVertexCacheDeformer*>(model->GetDeformer(0, FbxDeformer::eVertexCache)))->IsActive();
-			const bool lHasShape = model->GetShapeCount() > 0;
-			const bool lHasSkin = model->GetDeformerCount(FbxDeformer::eSkin) > 0;
-			const bool lHasDeformation = lHasVertexCache || lHasShape || lHasSkin;
+			//const bool lHasVertexCache = model->GetDeformerCount(FbxDeformer::eVertexCache) &&
+			//	(static_cast<FbxVertexCacheDeformer*>(model->GetDeformer(0, FbxDeformer::eVertexCache)))->IsActive();
+			//const bool lHasShape = model->GetShapeCount() > 0;
+			//const bool lHasSkin = model->GetDeformerCount(FbxDeformer::eSkin) > 0;
+			//const bool lHasDeformation = lHasVertexCache || lHasShape || lHasSkin;
 			
 
 			UINT indexBufferSize = indices.Count();
@@ -149,6 +237,53 @@ namespace TikiEngine
 			root->Destroy(true);		
 
 			return meshIndexed;
+		}
+
+		void FbxLoader::HandleNodeRecursive(FbxNode* node, FbxTime& pTime, FbxAMatrix& pParentGlobalPosition)
+		{
+			FbxAMatrix lGlobalPosition = GetGlobalPositionFbx(node);
+
+			//root has no NodeAttribute
+			if(node->GetNodeAttribute())
+			{
+				FbxAMatrix lGeometryOffset = GetGeometryFbx(node);
+				FbxAMatrix lGlobalOffPosition = lGlobalPosition * lGeometryOffset;
+
+				HandleNode(node, pTime, pParentGlobalPosition, lGlobalOffPosition);
+			}
+			for(int i = 0; i < node->GetChildCount(); i++)
+			{
+				HandleNodeRecursive(node->GetChild(i), pTime, lGlobalPosition);
+			}
+		}
+
+		void FbxLoader::HandleNode(FbxNode* pNode, FbxTime& pTime, FbxAMatrix& pParentGlobalPosition, FbxAMatrix& pGlobalPosition)
+		{
+			if(pNode->GetNodeAttribute())
+			{
+				if(pNode->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+				{
+					HandleSkeleton(pNode, pParentGlobalPosition, pGlobalPosition);
+				}
+			}
+		}
+
+		void FbxLoader::HandleSkeleton(FbxNode* pNode, FbxAMatrix& pParentGlobalPosition, FbxAMatrix& pGlobalPosition)
+		{
+			FbxSkeleton* lSkeleton = (FbxSkeleton*) pNode->GetNodeAttribute();
+
+			//Only draw the skeleton if it's a limb node and if 
+			//the parent also has an attribute of type skeleton.
+			if (lSkeleton->GetSkeletonType() == FbxSkeleton::eLimbNode &&
+				pNode->GetParent() &&
+				pNode->GetParent()->GetNodeAttribute() &&
+				pNode->GetParent()->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+			{
+	/*			this->skeletonList.Add(ConvertToTiki(pParentGlobalPosition.GetT()));
+				this->skeletonList.Add(ConvertToTiki(pGlobalPosition.GetT()));*/
+				this->skeletonList.Add(pParentGlobalPosition.GetT());
+				this->skeletonList.Add(pGlobalPosition.GetT());
+			}
 		}
 
 		void FbxLoader::InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene)
@@ -226,6 +361,56 @@ namespace TikiEngine
 
 			//return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
 		}
+
+		Matrix FbxLoader::ConvertToTiki(FbxAMatrix &matrix)
+		{
+			Matrix m = Matrix();
+			for(int i = 0; i < 4; i++)
+			{
+				FbxVector4 row = matrix.GetRow(i);
+				for(int j = 0; j < 4; j++)
+					m.n[i * 4 + j] = (float)row[j];
+			}
+			return m;
+		}
+
+		Vector4 FbxLoader::ConvertToTiki(FbxVector4 &vector)
+		{
+			Vector4 v = Vector4(
+				(float)vector[0],
+				(float)vector[1],
+				(float)vector[2],
+				(float)vector[3]
+			);
+
+			return v;
+		}
+
+		Matrix& FbxLoader::GetGlobalPosition(FbxNode* node)
+		{
+			return ConvertToTiki(GetGlobalPositionFbx(node));
+		}
+
+		FbxAMatrix& FbxLoader::GetGlobalPositionFbx(FbxNode* node, FbxTime pTime)
+		{
+			return node->EvaluateGlobalTransform(pTime);
+		}
+
+		FbxAMatrix& FbxLoader::GetGeometryFbx(FbxNode* node)
+		{
+			const FbxVector4 lT = node->GetGeometricTranslation(FbxNode::eSourcePivot);
+			const FbxVector4 lR = node->GetGeometricRotation(FbxNode::eSourcePivot);
+			const FbxVector4 lS = node->GetGeometricScaling(FbxNode::eSourcePivot);
+
+			return FbxAMatrix(lT, lR, lS);
+		}
+
+		Matrix& FbxLoader::GetGeometry(FbxNode* node)
+		{
+			return ConvertToTiki(GetGeometryFbx(node));
+		}
+
+		
 
 	}
 }

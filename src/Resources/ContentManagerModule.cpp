@@ -67,7 +67,7 @@ namespace TikiEngine
 			}
 			else if (hash == typeid(Mesh).hash_code())
 			{
-				value = fbxLoader->LoadMesh(fileName);
+				value = fbxLoader->LoadMesh(fileName);//LoadSkeleton(fileName);//;
 				loadFile = false;
 			}
 			else if (hash == typeid(IPhysicsMaterial).hash_code())
@@ -97,6 +97,11 @@ namespace TikiEngine
 		{
 			return this->fbxLoader->LoadMesh(name);
 		}
+		Mesh* ContentManagerModule::LoadFbxSkeletonMesh(const wstring& name)
+		{
+			return this->fbxLoader->LoadSkeleton(name);
+		}
+
 
 		ITexture* ContentManagerModule::LoadTexture(const wstring& name)
 		{

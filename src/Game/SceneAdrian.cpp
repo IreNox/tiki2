@@ -34,10 +34,12 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
+			//_CrtSetDbgFlag(_CrtSetDbgFlag(0)|_CRTDBG_CHECK_ALWAYS_DF);
+
 			GameObject* go = new GameObject(engine);
 
 			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/humanoid.fbx");
-
+		
 			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/checker.png");
 
 			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
@@ -58,7 +60,8 @@ namespace TikiEngine
 			go->Release();
 
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 40.0f;
+			go->PRS.Position.Z = 70.0f;
+			go->PRS.Position.Y = 40.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
 			go->AddComponent(fly);
