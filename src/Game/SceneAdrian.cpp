@@ -34,7 +34,6 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
-			//_CrtSetDbgFlag(_CrtSetDbgFlag(0)|_CRTDBG_CHECK_ALWAYS_DF);
 
 			GameObject* go = new GameObject(engine);
 

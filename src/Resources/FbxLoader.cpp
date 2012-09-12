@@ -408,7 +408,7 @@ namespace TikiEngine
 			return node->EvaluateGlobalTransform(pTime);
 		}
 
-		FbxAMatrix& FbxLoader::GetGeometryFbx(FbxNode* node)
+		FbxAMatrix FbxLoader::GetGeometryFbx(FbxNode* node)
 		{
 			const FbxVector4 lT = node->GetGeometricTranslation(FbxNode::eSourcePivot);
 			const FbxVector4 lR = node->GetGeometricRotation(FbxNode::eSourcePivot);

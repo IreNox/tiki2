@@ -52,7 +52,7 @@ namespace TikiEngine
 			Matrix& GetGlobalPosition(FbxNode* node);
 			Matrix& GetGeometry(FbxNode* node);
 
-			FbxAMatrix& GetGeometryFbx(FbxNode* node);
+			FbxAMatrix GetGeometryFbx(FbxNode* node);
 			FbxAMatrix& GetGlobalPositionFbx(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);
 
 			List<FbxVector4> skeletonList;
