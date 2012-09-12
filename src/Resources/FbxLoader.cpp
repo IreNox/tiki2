@@ -93,7 +93,7 @@ namespace TikiEngine
 
 			for(int i = 0; i < skeletonCount; i++)
 			{
-				ConvertToTiki(skeletonList.Get(i), FbxVector4(), FbxVector2(), (float*)&vertexData[i]);
+				ConvertToTiki(skeletonList.Get(i), FbxVector4(), FbxVector4(), FbxVector4(), FbxVector2(), &vertexData[i]);
 				indices.Add(i);
 			}
 				
@@ -199,10 +199,13 @@ namespace TikiEngine
 						uv = model->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
 					}
 
+					FbxLayerElementArrayTemplate<FbxVector4>* arr;
+
+					bool test = model->GetBinormals(&arr);
 
 					FbxVector4 normals = model->GetElementNormal(0)->GetDirectArray().GetAt(counter);
-					FbxVector4 binormal = FbxVector4(0, 0, 0, 0); //model->GetElementBinormal(0)->GetDirectArray().GetAt(counter);
-					FbxVector4 tangent = FbxVector4(0, 0, 0, 0); //model->GetElementTangent(0)->GetDirectArray().GetAt(counter);
+					FbxVector4 binormal = arr->GetAt(counter); // bn->GetDirectArray().GetAt(counter);
+					FbxVector4 tangent = model->GetElementTangent(0)->GetDirectArray().GetAt(counter);
 
 					ConvertToTiki(
 						pos, 
@@ -356,17 +359,17 @@ namespace TikiEngine
 			output->UV[0] = (float)uv[0];
 			output->UV[1] = (float)(1-uv[1]);
 
-			//normals			
+			//normals
 			output->Normal[0] = (float)normals[0];
 			output->Normal[1] = (float)normals[1];
 			output->Normal[2] = (float)-normals[2];
 
-			//binormals			
+			//binormals
 			output->Binormal[0] = (float)binormals[0];
 			output->Binormal[1] = (float)binormals[1];
 			output->Binormal[2] = (float)-binormals[2];
 
-			//tangent			
+			//tangent
 			output->Tangent[0] = (float)tangent[0];
 			output->Tangent[1] = (float)tangent[1];
 			output->Tangent[2] = (float)-tangent[2];
