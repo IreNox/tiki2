@@ -74,7 +74,7 @@ namespace TikiEngine
 					gameObject->AddComponent(comp);
 				}
 
-				return 0;
+				return comp;
 			}
 			#pragma endregion
 
