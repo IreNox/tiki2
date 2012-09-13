@@ -11,6 +11,8 @@
 
 #include "Core/ColorVertex.h"
 
+#include "Core/UpdateArgs.h"
+
 namespace TikiEngine
 {
 	namespace Modules
@@ -37,7 +39,7 @@ namespace TikiEngine
 #endif
 
 			void Begin();
-			void End();
+			void End(const UpdateArgs& args);
 
 			void Dispose();
 
@@ -47,6 +49,8 @@ namespace TikiEngine
 			NxScene* scene; 
 			NxControllerManager* controllerManager;
 			UserAllocator* userAllocator;
+			int frameCnt;
+			float timeSinceLastUpdate;
 
 #if _DEBUG
 			Mesh* debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology);

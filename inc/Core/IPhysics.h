@@ -21,6 +21,9 @@ namespace TikiEngine
 			}
 			virtual ~IPhysics() {}
 
+			void End() {}
+			virtual void End(const UpdateArgs& args) = 0;
+
 #if _DEBUG
 			virtual void FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list) = 0;
 #endif

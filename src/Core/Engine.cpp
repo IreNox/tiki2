@@ -150,7 +150,7 @@ namespace TikiEngine
 
 			this->Update(args);
 
-			physics->End();
+			physics->End(args);
 			input->End();
 
 			graphics->SetLightChanged(scene->GetLights());

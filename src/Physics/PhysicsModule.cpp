@@ -15,6 +15,8 @@ namespace TikiEngine
 			scene = 0;
 			controllerManager = 0;
 			userAllocator = 0;
+			frameCnt = 0;
+			timeSinceLastUpdate = 0;
 		}
 
 		PhysicsModule::~PhysicsModule()
@@ -86,9 +88,13 @@ namespace TikiEngine
 				Console::Write("Error: Unable to create a PhysX scene, exiting. \n");
 				return false;
 			}
-
-			// set some Visualization Flags, else debugRendering won't work.
+			
+			// perform 5/1 substeps? to advance simulation by 1/60th of a second.
+			//scene->setTiming((1.0f/60.0f) / 5.0f, 5, NX_TIMESTEP_FIXED);
+			scene->setTiming(1.0f/60.0f, 1, NX_TIMESTEP_FIXED);
+			
 #if _DEBUG
+			// set some Visualization Flags, else debugRendering won't work.
 			physicsSDK->setParameter(NX_SKIN_WIDTH, 0.025f);
 			physicsSDK->setParameter(NX_VISUALIZATION_SCALE, 1.0f);
 			physicsSDK->setParameter(NX_VISUALIZE_COLLISION_SHAPES, 1);
@@ -125,17 +131,17 @@ namespace TikiEngine
 
 		void PhysicsModule::Begin()
 		{
-
-
 		}
 
-		void PhysicsModule::End()
+		void PhysicsModule::End(const UpdateArgs& args)
 		{
-
-			if (scene && !pause)
+			// only update every 5th frame.
+			++frameCnt;
+			timeSinceLastUpdate += (float)args.Time.ElapsedTime;
+			if (scene && !pause && frameCnt == 5)
 			{
 				// the new method to start the SDK
-				scene->simulate(1.0f / 60.0f); 
+				scene->simulate(timeSinceLastUpdate); 
 				scene->flushStream();
 
 				// in here we can do computations which depend only on the old state of the scene "actors". 
@@ -153,21 +159,21 @@ namespace TikiEngine
 				//     compute something till rigid body simulation has finished
 				//}
 
+				// then we can use isWritable() to test if we fetched  all simulation results and made the scene writable again.
+				// Since there is only one status flag it is obvious that we fetched everything and the scene is writable.
+				NX_ASSERT(scene->isWritable());
+
+				// Update controllers!
+				NxReal maxTimestep;
+				NxTimeStepMethod method;
+				NxU32 maxIter, numSubSteps;
+				scene->getTiming(maxTimestep, maxIter, method, &numSubSteps);
+				if(numSubSteps)
+					controllerManager->updateControllers();
+				
+				frameCnt = 0;
+				timeSinceLastUpdate = 0;
 			}
-
-			// then we can use isWritable() to test if we fetched  all simulation results and made the scene writable again.
-			// Since there is only one status flag it is obvious that we fetched everything and the scene is writable.
-			NX_ASSERT(scene->isWritable());
-
-			// Update controllers!
-			NxReal maxTimestep;
-			NxTimeStepMethod method;
-			NxU32 maxIter;
-			NxU32 numSubSteps;
-			scene->getTiming(maxTimestep, maxIter, method, &numSubSteps);
-			if(numSubSteps)
-				controllerManager->updateControllers();
-
 		}
 
 #pragma region Debug

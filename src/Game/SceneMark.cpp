@@ -168,9 +168,9 @@ namespace TikiEngine
 		void SceneMark::Draw(const DrawArgs& args)
 		{
 			std::wostringstream s;
-			s << "Controller Position: (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
+			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
-			engine->sprites->DrawString(font, str, Vector2(10, 40));
+			engine->sprites->DrawString(font, str, Vector2(1, 80));
 
 			Scene::Draw(args);
 		}
@@ -187,6 +187,8 @@ namespace TikiEngine
 				displacement -= Vector3(1, 0, 0);
 			if (args.Input.GetKey(KEY_L))
 				displacement += Vector3(1, 0, 0);
+			if (args.Input.GetKey(KEY_SPACE))
+				controller->SetCenter(Vector3(0, 2, 0));
 
 			// we can also determine which parts of the collider collided with another one.
 			CollisionFlags cf;
