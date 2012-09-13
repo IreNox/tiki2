@@ -74,6 +74,12 @@ namespace TikiEngine
 			{
 				value = engine->librarys->CreateResource<IPhysicsMaterial>();
 			}
+
+			else if (hash == typeid(IBoundingBox).hash_code())
+			{
+				value = engine->librarys->CreateResource<IBoundingBox>();
+			}
+
 			
 			if (loadFile && value != 0)
 			{
@@ -130,8 +136,17 @@ namespace TikiEngine
 				typeid(IPhysicsMaterial).hash_code(), 
 				name
 			);
-
 		}
+
+		IBoundingBox* ContentManagerModule::LoadBoundingBox(const wstring& name)
+		{
+			return (IBoundingBox*)this->Load(
+				typeid(IBoundingBox).hash_code(), 
+				name
+			);
+		}
+
+
 		#pragma endregion
 
 		#pragma region Member - Path

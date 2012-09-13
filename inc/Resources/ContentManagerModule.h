@@ -28,6 +28,7 @@ namespace TikiEngine
 			ITexture* LoadTexture(const wstring& name);
 			Material* LoadMaterial(const wstring& name);
 			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
+			IBoundingBox* LoadBoundingBox(const wstring& name);
 
 			wstring GetWorkingPath();
 			wstring GetRealFilePath(wstring fileName);

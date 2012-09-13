@@ -35,7 +35,10 @@ namespace TikiEngine
 			delete triggerSphere;
 			delete controller;
 			delete material;
-			
+		
+			delete bounds1;
+			delete bounds2;
+
 			SafeRelease(&font);
 		}
 
@@ -50,8 +53,18 @@ namespace TikiEngine
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
 
+
+			
+			// init BoundingBox
+			bounds1 = engine->librarys->CreateResource<IBoundingBox>();
+			bounds1->Set(Vector3(0, 0, 0), Vector3(10, 10, 10));
+
+			bounds2 = engine->librarys->CreateResource<IBoundingBox>();
+			bounds2->Set(Vector3(-1, -1, -1), Vector3(5, 5, 5));
+
 			//IPhysicsMaterial* material; 
-			material = engine->content->LoadPhysicsMaterial(L"TODO");
+			//material = engine->content->LoadPhysicsMaterial(L"TODO");
+			material = engine->librarys->CreateResource<IPhysicsMaterial>();
 			material->SetRestitution(0.7f);
 			material->SetDynamicFriction(0.7f);
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
@@ -133,21 +146,6 @@ namespace TikiEngine
 
 
 
-			// BoxCollider flags that can be set at runtime:
-
-			// Runtime: set Kinematic Trigger, kinematic actors must be specified as dynamic before!
-			//box->SetTrigger(true);
-			//box->GetRigidBody()->SetKinematic(true);
-
-			// Runtime: Create static trigger
-			//box->SetDynamic(false);		// recreate to static
-			//box->SetTrigger(true);
-		
-
-			// Runtime: Create dynamic trigger, TODO: Handle Collision Groups, else collision detection won't work!
-			//box->SetDynamic(true);
-			//box->SetTrigger(true);
-
 			// Test if the box is dynamic to move it around
 			if (dynamicBox->GetDynamic())
 			{
@@ -171,6 +169,11 @@ namespace TikiEngine
 			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 80));
+
+			std::wostringstream s2;
+			s2 << "BoundingBox Intersects" << bounds1->Intersects(*bounds2);
+			str = s2.str();
+			engine->sprites->DrawString(font, str, Vector2(1, 100));
 
 			Scene::Draw(args);
 		}

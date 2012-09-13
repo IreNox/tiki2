@@ -5,6 +5,7 @@
 #include "Core/IBoxCollider.h"
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
+#include "Core/IBoundingBox.h"
 
 
 #include "Core/IFont.h"
@@ -35,6 +36,8 @@ namespace TikiEngine
 			IPhysicsMaterial* material; 
 			ICharacterController* controller;
 
+			IBoundingBox* bounds1;
+			IBoundingBox* bounds2;
 			IFont* font;
 		};
 	}

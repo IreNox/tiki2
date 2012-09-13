@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Physics\BoundingBox.h" />
     <ClInclude Include="inc\Physics\BoxCollider.h" />
     <ClInclude Include="inc\Physics\CharacterController.h" />
     <ClInclude Include="inc\Physics\Collider.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Physics\BoundingBox.cpp" />
     <ClCompile Include="src\Physics\BoxCollider.cpp" />
     <ClCompile Include="src\Physics\CharacterController.cpp" />
     <ClCompile Include="src\Physics\Collider.cpp" />

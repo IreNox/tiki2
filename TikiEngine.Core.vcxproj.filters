@@ -499,5 +499,8 @@
     <ClInclude Include="inc\Core\IPhysicsMaterial.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IBoundingBox.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

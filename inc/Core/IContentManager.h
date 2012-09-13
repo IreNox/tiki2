@@ -6,6 +6,8 @@
 #include "Core/ITexture.h"
 #include "Core/Material.h"
 #include "Core/IPhysicsMaterial.h"
+#include "Core/IBoundingBox.h"
+
 
 namespace TikiEngine
 {
@@ -30,6 +32,7 @@ namespace TikiEngine
 			virtual ITexture* LoadTexture(const wstring& name) = 0;
 			virtual Material* LoadMaterial(const wstring& name) = 0;
 			virtual IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name) = 0;
+			virtual IBoundingBox* LoadBoundingBox(const wstring& name) = 0;
 
 			virtual wstring GetWorkingPath() = 0;
 			virtual wstring GetRealFilePath(wstring fileName) = 0;
