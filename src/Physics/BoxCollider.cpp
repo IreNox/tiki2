@@ -134,8 +134,7 @@ namespace TikiEngine
 
 		void BoxCollider::Update(const UpdateArgs& args)
 		{
-			NxVec3 pos = actor->getGlobalPosition();			
-			gameObject->PRS.Position = Vector3(pos.x, pos.y, pos.z);
+			gameObject->PRS.Position = actor->getGlobalPosition().get();
 
 			NxQuat rot = actor->getGlobalOrientationQuat();
 			gameObject->PRS.Rotation = Quaternion(rot.x, rot.y, rot.z, rot.w);

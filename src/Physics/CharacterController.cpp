@@ -1,6 +1,8 @@
 #include "Physics/CharacterController.h"
 #include "Physics/DllMain.h"
 
+#include "Core/GameObject.h"
+
 namespace TikiEngine 
 {
 	namespace Physics
@@ -176,6 +178,14 @@ namespace TikiEngine
 			// set the underlying kinematic actor from controller
 			actor = controller->getActor();
 			rigidBody.SetActor(actor);
+		}
+
+		void CharacterController::Update(const UpdateArgs& args)
+		{
+			gameObject->PRS.Position = actor->getGlobalPosition().get();
+
+			NxQuat rot = actor->getGlobalOrientationQuat();
+			gameObject->PRS.Rotation = Quaternion(rot.x, rot.y, rot.z, rot.w);
 		}
 
 	}

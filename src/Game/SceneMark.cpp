@@ -39,6 +39,8 @@ namespace TikiEngine
 			delete bounds1;
 			delete bounds2;
 
+			delete entity;
+
 			SafeRelease(&font);
 		}
 
@@ -53,7 +55,7 @@ namespace TikiEngine
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
 
-
+			entity = new BaseGameEntity(engine, 0);
 			
 			// init BoundingBox
 			bounds1 = engine->librarys->CreateResource<IBoundingBox>();

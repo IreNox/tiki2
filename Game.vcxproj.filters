@@ -27,6 +27,12 @@
     <Filter Include="Quelldateien\Effects">
       <UniqueIdentifier>{11762833-c888-4f3a-bab3-a3f9c86d6d26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI">
+      <UniqueIdentifier>{24c564ce-4b1a-4c4e-a17c-6066f142d221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI">
+      <UniqueIdentifier>{b2539aea-d156-4889-aa79-12c6cb93e27b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -43,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\PPBlur.h">
       <Filter>Headerdateien\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BaseGameEntity.h">
+      <Filter>Headerdateien\AI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -63,6 +72,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\PPBlur.cpp">
       <Filter>Quelldateien\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BaseGameEntity.cpp">
+      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

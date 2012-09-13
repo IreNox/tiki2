@@ -6,7 +6,7 @@
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
 #include "Core/IBoundingBox.h"
-
+#include "BaseGameEntity.h"
 
 #include "Core/IFont.h"
 
@@ -14,6 +14,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::AI;
+
 		class SceneMark : public Scene
 		{
 		public:
@@ -39,6 +41,8 @@ namespace TikiEngine
 			IBoundingBox* bounds1;
 			IBoundingBox* bounds2;
 			IFont* font;
+
+			BaseGameEntity* entity;
 		};
 	}
 }

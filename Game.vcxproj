@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Game\BaseGameEntity.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
@@ -26,6 +27,7 @@
     <ClInclude Include="inc\Game\SceneTim.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
