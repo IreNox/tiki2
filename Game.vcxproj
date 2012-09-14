@@ -21,15 +21,20 @@
   <ItemGroup>
     <ClInclude Include="inc\Game\BaseGameEntity.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
+    <ClInclude Include="inc\Game\EntityManager.h" />
+    <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
+    <ClInclude Include="inc\Game\Utils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
+    <ClCompile Include="src\Game\EntityManager.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
+    <ClCompile Include="src\Game\MovingEntity.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
     <ClCompile Include="src\Game\SceneMark.cpp" />

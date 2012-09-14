@@ -29,17 +29,17 @@ namespace TikiEngine
 
 		SceneMark::~SceneMark()
 		{
-			delete kinematicBox;
-			delete staticBox;
-			delete dynamicBox;
-			delete triggerSphere;
-			delete controller;
-			delete material;
+			SafeRelease(&kinematicBox);
+			SafeRelease(&staticBox);
+			SafeRelease(&dynamicBox);
+			SafeRelease(&triggerSphere);
+			SafeRelease(&controller);
+			SafeRelease(&material);
 		
-			delete bounds1;
-			delete bounds2;
+			SafeRelease(&bounds1);
+			SafeRelease(&bounds2);
 
-			delete entity;
+			SafeRelease(&entity);
 
 			SafeRelease(&font);
 		}
@@ -55,8 +55,11 @@ namespace TikiEngine
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
 
-			entity = new BaseGameEntity(engine, 0);
-			
+			entity = new MovingEntity(engine, Vector3::Zero, 1.0, Vector3::Zero, 1, 
+									  Vector3(0, 0, 0), 1, Vector3::One, 0.2, 1.0);
+			this->AddElement(entity);
+			//entity->Release();
+
 			// init BoundingBox
 			bounds1 = engine->librarys->CreateResource<IBoundingBox>();
 			bounds1->Set(Vector3(0, 0, 0), Vector3(10, 10, 10));

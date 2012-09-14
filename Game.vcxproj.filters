@@ -53,6 +53,15 @@
     <ClInclude Include="inc\Game\BaseGameEntity.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\Utils.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EntityManager.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\MovingEntity.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -74,6 +83,12 @@
       <Filter>Quelldateien\Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BaseGameEntity.cpp">
+      <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\EntityManager.cpp">
+      <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\MovingEntity.cpp">
       <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>

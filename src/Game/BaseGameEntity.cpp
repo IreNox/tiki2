@@ -26,5 +26,18 @@ namespace TikiEngine
 		  nextValidID = id + 1;
 		}
 
+		void BaseGameEntity::SetScale(Vector3 val)
+		{
+			boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
+							  MaxOf(MaxOf(scale.X, scale.Y), scale.Z); 
+			scale = val;
+		}
+
+		void BaseGameEntity::SetScale(Double val)
+		{
+			boundingRadius *= (val / MaxOf(MaxOf(scale.X, scale.Y), scale.Z)); 
+			scale = Vector3((float)val);
+		}
+
 	}
 }
