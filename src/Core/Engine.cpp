@@ -11,6 +11,7 @@
 #include "Core/Scene.h"
 
 #include "Core/IInput.h"
+#include "Core/ISound.h"
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
 #include "Core/ISpriteBatch.h"
@@ -24,7 +25,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Engine::Engine()
-		: scene(0), loadedModules(), audio(0), input(0), physics(0), graphics(0), sprites(0), content(0)
+		: scene(0), loadedModules(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
 	{
 	}
 
@@ -95,6 +96,13 @@ namespace TikiEngine
 			return false;
 		}
 
+		sound = librarys->CreateModule<ISound>();
+		if (!initModule(sound))
+		{
+			MessageBox(window->GetHWND(), L"Can't init Sound.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
 		physics = librarys->CreateModule<IPhysics>();
 		if (!initModule(physics))
 		{
@@ -137,16 +145,17 @@ namespace TikiEngine
 			window->Begin();
 
 			QueryPerformanceCounter(&current);
-			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
-			gameTime += elapsedTime;
+			GameTime time = GameTime(
+				(double)(current.QuadPart - last.QuadPart) / freq.QuadPart,				
+				gameTime
+			);
+			gameTime += time.ElapsedTime;
 			last = current;
-			GameTime time = GameTime(elapsedTime, gameTime);
 
 			UpdateArgs args = UpdateArgs(time);
 			input->Begin();
-			physics->Begin();
-
 			input->FillInputState(&args.Input);
+			physics->Begin();
 
 			this->Update(args);
 
@@ -159,13 +168,7 @@ namespace TikiEngine
 			while (i < scene->GetCameras()->Count())
 			{
 				Camera* camera = scene->GetCameras()->Get(i);
-
-				DrawArgs drawArgs = DrawArgs(
-					time,
-					camera,
-					graphics,
-					sprites
-				);
+				DrawArgs drawArgs = DrawArgs(time, camera, graphics, sprites);
 				
 				graphics->Begin(drawArgs);
 				sprites->Begin();

@@ -502,5 +502,8 @@
     <ClInclude Include="inc\Core\IBoundingBox.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\ISound.h">
+      <Filter>Headerdateien\Interfaces\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

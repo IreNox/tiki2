@@ -17,8 +17,8 @@ namespace TikiEngine
 		class Window;
 		class LibraryManager;
 
-		class IAudio;
 		class IInput;
+		class ISound;
 		class IPhysics;
 		class IGraphics;
 		class ISpriteBatch;
@@ -32,8 +32,8 @@ namespace TikiEngine
 	{
 	public:
 
-		IAudio* audio;
 		IInput* input;
+		ISound* sound;
 		IPhysics* physics;
 		IGraphics* graphics;
 		ISpriteBatch* sprites;
