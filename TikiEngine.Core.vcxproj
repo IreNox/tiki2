@@ -77,6 +77,7 @@
     <ClInclude Include="inc\Core\IFont.h" />
     <ClInclude Include="inc\Core\IScript.h" />
     <ClInclude Include="inc\Core\ISound.h" />
+    <ClInclude Include="inc\Core\ISoundSystem.h" />
     <ClInclude Include="inc\Core\ISphereCollider.h" />
     <ClInclude Include="inc\Core\ISpriteBatch.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />

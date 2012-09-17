@@ -146,10 +146,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="inc\Sound\DllMain.h" />
+    <ClInclude Include="inc\Sound\Sound.h" />
     <ClInclude Include="inc\Sound\SoundModule.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Sound\DllMain.cpp" />
+    <ClCompile Include="src\Sound\Sound.cpp" />
     <ClCompile Include="src\Sound\SoundModule.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

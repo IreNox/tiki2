@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/ISound.h"
+#include "Core/ISoundSystem.h"
 #include "fmod/fmod.hpp"
 
 namespace TikiEngine
@@ -9,7 +9,7 @@ namespace TikiEngine
 	{
 		using namespace FMOD;
 
-		class SoundModule : public ISound
+		class SoundModule : public ISoundSystem
 		{
 		public:
 
@@ -23,7 +23,9 @@ namespace TikiEngine
 
 			void Dispose();
 
-			void Bla();
+			void PlaySound(ISound* sound);
+
+			FMOD::Sound* LoadSound(cstring fileName);
 
 		private:
 

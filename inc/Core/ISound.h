@@ -1,20 +1,22 @@
 #pragma once
 
-#include "Core/IModule.h"
+#include "Core/IResource.h"
 
 namespace TikiEngine
 {
-	namespace Modules
+	namespace Resources
 	{
-		class ISound : public IModule
+		class ISound : public IResource
 		{
 		public:
 
-			ISound(Engine* engine) : IModule(engine) {}
+			ISound(Engine* engine) : IResource(engine) {}
 			~ISound() {}
 
-			virtual void Bla() = 0;
-
+			/*!
+			 * @brief Duration in Seconds
+			*/
+			virtual float GetDuration() = 0;
 		};
 	}
 }

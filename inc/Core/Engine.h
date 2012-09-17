@@ -18,9 +18,9 @@ namespace TikiEngine
 		class LibraryManager;
 
 		class IInput;
-		class ISound;
 		class IPhysics;
 		class IGraphics;
+		class ISoundSystem;
 		class ISpriteBatch;
 		class IContentManager;
 	}
@@ -33,9 +33,9 @@ namespace TikiEngine
 	public:
 
 		IInput* input;
-		ISound* sound;
 		IPhysics* physics;
 		IGraphics* graphics;
+		ISoundSystem* sound;
 		ISpriteBatch* sprites;
 		IContentManager* content;
 

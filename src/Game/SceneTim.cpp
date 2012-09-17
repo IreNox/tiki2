@@ -1,22 +1,22 @@
 
 #include "Game/SceneTim.h"
 
+#include "Core/Engine.h"
 #include "Core/IPhysics.h"
+#include "Core/IGraphics.h"
+#include "Core/ISpriteBatch.h"
+#include "Core/ISoundSystem.h"
 #include "Core/LibraryManager.h"
 #include "Core/IContentManager.h"
 
 #include "Core/IMeshRenderer.h"
 #include "Core/IPhysicsMaterial.h"
 #include "Core/IBoxCollider.h"
-#include "Core/DebugPhysicsRenderer.h"
+#include "Core/ISound.h"
 
 #include "Game/PPBlur.h"
 
 #include "Game/CameraFly.h"
-
-#include "Core/Engine.h"
-#include "Core/IGraphics.h"
-#include "Core/ISpriteBatch.h"
 
 namespace TikiEngine
 {
@@ -82,6 +82,10 @@ namespace TikiEngine
 
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
+			ISound* sound = engine->librarys->CreateResource<ISound>();
+			sound->LoadFromFile(L"Data/Sound/beep.wav");
+
+			engine->sound->PlaySound(sound);
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 16.0f);

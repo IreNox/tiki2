@@ -11,9 +11,9 @@
 #include "Core/Scene.h"
 
 #include "Core/IInput.h"
-#include "Core/ISound.h"
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
+#include "Core/ISoundSystem.h"
 #include "Core/ISpriteBatch.h"
 
 #include "Core/GameTime.h"
@@ -96,7 +96,7 @@ namespace TikiEngine
 			return false;
 		}
 
-		sound = librarys->CreateModule<ISound>();
+		sound = librarys->CreateModule<ISoundSystem>();
 		if (!initModule(sound))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Sound.", L"TikiEngine 2.0", MB_ICONERROR);

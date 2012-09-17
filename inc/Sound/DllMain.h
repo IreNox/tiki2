@@ -21,7 +21,7 @@ namespace TikiEngine
 		static TikiInfo DllInfo;
 
 		static Engine* Engine;
-		static SoundModule* ModuleGraphics;
+		static SoundModule* Module;
 
 		static void InitDll(TikiEngine::Engine* engine);
 

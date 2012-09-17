@@ -10,15 +10,18 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
+		#pragma region Class
 		SoundModule::SoundModule(Engine* engine)
-			: ISound(engine), system(0)
+			: ISoundSystem(engine), system(0)
 		{
 		}
 
 		SoundModule::~SoundModule()
 		{
 		}
+		#pragma endregion
 
+		#pragma region Init
 		bool SoundModule::Initialize(EngineDescription& desc)
 		{
 			FMOD_RESULT r = System_Create(&system);
@@ -144,7 +147,19 @@ namespace TikiEngine
 
 			return true;
 		}
+		#pragma endregion
 
+		#pragma region Member
+		FMOD::Sound* SoundModule::LoadSound(cstring fileName)
+		{
+			Sound* sound = 0;
+			system->createStream(fileName, FMOD_DEFAULT, 0, &sound);
+
+			return sound;
+		}
+		#pragma endregion
+
+		#pragma region Member - Begin/End
 		void SoundModule::Begin()
 		{
 		}
@@ -152,7 +167,9 @@ namespace TikiEngine
 		void SoundModule::End()
 		{
 		}
+		#pragma endregion
 
+		#pragma region Member - Dispose
 		void SoundModule::Dispose()
 		{
 			if (system != 0)
@@ -161,9 +178,16 @@ namespace TikiEngine
 				system = 0;
 			}
 		}
-
-		void SoundModule::Bla()
+		#pragma endregion
+				
+		void SoundModule::PlaySound(ISound* sound)
 		{
+			system->playSound(
+				FMOD_CHANNEL_FREE,
+				(FMOD::Sound*)sound->GetNativeResource(),
+				false, 
+				0
+			);
 		}
 	}
 }
