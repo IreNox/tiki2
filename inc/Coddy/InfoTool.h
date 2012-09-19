@@ -1,0 +1,184 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Cloddy SDK v2.1 - (C) Copyright 2008-2012, BiteTheBytes UG (haftungsbeschraenkt)
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+#ifndef CLODDY_API_TOOLS_INFOTOOL_H
+#define CLODDY_API_TOOLS_INFOTOOL_H
+
+#include "CodeX/System.h"
+
+// Include referenced classes.
+
+#include "Cloddy/Tool.h"
+
+// Forward declare referenced interfaces.
+
+namespace Cloddy { namespace API { namespace Util { namespace Progress { class IProgressMonitor; } } } }
+namespace Cloddy { namespace Core { namespace Collections { template<class> class IList; } } }
+namespace Cloddy { namespace Core { namespace IO { namespace Serialization { class ISerializable; } } } }
+namespace Cloddy { namespace Core { namespace IO { namespace Serialization { class ISerialTypeInfo; } } } }
+
+// Forward declare referenced classes.
+
+namespace Cloddy { namespace API { namespace Tools { class InfoTag; } } }
+namespace Cloddy { namespace API { namespace Tools { class ToolParameterErrors; } } }
+namespace Cloddy { namespace Core { namespace IO { namespace Files { class Path; } } } }
+namespace Cloddy { namespace Core { namespace IO { namespace Serialization { class Serializer; } } } }
+namespace Cloddy { namespace Core { namespace IO { namespace Serialization { template<class> class SerialTypeInfo; } } } }
+
+// Declare class ::Cloddy::API::Tools::InfoTool.
+
+namespace Cloddy { namespace API { namespace Tools
+{
+  // Use referenced namespaces.
+  
+  using namespace CodeX;
+  
+  // Use referenced interfaces.
+  
+  using Cloddy::API::Util::Progress::IProgressMonitor;
+  using Cloddy::Core::Collections::IList;
+  using Cloddy::Core::IO::Serialization::ISerializable;
+  using Cloddy::Core::IO::Serialization::ISerialTypeInfo;
+  
+  // Use referenced classes.
+  
+  using Cloddy::Core::IO::Files::Path;
+  using Cloddy::Core::IO::Serialization::Serializer;
+  using Cloddy::Core::IO::Serialization::SerialTypeInfo;
+  
+  class InfoTool : public Tool
+  {
+    // ---------------------------------------------------------------------------------------------
+    // Public / Attributes
+    // ---------------------------------------------------------------------------------------------
+  public:
+    
+    /*!
+     * @brief  The info tags that have been generated during the last execution of this tool.
+     * 
+     * @return <b>[not-null]</b>  The info tag array.
+     */
+    Ptr<IList<Ref<InfoTag> > > GetInfoTags();
+    
+    /*!
+     * @brief  The info tags that have been generated during the last execution of this tool.
+     * 
+     * @param value <b>[not-null]</b>  The info tag array.
+     */
+    void SetInfoTags(IList<Ref<InfoTag> >* value);
+    
+    /*!
+     * @brief  The input file.
+     * 
+     * @return Path to the file in the filesystem.
+     */
+    Ptr<Path> GetInputFile();
+    
+    /*!
+     * @brief  The input file.
+     * 
+     * @param value Path to the file in the filesystem.
+     */
+    void SetInputFile(Path* value);
+    
+    virtual String GetName();
+    
+    virtual Ptr<ISerialTypeInfo> GetSerialType();
+    
+    // ---------------------------------------------------------------------------------------------
+    // Public / Methods
+    // ---------------------------------------------------------------------------------------------
+    
+    virtual Ptr<ISerializable> Deserialize(int32 serialVersion, Serializer* data);
+    
+    virtual void Prepare(IProgressMonitor* progressMonitor);
+    
+    virtual void Run(IProgressMonitor* argument);
+    
+    virtual void Serialize(Serializer* data);
+    
+    // ---------------------------------------------------------------------------------------------
+    // Protected / Methods
+    // ---------------------------------------------------------------------------------------------
+  protected:
+    
+    virtual void DisposeManaged();
+    
+    virtual void DoValidate(ToolParameterErrors* errors);
+    
+    // ---------------------------------------------------------------------------------------------
+    // Private / Constants
+    // ---------------------------------------------------------------------------------------------
+  private:
+    
+    /*!
+     * @brief  The GUID that uniquely identifies this type:{41EBFC43-1536-444C-9CA4-1662236843F1}
+     */
+    static const String SerialGuid;
+    
+    // ---------------------------------------------------------------------------------------------
+    // Private / Attributes
+    // ---------------------------------------------------------------------------------------------
+    
+    /*!
+     * @brief  Serialization information about this type.
+     */
+    static const StaticPtr<ISerialTypeInfo> SerialId;
+    
+    /*!
+     * @brief  The info tags that have been generated during the last execution of this tool.
+     */
+    Ptr<IList<Ref<InfoTag> > > infoTags;
+    
+    /*!
+     * @brief  The input file.
+     */
+    Ptr<Path> inputFile;
+    
+    // ---------------------------------------------------------------------------------------------
+    // Static Initializer Functions
+    // ---------------------------------------------------------------------------------------------
+    
+    /*!
+     * @brief Static initializer function for field SerialId.
+     */
+    static Object* StaticInitializer_SerialId();
+    
+    // ---------------------------------------------------------------------------------------------
+    // Metadata
+    // ---------------------------------------------------------------------------------------------
+    
+    /*!
+     * @brief Type definition for a smart pointer to this type.
+     *
+     * The \c ptr typedef can be used when the \c Ptr symbol cannot be used because another symbol
+     * of that name has already been defined.
+     */
+    public: typedef Ptr<InfoTool> ptr;
+    
+    /*!
+     * @brief The unique ID of this type.
+     */
+    public: static const int32 TypeId = 0x852F0D85;
+    
+    /*!
+     * @brief Tries to cast this object to the given type.
+     *
+     * @param typeId The ID of the type to cast to.
+     *
+     * @return The result of the type cast. Can be \c 0 if the requested cast is an invalid 
+     *         downcast.
+     */
+    protected: virtual void* TryCast(int typeId)
+    {
+      if (typeId == TypeId) return (void*) this;
+      void* ptr;
+      if ((ptr = Tool::TryCast(typeId)) != 0) return ptr;
+      return (void*) 0;
+    }
+  };
+  
+} } } 
+
+#endif

@@ -3,7 +3,7 @@
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
-    <OutDir>$(SolutionDir)lib\x$(PlatformArchitecture)\</OutDir>
+    <OutDir>$(SolutionDir)lib\x$(PlatformArchitecture)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup>
     <IntDir>$(SolutionDir)obj\$(ProjectName)\$(Configuration)\$(Platform)\</IntDir>

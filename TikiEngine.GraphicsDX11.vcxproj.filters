@@ -89,6 +89,9 @@
     <ClCompile Include="src\Graphics\Font.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\TerrainRenderer.cpp">
+      <Filter>Quelldateien\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -147,6 +150,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\Font.h">
       <Filter>Headerdateien\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TerrainRenderer.h">
+      <Filter>Headerdateien\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
