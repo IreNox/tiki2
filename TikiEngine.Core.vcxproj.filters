@@ -212,14 +212,14 @@
     <ClCompile Include="src\Core\ColorVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Object.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\PostProcess.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\PostProcessPass.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\TikiObject.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -285,9 +285,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Stack.h">
       <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Object.h">
-      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IContentManager.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
@@ -507,6 +504,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\ISound.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiObject.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

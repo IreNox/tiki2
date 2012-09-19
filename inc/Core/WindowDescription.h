@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Core/TypeInc.h"
-
 namespace TikiEngine
 {
 	namespace Description

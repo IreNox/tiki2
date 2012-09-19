@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Core/Object.h"
+#include "Core/TikiObject.h"
 #include "Core/Quaternion.h" //includes "Core/Vector3.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
-		class IRigidBody : public Object
+		class IRigidBody : public TikiObject
 		{
 		public: 
 			IRigidBody()
-				: Object()
+				: TikiObject()
 			{
 			}
 

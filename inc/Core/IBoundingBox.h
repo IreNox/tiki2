@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/IResource.h"
+#include "Core/Vector3.h"
 
 namespace TikiEngine
 {

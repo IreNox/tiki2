@@ -37,7 +37,7 @@ namespace TikiEngine
 
 			if (version < FMOD_VERSION)
 			{
-				printf("Error! You are using an old version of FMOD %08x. This program requires %08x\n", version, FMOD_VERSION);
+				//printf("Error! You are using an old version of FMOD %08x. This program requires %08x\n", version, FMOD_VERSION);
 				return false;
 			}
 

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Core/Object.h"
+#include "Core/TikiObject.h"
 #include "Core/Engine.h"
 
 namespace TikiEngine
 {
-	class EngineObject : public Object
+	class EngineObject : public TikiObject
 	{
 	public:
 

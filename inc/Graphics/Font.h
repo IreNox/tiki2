@@ -3,7 +3,7 @@
 #include "Core/IFont.h"
 
 #include "Core/Rectangle.h"
-
+#include "Core/Dictionary.h"
 
 namespace TikiEngine
 {

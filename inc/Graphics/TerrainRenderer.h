@@ -2,11 +2,19 @@
 
 #include "Core/Component.h"
 
-#include <Cloddy/Cloddy_Core.h>
-#include <Cloddy/Cloddy_Kernel.h>
-#include <Cloddy/Cloddy_API.h>
-#include <Cloddy/Cloddy_Graphics.h>
-#include <Cloddy/Cloddy_Extensions.h>
+#define CODEX_PREFIX
+#define CLODDY_CORE_PREFIX
+#define CLODDY_KERNEL_PREFIX
+#define CLODDY_API_PREFIX
+#define CLODDY_GRAPHICS_PREFIX
+#define CLODDY_EXTENSIONS_PREFIX
+
+#include <CodeX/Codex.h>
+#include "Cloddy/Cloddy_Core.h"
+#include "Cloddy/Cloddy_Kernel.h"
+#include "Cloddy/Cloddy_API.h"
+#include "Cloddy/Cloddy_Graphics.h"
+#include "Cloddy/Cloddy_Extensions.h"
 
 namespace TikiEngine
 {
@@ -20,7 +28,7 @@ namespace TikiEngine
 		{
 		public:
 
-			TerrainRenderer(Engine* engine);
+			TerrainRenderer(Engine* engine, GameObject* gameObject);
 			~TerrainRenderer();
 
 			void Draw(const DrawArgs& args);
