@@ -6,7 +6,7 @@
 #include "Core/IShader.h"
 #include "Core/List.h"
 
-#include "Core/GameTime.h"
+#include "Core/DrawArgs.h"
 
 namespace TikiEngine
 {
@@ -26,7 +26,7 @@ namespace TikiEngine
 
 			const List<PostProcessPass*>* GetPasses();
 
-			virtual void UpdatePass(UInt32 index, const GameTime& time);
+			virtual void UpdatePass(UInt32 index, const DrawArgs& args);
 
 		protected:
 

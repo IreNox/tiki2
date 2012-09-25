@@ -80,7 +80,7 @@ namespace TikiEngine
 		private:
 
 			bool inited;
-			GameTime currentTime;
+			DrawArgs currentArgs;
 
 			IDXGIFactory* factory;
 			IDXGIAdapter* adapter;

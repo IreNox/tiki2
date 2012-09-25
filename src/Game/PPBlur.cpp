@@ -40,7 +40,7 @@ namespace TikiEngine
 			SafeRelease(&verticleTarget);
 		}
 
-		void PPBlur::UpdatePass(UInt32 index, const GameTime& time)
+		void PPBlur::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
 			shader->SelectSubByIndex(index);
 		}

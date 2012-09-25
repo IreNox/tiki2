@@ -14,8 +14,6 @@
 #include "Core/IBoxCollider.h"
 #include "Core/ISound.h"
 
-#include "Game/PPBlur.h"
-
 #include "Game/CameraFly.h"
 
 namespace TikiEngine
@@ -23,7 +21,6 @@ namespace TikiEngine
 	namespace Game
 	{
 		using namespace TikiEngine::Scripts;
-		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Components;
 
@@ -81,6 +78,9 @@ namespace TikiEngine
 
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
+			ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			engine->graphics->AddPostProcess(ssao);
+
 			ISound* sound = engine->librarys->CreateResource<ISound>();
 			sound->LoadFromFile(L"Data/Sound/beep.wav");
 
@@ -111,6 +111,11 @@ namespace TikiEngine
 			engine->sprites->Draw(
 				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 200, 200, 180)
+			);
+
+			engine->sprites->Draw(
+				ssao->GetAO(),
+				Rectangle(10, 390, 200, 180)
 			);
 
 			/*engine->sprites->Draw(

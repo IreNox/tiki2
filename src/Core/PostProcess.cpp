@@ -44,7 +44,7 @@ namespace TikiEngine
 			return &passes;
 		}
 
-		void PostProcess::UpdatePass(UInt32 index, const GameTime& time)
+		void PostProcess::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
 		}
 		#pragma endregion

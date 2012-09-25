@@ -24,6 +24,7 @@
     <ClInclude Include="inc\Game\EntityManager.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
+    <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
@@ -36,6 +37,7 @@
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
+    <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
     <ClCompile Include="src\Game\SceneMark.cpp" />
     <ClCompile Include="src\Game\SceneTim.cpp" />

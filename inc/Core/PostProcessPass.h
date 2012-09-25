@@ -30,7 +30,7 @@ namespace TikiEngine
 			const Dictionary<IRenderTarget*, cstring>* GetInput();
 			const Dictionary<IRenderTarget*, UInt32>* GetOutput();
 
-			virtual void UpdateVars(const GameTime& time);
+			virtual void UpdateVars(const DrawArgs& args);
 
 		private:
 

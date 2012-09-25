@@ -7,11 +7,15 @@
 
 #include "Core/IFont.h"
 
+#include "Game/PPBlur.h"
+#include "Game/PPScreenSpaceAmbientOcclusion.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
 		using namespace TikiEngine::Objects;
+		using namespace TikiEngine::Graphics;
 
 		class SceneTim : public Scene
 		{
@@ -32,6 +36,9 @@ namespace TikiEngine
 			LightObject* light;
 
 			ITexture* tex;
+
+			PPScreenSpaceAmbientOcclusion* ssao;
+
 		};
 	}
 }

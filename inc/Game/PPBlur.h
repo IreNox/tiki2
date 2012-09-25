@@ -13,7 +13,7 @@ namespace TikiEngine
 			PPBlur(Engine* engine);
 			~PPBlur();
 
-			void UpdatePass(UInt32 index, const GameTime& time);
+			void UpdatePass(UInt32 index, const DrawArgs& args);
 			
 		private:
 

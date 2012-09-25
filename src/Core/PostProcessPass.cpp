@@ -38,7 +38,7 @@ namespace TikiEngine
 		#pragma endregion
 		
 		#pragma region Member
-		void PostProcessPass::UpdateVars(const GameTime& time)
+		void PostProcessPass::UpdateVars(const DrawArgs& args)
 		{
 		}
 		#pragma endregion

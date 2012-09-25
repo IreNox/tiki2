@@ -24,7 +24,7 @@ namespace TikiEngine
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
 			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets(), postProcesses(), postProcessPassQuads(),
-			defaultPostProcess(0), currentTime(0, 0), alphaBlendState(0), depthStencilStateDisable(0),
+			defaultPostProcess(0), currentArgs(), alphaBlendState(0), depthStencilStateDisable(0),
 			screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0)
 		{
 			clearColor = Color::TikiBlue;
@@ -241,7 +241,7 @@ namespace TikiEngine
 		#pragma region Member - Begin/End
 		void GraphicsModule::Begin(const DrawArgs& args)
 		{
-			currentTime = args.Time;
+			currentArgs = args;
 
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
@@ -658,8 +658,8 @@ namespace TikiEngine
 					quad = postProcessPassQuads[pass];
 				}
 
-				postProcess->UpdatePass(i, currentTime);
-				pass->UpdateVars(currentTime);
+				postProcess->UpdatePass(i, currentArgs);
+				pass->UpdateVars(currentArgs);
 
 				quad->SetOutput(pass->GetOutput());				
 				quad->SetInput(pass->GetInput());
