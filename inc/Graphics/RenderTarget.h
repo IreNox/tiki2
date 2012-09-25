@@ -21,6 +21,7 @@ namespace TikiEngine
 			void CreateScreenSize();
 
 			void Apply(UInt32 slot);
+			void ApplyFirstAndOnly();
 			void Clear(const Color& color);
 
 			Int32 GetWidth();

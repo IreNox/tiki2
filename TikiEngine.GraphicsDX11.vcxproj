@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp" />
+    <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\GraphicsModule.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="inc\Graphics\Buffer.h" />
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
+    <ClInclude Include="inc\Graphics\DebugLineRenderer.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
     <ClInclude Include="inc\Graphics\Font.h" />
     <ClInclude Include="inc\Graphics\DynamicBuffer.h" />

@@ -46,7 +46,7 @@ cbuffer LightBuffer : register(b1)
 	Light Lights[32];
 };
 
-Texture2DArray tex;
+Texture2D tex;
 
 SamplerState sam : register(s0)
 {    
@@ -73,7 +73,9 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	return tex.Sample(sam, input.UV);
+	int i = (int)input.UV.z;
+
+	return tex.Sample(sam, input.UV.xy);
 }
 
 technique11 basic

@@ -42,8 +42,9 @@ struct Color
 	}
 
 	static Color TransparentBlack;
+	static Color NormalDefault;
 	static Color White;
-	static Color Back;
+	static Color Black;
 	static Color Red;
 	static Color Green;
 	static Color Blue;

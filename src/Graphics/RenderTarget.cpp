@@ -39,6 +39,11 @@ namespace TikiEngine
 			DllMain::ModuleGraphics->SetRenderTarget(slot, renderTarget);
 		}
 
+		void RenderTarget::ApplyFirstAndOnly()
+		{
+			DllMain::ModuleGraphics->SetFirstAndOnlyRenderTargets(renderTarget);
+		}
+
 		void RenderTarget::Clear(const Color& color)
 		{
 			DllMain::Context->ClearRenderTargetView(renderTarget, color.arr);

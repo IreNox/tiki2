@@ -16,6 +16,10 @@
 
 #include "Graphics/RenderTarget.h"
 
+#if _DEBUG
+#include "Graphics/DebugLineRenderer.h"
+#endif
+
 #include <D3D11.h>
 #include <D3DX11.h>
 
@@ -36,16 +40,22 @@ namespace TikiEngine
 			void Begin(const DrawArgs& args);
 			void End();
 
+#if _DEBUG
+			void DrawLine(const Vector3& start, const Vector3& end, const Color& color);
+			void DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst = false);
+#endif
+			
 			void Dispose();
 
 			void Clear(float* color);
-			void Present();
 
 			void* GetDevice();
 			void* GetDeviceContext();
 
 			ViewPort* GetViewPort();
-			IRenderTarget* GetScreenBuffer();
+			IRenderTarget* GetScreenTarget();
+			IRenderTarget* GetNormalTarget();
+			IRenderTarget* GetDepthTarget();
 
 			ConstantBuffer<Lights>* GetLightBuffer();
 			ConstantBuffer<Matrices>* GetMatrixBuffer();
@@ -61,7 +71,9 @@ namespace TikiEngine
 			void RemoveScreenSizeRenderTarget(RenderTarget* target);
 
 			void SetLightChanged(List<Light*>* lights);
+
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
+			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
 
 			bool GetReady();
 
@@ -97,6 +109,8 @@ namespace TikiEngine
 
 			List<ID3D11RenderTargetView*> renderTargets;
 
+			RenderTarget* rtDepth;
+			RenderTarget* rtNormal;
 			RenderTarget* rtScreen;
 			RenderTarget* rtBackBuffer;
 			List<RenderTarget*> screenSizeRenderTargets;
@@ -104,6 +118,10 @@ namespace TikiEngine
 			PostProcess* defaultPostProcess;
 			List<PostProcess*> postProcesses;
 			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
+
+#if _DEBUG
+			DebugLineRenderer* lineRenderer;
+#endif
 
 			bool initSelectAdapter(EngineDescription& desc);
 			bool initDirectX(EngineDescription& desc);

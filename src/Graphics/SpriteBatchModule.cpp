@@ -69,6 +69,8 @@ namespace TikiEngine
 
 		void SpriteBatchModule::End()
 		{
+			DllMain::ModuleGraphics->GetScreenTarget()->ApplyFirstAndOnly();
+
 			UInt32 count = vertices.Count();
 
 			if (count == 0) return;
@@ -98,13 +100,23 @@ namespace TikiEngine
 
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-			shader->SetTextureArray("tex", &textures);
-			shader->Apply();
 			declaration->Apply();
 
 			renderTarget->Clear(Color::TransparentBlack);
 			renderTarget->Apply(0);
-			DllMain::Context->Draw(count, 0);
+
+			UInt32 i = 0;
+			UInt32 spritesCount = count / 6;
+			while (i < spritesCount)
+			{
+				shader->SetTexture("tex", textures[i]);
+				shader->Apply();
+
+				DllMain::Context->Draw(6, i * 6);
+
+				i++;
+			}
+
 		}
 		#pragma endregion
 
@@ -256,11 +268,11 @@ namespace TikiEngine
 		{
 			float index = 0;
 
-			if (!textures.Contains(texture))
-			{
-				textures.Add(texture);
-				index = (float)textures.IndexOf(texture);
-			}
+			textures.Add(texture);
+			index = (float)textures.Count() - 1; //.IndexOf(texture);
+			//if (!textures.Contains(texture))
+			//{
+			//}
 
 			SpriteBatchVertex vertex[4] = {
 				{ tl.X, tl.Y, tl.Z, texCoord.X, texCoord.Y, index }, // TL

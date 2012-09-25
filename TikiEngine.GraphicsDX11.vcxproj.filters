@@ -42,6 +42,12 @@
     <Filter Include="Headerdateien\Modules">
       <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Internal\Rendering">
+      <UniqueIdentifier>{c919f251-3e77-4de8-a6a2-12114241571d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Internal\Rendering">
+      <UniqueIdentifier>{0b570a00-d9c5-4fdf-ab6c-6de06647b201}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
@@ -77,9 +83,6 @@
     <ClCompile Include="src\Graphics\RenderTarget.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Quad.cpp">
-      <Filter>Quelldateien\Internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
@@ -91,6 +94,12 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\TerrainRenderer.cpp">
       <Filter>Quelldateien\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Quad.cpp">
+      <Filter>Quelldateien\Internal\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
+      <Filter>Quelldateien\Internal\Rendering</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +139,6 @@
     <ClInclude Include="inc\Graphics\Lights.h">
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\Quad.h">
-      <Filter>Headerdateien\Internal</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\d3dx11effect.h">
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
@@ -153,6 +159,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainRenderer.h">
       <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DebugLineRenderer.h">
+      <Filter>Headerdateien\Internal\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Quad.h">
+      <Filter>Headerdateien\Internal\Rendering</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,6 +23,7 @@ namespace TikiEngine
 			virtual void CreateScreenSize() = 0;
 
 			virtual void Apply(UInt32 slot) = 0;
+			virtual void ApplyFirstAndOnly() = 0;
 
 			virtual void Clear(const Color& color) = 0;
 			

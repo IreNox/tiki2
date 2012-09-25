@@ -68,6 +68,8 @@ namespace TikiEngine
 			}
 			delete(values);
 
+			SafeRelease(&rtDepth);
+			SafeRelease(&rtNormal);
 			SafeRelease(&rtScreen);
 			SafeRelease(&rtBackBuffer);
 
@@ -80,12 +82,17 @@ namespace TikiEngine
 				i++;
 			}
 
+#if _DEBUG
+			SafeRelease(&lineRenderer);
+#endif
+
 			SafeDelete(&matrixBuffer);
 			SafeDelete(&lightBuffer);
 
 			SafeRelease(&alphaBlendState);
 			SafeRelease(&depthStencilStateDisable);
 			SafeRelease(&rasterStateBackfaces);
+
 			SafeRelease(&depthStencilView);
 			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilBuffer);
@@ -117,7 +124,17 @@ namespace TikiEngine
 			return &viewPort;
 		}
 
-		IRenderTarget* GraphicsModule::GetScreenBuffer()
+		IRenderTarget* GraphicsModule::GetDepthTarget()
+		{
+			return rtDepth;
+		}
+
+		IRenderTarget* GraphicsModule::GetNormalTarget()
+		{
+			return rtNormal;
+		}
+
+		IRenderTarget* GraphicsModule::GetScreenTarget()
 		{
 			return rtScreen;
 		}
@@ -199,6 +216,26 @@ namespace TikiEngine
 
 			delete[](targets);
 		}
+
+		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target)
+		{
+			renderTargets.Clear();
+			this->SetRenderTarget(0, target);
+		}
+		#pragma endregion
+
+		#pragma region Member - Debug
+#if _DEBUG
+		void GraphicsModule::DrawLine(const Vector3& start, const Vector3& end, const Color& color)
+		{
+			lineRenderer->DrawLine(start, end, color);
+		}
+
+		void GraphicsModule::DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst)
+		{
+			lineRenderer->DrawLine(points, color, lastToFirst);
+		}
+#endif
 		#pragma endregion
 
 		#pragma region Member - Begin/End
@@ -217,11 +254,19 @@ namespace TikiEngine
 				*matrices = *args.CurrentCamera->GetMatrices();
 				matrixBuffer->Unmap();
 			}
+
+#if _DEBUG
+			lineRenderer->Begin();
+#endif
 		}
 
 		void GraphicsModule::End()
 		{
 			deviceContext->OMSetDepthStencilState(depthStencilStateDisable, 1);
+
+#if _DEBUG
+			lineRenderer->End();
+#endif
 
 			UInt32 i = 0;
 			while (i < postProcesses.Count())
@@ -347,9 +392,12 @@ namespace TikiEngine
 				&device,
 				&level,
 				&deviceContext
-				);
+			);
 
 			if (FAILED(r)) { return false; }
+
+			DllMain::Device = device;
+			DllMain::Context = deviceContext;
 			#pragma endregion
 
 			#pragma region BackBuffer
@@ -552,9 +600,6 @@ namespace TikiEngine
 		#pragma region Private Member - Init - Engine
 		bool GraphicsModule::initEngine(EngineDescription& desc)
 		{
-			DllMain::Device = device;
-			DllMain::Context = deviceContext;
-
 			this->indexBuffer = new IndexBuffer(engine);
 			this->lightBuffer = new ConstantBuffer<Lights>(engine);
 			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
@@ -562,7 +607,13 @@ namespace TikiEngine
 			this->rtBackBuffer = new RenderTarget(engine, renderTargetView);
 
 			this->rtScreen = new RenderTarget(engine);
-			this->rtScreen->Create(rtBackBuffer->GetWidth(), rtBackBuffer->GetHeight(), false);
+			this->rtScreen->CreateScreenSize();
+
+			this->rtNormal = new RenderTarget(engine);
+			this->rtNormal->CreateScreenSize();
+
+			this->rtDepth = new RenderTarget(engine);
+			this->rtDepth->CreateScreenSize();
 
 			IShader* shader = new Shader(engine);
 			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
@@ -576,6 +627,10 @@ namespace TikiEngine
 
 			SafeRelease(&pass);
 			SafeRelease(&shader);
+
+#if _DEBUG
+			lineRenderer = new DebugLineRenderer(engine);
+#endif
 
 			return true;
 		}

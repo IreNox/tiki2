@@ -42,7 +42,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/tim_test.FBX");
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/Normals.fbx");
 			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
@@ -51,7 +51,6 @@ namespace TikiEngine
 			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
 			render->SetMesh(mesh);
 			render->SetMaterial(mat);
-
 			mat->Release();
 			mesh->Release();
 
@@ -64,7 +63,7 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(0.8f, 0.8f, 0.8f, 0.8f));
 			light->GetLight()->SetRange(7.5f);
-			light->PRS.Position = Vector3(50, 0, 0);
+			light->PRS.Position = Vector3(5, 0, 0);
 
 			this->AddElement(light);
 			light->Release();
@@ -95,20 +94,26 @@ namespace TikiEngine
 
 		void SceneTim::Draw(const DrawArgs& args)
 		{
+			engine->graphics->GetDepthTarget()->Clear(Color::Black);
+			engine->graphics->GetDepthTarget()->Apply(1);
+			engine->graphics->GetNormalTarget()->Clear(Color::NormalDefault);
+			engine->graphics->GetNormalTarget()->Apply(2);
+
 			Scene::Draw(args);
 
-			engine->sprites->DrawString(font, L"BlaBla", Vector2(100, 100));
+			//engine->sprites->DrawString(font, L"BlaBla", Vector2(500, 500));
 
-			/*engine->sprites->Draw(
-				tex,
-				Vector2(400, 400),
-				args.Time.TotalTime,
-				Vector2(256, 256),
-				Vector2(0.5f),
-				2
+			engine->sprites->Draw(
+				engine->graphics->GetDepthTarget(),
+				Rectangle(10, 10, 200, 180)
 			);
 
 			engine->sprites->Draw(
+				engine->graphics->GetNormalTarget(),
+				Rectangle(10, 200, 200, 180)
+			);
+
+			/*engine->sprites->Draw(
 				tex,
 				Vector2(300, 300),
 				args.Time.TotalTime,

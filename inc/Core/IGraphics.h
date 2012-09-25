@@ -14,6 +14,7 @@ namespace TikiEngine
 	{
 		using TikiEngine::Graphics::PostProcess;
 		using TikiEngine::Graphics::PostProcessPass;
+		using TikiEngine::Resources::ITexture;
 		using TikiEngine::Resources::IRenderTarget;
 		using TikiEngine::Components::Light;
 
@@ -29,7 +30,12 @@ namespace TikiEngine
 
 			void Begin() {}
 			virtual void Begin(const DrawArgs& args) = 0;
-						
+			
+#if _DEBUG
+			virtual void DrawLine(const Vector3& start, const Vector3& end, const Color& color) = 0;
+			virtual void DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst = false) = 0;
+#endif
+
 			virtual void* GetDevice() = 0;
 			virtual void* GetDeviceContext() = 0;
 
@@ -37,7 +43,9 @@ namespace TikiEngine
 			virtual void RemovePostProcess(PostProcess* postProcess) = 0;
 
 			virtual ViewPort* GetViewPort() = 0;
-			virtual IRenderTarget* GetScreenBuffer() = 0;
+			virtual IRenderTarget* GetScreenTarget() = 0;
+			virtual IRenderTarget* GetNormalTarget() = 0;
+			virtual IRenderTarget* GetDepthTarget() = 0;
 
 			virtual void SetLightChanged(List<Light*>* lights) = 0;
 		};

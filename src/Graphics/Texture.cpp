@@ -37,11 +37,17 @@ namespace TikiEngine
 			srDesc.Texture2D.MostDetailedMip = 0;
 			srDesc.Texture2D.MipLevels = 1;
 
-			DllMain::Device->CreateShaderResourceView(
+			HRESULT r = DllMain::Device->CreateShaderResourceView(
 				tex,
 				&srDesc,
 				&textureResource
 			);
+			
+			// TODO: Can't create ShaderResourceView
+			//if (FAILED(r))
+			//{
+			//	throw "Can't create ShaderResourceView";
+			//}
 		}
 
 		Texture::~Texture()

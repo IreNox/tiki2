@@ -4,6 +4,7 @@
 
 Texture2D backBuffer;
 Texture2D spriteBatch;
+Texture2D debugLines;
 
 SamplerState sam 
 {    
@@ -47,9 +48,13 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
 	float4 bbColor = backBuffer.Sample(sam, input.UV);
 	float4 sbColor = spriteBatch.Sample(sam, input.UV);
+	float4 dlColor = debugLines.Sample(sam, input.UV);
 	float4 color = float4(0, 0, 0, 0);
 
-	color = (bbColor * (1 - sbColor.a)) + sbColor;
+	color = (bbColor * (1 - dlColor.a)) + dlColor;
+	color = (color * (1 - sbColor.a)) + sbColor;
+
+	//color = bbColor + sbColor + dlColor;
 
     return color;
 }

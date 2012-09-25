@@ -261,11 +261,16 @@ namespace TikiEngine
 				i++;
 			}
 
-			effect->GetVariableByName(key)->AsShaderResource()->SetResourceArray(
+			HRESULT r = effect->GetVariableByName(key)->AsShaderResource()->SetResourceArray(
 				data,
 				0,
 				array->Count()
 			);
+
+			if (FAILED(r))
+			{
+				throw "Can't set Shader Variable of type TextureArray";
+			}
 
 			delete[](data);
 		}

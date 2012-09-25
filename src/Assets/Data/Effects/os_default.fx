@@ -23,11 +23,19 @@ struct PS_INPUT
 {
     float4 Pos		: SV_POSITION;
 	float3 WorldPos	: POSITION0;
+	float4 DepthPos	: POSITION1;
     float2 UV		: TEXCOORD0;
 
 	float3 Normal	: NORMAL;
 	float3 Binormal	: BINORMAL;
 	float3 Tangent	: TANGENT;
+};
+
+struct PS_OUTPUT
+{
+	float4 Screen	: SV_TARGET;
+	float4 Depth	: SV_TARGET;
+	float4 Normal	: SV_TARGET;
 };
 
 /////////////
@@ -77,7 +85,8 @@ PS_INPUT VS_Main(VS_INPUT input)
 
     output.Pos = mul(output.Pos, viewMatrix);
     output.Pos = mul(output.Pos, projectionMatrix);
-    
+    output.DepthPos = output.Pos;
+
 	output.Normal = normalize(mul(input.Normal, worldMatrixInverseTranspose));
     output.UV = input.UV;
     
@@ -87,8 +96,13 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 // Pixel Shader
 ////////////////////////////////////////////////////////////////////////////////
-float4 PS_Main(PS_INPUT input) : SV_TARGET
+PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 {
+	PS_OUTPUT output = (PS_OUTPUT)0;
+	output.Depth.rgb = input.DepthPos.z / input.DepthPos.w;
+	output.Depth.a = 1.0f;
+	output.Normal = float4(input.Normal, 1.0f);
+
 	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
 	float3 termAmbient = AmbientColor.rgb * AmbientIntensity;
 	float3 termEmissive = EmissiveColor.rgb * EmissiveIntensity;
@@ -111,10 +125,12 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 		termDiffuse.rgb *= termLight;
 	}
 	
-	return float4(
+	output.Screen = float4(
 		saturate(termDiffuse.rgb + termAmbient + termEmissive),
 		termDiffuse.a
 	);
+
+	return output;
 }
 
 technique11 basic
