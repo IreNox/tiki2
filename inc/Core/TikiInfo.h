@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/TypeInc.h"
+#include "Core/TypeDef.h"
 #include "Core/List.h"
 
 #include "Core/IModule.h"
@@ -13,9 +13,9 @@ namespace TikiEngine
 	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
 
-	typedef IModule*(*FuncGetTikiModule)(IntPtr);
-	typedef IResource*(*FuncGetTikiResource)(IntPtr);
-	typedef Component*(*FuncGetTikiComponent)(IntPtr, GameObject* gameObject);
+	typedef IModule*(*FuncGetTikiModule)(PInt);
+	typedef IResource*(*FuncGetTikiResource)(PInt);
+	typedef Component*(*FuncGetTikiComponent)(PInt, GameObject* gameObject);
 
 	struct TikiInfo 
 	{
@@ -25,9 +25,9 @@ namespace TikiEngine
 		FuncGetTikiResource FuncTikiResource;
 		FuncGetTikiComponent FuncTikiComponent;
 
-		List<IntPtr> Modules;
-		List<IntPtr> Resources;
-		List<IntPtr> Components;
+		List<PInt> Modules;
+		List<PInt> Resources;
+		List<PInt> Components;
 
 		TikiInfo()
 			: LibraryHandle(0), FuncTikiModule(0), FuncTikiResource(0), FuncTikiComponent(0), Modules(), Resources(), Components()

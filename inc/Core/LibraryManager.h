@@ -32,7 +32,7 @@ namespace TikiEngine
 			template <class T>
 			T* CreateModule()
 			{
-				IntPtr hash;
+				PInt hash;
 				TikiInfo* info = getDefault<T>(&hash);
 
 				if (info != 0)
@@ -46,7 +46,7 @@ namespace TikiEngine
 			template <class T>
 			T* CreateResource()
 			{
-				IntPtr hash;
+				PInt hash;
 				TikiInfo* info = getDefault<T>(&hash);
 
 				if (info != 0)
@@ -60,7 +60,7 @@ namespace TikiEngine
 			template <class T>
 			T* CreateComponent(GameObject* gameObject)
 			{
-				IntPtr hash;
+				PInt hash;
 				TikiInfo* info = getDefault<T>(&hash);
 				T* comp = 0;
 
@@ -80,13 +80,13 @@ namespace TikiEngine
 
 		private:
 
-			Dictionary<IntPtr, TikiInfo*> defaultLibrarys;
+			Dictionary<PInt, TikiInfo*> defaultLibrarys;
 			Dictionary<wstring, TikiInfo*> loadedLibrarys;
 
 			TikiInfo* loadLibrary(Engine* engine, wstring libraryName);
 
 			template <class T>
-			TikiInfo* getDefault(IntPtr* hash)
+			TikiInfo* getDefault(PInt* hash)
 			{
 				*hash = typeid(T).hash_code();
 

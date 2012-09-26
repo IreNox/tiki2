@@ -38,9 +38,9 @@ namespace TikiEngine
 
 		static void InitDll(TikiEngine::Engine* engine);
 
-		static IModule* CreateModule(IntPtr);
-		static IResource* CreateResource(IntPtr);
-		static Component* CreateComponent(IntPtr, GameObject* gameObject);
+		static IModule* CreateModule(PInt);
+		static IResource* CreateResource(PInt);
+		static Component* CreateComponent(PInt, GameObject* gameObject);
 
 	private:
 

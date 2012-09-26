@@ -1,6 +1,10 @@
 #pragma once
 
-#include "Core/TypeInc.h"
+#include "Core/TypeDef.h"
+#include "Core/Vector2.h"
+#include "Core/Vector3.h"
+#include "Core/Vector4.h"
+#include "Core/Matrix.h"
 
 #include "Core/IResource.h"
 #include "Core/ITexture.h"

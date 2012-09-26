@@ -8,6 +8,12 @@
 #include <sstream>
 #endif
 
+#if _WIN64
+TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCDCDCDCDCD;
+#else
+TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCD;
+#endif
+
 TikiObject::TikiObject()
 	: refCount(1)
 {	
@@ -31,6 +37,11 @@ UInt32 TikiObject::AddRef()
 	s << L"AddRef: " << this << L" to " << refCount << L"\n";
 	OutputDebugString(s.str().c_str());
 
+	//if (this == wrongPtr)
+	//{
+	//	DebugBreak();
+	//}
+
 	return refCount;
 #else
 	return ++refCount;
@@ -45,6 +56,11 @@ UInt32 TikiObject::Release()
 	std::wostringstream s;
 	s << L"Release: " << this << L" to " << refCount << L"\n";
 	OutputDebugString(s.str().c_str());
+
+	//if (this == wrongPtr)
+	//{
+	//	DebugBreak();
+	//}
 #endif
 
 	if (refCount == 0)

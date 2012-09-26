@@ -28,8 +28,8 @@ namespace TikiEngine
 
 		static void InitDll(TikiEngine::Engine* engine);
 
-		static IModule* CreateModule(IntPtr);
-		static Component* CreateComponent(IntPtr, GameObject* gameObject);
+		static IModule* CreateModule(PInt);
+		static Component* CreateComponent(PInt, GameObject* gameObject);
 
 	private:
 

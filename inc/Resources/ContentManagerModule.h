@@ -20,7 +20,7 @@ namespace TikiEngine
 
 			void Dispose();
 
-			IResource* Load(IntPtr hash, wstring name);
+			IResource* Load(PInt hash, wstring name);
 
 			Mesh* LoadMesh(const wstring& name);
 			Mesh* LoadFbxMesh(const wstring& name);

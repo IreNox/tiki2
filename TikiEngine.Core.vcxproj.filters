@@ -81,9 +81,6 @@
     <Filter Include="Headerdateien\Interfaces\Modules">
       <UniqueIdentifier>{0be57129-1b5a-4055-aa5c-d17170b1e4bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Interfaces\Extern Components">
-      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Interfaces\Resources">
       <UniqueIdentifier>{3a084f55-a415-4bf2-821b-173f048d599d}</UniqueIdentifier>
     </Filter>
@@ -110,6 +107,9 @@
     </Filter>
     <Filter Include="Headerdateien\Core\Enums">
       <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Interfaces\Components">
+      <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -235,21 +235,6 @@
     <ClInclude Include="inc\Core\GraphicsDescription.h">
       <Filter>Headerdateien\Core\Descriptions</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ICollection.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IList.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IDictionary.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IEnumerable.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\IEnumerator.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\KeyValuePair.h">
       <Filter>Headerdateien\Core\List</Filter>
     </ClInclude>
@@ -265,9 +250,6 @@
     <ClInclude Include="inc\Core\Matrix2x2.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Queue.h">
-      <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Vector2.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
@@ -282,9 +264,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\WindowDescription.h">
       <Filter>Headerdateien\Core\Descriptions</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Stack.h">
-      <Filter>Headerdateien\Core\List</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IContentManager.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
@@ -341,13 +320,13 @@
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IBehavior.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IRigidbody.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ICollider.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Component.h">
       <Filter>Headerdateien\Engine\Components</Filter>
@@ -356,7 +335,7 @@
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IMeshRenderer.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\HelperHash.h">
       <Filter>Headerdateien\Engine\Static</Filter>
@@ -428,10 +407,10 @@
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IBoxCollider.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IScript.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\Components</Filter>
@@ -476,7 +455,7 @@
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ICharacterController.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ISpriteBatch.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
@@ -488,7 +467,7 @@
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ISphereCollider.h">
-      <Filter>Headerdateien\Interfaces\Extern Components</Filter>
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IFont.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
@@ -507,6 +486,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\TikiObject.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ITerrainRenderer.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

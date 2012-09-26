@@ -6,6 +6,7 @@
 #include "Core/IRenderTarget.h"
 
 #include "Core/GameTime.h"
+#include "Core/Dictionary.h"
 
 namespace TikiEngine
 {

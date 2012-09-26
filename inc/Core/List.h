@@ -1,23 +1,22 @@
 #pragma once
 
 #include "Core/TypeDef.h"
-#include "IList.h"
 
 template <class T>
-class List : public IList<T>
+class List
 {
 public:
+	bool IsReadOnly;
+
 	#pragma region Class
 	List()
-		: lengthArr(2), lengthData(-1), data(new T[2])
+		: IsReadOnly(false), lengthArr(2), lengthData(-1), data(new T[2])
 	{
 	}
 
 	List(T* data, UInt32 count, bool readOnly)
-		: lengthData(count - 1), lengthArr(2)
+		: IsReadOnly(readOnly), lengthData(count - 1), lengthArr(2)
 	{
-		this->IsReadOnly = readOnly;
-
 		while (lengthArr < count)
 		{
 			lengthArr = getNextSize();
@@ -167,13 +166,6 @@ public:
 	}  
 	#pragma endregion
 
-	#pragma region Member - Enumerator
-	IEnumerator<T>* GetEnumerator() const
-	{
-		return new Enumerator<T>(this);
-	}
-	#pragma endregion
-
 	#pragma region Indexer
 	T Get(const int index) const
 	{
@@ -195,48 +187,7 @@ public:
 		return this->data[index];
 	} 
 	#pragma endregion
-
-	#pragma region Class - Enumerator
-	template <class T>
-	class Enumerator : public IEnumerator<T>
-	{
-	public:
-		Enumerator(const List<T>* list)
-			: list(list), index(0)
-		{
-		}
-
-		~Enumerator()
-		{
-		};
-
-		T Current() const
-		{
-			return list->Get(index);
-		}
-
-		bool MoveNext()
-		{
-			if (index < list->Count() - 1)
-			{
-				index++;
-				return true;
-			}
-
-			return false;
-		}
-
-		void Reset()
-		{
-			index = 0;
-		}
-
-	private:
-		UInt32 index;
-		const List<T>* list;
-	};
-	#pragma endregion
-
+		
 protected:
 
 	T* data;

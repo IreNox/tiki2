@@ -80,6 +80,7 @@
     <ClInclude Include="inc\Core\ISoundSystem.h" />
     <ClInclude Include="inc\Core\ISphereCollider.h" />
     <ClInclude Include="inc\Core\ISpriteBatch.h" />
+    <ClInclude Include="inc\Core\ITerrainRenderer.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />
     <ClInclude Include="inc\Core\Matrices.h" />
     <ClInclude Include="inc\Core\Point.h" />
@@ -119,15 +120,10 @@
     <ClInclude Include="inc\Core\GameTime.h" />
     <ClInclude Include="inc\Core\GraphicsDescription.h" />
     <ClInclude Include="inc\Core\HelperHash.h" />
-    <ClInclude Include="inc\Core\ICollection.h" />
     <ClInclude Include="inc\Core\IContentManager.h" />
-    <ClInclude Include="inc\Core\IDictionary.h" />
     <ClInclude Include="inc\Core\GameObject.h" />
-    <ClInclude Include="inc\Core\IEnumerable.h" />
-    <ClInclude Include="inc\Core\IEnumerator.h" />
     <ClInclude Include="inc\Core\IGraphics.h" />
     <ClInclude Include="inc\Core\Light.h" />
-    <ClInclude Include="inc\Core\IList.h" />
     <ClInclude Include="inc\Core\IModule.h" />
     <ClInclude Include="inc\Core\InputState.h" />
     <ClInclude Include="inc\Core\IPhysics.h" />
@@ -140,9 +136,7 @@
     <ClInclude Include="inc\Core\TikiInfo.h" />
     <ClInclude Include="inc\Core\TikiObject.h" />
     <ClInclude Include="inc\Core\QuadObject.h" />
-    <ClInclude Include="inc\Core\Queue.h" />
     <ClInclude Include="inc\Core\Scene.h" />
-    <ClInclude Include="inc\Core\Stack.h" />
     <ClInclude Include="inc\Core\Transform.h" />
     <ClInclude Include="inc\Core\Vector2.h" />
     <ClInclude Include="inc\Core\Vector3.h" />

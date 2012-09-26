@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/TypeInc.h"
 #include "Core/GameObject.h"
 #include "Utils.h"
 

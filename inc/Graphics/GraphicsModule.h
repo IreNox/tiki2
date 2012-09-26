@@ -28,7 +28,7 @@ namespace TikiEngine
 	namespace Modules
 	{
 		using namespace TikiEngine::Graphics;
-		
+
 		class GraphicsModule : public IGraphics
 		{
 		public:
@@ -103,7 +103,7 @@ namespace TikiEngine
 			Color clearColor;
 			ConstantBuffer<Lights>* lightBuffer;
 			ConstantBuffer<Matrices>* matrixBuffer;
-			
+
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;
 

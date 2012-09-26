@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Core/Component.h"
-
 #define CODEX_PREFIX
 #define CLODDY_CORE_PREFIX
 #define CLODDY_KERNEL_PREFIX
@@ -16,6 +14,9 @@
 #include "Cloddy/Cloddy_Graphics.h"
 #include "Cloddy/Cloddy_Extensions.h"
 
+#include "Core/ITerrainRenderer.h"
+#include "Graphics/TikiHeightmap.h"
+
 namespace TikiEngine
 {
 	namespace Components
@@ -24,7 +25,7 @@ namespace TikiEngine
 		using namespace Cloddy::Extensions;
 		using namespace Cloddy::API::VertexFactories::VertexFormats;
 
-		class TerrainRenderer : public Component
+		class TerrainRenderer : public ITerrainRenderer
 		{
 		public:
 
@@ -38,19 +39,23 @@ namespace TikiEngine
 	
 		private:
 
-			IVertexFormat* vertexformat;
+			codex_Ptr<IVertexFormat> vertexFormat;
 
-			IndexBuffer* indexbuffer;
-			VertexBuffer* vertexBuffer;
+			codex_Ptr<IndexBuffer> indexBuffer;
+			codex_Ptr<VertexBuffer> vertexBuffer;
 
-			CloddyManager* manager;
+			codex_Ptr<CloddyManager> manager;
 			CloddyDescription description;
 
-			ICloddyTerrain* terrain;
+			codex_Ptr<TikiHeightmap> heightmap;
+
+			codex_Ptr<ICloddyTerrain> terrain;
 			CloddySphericalTerrainDescription terrainDescription;
-			CloddyLocalDataset* datasetElevation;
-			CloddyLocalDataset* datasetDetail;
-			CloddyLocalDataset* datasetColor;
+			codex_Ptr<CloddyLocalDataset> datasetElevation;
+			codex_Ptr<CloddyLocalDataset> datasetDetail;
+			codex_Ptr<CloddyLocalDataset> datasetColor;
+
+			codex_Ptr<TriangulationCallback> callback;
 
 		};
 	}

@@ -25,7 +25,7 @@ namespace TikiEngine
 			}
 			virtual ~IContentManager() {}
 
-			virtual IResource* Load(IntPtr hash, wstring name) = 0;
+			virtual IResource* Load(PInt hash, wstring name) = 0;
 
 			virtual Mesh* LoadMesh(const wstring& name) = 0;
 			virtual Mesh* LoadFbxMesh(const wstring& name) = 0;

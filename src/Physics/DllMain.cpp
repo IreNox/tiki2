@@ -44,7 +44,7 @@ namespace TikiEngine
 		
 	}
 
-	IModule* DllMain::CreateModule(IntPtr hash)
+	IModule* DllMain::CreateModule(PInt hash)
 	{
 		if (hash != typeid(IPhysics).hash_code())
 		{
@@ -54,7 +54,7 @@ namespace TikiEngine
 		return DllMain::ModuleGraphics;
 	}
 
-	IResource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(PInt hash)
 	{
 		if (hash == typeid(IPhysicsMaterial).hash_code())
 		{
@@ -70,7 +70,7 @@ namespace TikiEngine
 	}
 
 
-	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
+	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
 		if (hash == typeid(IBoxCollider).hash_code())
 		{

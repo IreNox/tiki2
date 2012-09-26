@@ -167,8 +167,13 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())
 			{
-				Camera* camera = scene->GetCameras()->Get(i);
-				DrawArgs drawArgs = DrawArgs(time, camera, graphics, sprites);
+				DrawArgs drawArgs = DrawArgs(
+					time,
+					scene->GetCameras()->Get(i),
+					scene->GetLights(),
+					graphics,
+					sprites
+				);
 				
 				graphics->Begin(drawArgs);
 				sprites->Begin();

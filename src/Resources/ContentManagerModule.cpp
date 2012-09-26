@@ -51,7 +51,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Load
-		IResource* ContentManagerModule::Load(IntPtr hash, wstring name)
+		IResource* ContentManagerModule::Load(PInt hash, wstring name)
 		{
 			bool loadFile = true;
 			IResource* value = 0;

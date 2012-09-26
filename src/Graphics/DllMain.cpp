@@ -7,6 +7,7 @@
 #include "Graphics/RenderTarget.h"
 
 #include "Graphics/MeshRenderer.h"
+#include "Graphics/TerrainRenderer.h"
 
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
@@ -46,9 +47,10 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
+		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
 	}
 
-	IModule* DllMain::CreateModule(IntPtr hash)
+	IModule* DllMain::CreateModule(PInt hash)
 	{
 		if (hash == typeid(IGraphics).hash_code())
 		{
@@ -62,7 +64,7 @@ namespace TikiEngine
 		return 0;
 	}
 
-	IResource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(PInt hash)
 	{
 		if (hash == typeid(IFont).hash_code())
 		{
@@ -84,11 +86,15 @@ namespace TikiEngine
 		return 0;
 	}
 
-	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
+	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
 		if (hash == typeid(IMeshRenderer).hash_code())
 		{
 			return new MeshRenderer(DllMain::Engine, gameObject);
+		}
+		else if (hash == typeid(ITerrainRenderer).hash_code())
+		{
+			return new TerrainRenderer(DllMain::Engine, gameObject);
 		}
 
 		return 0;

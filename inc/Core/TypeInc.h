@@ -23,9 +23,6 @@
 using std::string;
 using std::wstring;
 
-typedef string  String;
-typedef wstring StringW;
-
 //#if defined(DEBUG) || defined(_DEBUG)
 //#define TIKINEW new (_NORMAL_BLOCK, __FILE__,__LINE__)
 //#else 

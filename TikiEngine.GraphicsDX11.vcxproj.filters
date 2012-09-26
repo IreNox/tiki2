@@ -48,6 +48,12 @@
     <Filter Include="Quelldateien\Internal\Rendering">
       <UniqueIdentifier>{0b570a00-d9c5-4fdf-ab6c-6de06647b201}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Internal\Cloddy">
+      <UniqueIdentifier>{6266a1d4-4603-4f21-9959-624683e43532}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Internal\Cloddy">
+      <UniqueIdentifier>{e6432fc2-ca46-4cba-86a8-d3521817312d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
@@ -100,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TikiHeightmap.cpp">
+      <Filter>Quelldateien\Internal\Cloddy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +174,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\Quad.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiHeightmap.h">
+      <Filter>Headerdateien\Internal\Cloddy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

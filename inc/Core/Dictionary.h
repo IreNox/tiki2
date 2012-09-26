@@ -1,10 +1,10 @@
 #pragma once
 
-#include "List.h"
-#include "IDictionary.h"
+#include "Core/List.h"
+#include "Core/KeyValuePair.h"
 
 template <class TKey, class TValue>
-class Dictionary : public IDictionary<TKey, TValue>
+class Dictionary
 {
 public:
 	#pragma region Class
@@ -116,11 +116,6 @@ public:
 	{
 		return list.Count();
 	}
-
-	IEnumerator<KeyValuePair<TKey, TValue>>* GetEnumerator() const
-	{
-		return list.GetEnumerator();
-	} 
 
 	KeyValuePair<TKey, TValue> Get(UInt32 index) const
 	{

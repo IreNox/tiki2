@@ -29,7 +29,7 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(ISound).hash_code());
 	}
 
-	IModule* DllMain::CreateModule(IntPtr hash)
+	IModule* DllMain::CreateModule(PInt hash)
 	{
 		if (hash != typeid(ISoundSystem).hash_code())
 		{
@@ -39,7 +39,7 @@ namespace TikiEngine
 		return DllMain::Module;
 	}
 
-	IResource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(PInt hash)
 	{
 		if (hash == typeid(ISound).hash_code())
 		{
@@ -49,7 +49,7 @@ namespace TikiEngine
 		return 0;
 	}
 
-	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
+	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
 		return 0;
 	}

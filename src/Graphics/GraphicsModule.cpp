@@ -19,7 +19,7 @@ namespace TikiEngine
 {
 	namespace Modules
 	{
-		#pragma region Class
+#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
@@ -33,9 +33,9 @@ namespace TikiEngine
 		GraphicsModule::~GraphicsModule()
 		{
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Member - Init/Dispose
+#pragma region Member - Init/Dispose
 		bool GraphicsModule::Initialize(EngineDescription& desc)
 		{
 			if (inited) return false;
@@ -106,9 +106,9 @@ namespace TikiEngine
 
 			inited = false;
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Member - Get
+#pragma region Member - Get
 		void* GraphicsModule::GetDevice()
 		{
 			return (void*)this->device;
@@ -138,9 +138,9 @@ namespace TikiEngine
 		{
 			return rtScreen;
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Member - Get - Buffer
+#pragma region Member - Get - Buffer
 		IndexBuffer* GraphicsModule::GetIndexBuffer()
 		{
 			return indexBuffer;
@@ -165,14 +165,14 @@ namespace TikiEngine
 				vertexBuffers.Add(
 					hash,
 					new VertexBuffer(engine, decl, dynamic)
-				);
+					);
 			}
 
 			return vertexBuffers.Get(hash);		
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Member - Set
+#pragma region Member - Set
 		void GraphicsModule::SetLightChanged(List<Light*>* lights)
 		{
 			Lights* buf = lightBuffer->Map();
@@ -212,7 +212,7 @@ namespace TikiEngine
 				renderTargets.Count(),
 				targets,
 				depthStencilView
-			);
+				);
 
 			delete[](targets);
 		}
@@ -238,7 +238,7 @@ namespace TikiEngine
 #endif
 		#pragma endregion
 
-		#pragma region Member - Begin/End
+#pragma region Member - Begin/End
 		void GraphicsModule::Begin(const DrawArgs& args)
 		{
 			currentArgs = args;
@@ -279,9 +279,9 @@ namespace TikiEngine
 
 			swapChain->Present(0, 0);
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Member - Add/Remove
+#pragma region Member - Add/Remove
 		void GraphicsModule::AddPostProcess(PostProcess* postProcess)
 		{
 			postProcesses.Add(postProcess);
@@ -327,9 +327,9 @@ namespace TikiEngine
 		{
 			screenSizeRenderTargets.Remove(target);
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Private Member - Init - SelectAdapter
+#pragma region Private Member - Init - SelectAdapter
 		bool GraphicsModule::initSelectAdapter(EngineDescription& desc)
 		{
 			HRESULT r = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&factory);
@@ -351,15 +351,15 @@ namespace TikiEngine
 
 			return true;
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Private Member - Init - DirectX
+#pragma region Private Member - Init - DirectX
 		bool GraphicsModule::initDirectX(EngineDescription& desc)
 		{
 			RECT rect;
 			GetClientRect(desc.Window.hWnd, &rect);
 
-			#pragma region SwapChain
+#pragma region SwapChain
 			DXGI_SWAP_CHAIN_DESC swapDesc;
 			ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
 
@@ -398,9 +398,9 @@ namespace TikiEngine
 
 			DllMain::Device = device;
 			DllMain::Context = deviceContext;
-			#pragma endregion
+#pragma endregion
 
-			#pragma region BackBuffer
+#pragma region BackBuffer
 			ID3D11Texture2D* backBufferPtr;
 			r = swapChain->GetBuffer(
 				0,
@@ -414,9 +414,9 @@ namespace TikiEngine
 			backBufferPtr->Release();
 
 			if (FAILED(r)) { return false; }
-			#pragma endregion
+#pragma endregion
 
-			#pragma region DepthBuffer
+#pragma region DepthBuffer
 			D3D11_TEXTURE2D_DESC depthDesc;
 			ZeroMemory(&depthDesc, sizeof(depthDesc));
 
@@ -436,7 +436,7 @@ namespace TikiEngine
 				&depthDesc,
 				NULL,
 				&depthStencilBuffer
-			);
+				);
 
 			if (FAILED(r)) { return false; }
 
@@ -464,7 +464,7 @@ namespace TikiEngine
 			r = device->CreateDepthStencilState(
 				&depthStencilDesc,
 				&depthStencilState
-			);
+				);
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
 
 			if (FAILED(r)) { return false; }
@@ -480,7 +480,7 @@ namespace TikiEngine
 				depthStencilBuffer,
 				&depthStencilViewDesc,
 				&depthStencilView
-			);
+				);
 
 			if (FAILED(r)) { return false; }
 
@@ -488,10 +488,10 @@ namespace TikiEngine
 				1,
 				&renderTargetView,
 				depthStencilView
-			);
-			#pragma endregion
+				);
+#pragma endregion
 
-			#pragma region RasterizerState
+#pragma region RasterizerState
 			D3D11_RASTERIZER_DESC rasterDesc;
 
 			rasterDesc.AntialiasedLineEnable = false;
@@ -516,9 +516,9 @@ namespace TikiEngine
 			}
 
 			deviceContext->RSSetState(rasterStateBackfaces); // back face culling
-			#pragma endregion
+#pragma endregion
 
-			#pragma region DepthDisableStencil
+#pragma region DepthDisableStencil
 			D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 			ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
 
@@ -540,12 +540,12 @@ namespace TikiEngine
 			r = device->CreateDepthStencilState(
 				&depthDisabledStencilDesc,
 				&depthStencilStateDisable
-			);
+				);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
-			#pragma endregion
+#pragma endregion
 
-			#pragma region BlendState
+#pragma region BlendState
 			D3D11_BLEND_DESC blendStateDesc;
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
@@ -561,15 +561,15 @@ namespace TikiEngine
 			r = device->CreateBlendState(
 				&blendStateDesc,
 				&alphaBlendState
-			);
+				);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
 
 			float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			deviceContext->OMSetBlendState(alphaBlendState, blendFactor, 0xffffffff);
-			#pragma endregion
+#pragma endregion
 
-			#pragma region ViewPort
+#pragma region ViewPort
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
 
@@ -591,13 +591,13 @@ namespace TikiEngine
 			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
-			#pragma endregion
+#pragma endregion
 
 			return true;
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Private Member - Init - Engine
+#pragma region Private Member - Init - Engine
 		bool GraphicsModule::initEngine(EngineDescription& desc)
 		{
 			this->indexBuffer = new IndexBuffer(engine);
@@ -634,9 +634,9 @@ namespace TikiEngine
 
 			return true;
 		}
-		#pragma endregion
+#pragma endregion
 
-		#pragma region Private Member - Draw - PostProcess
+#pragma region Private Member - Draw - PostProcess
 		void GraphicsModule::drawPostProcess(PostProcess* postProcess)
 		{
 			const List<PostProcessPass*>* passes = postProcess->GetPasses();
@@ -669,6 +669,6 @@ namespace TikiEngine
 				i++;
 			}
 		}
-		#pragma endregion
+#pragma endregion
 	}
 }

@@ -3,7 +3,6 @@
 #include "Core/EngineObject.h"
 
 #include "Core/PostProcessPass.h"
-#include "Core/IShader.h"
 #include "Core/List.h"
 
 #include "Core/DrawArgs.h"

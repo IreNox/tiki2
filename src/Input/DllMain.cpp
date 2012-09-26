@@ -23,7 +23,7 @@ namespace TikiEngine
 		DllInfo.Modules.Add(typeid(IInput).hash_code());
 	}
 
-	IModule* DllMain::CreateModule(IntPtr hash)
+	IModule* DllMain::CreateModule(PInt hash)
 	{
 		if (hash != typeid(IInput).hash_code())
 		{
@@ -33,7 +33,7 @@ namespace TikiEngine
 		return DllMain::ModuleGraphics;
 	}
 
-	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
+	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
 		return 0;
 	}

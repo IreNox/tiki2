@@ -1,5 +1,6 @@
 
 #include "Core/GameObject.h"
+#include <typeinfo.h>
 
 namespace TikiEngine
 {

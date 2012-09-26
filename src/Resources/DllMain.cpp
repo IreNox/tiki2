@@ -25,7 +25,7 @@ namespace TikiEngine
 		DllInfo.Modules.Add(typeid(IContentManager).hash_code());
 	}
 
-	IModule* DllMain::CreateModule(IntPtr hash)
+	IModule* DllMain::CreateModule(PInt hash)
 	{
 		if (hash != typeid(IContentManager).hash_code())
 		{
@@ -35,12 +35,12 @@ namespace TikiEngine
 		return DllMain::ModuleGraphics;
 	}
 
-	IResource* DllMain::CreateResource(IntPtr hash)
+	IResource* DllMain::CreateResource(PInt hash)
 	{
 		return 0;
 	}
 
-	Component* DllMain::CreateComponent(IntPtr hash, GameObject* gameObject)
+	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
 		return 0;
 	}

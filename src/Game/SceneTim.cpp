@@ -12,6 +12,7 @@
 #include "Core/IMeshRenderer.h"
 #include "Core/IPhysicsMaterial.h"
 #include "Core/IBoxCollider.h"
+#include "Core/ITerrainRenderer.h"
 #include "Core/ISound.h"
 
 #include "Game/CameraFly.h"
@@ -75,6 +76,14 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+			go = new GameObject(engine);
+			
+			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			go->AddComponent(terrain);
+			terrain->Release();
+
+			this->AddElement(go);
+			go->Release();
 
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
@@ -84,10 +93,8 @@ namespace TikiEngine
 			ISound* sound = engine->librarys->CreateResource<ISound>();
 			sound->LoadFromFile(L"Data/Sound/beep.wav");
 
-			engine->sound->PlaySound(sound);
-
-			font = engine->librarys->CreateResource<IFont>();
-			font->Create(L"Arial", 16.0f);
+			//font = engine->librarys->CreateResource<IFont>();
+			//font->Create(L"Arial", 16.0f);
 
 			Scene::Initialize(args);
 		}
