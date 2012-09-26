@@ -69,6 +69,11 @@ namespace TikiEngine
 		 * @brief Startet die Anwendungsschleife
 		 */
 		void Run();
+		
+		/*!
+		 * @brief Gibt die Engine wieder frei.
+		 */
+		void Dispose();
 
 		EngineDescription* GetEngineDescription(); 
 

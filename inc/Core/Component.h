@@ -14,32 +14,22 @@ namespace TikiEngine
 		{
 		public:
 
-			Component(Engine* engine, GameObject* gameObject, ComponentType type)
-				: EngineObject(engine), gameObject(gameObject), type(type)
-			{
-			}
-			virtual ~Component() {}
+			Component(Engine* engine, GameObject* gameObject, ComponentType type);
+			virtual ~Component();
 
 			virtual void Draw(const DrawArgs& args) = 0;
 			virtual void Update(const UpdateArgs& args) = 0;
 
-			GameObject* GetGameObject()
-			{
-				return gameObject;
-			}
-
-			ComponentType GetType()
-			{
-				return type;
-			}
+			GameObject* GetGameObject();
+			ComponentType GetType();
 
 			virtual bool GetReady() = 0;
 
 		protected:
 
+			ComponentType type;
 			GameObject* gameObject;
 
-			ComponentType type;
 		};
 	}
 }

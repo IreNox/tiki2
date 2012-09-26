@@ -31,21 +31,6 @@ namespace TikiEngine
 
 	Engine::~Engine()
 	{
-		SafeRelease(&scene);
-
-		loadedModules.Remove(librarys);
-
-		int i = loadedModules.Count() - 1;
-		while (i >= 0)
-		{
-			loadedModules[i]->Dispose();
-			SafeRelease(&loadedModules[i]);
-
-			i--;
-		}
-		
-		librarys->Dispose();
-		SafeRelease(&librarys);
 	}
 	#pragma endregion
 
@@ -118,6 +103,27 @@ namespace TikiEngine
 		}
 
 		return true;
+	}
+	#pragma endregion
+
+	#pragma region Member - Dispose
+	void Engine::Dispose()
+	{
+		SafeRelease(&scene);
+
+		loadedModules.Remove(librarys);
+
+		int i = loadedModules.Count() - 1;
+		while (i >= 0)
+		{
+			loadedModules[i]->Dispose();
+			SafeRelease(&loadedModules[i]);
+
+			i--;
+		}
+
+		librarys->Dispose();
+		SafeRelease(&librarys);
 	}
 	#pragma endregion
 

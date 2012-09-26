@@ -9,7 +9,6 @@ namespace TikiEngine
 			: GameObject(engine)
 		{
 			camera = new Camera(engine, this);
-			this->AddComponent(camera);
 		}
 
 		CameraObject::~CameraObject()

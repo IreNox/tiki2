@@ -43,19 +43,19 @@ namespace TikiEngine
 
 	void TikiHeightmap::Get(Int32 x, Int32 y, Int32 z, HeightmapSample* sample)
 	{
-		HeightmapSample tmp = HeightmapSample();
+		//HeightmapSample tmp = HeightmapSample();
 
 		//color->Get(x, x, z, &tmp);
-		sample->Diffuse = 0xFF0000FF;
+		//sample->Diffuse = RGB(x, y, z) || 0xFF000000; // 0xFF0000FF;
 
-		elevation->Get(x, y, z, &tmp);
-		sample->Elevation = tmp.Elevation;
+		elevation->Get(x, y, z, sample);
+		//sample->Elevation = tmp.Elevation;
 
-		detail->Get(x, y, z, &tmp);
-		sample->Detail0 = tmp.Detail0;
-		sample->Detail1 = tmp.Detail1;
-		sample->Detail2 = tmp.Detail2;
-		sample->Detail3 = tmp.Detail3;
+		//detail->Get(x, y, z, &tmp);
+		//sample->Detail0 = tmp.Detail0;
+		//sample->Detail1 = tmp.Detail1;
+		//sample->Detail2 = tmp.Detail2;
+		//sample->Detail3 = tmp.Detail3;
 	}
 
 	void TikiHeightmap::DisposeUnmanaged()

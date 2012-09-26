@@ -33,7 +33,8 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			SafeRelease(&tex);
-			SafeRelease(&font);
+			SafeRelease(&ssao);
+			SafeRelease(&light);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
@@ -51,26 +52,22 @@ namespace TikiEngine
 			render->SetMaterial(mat);
 			mat->Release();
 			mesh->Release();
-
-			go->AddComponent(render);
 			render->Release();
 
 			this->AddElement(go);
 			go->Release();
 
 			light = new LightObject(engine);
-			light->GetLight()->SetColor(Color(0.8f, 0.8f, 0.8f, 0.8f));
-			light->GetLight()->SetRange(7.5f);
-			light->PRS.Position = Vector3(5, 0, 0);
-
+			light->GetLight()->SetColor(Color(1, 1, 1, 1));
+			light->GetLight()->SetRange(750.0f);
+			light->PRS.Position = Vector3(1500, 0, 0);
 			this->AddElement(light);
-			light->Release();
-
+			
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 40.0f;
+			go->PRS.Position.Z = 500.0f;
+			go->PRS.Position.Y = 300.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
-			go->AddComponent(fly);
 			fly->Release();
 
 			this->AddElement(go);
@@ -78,9 +75,13 @@ namespace TikiEngine
 
 			go = new GameObject(engine);
 			
+			mat = engine->content->LoadMaterial(L"Data\\Effects\\os_cloddy.fx");
+			mat->GetShader()->SetTexture("tex", tex);
+
 			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			go->AddComponent(terrain);
 			terrain->Release();
+			terrain->SetMaterial(mat);
+			mat->Release();
 
 			this->AddElement(go);
 			go->Release();
@@ -90,8 +91,8 @@ namespace TikiEngine
 			ssao = new PPScreenSpaceAmbientOcclusion(engine);
 			engine->graphics->AddPostProcess(ssao);
 
-			ISound* sound = engine->librarys->CreateResource<ISound>();
-			sound->LoadFromFile(L"Data/Sound/beep.wav");
+			//ISound* sound = engine->librarys->CreateResource<ISound>();
+			//sound->LoadFromFile(L"Data/Sound/beep.wav");
 
 			//font = engine->librarys->CreateResource<IFont>();
 			//font->Create(L"Arial", 16.0f);
@@ -137,11 +138,11 @@ namespace TikiEngine
 
 		void SceneTim::Update(const UpdateArgs& args)
 		{
-			light->PRS.Position = Vector3(
-				sinf((float)args.Time.TotalTime / 5) * 50,
-				0,
-				cosf((float)args.Time.TotalTime / 5) * 50
-			);
+			//light->PRS.Position = Vector3(
+			//	sinf((float)args.Time.TotalTime / 5) * 50,
+			//	0,
+			//	cosf((float)args.Time.TotalTime / 5) * 50
+			//);
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
 

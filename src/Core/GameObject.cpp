@@ -33,12 +33,6 @@ namespace TikiEngine
 		}
 	}
 
-	void GameObject::AddComponent(Component* comp)
-	{
-		components.Add(comp);
-		comp->AddRef();
-	}
-
 	Component* GameObject::GetComponent(PInt hash)
 	{
 		UInt32 i = 0;

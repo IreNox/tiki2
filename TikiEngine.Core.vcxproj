@@ -23,6 +23,7 @@
     <ClCompile Include="src\Core\CameraObject.cpp" />
     <ClCompile Include="src\Core\Color.cpp" />
     <ClCompile Include="src\Core\ColorVertex.cpp" />
+    <ClCompile Include="src\Core\Component.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
     <ClCompile Include="src\Core\DebugPhysicsRenderer.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="inc\Core\PostProcessPass.h" />
     <ClInclude Include="inc\Core\PrimitiveTopologies.h" />
     <ClInclude Include="inc\Core\Rectangle.h" />
+    <ClInclude Include="inc\Core\TikiPtr.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
     <ClInclude Include="inc\Core\MeshAnimated.h" />

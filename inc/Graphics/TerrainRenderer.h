@@ -16,6 +16,7 @@
 
 #include "Core/ITerrainRenderer.h"
 #include "Graphics/TikiHeightmap.h"
+#include "Graphics/VertexDeclaration.h"
 
 namespace TikiEngine
 {
@@ -24,6 +25,7 @@ namespace TikiEngine
 		using namespace Cloddy::Graphics;
 		using namespace Cloddy::Extensions;
 		using namespace Cloddy::API::VertexFactories::VertexFormats;
+		using namespace TikiEngine::Vertices;
 
 		class TerrainRenderer : public ITerrainRenderer
 		{
@@ -35,9 +37,15 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
+			Material* GetMaterial();
+			void SetMaterial(Material* mat);
+
 			bool GetReady();
 	
 		private:
+
+			Material* material;
+			ID3D11InputLayout* layout;
 
 			codex_Ptr<IVertexFormat> vertexFormat;
 
@@ -45,12 +53,12 @@ namespace TikiEngine
 			codex_Ptr<VertexBuffer> vertexBuffer;
 
 			codex_Ptr<CloddyManager> manager;
-			CloddyDescription description;
+			codex_Ptr<CloddyDescription> description;
 
 			codex_Ptr<TikiHeightmap> heightmap;
 
 			codex_Ptr<ICloddyTerrain> terrain;
-			CloddySphericalTerrainDescription terrainDescription;
+			codex_Ptr<cloddy_CloddyRectangularTerrainDescription> terrainDescription;
 			codex_Ptr<CloddyLocalDataset> datasetElevation;
 			codex_Ptr<CloddyLocalDataset> datasetDetail;
 			codex_Ptr<CloddyLocalDataset> datasetColor;

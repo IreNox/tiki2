@@ -51,8 +51,6 @@ namespace TikiEngine
 
 			mat->Release();
 			mesh->Release();
-
-			go->AddComponent(render);
 			render->Release();
 
 			this->AddElement(go);
@@ -63,7 +61,6 @@ namespace TikiEngine
 			go->PRS.Position.Y = 40.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
-			go->AddComponent(fly);
 			fly->Release();
 
 			this->AddElement(go);

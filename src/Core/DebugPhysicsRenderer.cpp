@@ -1,4 +1,5 @@
 
+#if _DEBUG
 #include "Core/DebugPhysicsRenderer.h"
 
 #include "Core/IPhysics.h"
@@ -70,3 +71,4 @@ namespace TikiEngine
 		}
 	}
 }
+#endif

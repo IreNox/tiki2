@@ -69,11 +69,6 @@ namespace TikiEngine
 					comp = (T*)info->FuncTikiComponent(hash, gameObject);
 				}
 
-				if (comp != 0)
-				{
-					gameObject->AddComponent(comp);
-				}
-
 				return comp;
 			}
 			#pragma endregion

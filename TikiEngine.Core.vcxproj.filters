@@ -221,6 +221,9 @@
     <ClCompile Include="src\Core\TikiObject.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Component.cpp">
+      <Filter>Quelldateien\Engine\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -484,11 +487,14 @@
     <ClInclude Include="inc\Core\ISound.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\TikiObject.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\ITerrainRenderer.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiObject.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiPtr.h">
+      <Filter>Headerdateien\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

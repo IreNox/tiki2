@@ -15,6 +15,8 @@ namespace TikiEngine
 
 	class GameObject : public EngineObject
 	{
+		friend class Component;
+
 	public:
 
 		Transform PRS;
@@ -25,7 +27,6 @@ namespace TikiEngine
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
-		void AddComponent(Component* comp);
 		Component* GetComponent(PInt hash);
 
 		#pragma region Member - GetElement
@@ -63,8 +64,8 @@ namespace TikiEngine
 		bool RemoveComponent(Component* comp);
 
 	protected:
-
 		List<Component*> components;
+
 	};
 }
 

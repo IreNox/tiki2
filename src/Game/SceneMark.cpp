@@ -139,12 +139,13 @@ namespace TikiEngine
 			go->Release();
 
 			CameraFly* fly = new CameraFly(engine, go);
-			go->AddComponent(fly);
 			fly->Release();
 
+#if _DEBUG
 			go = new DebugPhysicRenderer(engine);
 			this->AddElement(go);
 			go->Release();
+#endif
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);

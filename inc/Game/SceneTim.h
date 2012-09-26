@@ -31,7 +31,7 @@ namespace TikiEngine
 
 		private:
 
-			IFont* font;
+			//IFont* font;
 
 			LightObject* light;
 

@@ -1,5 +1,6 @@
 #pragma once
 
+#if _DEBUG
 #include "Core/Dictionary.h"
 
 #include "Core\GameObject.h"
@@ -26,3 +27,4 @@ namespace TikiEngine
 		};
 	}
 }
+#endif

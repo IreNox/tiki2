@@ -21,11 +21,13 @@ TikiObject::TikiObject()
 
 TikiObject::~TikiObject()
 {
+#if _DEBUG
 	if (refCount > 0)
 	{
 		OutputDebugString(L"Used object destroyed.");
 		//throw "Used object destroyed.";
 	}
+#endif
 }
 
 UInt32 TikiObject::AddRef()
@@ -33,14 +35,14 @@ UInt32 TikiObject::AddRef()
 #if _DEBUG
 	 refCount++;
 
+	if (this == wrongPtr)
+	{
+		throw "Release wrong Pointer.";
+	}
+
 	std::wostringstream s;
 	s << L"AddRef: " << this << L" to " << refCount << L"\n";
 	OutputDebugString(s.str().c_str());
-
-	//if (this == wrongPtr)
-	//{
-	//	DebugBreak();
-	//}
 
 	return refCount;
 #else
@@ -53,14 +55,19 @@ UInt32 TikiObject::Release()
 	refCount--;
 
 #if _DEBUG
+	if (refCount == 0xfeeefeed)
+	{
+		throw "Release Released Object.";
+	}
+
+	if (this == wrongPtr)
+	{
+		throw "Release wrong Pointer.";
+	}
+
 	std::wostringstream s;
 	s << L"Release: " << this << L" to " << refCount << L"\n";
 	OutputDebugString(s.str().c_str());
-
-	//if (this == wrongPtr)
-	//{
-	//	DebugBreak();
-	//}
 #endif
 
 	if (refCount == 0)

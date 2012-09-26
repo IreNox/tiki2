@@ -15,8 +15,7 @@ struct VS_INPUT
 	float2 UV	  : TEXCOORD;
 
 	float3 Normal	: NORMAL;
-	float3 Binormal	: BINORMAL;
-	float3 Tangent	: TANGENT;
+	float4 Color	: COLOR;
 };
 
 struct PS_INPUT
@@ -27,8 +26,7 @@ struct PS_INPUT
     float2 UV		: TEXCOORD0;
 
 	float3 Normal	: NORMAL;
-	float3 Binormal	: BINORMAL;
-	float3 Tangent	: TANGENT;
+	float4 Color	: COLOR;
 };
 
 struct PS_OUTPUT
@@ -89,6 +87,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 	output.Normal = normalize(mul(input.Normal, worldMatrixInverseTranspose));
     output.UV = input.UV;
+	output.Color = input.Color;
     
     return output;
 }
@@ -99,32 +98,8 @@ PS_INPUT VS_Main(VS_INPUT input)
 PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 {
 	PS_OUTPUT output = (PS_OUTPUT)0;
-	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
-	float3 termAmbient = AmbientColor.rgb * AmbientIntensity;
-	float3 termEmissive = EmissiveColor.rgb * EmissiveIntensity;
-	float3 termLight = float3(0, 0, 0);
-
-	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
 	
-	if (LightsCount != 0.0f)
-	{
-		for (float i = 0; i < LightsCount; i++)
-		{
-			float3 lightDir = normalize(Lights[i].Position - input.WorldPos);
-
-			float lighting = dot(input.Normal, lightDir);	
-			lighting *= (Lights[i].Range / dot(lightDir, lightDir));
-
-			termLight += Lights[i].Color * lighting;
-		}		
-	
-		termDiffuse.rgb *= termLight;
-	}
-	
-	output.Screen = float4(
-		saturate(termDiffuse.rgb + termAmbient + termEmissive),
-		termDiffuse.a
-	);
+	output.Screen = input.Color; 
 
 	output.Depth.rgb = 1 - (input.DepthPos.z / 50.0f); //input.DepthPos.w;
 	output.Depth.a = 1.0f;
