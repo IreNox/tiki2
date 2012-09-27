@@ -121,11 +121,6 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
-			engine->sprites->Draw(
-				ssao->GetAO(),
-				Rectangle(10, 390, 200, 180)
-			);
-
 			/*engine->sprites->Draw(
 				tex,
 				Vector2(300, 300),

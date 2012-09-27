@@ -43,9 +43,9 @@ namespace TikiEngine
 
 	void TikiHeightmap::Get(Int32 x, Int32 y, Int32 z, HeightmapSample* sample)
 	{
-		//HeightmapSample tmp = HeightmapSample();
+		HeightmapSample tmp = HeightmapSample();
 
-		//color->Get(x, x, z, &tmp);
+		color->Get(x, y, z, &tmp);
 		//sample->Diffuse = RGB(x, y, z) || 0xFF000000; // 0xFF0000FF;
 
 		elevation->Get(x, y, z, sample);
