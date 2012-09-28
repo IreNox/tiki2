@@ -33,6 +33,12 @@
     <Filter Include="Quelldateien\AI">
       <UniqueIdentifier>{b2539aea-d156-4889-aa79-12c6cb93e27b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\SQLite">
+      <UniqueIdentifier>{a9f93a12-b153-4ba1-9a16-eac09751802d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\SQlite">
+      <UniqueIdentifier>{6e1b4efc-e738-4b32-8c23-ebc1886c3e0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -65,6 +71,15 @@
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h">
       <Filter>Headerdateien\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\sqlite3.h">
+      <Filter>Headerdateien\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\sqlite3ext.h">
+      <Filter>Headerdateien\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SceneLevel.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -96,6 +111,15 @@
     </ClCompile>
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp">
       <Filter>Quelldateien\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\shell.c">
+      <Filter>Quelldateien\SQlite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\sqlite3.c">
+      <Filter>Quelldateien\SQlite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneLevel.cpp">
+      <Filter>Quelldateien\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

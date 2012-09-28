@@ -23,6 +23,7 @@ namespace TikiEngine
 
 	DebugLineRenderer::~DebugLineRenderer()
 	{
+		SafeRelease(&decl);
 		SafeRelease(&shader);
 		SafeRelease(&vertexBuffer);
 		SafeRelease(&renderTarget);

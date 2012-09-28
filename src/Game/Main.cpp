@@ -6,6 +6,7 @@
 #include "Game/SceneTim.h"
 #include "Game/SceneMark.h"
 #include "Game/SceneAdrian.h"
+#include "Game/SceneLevel.h"
 
 using namespace TikiEngine;
 using namespace TikiEngine::Game;
@@ -14,7 +15,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(23999);
+	//_CrtSetBreakAlloc(838);
 
 	{
 		EngineDescription desc;
@@ -35,6 +36,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			if (name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim")
 			{
+				//engine->scene = new SceneLevel(engine);
 				engine->scene = new SceneTim(engine);
 				//engine->scene = new SceneAdrian(engine);
 				//engine->scene = new SceneMark(engine);

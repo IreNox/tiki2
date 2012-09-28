@@ -91,6 +91,8 @@ namespace TikiEngine
 			ssao = new PPScreenSpaceAmbientOcclusion(engine);
 			engine->graphics->AddPostProcess(ssao);
 
+			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
+
 			//ISound* sound = engine->librarys->CreateResource<ISound>();
 			//sound->LoadFromFile(L"Data/Sound/beep.wav");
 
@@ -119,6 +121,11 @@ namespace TikiEngine
 			engine->sprites->Draw(
 				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 200, 200, 180)
+			);
+
+			engine->sprites->Draw(
+				ssao->GetAO(),
+				Rectangle(10, 390, 200, 180)
 			);
 
 			/*engine->sprites->Draw(

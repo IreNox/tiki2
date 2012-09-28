@@ -26,8 +26,11 @@
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
+    <ClInclude Include="inc\Game\SceneLevel.h" />
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
+    <ClInclude Include="inc\Game\sqlite3.h" />
+    <ClInclude Include="inc\Game\sqlite3ext.h" />
     <ClInclude Include="inc\Game\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -39,8 +42,11 @@
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
+    <ClCompile Include="src\Game\SceneLevel.cpp" />
     <ClCompile Include="src\Game\SceneMark.cpp" />
     <ClCompile Include="src\Game\SceneTim.cpp" />
+    <ClCompile Include="src\Game\shell.c" />
+    <ClCompile Include="src\Game\sqlite3.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}</ProjectGuid>

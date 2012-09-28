@@ -14,9 +14,9 @@ namespace TikiEngine
 
 		MeshRenderer::~MeshRenderer()
 		{
+			SafeRelease(&data);
 			SafeRelease(&mesh);
 			SafeRelease(&material);
-			SafeRelease(&data);
 		}
 		#pragma endregion
 

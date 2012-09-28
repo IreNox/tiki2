@@ -40,6 +40,7 @@ namespace TikiEngine
 			virtual void* GetDeviceContext() = 0;
 
 			virtual void AddPostProcess(PostProcess* postProcess) = 0;
+			virtual void AddDefaultProcessTarget(cstring varName, IRenderTarget* target) = 0;
 			virtual void RemovePostProcess(PostProcess* postProcess) = 0;
 
 			virtual ViewPort* GetViewPort() = 0;

@@ -42,14 +42,14 @@ namespace TikiEngine
 			manager->SetLicence("Data/Cloddy/Licence/licence.dat");
 			manager->Initialize();
 
-			datasetColor = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c24.cube.dat", true, cloddy_CloddyDatasetConverterType::C24);
+			//datasetColor = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c24.cube.dat", true, cloddy_CloddyDatasetConverterType::C24);
 			//datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.e16.cube.dat", true, cloddy_CloddyDatasetConverterType::E16);
-			datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/flats.E16C24.rect.dat", true, cloddy_CloddyDatasetConverterType::E16C24);
-			datasetDetail = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c32.cube.dat", true, cloddy_CloddyDatasetConverterType::C32);
+			datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", true, cloddy_CloddyDatasetConverterType::E16C24);
+			//datasetDetail = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c32.cube.dat", true, cloddy_CloddyDatasetConverterType::C32);
 
-			heightmap = new TikiHeightmap(8192 + 1);
-			heightmap->SetColor(datasetColor->GetHeightmap());
-			heightmap->SetDetail(datasetDetail->GetHeightmap());
+			heightmap = new TikiHeightmap(1048576 + 1);
+			//heightmap->SetColor(datasetColor->GetHeightmap());
+			//heightmap->SetDetail(datasetDetail->GetHeightmap());
 			heightmap->SetElevation(datasetElevation->GetHeightmap());
 
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();

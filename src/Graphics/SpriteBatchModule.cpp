@@ -49,8 +49,9 @@ namespace TikiEngine
 		void SpriteBatchModule::Dispose()
 		{
 			SafeRelease(&buffer);
-			SafeRelease(&declaration);
 			SafeRelease(&shader);
+			SafeRelease(&declaration);
+			SafeRelease(&renderTarget);
 		}
 		#pragma endregion
 

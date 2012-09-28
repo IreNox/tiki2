@@ -22,14 +22,14 @@ SamplerState samRandom
 };
 
 //The number of samples used by the SSAO
-int nbrSamples = 4;
+int nbrSamples = 32;
  
 //The world scale 
 float minScale = 4;
 float maxScale = 30;
 
 //Exponent used to enhance the final contrast
-float exponent = 1;
+float exponent = 0.5f;
 
 //The camera forward vector
 float3 ViewForward;
