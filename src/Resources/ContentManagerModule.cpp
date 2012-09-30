@@ -14,7 +14,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine) , fbxLoader(0)
+			: IContentManager(engine) , fbxLoader(0), loadedResources()
 		{
 			wchar_t cd[MAX_PATH];
 			_wgetcwd(cd, MAX_PATH);
@@ -53,39 +53,46 @@ namespace TikiEngine
 		#pragma region Member - Load
 		IResource* ContentManagerModule::Load(PInt hash, wstring name)
 		{
-			bool loadFile = true;
-			IResource* value = 0;
-			wstring fileName = this->GetRealFilePath(name);
+			IResource* value = this->findLoadedResource(hash, name);
 
-			if (hash == typeid(ITexture).hash_code())
+			if (value == 0)
 			{
-				value = engine->librarys->CreateResource<ITexture>();
-			}
-			else if (hash == typeid(IShader).hash_code())
-			{
-				value = engine->librarys->CreateResource<IShader>();				
-			}
-			else if (hash == typeid(Mesh).hash_code())
-			{
-				value = fbxLoader->LoadMesh(fileName); //fbxLoader->LoadSkeleton(fileName);
-				loadFile = false;
-			}
-			else if (hash == typeid(IPhysicsMaterial).hash_code())
-			{
-				value = engine->librarys->CreateResource<IPhysicsMaterial>();
-			}
+				bool loadFile = true;
+				wstring fileName = this->GetRealFilePath(name);
 
-			else if (hash == typeid(IBoundingBox).hash_code())
-			{
-				value = engine->librarys->CreateResource<IBoundingBox>();
-			}
+				if (hash == typeid(ITexture).hash_code())
+				{
+					value = engine->librarys->CreateResource<ITexture>();
+				}
+				else if (hash == typeid(IShader).hash_code())
+				{
+					value = engine->librarys->CreateResource<IShader>();				
+				}
+				else if (hash == typeid(Mesh).hash_code())
+				{
+					value = fbxLoader->LoadMesh(fileName); //fbxLoader->LoadSkeleton(fileName);
+					loadFile = false;
+				}
+				else if (hash == typeid(IPhysicsMaterial).hash_code())
+				{
+					value = engine->librarys->CreateResource<IPhysicsMaterial>();
+				}
 
+				else if (hash == typeid(IBoundingBox).hash_code())
+				{
+					value = engine->librarys->CreateResource<IBoundingBox>();
+				}
+
+				if (value != 0)
+				{
+					loadedResources.Add(
+						ResourceInfo(hash, name, value)
+					);
+
+					if (loadFile) value->LoadFromFile(fileName.c_str());
+				}
+			}
 			
-			if (loadFile && value != 0)
-			{
-				value->LoadFromFile(fileName.c_str());
-			}
-
 			return value;
 		}
 		#pragma endregion
@@ -126,6 +133,7 @@ namespace TikiEngine
 					name
 				)
 			);
+			mat->GetShader()->Release();
 
 			return mat;
 		}
@@ -158,6 +166,24 @@ namespace TikiEngine
 		wstring ContentManagerModule::GetRealFilePath(wstring fileName)
 		{
 			return workingPath + L"\\" + fileName;
+		}
+		#pragma endregion
+
+		#pragma region Private Member
+		IResource* ContentManagerModule::findLoadedResource(PInt hash, wstring name)
+		{
+			UInt32 i = 0;
+			while (i < loadedResources.Count())
+			{
+				if (loadedResources[i].hash == hash && loadedResources[i].fileName == name)
+				{
+					return loadedResources[i].resource;
+				}
+
+				i++;
+			}
+
+			return 0;
 		}
 		#pragma endregion
 	}

@@ -20,8 +20,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\BaseGameEntity.h" />
+    <ClInclude Include="inc\Game\BasicDatabase.h" />
+    <ClInclude Include="inc\Game\BasicTransform.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
+    <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\EntityManager.h" />
+    <ClInclude Include="inc\Game\Level.h" />
+    <ClInclude Include="inc\Game\LevelChild.h" />
+    <ClInclude Include="inc\Game\LevelEnemy.h" />
+    <ClInclude Include="inc\Game\LevelObject.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
@@ -35,8 +42,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
+    <ClCompile Include="src\Game\BasicDatabase.cpp" />
+    <ClCompile Include="src\Game\BasicTransform.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
+    <ClCompile Include="src\Game\CameraRTS.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />
+    <ClCompile Include="src\Game\Level.cpp" />
+    <ClCompile Include="src\Game\LevelChild.cpp" />
+    <ClCompile Include="src\Game\LevelEnemy.cpp" />
+    <ClCompile Include="src\Game\LevelObject.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
@@ -107,19 +121,15 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
     <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
     <TargetName>$(ProjectName)$(PlatformArchitecture)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">

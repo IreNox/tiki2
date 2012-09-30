@@ -39,6 +39,12 @@
     <Filter Include="Quelldateien\SQlite">
       <UniqueIdentifier>{6e1b4efc-e738-4b32-8c23-ebc1886c3e0b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Level">
+      <UniqueIdentifier>{7a7e5513-4730-4ce8-b491-89f7fb412383}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Level">
+      <UniqueIdentifier>{fd233766-67c9-400f-bf57-484c10707460}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -80,6 +86,27 @@
     <ClInclude Include="inc\Game\SceneLevel.h">
       <Filter>Headerdateien\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\CameraRTS.h">
+      <Filter>Headerdateien\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Level.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\LevelObject.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\LevelEnemy.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BasicTransform.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BasicDatabase.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\LevelChild.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -120,6 +147,27 @@
     </ClCompile>
     <ClCompile Include="src\Game\SceneLevel.cpp">
       <Filter>Quelldateien\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\CameraRTS.cpp">
+      <Filter>Quelldateien\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BasicDatabase.cpp">
+      <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BasicTransform.cpp">
+      <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Level.cpp">
+      <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\LevelEnemy.cpp">
+      <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\LevelObject.cpp">
+      <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\LevelChild.cpp">
+      <Filter>Quelldateien\Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

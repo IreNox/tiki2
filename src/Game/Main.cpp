@@ -15,7 +15,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(838);
+	//_CrtSetBreakAlloc(98954);
 
 	{
 		EngineDescription desc;
@@ -34,9 +34,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			if (name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim")
+			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
 			{
-				//engine->scene = new SceneLevel(engine);
 				engine->scene = new SceneTim(engine);
 				//engine->scene = new SceneAdrian(engine);
 				//engine->scene = new SceneMark(engine);
@@ -53,7 +52,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			}
 			else
 			{
-				//engine->scene = new SceneGameOver(engine);
+				SceneLevel* level = new SceneLevel(engine);
+				level->LoadLevel(1);
+
+				engine->scene = level;
 			}
 
 			engine->Run();

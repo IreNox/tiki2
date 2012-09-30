@@ -72,7 +72,7 @@ namespace TikiEditor
 
             _batch.DrawLine(
                 vertices,
-                Color.Blue
+                (_selected == bt ? Color.Red : Color.Blue)
             );
         }
         #endregion
@@ -97,7 +97,7 @@ namespace TikiEditor
                     _points.Clear();
 
                     _points["pos"] = Vector2.Zero;
-                    _points["size"] = bt.Scale / 2;
+                    _points["size"] = new Vector2(bt.Scale / 2);
                     _points["rotation"] = new Vector2(
                         (float)Math.Sin(bt.Rotation),
                         (float)Math.Cos(bt.Rotation)
@@ -119,9 +119,7 @@ namespace TikiEditor
                     -new Vector3(_selected.Position, 0)
                 ) * Matrix.CreateScale(
                     new Vector3(
-                        1.0f / _selected.ScaleX,
-                        1.0f / _selected.ScaleY,
-                        0.0f
+                        1.0f / _selected.Scale
                     )
                 ) * Matrix.CreateRotationZ(
                     -_selected.Rotation
@@ -149,7 +147,8 @@ namespace TikiEditor
                             _selected.Position = mouse;
                             break;
                         case "size":
-                            _selected.Scale = localMouse * 2;
+                            _selected.Scale = (localMouse.X + localMouse.Y);
+                            localMouse = new Vector2(_selected.Scale / 2);
                             break;
                         case "rotation":
                             _selected.Rotation = (float)Math.Atan2(localMouse.Y, localMouse.X);
@@ -192,7 +191,7 @@ namespace TikiEditor
 
                 if (GI.Control.KeyboardDown(Keys.RightControl))
                 {
-                    _selected.Scale += trans;
+                    _selected.Scale += trans.Length();
                 }
                 else if (GI.Control.KeyboardDown(Keys.RightAlt))
                 {

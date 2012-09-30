@@ -1,5 +1,6 @@
 
 #include "Core/LightObject.h"
+#include "Core/TypeGlobals.h"
 
 namespace TikiEngine
 {
@@ -13,6 +14,7 @@ namespace TikiEngine
 
 		LightObject::~LightObject()
 		{
+			SafeRelease(&light);
 		}
 
 		Light* LightObject::GetLight()

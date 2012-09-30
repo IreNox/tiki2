@@ -15,7 +15,7 @@
 #include "Core/ITerrainRenderer.h"
 #include "Core/ISound.h"
 
-#include "Game/CameraFly.h"
+#include "Game/CameraRTS.h"
 
 namespace TikiEngine
 {
@@ -67,7 +67,7 @@ namespace TikiEngine
 			go->PRS.Position.Z = 500.0f;
 			go->PRS.Position.Y = 300.0f;
 
-			CameraFly* fly = new CameraFly(engine, go);
+			CameraRTS* fly = new CameraRTS(engine, go);
 			fly->Release();
 
 			this->AddElement(go);
@@ -104,10 +104,7 @@ namespace TikiEngine
 
 		void SceneTim::Draw(const DrawArgs& args)
 		{
-			engine->graphics->GetDepthTarget()->Clear(Color::Black);
-			engine->graphics->GetDepthTarget()->Apply(1);
-			engine->graphics->GetNormalTarget()->Clear(Color::NormalDefault);
-			engine->graphics->GetNormalTarget()->Apply(2);
+
 
 			Scene::Draw(args);
 

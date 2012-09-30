@@ -3,6 +3,10 @@
 #include "Core/Scene.h"
 #include "Game/sqlite3.h"
 
+#include "Game/Level.h"
+#include "Game/LevelEnemy.h"
+#include "Game/LevelObject.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -16,10 +20,17 @@ namespace TikiEngine
 
 			void Initialize(const InitializationArgs& args);
 
+			bool LoadLevel(Int64 id);
+			void DisposeLevel();
+
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
+
 		private:
 
-			string name;
-			string heightmapFile;
+			Level* level;
+			List<LevelEnemy*> enemies;
+			List<LevelObject*> objects;
 
 			sqlite3* db;
 

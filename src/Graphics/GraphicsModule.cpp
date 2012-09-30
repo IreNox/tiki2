@@ -252,6 +252,11 @@ namespace TikiEngine
 			rtScreen->Clear(clearColor);
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
+						
+			rtDepth->Clear(Color::Black);
+			rtDepth->Apply(1);
+			rtNormal->Clear(Color::NormalDefault);
+			rtNormal->Apply(2);
 
 			if (args.CurrentCamera)
 			{

@@ -10,8 +10,7 @@ namespace TikiEditor.Objects
         private float _x;
         private float _y;
 
-        private float _scaleX = 1.0f;
-        private float _scaleY = 1.0f;
+        private float _scale = 1.0f;
 
         private float _rotation;
         #endregion
@@ -50,18 +49,11 @@ namespace TikiEditor.Objects
             set { SetProperty(ref _rotation, value, "Rotation"); }
         }
 
-        [DataField("ScaleX")]
-        public float ScaleX
+        [DataField("Scale")]
+        public float Scale
         {
-            get { return _scaleX; }
-            set { SetProperty(ref _scaleX, value, "ScaleX"); }
-        }
-
-        [DataField("ScaleY")]
-        public float ScaleY
-        {
-            get { return _scaleY; }
-            set { SetProperty(ref _scaleY, value, "ScaleY"); }
+            get { return _scale; }
+            set { SetProperty(ref _scale, value, "Scale"); }
         }
         #endregion
 
@@ -75,16 +67,7 @@ namespace TikiEditor.Objects
                 this.PositionY = value.Y;
             }
         }
-
-        public Vector2 Scale
-        {
-            get { return new Vector2(_scaleX, _scaleY); }
-            set
-            {
-                this.ScaleX = value.X;
-                this.ScaleY = value.Y;
-            }
-        }        
+      
         #endregion
 
         #region Properties - Dynamic
@@ -93,7 +76,7 @@ namespace TikiEditor.Objects
             get
             {
                 return Matrix.CreateScale(
-                    new Vector3(this.Scale, 0)
+                    new Vector3(this.Scale)
                 ) * Matrix.CreateRotationZ(
                     _rotation
                 ) * Matrix.CreateTranslation(

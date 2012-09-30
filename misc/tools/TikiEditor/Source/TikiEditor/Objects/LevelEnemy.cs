@@ -6,7 +6,7 @@ using Database.GDB;
 
 namespace TikiEditor.Objects
 {
-    [DataTable("tiki_level_enemy")]
+    [DataTable("tiki_level_enemies")]
     public class LevelEnemy : BasicTransform
     {
         #region Vars

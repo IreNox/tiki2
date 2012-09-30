@@ -47,7 +47,7 @@ namespace TikiEngine
 			datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", true, cloddy_CloddyDatasetConverterType::E16C24);
 			//datasetDetail = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c32.cube.dat", true, cloddy_CloddyDatasetConverterType::C32);
 
-			heightmap = new TikiHeightmap(1048576 + 1);
+			heightmap = new TikiHeightmap(8192 + 1);
 			//heightmap->SetColor(datasetColor->GetHeightmap());
 			//heightmap->SetDetail(datasetDetail->GetHeightmap());
 			heightmap->SetElevation(datasetElevation->GetHeightmap());
@@ -56,6 +56,8 @@ namespace TikiEngine
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(128);
 			terrainDescription->SetHeightmap(heightmap);
+			terrainDescription->SetWidth(2048.0f);
+			terrainDescription->SetHeight(2048.0f);
 
 			terrain = manager->CreateTerrain(terrainDescription);
 		}
