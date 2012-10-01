@@ -41,9 +41,7 @@ namespace TikiEngine
 		void MeshRenderer::SetMesh(Mesh* mesh)
 		{
 			SafeRelease(&this->mesh);
-
-			this->mesh = mesh;
-			SafeAddRef(&this->mesh);
+			SafeAddRef(mesh, &this->mesh);
 
 			updateData();
 		}

@@ -73,6 +73,7 @@ UInt32 TikiObject::Release()
 	if (refCount == 0)
 	{
 		delete this;
+		return 0;
 	}
 
 	return refCount;

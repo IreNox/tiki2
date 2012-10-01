@@ -13,7 +13,8 @@ namespace TikiEngine
 		}
 
 		LevelChild::~LevelChild()
-		{			
+		{
+			SafeRelease(&renderer);
 		}
 
 		void LevelChild::LoadFromDatabase(sqlite3_stmt* state)

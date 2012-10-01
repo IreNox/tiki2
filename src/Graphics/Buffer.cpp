@@ -19,11 +19,9 @@ namespace TikiEngine
 
 		Buffer::~Buffer()
 		{
-			if (buffer != NULL)
-			{
-				buffer->Release();
-				buffer = NULL;
-			}
+			SafeDelete(&bufferData);
+
+			SafeRelease(&buffer);
 		}
 		#pragma endregion
 

@@ -45,8 +45,14 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
-			
-			//auto objects = loadedResources.GetValues();
+			UInt32 i = 0;
+			while (i < loadedResources.Count())
+			{
+				while (loadedResources[i].resource->Release()) { }
+
+				i++;
+			}
+			loadedResources.Clear();
 		}
 		#pragma endregion
 
@@ -109,6 +115,8 @@ namespace TikiEngine
 
 				if (value != 0)
 				{
+					value->AddRef();
+
 					loadedResources.Add(
 						ResourceInfo(hash, name, value)
 					);
@@ -209,6 +217,7 @@ namespace TikiEngine
 			{
 				if (loadedResources[i].hash == hash && loadedResources[i].fileName == name)
 				{
+					loadedResources[i].resource->AddRef();
 					return loadedResources[i].resource;
 				}
 

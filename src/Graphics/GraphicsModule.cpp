@@ -597,7 +597,7 @@ namespace TikiEngine
 				(Int32)viewPort.Height,
 				viewPort.MinDepth,
 				viewPort.MaxDepth
-				);
+			);
 			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
