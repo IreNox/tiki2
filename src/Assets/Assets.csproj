@@ -62,6 +62,9 @@
     <None Include="Data\Effects\pp_default.fx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Models\replaceme_cube.fbx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Resources\Models\balls_test.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

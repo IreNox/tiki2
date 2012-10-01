@@ -40,9 +40,9 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
-			GameObject* go = new GameObject(engine);
+			//GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/box_ursprung.fbx");
+			/*Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/box_ursprung.fbx");
 			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
@@ -57,10 +57,10 @@ namespace TikiEngine
 			render->Release();
 
 			this->AddElement(go);
-			go->Release();
+			go->Release();*/
 
 			// Camera
-			go = new CameraObject(engine);
+			GameObject* go = new CameraObject(engine);
 			go->PRS.Position.Z = 5.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);

@@ -2,6 +2,8 @@
 #include "Core/Engine.h"
 #include "Core/Console.h"
 
+#include "Core/TypeGlobals.h"
+
 #include "Graphics/Buffer.h"
 #include "Graphics/DllMain.h"
 
@@ -11,7 +13,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Buffer::Buffer(Engine* engine, UInt32 size)
-			: EngineObject(engine), elementSize(size), buffer(0), bufferSize(0), bufferUsage(0)
+			: EngineObject(engine), elementSize(size), buffer(0), bufferData(0), bufferUsage(0)
 		{
 		}
 
@@ -61,21 +63,18 @@ namespace TikiEngine
 			UINT size = this->elementSize * count;
 			*index = this->bufferUsage / this->elementSize;
 
-			if (this->bufferSize < this->bufferUsage + size)
-			{
-				this->resizeBuffer(data, size);
-			}
-			else
-			{
-				this->writeBuffer(data, size, this->bufferUsage);
-				this->bufferUsage += size;
-			}
+			this->resizeBuffer(data, size);
 		}
 		#pragma endregion
 
 		#pragma region Member - ResizeBuffer
 		void Buffer::writeBuffer(void* addData, UINT dataSize, UINT index)
 		{
+			if (bufferData == 0)
+			{
+				throw "Buffer not init.";
+			}
+
 			D3D11_MAPPED_SUBRESOURCE mapped;
 
 			HRESULT r = DllMain::Context->Map(
@@ -91,26 +90,25 @@ namespace TikiEngine
 				Console::WriteError("Can't map Buffer", r);
 			}
 
-			char* data = (char*)mapped.pData;
-			data += index;
-
-			memcpy(
-				(void*)data,
-				addData,
-				dataSize
-			);			
+			memcpy(bufferData + index, addData, dataSize);
+			memcpy(mapped.pData, bufferData, bufferUsage);
 
 			DllMain::Context->Unmap(buffer, 0);
 		}
 
 		void Buffer::resizeBuffer(void* addData, UINT dataSize)
 		{
-			UINT neededSize = this->bufferUsage + dataSize;
-			UINT size = neededSize;
+			UInt32 neededSize = this->bufferUsage + dataSize;
 
-			UINT index = 0;
-			char* newData = new char[size];
-			ZeroMemory(newData, size);
+			char* newData = new char[neededSize];
+
+			if (bufferData != 0)
+			{
+				memcpy(newData, bufferData, this->bufferUsage);
+				SafeDelete(&bufferData);
+			}
+			memcpy(newData + this->bufferUsage, addData, dataSize);
+			bufferData = newData;
 
 			//if (buffer != NULL)
 			//{
@@ -136,19 +134,14 @@ namespace TikiEngine
 			//	buffer = 0;
 			//}
 
-			memcpy(newData + index, addData, dataSize);
 			
-			this->bufferSize = size;
-			this->bufferUsage += dataSize;
-
-			buffer = this->createBuffer(size, newData);
+			this->bufferUsage = neededSize;
+			buffer = this->createBuffer(neededSize, newData);
 
 			if (buffer == 0)
 			{
 				Console::WriteError("Can't create Buffer", 0);
 			}
-
-			delete(newData);
 		}
 		#pragma endregion
 	}

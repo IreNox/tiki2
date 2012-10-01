@@ -34,10 +34,11 @@ namespace TikiEngine
 
 		private:
 
-			UINT bufferSize;
 			UINT bufferUsage;
 
 			UINT elementSize;
+
+			char* bufferData;
 
 			void writeBuffer(void* addData, UInt32 dataSize, UInt32 index);
 			void resizeBuffer(void* addData, UInt32 dataSize);

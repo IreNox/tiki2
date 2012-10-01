@@ -29,7 +29,7 @@ namespace TikiEngine
 				switch (type)
 				{
 				case 0:
-					Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/box_ursprung.fbx");
+					Mesh* mesh = engine->content->LoadMesh(L"Data/Models/replaceme_cube.fbx");
 					renderer->SetMesh(mesh);
 					mesh->Release();
 
