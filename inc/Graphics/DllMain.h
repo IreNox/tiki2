@@ -47,6 +47,7 @@ namespace TikiEngine
 		static ID3D11DeviceContext* Context;
 
 		static void InitDll(TikiEngine::Engine* engine);
+		static void DisposeDll();
 
 		static IModule* CreateModule(PInt);
 		static IResource* CreateResource(PInt);

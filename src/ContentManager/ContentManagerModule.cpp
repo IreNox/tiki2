@@ -5,6 +5,9 @@
 
 #include "ContentManager/ContentManagerModule.h"
 
+#include "Core/MeshIndexed.h"
+#include "Core/DefaultVertex.h"
+
 #include <typeinfo.h>
 
 namespace TikiEngine
@@ -65,6 +68,31 @@ namespace TikiEngine
 				{
 					value = engine->librarys->CreateResource<IShader>();				
 				}
+				else if (hash == typeid(Mesh).hash_code())
+				{
+					MeshIndexed* mesh = new MeshIndexed(engine);
+					loadFile = false;
+
+					IModel* model = this->LoadModel(name);
+
+					UInt32* indices = 0;
+					void* vertices = 0;
+
+					UInt32 indicesCount = 0;
+					UInt32 verticesCount = 0;
+
+					model->GetIndexData(&indices, &indicesCount);
+					model->GetVertexData(&vertices, &verticesCount);
+
+					mesh->SetIndexData(indices, indicesCount);
+					mesh->SetVertexData(vertices, verticesCount);
+
+					mesh->SetVertexDeclaration(TikiEngine::Vertices::DefaultVertex::Declaration, TikiEngine::Vertices::DefaultVertex::DeclarationCount);
+
+					SafeRelease(&model);
+
+					value = mesh;
+				}
 				else if (hash == typeid(IModel).hash_code())
 				{
 					value = engine->librarys->CreateResource<IModel>();
@@ -104,7 +132,10 @@ namespace TikiEngine
 
 		IModel* ContentManagerModule::LoadModel(const wstring& name)
 		{
-			return NULL;
+			return (IModel*)this->Load(
+				typeid(IModel).hash_code(),
+				name
+			);
 		}
 
 		//Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)

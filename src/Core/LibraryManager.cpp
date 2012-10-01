@@ -66,6 +66,11 @@ namespace TikiEngine
 			while (i < infos->Count())
 			{
 				info = infos->Get(i);
+				
+				if (info->FuncDispose != 0)
+				{
+					info->FuncDispose();
+				}
 
 				FreeLibrary(info->LibraryHandle);
 

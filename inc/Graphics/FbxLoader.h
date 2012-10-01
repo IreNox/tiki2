@@ -28,7 +28,7 @@ namespace TikiEngine
 			FbxLoader(Engine* engine);
 			~FbxLoader();
 
-			Mesh* LoadMesh(const wstring& name);
+			void LoadFile(const wstring& name, UInt32** indices, UInt32* indicesCount, void** vertices, UInt32* verticesSize, FbxScene** scene);
 			Mesh* LoadSkeleton(const wstring& name);
 
 		private:

@@ -16,7 +16,7 @@ namespace TikiEngine
 			Single Binormal[3];
 			Single Tangent[3];
 
-			static UInt32 DeclCount;
+			static UInt32 DeclarationCount;
 			static InputElement Declaration[5];
 		};
 	}

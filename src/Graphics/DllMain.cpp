@@ -42,6 +42,7 @@ namespace TikiEngine
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
+		DllInfo.FuncDispose = DisposeDll;
 
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
@@ -54,6 +55,11 @@ namespace TikiEngine
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
+	}
+
+	void DllMain::DisposeDll()
+	{
+		SafeRelease(&DllMain::FBXLoader);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

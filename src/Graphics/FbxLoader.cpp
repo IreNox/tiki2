@@ -1,3 +1,4 @@
+
 #include "Graphics/FbxLoader.h"
 
 namespace TikiEngine
@@ -116,11 +117,11 @@ namespace TikiEngine
 			return meshIndexed;
 		}
 
-		Mesh* FbxLoader::LoadMesh(const wstring& name)
+		void FbxLoader::LoadFile(const wstring& name, UInt32** indicesOut, UInt32* indicesCount, void** verticesOut, UInt32* verticesSize, FbxScene** scene)
 		{
-			bool result = LoadScene(fbxManager, scene, name);
+			bool result = LoadScene(fbxManager, this->scene, name);
 
-			FbxNode *root = scene->GetRootNode();
+			FbxNode *root = this->scene->GetRootNode();
 			FbxNode *mesh = NULL;
 			FbxMesh *model = NULL;
 
@@ -225,24 +226,15 @@ namespace TikiEngine
 			//const bool lHasSkin = model->GetDeformerCount(FbxDeformer::eSkin) > 0;
 			//const bool lHasDeformation = lHasVertexCache || lHasShape || lHasSkin;
 			
+			*scene = this->scene;
 
-			UINT indexBufferSize = indices.Count();
-			UInt32 *indexBufferData = indices.ToArray();
+			*indicesOut = indices.ToArray();
+			*indicesCount = indices.Count();
 
-			MeshIndexed* meshIndexed = new MeshIndexed(engine);
-
-			meshIndexed->SetVertexData(vertexData, size);
-			meshIndexed->SetIndexData(indexBufferData, indexBufferSize);
-			meshIndexed->SetVertexDeclaration(DefaultVertex::Declaration,5);
-
-			delete vertexData;
-			vertexData = 0;
-			delete indexBufferData;
-			indexBufferData = 0;
+			*verticesOut = vertexData;
+			*verticesSize = size;
 
 			root->Destroy(true);		
-
-			return meshIndexed;
 		}
 
 		void FbxLoader::HandleNodeRecursive(FbxNode* node, FbxTime& pTime, FbxAMatrix& pParentGlobalPosition)

@@ -40,10 +40,10 @@
     <Content Include="cudart64_30_9.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fbxsdk-2013.2.dll">
+    <Content Include="fbxsdk-2013.3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="fbxsdk-2013.2d.dll">
+    <Content Include="fbxsdk-2013.3d.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="fmodex64.dll">
