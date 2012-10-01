@@ -3,6 +3,7 @@
 #include "Core/IModule.h"
 
 #include "Core/Mesh.h"
+#include "Core/IModel.h"
 #include "Core/ITexture.h"
 #include "Core/Material.h"
 #include "Core/IPhysicsMaterial.h"
@@ -28,7 +29,7 @@ namespace TikiEngine
 			virtual IResource* Load(PInt hash, wstring name) = 0;
 
 			virtual Mesh* LoadMesh(const wstring& name) = 0;
-			virtual Mesh* LoadFbxMesh(const wstring& name) = 0;
+			virtual IModel* LoadModel(const wstring& name) = 0;
 			virtual ITexture* LoadTexture(const wstring& name) = 0;
 			virtual Material* LoadMaterial(const wstring& name) = 0;
 			virtual IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name) = 0;

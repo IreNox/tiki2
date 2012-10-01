@@ -5,12 +5,15 @@
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
 #include "Graphics/RenderTarget.h"
+#include "Graphics/Model.h"
 
 #include "Graphics/MeshRenderer.h"
 #include "Graphics/TerrainRenderer.h"
 
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
+
+#include "Graphics/FbxLoader.h"
 
 #include <typeinfo.h>
 
@@ -21,6 +24,7 @@ namespace TikiEngine
 	TikiInfo DllMain::DllInfo = TikiInfo();
 	
 	Engine* DllMain::Engine = 0;
+	FbxLoader* DllMain::FBXLoader = 0;
 
 	GraphicsModule* DllMain::ModuleGraphics = 0;
 	SpriteBatchModule* DllMain::ModuleSpriteBatch = 0;
@@ -31,6 +35,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
+		DllMain::FBXLoader = new FbxLoader(engine);
 		DllMain::ModuleGraphics = new GraphicsModule(engine);
 		DllMain::ModuleSpriteBatch = new SpriteBatchModule(engine);
 
@@ -45,6 +50,7 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(IShader).hash_code());
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
+		DllInfo.Resources.Add(typeid(IModel).hash_code());
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
@@ -82,7 +88,10 @@ namespace TikiEngine
 		{
 			return new RenderTarget(DllMain::Engine);
 		}
-
+		else if(hash == typeid(IModel).hash_code())
+		{
+			return new Model(DllMain::Engine);
+		}
 		return 0;
 	}
 

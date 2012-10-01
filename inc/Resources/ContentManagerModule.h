@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/IContentManager.h"
-#include "Resources/FbxLoader.h"
+
 
 namespace TikiEngine
 {
@@ -23,8 +23,7 @@ namespace TikiEngine
 			IResource* Load(PInt hash, wstring name);
 
 			Mesh* LoadMesh(const wstring& name);
-			Mesh* LoadFbxMesh(const wstring& name);
-			Mesh* LoadFbxSkeletonMesh(const wstring& name);
+			IModel* LoadModel(const wstring& name);
 			ITexture* LoadTexture(const wstring& name);
 			Material* LoadMaterial(const wstring& name);
 			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
@@ -48,8 +47,6 @@ namespace TikiEngine
 			IResource* findLoadedResource(PInt hash, wstring name);
 
 			wstring workingPath;
-
-			FbxLoader *fbxLoader;
 
 			List<ResourceInfo> loadedResources;
 

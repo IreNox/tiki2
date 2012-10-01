@@ -15,7 +15,7 @@
 #include "Core/ITerrainRenderer.h"
 #include "Core/ISound.h"
 
-#include "Game/CameraRTS.h"
+#include "Game/CameraFly.h"
 
 namespace TikiEngine
 {
@@ -67,7 +67,7 @@ namespace TikiEngine
 			go->PRS.Position.Z = 500.0f;
 			go->PRS.Position.Y = 300.0f;
 
-			CameraRTS* fly = new CameraRTS(engine, go);
+			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
 
 			this->AddElement(go);

@@ -4,7 +4,6 @@
 #include "Core/LibraryManager.h"
 
 #include "Resources/ContentManagerModule.h"
-#include "Resources/FbxLoader.h"
 
 #include <typeinfo.h>
 
@@ -14,7 +13,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine) , fbxLoader(0), loadedResources()
+			: IContentManager(engine) , loadedResources()
 		{
 			wchar_t cd[MAX_PATH];
 			_wgetcwd(cd, MAX_PATH);
@@ -30,7 +29,6 @@ namespace TikiEngine
 		#pragma region Member - Module
 		bool ContentManagerModule::Initialize(EngineDescription& desc)
 		{
-			this->fbxLoader = new FbxLoader(engine);
 			return true;
 		}
 
@@ -44,7 +42,6 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
-			SafeRelease(&fbxLoader);
 			
 			//auto objects = loadedResources.GetValues();
 		}
@@ -68,10 +65,9 @@ namespace TikiEngine
 				{
 					value = engine->librarys->CreateResource<IShader>();				
 				}
-				else if (hash == typeid(Mesh).hash_code())
+				else if (hash == typeid(IModel).hash_code())
 				{
-					value = fbxLoader->LoadMesh(fileName); //fbxLoader->LoadSkeleton(fileName);
-					loadFile = false;
+					value = engine->librarys->CreateResource<IModel>();
 				}
 				else if (hash == typeid(IPhysicsMaterial).hash_code())
 				{
@@ -106,14 +102,19 @@ namespace TikiEngine
 			);
 		}
 
-		Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
+		IModel* ContentManagerModule::LoadModel(const wstring& name)
 		{
-			return this->fbxLoader->LoadMesh(name);
+			return NULL;
 		}
-		Mesh* ContentManagerModule::LoadFbxSkeletonMesh(const wstring& name)
-		{
-			return this->fbxLoader->LoadSkeleton(name);
-		}
+
+		//Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
+		//{
+		//	return this->fbxLoader->LoadMesh(name);
+		//}
+		//Mesh* ContentManagerModule::LoadFbxSkeletonMesh(const wstring& name)
+		//{
+		//	return this->fbxLoader->LoadSkeleton(name);
+		//}
 
 
 		ITexture* ContentManagerModule::LoadTexture(const wstring& name)

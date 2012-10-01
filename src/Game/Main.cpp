@@ -42,7 +42,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			}
 			else if (name == L"adrian.lück" || name == L"Adrian")
 			{
+				//engine->scene = new SceneTim(engine);
 				engine->scene = new SceneAdrian(engine);
+				//engine->scene = new SceneMark(engine);
 			}
 			else if (name == L"mark.reichert" || name == L"Shekk")
 			{				

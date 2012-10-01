@@ -9,12 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Headerdateien\Loader">
-      <UniqueIdentifier>{4d420d61-5f1f-4711-87c1-9379a919cf18}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Loader">
-      <UniqueIdentifier>{f008abba-a324-4f18-bf2b-3a322c3b32ab}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Resources\ContentManagerModule.h">
@@ -23,9 +17,6 @@
     <ClInclude Include="inc\Resources\DllMain.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Resources\FbxLoader.h">
-      <Filter>Headerdateien\Loader</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManagerModule.cpp">
@@ -33,9 +24,6 @@
     </ClCompile>
     <ClCompile Include="src\Resources\DllMain.cpp">
       <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\FbxLoader.cpp">
-      <Filter>Quelldateien\Loader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

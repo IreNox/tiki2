@@ -21,12 +21,10 @@
   <ItemGroup>
     <ClInclude Include="inc\Resources\ContentManagerModule.h" />
     <ClInclude Include="inc\Resources\DllMain.h" />
-    <ClInclude Include="inc\Resources\FbxLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Resources\ContentManagerModule.cpp" />
     <ClCompile Include="src\Resources\DllMain.cpp" />
-    <ClCompile Include="src\Resources\FbxLoader.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}</ProjectGuid>

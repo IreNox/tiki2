@@ -496,5 +496,8 @@
     <ClInclude Include="inc\Core\TikiPtr.h">
       <Filter>Headerdateien\Core</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IModel.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

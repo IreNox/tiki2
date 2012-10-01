@@ -54,6 +54,12 @@
     <Filter Include="Headerdateien\Internal\Cloddy">
       <UniqueIdentifier>{e6432fc2-ca46-4cba-86a8-d3521817312d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Internal\FBX">
+      <UniqueIdentifier>{f3eb8ca4-0305-4788-8b4f-100dd3a78dae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Internal\FBX">
+      <UniqueIdentifier>{39e88201-8a24-43fb-8fc4-29b0feeb7e7c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
@@ -109,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\TikiHeightmap.cpp">
       <Filter>Quelldateien\Internal\Cloddy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Model.cpp">
+      <Filter>Quelldateien\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\FbxLoader.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,6 +189,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\TikiHeightmap.h">
       <Filter>Headerdateien\Internal\Cloddy</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Model.h">
+      <Filter>Headerdateien\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\FbxLoader.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
