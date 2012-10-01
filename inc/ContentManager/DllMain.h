@@ -3,7 +3,7 @@
 #include "Core/TikiInfo.h"
 #include "Core/Dictionary.h"
 
-#include "Resources/ContentManagerModule.h"
+#include "ContentManager/ContentManagerModule.h"
 
 using TikiEngine::Engine;
 using TikiEngine::TikiInfo;

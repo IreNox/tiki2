@@ -11,18 +11,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\ContentManager\ContentManagerModule.h">
+    <ClInclude Include="..\..\inc\ContentManager\ContentManagerModule.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="inc\ContentManager\DllMain.h">
+    <ClInclude Include="..\..\inc\ContentManager\DllMain.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\ContentManager\ContentManagerModule.cpp">
+    <ClCompile Include="..\..\src\ContentManager\ContentManagerModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\ContentManager\DllMain.cpp">
+    <ClCompile Include="..\..\src\ContentManager\DllMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 
-#include "Resources/DllMain.h"
+#include "ContentManager/DllMain.h"
 
 #include <typeinfo.h>
 

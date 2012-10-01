@@ -34,14 +34,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsDX11", "
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Resources", "TikiEngine.Resources.vcxproj", "{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}"
-	ProjectSection(ProjectDependencies) = postProject
-		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary32", "src\Binary32\Binary32.csproj", "{B02782B6-CFD8-401D-8A73-105106961E5C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary64", "src\Binary64\Binary64.csproj", "{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.ContentManager", "misc\proj\TikiEngine.ContentManager.vcxproj", "{60826F76-797B-476A-A4A0-237278730964}"
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -67,14 +64,15 @@ Global
 		SccLocalPath7 = .
 		SccProjectUniqueName8 = TikiEngine.GraphicsDX11.vcxproj
 		SccLocalPath8 = .
-		SccProjectUniqueName9 = TikiEngine.Resources.vcxproj
-		SccLocalPath9 = .
-		SccProjectUniqueName10 = src\\Binary32\\Binary32.csproj
-		SccProjectName10 = src/Binary32
-		SccLocalPath10 = src\\Binary32
-		SccProjectUniqueName11 = src\\Binary64\\Binary64.csproj
-		SccProjectName11 = src/Binary64
-		SccLocalPath11 = src\\Binary64
+		SccProjectUniqueName9 = src\\Binary32\\Binary32.csproj
+		SccProjectName9 = src/Binary32
+		SccLocalPath9 = src\\Binary32
+		SccProjectUniqueName10 = src\\Binary64\\Binary64.csproj
+		SccProjectName10 = src/Binary64
+		SccLocalPath10 = src\\Binary64
+		SccProjectUniqueName11 = misc\\proj\\TikiEngine.ContentManager.vcxproj
+		SccProjectName11 = misc/proj
+		SccLocalPath11 = misc\\proj
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -147,14 +145,6 @@ Global
 		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x64.Build.0 = Release|x64
 		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x86.ActiveCfg = Release|Win32
 		{59897D41-2ADE-4851-8D7A-E3CF1C80F120}.Release|x86.Build.0 = Release|Win32
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x64.ActiveCfg = Debug|x64
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x64.Build.0 = Debug|x64
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x86.ActiveCfg = Debug|Win32
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Debug|x86.Build.0 = Debug|Win32
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x64.ActiveCfg = Release|x64
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x64.Build.0 = Release|x64
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x86.ActiveCfg = Release|Win32
-		{C1B0EFBC-23AE-4B96-9D5C-DA05087A8247}.Release|x86.Build.0 = Release|Win32
 		{B02782B6-CFD8-401D-8A73-105106961E5C}.Debug|x64.ActiveCfg = Release|x86
 		{B02782B6-CFD8-401D-8A73-105106961E5C}.Debug|x86.ActiveCfg = Release|x86
 		{B02782B6-CFD8-401D-8A73-105106961E5C}.Debug|x86.Build.0 = Release|x86
@@ -167,6 +157,14 @@ Global
 		{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4}.Release|x64.ActiveCfg = Release|x64
 		{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4}.Release|x64.Build.0 = Release|x64
 		{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4}.Release|x86.ActiveCfg = Release|x64
+		{60826F76-797B-476A-A4A0-237278730964}.Debug|x64.ActiveCfg = Debug|x64
+		{60826F76-797B-476A-A4A0-237278730964}.Debug|x64.Build.0 = Debug|x64
+		{60826F76-797B-476A-A4A0-237278730964}.Debug|x86.ActiveCfg = Debug|Win32
+		{60826F76-797B-476A-A4A0-237278730964}.Debug|x86.Build.0 = Debug|Win32
+		{60826F76-797B-476A-A4A0-237278730964}.Release|x64.ActiveCfg = Release|x64
+		{60826F76-797B-476A-A4A0-237278730964}.Release|x64.Build.0 = Release|x64
+		{60826F76-797B-476A-A4A0-237278730964}.Release|x86.ActiveCfg = Release|Win32
+		{60826F76-797B-476A-A4A0-237278730964}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

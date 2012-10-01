@@ -3,7 +3,7 @@
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
 
-#include "Resources/ContentManagerModule.h"
+#include "ContentManager/ContentManagerModule.h"
 
 #include <typeinfo.h>
 
