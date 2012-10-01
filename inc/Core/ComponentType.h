@@ -12,7 +12,8 @@ namespace TikiEngine
 			CT_Collider,
 			CT_Light,
 			CT_Renderer,
-			CT_Rigidbody
+			CT_Rigidbody,
+			CT_AI
 		};
 	}
 }

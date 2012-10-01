@@ -1,6 +1,8 @@
 #include "Game/EntityManager.h"
 #include <cassert>
 
+#include "Game/MovingEntity.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -12,7 +14,7 @@ namespace TikiEngine
 		    return &instance;
 		}
 
-		BaseGameEntity* EntityManager::GetEntityFromID(int id) const
+		GameObject* EntityManager::GetEntityFromID(int id) const
 		{
 			//find the entity
 		    EntityMap::const_iterator ent = entityMap.find(id);
@@ -28,9 +30,22 @@ namespace TikiEngine
 		    entityMap.erase(entityMap.find(entity->ID()));
 		} 
 
-		void EntityManager::RegisterEntity(BaseGameEntity* newEntity)
+		void EntityManager::RegisterMovingEntity(GameObject* gameObject)
 		{
-		    entityMap.insert(std::make_pair(newEntity->ID(), newEntity));
+			MovingEntity* comp = new MovingEntity(0, gameObject);
+			comp->Init();
+			comp->Release();
+
+		    entityMap.insert(std::make_pair(comp->ID(), gameObject));
 		}
+
+		//void EntityManager::RegisterBot(GameObject* gameObject)
+		//{
+		//	TikiBot* comp = new TikiBot(engine, gameObject);
+		//	comp->Init();
+
+		//	entityMap.insert(std::make_pair(comp->ID(), gameObject));
+		//}
+
 	}
 }

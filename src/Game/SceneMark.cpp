@@ -39,7 +39,7 @@ namespace TikiEngine
 			SafeRelease(&bounds1);
 			SafeRelease(&bounds2);
 
-			SafeRelease(&entity);
+			//SafeRelease(&entity);
 
 			SafeRelease(&font);
 		}
@@ -54,10 +54,12 @@ namespace TikiEngine
 
 			// Material, Center, Size, Dynamic must be set before the object gets created
 			GameObject* go = new GameObject(engine);
+			EntityMgr->RegisterMovingEntity(go); //, desc
 
-			entity = new MovingEntity(engine, Vector3::Zero, 1.0, Vector3::Zero, 1, 
-									  Vector3(0, 0, 0), 1, Vector3::One, 0.2, 1.0);
-			this->AddElement(entity);
+			//entity = new MovingEntity(engine, Vector3::Zero, 1.0, Vector3::Zero, 1, 
+			//						  Vector3(0, 0, 0), 1, Vector3::One, 0.2, 1.0);
+			this->AddElement(go);
+			go->Release();
 			//entity->Release();
 
 			// init BoundingBox

@@ -8,23 +8,24 @@ namespace TikiEngine
 	{
 		int BaseGameEntity::nextValidID = 0;
 
-		BaseGameEntity::BaseGameEntity(Engine* engine, int ID) : GameObject(engine)
+		BaseGameEntity::BaseGameEntity(Engine* engine, GameObject* gameObject)
+			: Component(engine, gameObject, ComponentType::CT_AI)
 		{
+			id = nextValidID++;
+
 			boundingRadius = 0.0;
 			scale = Vector3::One;
             type = default_entity_type;
             tag = false;
-
-			SetID(ID);
 		}
 
-		void BaseGameEntity::SetID(int val)
-		{
-		  //make sure the val is equal to or greater than the next available ID
-		  assert ( (val >= nextValidID) && "<BaseGameEntity::SetID>: invalid ID");
-		  id = val;
-		  nextValidID = id + 1;
-		}
+		//void BaseGameEntity::SetID(int val)
+		//{
+		//  //make sure the val is equal to or greater than the next available ID
+		//  assert ( (val >= nextValidID) && "<BaseGameEntity::SetID>: invalid ID");
+		//  id = val;
+		//  nextValidID = id + 1;
+		//}
 
 		void BaseGameEntity::SetScale(Vector3 val)
 		{

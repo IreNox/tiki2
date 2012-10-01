@@ -5,9 +5,12 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		MovingEntity::MovingEntity(Engine* engine, Vector3 position, Double radius, Vector3 velocity, Double maxSpeed, Vector3 heading,
-					 Double mass, Vector3 scale, Double turnRate, Double maxForce) : 
-					 BaseGameEntity(engine, BaseGameEntity::GetNextValidID())
+		MovingEntity::MovingEntity(Engine* engine, GameObject* gameObject) : 
+					 BaseGameEntity(engine, gameObject)
+		{
+		}
+
+		void MovingEntity::Init(Double radius, Vector3 velocity, Double maxSpeed, Vector3 heading, Double turnRate, Double maxForce)
 		{
 			this->heading = heading;
 			this->velocity = velocity;
@@ -69,9 +72,13 @@ namespace TikiEngine
 		    return false;
 		}
 
+		void MovingEntity::Draw(const DrawArgs& args)
+		{
+		}
 
-
-
+		void MovingEntity::Update(const UpdateArgs& args)
+		{
+		}
 
 	}
 }

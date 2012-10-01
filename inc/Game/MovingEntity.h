@@ -10,10 +10,11 @@ namespace TikiEngine
 		{
 
 		public:
-			MovingEntity(Engine* engine, Vector3 position, Double radius, Vector3 velocity, Double maxSpeed, Vector3 heading,
-						 Double mass, Vector3 scale, Double turnRate, Double maxForce);
+			MovingEntity(Engine* engine, GameObject* gameObject);
 
 			virtual ~MovingEntity(){}
+
+			void Init(Double radius = 1, Vector3 velocity = Vector3::Zero, Double maxSpeed = 25.0, Vector3 heading = Vector3::Zero, Double turnRate = 100, Double maxForce = 100);
 
 			// accessors
 			Vector3 Velocity() const { return velocity; }
@@ -39,6 +40,11 @@ namespace TikiEngine
 
 			Double MaxTurnRate() const { return maxTurnRate; }
 			void SetMaxTurnRate(double val) { maxTurnRate = val; }
+
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
+
+			//virtual void MoveTo(const Vector3& pos) = 0;
 
 		protected:
 			Vector3 velocity;

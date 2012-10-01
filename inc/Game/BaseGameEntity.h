@@ -1,19 +1,21 @@
 #pragma once
 
 #include "Core/TypeInc.h"
-#include "Core/GameObject.h"
+#include "Core/Component.h"
 #include "Utils.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
-		class BaseGameEntity : public GameObject
+		using namespace TikiEngine::Components;
+
+		class BaseGameEntity : public Component
 		{
 
 		public:
 			enum {default_entity_type = -1};
-			BaseGameEntity(Engine* engine, int ID);
+			BaseGameEntity(Engine* engine, GameObject* gameObject);
 			virtual ~BaseGameEntity() { }
 
 			// TODO:
@@ -49,11 +51,13 @@ namespace TikiEngine
 			int EntityType() const { return type; }
 			void SetEntityType(int newType) { type = newType; }
 
+			bool GetReady() { return true; }
+
 		private:
 			/* !@brief this must be called within each constructor to make sure the ID is set
 		        correctly. It verifies that the value passed to the method is greater
 		        or equal to the next valid ID, before setting the ID and incrementing the next valid ID */
-			void SetID(int val);
+			//void SetID(int val);
 
 		protected:
 			Vector3 position;
@@ -64,6 +68,7 @@ namespace TikiEngine
 			int id;					  // each entity has a unique ID
 			int type;			      // every entity has a type associated with it (health, troll, ammo etc)
 			Boolean tag;		      // generic flag. 
+
 			static int nextValidID;	  // this is the next valid ID. Each time a BaseGameEntity is instantiated this value is updated
 
 		};
