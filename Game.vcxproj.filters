@@ -45,6 +45,15 @@
     <Filter Include="Quelldateien\Level">
       <UniqueIdentifier>{fd233766-67c9-400f-bf57-484c10707460}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\BaseEntities">
+      <UniqueIdentifier>{64989333-28a1-4308-9a00-2daf5e57dfe0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\BaseEntities">
+      <UniqueIdentifier>{670f9ad6-f7ad-4db9-981a-870f52bd0c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Movement">
+      <UniqueIdentifier>{e4e91d21-6cce-412a-8809-d34e5b655889}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -62,16 +71,7 @@
     <ClInclude Include="inc\Game\PPBlur.h">
       <Filter>Headerdateien\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\BaseGameEntity.h">
-      <Filter>Headerdateien\AI</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\Utils.h">
-      <Filter>Headerdateien\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\EntityManager.h">
-      <Filter>Headerdateien\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\MovingEntity.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h">
@@ -107,6 +107,21 @@
     <ClInclude Include="inc\Game\LevelChild.h">
       <Filter>Headerdateien\Level</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\BaseGameEntity.h">
+      <Filter>Headerdateien\AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\MovingEntity.h">
+      <Filter>Headerdateien\AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EntityManager.h">
+      <Filter>Headerdateien\AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiBot.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiSteering.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -126,15 +141,6 @@
     </ClCompile>
     <ClCompile Include="src\Game\PPBlur.cpp">
       <Filter>Quelldateien\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\BaseGameEntity.cpp">
-      <Filter>Quelldateien\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\EntityManager.cpp">
-      <Filter>Quelldateien\AI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\MovingEntity.cpp">
-      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp">
       <Filter>Quelldateien\Effects</Filter>
@@ -168,6 +174,18 @@
     </ClCompile>
     <ClCompile Include="src\Game\LevelChild.cpp">
       <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BaseGameEntity.cpp">
+      <Filter>Quelldateien\AI\BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\MovingEntity.cpp">
+      <Filter>Quelldateien\AI\BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\EntityManager.cpp">
+      <Filter>Quelldateien\AI\BaseEntities</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\TikiBot.cpp">
+      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -38,6 +38,8 @@
     <ClInclude Include="inc\Game\SceneTim.h" />
     <ClInclude Include="inc\Game\sqlite3.h" />
     <ClInclude Include="inc\Game\sqlite3ext.h" />
+    <ClInclude Include="inc\Game\TikiBot.h" />
+    <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -61,6 +63,7 @@
     <ClCompile Include="src\Game\SceneTim.cpp" />
     <ClCompile Include="src\Game\shell.c" />
     <ClCompile Include="src\Game\sqlite3.c" />
+    <ClCompile Include="src\Game\TikiBot.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}</ProjectGuid>

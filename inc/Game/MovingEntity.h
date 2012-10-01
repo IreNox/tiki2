@@ -1,6 +1,6 @@
 #pragma once
 
-#include "BaseGameEntity.h"
+#include "Game/BaseGameEntity.h"
 
 namespace TikiEngine
 {
@@ -14,15 +14,16 @@ namespace TikiEngine
 
 			virtual ~MovingEntity(){}
 
-			void Init(Double radius = 1, Vector3 velocity = Vector3::Zero, Double maxSpeed = 25.0, Vector3 heading = Vector3::Zero, Double turnRate = 100, Double maxForce = 100);
+			void Init(Double radius = 1, Vector2 velocity = Vector2::Zero, Double maxSpeed = 1.0, 
+					  Vector2 heading = Vector2::Zero, Double turnRate = 0.2, Double maxForce = 1.0);
 
 			// accessors
-			Vector3 Velocity() const { return velocity; }
-			void SetVelocity(const Vector3& newVel) { velocity = newVel; }
+			Vector2 Velocity() const { return velocity; }
+			void SetVelocity(const Vector2& newVel) { velocity = newVel; }
   
 			Double Mass() const { return mass; }
   
-			Vector3 Side() const { return side; }
+			Vector2 Side() const { return side; }
 
 			Double MaxSpeed() const { return maxSpeed; }                       
 			void SetMaxSpeed(Double newSpeed) { maxSpeed = newSpeed; }
@@ -34,26 +35,21 @@ namespace TikiEngine
 			Double Speed() const { return velocity.Length(); }
 			Double SpeedSq() const { return velocity.LengthSquared(); }
   
-			Vector3 Heading() const { return heading; }
-			void SetHeading(Vector3 newHeading);
-			Boolean RotateHeadingToFacePosition(Vector3 target);
+			Vector2 Heading() const { return heading; }
+			void SetHeading(Vector2 newHeading);
+			Boolean RotateHeadingToFacePosition(Vector2 target);
 
 			Double MaxTurnRate() const { return maxTurnRate; }
 			void SetMaxTurnRate(double val) { maxTurnRate = val; }
 
-			void Draw(const DrawArgs& args);
-			void Update(const UpdateArgs& args);
-
-			//virtual void MoveTo(const Vector3& pos) = 0;
-
 		protected:
-			Vector3 velocity;
+			Vector2 velocity;
   
 			// a normalized vector pointing in the direction the entity is heading. 
-			Vector3 heading;
+			Vector2 heading;
 			
 			// a vector perpendicular to the heading vector
-			Vector3 side; 
+			Vector2 side; 
 			
 			Double mass;
   			

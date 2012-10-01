@@ -39,25 +39,19 @@ namespace TikiEngine
 			SafeRelease(&bounds1);
 			SafeRelease(&bounds2);
 
-			//SafeRelease(&entity);
+			SafeRelease(&bot);
 
 			SafeRelease(&font);
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
 		{
-			// BoxCollider Unit Test:
-			// by default they can be set to static or dynamic objects
-			// every time we change static to dynamic, or center/size, we recreate the Actor.
-			// When recreating, the class also keeps track if the Collider was a trigger
-			// and raises the flags respectively.
 
-			// Material, Center, Size, Dynamic must be set before the object gets created
+
 			GameObject* go = new GameObject(engine);
-			EntityMgr->RegisterMovingEntity(go); //, desc
+			//EntityMgr->RegisterMovingEntity(go); //, desc
+			bot = new TikiBot(engine, go);
 
-			//entity = new MovingEntity(engine, Vector3::Zero, 1.0, Vector3::Zero, 1, 
-			//						  Vector3(0, 0, 0), 1, Vector3::One, 0.2, 1.0);
 			this->AddElement(go);
 			go->Release();
 			//entity->Release();
@@ -76,7 +70,12 @@ namespace TikiEngine
 			material->SetDynamicFriction(0.7f);
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
-			// init dynamic BoxCollider
+			// Init Colliders
+			// by default these can be set to static or dynamic objects
+			// every time we change static to dynamic, or center/size, we recreate the Actor.
+			// When recreating, the class also keeps track if the Collider was a trigger
+			// and raises the flags respectively.
+			go = new GameObject(engine);
 			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
 			dynamicBox->SetCenter(Vector3(0, 3, -4));

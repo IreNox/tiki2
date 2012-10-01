@@ -1,0 +1,100 @@
+#pragma once
+
+#include "Game/MovingEntity.h"
+#include "Game/TikiSteering.h"
+#include <vector>
+
+namespace TikiEngine
+{
+	namespace AI
+	{
+		class TikiBot : public MovingEntity
+		{
+		public:
+			TikiBot(Engine* engine, GameObject* gameObject);
+			~TikiBot();
+
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
+			//bool HandleMessage(const Telegram& msg); // TODO
+			void Write(std::ostream&  os)const{ }
+		    void Read (std::ifstream& is){ }
+
+
+
+			//methods for accessing attribute data
+			int Health() const {return health;}
+			int MaxHealth() const {return maxHealth;}
+			//void ReduceHealth(unsigned int val);
+			//void IncreaseHealth(unsigned int val);
+			//void RestoreHealthToMaximum();
+				 
+			int Score() const {return score;}
+			void IncrementScore() {++score;}
+
+			Vector2 Facing() const {return facing;}
+			double FieldOfView() const {return fieldOfView;}
+
+			bool isPossessed() const {return possessed;}
+			bool isDead() const {return status == dead;}
+			bool isAlive() const {return status == alive;}
+			bool isSpawning() const {return status == spawning;}
+  
+			void SetSpawning() {status = spawning;}
+			void SetDead() {status = dead;}
+			void SetAlive() {status = alive;}
+
+
+		private:
+			enum Status {alive, dead, spawning};
+
+			// alive, dead or spawning?
+			Status status;
+
+			// the bot's health. Every time the bot is shot this value is decreased. If
+			// it reaches zero then the bot dies (and respawns)
+			int health;
+  
+			// the bot's maximum health value. It starts its life with health at this value
+			int maxHealth;
+
+			// each time this bot kills another this value is incremented
+			int score;
+  
+			// the direction the bot is facing (and therefore the direction of aim). 
+			// Note that this may not be the same as the bot's heading, which always
+			// points in the direction of the bot's movement
+			Vector2 facing;
+
+			// a bot only perceives other bots within this field of view
+			double fieldOfView;
+  
+			// to show that a player has been hit it is surrounded by a thick 
+			// red circle for a fraction of a second. This variable represents
+			// the number of update-steps the circle gets drawn
+			int numUpdatesHitPersistant;
+
+			// set to true when the bot is hit, and remains true until 
+			// m_iNumUpdatesHitPersistant becomes zero. (used by the render method to
+			// draw a thick red circle around a bot to indicate it's been hit)
+			bool hit;
+
+			// set to true when a human player takes over control of the bot
+			bool possessed;
+
+			// bots shouldn't be copied, only created or respawned
+			TikiBot(const TikiBot&);
+			TikiBot& operator=(const TikiBot&);
+
+			// this method is called from the update method. It calculates and applies
+			// the steering force for this time-step.
+			void UpdateMovement();
+
+
+
+
+
+		};
+
+	}
+}

@@ -2,7 +2,8 @@
 
 #include "Core/TypeInc.h"
 #include "Core/Component.h"
-#include "Utils.h"
+#include "Core/GameObject.h"
+#include "Game/Utils.h"
 
 namespace TikiEngine
 {
@@ -32,8 +33,8 @@ namespace TikiEngine
 			static void ResetNextValidID() {nextValidID = 0;}
 
 
-			Vector3 Pos() const { return position; }
-			void SetPos(const Vector3& newPos) { position = newPos; }
+			Vector3 Pos() { return GetGameObject()->PRS.Position; }
+			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.Position = newPos; }
 
 			Double BRadius() const { return boundingRadius; }
 			void SetBRadius(Double r) { boundingRadius = r; }
@@ -44,24 +45,16 @@ namespace TikiEngine
 			void Tag() { tag = true; }
 			void UnTag() {tag = false; }
 
-			Vector3 Scale() const { return scale; }
+			Vector3 Scale() { return GetGameObject()->PRS.Scale; }
 			void SetScale(Vector3 val);
-			void SetScale(Double val);
+			void SetScale(float val);
 
 			int EntityType() const { return type; }
 			void SetEntityType(int newType) { type = newType; }
 
 			bool GetReady() { return true; }
 
-		private:
-			/* !@brief this must be called within each constructor to make sure the ID is set
-		        correctly. It verifies that the value passed to the method is greater
-		        or equal to the next valid ID, before setting the ID and incrementing the next valid ID */
-			//void SetID(int val);
-
 		protected:
-			Vector3 position;
-			Vector3 scale;
 		    Double boundingRadius;   // the magnitude of this object's bounding radius
 
 		private:
@@ -70,7 +63,6 @@ namespace TikiEngine
 			Boolean tag;		      // generic flag. 
 
 			static int nextValidID;	  // this is the next valid ID. Each time a BaseGameEntity is instantiated this value is updated
-
 		};
 	}
 }

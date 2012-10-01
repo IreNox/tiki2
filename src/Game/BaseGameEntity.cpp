@@ -14,30 +14,25 @@ namespace TikiEngine
 			id = nextValidID++;
 
 			boundingRadius = 0.0;
-			scale = Vector3::One;
             type = default_entity_type;
             tag = false;
 		}
 
-		//void BaseGameEntity::SetID(int val)
-		//{
-		//  //make sure the val is equal to or greater than the next available ID
-		//  assert ( (val >= nextValidID) && "<BaseGameEntity::SetID>: invalid ID");
-		//  id = val;
-		//  nextValidID = id + 1;
-		//}
-
 		void BaseGameEntity::SetScale(Vector3 val)
 		{
 			boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
-							  MaxOf(MaxOf(scale.X, scale.Y), scale.Z); 
-			scale = val;
+							  MaxOf(MaxOf(GetGameObject()->PRS.Scale.X, 
+										  GetGameObject()->PRS.Scale.Y), 
+										  GetGameObject()->PRS.Scale.Z); 
+			GetGameObject()->PRS.Scale = val;
 		}
 
-		void BaseGameEntity::SetScale(Double val)
+		void BaseGameEntity::SetScale(float val)
 		{
-			boundingRadius *= (val / MaxOf(MaxOf(scale.X, scale.Y), scale.Z)); 
-			scale = Vector3((float)val);
+			boundingRadius *= (val / MaxOf(MaxOf(GetGameObject()->PRS.Scale.X, 
+												 GetGameObject()->PRS.Scale.Y),
+												 GetGameObject()->PRS.Scale.Z)); 
+			GetGameObject()->PRS.Scale = Vector3(val);
 		}
 
 	}

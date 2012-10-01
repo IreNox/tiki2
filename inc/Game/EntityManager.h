@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Game/MovingEntity.h"
+#include "Game/TikiBot.h"
 #include <map>
 
 // provide easy access
@@ -23,7 +23,7 @@ namespace TikiEngine
 
 			/* !@brief this method stores a pointer to the entity in the std::vector
 			m_Entities at the index position indicated by the entity's ID (makes for faster access) */
-			void RegisterMovingEntity(GameObject* gameObject);
+			void RegisterTikiBot(GameObject* gameObject);
 			
 			/* !@brief returns a pointer to the entity with the ID given as a parameter */
 			GameObject* GetEntityFromID(int id) const;

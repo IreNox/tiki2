@@ -33,6 +33,9 @@ public:
 	void Normalize();
 	static Vector2 Normalize(const Vector2& vector);
 
+	// Returns a vector perpendicular to this vector
+	Vector2 Cross();
+
 	static float Distance(const Vector2& vector1, const Vector2& vector2);
 	static float DistanceSquared(const Vector2& vector1, const Vector2& vector2);
 

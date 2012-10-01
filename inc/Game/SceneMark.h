@@ -6,6 +6,8 @@
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
 #include "Core/IBoundingBox.h"
+
+#include "Game/TikiBot.h"
 #include "Game/EntityManager.h"
 
 #include "Core/IFont.h"
@@ -42,7 +44,7 @@ namespace TikiEngine
 			IBoundingBox* bounds2;
 			IFont* font;
 
-			//MovingEntity* entity;
+			TikiBot* bot;
 		};
 	}
 }

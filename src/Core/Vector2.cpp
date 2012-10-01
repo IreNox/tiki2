@@ -69,7 +69,7 @@ Vector2 Vector2::Lerp(const Vector2& value1, const Vector2& value2, float amount
 }
 #pragma endregion
 
-#pragma region Length, Distance, Normalize Angle, Cross, Normalize
+#pragma region Length, Distance, Normalize Angle, Cross, Normalize, Perp
 float Vector2::Length() const
 {
 	return sqrt(
@@ -106,6 +106,12 @@ Vector2 Vector2::Normalize(const Vector2& vector)
 	float num = 1 / sqrtf(vector.X * vector.X + vector.Y * vector.Y);
 	return Vector2(vector.X * num, vector.Y * num);
 }
+
+Vector2 Vector2::Cross()
+{
+	return Vector2(-Y, X);
+}
+
 
 float Vector2::Angle(const Vector2& vector1, const Vector2& vector2)
 {

@@ -184,8 +184,7 @@ namespace TikiEngine
 		{
 			gameObject->PRS.Position = actor->getGlobalPosition().get();
 
-			NxQuat rot = actor->getGlobalOrientationQuat();
-			gameObject->PRS.Rotation = Quaternion(rot.x, rot.y, rot.z, rot.w);
+			// controllers have no rotation!
 		}
 
 	}
