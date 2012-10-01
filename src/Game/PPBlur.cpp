@@ -15,9 +15,10 @@ namespace TikiEngine
 			verticleTarget = engine->librarys->CreateResource<IRenderTarget>();
 			verticleTarget->CreateScreenSize();
 
-			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\pp_blur.fx");
-			SafeAddRef(mat->GetShader(), &shader);
-			SafeRelease(&mat);
+			SafeAddRef(
+				engine->content->LoadShader(L"Data\\Effects\\pp_blur.fx"),
+				&shader
+			);
 
 			shader->SetVector2("ScreenSize", Vector2((float)verticleTarget->GetWidth(), (float)verticleTarget->GetHeight()));
 

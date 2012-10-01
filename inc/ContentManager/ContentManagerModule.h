@@ -24,8 +24,12 @@ namespace TikiEngine
 
 			Mesh* LoadMesh(const wstring& name);
 			IModel* LoadModel(const wstring& name);
+
 			ITexture* LoadTexture(const wstring& name);
+
+			IShader* LoadShader(const wstring& name);
 			Material* LoadMaterial(const wstring& name);
+
 			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
 			IBoundingBox* LoadBoundingBox(const wstring& name);
 

@@ -42,7 +42,6 @@ namespace TikiEngine
 			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/checker.png");
 
 			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
-
 			mat->GetShader()->SetTexture("tex", tex);
 
 			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);

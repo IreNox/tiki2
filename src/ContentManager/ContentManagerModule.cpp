@@ -45,14 +45,13 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
-			UInt32 i = 0;
-			while (i < loadedResources.Count())
-			{
-				while (loadedResources[i].resource->Release()) { }
-
-				i++;
-			}
-			loadedResources.Clear();
+			//UInt32 i = 0;
+			//while (i < loadedResources.Count())
+			//{
+			//	while (loadedResources[i].resource->Release()) { }
+			//	i++;
+			//}
+			//loadedResources.Clear();
 		}
 		#pragma endregion
 
@@ -164,15 +163,23 @@ namespace TikiEngine
 			);
 		}
 
+		IShader* ContentManagerModule::LoadShader(const wstring& name)
+		{
+			return (IShader*)this->Load(
+				typeid(IShader).hash_code(),
+				name
+			);
+		}
+
 		Material* ContentManagerModule::LoadMaterial(const wstring& name)
 		{
 			Material* mat = new Material(engine);
 			mat->SetShader(
 				(IShader*)this->Load(
-					typeid(IShader).hash_code(),
-					name
+				typeid(IShader).hash_code(),
+				name
 				)
-			);
+				);
 			mat->GetShader()->Release();
 
 			return mat;

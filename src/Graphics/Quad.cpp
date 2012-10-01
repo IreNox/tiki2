@@ -60,11 +60,13 @@ namespace TikiEngine
 			SafeRelease(&this->inputLayout);
 			SafeRelease(&this->shader);
 
-			this->shader = (Shader*)shader;
+			SafeAddRef(
+				(Shader*)shader,
+				&this->shader
+			);
 
 			if (this->shader != 0)
 			{
-				this->shader->AddRef();
 				this->shader->CreateLayout(
 					Quad::quadVertexElements,
 					2,

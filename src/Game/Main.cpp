@@ -34,7 +34,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
+			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && true)
 			{
 				engine->scene = new SceneTim(engine);
 				//engine->scene = new SceneAdrian(engine);

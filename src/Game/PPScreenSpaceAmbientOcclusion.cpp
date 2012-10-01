@@ -15,22 +15,23 @@ namespace TikiEngine
 		PPScreenSpaceAmbientOcclusion::PPScreenSpaceAmbientOcclusion(Engine* engine)
 			: PostProcess(engine)
 		{
-			Material* mat = engine->content->LoadMaterial(L"Data/Effects/pp_ssao.fx");
-			SafeAddRef(mat->GetShader(), &shader);
-			SafeRelease(&mat);
+			SafeAddRef(
+				engine->content->LoadShader(L"Data/Effects/pp_ssao.fx"),
+				&shader
+			);
 
 			aoTarget = engine->librarys->CreateResource<IRenderTarget>();
 			aoTarget->CreateScreenSize();
 
-			Vector2 screenSizeX2 = engine->graphics->GetViewPort()->GetSize() * 2;
-			shader->SetVector2("HalfPixel", Vector2(1.0f / screenSizeX2.X, 1 / screenSizeX2.Y));
+			Vector2 screenSize = engine->graphics->GetViewPort()->GetSize();
+			shader->SetVector2("ScreenSize", Vector2(screenSize.X, screenSize.Y));
 
 			randomTexture = engine->content->LoadTexture(L"Data/Resources/Textures/random.png");
-			shader->SetTexture("texRandom", randomTexture);
+			shader->SetTexture("tRandom", randomTexture);
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
-			pass->AddInput("rtDiffuse", engine->graphics->GetScreenTarget());
-			pass->AddInput("rtNormal", engine->graphics->GetNormalTarget());
+			pass->AddInput("tNormal", engine->graphics->GetNormalTarget());
+			pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, aoTarget);
 			this->AddPass(pass);
 			SafeRelease(&pass);
