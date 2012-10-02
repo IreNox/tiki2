@@ -54,6 +54,9 @@
     <Filter Include="Headerdateien\AI\Movement">
       <UniqueIdentifier>{e4e91d21-6cce-412a-8809-d34e5b655889}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\AI\Movement">
+      <UniqueIdentifier>{b610b4b7-6fef-4aba-bc57-6f03a9d1991a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -186,6 +189,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\TikiBot.cpp">
       <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\TikiSteering.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

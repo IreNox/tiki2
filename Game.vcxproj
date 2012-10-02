@@ -64,6 +64,7 @@
     <ClCompile Include="src\Game\shell.c" />
     <ClCompile Include="src\Game\sqlite3.c" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
+    <ClCompile Include="src\Game\TikiSteering.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}</ProjectGuid>

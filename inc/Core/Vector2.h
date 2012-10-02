@@ -24,6 +24,12 @@ public:
 
 	~Vector2(void);
 
+	// returns true if both x and y are zero
+	bool IsZero() const;
+
+	// adjusts x and y so that the length of the vector does not exceed max
+	void Truncate(float maximum);
+
 	float Length() const;
 	float LengthSquared() const;
 
@@ -33,7 +39,7 @@ public:
 	void Normalize();
 	static Vector2 Normalize(const Vector2& vector);
 
-	// Returns a vector perpendicular to this vector
+	// returns a vector perpendicular to this vector
 	Vector2 Cross();
 
 	static float Distance(const Vector2& vector1, const Vector2& vector2);

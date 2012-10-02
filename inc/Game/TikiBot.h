@@ -1,13 +1,17 @@
 #pragma once
 
+#include <vector>
 #include "Game/MovingEntity.h"
 #include "Game/TikiSteering.h"
-#include <vector>
+#include "Core/ICharacterController.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
+		class TikiSteering;
+		//class ICharacterController;
+
 		class TikiBot : public MovingEntity
 		{
 		public:
@@ -22,7 +26,7 @@ namespace TikiEngine
 
 
 
-			//methods for accessing attribute data
+#pragma region Accessing attribute data
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
 			//void ReduceHealth(unsigned int val);
@@ -43,6 +47,10 @@ namespace TikiEngine
 			void SetSpawning() {status = spawning;}
 			void SetDead() {status = dead;}
 			void SetAlive() {status = alive;}
+#pragma endregion
+
+			TikiSteering* const GetSteering() { return steering; }
+
 
 
 		private:
@@ -50,6 +58,12 @@ namespace TikiEngine
 
 			// alive, dead or spawning?
 			Status status;
+
+			// PhysX Controller
+			ICharacterController* controller;
+
+			// the bot uses this object to steer
+			TikiSteering* steering;
 
 			// the bot's health. Every time the bot is shot this value is decreased. If
 			// it reaches zero then the bot dies (and respawns)
@@ -88,7 +102,7 @@ namespace TikiEngine
 
 			// this method is called from the update method. It calculates and applies
 			// the steering force for this time-step.
-			void UpdateMovement();
+			void UpdateMovement(const UpdateArgs& args);
 
 
 

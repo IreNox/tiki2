@@ -49,12 +49,15 @@ namespace TikiEngine
 
 
 			GameObject* go = new GameObject(engine);
-			//EntityMgr->RegisterMovingEntity(go); //, desc
-			bot = new TikiBot(engine, go);
+			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
 
+			// Create TikiBot and set some target poition to seek
+			bot = new TikiBot(engine, go);
+			bot->GetSteering()->SetTarget(Vector2(5, -5));
+			bot->GetSteering()->ArriveOn();
+			//bot->GetSteering()->SeekOn();
 			this->AddElement(go);
 			go->Release();
-			//entity->Release();
 
 			// init BoundingBox
 			bounds1 = engine->librarys->CreateResource<IBoundingBox>();

@@ -2,6 +2,9 @@
 #pragma region Init
 #include "Core/Vector2.h"
 #include <Math.h>
+#include <limits>
+
+const float MinFloat = (std::numeric_limits<float>::min)();
 
 int Vector2::Dimensions = 2;
 
@@ -29,6 +32,21 @@ Vector2::~Vector2(void)
 {
 }
 #pragma endregion
+
+bool Vector2::IsZero() const
+{
+	return (X*X + Y*Y) < MinFloat;
+}
+
+void Vector2::Truncate(float maximum)
+{
+	if (this->Length() > maximum)
+	{
+		this->Normalize();
+
+		*this = *this * maximum;
+	}
+}
 
 #pragma region Dot, Cross, Negate, Reflect
 float Vector2::Dot(const Vector2& vector1, const Vector2& vector2)

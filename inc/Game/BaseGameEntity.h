@@ -33,7 +33,7 @@ namespace TikiEngine
 			static void ResetNextValidID() {nextValidID = 0;}
 
 
-			Vector3 Pos() { return GetGameObject()->PRS.Position; }
+			Vector2 Pos() { return Vector2(GetGameObject()->PRS.Position.X, GetGameObject()->PRS.Position.Z); }
 			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.Position = newPos; }
 
 			Double BRadius() const { return boundingRadius; }
