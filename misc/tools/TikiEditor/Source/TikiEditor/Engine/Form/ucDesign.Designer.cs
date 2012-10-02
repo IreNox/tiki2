@@ -43,9 +43,7 @@
             this.button10 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.buttonAddEnemyBasic = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
@@ -55,6 +53,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.checkShowBoundingBox = new System.Windows.Forms.CheckBox();
             this.checkShowPoints = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabAdd.SuspendLayout();
@@ -134,7 +134,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 67);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(239, 324);
+            this.tabControl1.Size = new System.Drawing.Size(239, 351);
             this.tabControl1.TabIndex = 6;
             // 
             // tabAdd
@@ -143,7 +143,7 @@
             this.tabAdd.Location = new System.Drawing.Point(4, 22);
             this.tabAdd.Name = "tabAdd";
             this.tabAdd.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdd.Size = new System.Drawing.Size(231, 298);
+            this.tabAdd.Size = new System.Drawing.Size(231, 325);
             this.tabAdd.TabIndex = 0;
             this.tabAdd.Text = "Add";
             this.tabAdd.UseVisualStyleBackColor = true;
@@ -151,15 +151,15 @@
             // panelButtons
             // 
             this.panelButtons.AutoScroll = true;
+            this.panelButtons.Controls.Add(this.label3);
+            this.panelButtons.Controls.Add(this.label2);
             this.panelButtons.Controls.Add(this.button7);
             this.panelButtons.Controls.Add(this.button8);
             this.panelButtons.Controls.Add(this.button9);
             this.panelButtons.Controls.Add(this.button10);
             this.panelButtons.Controls.Add(this.button11);
             this.panelButtons.Controls.Add(this.button12);
-            this.panelButtons.Controls.Add(this.button6);
-            this.panelButtons.Controls.Add(this.button5);
-            this.panelButtons.Controls.Add(this.button4);
+            this.panelButtons.Controls.Add(this.buttonAddEnemyBasic);
             this.panelButtons.Controls.Add(this.button3);
             this.panelButtons.Controls.Add(this.button2);
             this.panelButtons.Controls.Add(this.button1);
@@ -167,7 +167,7 @@
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelButtons.Location = new System.Drawing.Point(3, 3);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(225, 292);
+            this.panelButtons.Size = new System.Drawing.Size(225, 319);
             this.panelButtons.TabIndex = 0;
             // 
             // button7
@@ -242,41 +242,17 @@
             this.button12.Text = "-none-";
             this.button12.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // buttonAddEnemyBasic
             // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnemyBasic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Enabled = false;
-            this.button6.Location = new System.Drawing.Point(3, 177);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(202, 23);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "-none-";
-            this.button6.UseVisualStyleBackColor = true;
-            // 
-            // button5
-            // 
-            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button5.Enabled = false;
-            this.button5.Location = new System.Drawing.Point(3, 148);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(202, 23);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "-none-";
-            this.button5.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.Enabled = false;
-            this.button4.Location = new System.Drawing.Point(3, 119);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(202, 23);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "-none-";
-            this.button4.UseVisualStyleBackColor = true;
+            this.buttonAddEnemyBasic.Enabled = false;
+            this.buttonAddEnemyBasic.Location = new System.Drawing.Point(3, 177);
+            this.buttonAddEnemyBasic.Name = "buttonAddEnemyBasic";
+            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnemyBasic.TabIndex = 6;
+            this.buttonAddEnemyBasic.Text = "Basic Enemy";
+            this.buttonAddEnemyBasic.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
@@ -307,7 +283,7 @@
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(3, 32);
+            this.button1.Location = new System.Drawing.Point(3, 119);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(202, 23);
             this.button1.TabIndex = 1;
@@ -318,7 +294,7 @@
             // 
             this.buttonAddObject.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddObject.Location = new System.Drawing.Point(3, 3);
+            this.buttonAddObject.Location = new System.Drawing.Point(3, 32);
             this.buttonAddObject.Name = "buttonAddObject";
             this.buttonAddObject.Size = new System.Drawing.Size(202, 23);
             this.buttonAddObject.TabIndex = 0;
@@ -333,7 +309,7 @@
             this.tabEdit.Location = new System.Drawing.Point(4, 22);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEdit.Size = new System.Drawing.Size(270, 320);
+            this.tabEdit.Size = new System.Drawing.Size(231, 298);
             this.tabEdit.TabIndex = 1;
             this.tabEdit.Text = "Edit";
             this.tabEdit.UseVisualStyleBackColor = true;
@@ -345,7 +321,7 @@
             this.tabView.Controls.Add(this.checkShowPoints);
             this.tabView.Location = new System.Drawing.Point(4, 22);
             this.tabView.Name = "tabView";
-            this.tabView.Size = new System.Drawing.Size(270, 320);
+            this.tabView.Size = new System.Drawing.Size(231, 298);
             this.tabView.TabIndex = 2;
             this.tabView.Text = "View/Help";
             this.tabView.UseVisualStyleBackColor = true;
@@ -383,6 +359,24 @@
             this.checkShowPoints.UseVisualStyleBackColor = true;
             this.checkShowPoints.CheckedChanged += new System.EventHandler(this.checkShowPoints_CheckedChanged);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 161);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(50, 13);
+            this.label2.TabIndex = 13;
+            this.label2.Text = "Enemies:";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(3, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(46, 13);
+            this.label3.TabIndex = 14;
+            this.label3.Text = "Objects:";
+            // 
             // ucDesign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -391,12 +385,13 @@
             this.Controls.Add(this.tabControl1);
             this.Location = new System.Drawing.Point(1300, 100);
             this.Name = "ucDesign";
-            this.Size = new System.Drawing.Size(245, 394);
+            this.Size = new System.Drawing.Size(245, 421);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
             this.tabAdd.ResumeLayout(false);
             this.panelButtons.ResumeLayout(false);
+            this.panelButtons.PerformLayout();
             this.tabEdit.ResumeLayout(false);
             this.tabView.ResumeLayout(false);
             this.tabView.PerformLayout();
@@ -421,9 +416,7 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button buttonAddEnemyBasic;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
@@ -432,5 +425,7 @@
         private System.Windows.Forms.CheckBox checkShowBoundingBox;
         private System.Windows.Forms.CheckBox checkShowPoints;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
     }
 }

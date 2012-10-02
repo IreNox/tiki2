@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using TikiEditor.Objects;
 using System.IO;
+using System.Linq;
+using System.ComponentModel;
 
 namespace TikiEditor
 {
@@ -19,13 +21,16 @@ namespace TikiEditor
         private System.Windows.Forms.Control _window;
         private Designer.formMain _formMain;
 
-        private float _zoom = 1;
+        private string _heightmapName;
+        private Heightmap _heightmap;
         private Texture2D _background;
         #endregion
 
         #region Init
         public GameMain()
         {
+            _heightmap = new Heightmap();
+
             _initForm();
 
             this.IsMouseVisible = true;
@@ -69,19 +74,14 @@ namespace TikiEditor
             GI.Camera.CurrentPositionCenter = Vector2.Zero;
 
             _level = GI.Level;
+            _level.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Level_PropertyChanged);
 
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
-            if (File.Exists(_level.HeightmapFilename))
-            {
-                using (Stream stream = File.OpenRead(_level.HeightmapFilename))
-                {
-                    _background = Texture2D.FromStream(this.GraphicsDevice, stream);
-                }
-            }
+            Level_PropertyChanged(null, new PropertyChangedEventArgs("HeightmapFilename"));
 
             //this.Components.Add(
             //    new Button(
@@ -114,6 +114,47 @@ namespace TikiEditor
         }
         #endregion
 
+        #region Member - EventHandler
+        private void Level_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == "HeightmapFilename")
+            {
+                if (_heightmapName != _level.HeightmapFilename && File.Exists(_level.HeightmapFilename))
+                {
+                    try
+                    {
+                        _heightmap.LoadHeightmap(_level.HeightmapFilename);
+
+                        int[] data = new int[_heightmap.GetWidth() * _heightmap.GetHeight()];
+                        _heightmap.FillData(data);
+
+                        Texture2D tex = new Texture2D(
+                            this.GraphicsDevice,
+                            _heightmap.GetWidth(),
+                            _heightmap.GetHeight()
+                        );
+
+                        int max = data.Max();
+
+                        tex.SetData(
+                            data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()
+                        );
+
+                        if (_background != null)
+                        {
+                            _background.Dispose();
+                        }
+                        _background = tex;
+                        _heightmapName = _level.HeightmapFilename;
+                    }
+                    catch
+                    { 
+                    }
+                }
+            }
+        }
+        #endregion
+
         #region Member - XNA - Draw
         protected override void Draw(GameTime gameTime)
         {
@@ -134,7 +175,7 @@ namespace TikiEditor
                         (float)_background.Width / 2,
                         (float)_background.Height / 2
                     ),
-                    1.0f,
+                    CU.ToDisplayUnits(_level.HeightmapSize / _background.Width),
                     SpriteEffects.None,
                     0.01f
                 );
@@ -152,6 +193,14 @@ namespace TikiEditor
         {
             if (_resetPoint != Point.Zero)
             {
+                Color[] data = null;
+
+                if (_background != null)
+                {
+                    data = new Color[_background.Width * _background.Height];
+                    _background.GetData(data);
+                }
+
                 _graphics.IsFullScreen = _isFullscreen;
                 _graphics.PreferredBackBufferWidth = _resetPoint.X;
                 _graphics.PreferredBackBufferHeight = _resetPoint.Y;
@@ -161,6 +210,12 @@ namespace TikiEditor
                 GI.Reset();
                 GI.Camera.ResetScreen();
                 GI.BasicDraw.Reset();
+
+                if (_background != null)
+                {
+                    _background = new Texture2D(this.GraphicsDevice, _background.Width, _background.Height);
+                    _background.SetData(data);
+                }
             }
 
             Program.Form.UpdateGame();
@@ -170,7 +225,8 @@ namespace TikiEditor
                 this.Exit();
             }
 
-            float zoom = (((float)GI.Control.MouseScroll / 1000) + 1) * _zoom;
+            float scroll = (float)GI.Control.MouseScroll / 1000;
+            float zoom = 1.0f / ((scroll * scroll) + 1);
             if (GI.Camera.Zoom != zoom && zoom > 0) GI.Camera.Zoom = zoom;
 
             if (GI.Control.KeyboardPressed(Keys.F6))

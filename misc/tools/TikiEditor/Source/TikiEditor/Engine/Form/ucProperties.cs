@@ -447,7 +447,9 @@ namespace TikiEditor.Designer
             {
                 if (info.Control is TextBox)
                 {
-                    string fileName = dialogOpenFile.FileName;
+                    string fileName = dialogOpenFile.FileName.Replace(
+                        Path.GetDirectoryName(Application.ExecutablePath), ""
+                    ).Substring(1);
                     //.Substring(0, dialogOpenFile.FileName.Length - Path.GetExtension(dialogOpenFile.FileName).Length);
                     //fileName = fileName.Replace(Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Content"), ""); //, "");
                     //fileName = fileName.Substring(1);
