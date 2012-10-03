@@ -12,11 +12,11 @@ namespace TikiEngine
 		//--------------------------- Constants ----------------------------------
 
 		//the radius of the constraining circle for the wander behavior
-		const double WanderRad    = 1.2;
+		const float WanderRad    = 15.0f; //1.2f;
 		//distance the wander circle is projected in front of the agent
-		const double WanderDist   = 2.0;
+		const float WanderDist   = 2.0f;
 		//the maximum amount of displacement along the circle each frame
-		const double WanderJitterPerSec = 40.0;
+		const float WanderJitterPerSec = 40.0f;
 
 		class TikiSteering
 		{
@@ -54,8 +54,9 @@ namespace TikiEngine
 			Vector2 Force() const { return steeringForce; }
 
 			// Set and Get Flags
-			void SeekOn() { flags |= seek; }
+			void SeekOn()   { flags |= seek; }
 			void ArriveOn() { flags |= arrive; }
+			void WanderOn() { flags |= wander; }
 
 		private:
 			//this function tests if a specific bit of m_iFlags is set
@@ -69,10 +70,11 @@ namespace TikiEngine
 			// this behavior moves the agent towards a target position
 			Vector2 Seek(const Vector2& targetPos);
 
-
-
 			// this behavior is similar to seek but it attempts to arrive at the target with a zero velocity
 			Vector2 Arrive(const Vector2& targetPos, const Deceleration deceleration);
+
+			// this behavior makes the agent wander about randomly
+			Vector2 Wander();
 
 
 
@@ -101,14 +103,14 @@ namespace TikiEngine
 			Vector2 wanderTarget; 
 
 			// explained above
-			double wanderJitter;
-			double wanderRadius;
-			double wanderDistance;
+			float wanderJitter;
+			float wanderRadius;
+			float wanderDistance;
 
 
 			// multipliers. These can be adjusted to effect strength of the appropriate behavior.
 			double weightSeparation;
-			double weightWander;
+			float weightWander;
 			double weightWallAvoidance;
 			float weightSeek;
 			float weightArrive;

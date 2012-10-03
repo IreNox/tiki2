@@ -14,7 +14,7 @@ namespace TikiEngine
 		{
 			this->heading = heading;
 			this->velocity = velocity;
-			this->mass = 10;
+			this->mass = 50;
 			this->side = heading.Cross();	
 			this->maxSpeed = maxSpeed;
 			this->maxTurnRate = turnRate;

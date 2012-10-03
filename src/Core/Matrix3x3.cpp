@@ -94,3 +94,55 @@ Matrix3x3 Matrix3x3::Adjugate()
 	);
 }
 #pragma endregion
+
+#pragma region Translate, Rotate, Scale, Transform
+Matrix3x3 Matrix3x3::Translate(float x, float y)
+{
+	return Matrix3x3(1, 0, 0,
+					 0, 1, 0,
+					 x, y, 1);
+}
+
+Matrix3x3 Matrix3x3::Scale(float x, float y)
+{
+	return Matrix3x3(x, 0, 0,
+					 0, y, 0,
+					 0, 0, 1);
+}
+
+Matrix3x3 Matrix3x3::Rotate(float radians)
+{
+	float s = sinf(radians);
+	float c = cosf(radians);
+
+	return Matrix3x3(c, s, 0,
+					-s, c, 0,
+					 0, 0, 1);
+}
+
+Matrix3x3 Matrix3x3::Rotate(const Vector2 &fwd, const Vector2& side)
+{
+	return Matrix3x3(fwd.X,  fwd.Y,  0,
+					 side.X, side.Y, 0,
+					 0,		 0,		 1);
+}
+
+void Matrix3x3::TransformVector(Vector2 point)
+{
+	float tempX = (M00 * point.X) + (M01 * point.Y) + M02;
+	float tempY = (M10 * point.X) + (M11 * point.Y) + M12;
+
+	point.X = tempX;
+	point.Y = tempY;
+}
+
+
+#pragma endregion
+
+#pragma region Operator overloads
+Matrix3x3 Matrix3x3::operator* (const Matrix3x3& matrix)
+{
+	return this->Multiply(matrix);
+}
+
+#pragma endregion

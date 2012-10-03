@@ -24,10 +24,22 @@ public:
 	
 	Matrix3x3 Multiply(Matrix3x3 matrix);	
 	
+	Matrix3x3 Translate(float x, float y);
+	Matrix3x3 Scale(float x, float y);
+	Matrix3x3 Rotate(float radians);
+	Matrix3x3 Rotate(const Vector2 &fwd, const Vector2& side);
+
+	// applies a 2D transformation matrix to a single Vector2
+	void TransformVector(Vector2 point);
+
 	float Determinant();
 	Matrix3x3 Adjugate();
 
 	void Print();
+
+
+	Matrix3x3 operator* (const Matrix3x3& matrix);
+
 
 	static Matrix3x3 Identity;
 };

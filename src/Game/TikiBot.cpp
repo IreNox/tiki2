@@ -39,7 +39,7 @@ namespace TikiEngine
 			// init CharacterController
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
 			controller->SetCenter(Vector3(Pos().X, 5, Pos().Y));
-			controller->SetRadius(0.25f);
+			controller->SetRadius((float)boundingRadius);
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);

@@ -8,7 +8,7 @@ namespace TikiEngine
 			tikiBot(agent),
 			flags(0),
 			weightSeparation(10.0),
-			weightWander(1.0),
+			weightWander(1.0f),
 			weightWallAvoidance(10.0),
 			viewDistance(15.0),
 			wallDetectionFeelerLength(25.0), // * bot scale
@@ -63,6 +63,15 @@ namespace TikiEngine
 					return steeringForce;
 			}
 
+			if (On(wander))
+			{
+				force = Wander() * weightWander;
+
+				if (!AccumulateForce(steeringForce, force)) 
+					return steeringForce;
+			}
+
+
 			return steeringForce;
 		}
 
@@ -103,6 +112,30 @@ namespace TikiEngine
 			}
 
 			return Vector2::Zero;
+		}
+
+		Vector2 TikiSteering::Wander()
+		{
+			// first, add a small random vector to the target's position
+			wanderTarget += Vector2(RandomClamped() * wanderJitter,
+									RandomClamped() * wanderJitter);
+
+			// reproject this new vector back on to a unit circle
+			wanderTarget.Normalize();
+
+			// increase the length of the vector to the same as the radius of the wander circle
+			wanderTarget = wanderTarget * wanderRadius;
+
+			// move the target into a position WanderDist in front of the agent
+			Vector2 theTarget = wanderTarget + Vector2(wanderDistance, 0);
+
+			// project the target into world space
+			Vector2 projectedTarget = PointToWorldSpace(theTarget, 
+														tikiBot->Heading(),
+														tikiBot->Side(),
+														tikiBot->Pos());
+			//and steer towards it
+			return projectedTarget - tikiBot->Pos();
 		}
 
 
