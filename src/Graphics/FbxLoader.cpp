@@ -26,6 +26,7 @@ namespace TikiEngine
 
 		}
 
+
 		int FbxLoader::CountNodes(FbxNode* node, FbxNodeAttribute::EType type)
 		{
 			int result = 0;
@@ -277,8 +278,7 @@ namespace TikiEngine
 				pNode->GetParent()->GetNodeAttribute() &&
 				pNode->GetParent()->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 			{
-				//this->skeletonList.Add(ConvertToTiki(pParentGlobalPosition.GetT()));
-				//this->skeletonList.Add(ConvertToTiki(pGlobalPosition.GetT()));
+
 				this->skeletonList.Add(pParentGlobalPosition.GetT());
 				this->skeletonList.Add(pGlobalPosition.GetT());
 			}
@@ -294,9 +294,19 @@ namespace TikiEngine
 			pScene = FbxScene::Create(pManager, "");
 		}
 
+		void FbxLoader::CreateNewScene(FbxScene** scene)
+		{
+			*scene = FbxScene::Create(this->fbxManager, "");
+		}
+
+		bool FbxLoader::GetScene(wstring filename, FbxScene** scene)
+		{
+			CreateNewScene(scene);
+			return this->LoadScene(fbxManager, *scene, filename);
+		}
+
 		bool FbxLoader::LoadScene(FbxManager* pSdkManager, FbxDocument* pScene, wstring filename)
 		{
-
 			//TODO: Convert Function wstring to char*
 			bool lStatus;
 			size_t blatmpscheissegal;

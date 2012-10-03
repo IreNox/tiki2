@@ -31,11 +31,16 @@ namespace TikiEngine
 			void LoadFile(const wstring& name, UInt32** indices, UInt32* indicesCount, void** vertices, UInt32* verticesSize, FbxScene** scene);
 			Mesh* LoadSkeleton(const wstring& name);
 
+			bool GetScene(wstring filename, FbxScene** scene);
 		private:
+
+			void CreateNewScene(FbxScene** scene);
 
 			void InitializeSdkObjects(FbxManager*& pManager, FbxScene*& pScene);
 			void InitializeAnimationStack();
 			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
+
+			
 			
 			int CountNodes(FbxNode* node, FbxNodeAttribute::EType type);
 

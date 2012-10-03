@@ -145,16 +145,6 @@ namespace TikiEngine
 			);
 		}
 
-		//Mesh* ContentManagerModule::LoadFbxMesh(const wstring& name)
-		//{
-		//	return this->fbxLoader->LoadMesh(name);
-		//}
-		//Mesh* ContentManagerModule::LoadFbxSkeletonMesh(const wstring& name)
-		//{
-		//	return this->fbxLoader->LoadSkeleton(name);
-		//}
-
-
 		ITexture* ContentManagerModule::LoadTexture(const wstring& name)
 		{
 			return (ITexture*)this->Load(

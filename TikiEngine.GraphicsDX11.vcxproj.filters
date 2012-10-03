@@ -122,6 +122,12 @@
     <ClCompile Include="src\Graphics\FbxLoader.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\FBXConverter.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Deformer.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -194,6 +200,12 @@
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\FbxLoader.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\FBXConverter.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Deformer.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
