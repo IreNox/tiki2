@@ -37,7 +37,7 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/humanoid.fbx");
+			Mesh* mesh = engine->content->LoadMesh(L"Data/Models/multiple_meshes.fbx");
 		
 			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/checker.png");
 

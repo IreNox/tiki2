@@ -189,13 +189,9 @@ namespace TikiEngine
 			const bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
 			const bool hasDeformation = hasShape || hasSkin;
 
-			FbxVector4* vertexArray = NULL;
-			if(hasDeformation)
-			{
-				vertexArray = new FbxVector4[vertexCount];
-				memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
-			}
-
+			FbxVector4* vertexArray = new FbxVector4[vertexCount];
+			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
+			
 			if(hasDeformation)
 			{
 				if(hasShape)
