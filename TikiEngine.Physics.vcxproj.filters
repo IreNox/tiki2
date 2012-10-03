@@ -15,18 +15,18 @@
     <Filter Include="Quelldateien\Colliders">
       <UniqueIdentifier>{dc264be6-3d54-4d01-97d7-6b3fc8fc0f8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\NxFail">
+      <UniqueIdentifier>{40cb4656-b042-4c52-b39c-ff095ec18ba6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\NxFail">
+      <UniqueIdentifier>{4fc170d3-caf5-4984-a364-07e5a4061f45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Physics\DllMain.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="inc\Physics\PhysicsModule.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\ErrorStream.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Physics\VRDSettings.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="inc\Physics\PhysicsMaterial.h">
@@ -41,9 +41,6 @@
     <ClInclude Include="inc\Physics\RigidBody.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Physics\UserAllocator.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Physics\CharacterController.h">
       <Filter>Headerdateien\Colliders</Filter>
     </ClInclude>
@@ -52,6 +49,21 @@
     </ClInclude>
     <ClInclude Include="inc\Physics\BoundingBox.h">
       <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\TriangleMeshCollider.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\VRDSettings.h">
+      <Filter>Headerdateien\NxFail</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\UserAllocator.h">
+      <Filter>Headerdateien\NxFail</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\ErrorStream.h">
+      <Filter>Headerdateien\NxFail</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Physics\Stream.h">
+      <Filter>Headerdateien\NxFail</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -73,9 +85,6 @@
     <ClCompile Include="src\Physics\RigidBody.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
-    <ClCompile Include="src\Physics\UserAllocator.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Physics\CharacterController.cpp">
       <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
@@ -84,6 +93,15 @@
     </ClCompile>
     <ClCompile Include="src\Physics\BoundingBox.cpp">
       <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\TriangleMeshCollider.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\UserAllocator.cpp">
+      <Filter>Quelldateien\NxFail</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\Stream.cpp">
+      <Filter>Quelldateien\NxFail</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

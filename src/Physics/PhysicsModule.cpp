@@ -8,7 +8,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		PhysicsModule::PhysicsModule(Engine* engine)
-			: IPhysics(engine)
+			: IPhysics(engine), cooking(0)
 		{
 			pause = false;
 			userAllocator = 0;
@@ -28,6 +28,11 @@ namespace TikiEngine
 		{
 			if (physicsSDK != 0)
 			{
+				if (cooking != 0)
+				{
+					cooking->NxCloseCooking();
+				}
+
 				// release ControllerManager
 				if (controllerManager != 0)
 					NxReleaseControllerManager(controllerManager);
@@ -59,7 +64,7 @@ namespace TikiEngine
 			Console::Write("Initializing PhysicsModule");
 
 			if (!userAllocator)
-				userAllocator = new UserAllocator();
+				userAllocator = new ControllerManagerAllocator();
 
 
 			// init PhysX SDK
@@ -107,13 +112,20 @@ namespace TikiEngine
 			//physicsSDK->setParameter(NX_VISUALIZE_BODY_ANG_FORCE, 1);
 #endif
 
+			// Also create the controller Manager.
+			controllerManager = NxCreateControllerManager(userAllocator);
+
+			cooking = NxGetCookingLib(NX_PHYSICS_SDK_VERSION);			
+			if (!cooking->NxInitCooking(userAllocator, &errorStream))
+			{
+				throw "scheisse";
+			}
+
 			//bool hardware = IsHardwarePresent();
 			// assign statics to dllMain
 			DllMain::Scene = scene;
+			DllMain::Cooking = cooking;
 			DllMain::PhysicsSDK = physicsSDK;
-
-			// Also create the controller Manager.
-			controllerManager = NxCreateControllerManager(userAllocator);
 			DllMain::ControllerManager = controllerManager;
 
 			return true;
@@ -177,7 +189,7 @@ namespace TikiEngine
 			}
 		}
 
-#pragma region Debug
+		#pragma region Debug
 #if _DEBUG
 		void PhysicsModule::DrawDebug()
 		{
@@ -219,7 +231,6 @@ namespace TikiEngine
 			);
 		}
 #endif
-#pragma endregion
-
+		#pragma endregion
 	}
 }

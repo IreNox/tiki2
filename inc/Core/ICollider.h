@@ -3,7 +3,6 @@
 #include "Core/Component.h"
 #include "Core/IRigidBody.h"
 
-
 namespace TikiEngine
 {
 	namespace Components

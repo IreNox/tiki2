@@ -40,7 +40,7 @@ namespace TikiEngine
 			void SetCollisionGroup(UInt32 group);
 
 
-
+			bool GetReady();
 
 		protected:
 			ColliderState state;

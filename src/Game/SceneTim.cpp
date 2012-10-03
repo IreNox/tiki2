@@ -13,7 +13,11 @@
 #include "Core/IPhysicsMaterial.h"
 #include "Core/IBoxCollider.h"
 #include "Core/ITerrainRenderer.h"
+#include "Core/ITriangleMeshCollider.h"
 #include "Core/ISound.h"
+
+#include "Core/MeshIndexed.h"
+#include "Core/DefaultVertex.h"
 
 #include "Game/CameraFly.h"
 
@@ -41,7 +45,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/Normals.fbx");
+			MeshIndexed* mesh = (MeshIndexed*)engine->content->LoadMesh(L"Data/Resources/Models/Dice2.fbx");
 			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
@@ -54,6 +58,34 @@ namespace TikiEngine
 			mesh->Release();
 			render->Release();
 
+			IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
+			material->SetRestitution(0.7f);
+			material->SetDynamicFriction(0.7f);
+			material->SetStaticFriction(0.5f);
+
+			ITriangleMeshCollider* collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
+			collider->SetMaterial(material->GetIndex());
+			collider->SetCenter(Vector3(0, 3, -4));
+			collider->SetDynamic(true);
+			collider->SetGroup(CG_Collidable_Pushable);
+
+			UInt32 count;
+			UInt32* indexData;
+			mesh->GetIndexData(&indexData, &count);
+			collider->SetIndices(indexData, count);
+
+			DefaultVertex* vertexData;
+			mesh->GetVertexData((void**)&vertexData, &count);
+
+			List<Vector3> list = List<Vector3>();
+			UInt32 i = 0;
+			count /= sizeof(DefaultVertex);
+			while (i < count) { list.Add(Vector3(vertexData[i].Position)); i++; }
+
+			Vector3* vectorData = list.ToArray();
+			collider->SetVertices(vectorData, count);
+			delete[](vectorData);
+
 			this->AddElement(go);
 			go->Release();
 
@@ -64,8 +96,8 @@ namespace TikiEngine
 			this->AddElement(light);
 			
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 500.0f;
-			go->PRS.Position.Y = 300.0f;
+			go->PRS.Position.Z = 5.0f;
+			go->PRS.Position.Y = 0.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
@@ -79,8 +111,9 @@ namespace TikiEngine
 			mat->GetShader()->SetTexture("tex", tex);
 
 			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			terrain->Release();
+			terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
 			terrain->SetMaterial(mat);
+			terrain->Release();
 			mat->Release();
 
 			this->AddElement(go);
@@ -124,6 +157,8 @@ namespace TikiEngine
 				ssao->GetAO(),
 				Rectangle(10, 390, 200, 180)
 			);
+
+			engine->physics->DrawDebug();
 
 			/*engine->sprites->Draw(
 				tex,

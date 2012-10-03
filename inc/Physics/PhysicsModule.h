@@ -2,12 +2,12 @@
 
 #include "Core/IPhysics.h"
 
+#include "PhysX/Cooking/NxCooking.h"
 #include "PhysX/Physics/NxPhysics.h"
 #include "PhysX/NxCharacter/ControllerManager.h"
 
 #include "Physics/ErrorStream.h"
 #include "Physics/VRDSettings.h"
-#include "Physics/UserAllocator.h"
 
 #include "Core/ColorVertex.h"
 
@@ -47,8 +47,9 @@ namespace TikiEngine
 			bool pause;
 			NxPhysicsSDK* physicsSDK;
 			NxScene* scene; 
+			NxCookingInterface* cooking;
 			NxControllerManager* controllerManager;
-			UserAllocator* userAllocator;
+			NxUserAllocator* userAllocator;
 			int frameCnt;
 			float timeSinceLastUpdate;
 

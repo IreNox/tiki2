@@ -22,9 +22,10 @@ namespace TikiEngine
 
 		static Engine* Engine;
 
-		static PhysicsModule* ModuleGraphics;
+		static PhysicsModule* Module;
 	    static NxScene* Scene;
 		static NxPhysicsSDK* PhysicsSDK;
+		static NxCookingInterface* Cooking;
 		static NxControllerManager* ControllerManager;
 
 		static void InitDll(TikiEngine::Engine* engine);

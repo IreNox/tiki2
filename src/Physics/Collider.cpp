@@ -75,5 +75,12 @@ namespace TikiEngine
 				actor->getShapes()[i]->setGroup(group);
 		}
 		#pragma endregion
+
+		bool Collider::GetReady()
+		{
+			return  (center != NxVec3(NX_MAX_F32)) && 
+					(state != CS_UNINITIALIZED) &&
+					(materialIndex != -1);
+		}
 	}
 }

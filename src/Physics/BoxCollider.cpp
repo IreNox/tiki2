@@ -87,10 +87,7 @@ namespace TikiEngine
 
 		bool BoxCollider::GetReady() 
 		{
-			return (size != NxVec3(NX_MAX_F32)) && 
-				   (center != NxVec3(NX_MAX_F32)) && 
-				   (state != CS_UNINITIALIZED) &&
-				   (materialIndex != -1);
+			return Collider::GetReady() && (size != NxVec3(NX_MAX_F32));
 		}
 		#pragma endregion
 
