@@ -34,11 +34,15 @@ namespace TikiEngine
 			TerrainRenderer(Engine* engine, GameObject* gameObject);
 			~TerrainRenderer();
 
+			void LoadTerrain(string fileName, int scale, int size);
+
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
 			Material* GetMaterial();
 			void SetMaterial(Material* mat);
+
+			float SampleHeight(const Vector3& position);
 
 			bool GetReady();
 	

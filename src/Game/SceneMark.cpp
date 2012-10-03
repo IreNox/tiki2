@@ -7,10 +7,10 @@
 //#include "assert.h"
 
 #include "Core/IPhysicsMaterial.h"
-#include "Core/DebugPhysicsRenderer.h"
 #include "Core/CameraObject.h"
 
 #include "Game/CameraFly.h"
+#include "Core/IPhysics.h"
 #include "Core/ISpriteBatch.h"
 #include <sstream>
 
@@ -145,12 +145,6 @@ namespace TikiEngine
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
 
-#if _DEBUG
-			go = new DebugPhysicRenderer(engine);
-			this->AddElement(go);
-			go->Release();
-#endif
-
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
 
@@ -184,6 +178,10 @@ namespace TikiEngine
 			s2 << "BoundingBox Intersects" << bounds1->Intersects(*bounds2);
 			str = s2.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 100));
+
+			#if _DEBUG
+			engine->physics->DrawDebug();
+			#endif
 
 			Scene::Draw(args);
 		}

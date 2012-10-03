@@ -1,6 +1,9 @@
 
 #include "Game/BasicTransform.h"
 
+#include "Game/SceneLevel.h"
+#include "Core/ITerrainRenderer.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -18,7 +21,11 @@ namespace TikiEngine
 		{
 			BasicDatabase::LoadFromDatabase(state);
 
-			this->PRS.Position.Y = 0.0f; // read from cloddy
+			SceneLevel* scene = (SceneLevel*)engine->scene;
+			if (scene && scene->GetLevel()->GetTerrain())
+			{
+				this->PRS.Position.Y = scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.Position);
+			}			
 		}
 
 		void BasicTransform::databaseToField(string fieldName, sqlite3_stmt* state, int fieldId)
@@ -29,7 +36,7 @@ namespace TikiEngine
 			}
 			else if (fieldName == "PositionY")
 			{
-				this->PRS.Position.Y = (float)sqlite3_column_double(state, fieldId);
+				this->PRS.Position.Z = (float)sqlite3_column_double(state, fieldId);
 			}
 			else if (fieldName == "Scale")
 			{

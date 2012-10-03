@@ -25,7 +25,7 @@ namespace TikiEngine
 			virtual void End(const UpdateArgs& args) = 0;
 
 #if _DEBUG
-			virtual void FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list) = 0;
+			virtual void DrawDebug() = 0;
 #endif
 
 		};

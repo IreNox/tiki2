@@ -99,9 +99,27 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 {
 	PS_OUTPUT output = (PS_OUTPUT)0;
 	
-	output.Screen = input.Color; 
+	float light = 1.0f;
+	float4 color = input.Color;
 
-	output.Depth.rgb = 1.0f - (input.DepthPos.z / 1000.0f); //input.DepthPos.w;
+	if (LightsCount != 0.0f)
+	{
+		for (float i = 0; i < LightsCount; i++)
+		{
+			float3 lightDir = normalize(Lights[i].Direction); // - input.WorldPos
+
+			float lighting = dot(input.Normal, lightDir);	
+			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));
+
+			light += lighting;
+		}
+
+		color.rgb *= light;
+	}
+	
+	output.Screen =  color;
+
+	output.Depth.rgb = 1.0f - (input.DepthPos.z / 1000.0f);
 	output.Depth.a = 1.0f;
 	output.Normal = float4(input.Normal, 1.0f);
 

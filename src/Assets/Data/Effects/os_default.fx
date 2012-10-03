@@ -102,7 +102,7 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 	float4 termDiffuse = tex.Sample(sam, input.UV) * DiffuseIntensity;
 	float3 termAmbient = AmbientColor.rgb * AmbientIntensity;
 	float3 termEmissive = EmissiveColor.rgb * EmissiveIntensity;
-	float3 termLight = float3(0, 0, 0);
+	float3 termLight = float3(1, 1, 1);
 
 	//lighting *= (LightRange / dot(input.LightDir, input.LightDir));
 	
@@ -110,10 +110,10 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 	{
 		for (float i = 0; i < LightsCount; i++)
 		{
-			float3 lightDir = normalize(Lights[i].Position - input.WorldPos);
+			float3 lightDir = normalize(Lights[i].Direction);
 
 			float lighting = dot(input.Normal, lightDir);	
-			lighting *= (Lights[i].Range / dot(lightDir, lightDir));
+			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));
 
 			termLight += Lights[i].Color * lighting;
 		}		
@@ -126,7 +126,7 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 		termDiffuse.a
 	);
 
-	output.Depth.rgb = 1 - (input.DepthPos.z / 50.0f); //input.DepthPos.w;
+	output.Depth.rgb = 1 - (input.DepthPos.z / 1000.0f); //input.DepthPos.w;
 	output.Depth.a = 1.0f;
 	output.Normal = float4(input.Normal, 1.0f);
 

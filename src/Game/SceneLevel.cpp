@@ -6,8 +6,11 @@
 #include "Core/IMeshRenderer.h"
 #include "Core/LibraryManager.h"
 
+#include "Core/LightObject.h"
 #include "Core/CameraObject.h"
+
 #include "Game/CameraFly.h"
+
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
 
@@ -59,6 +62,15 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();*/
 
+			//Light
+			LightObject* lo = new LightObject(engine);
+			lo->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(1, 0, 1);
+			lo->GetLight()->SetColor(Color::White);
+			lo->GetLight()->SetRange(1000);
+
+			this->AddElement(lo);
+			lo->Release();
+
 			// Camera
 			GameObject* go = new CameraObject(engine);
 			go->PRS.Position.Z = 5.0f;
@@ -70,6 +82,13 @@ namespace TikiEngine
 			go->Release();
 			
 			Scene::Initialize(args);
+		}
+		#pragma endregion
+
+		#pragma region Member
+		Level* SceneLevel::GetLevel()
+		{
+			return level;
 		}
 		#pragma endregion
 

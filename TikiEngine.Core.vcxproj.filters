@@ -96,14 +96,8 @@
     <Filter Include="Headerdateien\Engine\GameObjects\Basic">
       <UniqueIdentifier>{200d2000-146e-40b6-8320-449acaa72980}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Engine\GameObjects\Debug">
-      <UniqueIdentifier>{fada5754-6a9b-4785-bf4c-6b9b5a9c69c1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Engine\GameObjects\Basic">
       <UniqueIdentifier>{525a7a6e-9ebe-4c79-af72-43ca91d6da0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Engine\GameObjects\Debug">
-      <UniqueIdentifier>{11639179-7cc6-4e65-be2f-f8a2ff95ecac}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Core\Enums">
       <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
@@ -205,9 +199,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\MeshObject.cpp">
       <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\DebugPhysicsRenderer.cpp">
-      <Filter>Quelldateien\Engine\GameObjects\Debug</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\ColorVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
@@ -438,9 +429,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\QuadObject.h">
       <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\DebugPhysicsRenderer.h">
-      <Filter>Headerdateien\Engine\GameObjects\Debug</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\PrimitiveTopologies.h">
       <Filter>Headerdateien\Core\Enums</Filter>

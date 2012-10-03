@@ -46,13 +46,6 @@ namespace TikiEditor.Designer
             ucProperties1.Save();
         }
 
-        private void buttonAddObject_Click(object sender, EventArgs e)
-        {
-            GI.Level.Objects.Add(
-                new LevelObject()
-            );
-        }
-
         private void checkShowPoints_CheckedChanged(object sender, EventArgs e)
         {
             GI.BasicDraw.ShowPoints = checkShowPoints.Checked;
@@ -61,6 +54,22 @@ namespace TikiEditor.Designer
         private void checkShowBoundingBox_CheckedChanged(object sender, EventArgs e)
         {
             GI.BasicDraw.ShowBounding = checkShowBoundingBox.Checked;
+        }
+        #endregion
+
+        #region Member - EventHandler - Add
+        private void buttonAddObject_Click(object sender, EventArgs e)
+        {
+            GI.Level.Objects.Add(
+                new LevelObject()
+            );
+        }
+
+        private void buttonAddEnemyBasic_Click(object sender, EventArgs e)
+        {
+            GI.Level.Enemies.Add(
+                new LevelEnemy()
+            );
         }
         #endregion
 

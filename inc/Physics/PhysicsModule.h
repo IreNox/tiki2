@@ -35,7 +35,7 @@ namespace TikiEngine
 			NxScene* GetScene();
 
 #if _DEBUG
-			void FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list);
+			void DrawDebug();
 #endif
 
 			void Begin();
@@ -53,8 +53,7 @@ namespace TikiEngine
 			float timeSinceLastUpdate;
 
 #if _DEBUG
-			Mesh* debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology);
-			void debugFillVertex(ColorVertex& vertex, const NxVec3& pos, const NxU32& color);
+			Vector3 physxToTiki(const NxVec3& vector);
 #endif
 
 		};

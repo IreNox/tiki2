@@ -55,9 +55,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			else
 			{
 				SceneLevel* level = new SceneLevel(engine);
-				level->LoadLevel(1);
-
 				engine->scene = level;
+
+				level->LoadLevel(1);
 			}
 
 			engine->Run();

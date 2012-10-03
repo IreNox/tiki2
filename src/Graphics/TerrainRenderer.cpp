@@ -14,20 +14,36 @@ namespace TikiEngine
 {
 	namespace Components
 	{
+		using namespace Cloddy::API::MeshVisitors;
+		using namespace Cloddy::Core::Math::Vectors;
+
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
 			: ITerrainRenderer(engine, gameObject), material(0)
 		{
-			int size = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height) / 2;
+		}
+
+		TerrainRenderer::~TerrainRenderer()
+		{
+			manager->Shutdown();
+			SafeRelease(&material);
+			SafeRelease(&layout);
+		}
+		#pragma endregion
+		
+		#pragma region Member - Load
+		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size)
+		{
+			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height) / 2;
 
 			vertexFormat = cloddy_VertexFormat::P3F()
-				  ->Append(cloddy_VertexFormat::T2F(1, 1))
-				  ->Append(cloddy_VertexFormat::N3F())
-				  ->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
-				  //->Append(cloddy_VertexFormat::X4F_12());
+				->Append(cloddy_VertexFormat::T2F(1, 1))
+				->Append(cloddy_VertexFormat::N3F())
+				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
+			//->Append(cloddy_VertexFormat::X4F_12());
 
-			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size, vertexFormat->GetVertexSize());
-			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size);
+			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
+			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2);
 
 			callback = new cloddy_TriangulationCallback(engine->graphics->GetDevice(), vertexBuffer, indexBuffer);
 
@@ -42,34 +58,28 @@ namespace TikiEngine
 			manager->SetLicence("Data/Cloddy/Licence/licence.dat");
 			manager->Initialize();
 
+			datasetElevation = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+
 			//datasetColor = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c24.cube.dat", true, cloddy_CloddyDatasetConverterType::C24);
 			//datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.e16.cube.dat", true, cloddy_CloddyDatasetConverterType::E16);
-			datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", true, cloddy_CloddyDatasetConverterType::E16C24);
 			//datasetDetail = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c32.cube.dat", true, cloddy_CloddyDatasetConverterType::C32);
 
-			heightmap = new TikiHeightmap(8192 + 1);
+			//heightmap = new TikiHeightmap(8192 + 1);
 			//heightmap->SetColor(datasetColor->GetHeightmap());
 			//heightmap->SetDetail(datasetDetail->GetHeightmap());
-			heightmap->SetElevation(datasetElevation->GetHeightmap());
+			//heightmap->SetElevation(datasetElevation->GetHeightmap());
 
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(128);
-			terrainDescription->SetHeightmap(heightmap);
-			terrainDescription->SetWidth(2048.0f);
-			terrainDescription->SetHeight(2048.0f);
+			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
+			terrainDescription->SetWidth(size);
+			terrainDescription->SetHeight(size);
 
-			terrain = manager->CreateTerrain(terrainDescription);
-		}
-
-		TerrainRenderer::~TerrainRenderer()
-		{
-			manager->Shutdown();
-			SafeRelease(&material);
-			SafeRelease(&layout);
+			terrain = manager->CreateTerrain(terrainDescription);			
 		}
 		#pragma endregion
-		
+
 		#pragma region Member
 		Material* TerrainRenderer::GetMaterial()
 		{
@@ -95,6 +105,14 @@ namespace TikiEngine
 				Shader* shader = (Shader*)material->GetShader();
 				shader->CreateLayout(layoutDescription, 4, &layout, &tmp);
 			}
+		}
+
+		float TerrainRenderer::SampleHeight(const Vector3& position)
+		{
+			Vec3F asd = Vec3F((float*)position.arr);
+			asd.Y = 10000.0f;
+
+			return terrain->GetAltitude(asd, 0);
 		}
 
 		bool TerrainRenderer::GetReady()

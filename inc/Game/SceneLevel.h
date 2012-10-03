@@ -26,6 +26,8 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
+			Level* GetLevel();
+
 		private:
 
 			Level* level;

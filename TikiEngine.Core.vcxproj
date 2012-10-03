@@ -25,7 +25,6 @@
     <ClCompile Include="src\Core\ColorVertex.cpp" />
     <ClCompile Include="src\Core\Component.cpp" />
     <ClCompile Include="src\Core\Console.cpp" />
-    <ClCompile Include="src\Core\DebugPhysicsRenderer.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
     <ClCompile Include="src\Core\FileStream.cpp" />
     <ClCompile Include="src\Core\GameObject.cpp" />
@@ -63,7 +62,6 @@
     <ClInclude Include="inc\Core\ColorVertex.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
     <ClInclude Include="inc\Core\Console.h" />
-    <ClInclude Include="inc\Core\DebugPhysicsRenderer.h" />
     <ClInclude Include="inc\Core\DefaultVertex.h" />
     <ClInclude Include="inc\Core\Dictionary.h" />
     <ClInclude Include="inc\Core\DrawArgs.h" />

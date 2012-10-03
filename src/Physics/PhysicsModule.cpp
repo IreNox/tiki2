@@ -1,5 +1,6 @@
 #include "Physics/PhysicsModule.h"
 #include "Physics/DllMain.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -178,109 +179,44 @@ namespace TikiEngine
 
 #pragma region Debug
 #if _DEBUG
-		void PhysicsModule::FillDebugMesh(Dictionary<PrimitiveTopologies, Mesh*>* list)
+		void PhysicsModule::DrawDebug()
 		{
 			const NxDebugRenderable* debug = scene->getDebugRenderable();
 
 			NxU32 i = 0;
-			NxU32 count = debug->getNbPoints();
+			NxU32 count = debug->getNbLines();
 			if (count > 0)
 			{
-				Mesh* mesh = debugCheckMesh(list, PT_PointList);
-				ColorVertex* vertices = new ColorVertex[count * 1];
-
-				const NxDebugPoint* points = debug->getPoints();
-
-				while (i < count)
-				{
-					UInt32 index = i * 2;
-					const NxDebugPoint* point = points + i;
-
-					debugFillVertex(vertices[index + 0], point->p, point->color);
-
-					i++;
-				}
-
-				mesh->SetVertexData(vertices, sizeof(ColorVertex) * count);
-				delete(vertices);
-			}
-
-			i = 0;
-			count = debug->getNbLines();
-			if (count > 0)
-			{
-				Mesh* mesh = debugCheckMesh(list, PT_LineList);
-				ColorVertex* vertices = new ColorVertex[count * 2];
-
 				const NxDebugLine* lines = debug->getLines();
 
 				while (i < count)
 				{
-					UInt32 index = i * 2;
 					const NxDebugLine* line = lines + i;
 
-					debugFillVertex(vertices[index + 0], line->p0, line->color);
-					debugFillVertex(vertices[index + 1], line->p1, line->color);
+					Vector3 start = physxToTiki(line->p0);
+					Vector3 end = physxToTiki(line->p1);
 
-					i++;
-				}
+					Color color = Color(
+						(float)((line->color >> 16)&0xff)/255.0f,
+						(float)((line->color >> 8)&0xff)/255.0f,
+						(float)( line->color & 0xff)/255.0f,
+						1.0f
+					);
 
-				mesh->SetVertexData(vertices, sizeof(ColorVertex) * count);
-				delete(vertices);
-			}
-
-			i = 0;
-			count = debug->getNbTriangles();
-			if (count > 0)
-			{
-				Mesh* mesh = debugCheckMesh(list, PT_TriangleList);
-				ColorVertex* vertices = new ColorVertex[count * 3];
-
-				const NxDebugTriangle* triangles = debug->getTriangles();
-
-				while (i< count)
-				{
-					UInt32 index = i * 2;
-					const NxDebugTriangle* triangle = triangles + i;
-
-					debugFillVertex(vertices[index + 0], triangle->p0, triangle->color);
-					debugFillVertex(vertices[index + 1], triangle->p1, triangle->color);
-					debugFillVertex(vertices[index + 2], triangle->p2, triangle->color);
+					engine->graphics->DrawLine(start, end, color);
 
 					i++;
 				}
 			}
 		}
 
-		Mesh* PhysicsModule::debugCheckMesh(Dictionary<PrimitiveTopologies, Mesh*>* list, PrimitiveTopologies topology)
+		Vector3 PhysicsModule::physxToTiki(const NxVec3& vector)
 		{
-			Mesh* mesh = 0;
-
-			if (list->ContainsKey(topology))
-			{
-				mesh = list->Get(topology);
-			}
-			else
-			{
-				mesh = new Mesh(engine);
-				mesh->SetVertexDeclaration(ColorVertex::Declaration, 2);
-				mesh->SetPrimitiveTopology(topology);
-
-				list->Add(topology, mesh);
-			}
-
-			return mesh;
-		}
-
-		void PhysicsModule::debugFillVertex(ColorVertex& vertex, const NxVec3& pos, const NxU32& color)
-		{
-			vertex.Position[0] = pos.x;
-			vertex.Position[1] = pos.y;
-			vertex.Position[2] = pos.z;
-			vertex.Color[0]	= (float)((color>>16)&0xff)/255.0f;
-			vertex.Color[1]	= (float)((color>>8)&0xff)/255.0f;
-			vertex.Color[2]	= (float)(color&0xff)/255.0f;
-			vertex.Color[3]	= 1.0f;
+			return Vector3(
+				vector.x,
+				vector.y,
+				vector.z
+			);
 		}
 #endif
 #pragma endregion
