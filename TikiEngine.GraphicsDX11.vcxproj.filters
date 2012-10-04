@@ -128,6 +128,9 @@
     <ClCompile Include="src\Graphics\Deformer.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\ModelRenderer.cpp">
+      <Filter>Quelldateien\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\Deformer.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelRenderer.h">
+      <Filter>Headerdateien\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -28,15 +28,10 @@ namespace TikiEngine
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
 
-			FbxNode * root = this->scene->GetRootNode();
-			this->HandleNodeRecursive(
-				root,
-				FBXSDK_TIME_INFINITE,
-				currentAnimLayer,
-				GetGlobalPosition(root),
-				NULL);
-			FillData();
+			this->currentTime = FBXSDK_TIME_INFINITE;
+			this->Update();
 		}
+
 		void Model::FillData()
 		{
 			int bla = this->verticesList.Count();
@@ -68,6 +63,27 @@ namespace TikiEngine
 
 			currentAnimLayer = lCurrentAnimationStack->GetMember<FbxAnimLayer>();
 			scene->GetEvaluator()->SetContext(lCurrentAnimationStack);
+
+			FbxTakeInfo* lCurrentTakeInfo = scene->GetTakeInfo(*(animStackNameArray[pIndex]));
+			if (lCurrentTakeInfo)
+			{
+				start = lCurrentTakeInfo->mLocalTimeSpan.GetStart();
+				stop = lCurrentTakeInfo->mLocalTimeSpan.GetStop();
+			}
+			else
+			{
+				// Take the time line value
+				FbxTimeSpan lTimeLineTimeSpan;
+				scene->GetGlobalSettings().GetTimelineDefaultTimeSpan(lTimeLineTimeSpan);
+
+				start = lTimeLineTimeSpan.GetStart();
+				stop  = lTimeLineTimeSpan.GetStop();
+			}
+
+			frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
+
+			// move to beginning
+			currentTime = start;
 
 			return true;
 		}
@@ -122,6 +138,31 @@ namespace TikiEngine
 		bool Model::GetReady()
 		{
 			return (indices != 0 && vertices != 0);
+		}
+
+		void Model::Update()
+		{
+			FbxNode* root = this->scene->GetRootNode();
+
+			currentTime += frameTime;
+
+			if (currentTime > stop)
+			{
+				currentTime = start;
+			}
+
+			this->verticesList.Clear();
+			this->indicesList.Clear();
+
+			this->HandleNodeRecursive(
+				root, 
+				currentTime, 
+				currentAnimLayer, 
+				GetGlobalPosition(root), 
+				NULL);
+
+			FillData();
+
 		}
 		#pragma endregion
 
@@ -180,14 +221,14 @@ namespace TikiEngine
 		{
 			FbxMesh* mesh = node->GetMesh();
 
-			const int vertexCount = mesh->GetControlPointsCount();
+			int vertexCount = mesh->GetControlPointsCount();
 
 			if(vertexCount == 0)
 				return;
 
-			const bool hasShape = mesh->GetShapeCount() > 0;
-			const bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
-			const bool hasDeformation = hasShape || hasSkin;
+			bool hasShape = mesh->GetShapeCount() > 0;
+			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+			bool hasDeformation = hasShape || hasSkin;
 
 			FbxVector4* vertexArray = new FbxVector4[vertexCount];
 			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
@@ -211,7 +252,12 @@ namespace TikiEngine
 				}
 			}
 
-			UInt32 indicesOffset = this->indicesList.Count();
+			for(int i = 0; i < vertexCount; i++)
+			{
+				vertexArray[i] = (static_cast<FbxMatrix>(globalPosition).MultNormalize(vertexArray[i]));
+			}
+
+			UInt32 indicesOffset = this->verticesList.Count();
 
 			UInt32 counter = 0;
 
@@ -219,16 +265,8 @@ namespace TikiEngine
 			{
 				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 
-				indicesList.Add(indicesOffset + counter);
-				indicesList.Add(indicesOffset + counter + 1);
-				indicesList.Add(indicesOffset + counter + 2);
+				UInt32 indicesArray[4];
 
-				if(verticesInPolygon == 4)
-				{
-					indicesList.Add(indicesOffset + counter);
-					indicesList.Add(indicesOffset + counter + 2);
-					indicesList.Add(indicesOffset + counter + 3);
-				}
 				for(Int32 k = 0; k < verticesInPolygon; k++)
 				{
 					int index = mesh->GetPolygonVertex(i,k);
@@ -236,11 +274,13 @@ namespace TikiEngine
 					FbxVector4 position = vertexArray[index];
 
 					FbxVector2 uv = FbxVector2(0,0);
+
 					if(mesh->GetElementUVCount() != 0)
 					{
 						int uvIndex = mesh->GetElementUV(0)->GetIndexArray().GetAt(counter);
 						uv = mesh->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
 					}
+
 					FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter);
 					FbxVector4 binormal = FbxVector4();
 					FbxVector4 tangent = FbxVector4();
@@ -262,12 +302,27 @@ namespace TikiEngine
 						(float)tangent[2]
 
 					};	
-					this->verticesList.Add(default);
-					counter++;
+
+					indicesArray[k] = verticesList.IndexOf(default);
+					if(indicesArray[k] == -1)
+					{
+						indicesArray[k] = verticesList.Count();
+						verticesList.Add(default);
+					}
+				}
+
+				indicesList.Add(indicesArray[0]);
+				indicesList.Add(indicesArray[1]);
+				indicesList.Add(indicesArray[2]);
+
+				if(verticesInPolygon == 4)
+				{
+					indicesList.Add(indicesArray[0]);
+					indicesList.Add(indicesArray[2]);
+					indicesList.Add(indicesArray[3]);
 				}
 			}
 		}
-
 
 		#pragma region Math
 		FbxAMatrix& Model::GetGlobalPosition(FbxNode* node, FbxTime pTime)

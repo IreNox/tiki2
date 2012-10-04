@@ -30,6 +30,8 @@ namespace TikiEngine
 
 			bool GetReady();
 
+			void Update();
+
 		protected:
 
 			void loadFromStream(wcstring fileName, Stream* stream);
@@ -51,6 +53,12 @@ namespace TikiEngine
 
 			FbxAMatrix& GetGlobalPosition(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);
 			FbxAMatrix& GetGeometry(FbxNode* node);
+
+
+			FbxTime start;
+			FbxTime stop;
+			FbxTime frameTime;
+			FbxTime currentTime;
 
 			List<DefaultVertex> verticesList;
 			List<UInt32> indicesList;

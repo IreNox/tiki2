@@ -487,6 +487,9 @@
     <ClInclude Include="inc\Core\IModel.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IModelRenderer.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
     <ClInclude Include="inc\Core\ITriangleMeshCollider.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>

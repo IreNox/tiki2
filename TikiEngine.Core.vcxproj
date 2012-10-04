@@ -75,6 +75,7 @@
     <ClInclude Include="inc\Core\ICharacterController.h" />
     <ClInclude Include="inc\Core\IFont.h" />
     <ClInclude Include="inc\Core\IModel.h" />
+    <ClInclude Include="inc\Core\IModelRenderer.h" />
     <ClInclude Include="inc\Core\IScript.h" />
     <ClInclude Include="inc\Core\ISound.h" />
     <ClInclude Include="inc\Core\ISoundSystem.h" />

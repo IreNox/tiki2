@@ -80,6 +80,7 @@ namespace TikiEngine
 
 		void MeshRenderer::Update(const UpdateArgs& args)
 		{
+			
 			//if (!this->GetReady()) return;
 		}
 		#pragma endregion
