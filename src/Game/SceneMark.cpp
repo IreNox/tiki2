@@ -13,6 +13,8 @@
 #include "Core/ISpriteBatch.h"
 #include <sstream>
 
+#include "Core/IGraphics.h"
+
 
 namespace TikiEngine
 {
@@ -144,7 +146,9 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			fly = new CameraFly(engine, go);
+
+      fly = new CameraFly(engine, go);
+
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
 
@@ -169,6 +173,11 @@ namespace TikiEngine
 
 		void SceneMark::Draw(const DrawArgs& args)
 		{
+      Vector3 forwardCam = fly->GetGameObject()->PRS.Position + fly->GetGameObject()->PRS.GetForward();
+      engine->graphics->DrawLine(forwardCam, forwardCam + dir * 10000.0f, Color::Red);
+      engine->graphics->DrawLine(forwardCam, Vector3::Zero, Color::Green);
+
+
 			std::wostringstream s;
 			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
@@ -179,9 +188,18 @@ namespace TikiEngine
 			str = s2.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 100));
 
+      std::wostringstream s3;
+      Vector3 camPos = fly->GetGameObject()->PRS.Position;
+      s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
+      str = s3.str();
+      engine->sprites->DrawString(font, str, Vector2(1, 120));
+
+
 			#if _DEBUG
 			engine->physics->DrawDebug();
 			#endif
+
+
 
 			Scene::Draw(args);
 		}
@@ -227,19 +245,28 @@ namespace TikiEngine
 			}
 
       // Raycast Test
-      if (args.Input.GetKey(KEY_SPACE))
+      if (args.Input.GetKey(KEY_F1))
       {
         RaycastHit info;
-        Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(Vector3(args.Input.MousePosition, 0));
+        Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
+
+        Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(Vector3(absMouse, 0));
         //Ray ray(Vector3(0, 10, 0), Vector3(0, -1, 0));
+
+        orig = ray.Origin;
+        dir = ray.Direction;
+
         if (engine->physics->RayCast(ray, &info))
         {
           // we hit 
-          Vector3 debug = Vector3::Zero;
+          ICollider* collisionCollider = info.collider;
+          //collisionCollider->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
+          Vector3 debug = info.Point;
         }
         else
         {
           // not
+          Vector3 debug = info.Point;
         }
       }
 

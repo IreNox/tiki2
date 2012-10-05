@@ -22,7 +22,7 @@ namespace TikiEngine
 			}
 			virtual ~IPhysics() {}
 
-      virtual Boolean RayCast(Ray ray, RaycastHit* hitInfo, float distance = 1000.0f) = 0;
+      virtual Boolean RayCast(Ray ray, RaycastHit* hitInfo, float distance = 10000.0f) = 0;
 
 			void End() {}
 			virtual void End(const UpdateArgs& args) = 0;

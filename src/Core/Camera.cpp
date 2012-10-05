@@ -98,20 +98,19 @@ namespace TikiEngine
       v.Y = -( ( ( 2.0f * screenPos.Y) / bbDim.Y) - 1) / matrices.ProjectionMatrix.M22;
       v.Z = 1.0f;
 
-      Matrix m = Matrix::Invert(matrices.ViewMatrix);
-
-      // TODO: This shit freaks me out!!
+      Matrix m = Matrix::Invert(Matrix::Transpose(matrices.ViewMatrix));
 
       // The direction is a vector defining the direction from the eye through the screen into the 3D world
-      //Vector3 dir(v.X * m.M11 + v.Y * m.M21 + v.Z * m.M31,
-      //            v.X * m.M12 + v.Y * m.M22 + v.Z * m.M32,
-      //            v.X * m.M13 + v.Y * m.M23 + v.Z * m.M33);
-      Vector3 dir(v.X * m.M11 + v.Y * m.M12 + v.Z * m.M13,
-                  v.X * m.M21 + v.Y * m.M22 + v.Z * m.M23,
-                  v.X * m.M31 + v.Y * m.M32 + v.Z * m.M33);
+      Vector3 dir(v.X * m.M11 + v.Y * m.M21 + v.Z * m.M31,
+                  v.X * m.M12 + v.Y * m.M22 + v.Z * m.M32,
+                  v.X * m.M13 + v.Y * m.M23 + v.Z * m.M33);
       
-      //Vector3 orig(m.M41, m.M42, m.M43);
-      Vector3 orig(m.M14, m.M24, m.M34);
+      Vector3 orig(m.M41, m.M42, m.M43);
+
+//         Vector3 dir(v.X * m.M11 + v.Y * m.M12 + v.Z * m.M13,
+//                     v.X * m.M21 + v.Y * m.M22 + v.Z * m.M23,
+//                     v.X * m.M31 + v.Y * m.M32 + v.Z * m.M33);
+//        Vector3 orig(m.M14, m.M24, m.M34);
 
       return Ray(orig, dir);
     }

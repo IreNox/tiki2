@@ -49,6 +49,10 @@ namespace TikiEngine
 			TikiBot* bot;
 
       CameraFly* fly;
+      
+      Vector3 orig;
+      Vector3 dir;
+
 
 		};
 	}
