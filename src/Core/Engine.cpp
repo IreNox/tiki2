@@ -178,7 +178,8 @@ namespace TikiEngine
 					scene->GetCameras()->Get(i),
 					scene->GetLights(),
 					graphics,
-					sprites
+					sprites,
+					&args
 				);
 				
 				graphics->Begin(drawArgs);

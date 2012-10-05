@@ -40,5 +40,10 @@ namespace TikiEngine
 
 		List<Light*> lights;
 		List<Camera*> cameras;
+
+#if _DEBUG
+		ITexture* mouse;
+#endif
+
 	};
 }

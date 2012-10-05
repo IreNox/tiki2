@@ -116,9 +116,10 @@ namespace TikiEngine
 			controllerManager = NxCreateControllerManager(userAllocator);
 
 			cooking = NxGetCookingLib(NX_PHYSICS_SDK_VERSION);			
-			if (!cooking->NxInitCooking(userAllocator, &errorStream))
+			if (!cooking->NxInitCooking()) //userAllocator, &errorStream
 			{
-				throw "scheisse";
+				Console::Write("Can't init Cooking Library.");
+				return false;
 			}
 
 			//bool hardware = IsHardwarePresent();

@@ -4,6 +4,7 @@
 #include "Physics/TriangleMeshCollider.h"
 #include "Physics/DllMain.h"
 #include "Physics/Stream.h"
+#include "Physics/UserAllocator.h"
 
 namespace TikiEngine
 {
@@ -72,9 +73,15 @@ namespace TikiEngine
 		{
 			SafeDeleteArray(&this->indexData);
 
-			this->indexCount = count;
-			this->indexData = new UInt32[count];
-			memcpy(this->indexData, indices, sizeof(UInt32) * count);
+			//this->indexCount = count;
+			//this->indexData = new NxU32[count];
+			//memcpy(this->indexData, indices, sizeof(UInt32) * count);
+
+			this->indexCount = 3;
+			this->indexData = new NxU32[3];
+			this->indexData[0] = 0;
+			this->indexData[1] = 1;
+			this->indexData[2] = 2;
 
 			this->updateData();
 		}
@@ -83,9 +90,15 @@ namespace TikiEngine
 		{
 			SafeDeleteArray(&this->vertexData);
 
-			this->vertexCount = count;
-			this->vertexData = new Vector3[count];
-			memcpy(this->vertexData, vertices, sizeof(Vector3) * count);
+			//this->vertexCount = count;
+			//this->vertexData = new NxVec3[count];
+			//memcpy(this->vertexData, vertices, sizeof(Vector3) * count);
+
+			this->vertexCount = 3;
+			this->vertexData = new NxVec3[3];
+			this->vertexData[0] = NxVec3(-1, -1, -1);
+			this->vertexData[1] = NxVec3( 1, -1, -1);
+			this->vertexData[2] = NxVec3( 1,  1, -1);
 
 			this->updateData();
 		}
@@ -125,16 +138,25 @@ namespace TikiEngine
 			NxTriangleMeshDesc meshDesc;
 			meshDesc.numVertices			= vertexCount;
 			meshDesc.numTriangles			= indexCount;
-			meshDesc.pointStrideBytes		= sizeof(Vector3);
-			meshDesc.triangleStrideBytes	= 3 * sizeof(UInt32);
+			meshDesc.pointStrideBytes		= sizeof(NxVec3);
+			meshDesc.triangleStrideBytes	= 3 * sizeof(NxU32);
 			meshDesc.points					= vertexData;
 			meshDesc.triangles				= indexData;
-			meshDesc.flags					= 0;
+			meshDesc.flags				    = NX_MF_FLIPNORMALS;			
 
-			meshDesc.heightFieldVerticalAxis = NX_Y;
-			meshDesc.heightFieldVerticalExtent	= -1000.0f;
+			//meshDesc.heightFieldVerticalAxis = NX_Y;
+			//meshDesc.heightFieldVerticalExtent	= -1000.0f;
 			
-			MemoryWriteBuffer buf;			
+			bool valid = meshDesc.isValid();
+
+			MemoryWriteBuffer buf;
+
+			NxCookingParams params;  
+			params.targetPlatform = PLATFORM_PC;  
+			params.skinWidth = 0.1f;  
+			params.hintCollisionSpeed = false;
+			DllMain::Cooking->NxSetCookingParams(params);  
+
 			DllMain::Cooking->NxCookTriangleMesh(meshDesc, buf);
 
 			MemoryReadBuffer readBuf(buf.data);
@@ -144,11 +166,9 @@ namespace TikiEngine
 			terrainShapeDesc.meshData				= triangleMesh;
 			terrainShapeDesc.shapeFlags				= NX_SF_FEATURE_INDICES;
 			
-			if (state == CS_DYNAMIC)
-				actorDescription.body = rigidBody.GetDescription();
-
 			actorDescription.shapes.pushBack(&terrainShapeDesc);
 			actorDescription.userData = (void*)this;
+			actorDescription.globalPose.t = center;
 
 			actor = DllMain::Scene->createActor(actorDescription);
 		}

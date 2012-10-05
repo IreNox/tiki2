@@ -66,7 +66,7 @@ namespace TikiEngine
 			ITriangleMeshCollider* collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
 			collider->SetMaterial(material->GetIndex());
 			collider->SetCenter(Vector3(0, 3, -4));
-			collider->SetDynamic(true);
+			collider->SetDynamic(false);
 			collider->SetGroup(CG_Collidable_Pushable);
 
 			UInt32 count;

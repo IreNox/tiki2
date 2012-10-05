@@ -34,7 +34,7 @@ namespace TikiEngine
 		#pragma region Member - Load
 		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size)
 		{
-			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height) / 2;
+			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 
 			vertexFormat = cloddy_VertexFormat::P3F()
 				->Append(cloddy_VertexFormat::T2F(1, 1))
@@ -43,7 +43,7 @@ namespace TikiEngine
 			//->Append(cloddy_VertexFormat::X4F_12());
 
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
-			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2);
+			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 2);
 
 			callback = new cloddy_TriangulationCallback(engine->graphics->GetDevice(), vertexBuffer, indexBuffer);
 

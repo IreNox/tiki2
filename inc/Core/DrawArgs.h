@@ -2,6 +2,7 @@
 
 #include "Core/GameTime.h"
 #include "Core/List.h"
+#include "Core/UpdateArgs.h"
 
 namespace TikiEngine
 {
@@ -31,13 +32,15 @@ namespace TikiEngine
 		IGraphics* Graphics;
 		ISpriteBatch* SpriteBatch;
 
+		UpdateArgs* UpdateData;
+
 		DrawArgs()
-			: Time(0, 0), CurrentCamera(0), Graphics(0), SpriteBatch(0), AllLights(0)
+			: Time(0, 0), CurrentCamera(0), Graphics(0), SpriteBatch(0), AllLights(0), UpdateData(0)
 		{
 		}
 
-		DrawArgs(GameTime time, Camera* camera, List<Light*>* allLights, IGraphics* graphics, ISpriteBatch* spriteBatch)
-			: Time(time), CurrentCamera(camera), AllLights(allLights), Graphics(graphics), SpriteBatch(spriteBatch)
+		DrawArgs(GameTime time, Camera* camera, List<Light*>* allLights, IGraphics* graphics, ISpriteBatch* spriteBatch, UpdateArgs* updateArgs)
+			: Time(time), CurrentCamera(camera), AllLights(allLights), Graphics(graphics), SpriteBatch(spriteBatch), UpdateData(updateArgs)
 		{
 		}
 

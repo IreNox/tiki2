@@ -42,8 +42,8 @@ namespace TikiEngine
 
 		private:
 
-			UInt32 vertexCount;
-			Vector3* vertexData;
+			NxU32 vertexCount;
+			NxVec3* vertexData;
 
 			UInt32 indexCount;
 			UInt32* indexData;

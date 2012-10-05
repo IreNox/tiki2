@@ -1,12 +1,18 @@
 
 #include "Core\Scene.h"
 
+#include "Core\IGraphics.h"
+#include "Core\ISpriteBatch.h"
+
 namespace TikiEngine
 {
 	#pragma region Class
 	Scene::Scene(Engine* engine)
 		: EngineObject(engine), elements(), lights(), cameras()
 	{
+#if _DEBUG
+		mouse = engine->content->LoadTexture(L"Data/Textures/mouse.png");
+#endif
 	}
 
 	Scene::~Scene()
@@ -84,6 +90,19 @@ namespace TikiEngine
 		{
 			elements[i]->Draw(args);
 		}
+
+#if _DEBUG
+		Vector2 mouse2 = args.UpdateData->Input.MousePosition;
+		Vector2 viewPort = engine->graphics->GetViewPort()->GetSize();
+
+		engine->sprites->Draw(
+			mouse, 
+			Vector2(
+				mouse2.X * viewPort.X,
+				mouse2.Y * viewPort.Y
+			)			
+		);
+#endif
 	}
 
 	void Scene::Update(const UpdateArgs& args)

@@ -30,6 +30,11 @@ namespace TikiEngine
 		void Collider::SetCenterPos(const Vector3& center)
 		{
 			this->center = center.arr;
+
+			if (actor)
+			{
+				actor->setGlobalPosition(this->center);
+			}
 		}
 
 		bool Collider::GetDynamicFlag()
