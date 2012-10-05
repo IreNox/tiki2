@@ -32,5 +32,13 @@ namespace TikiEngine
 				(float)this->Height
 			);
 		}
+
+		Vector2 ToPixelCoord(Vector2 relativePos)
+		{
+			return Vector2(
+				relativePos.X * this->Width,
+				relativePos.Y * this->Height
+			);
+		}
 	};
 }
