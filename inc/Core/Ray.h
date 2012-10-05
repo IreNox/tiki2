@@ -31,6 +31,6 @@ namespace TikiEngine
     Single Distance;
 
     /* The Collider that was hit. */
-    ICollider* collider;
+    ICollider* Collider;
   };
 }

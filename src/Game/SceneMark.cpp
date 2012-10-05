@@ -42,7 +42,7 @@ namespace TikiEngine
 
 			SafeRelease(&bot);
 
-      SafeRelease(&fly);
+			SafeRelease(&fly);
 
 			SafeRelease(&font);
 		}
@@ -146,8 +146,7 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-
-      fly = new CameraFly(engine, go);
+			fly = new CameraFly(engine, go);
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
@@ -173,10 +172,9 @@ namespace TikiEngine
 
 		void SceneMark::Draw(const DrawArgs& args)
 		{
-      Vector3 forwardCam = fly->GetGameObject()->PRS.Position + fly->GetGameObject()->PRS.GetForward();
-      engine->graphics->DrawLine(forwardCam, forwardCam + dir * 10000.0f, Color::Red);
-      engine->graphics->DrawLine(forwardCam, Vector3::Zero, Color::Green);
-
+		    Vector3 forwardCam = fly->GetGameObject()->PRS.Position + fly->GetGameObject()->PRS.GetForward();
+		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
+			engine->graphics->DrawLine(forwardCam, impact, Color::Green);
 
 			std::wostringstream s;
 			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
@@ -188,11 +186,11 @@ namespace TikiEngine
 			str = s2.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 100));
 
-      std::wostringstream s3;
-      Vector3 camPos = fly->GetGameObject()->PRS.Position;
-      s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
-      str = s3.str();
-      engine->sprites->DrawString(font, str, Vector2(1, 120));
+			std::wostringstream s3;
+			Vector3 camPos = fly->GetGameObject()->PRS.Position;
+			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
+			str = s3.str();
+			engine->sprites->DrawString(font, str, Vector2(1, 120));
 
 
 			#if _DEBUG
@@ -244,31 +242,34 @@ namespace TikiEngine
 				kinematicBox->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
 
-      // Raycast Test
-      if (args.Input.GetKey(KEY_F1))
-      {
-        RaycastHit info;
-        Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
+		    // Raycast Test
+		    if (args.Input.GetKey(KEY_F1))
+		    {
+				RaycastHit info;
+				Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
+		    
+				Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(absMouse);
+		    
+				orig = ray.Origin;
+				dir = ray.Direction;
+				
+				if (engine->physics->RayCast(ray, &info))
+				{
+					// how to do this? 
+					//IBoxCollider* coll = static_cast<IBoxCollider*>(info.Collider);
+					//if (coll)
+					//	coll->GetRigidBody()->SetVelocity(Vector3(0, 50, 0));
 
-        Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(Vector3(absMouse, 0));
-        //Ray ray(Vector3(0, 10, 0), Vector3(0, -1, 0));
+					
+					Vector3 debug = info.Point;
+					impact = info.Point;
 
-        orig = ray.Origin;
-        dir = ray.Direction;
-
-        if (engine->physics->RayCast(ray, &info))
-        {
-          // we hit 
-          ICollider* collisionCollider = info.collider;
-          //collisionCollider->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
-          Vector3 debug = info.Point;
-        }
-        else
-        {
-          // not
-          Vector3 debug = info.Point;
-        }
-      }
+				}
+				else
+				{
+				    Vector3 debug = info.Point;
+				}
+		     }
 
 			Scene::Update(args);
 

@@ -35,7 +35,7 @@ namespace TikiEngine
 
 			bool GetReady();
 
-      Ray ScreenPointToRay(const Vector3& screenPos);
+		    Ray ScreenPointToRay(const Vector2& screenPos);
 
 		private:
 
