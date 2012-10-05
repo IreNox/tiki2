@@ -9,6 +9,7 @@
 
 #include "Game/TikiBot.h"
 #include "Game/EntityManager.h"
+#include "Game/CameraFly.h"
 
 #include "Core/IFont.h"
 
@@ -17,6 +18,7 @@ namespace TikiEngine
 	namespace Game
 	{
 		using namespace TikiEngine::AI;
+    using namespace TikiEngine::Scripts;
 
 		class SceneMark : public Scene
 		{
@@ -45,6 +47,9 @@ namespace TikiEngine
 			IFont* font;
 
 			TikiBot* bot;
+
+      CameraFly* fly;
+
 		};
 	}
 }

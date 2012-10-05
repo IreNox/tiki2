@@ -142,6 +142,26 @@ namespace TikiEngine
 			return scene; 
 		}
 
+    Boolean PhysicsModule::RayCast(Ray ray, RaycastHit* hitInfo, float distance)
+    {
+      NxRay worldRay(ray.Origin.arr, Vector3::Normalize(ray.Direction).arr);
+      NxRaycastHit hit;
+
+      scene->raycastClosestShape(worldRay, NX_ALL_SHAPES, hit, 0xffffffff, distance);
+      
+      if (hit.shape)
+      {
+        hitInfo->Point = hit.worldImpact.get();
+        hitInfo->Normal = hit.worldNormal.get();
+        hitInfo->Distance = hit.distance;
+        hitInfo->collider = (ICollider*)(hit.shape->getActor().userData);
+        return true;
+      }
+
+      return false;
+    }
+
+
 		void PhysicsModule::Begin()
 		{
 		}

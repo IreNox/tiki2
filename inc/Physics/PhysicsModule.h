@@ -6,6 +6,9 @@
 #include "PhysX/Physics/NxPhysics.h"
 #include "PhysX/NxCharacter/ControllerManager.h"
 
+#include "Core/Ray.h"
+#include "PhysX/Foundation/NxRay.h"
+
 #include "Physics/ErrorStream.h"
 #include "Physics/VRDSettings.h"
 
@@ -18,6 +21,7 @@ namespace TikiEngine
 	namespace Modules
 	{
 		using namespace TikiEngine::Vertices;
+    using namespace TikiEngine;
 
 		class PhysicsModule : public IPhysics
 		{
@@ -34,6 +38,8 @@ namespace TikiEngine
 			/*! @brief retrieves the current scene */
 			NxScene* GetScene();
 
+      Boolean RayCast(Ray ray, RaycastHit* hitInfo, float distance);
+
 #if _DEBUG
 			void DrawDebug();
 #endif
@@ -42,6 +48,8 @@ namespace TikiEngine
 			void End(const UpdateArgs& args);
 
 			void Dispose();
+
+
 
 		private:
 			bool pause;

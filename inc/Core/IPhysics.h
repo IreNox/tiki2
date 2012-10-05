@@ -4,6 +4,7 @@
 #include "Core/Mesh.h"
 
 #include "Core/PrimitiveTopologies.h"
+#include "Core/Ray.h"
 
 namespace TikiEngine
 {
@@ -20,6 +21,8 @@ namespace TikiEngine
 			{
 			}
 			virtual ~IPhysics() {}
+
+      virtual Boolean RayCast(Ray ray, RaycastHit* hitInfo, float distance = 1000.0f) = 0;
 
 			void End() {}
 			virtual void End(const UpdateArgs& args) = 0;

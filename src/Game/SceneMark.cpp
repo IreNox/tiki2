@@ -9,7 +9,6 @@
 #include "Core/IPhysicsMaterial.h"
 #include "Core/CameraObject.h"
 
-#include "Game/CameraFly.h"
 #include "Core/IPhysics.h"
 #include "Core/ISpriteBatch.h"
 #include <sstream>
@@ -40,6 +39,8 @@ namespace TikiEngine
 			SafeRelease(&bounds2);
 
 			SafeRelease(&bot);
+
+      SafeRelease(&fly);
 
 			SafeRelease(&font);
 		}
@@ -143,9 +144,7 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			CameraFly* fly = new CameraFly(engine, go);
-			fly->Release();
-
+			fly = new CameraFly(engine, go);
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
 
@@ -226,6 +225,23 @@ namespace TikiEngine
 				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
 				kinematicBox->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
+
+      // Raycast Test
+      if (args.Input.GetKey(KEY_SPACE))
+      {
+        RaycastHit info;
+        Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(Vector3(args.Input.MousePosition, 0));
+        //Ray ray(Vector3(0, 10, 0), Vector3(0, -1, 0));
+        if (engine->physics->RayCast(ray, &info))
+        {
+          // we hit 
+          Vector3 debug = Vector3::Zero;
+        }
+        else
+        {
+          // not
+        }
+      }
 
 			Scene::Update(args);
 
