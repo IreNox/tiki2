@@ -493,5 +493,8 @@
     <ClInclude Include="inc\Core\ITriangleMeshCollider.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\Ray.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

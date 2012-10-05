@@ -89,6 +89,7 @@
     <ClInclude Include="inc\Core\PostProcess.h" />
     <ClInclude Include="inc\Core\PostProcessPass.h" />
     <ClInclude Include="inc\Core\PrimitiveTopologies.h" />
+    <ClInclude Include="inc\Core\Ray.h" />
     <ClInclude Include="inc\Core\Rectangle.h" />
     <ClInclude Include="inc\Core\TikiPtr.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />

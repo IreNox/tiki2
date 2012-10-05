@@ -7,6 +7,8 @@
 
 #include "Core/IRenderTarget.h"
 
+#include "Core/Ray.h"
+
 namespace TikiEngine
 {
 	namespace Components
@@ -32,6 +34,8 @@ namespace TikiEngine
 			void SetRenderTarget(IRenderTarget* renderTarget);
 
 			bool GetReady();
+
+      Ray ScreenPointToRay(const Vector3& screenPos);
 
 		private:
 
