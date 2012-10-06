@@ -5,12 +5,14 @@
 #include "Core/Transform.h"
 #include "Core/Component.h"
 #include "Core/Material.h"
+#include "Core/IModel.h"
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
 namespace TikiEngine
 {
+	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
 
 	class GameObject : public EngineObject
@@ -18,6 +20,8 @@ namespace TikiEngine
 		friend class Component;
 
 	public:
+
+		IModel* Model;
 
 		Transform PRS;
 
@@ -64,6 +68,7 @@ namespace TikiEngine
 		bool RemoveComponent(Component* comp);
 
 	protected:
+
 		List<Component*> components;
 
 	};

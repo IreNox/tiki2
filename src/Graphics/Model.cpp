@@ -5,6 +5,7 @@
 #include "Graphics/DllMain.h"
 #include "Graphics/FbxLoader.h"
 #include "Graphics/Deformer.h"
+#include "Graphics/TikiMesh.h"
 
 namespace TikiEngine
 {
@@ -12,14 +13,22 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), indices(0), indicesCount(0), vertices(0), verticesSize(0)
+			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0)
 		{
+			indexBuffer = new DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
+			vertexBuffer = new DynamicBuffer<DefaultVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 		}
 
 		Model::~Model()
 		{
-			SafeDelete(&indices);
-			SafeDelete(&vertices);
+			for(int i = 0; i < meshes.Count(); i++)
+			{
+				SafeRelease(&meshes[i]);
+			}
+
+			SafeRelease(&material);
+			SafeRelease(&indexBuffer);
+			SafeRelease(&vertexBuffer);
 		}
 		#pragma endregion
 
@@ -28,16 +37,11 @@ namespace TikiEngine
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
 
-			this->currentTime = FBXSDK_TIME_INFINITE;
-			this->Update();
-		}
+			FbxNode* root = scene->GetRootNode();
+			this->InitializeNodeRecursive(root, currentTime, currentAnimLayer, this->GetGlobalPosition(root), NULL);
 
-		void Model::FillData()
-		{
-			int bla = this->verticesList.Count();
-			int bla2 = this->indicesList.Count();
-			this->SetVertexData(this->verticesList.ToArray(), this->verticesList.Count() * sizeof(DefaultVertex));
-			this->SetIndexData(this->indicesList.ToArray(), this->indicesList.Count());
+			this->CopyIndexData();
+			this->CopyVertexData();
 		}
 
 		#pragma region Animation
@@ -89,59 +93,71 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member
-
-		void Model::SetIndexData(UInt32* indices, UInt32 count)
-		{
-			SafeDelete(&this->indices);
-			this->indices = new UInt32[count];
-			this->indicesCount = count;
-
-			memcpy(
-				this->indices,
-				indices,
-				count * sizeof(UInt32)
-			);
-		}
-
-		bool Model::GetIndexData(UInt32** indices, UInt32* count)
-		{
-			*indices = this->indices;
-			*count = indicesCount;
-
-			return (indices != 0);
-		}
-
-		void Model::SetVertexData(void* vertices, UInt32 size)
-		{
-			SafeDelete(&this->vertices);
-
-			this->vertices = new Byte[size];
-			this->verticesSize = size;
-			memcpy(this->vertices, vertices, size);
-		}
-
-		bool Model::GetVertexData(void** vertices, UInt32* size)
-		{
-			*vertices = this->vertices;
-			*size = this->verticesSize;
-
-			return (vertices != 0);
-		}
-
-
+		#pragma region Member - Get/Set
 		void* Model::GetNativeResource()
 		{
-			return NULL;
+			return scene;
 		}
 
 		bool Model::GetReady()
 		{
-			return (indices != 0 && vertices != 0);
+			return (scene != 0);
 		}
 
-		void Model::Update()
+		Material* Model::GetMaterial()
 		{
+			return material;
+		}
+
+		void Model::SetMaterial(Material* material)
+		{
+			SafeAddRef(material, &this->material);
+
+			SafeRelease(&declaration);
+
+			if (material != 0 && material->GetReady())
+			{
+				declaration = new VertexDeclaration(engine, material->GetShader(), DefaultVertex::Declaration, DefaultVertex::DeclarationCount);
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw/Update
+		void Model::Draw(GameObject* gameObject, const DrawArgs& args)
+		{
+			if (!this->GetReady()) return;
+
+			material->UpdateDrawArgs(args, gameObject);
+			material->Apply();
+
+			UINT offset = 0;
+			UINT stride = declaration->GetElementSize();
+
+			ID3D11Buffer* buffer = this->vertexBuffer->GetBuffer();
+			DllMain::Context->IASetVertexBuffers(
+				0,
+				1,
+				&buffer,
+				&stride,
+				&offset
+			);
+
+			DllMain::Context->IASetIndexBuffer(
+				this->indexBuffer->GetBuffer(),
+				DXGI_FORMAT_R32_UINT,
+				0
+			);
+
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			declaration->Apply();
+
+			DllMain::Context->DrawIndexed(indicesList.Count(), 0, 0);
+		}
+
+		void Model::Update(const UpdateArgs& args)
+		{
+			if (!this->GetReady()) return;
+
 			FbxNode* root = this->scene->GetRootNode();
 
 			currentTime += frameTime;
@@ -151,18 +167,14 @@ namespace TikiEngine
 				currentTime = start;
 			}
 
-			this->verticesList.Clear();
-			this->indicesList.Clear();
+			UInt32 i = 0;
+			while (i < meshes.Count())
+			{
+				meshes[i]->Update(currentTime, currentAnimLayer, NULL);
+				i++;
+			}
 
-			this->HandleNodeRecursive(
-				root, 
-				currentTime, 
-				currentAnimLayer, 
-				GetGlobalPosition(root), 
-				NULL);
-
-			FillData();
-
+			this->CopyVertexData();			
 		}
 		#pragma endregion
 
@@ -226,6 +238,9 @@ namespace TikiEngine
 			if(vertexCount == 0)
 				return;
 
+			TikiMesh tm = TikiMesh(engine, node);
+			tm.Initialize();
+
 			bool hasShape = mesh->GetShapeCount() > 0;
 			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
 			bool hasDeformation = hasShape || hasSkin;
@@ -257,72 +272,172 @@ namespace TikiEngine
 				vertexArray[i] = (static_cast<FbxMatrix>(globalPosition).MultNormalize(vertexArray[i]));
 			}
 
-			UInt32 indicesOffset = this->verticesList.Count();
-
-			UInt32 counter = 0;
-
-			for(UInt32 i = 0; i < mesh->GetPolygonVertexCount();i++)
+			if(!this->GetReady())
 			{
-				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
+				UInt32 indicesOffset = this->verticesList.Count();
 
-				UInt32 indicesArray[4];
+				UInt32 counter = 0;
 
-				for(Int32 k = 0; k < verticesInPolygon; k++)
+				for(UInt32 i = 0; i < mesh->GetPolygonVertexCount();i++)
 				{
-					int index = mesh->GetPolygonVertex(i,k);
+					Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 
-					FbxVector4 position = vertexArray[index];
+					UInt32 indicesArray[4];
 
-					FbxVector2 uv = FbxVector2(0,0);
-
-					if(mesh->GetElementUVCount() != 0)
+					for(Int32 k = 0; k < verticesInPolygon; k++)
 					{
-						int uvIndex = mesh->GetElementUV(0)->GetIndexArray().GetAt(counter);
-						uv = mesh->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+						int index = mesh->GetPolygonVertex(i,k);
+
+						FbxVector4 position = vertexArray[index];
+
+						FbxVector2 uv = FbxVector2(0,0);
+						int uvIndex = -1;
+
+						if(mesh->GetElementUVCount() != 0)
+						{
+							uvIndex = mesh->GetElementUV(0)->GetIndexArray().GetAt(counter);
+							uv = mesh->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
+						}
+
+						FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter);
+
+						int blub = mesh->GetElementTangentCount();
+						FbxVector4 binormal = FbxVector4();
+						FbxVector4 tangent = FbxVector4();
+
+						DefaultVertex default = {
+							(float)position[0],(float)position[1],(float)position[2],
+							(float)uv[0],(float)uv[1],
+							(float)normals[0],(float)normals[1],(float)normals[2],
+							(float)binormal[0],(float)binormal[1],(float)binormal[2],
+							(float)tangent[0],(float)tangent[1],(float)tangent[2]
+						};	
+
+						indicesArray[k] = verticesList.IndexOf(default);
+						if(indicesArray[k] == -1)
+						{
+							//UpdateStructure us = 
+							//{
+							//	i,k,uvIndex,counter
+							//};
+							//this->updateStructure.Add(us);
+							indicesArray[k] = verticesList.Count();
+							verticesList.Add(default);
+						}
 					}
 
-					FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter);
-					FbxVector4 binormal = FbxVector4();
-					FbxVector4 tangent = FbxVector4();
+					indicesList.Add(indicesArray[0]);
+					indicesList.Add(indicesArray[1]);
+					indicesList.Add(indicesArray[2]);
 
-					DefaultVertex default = {
-						(float)position[0],
-						(float)position[1],
-						(float)position[2],
-						(float)uv[0],
-						(float)uv[1],
-						(float)normals[0],
-						(float)normals[1],
-						(float)normals[2],
-						(float)binormal[0],
-						(float)binormal[1],
-						(float)binormal[2],
-						(float)tangent[0],
-						(float)tangent[1],
-						(float)tangent[2]
-
-					};	
-
-					indicesArray[k] = verticesList.IndexOf(default);
-					if(indicesArray[k] == -1)
+					if(verticesInPolygon == 4)
 					{
-						indicesArray[k] = verticesList.Count();
-						verticesList.Add(default);
+						indicesList.Add(indicesArray[0]);
+						indicesList.Add(indicesArray[2]);
+						indicesList.Add(indicesArray[3]);
 					}
 				}
+			}
+			else
+			{
+				
+			}
+		}
 
-				indicesList.Add(indicesArray[0]);
-				indicesList.Add(indicesArray[1]);
-				indicesList.Add(indicesArray[2]);
+		void Model::InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose)
+		{
+			FbxAMatrix lGlobalPosition = GetGlobalPosition(node, time);
 
-				if(verticesInPolygon == 4)
+			//root has no NodeAttribute
+			if(node->GetNodeAttribute())
+			{
+				FbxAMatrix lGeometryOffset = GetGeometry(node);
+				FbxAMatrix lGlobalOffPosition = lGlobalPosition * lGeometryOffset;
+
+				InitializeNode(node, time, animLayer, parentGlobalPosition, lGlobalOffPosition, pose);
+			}
+			for(int i = 0; i < node->GetChildCount(); i++)
+			{
+				InitializeNodeRecursive(node->GetChild(i), time, animLayer, lGlobalPosition, pose);
+			}
+		}
+		void Model::InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose)
+		{
+			if(node->GetNodeAttribute())
+			{
+				if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
 				{
-					indicesList.Add(indicesArray[0]);
-					indicesList.Add(indicesArray[2]);
-					indicesList.Add(indicesArray[3]);
+					InitializeMesh(node, time, animLayer, globalPosition, pose);
+				}
+				else if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
+				{
+					//Ini(node, parentGlobalPosition, globalPosition);
 				}
 			}
 		}
+		void Model::InitializeMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
+			FbxAMatrix& globalPosition, FbxPose* pose)
+		{
+			if(node->GetMesh()->GetControlPointsCount() == 0)
+				return;
+
+			TikiMesh* tm = new TikiMesh(engine, node);
+			tm->Initialize();
+
+			meshes.Add(tm);
+		}
+
+		void Model::CopyVertexData()
+		{
+			verticesList.Clear();
+
+			UInt32 i = 0;
+			while (i < meshes.Count())
+			{
+				verticesList.AddRange(
+					meshes[i]->verticesList.GetInternalData(),
+					0,
+					meshes[i]->verticesList.Count()
+				);
+
+				i++;
+			}
+
+			DefaultVertex* vertexData = vertexBuffer->Map(verticesList.Count());
+			memcpy(vertexData, verticesList.GetInternalData(), sizeof(DefaultVertex) * verticesList.Count());
+			vertexBuffer->Unmap();
+		}
+
+		void Model::CopyIndexData()
+		{
+			indicesList.Clear();
+
+			UInt32 i = 0;
+			UInt32 offset = 0;
+			while (i < meshes.Count())
+			{
+				UInt32 a = 0;
+				UInt32 c = meshes[i]->indicesList.Count();
+				while (a < c)
+				{
+					indicesList.Add(
+						meshes[i]->indicesList[a] + offset
+					);
+
+					a++;
+				}
+
+				offset += meshes[i]->verticesList.Count();
+				i++;
+			}
+
+			UInt32* indexData = indexBuffer->Map(indicesList.Count());
+			memcpy(indexData, indicesList.GetInternalData(), sizeof(UInt32) * indicesList.Count());
+			indexBuffer->Unmap();
+		}
+
+
+
 
 		#pragma region Math
 		FbxAMatrix& Model::GetGlobalPosition(FbxNode* node, FbxTime pTime)

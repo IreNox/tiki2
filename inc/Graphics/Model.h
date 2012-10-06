@@ -4,15 +4,20 @@
 #include "Core/DefaultVertex.h"
 #include "Core/IModel.h"
 
+#include "Graphics/TikiMesh.h"
+#include "Graphics/DynamicBuffer.h"
+#include "Graphics/VertexDeclaration.h"
+
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
-
-using namespace TikiEngine::Vertices;
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
+		using namespace TikiEngine::Vertices;
+		using namespace TikiEngine::Graphics;
+
 		class Model : public IModel
 		{
 		public:
@@ -22,15 +27,13 @@ namespace TikiEngine
 
 			void* GetNativeResource();
 
-			bool GetIndexData(UInt32** indices, UInt32* count);
-			void SetIndexData(UInt32* indices, UInt32 count);
+			void Draw(GameObject* gameObject, const DrawArgs& args);
+			void Update(const UpdateArgs& args);
 
-			bool GetVertexData(void** vertices, UInt32* size);
-			void SetVertexData(void* vertices, UInt32 size);
+			Material* GetMaterial();
+			void SetMaterial(Material* material);
 
 			bool GetReady();
-
-			void Update();
 
 		protected:
 
@@ -40,7 +43,6 @@ namespace TikiEngine
 		private:
 
 			void Initialize();
-			void FillData();
 
 			void InitializeAnimationStack();
 			bool SetCurrentAnimStack(int pIndex);
@@ -51,9 +53,17 @@ namespace TikiEngine
 			void HandleMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
 				FbxAMatrix& globalPosition, FbxPose* pose);
 
+			void InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose);
+			void InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose);
+			void InitializeMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
+				FbxAMatrix& globalPosition, FbxPose* pose);
+
+			void CopyVertexData();
+			void CopyIndexData();
+
 			FbxAMatrix& GetGlobalPosition(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);
 			FbxAMatrix& GetGeometry(FbxNode* node);
-
+			
 
 			FbxTime start;
 			FbxTime stop;
@@ -63,11 +73,16 @@ namespace TikiEngine
 			List<DefaultVertex> verticesList;
 			List<UInt32> indicesList;
 
-			UInt32* indices;
-			void* vertices;
+			List<TikiMesh*> meshes;
 
-			UInt32 indicesCount;
-			UInt32 verticesSize;
+			Material* material;
+			VertexDeclaration* declaration;
+
+			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+			DynamicBuffer<DefaultVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+
+			UInt32 updateCounter;
+			//List<UpdateStructure> updateStructure;
 
 			FbxArray<FbxString*> animStackNameArray;
 			FbxAnimLayer* currentAnimLayer;

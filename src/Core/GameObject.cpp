@@ -1,16 +1,19 @@
 
 #include "Core/GameObject.h"
+#include "Core/TypeGlobals.h"
 #include <typeinfo.h>
 
 namespace TikiEngine
 {
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), components()
+		: EngineObject(engine), components(), Model(0)
 	{
 	}
 
 	GameObject::~GameObject()
 	{
+		SafeRelease(&this->Model);
+
 		for (UInt32 i = 0; i < components.Count(); i++)
 		{
 			components[i]->Release();
@@ -19,6 +22,8 @@ namespace TikiEngine
 
 	void GameObject::Draw(const DrawArgs& args)
 	{
+		if (this->Model && this->Model->GetReady()) this->Model->Draw(this, args);
+
 		for (UInt32 i = 0; i < components.Count(); i++)
 		{
 			components[i]->Draw(args);
@@ -27,6 +32,8 @@ namespace TikiEngine
 
 	void GameObject::Update(const UpdateArgs& args)
 	{
+		if (this->Model && this->Model->GetReady()) this->Model->Update(args);
+
 		for (UInt32 i = 0; i < components.Count(); i++)
 		{
 			components[i]->Update(args);

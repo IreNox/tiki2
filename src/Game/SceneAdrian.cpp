@@ -37,20 +37,15 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 
-			Mesh* mesh = engine->content->LoadMesh(L"Data/Models/humanoid.fbx");
+			go->Model = engine->content->LoadModel(L"Data/Models/humanoid.fbx");
 
 			ITexture* tex = engine->content->LoadTexture(L"Data/Textures/checker.png");
 
 			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
 
-			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			render->SetMesh(mesh);
-			render->SetMaterial(mat);
-
+			go->Model->SetMaterial(mat);
 			mat->Release();
-			mesh->Release();
-			render->Release();
 
 			this->AddElement(go);
 			go->PRS.Position = Vector3(50);

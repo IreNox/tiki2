@@ -15,6 +15,7 @@ namespace TikiEngine
 		{
 		public:
 			VertexDeclaration(Engine* engine, IShader* shader, List<InputElement>* elements);
+			VertexDeclaration(Engine* engine, IShader* shader, InputElement* elements, UInt32 elementsCount);
 			~VertexDeclaration();
 
 			void Apply();
@@ -31,7 +32,7 @@ namespace TikiEngine
 			UInt32 elementSize;
 			ID3D11InputLayout* inputLayout;
 
-			void createInputLayout(List<InputElement>* decl);
+			void createInputLayout(const InputElement* decl, UInt32 count);
 
 		};
 	}

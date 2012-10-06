@@ -6,6 +6,8 @@
 
 #include "Graphics/DllMain.h"
 
+#include "Core/TypeGlobals.h"
+
 namespace TikiEngine
 {
 	namespace Vertices
@@ -17,7 +19,15 @@ namespace TikiEngine
 			this->shader = (Shader*)shader;
 
 			this->shader->AddRef();
-			createInputLayout(elements);
+			createInputLayout(elements->GetInternalData(), elements->Count());
+		}
+
+		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, InputElement* elements, UInt32 elementsCount)
+			: EngineObject(engine)
+		{
+			SafeAddRef((Shader*)shader, &this->shader);
+
+			createInputLayout(elements, elementsCount);
 		}
 
 		VertexDeclaration::~VertexDeclaration()
@@ -63,15 +73,15 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member - CreateInputLayout
-		void VertexDeclaration::createInputLayout(List<InputElement>* decl)
+		void VertexDeclaration::createInputLayout(const InputElement* decl, UInt32 count)
 		{
 			elementSize = 0;
-			D3D11_INPUT_ELEMENT_DESC* elements = new D3D11_INPUT_ELEMENT_DESC[decl->Count()];
+			D3D11_INPUT_ELEMENT_DESC* elements = new D3D11_INPUT_ELEMENT_DESC[count];
 
 			UInt32 i = 0;
-			while (i < decl->Count())
+			while (i < count)
 			{
-				InputElement input = decl->Get(i);
+				InputElement input = decl[i];
 				D3D11_INPUT_ELEMENT_DESC element;
 
 				switch (input.SemanticType)
@@ -158,7 +168,7 @@ namespace TikiEngine
 
 			shader->CreateLayout(
 				elements,
-				decl->Count(),
+				count,
 				&inputLayout,
 				&hash
 			);

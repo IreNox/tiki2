@@ -131,6 +131,9 @@
     <ClCompile Include="src\Graphics\ModelRenderer.cpp">
       <Filter>Quelldateien\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\TikiMesh.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\ModelRenderer.h">
       <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiMesh.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

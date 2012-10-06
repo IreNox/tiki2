@@ -89,9 +89,11 @@ public:
 		this->data[index] = item;
 	}
 
-	void AddRange(T* src, Int32 offset, UInt32 length)
+	void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
+		Int32 badFix = lengthData;
 		int index = getNewIndex(this->lengthData + (length - 2), true);
+		lengthData = badFix;
 
 		UInt32 i = 0;
 		while (i < length)
@@ -121,6 +123,11 @@ public:
 		}
 
 		this->data[index] = item;
+	}
+
+	const T const* GetInternalData() const
+	{
+		return data;
 	}
 	#pragma endregion
 

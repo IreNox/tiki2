@@ -75,28 +75,7 @@ namespace TikiEngine
 				}
 				else if (hash == typeid(Mesh).hash_code())
 				{
-					MeshIndexed* mesh = new MeshIndexed(engine);
-					loadFile = false;
-
-					IModel* model = this->LoadModel(name);
-
-					UInt32* indices = 0;
-					void* vertices = 0;
-
-					UInt32 indicesCount = 0;
-					UInt32 verticesCount = 0;
-
-					model->GetIndexData(&indices, &indicesCount);
-					model->GetVertexData(&vertices, &verticesCount);
-
-					mesh->SetIndexData(indices, indicesCount);
-					mesh->SetVertexData(vertices, verticesCount);
-
-					mesh->SetVertexDeclaration(TikiEngine::Vertices::DefaultVertex::Declaration, TikiEngine::Vertices::DefaultVertex::DeclarationCount);
-
-					SafeRelease(&model);
-
-					value = mesh;
+					throw "Not supported";
 				}
 				else if (hash == typeid(IModel).hash_code())
 				{
