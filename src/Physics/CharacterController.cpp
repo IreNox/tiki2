@@ -172,7 +172,7 @@ namespace TikiEngine
 			desc.skinWidth	 = radius * 0.10f; // make it 10% of radius, gives best results (unity doc)
 			desc.stepOffset	 = stepOffset;
 			desc.callback	 = 0; //TODO : &controllerHitReport;
-			desc.userData	 = (void*)this;	
+			desc.userData	 = dynamic_cast<ICollider*>(this);	
 			controller = DllMain::ControllerManager->createController(DllMain::Scene, desc);
 
 			// set the underlying kinematic actor from controller

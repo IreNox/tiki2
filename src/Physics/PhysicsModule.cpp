@@ -155,7 +155,7 @@ namespace TikiEngine
         hitInfo->Point = hit.worldImpact.get();
         hitInfo->Normal = hit.worldNormal.get();
         hitInfo->Distance = hit.distance;
-		hitInfo->Collider = (ICollider*)hit.shape->getActor().userData;
+		    hitInfo->Collider = (ICollider*)hit.shape->getActor().userData;
         return true;
       }
 

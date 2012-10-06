@@ -255,10 +255,10 @@ namespace TikiEngine
 				
 				if (engine->physics->RayCast(ray, &info))
 				{
-					// how to do this? 
-					//IBoxCollider* coll = static_cast<IBoxCollider*>(info.Collider);
-					//if (coll)
-					//	coll->GetRigidBody()->SetVelocity(Vector3(0, 50, 0));
+					ICollider* coll = info.Collider;
+					if (coll)
+            if(coll->GetDynamic())
+						   coll->GetRigidBody()->SetVelocity(Vector3(0, 10, 0));
 
 					
 					Vector3 debug = info.Point;

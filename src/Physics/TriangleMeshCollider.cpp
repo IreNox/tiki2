@@ -167,7 +167,7 @@ namespace TikiEngine
 			terrainShapeDesc.shapeFlags				= NX_SF_FEATURE_INDICES;
 			
 			actorDescription.shapes.pushBack(&terrainShapeDesc);
-			actorDescription.userData = (void*)this;
+			actorDescription.userData = dynamic_cast<ICollider*>(this);
 			actorDescription.globalPose.t = center;
 
 			actor = DllMain::Scene->createActor(actorDescription);

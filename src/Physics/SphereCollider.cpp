@@ -118,7 +118,7 @@ namespace TikiEngine
 				actorDescription.body = rigidBody.GetDescription();
 
 			actorDescription.shapes.pushBack(&sphereDesc);
-			actorDescription.userData = (void*)this;	// associate the actor with this object
+			actorDescription.userData = dynamic_cast<ICollider*>(this);	// associate the actor with this object
 			actorDescription.globalPose.t = center;
 
 			// finally, create the actor from description
