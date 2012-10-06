@@ -1,7 +1,6 @@
-#include "Game/EntityManager.h"
+
 #include <cassert>
-
-
+#include "Game/EntityManager.h"
 
 namespace TikiEngine
 {
@@ -14,13 +13,13 @@ namespace TikiEngine
 		    return &instance;
 		}
 
-		GameObject* EntityManager::GetEntityFromID(int id) const
+		BaseGameEntity* EntityManager::GetEntityFromID(int id) const
 		{
 			//find the entity
 		    EntityMap::const_iterator ent = entityMap.find(id);
 
 		    //assert that the entity is a member of the map
-		    assert ( (ent !=  entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
+		    assert((ent !=  entityMap.end()) && "<EntityManager::GetEntityFromID>: invalid ID");
 		    
 		    return ent->second;
 		}
@@ -30,13 +29,19 @@ namespace TikiEngine
 		    entityMap.erase(entityMap.find(entity->ID()));
 		} 
 
+		void EntityManager::RegisterEntity(BaseGameEntity* newEntity)
+		{
+			entityMap.insert(std::make_pair(newEntity->ID(), newEntity));
+		}
+
+
 		void EntityManager::RegisterTikiBot(GameObject* gameObject)
 		{
-			TikiBot* comp = new TikiBot(0, gameObject);
+			//TikiBot* comp = new TikiBot(0, gameObject);
 			//comp->Init();
-			comp->Release();
+			//comp->Release();
 
-		    entityMap.insert(std::make_pair(comp->ID(), gameObject));
+		    //entityMap.insert(std::make_pair(comp->ID(), gameObject));
 		}
 
 	}

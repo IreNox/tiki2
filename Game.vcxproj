@@ -29,6 +29,7 @@
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />
     <ClInclude Include="inc\Game\LevelObject.h" />
+    <ClInclude Include="inc\Game\MessageDispatcher.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="inc\Game\SceneTim.h" />
     <ClInclude Include="inc\Game\sqlite3.h" />
     <ClInclude Include="inc\Game\sqlite3ext.h" />
+    <ClInclude Include="inc\Game\Telegram.h" />
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\Utils.h" />
@@ -54,6 +56,7 @@
     <ClCompile Include="src\Game\LevelEnemy.cpp" />
     <ClCompile Include="src\Game\LevelObject.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
+    <ClCompile Include="src\Game\MessageDispatcher.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />

@@ -57,6 +57,12 @@
     <Filter Include="Quelldateien\AI\Movement">
       <UniqueIdentifier>{b610b4b7-6fef-4aba-bc57-6f03a9d1991a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Messaging">
+      <UniqueIdentifier>{1c4c4d4b-4b83-4127-b1b9-9bb8baf27319}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Messaging">
+      <UniqueIdentifier>{9beb7ab9-4fef-4355-82b0-013bed2a3062}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -125,6 +131,12 @@
     <ClInclude Include="inc\Game\TikiSteering.h">
       <Filter>Headerdateien\AI\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\Telegram.h">
+      <Filter>Headerdateien\AI\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\MessageDispatcher.h">
+      <Filter>Headerdateien\AI\Messaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -192,6 +204,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\TikiSteering.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\MessageDispatcher.cpp">
+      <Filter>Quelldateien\AI\Messaging</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

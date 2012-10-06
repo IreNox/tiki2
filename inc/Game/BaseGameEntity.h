@@ -4,6 +4,7 @@
 #include "Core/Component.h"
 #include "Core/GameObject.h"
 #include "Game/Utils.h"
+#include "Game/Telegram.h"
 
 namespace TikiEngine
 {
@@ -20,7 +21,7 @@ namespace TikiEngine
 			virtual ~BaseGameEntity() { }
 
 			// TODO:
-			//virtual bool HandleMessage(const Telegram& msg){return false;}
+			virtual bool HandleMessage(const Telegram& msg){return false;}
   
 		    //entities should be able to read/write their data to a stream
 			virtual void Write(std::ostream& os) const { }

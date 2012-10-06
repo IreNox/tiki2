@@ -3,8 +3,8 @@
 #include "Core/Matrix3x3.h"
 
 /* misc utility functions and constants */
-const double   Pi        = 3.14159;
-const double   TwoPi     = Pi * 2;
+const float   Pi        = 3.14159f;
+const float   TwoPi     = Pi * 2;
 
 
 inline Double DegsToRads(double degrees)
@@ -33,11 +33,11 @@ inline T MinOf(const T& a, const T& b)
 
 
 
-//returns a random double between zero and 1
+//returns a random float between zero and 1
 inline float RandFloat() {return ((rand())/(RAND_MAX+1.0f));}
 
-//returns a random double in the range -1 < n < 1
-inline float RandomClamped()    {return RandFloat() - RandFloat();}
+//returns a random float in the range -1 < n < 1
+inline float RandomClamped() {return RandFloat() - RandFloat();}
 
 
 

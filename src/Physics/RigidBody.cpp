@@ -64,9 +64,11 @@ namespace TikiEngine
 
 		void RigidBody::SetVelocity(const Vector3& linearVelocity)
 		{
-			this->velocity = linearVelocity;
-			actor->setLinearVelocity(linearVelocity.arr);
-
+			if (!isKinematic)
+			{
+				this->velocity = linearVelocity;
+				actor->setLinearVelocity(linearVelocity.arr);
+			}
 		}
 
 		Vector3 RigidBody::GetVelocity()
@@ -76,8 +78,11 @@ namespace TikiEngine
 
 		void RigidBody::SetAngularVelocity(const Vector3& angularVelocity)
 		{
-			this->angularVelocity = angularVelocity;
-			actor->setAngularVelocity(angularVelocity.arr);
+			if (!isKinematic)
+			{
+				this->angularVelocity = angularVelocity;
+				actor->setAngularVelocity(angularVelocity.arr);
+			}
 		}
 					
 		Vector3 RigidBody:: GetAngularVelocity()

@@ -11,8 +11,8 @@ namespace TikiEngine
 			weightWander(1.0f),
 			weightWallAvoidance(10.0),
 			viewDistance(15.0),
-			wallDetectionFeelerLength(25.0), // * bot scale
-			feelers(3),
+			//wallDetectionFeelerLength(25.0), // * bot scale
+			//feelers(3),
 			deceleration(normal),
 			targetAgent1(0),
 			targetAgent2(0),
@@ -25,11 +25,11 @@ namespace TikiEngine
 			summingMethod(prioritized)
 		{
 			//stuff for the wander behavior
-			double theta = RandFloat() * TwoPi;
+			float theta = RandFloat() * TwoPi;
 
 			//create a vector to a target position on the wander circle
-			wanderTarget = Vector2((float)(wanderRadius * cos(theta)),
-	   						       (float)(wanderRadius * sin(theta)));
+			wanderTarget = Vector2(wanderRadius * cosf(theta),
+	   						       wanderRadius * sinf(theta));
 
 		}
 
@@ -88,25 +88,23 @@ namespace TikiEngine
 			Vector2 ToTarget = targetPos - tikiBot->Pos();
 
 			//calculate the distance to the target
-			double dist = ToTarget.Length();
+			float dist = ToTarget.Length();
 
 			if (dist > 0)
 			{
 				//because Deceleration is enumerated as an int, this value is required
 				//to provide fine tweaking of the deceleration..
-				const double DecelerationTweaker = 0.3;
+				const float DecelerationTweaker = 0.3f;
 
-				//calculate the speed required to reach the target given the desired
-				//deceleration
-				double speed =  dist / ((double)decel * DecelerationTweaker);     
+				//calculate the speed required to reach the target given the desired deceleration
+				float speed =  dist / ((float)decel * DecelerationTweaker);     
 
 				//make sure the velocity does not exceed the max
-				speed = MinOf(speed, tikiBot->MaxSpeed());
+				speed = MinOf(speed, (float)tikiBot->MaxSpeed());
 
 				//from here proceed just like Seek except we don't need to normalize 
-				//the ToTarget vector because we have already gone to the trouble
-				//of calculating its length: dist. 
-				Vector2 DesiredVelocity =  ToTarget * (float)(speed / dist);
+				//the ToTarget vector because we have already gone to the trouble of calculating its length: dist. 
+				Vector2 DesiredVelocity =  ToTarget * speed / dist;
 
 				return (DesiredVelocity - tikiBot->Velocity());
 			}
@@ -143,18 +141,18 @@ namespace TikiEngine
 		// and then applies that amount of the force to add.
 		bool TikiSteering::AccumulateForce(Vector2 &RunningTot, Vector2 ForceToAdd)
 		{
-			// calculate how much steering force the vehicle has used so far
-			double MagnitudeSoFar = RunningTot.Length();
+			// calculate how much steering force the bot has used so far
+			float MagnitudeSoFar = RunningTot.Length();
 
 			// calculate how much steering force remains to be used by this vehicle
-			double MagnitudeRemaining = tikiBot->MaxForce() - MagnitudeSoFar;
+			float MagnitudeRemaining = (float)tikiBot->MaxForce() - MagnitudeSoFar;
 
 			// return false if there is no more force left to use
-			if (MagnitudeRemaining <= 0.0) 
+			if (MagnitudeRemaining <= 0.0f) 
 				return false;
 
 			//calculate the magnitude of the force we want to add
-			double MagnitudeToAdd = ForceToAdd.Length();
+			float MagnitudeToAdd = ForceToAdd.Length();
   
 			// if the magnitude of the sum of ForceToAdd and the running total
 			// does not exceed the maximum force available to this bot, just

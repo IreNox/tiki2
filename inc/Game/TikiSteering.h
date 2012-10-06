@@ -9,10 +9,9 @@ namespace TikiEngine
 	{
 		class TikiBot;
 
-		//--------------------------- Constants ----------------------------------
-
+		//Wander Constants
 		//the radius of the constraining circle for the wander behavior
-		const float WanderRad    = 15.0f; //1.2f;
+		const float WanderRad    = 10.0f; //1.2f;
 		//distance the wander circle is projected in front of the agent
 		const float WanderDist   = 2.0f;
 		//the maximum amount of displacement along the circle each frame
@@ -53,10 +52,18 @@ namespace TikiEngine
 			
 			Vector2 Force() const { return steeringForce; }
 
-			// Set and Get Flags
-			void SeekOn()   { flags |= seek; }
+			// Set and Get Bahvior Flags
+			void SeekOn()   { flags |= seek;   }
 			void ArriveOn() { flags |= arrive; }
 			void WanderOn() { flags |= wander; }
+
+			void SeekOff()   { if(On(seek))   flags ^=seek;   }
+			void ArriveOff() { if(On(arrive)) flags ^=arrive; }
+			void WanderOff() { if(On(wander)) flags ^=wander; }
+
+			bool SeekIsOn()	  { return On(seek);   }
+			bool ArriveIsOn() { return On(arrive); }
+			bool WanderIsOn() { return On(wander); }
 
 		private:
 			//this function tests if a specific bit of m_iFlags is set
@@ -93,11 +100,6 @@ namespace TikiEngine
 			Vector2 target;
 
 
-			// a vertex buffer to contain the feelers rqd for wall avoidance  
-			std::vector<Vector2> feelers;
-  
-			// the length of the 'feeler/s' used in wall detection
-			double wallDetectionFeelerLength;
 
 			// the current position on the wander circle the agent is attempting to steer towards
 			Vector2 wanderTarget; 

@@ -15,7 +15,7 @@ namespace TikiEngine
 			// Init MovingEntity stats
 			Init();
 
-			// Init bot stats
+			// Init bot attributes
 			maxHealth = 100;
 			health = maxHealth;
 
@@ -34,8 +34,6 @@ namespace TikiEngine
 
 			steering = new TikiSteering(this);
 
-
-
 			// init CharacterController
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
 			controller->SetCenter(Vector3(Pos().X, 5, Pos().Y));
@@ -43,7 +41,7 @@ namespace TikiEngine
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
-			controller->SetGroup(CG_Collidable_Non_Pushable);
+			controller->SetGroup(CG_Collidable_Pushable);
 
 		}
 

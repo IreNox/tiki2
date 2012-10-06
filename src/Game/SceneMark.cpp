@@ -172,10 +172,20 @@ namespace TikiEngine
 
 		void SceneMark::Draw(const DrawArgs& args)
 		{
+			// Draw Mouse Ray
 		    Vector3 forwardCam = fly->GetGameObject()->PRS.Position + fly->GetGameObject()->PRS.GetForward();
 		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
 			engine->graphics->DrawLine(forwardCam, impact, Color::Green);
 
+
+			// Draw bot Velocity
+			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.Position);
+			Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
+			Vector3 vel = Vector3(bot->Velocity().X, botPos.Y, bot->Velocity().Y);
+			engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
+
+
+			// Draw some debug text
 			std::wostringstream s;
 			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
@@ -192,12 +202,9 @@ namespace TikiEngine
 			str = s3.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 120));
 
-
 			#if _DEBUG
 			engine->physics->DrawDebug();
 			#endif
-
-
 
 			Scene::Draw(args);
 		}
@@ -253,21 +260,30 @@ namespace TikiEngine
 				orig = ray.Origin;
 				dir = ray.Direction;
 				
+
 				if (engine->physics->RayCast(ray, &info))
 				{
+					// 
 					ICollider* coll = info.Collider;
 					if (coll)
-            if(coll->GetDynamic())
+					{
+						if(coll->GetDynamic())
+						{
 						   coll->GetRigidBody()->SetVelocity(Vector3(0, 10, 0));
+						   coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
+						}
+					}
 
-					
-					Vector3 debug = info.Point;
+					// turn off any wander behavior
+					if (bot->GetSteering()->WanderIsOn() == true)
+						bot->GetSteering()->WanderOff();
+
+					// get the impact point and activate bot movement
 					impact = info.Point;
+					bot->GetSteering()->SetTarget(Vector2(impact.X, impact.Z));
+					if (bot->GetSteering()->ArriveIsOn() == false)
+						bot->GetSteering()->ArriveOn();
 
-				}
-				else
-				{
-				    Vector3 debug = info.Point;
 				}
 		     }
 
