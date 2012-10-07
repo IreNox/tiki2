@@ -51,31 +51,6 @@ namespace TikiEngine
 			go->PRS.Position = Vector3(50);
 			go->Release();
 
-
-
-			//go = new GameObject(engine);
-
-			//mesh = engine->content->LoadMesh(L"Data/Resources/Models/humanoid.fbx");
-
-			//tex = engine->content->LoadTexture(L"Data/Resources/Textures/checker.png");
-
-			//mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
-			//mat->GetShader()->SetTexture("tex", tex);
-
-			//render = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			//render->SetMesh(mesh);
-			//render->SetMaterial(mat);
-
-			//mat->Release();
-			//mesh->Release();
-			//render->Release();
-
-			//this->AddElement(go);
-			//go->Release();
-
-
-
-
 			go = new CameraObject(engine);
 			go->PRS.Position.Z = 70.0f;
 			go->PRS.Position.Y = 40.0f;

@@ -14,7 +14,7 @@ namespace TikiEngine
 		public:
 
 			IResource(Engine* engine);
-			~IResource();
+			virtual ~IResource();
 
 			virtual void LoadFromFile(wcstring fileName);
 			virtual void SaveToFile(wcstring fileName);

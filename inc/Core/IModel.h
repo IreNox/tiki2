@@ -17,7 +17,7 @@ namespace TikiEngine
 		public:
 
 			IModel(Engine* engine) : IResource(engine) {}
-			~IModel() {}
+			virtual ~IModel() {}
 
 			virtual void Draw(GameObject* gameObject, const DrawArgs& args) = 0;
 			virtual void Update(const UpdateArgs& args) = 0;

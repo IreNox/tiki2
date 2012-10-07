@@ -21,6 +21,7 @@ namespace TikiEngine
 		}
 		void TikiMesh::Release()
 		{
+			FbxDelete(this->node);
 		}
 		bool TikiMesh::Initialize()
 		{
@@ -83,6 +84,7 @@ namespace TikiEngine
 						indicesArray[k] = verticesList.Count();
 						verticesList.Add(default);
 					}
+					counter++;
 				}
 
 				indicesList.Add(indicesArray[0]);

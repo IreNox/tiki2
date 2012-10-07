@@ -25,11 +25,13 @@ namespace TikiEngine
 			{
 				SafeRelease(&meshes[i]);
 			}
+			FbxDelete(this->scene);
 
 			SafeRelease(&material);
 			SafeRelease(&indexBuffer);
 			SafeRelease(&vertexBuffer);
 		}
+
 		#pragma endregion
 
 		void Model::Initialize()
