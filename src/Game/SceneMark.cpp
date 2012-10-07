@@ -2,10 +2,6 @@
 #include "Game/SceneMark.h"
 
 #include "Core/LibraryManager.h"
-//#include "Core/IRigidBody.h"
-
-//#include "assert.h"
-
 #include "Core/IPhysicsMaterial.h"
 #include "Core/CameraObject.h"
 
@@ -14,6 +10,7 @@
 #include <sstream>
 
 #include "Core/IGraphics.h"
+
 
 
 namespace TikiEngine
@@ -53,7 +50,8 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
-
+			//cellSpace = new CellSpacePartition<TikiBot*>(engine, 50.0f, 50.0f, 8, 8, 50); 
+			cellSpace = new CellSpacePartition<TikiBot*>(engine, 50, 50, 8, 8, 10);
 			// Create TikiBot and set some target poition to seek
 			bot = new TikiBot(engine, go);
 			bot->GetSteering()->WanderOn();

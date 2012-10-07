@@ -54,6 +54,14 @@ namespace TikiEngine
 
 
 		private:
+			// bots shouldn't be copied, only created or respawned
+			TikiBot(const TikiBot&);
+			TikiBot& operator=(const TikiBot&);
+
+			// this method is called from the update method. It calculates and applies
+			// the steering force for this time-step.
+			void UpdateMovement(const UpdateArgs& args);
+
 			enum Status {alive, dead, spawning};
 
 			// alive, dead or spawning?
@@ -96,13 +104,7 @@ namespace TikiEngine
 			// set to true when a human player takes over control of the bot
 			bool possessed;
 
-			// bots shouldn't be copied, only created or respawned
-			TikiBot(const TikiBot&);
-			TikiBot& operator=(const TikiBot&);
 
-			// this method is called from the update method. It calculates and applies
-			// the steering force for this time-step.
-			void UpdateMovement(const UpdateArgs& args);
 
 
 

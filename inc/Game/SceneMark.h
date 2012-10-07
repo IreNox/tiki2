@@ -5,11 +5,12 @@
 #include "Core/IBoxCollider.h"
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
-#include "Core/IBoundingBox.h"
+//#include "Core/IBoundingBox.h"
 
 #include "Game/TikiBot.h"
 #include "Game/EntityManager.h"
 #include "Game/CameraFly.h"
+#include "Game/CellSpacePartition.h"
 
 #include "Core/IFont.h"
 
@@ -18,7 +19,7 @@ namespace TikiEngine
 	namespace Game
 	{
 		using namespace TikiEngine::AI;
-    using namespace TikiEngine::Scripts;
+		using namespace TikiEngine::Scripts;
 
 		class SceneMark : public Scene
 		{
@@ -54,6 +55,7 @@ namespace TikiEngine
 			 Vector3 dir;
 			 Vector3 impact;
 
+			  CellSpacePartition<TikiBot*>* cellSpace;
 
 		};
 	}

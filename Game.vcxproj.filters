@@ -137,6 +137,9 @@
     <ClInclude Include="inc\Game\MessageDispatcher.h">
       <Filter>Headerdateien\AI\Messaging</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\CellSpacePartition.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -207,6 +210,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\MessageDispatcher.cpp">
       <Filter>Quelldateien\AI\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\CellSpacePartition.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
