@@ -18,8 +18,11 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+
+
 		using namespace TikiEngine::AI;
 		using namespace TikiEngine::Scripts;
+
 
 		class SceneMark : public Scene
 		{
@@ -55,7 +58,7 @@ namespace TikiEngine
 			 Vector3 dir;
 			 Vector3 impact;
 
-			  CellSpacePartition<TikiBot*>* cellSpace;
+			 CellSpacePartition<TikiBot*>* cellSpace;
 
 		};
 	}
