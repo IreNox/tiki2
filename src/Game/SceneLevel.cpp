@@ -64,7 +64,7 @@ namespace TikiEngine
 
 			//Light
 			LightObject* lo = new LightObject(engine);
-			lo->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(1, 0, 1);
+			lo->PRS.SetRotation(Quaternion::CreateFromYawPitchRoll(1, 0, 1));
 			lo->GetLight()->SetColor(Color::White);
 			lo->GetLight()->SetRange(1000);
 
@@ -73,7 +73,7 @@ namespace TikiEngine
 
 			// Camera
 			GameObject* go = new CameraObject(engine);
-			go->PRS.Position.Z = 5.0f;
+			go->PRS.SetPosition(Vector3(0, 0, 5.0f));
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();

@@ -134,7 +134,7 @@ namespace TikiEngine
 			Matrix world;
 			gameObject->PRS.FillWorldMatrix(&world);
 
-			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.Position;
+			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GetPosition();
 			Vector3 lightDirection = args.AllLights->Get(0)->GetGameObject()->PRS.GetForward();
 
 			manager->BeginTriangulation();

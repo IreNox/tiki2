@@ -20,19 +20,23 @@ namespace TikiEngine
 
 		void BaseGameEntity::SetScale(Vector3 val)
 		{
+			Vector3 scale = this->GetGameObject()->PRS.GetScale();
+
 			boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
-							  MaxOf(MaxOf(GetGameObject()->PRS.Scale.X, 
-										  GetGameObject()->PRS.Scale.Y), 
-										  GetGameObject()->PRS.Scale.Z); 
-			GetGameObject()->PRS.Scale = val;
+				MaxOf(MaxOf(scale.X, 
+				scale.Y), 
+				scale.Z); 
+			GetGameObject()->PRS.SetScale(val);
 		}
 
 		void BaseGameEntity::SetScale(float val)
 		{
-			boundingRadius *= (val / MaxOf(MaxOf(GetGameObject()->PRS.Scale.X, 
-												 GetGameObject()->PRS.Scale.Y),
-												 GetGameObject()->PRS.Scale.Z)); 
-			GetGameObject()->PRS.Scale = Vector3(val);
+			Vector3 scale = this->GetGameObject()->PRS.GetScale();
+
+			boundingRadius *= (val / MaxOf(MaxOf(scale.X, 
+												 scale.Y),
+												 scale.Z)); 
+			GetGameObject()->PRS.SetScale(Vector3(val));
 		}
 
 	}

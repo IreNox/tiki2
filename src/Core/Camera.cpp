@@ -79,8 +79,8 @@ namespace TikiEngine
 		void Camera::Update(const UpdateArgs& args)
 		{
 			this->matrices.ViewMatrix = Matrix::Transpose(Matrix::CreateLookAt(
-				gameObject->PRS.Position,
-				gameObject->PRS.Position + gameObject->PRS.GetForward(),
+				gameObject->PRS.GetPosition(),
+				gameObject->PRS.GetPosition() + gameObject->PRS.GetForward(),
 				Vector3::Up
 			));
 		}

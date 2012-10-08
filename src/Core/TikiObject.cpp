@@ -37,7 +37,7 @@ UInt32 TikiObject::AddRef()
 
 	if (this == wrongPtr)
 	{
-		throw "Release wrong Pointer.";
+		throw "AddRef wrong Pointer.";
 	}
 
 	std::wostringstream s;

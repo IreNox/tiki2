@@ -24,7 +24,9 @@ namespace TikiEngine
 			SceneLevel* scene = (SceneLevel*)engine->scene;
 			if (scene && scene->GetLevel()->GetTerrain())
 			{
-				this->PRS.Position.Y = scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.Position);
+				this->PRS.SetPosition(
+					this->PRS.GetPosition() + Vector3(0, scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.GetPosition()), 0)
+				);
 			}			
 		}
 
@@ -32,23 +34,27 @@ namespace TikiEngine
 		{
 			if (fieldName == "PositionX")
 			{
-				this->PRS.Position.X = (float)sqlite3_column_double(state, fieldId);
+				this->PRS.SetPosition(
+					this->PRS.GetPosition() + Vector3((float)sqlite3_column_double(state, fieldId), 0, 0)
+				);
 			}
 			else if (fieldName == "PositionY")
 			{
-				this->PRS.Position.Z = (float)sqlite3_column_double(state, fieldId);
+				this->PRS.SetPosition(
+					this->PRS.GetPosition() + Vector3(0, 0, (float)sqlite3_column_double(state, fieldId))
+				);
 			}
 			else if (fieldName == "Scale")
 			{
-				this->PRS.Scale = Vector3(
+				this->PRS.SetScale(Vector3(
 					(float)sqlite3_column_double(state, fieldId)
-				);
+				));
 			}
 			else if (fieldName == "Rotation")
 			{
-				this->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(
+				this->PRS.SetRotation(Quaternion::CreateFromYawPitchRoll(
 					(float)sqlite3_column_double(state, fieldId), 0, 0
-				);
+				));
 			}
 
 			BasicDatabase::databaseToField(fieldName, state, fieldId);

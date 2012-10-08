@@ -6,22 +6,46 @@
 
 namespace TikiEngine
 {	
+	class GameObject;
+
 	class Transform
 	{
+		friend class GameObject;
+
 	public:
 
-		Vector3 Position;
-		Quaternion Rotation;
-		Vector3 Scale;
+		Vector3 position;
+		Quaternion rotation;
+		Vector3 scale;
 
-		Transform();
 		~Transform();
-
-		void FillWorldMatrix(Matrix* worldMatrix) const;
 
 		Vector3 GetForward();
 		Vector3 GetUp();
 		Vector3 GetLeft();
+
+		Vector3 GetPosition();
+		void SetPosition(const Vector3& pos);
+
+		Vector3 GetScale();
+		void SetScale(const Vector3& scale);
+
+		Quaternion GetRotation();
+		void SetRotation(const Quaternion& rot);
+
+		void FillWorldMatrix(Matrix* worldMatrix);
+
+	private:
+
+		Transform(GameObject* gameObject);
+
+		bool isDirty;
+
+		GameObject* gameObject;
+
+		Matrix world;
+
+		void checkWorldMatrix();
 
 	};
 }

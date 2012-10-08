@@ -92,12 +92,11 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
-			light->PRS.Position = Vector3(1500, 0, 0);
+			light->PRS.SetPosition(Vector3(1500, 0, 0));
 			this->AddElement(light);
 			
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 5.0f;
-			go->PRS.Position.Y = 0.0f;
+			go->PRS.SetPosition(Vector3(0, 0, 5.0f));
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();

@@ -6,7 +6,7 @@
 namespace TikiEngine
 {
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), components(), Model(0)
+		: EngineObject(engine), PRS(this), components(), Model(0)
 	{
 	}
 

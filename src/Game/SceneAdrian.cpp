@@ -48,12 +48,11 @@ namespace TikiEngine
 			mat->Release();
 
 			this->AddElement(go);
-			go->PRS.Position = Vector3(50);
+			go->PRS.SetPosition(Vector3(50));
 			go->Release();
 
 			go = new CameraObject(engine);
-			go->PRS.Position.Z = 70.0f;
-			go->PRS.Position.Y = 40.0f;
+			go->PRS.SetPosition(Vector3(0, 40.0f, 70.0f));
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();

@@ -3,36 +3,86 @@
 
 namespace TikiEngine
 {
-	Transform::Transform()
-		: Position(0.0f), Rotation(Quaternion::Identity), Scale(1.0f)
+	#pragma region Class
+	Transform::Transform(GameObject* gameObject)
+		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f)
 	{
 	}
 
 	Transform::~Transform()
 	{
 	}
+	#pragma endregion
 
-	void Transform::FillWorldMatrix(Matrix* worldMatrix) const
+	#pragma region Member
+	void Transform::FillWorldMatrix(Matrix* worldMatrix)
 	{
-		Matrix rot = Matrix::CreateFromQuaternion(this->Rotation);
-		Matrix scale = Matrix::CreateScaleMatrix(this->Scale);
-		Matrix trans = Matrix::CreateTranslation(this->Position);
+		checkWorldMatrix();
 
-		*worldMatrix = scale * rot * trans;
+		*worldMatrix = world;
 	}
+	#pragma endregion
 
+	#pragma region  Member - Get Direction
 	Vector3 Transform::GetForward()
 	{
-		return this->Rotation * Vector3::ForwardRH;
+		return rotation * Vector3::ForwardRH;
 	}
 
 	Vector3 Transform::GetUp()
 	{
-		return this->Rotation * Vector3::Up;
+		return rotation * Vector3::Up;
 	}
 
 	Vector3 Transform::GetLeft()
 	{
-		return this->Rotation * Vector3::Left;
+		return rotation * Vector3::Left;
 	}
+	#pragma endregion
+
+	#pragma region Member - Get/Set
+	Vector3 Transform::GetPosition()
+	{
+		return position;
+	}
+
+	void Transform::SetPosition(const Vector3& pos)
+	{
+		this->position = pos;
+	}
+
+	Vector3 Transform::GetScale()
+	{
+		return scale;
+	}
+
+	void Transform::SetScale(const Vector3& scale)
+	{
+		this->scale = scale;
+	}
+
+	Quaternion Transform::GetRotation()
+	{
+		return rotation;
+	}
+
+	void Transform::SetRotation(const Quaternion& rot)
+	{
+		this->rotation = rot;
+	}
+	#pragma endregion
+
+	#pragma region Private Member
+	void Transform::checkWorldMatrix()
+	{
+		if (!isDirty) return;
+
+		Matrix rot = Matrix::CreateFromQuaternion(this->rotation);
+		Matrix scale = Matrix::CreateScaleMatrix(this->scale);
+		Matrix trans = Matrix::CreateTranslation(this->position);
+
+		world = scale * rot * trans;
+		isDirty = false;
+	}
+	#pragma endregion
 }
