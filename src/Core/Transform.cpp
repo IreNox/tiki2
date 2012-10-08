@@ -5,7 +5,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Transform::Transform(GameObject* gameObject)
-		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f)
+		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f), isDirty(true)
 	{
 	}
 
@@ -49,6 +49,7 @@ namespace TikiEngine
 	void Transform::SetPosition(const Vector3& pos)
 	{
 		this->position = pos;
+		this->isDirty = true;
 	}
 
 	Vector3 Transform::GetScale()
@@ -59,6 +60,7 @@ namespace TikiEngine
 	void Transform::SetScale(const Vector3& scale)
 	{
 		this->scale = scale;
+		this->isDirty = true;
 	}
 
 	Quaternion Transform::GetRotation()
@@ -69,6 +71,7 @@ namespace TikiEngine
 	void Transform::SetRotation(const Quaternion& rot)
 	{
 		this->rotation = rot;
+		this->isDirty = true;
 	}
 	#pragma endregion
 

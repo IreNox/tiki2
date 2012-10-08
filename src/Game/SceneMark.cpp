@@ -188,7 +188,7 @@ namespace TikiEngine
 
 
 			// Draw bot Velocity
-			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.Position);
+			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.GetPosition());
 			Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
 			Vector3 vel = Vector3(bot->Velocity().X, botPos.Y, bot->Velocity().Y);
 			engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
