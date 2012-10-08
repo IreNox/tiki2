@@ -15,7 +15,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(23932);
+	//_CrtSetBreakAlloc(25017);
 
 	{
 		EngineDescription desc;

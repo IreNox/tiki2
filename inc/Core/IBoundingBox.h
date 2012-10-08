@@ -2,6 +2,7 @@
 
 #include "Core/IResource.h"
 #include "Core/Vector3.h"
+#include "Core/Color.h"
 
 namespace TikiEngine
 {
@@ -29,7 +30,7 @@ namespace TikiEngine
 				@param b - Bounds to test for intersection. */
 			virtual bool Intersects(const IBoundingBox& b) const = 0;
 
-			virtual void DrawDeug(const DrawArgs& args) = 0;
+			virtual void DrawDebug(Color color) = 0;
 
 		};
 	}

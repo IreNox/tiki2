@@ -42,6 +42,12 @@ namespace TikiEngine
 			SafeRelease(&fly);
 
 			SafeRelease(&font);
+
+			cellSpace->EmptyCells();
+			delete cellSpace;
+
+			EntityMgr->Dispose();
+			
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -51,10 +57,14 @@ namespace TikiEngine
 			GameObject* go = new GameObject(engine);
 			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
 			//cellSpace = new CellSpacePartition<TikiBot*>(engine, 50.0f, 50.0f, 8, 8, 50); 
-			cellSpace = new CellSpacePartition<TikiBot*>(engine, 50, 50, 8, 8, 10);
-			// Create TikiBot and set some target poition to seek
+			cellSpace = new CellSpacePartition<TikiBot*>(engine, 100, 100, 8, 8, 10);
+			
+			// Create TikiBot, set steering, add to cellspace and entitymgr
 			bot = new TikiBot(engine, go);
 			bot->GetSteering()->WanderOn();
+			cellSpace->AddEntity(bot);
+			EntityMgr->RegisterEntity(bot);
+
 			//bot->GetSteering()->SetTarget(Vector2(5, -5));
 			//bot->GetSteering()->ArriveOn();
 			//bot->GetSteering()->SeekOn();
@@ -204,11 +214,16 @@ namespace TikiEngine
 			engine->physics->DrawDebug();
 			#endif
 
+			cellSpace->RenderCells();
+
 			Scene::Draw(args);
 		}
 
 		void SceneMark::Update(const UpdateArgs& args)
 		{
+			cellSpace->CalculateNeighbors(bot->Pos(),  10);
+
+
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
 			if (args.Input.GetKey(KEY_I))
@@ -273,8 +288,7 @@ namespace TikiEngine
 					}
 
 					// turn off any wander behavior
-					if (bot->GetSteering()->WanderIsOn() == true)
-						bot->GetSteering()->WanderOff();
+					bot->GetSteering()->WanderOff();
 
 					// get the impact point and activate bot movement
 					impact = info.Point;

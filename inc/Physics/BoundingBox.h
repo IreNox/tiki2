@@ -24,7 +24,7 @@ namespace TikiEngine
 			void Set(const Vector3& min, const Vector3& max);
 			bool Intersects(const IBoundingBox& b) const;
 
-			void DrawDeug(const DrawArgs& args);
+			void DrawDebug(Color color);
 
 			#pragma region IResource Members
 			void* GetNativeResource() { return (void*)&bounds; }
@@ -36,6 +36,7 @@ namespace TikiEngine
 			#pragma endregion
 
 		private:
+			Engine* engine;
 			NxBounds3 bounds;
 			Vector3 minimum;
 			Vector3 maximum;

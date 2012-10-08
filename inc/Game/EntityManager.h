@@ -35,12 +35,17 @@ namespace TikiEngine
 			/* !@brief clears all entities from the entity map */
 			void Reset() { entityMap.clear(); }
 
+			void Dispose();
+
 		private:
 			typedef std::map<int, BaseGameEntity*> EntityMap;
 
 			// for a quick lookup the entities are stored in a std::map, in which
 			// pointers to entities are cross referenced by their identifying number
 			EntityMap entityMap;
+			
+		    static EntityManager* instance;
+
 		};
 	}
 }

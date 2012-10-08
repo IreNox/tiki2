@@ -1,4 +1,5 @@
 #include "Physics/BoundingBox.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -7,6 +8,7 @@ namespace TikiEngine
 
 		BoundingBox::BoundingBox(Engine* engine) : IBoundingBox(engine)
 		{
+			this->engine = engine;
 		}
 
 		BoundingBox::~BoundingBox()
@@ -37,9 +39,22 @@ namespace TikiEngine
 			return bounds.intersects(bb);
 		}
 
-		void BoundingBox::DrawDeug(const DrawArgs& args)
+		void BoundingBox::DrawDebug(Color color)
 		{
-			// TODO
+			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, minimum.Z), Vector3(maximum.X, minimum.Y, minimum.Z), color);
+			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, maximum.Z), Vector3(maximum.X, minimum.Y, maximum.Z), color);
+			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, minimum.Z), Vector3(minimum.X, minimum.Y, maximum.Z), color);
+			engine->graphics->DrawLine(Vector3(maximum.X, minimum.Y, minimum.Z), Vector3(maximum.X, minimum.Y, maximum.Z), color);
+																				 										 
+			engine->graphics->DrawLine(Vector3(minimum.X, maximum.Y, minimum.Z), Vector3(maximum.X, maximum.Y, minimum.Z), color);
+			engine->graphics->DrawLine(Vector3(minimum.X, maximum.Y, maximum.Z), Vector3(maximum.X, maximum.Y, maximum.Z), color);
+			engine->graphics->DrawLine(Vector3(minimum.X, maximum.Y, minimum.Z), Vector3(minimum.X, maximum.Y, maximum.Z), color);
+			engine->graphics->DrawLine(Vector3(maximum.X, maximum.Y, minimum.Z), Vector3(maximum.X, maximum.Y, maximum.Z), color);
+																				 										
+			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, minimum.Z), Vector3(minimum.X, maximum.Y, minimum.Z), color);
+			engine->graphics->DrawLine(Vector3(maximum.X, minimum.Y, minimum.Z), Vector3(maximum.X, maximum.Y, minimum.Z), color);
+			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, maximum.Z), Vector3(minimum.X, maximum.Y, maximum.Z), color);
+			engine->graphics->DrawLine(Vector3(maximum.X, minimum.Y, maximum.Z), Vector3(maximum.X, maximum.Y, maximum.Z), color);
 		}
 
 	}

@@ -6,11 +6,22 @@ namespace TikiEngine
 {
 	namespace AI
 	{
+		EntityManager* EntityManager::instance = 0;
+
 		//   this class is a singleton
 		EntityManager* EntityManager::Instance()
 		{
-		    static EntityManager instance;
-		    return &instance;
+			if (instance == 0)
+				instance = new EntityManager;
+
+		    return instance;
+		}
+
+		void EntityManager::Dispose()
+		{
+			Reset();
+			delete instance;
+			instance = 0;
 		}
 
 		BaseGameEntity* EntityManager::GetEntityFromID(int id) const
