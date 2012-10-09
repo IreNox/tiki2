@@ -1,6 +1,8 @@
 #pragma once
 
+#include <random>
 #include "Core/Matrix3x3.h"
+#include "Core/TypeDef.h"
 
 /* misc utility functions and constants */
 const float   Pi        = 3.14159f;

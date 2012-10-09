@@ -215,6 +215,12 @@
     <ClCompile Include="src\Core\Component.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Plane.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Line2D.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -494,6 +500,12 @@
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Ray.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Plane.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Line2D.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
   </ItemGroup>

@@ -12,6 +12,8 @@
 #include "Game/CameraFly.h"
 #include "Game/CellSpacePartition.h"
 
+#include "Game/NavigationCell.h"
+
 #include "Core/IFont.h"
 
 namespace TikiEngine

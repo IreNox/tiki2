@@ -32,6 +32,8 @@
     <ClInclude Include="inc\Game\LevelObject.h" />
     <ClInclude Include="inc\Game\MessageDispatcher.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
+    <ClInclude Include="inc\Game\NavigationCell.h" />
+    <ClInclude Include="inc\Game\NavigationHeap.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
@@ -60,6 +62,8 @@
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\MessageDispatcher.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />
+    <ClCompile Include="src\Game\NavigationCell.cpp" />
+    <ClCompile Include="src\Game\NavigationHeap.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />

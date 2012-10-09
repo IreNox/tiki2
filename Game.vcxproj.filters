@@ -140,6 +140,12 @@
     <ClInclude Include="inc\Game\CellSpacePartition.h">
       <Filter>Headerdateien\AI\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\NavigationCell.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationHeap.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -212,6 +218,12 @@
       <Filter>Quelldateien\AI\Messaging</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CellSpacePartition.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\NavigationCell.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\NavigationHeap.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>

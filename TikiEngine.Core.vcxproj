@@ -32,6 +32,7 @@
     <ClCompile Include="src\Core\LibraryManager.cpp" />
     <ClCompile Include="src\Core\Light.cpp" />
     <ClCompile Include="src\Core\LightObject.cpp" />
+    <ClCompile Include="src\Core\Line2D.cpp" />
     <ClCompile Include="src\Core\Material.cpp" />
     <ClCompile Include="src\Core\Matrix.cpp" />
     <ClCompile Include="src\Core\Matrix2x2.cpp" />
@@ -39,6 +40,7 @@
     <ClCompile Include="src\Core\Mesh.cpp" />
     <ClCompile Include="src\Core\MeshIndexed.cpp" />
     <ClCompile Include="src\Core\MeshObject.cpp" />
+    <ClCompile Include="src\Core\Plane.cpp" />
     <ClCompile Include="src\Core\TikiObject.cpp" />
     <ClCompile Include="src\Core\PostProcess.cpp" />
     <ClCompile Include="src\Core\PostProcessPass.cpp" />
@@ -84,7 +86,9 @@
     <ClInclude Include="inc\Core\ITerrainRenderer.h" />
     <ClInclude Include="inc\Core\ITriangleMeshCollider.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />
+    <ClInclude Include="inc\Core\Line2D.h" />
     <ClInclude Include="inc\Core\Matrices.h" />
+    <ClInclude Include="inc\Core\Plane.h" />
     <ClInclude Include="inc\Core\Point.h" />
     <ClInclude Include="inc\Core\PostProcess.h" />
     <ClInclude Include="inc\Core\PostProcessPass.h" />
