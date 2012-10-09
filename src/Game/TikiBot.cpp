@@ -38,7 +38,7 @@ namespace TikiEngine
 
 			// init CharacterController
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
-			controller->SetCenter(Vector3(Pos().X, 5, Pos().Y));
+			controller->SetCenter(Pos3D());
 			controller->SetRadius((float)boundingRadius);
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
@@ -265,9 +265,7 @@ namespace TikiEngine
 					// test location on the NavigationMesh and resolve collisions
 					parent->ResolveMotionOnMesh(pathPos, currentCell, NextPosition, &NextCell);
 					pathPos = NextPosition;
-					//float boost = 10;
-					//pathMovement.X *= boost;
-					//pathMovement.Z *= boost;
+					controller->SetCenter(pathPos);
 					currentCell = NextCell;
 				}
 			}
@@ -291,7 +289,6 @@ namespace TikiEngine
 
 			//if (pathMovement != Vector3::Zero)
 			controller->Move(pathMovement);
-
 		}
 
 	}
