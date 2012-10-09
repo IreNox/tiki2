@@ -47,8 +47,12 @@ namespace TikiEngine
 
 		void CharacterController::SetCenter(const Vector3& center)
 		{
-			SetCenterPos(center);
-			UpdateData();
+			// don't updateData if we have a valid controller
+			this->center = center.arr;
+			if (controller != 0)
+				controller->setPosition(NxExtendedVec3(center.X, center.Y, center.Z));
+			else
+				UpdateData();
 		}
 
 		bool CharacterController::GetDynamic()
