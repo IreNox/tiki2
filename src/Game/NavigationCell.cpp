@@ -269,8 +269,8 @@ namespace TikiEngine
 				Vector2 PathDirection(PointOfIntersection.X - centerPoint.X, 
 									  PointOfIntersection.Y - centerPoint.Z);  
   
-				PathDirection = (PathDirection.X * 0.9f, 
-								 PathDirection.Y * 0.9f);  
+				PathDirection.X *= 0.9f; 
+				PathDirection.Y *= 0.9f;  
   
 				TestPoint.X = centerPoint.X + PathDirection.X;  
 				TestPoint.Y = centerPoint.Z + PathDirection.Y;  
@@ -349,7 +349,7 @@ namespace TikiEngine
 			return(false);  
 		}  
 
-		bool NavigationCell::QueryForPath(NavigationHeap* pHeap, NavigationCell* Caller, float arrivalcost)  
+		bool NavigationCell::QueryForPath(NavigationHeap* pHeap, NavigationCell* Caller, float cost)  
 		{  
 			if (sessionID != pHeap->SessionID())  
 			{  
@@ -360,7 +360,7 @@ namespace TikiEngine
 				{  
 					open  = true;  
 					ComputeHeuristic(pHeap->Goal());  
-					this->arrivalCost = arrivalcost;  
+					this->arrivalCost = cost;  
   
 					// remember the side this caller is entering from  
 					if (Caller == link[0])  
@@ -394,9 +394,9 @@ namespace TikiEngine
 				// Open means we are already in the Open Heap.  
 				// If this new caller provides a better path, adjust our data  
 				// Then tell the Heap to resort our position in the list.  
-				if ((arrivalcost + heuristic) < (this->arrivalCost + heuristic))  
+				if ((cost + heuristic) < (this->arrivalCost + heuristic))  
 				{  
-						this->arrivalCost = arrivalcost;  
+						this->arrivalCost = cost;  
   
 						// remember the side this caller is entering from  
 						if (Caller == link[0])  
