@@ -5,6 +5,11 @@
 #include "Game/TikiSteering.h"
 #include "Core/ICharacterController.h"
 
+// NavMesh includes
+#include "Game/NavigationCell.h"
+#include "Game/NavigationPath.h"
+#include "Game/NavigationMesh.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -15,8 +20,22 @@ namespace TikiEngine
 		class TikiBot : public MovingEntity
 		{
 		public:
+			struct Triangle
+			{
+				Vector3 vert[3];			// triangle vertices in clockwise order
+				unsigned char color[3][4];	// 4 color values (RGBA) for each vertex
+			};
+
+			typedef	std::vector<Triangle> TRIANGLE_POOL;
+
 			TikiBot(Engine* engine, GameObject* gameObject);
 			~TikiBot();
+
+			// Navigation
+			void CreateNav(NavigationMesh* par, NavigationCell* currCell);
+			void AddTriangle(const Triangle& triangle);
+			void GotoLocation(const Vector3& p, NavigationCell* cell);
+			void GotoRandomLocation();
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -62,6 +81,8 @@ namespace TikiEngine
 			// the steering force for this time-step.
 			void UpdateMovement(const UpdateArgs& args);
 
+			void UpdateNavigation(const UpdateArgs& args);
+
 			enum Status {alive, dead, spawning};
 
 			// alive, dead or spawning?
@@ -104,12 +125,16 @@ namespace TikiEngine
 			// set to true when a human player takes over control of the bot
 			bool possessed;
 
+			// Navigation
+			NavigationMesh* parent;			// the mesh we are sitting on
+			NavigationCell* currentCell;	// our current cell on the mesh
 
-
-
-
-
-
+			TRIANGLE_POOL geometry;			// a pile of triangles representing our object
+			bool pathActive;				// true when we are using a path to navigate
+			NavigationPath path;			// our path object
+			NavigationPath::WayPointID nextWaypoint; // ID of the next waypoint we will move to
+			Vector3 pathMovement;
+			Vector3 pathPos;
 		};
 
 	}

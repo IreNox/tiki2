@@ -35,6 +35,7 @@ namespace TikiEngine
 
 
 			Vector2 Pos() { return Vector2(GetGameObject()->PRS.GetPosition().X, GetGameObject()->PRS.GetPosition().Z); }
+			Vector3 Pos3D() { return Vector3(GetGameObject()->PRS.GetPosition()); }
 			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.SetPosition(newPos); }
 
 			Double BRadius() const { return boundingRadius; }

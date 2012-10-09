@@ -12,7 +12,7 @@
 #include "Game/CameraFly.h"
 #include "Game/CellSpacePartition.h"
 
-#include "Game/NavigationCell.h"
+#include "Game/NavigationMesh.h"
 
 #include "Core/IFont.h"
 
@@ -61,6 +61,12 @@ namespace TikiEngine
 			 Vector3 impact;
 
 			 CellSpacePartition<TikiBot*>* cellSpace;
+			 bool drawCellSpace;
+
+
+
+			 NavigationMesh naviMesh; 
+			 bool showNaviMesh;
 
 		};
 	}

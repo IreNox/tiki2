@@ -43,9 +43,9 @@ namespace TikiEngine
 			};
 
 			// ctor / dtor
-			inline NavigationCell() : sessionID(0) { };
-			inline NavigationCell(const NavigationCell& src) { *this = src; };
-			inline ~NavigationCell() { };
+			NavigationCell() : sessionID(0) { };
+			NavigationCell(const NavigationCell& src) { *this = src; };
+			~NavigationCell() { };
 
 			// operators
 			NavigationCell& operator=(const NavigationCell& src);

@@ -7,7 +7,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine;
 		// operators
-		inline NavigationCell& NavigationCell::operator=(const NavigationCell& src)
+		NavigationCell& NavigationCell::operator=(const NavigationCell& src)
 		{
 			if (this != &src)
 			{
@@ -31,7 +31,7 @@ namespace TikiEngine
 			return (*this);
 		}
 
-		inline void NavigationCell::Initialize(const Vector3& pointA, const Vector3& pointB, const Vector3& pointC)
+		void NavigationCell::Initialize(const Vector3& pointA, const Vector3& pointB, const Vector3& pointC)
 		{
 			vertex[VERT_A] = pointA;
 			vertex[VERT_B] = pointB;
@@ -46,7 +46,7 @@ namespace TikiEngine
 			ComputeCellData();
 		}
 
-		inline void NavigationCell::ComputeCellData()
+		void NavigationCell::ComputeCellData()
 		{
 			// create 2D versions of our verticies
 			Vector2 Point1(vertex[VERT_A].X, vertex[VERT_A].Z);
@@ -90,7 +90,7 @@ namespace TikiEngine
 			wallDistance[2] = WallVector.Length();
 		}
 
-		inline bool NavigationCell::RequestLink(const Vector3& PointA, const Vector3& PointB, NavigationCell* Caller)
+		bool NavigationCell::RequestLink(const Vector3& PointA, const Vector3& PointB, NavigationCell* Caller)
 		{
 			// return true if we share the two provided verticies with the calling cell.
 			if (vertex[VERT_A] == PointA)
@@ -137,7 +137,7 @@ namespace TikiEngine
 			return false;
 		}
 
-		inline void NavigationCell::SetLink(CELL_SIDE Side, NavigationCell* Caller)
+		void NavigationCell::SetLink(CELL_SIDE Side, NavigationCell* Caller)
 		{
 			link[Side] = Caller;
 		}
@@ -233,7 +233,7 @@ namespace TikiEngine
 		}  
 
 
-		inline void NavigationCell::MapVectorHeightToCell(Vector3& MotionPoint) const
+		void NavigationCell::MapVectorHeightToCell(Vector3& MotionPoint) const
 		{
 			MotionPoint.Y = cellPlane.SolveForY(MotionPoint.X, MotionPoint.Z);
 		}
@@ -360,7 +360,7 @@ namespace TikiEngine
 				{  
 					open  = true;  
 					ComputeHeuristic(pHeap->Goal());  
-					arrivalCost = arrivalcost;  
+					this->arrivalCost = arrivalcost;  
   
 					// remember the side this caller is entering from  
 					if (Caller == link[0])  
@@ -380,8 +380,8 @@ namespace TikiEngine
 				{  
 					// we are the cell that contains the starting location  
 					// of the A* search.  
-					open  = false;  
-					arrivalCost = 0;  
+					open = false;  
+					this->arrivalCost = 0;  
 					heuristic = 0;  
 					arrivalWall = 0;  
 				}  
@@ -394,9 +394,9 @@ namespace TikiEngine
 				// Open means we are already in the Open Heap.  
 				// If this new caller provides a better path, adjust our data  
 				// Then tell the Heap to resort our position in the list.  
-				if ((arrivalcost + heuristic) < (arrivalCost + heuristic))  
+				if ((arrivalcost + heuristic) < (this->arrivalCost + heuristic))  
 				{  
-						arrivalCost = arrivalcost;  
+						this->arrivalCost = arrivalcost;  
   
 						// remember the side this caller is entering from  
 						if (Caller == link[0])  
@@ -422,7 +422,7 @@ namespace TikiEngine
 
 
 		#pragma region Accessors
-		inline bool NavigationCell::IsPointInCellCollumn(const Vector2& TestPoint) const
+		bool NavigationCell::IsPointInCellCollumn(const Vector2& TestPoint) const
 		{
 			// we are "in" the cell if we are on the right hand side of all edge lines of the cell
 			int InteriorCount = 0;
@@ -438,33 +438,33 @@ namespace TikiEngine
 			return (InteriorCount == 3);
 		}
 
-		inline bool NavigationCell::IsPointInCellCollumn(const Vector3& TestPoint) const
+		bool NavigationCell::IsPointInCellCollumn(const Vector3& TestPoint) const
 		{
 			Vector2 TestPoint2D(TestPoint.X,TestPoint.Z);
 			return (IsPointInCellCollumn(TestPoint2D));
 		}
 
-		inline const Vector3& NavigationCell::Vertex(int Vert) const
+		const Vector3& NavigationCell::Vertex(int Vert) const
 		{
 			return(vertex[Vert]);
 		}
 
-		inline const Vector3& NavigationCell::CenterPoint() const
+		const Vector3& NavigationCell::CenterPoint() const
 		{
 			return(centerPoint);
 		}
 
-		inline NavigationCell* NavigationCell::Link(int Side) const
+		NavigationCell* NavigationCell::Link(int Side) const
 		{
 			return(link[Side]);
 		}
 
-		inline float NavigationCell::ArrivalCost() const
+		float NavigationCell::ArrivalCost() const
 		{
 			return(arrivalCost);
 		}
 
-		inline float NavigationCell::Heuristic() const
+		float NavigationCell::Heuristic() const
 		{
 			return(heuristic);
 		}
@@ -474,12 +474,12 @@ namespace TikiEngine
 			return(arrivalCost + heuristic);
 		}
 
-		inline int NavigationCell::ArrivalWall() const
+		int NavigationCell::ArrivalWall() const
 		{
 			return(arrivalWall);
 		}
 
-		inline const Vector3 NavigationCell::WallMidpoint(int Side)const
+		const Vector3 NavigationCell::WallMidpoint(int Side)const
 		{
 			return(wallMidpoint[Side]);
 		}

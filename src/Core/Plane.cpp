@@ -3,29 +3,29 @@
 namespace TikiEngine
 {
 	// default ctor
-	inline Plane::Plane()
+	Plane::Plane()
 	{
 	}
 
 	// default copy ctor
-	inline Plane::Plane(const Plane& plane)
+	Plane::Plane(const Plane& plane)
 	{
 		normal = plane.normal;
 		point = plane.point;
 		distance = plane.distance;
 	}
 
-	inline Plane::Plane(const Vector3& point0, const Vector3& point1, const Vector3& point2)
+	Plane::Plane(const Vector3& point0, const Vector3& point1, const Vector3& point2)
 	{
 		Set(point0, point1, point2);
 	}
 
-	inline Plane::~Plane()
+	Plane::~Plane()
 	{
 	}
 
 	// operators
-	inline Plane& Plane::operator=(const Plane& src)
+	Plane& Plane::operator=(const Plane& src)
 	{
 		normal = src.normal;
 		point = src.point;
@@ -35,7 +35,7 @@ namespace TikiEngine
 	}
 
 	// Given Z and Y, Solve for X on the plane 
-	inline float Plane::SolveForX(float y, float z) const
+	float Plane::SolveForX(float y, float z) const
 	{
 		//Ax + By + Cz + D = 0
 		// Ax = -(By + Cz + D)
@@ -50,7 +50,7 @@ namespace TikiEngine
 
 
 	// Given X and Z, Solve for Y on the plane 
-	inline float Plane::SolveForY(float x, float z) const
+	float Plane::SolveForY(float x, float z) const
 	{
 		// Ax + By + Cz + D = 0
 		// By = -(Ax + Cz + D)
@@ -64,7 +64,7 @@ namespace TikiEngine
 	}
 
 	// Given X and Y, Solve for Z on the plane 
-	inline float Plane::SolveForZ(float x, float y) const
+	float Plane::SolveForZ(float x, float y) const
 	{
 		//Ax + By + Cz + D = 0
 		// Cz = -(Ax + By + D)
@@ -78,26 +78,26 @@ namespace TikiEngine
 	}
 
 	// Setup Plane object given a clockwise ordering of 3D points 
-	inline void Plane::Set(const Vector3& point0, const Vector3& point1, const Vector3& point2)
+	void Plane::Set(const Vector3& point0, const Vector3& point1, const Vector3& point2)
 	{
 		normal = Vector3::Cross((point1 - point0), (point2 - point0));
-		normal.Normalize();
+		normal = Vector3::Normalize(normal);
 		point = point0;
 		distance = -Vector3::Dot(point, normal);
 	}
 
 	// accessors
-	inline const Vector3& Plane::Normal() const
+	const Vector3& Plane::Normal() const
 	{
 		return(normal);
 	}
 
-	inline const Vector3& Plane::Point() const
+	const Vector3& Plane::Point() const
 	{
 		return(point);
 	}
 
-	inline const float& Plane::Distance() const
+	const float& Plane::Distance() const
 	{
 		return(distance);
 	}

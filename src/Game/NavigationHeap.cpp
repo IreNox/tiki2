@@ -6,15 +6,15 @@ namespace TikiEngine
 	{
 
 		// Default Object Constructor / destructor
-		inline NavigationHeap::NavigationHeap()
+		NavigationHeap::NavigationHeap()
 		{
 		}
 
-		inline NavigationHeap::~NavigationHeap()
+		NavigationHeap::~NavigationHeap()
 		{
 		}
 
-		inline void NavigationHeap::Setup(int SessionID, const Vector3& Goal)
+		void NavigationHeap::Setup(int SessionID, const Vector3& Goal)
 		{
 			this->goal = Goal;
 			this->sessionID = SessionID;
@@ -47,19 +47,19 @@ namespace TikiEngine
 			}
 		}
 
-		inline bool NavigationHeap::NotEmpty()const
+		bool NavigationHeap::NotEmpty()const
 		{
 			return(nodes.size() ? true : false);
 		}
 
-		inline void NavigationHeap::GetTop(NavigationNode& n)
+		void NavigationHeap::GetTop(NavigationNode& n)
 		{
 			n = nodes.front();
 			std::pop_heap( nodes.begin(), nodes.end(), comp );
 			nodes.pop_back();
 		}
 
-		inline NavigationHeap::Container::iterator NavigationHeap::FindNodeInterator(NavigationCell* cell)
+		NavigationHeap::Container::iterator NavigationHeap::FindNodeInterator(NavigationCell* cell)
 		{
 			for( Container::iterator i = nodes.begin(); i != nodes.end(); ++i )
 			{

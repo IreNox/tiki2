@@ -146,6 +146,12 @@
     <ClInclude Include="inc\Game\NavigationHeap.h">
       <Filter>Headerdateien\AI\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\NavigationMesh.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationPath.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -224,6 +230,12 @@
       <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\NavigationHeap.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\NavigationMesh.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\NavigationPath.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,13 +4,13 @@
 namespace TikiEngine
 {
 	// default ctor
-	inline Line2D::Line2D() 
+	Line2D::Line2D() 
 		: normalCalculated(false)
 	{
 	}
 
 	// default copy ctor
-	inline Line2D::Line2D(const Line2D& Src)
+	Line2D::Line2D(const Line2D& Src)
 		: normalCalculated(false)
 	{
 		*this = Src;
@@ -29,7 +29,7 @@ namespace TikiEngine
 	}
 
 	// operators
-	inline Line2D& Line2D::operator=(const Line2D& src)
+	Line2D& Line2D::operator=(const Line2D& src)
 	{
 		pointA = src.pointA;
 		pointB = src.pointB;
@@ -59,14 +59,14 @@ namespace TikiEngine
 		return normal;
 	}
 
-	inline void Line2D::SetPoints(const Vector2& pA, const Vector2& pB)
+	void Line2D::SetPoints(const Vector2& pA, const Vector2& pB)
 	{
 		pointA = pA;
 		pointB = pB;
 		normalCalculated = false;
 	}
 
-	inline void Line2D::SetPoints(float pAx, float pAy, float pBx, float pBy)
+	void Line2D::SetPoints(float pAx, float pAy, float pBx, float pBy)
 	{
 		pointA.X = pAx;
 		pointA.Y = pAy;
@@ -75,7 +75,7 @@ namespace TikiEngine
 		normalCalculated = false;
 	}
 
-	inline float Line2D::SignedDistance(const Vector2& p) const
+	float Line2D::SignedDistance(const Vector2& p) const
 	{
 		if (!normalCalculated)
 			ComputeNormal();
@@ -161,17 +161,17 @@ namespace TikiEngine
 	}
 
 	// accessors
-	inline const Vector2& Line2D::EndPointA() const
+	const Vector2& Line2D::EndPointA() const
 	{
 		return pointA;
 	}
 	
-	inline const Vector2& Line2D::EndPointB() const
+	const Vector2& Line2D::EndPointB() const
 	{
 		return pointB;
 	}
 	
-	inline float Line2D::Length() const
+	float Line2D::Length() const
 	{
 		float xdist = pointB.X - pointA.X;
 		float ydist = pointB.Y - pointA.Y;
@@ -182,13 +182,13 @@ namespace TikiEngine
 		return sqrtf(xdist + ydist);  // return static_cast<float>(sqrt(xdist + ydist));
 	}
 
-	inline void Line2D::GetDirection(Vector2& direction) const
+	void Line2D::GetDirection(Vector2& direction) const
 	{
 		direction = (pointB - pointA);
 		direction.Normalize();
 	}
 	
-	inline void Line2D::ComputeNormal() const
+	void Line2D::ComputeNormal() const
 	{
 		// Get Normailized direction from A to B
 		GetDirection(normal);
