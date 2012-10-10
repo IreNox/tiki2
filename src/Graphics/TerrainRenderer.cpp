@@ -10,11 +10,18 @@
 #include "Graphics/DllMain.h"
 #include "Graphics/GraphicsModule.h"
 
+#include "Cloddy/Terrain.h"
+
 namespace TikiEngine
 {
 	namespace Components
 	{
-		//using namespace Cloddy::API::MeshVisitors;
+		//Terrain* t = dynamic_cast<Terrain*>((ICloddyTerrain*)terrain);
+		//MeshBuilder* builder = new MeshBuilder(100000, 100000, 300000);
+		//t->ExportMesh(TerrainMesh_Collision, builder);
+
+		using namespace Cloddy::API;
+		using namespace Cloddy::API::MeshVisitors;
 		using namespace Cloddy::Core::Math::Vectors;
 
 		#pragma region Class

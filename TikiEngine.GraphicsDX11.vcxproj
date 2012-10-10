@@ -30,7 +30,6 @@
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
-    <ClCompile Include="src\Graphics\ModelRenderer.cpp" />
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
@@ -60,7 +59,6 @@
     <ClInclude Include="inc\Graphics\Lights.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Model.h" />
-    <ClInclude Include="inc\Graphics\ModelRenderer.h" />
     <ClInclude Include="inc\Graphics\Quad.h" />
     <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />

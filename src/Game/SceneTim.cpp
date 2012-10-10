@@ -54,6 +54,8 @@ namespace TikiEngine
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
+			model->SetMaterial(mat);
+			mat->Release();
 
 			go->Model->SetMaterial(mat);
 			mat->Release();
