@@ -188,8 +188,8 @@ namespace TikiEngine
 
 				buf->Data[i].Range = l->GetRange();
 				buf->Data[i].Color = l->GetColor().ToVector4();
-				buf->Data[i].Position = l->GetGameObject()->PRS.GetPosition();
-				buf->Data[i].Direction = l->GetGameObject()->PRS.GetRotation() * Vector3::ForwardRH;
+				buf->Data[i].Position = l->GetGameObject()->PRS.Position();
+				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation() * Vector3::ForwardRH;
 
 				i++;
 			}
@@ -251,7 +251,7 @@ namespace TikiEngine
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
-			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL , 1.0f, 0);
+			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 						
 			rtDepth->Clear(Color::Black);
 			rtDepth->Apply(1);

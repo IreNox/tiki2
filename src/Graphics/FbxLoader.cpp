@@ -92,7 +92,7 @@ namespace TikiEngine
 
 			List<UInt32> indices = List<UInt32>();
 
-			for(int i = 0; i < skeletonCount; i++)
+			for(UInt32 i = 0; i < skeletonCount; i++)
 			{
 				ConvertToTiki(skeletonList[i], FbxVector4(), FbxVector4(), FbxVector4(), FbxVector2(), &vertexData[i]);
 				indices.Add(i);
@@ -402,7 +402,7 @@ namespace TikiEngine
 			return v;
 		}
 
-		Matrix& FbxLoader::GetGlobalPosition(FbxNode* node)
+		Matrix FbxLoader::GetGlobalPosition(FbxNode* node)
 		{
 			return ConvertToTiki(GetGlobalPositionFbx(node));
 		}
@@ -421,7 +421,7 @@ namespace TikiEngine
 			return FbxAMatrix(lT, lR, lS);
 		}
 
-		Matrix& FbxLoader::GetGeometry(FbxNode* node)
+		Matrix FbxLoader::GetGeometry(FbxNode* node)
 		{
 			return ConvertToTiki(GetGeometryFbx(node));
 		}

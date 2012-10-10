@@ -11,8 +11,8 @@ namespace TikiEngine
 		CameraRTS::CameraRTS(Engine* engine, GameObject* gameObject)
 			: IScript(engine, gameObject)
 		{
-			gameObject->PRS.SetPosition(Vector3(0, 192.0f, 0));
-			gameObject->PRS.SetRotation(gameObject->PRS.GetRotation() * Quaternion::CreateFromYawPitchRoll(0, -1, 0));
+			gameObject->PRS.Position() = Vector3(0, 192.0f, 0);
+			gameObject->PRS.Rotation() += Quaternion::CreateFromYawPitchRoll(0, -1, 0);
 		}
 
 		CameraRTS::~CameraRTS()
@@ -32,15 +32,12 @@ namespace TikiEngine
 
 			float speed = 200.0f * (float)args.Time.ElapsedTime;
 
-			gameObject->PRS.SetPosition(
-				gameObject->PRS.GetPosition() +
-				(Vector3(1 * move.X, 0, 1 * move.Y) * (float)args.Time.ElapsedTime) +
+			gameObject->PRS.Position() += (Vector3(1 * move.X, 0, 1 * move.Y) * (float)args.Time.ElapsedTime) +
 				Vector3(
-					(args.Input.MousePosition.X == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.X == 1.0f ? speed : 0.0f),
-					0.0f, 
-					(args.Input.MousePosition.Y == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.Y == 1.0f ? speed : 0.0f)
-				)
-			);
+				(args.Input.MousePosition.X == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.X == 1.0f ? speed : 0.0f),
+				0.0f, 
+				(args.Input.MousePosition.Y == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.Y == 1.0f ? speed : 0.0f)
+				);
 		}
 	}
 }

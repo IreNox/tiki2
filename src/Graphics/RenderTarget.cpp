@@ -49,6 +49,11 @@ namespace TikiEngine
 			DllMain::Context->ClearRenderTargetView(renderTarget, color.arr);
 		}
 
+		void RenderTarget::SaveToFile(wcstring fileName)
+		{
+			texture->SaveToFile(fileName);
+		}
+
 		Int32 RenderTarget::GetWidth()
 		{
 			return texture->GetWidth();
@@ -170,7 +175,6 @@ namespace TikiEngine
 
 		void RenderTarget::saveToStream(wcstring fileName, Stream* stream)
 		{
-			//texture->saveToStream(fileName, stream);
 		}
 		#pragma endregion
 	}

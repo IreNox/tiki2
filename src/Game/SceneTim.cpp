@@ -21,6 +21,9 @@
 
 #include "Game/CameraFly.h"
 
+#include <sstream>
+using namespace std;
+
 namespace TikiEngine
 {
 	namespace Game
@@ -37,54 +40,23 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			SafeRelease(&tex);
-			SafeRelease(&ssao);
+			//SafeRelease(&ssao);
 			SafeRelease(&light);
+			SafeRelease(&font);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
 			GameObject* go = new GameObject(engine);
 			
-			MeshIndexed* mesh = (MeshIndexed*)engine->content->LoadMesh(L"Data/Resources/Models/Dice2.fbx");
+			go->Model = engine->content->LoadModel(L"Data/Models/bridge.fbx");
 			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
 
-			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			render->SetMesh(mesh);
-			render->SetMaterial(mat);
+			go->Model->SetMaterial(mat);
 			mat->Release();
-			mesh->Release();
-			render->Release();
-
-			IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
-			material->SetRestitution(0.7f);
-			material->SetDynamicFriction(0.7f);
-			material->SetStaticFriction(0.5f);
-
-			ITriangleMeshCollider* collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
-			collider->SetMaterial(material->GetIndex());
-			collider->SetCenter(Vector3(0, 3, -4));
-			collider->SetDynamic(false);
-			collider->SetGroup(CG_Collidable_Pushable);
-
-			UInt32 count;
-			UInt32* indexData;
-			mesh->GetIndexData(&indexData, &count);
-			collider->SetIndices(indexData, count);
-
-			DefaultVertex* vertexData;
-			mesh->GetVertexData((void**)&vertexData, &count);
-
-			List<Vector3> list = List<Vector3>();
-			UInt32 i = 0;
-			count /= sizeof(DefaultVertex);
-			while (i < count) { list.Add(Vector3(vertexData[i].Position)); i++; }
-
-			Vector3* vectorData = list.ToArray();
-			collider->SetVertices(vectorData, count);
-			delete[](vectorData);
 
 			this->AddElement(go);
 			go->Release();
@@ -92,11 +64,11 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
-			light->PRS.SetPosition(Vector3(1500, 0, 0));
+			light->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 			
 			go = new CameraObject(engine);
-			go->PRS.SetPosition(Vector3(0, 0, 5.0f));
+			go->PRS.Position() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
@@ -120,27 +92,28 @@ namespace TikiEngine
 
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
-			ssao = new PPScreenSpaceAmbientOcclusion(engine);
-			engine->graphics->AddPostProcess(ssao);
+			//ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			//engine->graphics->AddPostProcess(ssao);
 
 			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
 
 			//ISound* sound = engine->librarys->CreateResource<ISound>();
 			//sound->LoadFromFile(L"Data/Sound/beep.wav");
 
-			//font = engine->librarys->CreateResource<IFont>();
-			//font->Create(L"Arial", 16.0f);
+			font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 14.0f);
 
 			Scene::Initialize(args);
 		}
 
 		void SceneTim::Draw(const DrawArgs& args)
 		{
-
-
 			Scene::Draw(args);
 
-			//engine->sprites->DrawString(font, L"BlaBla", Vector2(500, 500));
+			wostringstream s;
+			s << "Light: X: " << tmp.X << ", Y:"  << tmp.Y << ", Z:" << tmp.Z;
+
+			engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
 			engine->sprites->Draw(
 				engine->graphics->GetDepthTarget(),
@@ -152,10 +125,10 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
-			engine->sprites->Draw(
-				ssao->GetAO(),
-				Rectangle(10, 390, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	ssao->GetAO(),
+			//	Rectangle(10, 390, 200, 180)
+			//);
 
 			engine->physics->DrawDebug();
 
@@ -171,11 +144,20 @@ namespace TikiEngine
 
 		void SceneTim::Update(const UpdateArgs& args)
 		{
-			//light->PRS.Position = Vector3(
-			//	sinf((float)args.Time.TotalTime / 5) * 50,
-			//	0,
-			//	cosf((float)args.Time.TotalTime / 5) * 50
+			//// light settings test
+			//Vector3 move = Vector3(
+			//	(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
+			//	(args.Input.GetKey(KEY_I)   ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_K) ?  -1.0f : 0.0f),
+			//	(args.Input.GetKey(KEY_O)   ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_U) ?  -1.0f : 0.0f)
+			//) * args.Time.ElapsedTime;
+
+			//// tmp = class var
+			//tmp += move;
+
+			//light->PRS.SetRotation(
+			//	Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z)
 			//);
+
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
 

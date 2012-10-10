@@ -54,8 +54,8 @@ namespace TikiEngine
 			Vector4 ConvertToTiki(FbxVector4 &vector);
 			void ConvertToTiki(const FbxVector4& vector, const FbxVector4& normals, const FbxVector4& binormals, const FbxVector4& tangent, const FbxVector2& uv, DefaultVertex* output);
 
-			Matrix& GetGlobalPosition(FbxNode* node);
-			Matrix& GetGeometry(FbxNode* node);
+			Matrix GetGlobalPosition(FbxNode* node);
+			Matrix GetGeometry(FbxNode* node);
 
 			FbxAMatrix GetGeometryFbx(FbxNode* node);
 			FbxAMatrix& GetGlobalPositionFbx(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);

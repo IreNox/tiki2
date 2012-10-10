@@ -21,7 +21,7 @@ namespace TikiEngine
 
 		Model::~Model()
 		{
-			for(int i = 0; i < meshes.Count(); i++)
+			for(UInt32 i = 0; i < meshes.Count(); i++)
 			{
 				SafeRelease(&meshes[i]);
 			}
@@ -280,7 +280,7 @@ namespace TikiEngine
 
 				UInt32 counter = 0;
 
-				for(UInt32 i = 0; i < mesh->GetPolygonVertexCount();i++)
+				for(Int32 i = 0; i < mesh->GetPolygonVertexCount();i++)
 				{
 					Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 
@@ -446,7 +446,8 @@ namespace TikiEngine
 		{
 			return node->EvaluateGlobalTransform(pTime);
 		}
-		FbxAMatrix& Model::GetGeometry(FbxNode* node)
+
+		FbxAMatrix Model::GetGeometry(FbxNode* node)
 		{
 			const FbxVector4 lT = node->GetGeometricTranslation(FbxNode::eSourcePivot);
 			const FbxVector4 lR = node->GetGeometricRotation(FbxNode::eSourcePivot);

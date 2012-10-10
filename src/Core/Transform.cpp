@@ -41,37 +41,37 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Get/Set
-	Vector3 Transform::GetPosition()
+	const Vector3& Transform::Position() const
 	{
 		return position;
 	}
 
-	void Transform::SetPosition(const Vector3& pos)
+	Vector3& Transform::Position()
 	{
-		this->position = pos;
 		this->isDirty = true;
+		return position;
 	}
 
-	Vector3 Transform::GetScale()
+	const Vector3& Transform::Scale() const
 	{
 		return scale;
 	}
 
-	void Transform::SetScale(const Vector3& scale)
-	{
-		this->scale = scale;
+	Vector3& Transform::Scale()
+	{		
 		this->isDirty = true;
+		return scale;
 	}
 
-	Quaternion Transform::GetRotation()
+	const Quaternion& Transform::Rotation() const
 	{
 		return rotation;
 	}
 
-	void Transform::SetRotation(const Quaternion& rot)
+	Quaternion& Transform::Rotation()
 	{
-		this->rotation = rot;
 		this->isDirty = true;
+		return rotation;
 	}
 	#pragma endregion
 

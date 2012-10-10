@@ -43,7 +43,7 @@ namespace TikiEngine
 
 			UInt32 counter = 0;
 
-			for(UInt32 i = 0; i < mesh->GetPolygonVertexCount();i++)
+			for(Int32 i = 0; i < mesh->GetPolygonVertexCount();i++)
 			{
 				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 
@@ -142,7 +142,7 @@ namespace TikiEngine
 				vertexArray[i] = (static_cast<FbxMatrix>(globalPosition).MultNormalize(vertexArray[i]));
 			}
 
-			for(int i = 0; i < updateStructure.Count(); i++)
+			for(UInt32 i = 0; i < updateStructure.Count(); i++)
 			{
 				UpdateStructure us = updateStructure.Get(i);
 

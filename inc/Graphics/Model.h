@@ -62,7 +62,7 @@ namespace TikiEngine
 			void CopyIndexData();
 
 			FbxAMatrix& GetGlobalPosition(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);
-			FbxAMatrix& GetGeometry(FbxNode* node);
+			FbxAMatrix GetGeometry(FbxNode* node);
 			
 
 			FbxTime start;

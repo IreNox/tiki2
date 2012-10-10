@@ -84,7 +84,7 @@ namespace TikiEngine
 		{
 			Int64 pos = this->GetPosition();
 			fseek(handle, 0, SEEK_END);
-			Int64 size = ftell(handle);
+			PInt size = ftell(handle);
 
 			this->SetPosition(pos);
 

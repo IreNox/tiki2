@@ -59,13 +59,13 @@ namespace TikiEngine
 			codex_Ptr<CloddyManager> manager;
 			codex_Ptr<CloddyDescription> description;
 
-			codex_Ptr<TikiHeightmap> heightmap;
+			//codex_Ptr<TikiHeightmap> heightmap;
 
 			codex_Ptr<ICloddyTerrain> terrain;
 			codex_Ptr<cloddy_CloddyRectangularTerrainDescription> terrainDescription;
 			codex_Ptr<CloddyLocalDataset> datasetElevation;
-			codex_Ptr<CloddyLocalDataset> datasetDetail;
-			codex_Ptr<CloddyLocalDataset> datasetColor;
+			//codex_Ptr<CloddyLocalDataset> datasetDetail;
+			//codex_Ptr<CloddyLocalDataset> datasetColor;
 
 			codex_Ptr<TriangulationCallback> callback;
 

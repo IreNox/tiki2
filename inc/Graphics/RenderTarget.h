@@ -20,6 +20,8 @@ namespace TikiEngine
 			void Create(UInt32 width, UInt32 height, bool dynamic);
 			void CreateScreenSize();
 
+			void SaveToFile(wcstring fileName);
+
 			void Apply(UInt32 slot);
 			void ApplyFirstAndOnly();
 			void Clear(const Color& color);

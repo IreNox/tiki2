@@ -37,6 +37,11 @@ public:
 	#pragma endregion
 
 	#pragma region Member
+	UInt32 FirstIndex() const
+	{
+		return 0;
+	}
+
 	UInt32 Count() const
 	{
 		return this->lengthData + 1;
@@ -125,7 +130,7 @@ public:
 		this->data[index] = item;
 	}
 
-	const T const* GetInternalData() const
+	const T* GetInternalData() const
 	{
 		return data;
 	}

@@ -135,7 +135,7 @@ namespace TikiEngine
 
 			StringFormat* format = new StringFormat(StringFormatFlagsNoFitBlackBox);
 
-			UInt32 i = 0;
+			PInt i = 0;
 			float spaceWidth = 0;
 			PointF pos = PointF(0, 0);
 			RectF charSize = RectF(0, 0, 0, 0);

@@ -31,13 +31,15 @@ namespace TikiEngine
 
 		private:
 
-			//IFont* font;
+			IFont* font;
 
 			LightObject* light;
 
 			ITexture* tex;
 
 			PPScreenSpaceAmbientOcclusion* ssao;
+
+			Vector3 tmp;
 
 		};
 	}

@@ -14,36 +14,34 @@ namespace TikiEngine
 
 	public:
 
-		Vector3 position;
-		Quaternion rotation;
-		Vector3 scale;
-
 		~Transform();
 
 		Vector3 GetForward();
 		Vector3 GetUp();
 		Vector3 GetLeft();
 
-		Vector3 GetPosition();
-		void SetPosition(const Vector3& pos);
+		const Vector3& Position() const;
+		const Vector3& Scale() const;
+		const Quaternion& Rotation() const;
 
-		Vector3 GetScale();
-		void SetScale(const Vector3& scale);
-
-		Quaternion GetRotation();
-		void SetRotation(const Quaternion& rot);
+		Vector3& Position();
+		Vector3& Scale();
+		Quaternion& Rotation();
 
 		void FillWorldMatrix(Matrix* worldMatrix);
 
 	private:
 
-		Transform(GameObject* gameObject);
-
-		bool isDirty;
-
 		GameObject* gameObject;
 
+		bool isDirty;
 		Matrix world;
+
+		Vector3 position;
+		Quaternion rotation;
+		Vector3 scale;
+
+		Transform(GameObject* gameObject);
 
 		void checkWorldMatrix();
 

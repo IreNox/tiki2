@@ -269,7 +269,7 @@ namespace TikiEngine
 			
 			// Create a test navigation mesh
 			naviMesh.Clear();  
-			for (int i = 0; i < map_totalpolys; ++i)  
+			for (UInt32 i = 0; i < map_totalpolys; ++i)
 			{  
 				const Vector3& vertA = map_points[map_polys[i][0]];  
 				const Vector3& vertB = map_points[map_polys[i][1]];  
@@ -294,7 +294,7 @@ namespace TikiEngine
 			TikiBot::Triangle Poly;  
 			memset(&Poly.color[0][0], 0x00, 4*3);  
 
-			for (int i = 0; i < cone_totalpolys; ++i)  
+			for (UInt32 i = 0; i < cone_totalpolys; ++i)  
 			{  
 				Poly.vert[0]=cone_points[cone_polys[i][0]];  
 				Poly.vert[1]=cone_points[cone_polys[i][1]];  
@@ -393,7 +393,7 @@ namespace TikiEngine
 
 
 			go = new CameraObject(engine);
-			go->PRS.SetPosition(Vector3(0, 3, 7));
+			go->PRS.Position() = Vector3(0, 3, 7);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
 			this->AddElement(go);
 			go->Release();
@@ -425,12 +425,12 @@ namespace TikiEngine
 		void SceneMark::Draw(const DrawArgs& args)
 		{
 			// Draw Mouse Ray
-		    Vector3 forwardCam = fly->GetGameObject()->PRS.GetPosition() + fly->GetGameObject()->PRS.GetForward();
+		    Vector3 forwardCam = fly->GetGameObject()->PRS.Position() + fly->GetGameObject()->PRS.GetForward();
 		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
 			engine->graphics->DrawLine(forwardCam, impact, Color::Green);
 
 			// Draw bot Velocity
-			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.GetPosition());
+			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.Position());
 			Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
 			engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
 
@@ -447,7 +447,7 @@ namespace TikiEngine
 			engine->sprites->DrawString(font, str, Vector2(1, 100));
 
 			std::wostringstream s3;
-			Vector3 camPos = fly->GetGameObject()->PRS.GetPosition();
+			Vector3 camPos = fly->GetGameObject()->PRS.Position();
 			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
 			str = s3.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 120));

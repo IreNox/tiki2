@@ -4,8 +4,12 @@
 #include "Core\IGraphics.h"
 #include "Core\ISpriteBatch.h"
 
+#include <ppl.h>
+
 namespace TikiEngine
 {
+	using namespace Concurrency;
+
 	#pragma region Class
 	Scene::Scene(Engine* engine)
 		: EngineObject(engine), elements(), lights(), cameras()
@@ -107,10 +111,15 @@ namespace TikiEngine
 
 	void Scene::Update(const UpdateArgs& args)
 	{
-		for (UInt32 i = 0; i < elements.Count(); i++)
-		{
-			elements[i]->Update(args);
-		}
+		parallel_for(
+			elements.FirstIndex(), elements.Count(),
+			[=](UInt32 i){ elements[i]->Update(args); }
+		);
+
+		//for (UInt32 i = 0; i < elements.Count(); i++)
+		//{
+		//	elements[i]->Update(args);
+		//}
 
 	}
 	#pragma endregion

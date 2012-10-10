@@ -21,6 +21,7 @@ namespace TikiEngine
 
 		private:
 
+			Vector2 rot;
 			Camera* camera;
 		};
 	}

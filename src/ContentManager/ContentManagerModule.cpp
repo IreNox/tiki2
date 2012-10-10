@@ -45,13 +45,13 @@ namespace TikiEngine
 
 		void ContentManagerModule::Dispose()
 		{
-			//UInt32 i = 0;
-			//while (i < loadedResources.Count())
-			//{
-			//	while (loadedResources[i].resource->Release()) { }
-			//	i++;
-			//}
-			//loadedResources.Clear();
+			UInt32 i = 0;
+			while (i < loadedResources.Count())
+			{
+				while (loadedResources[i].resource->Release()) { }
+				i++;
+			}
+			loadedResources.Clear();
 		}
 		#pragma endregion
 

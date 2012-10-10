@@ -146,7 +146,11 @@ namespace TikiEngine
 		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect)
 		{
 			Vector3 tl = transformPoint(
-				Vector3(destRect.X, destRect.Y, 0.0f)
+				Vector3(
+					(float)destRect.X,
+					(float)destRect.Y,
+					0.0f
+				)
 			); 
 
 			Vector3 br = Vector3(
@@ -168,7 +172,11 @@ namespace TikiEngine
 		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect, const Rectangle& srcRect)
 		{
 			Vector3 tl = transformPoint(
-				Vector3(destRect.X, destRect.Y, 0.0f)
+				Vector3(
+					(float)destRect.X,
+					(float)destRect.Y,
+					0.0f
+				)
 			); 
 
 			Vector3 br = Vector3(

@@ -14,7 +14,7 @@ namespace TikiEngine
 {
 	namespace Components
 	{
-		using namespace Cloddy::API::MeshVisitors;
+		//using namespace Cloddy::API::MeshVisitors;
 		using namespace Cloddy::Core::Math::Vectors;
 
 		#pragma region Class
@@ -73,8 +73,8 @@ namespace TikiEngine
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(128);
 			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
-			terrainDescription->SetWidth(size);
-			terrainDescription->SetHeight(size);
+			terrainDescription->SetWidth((float)size);
+			terrainDescription->SetHeight((float)size);
 
 			terrain = manager->CreateTerrain(terrainDescription);			
 		}
@@ -97,9 +97,9 @@ namespace TikiEngine
 				D3D11_INPUT_ELEMENT_DESC layoutDescription[] =
 				{
 					{"POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-					{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-					{"NORMAL", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
-					{"COLOR", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+					{"TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+					{"NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
+					{"COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0},
 				};
 
 				Shader* shader = (Shader*)material->GetShader();
@@ -134,13 +134,15 @@ namespace TikiEngine
 			Matrix world;
 			gameObject->PRS.FillWorldMatrix(&world);
 
-			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GetPosition();
-			Vector3 lightDirection = args.AllLights->Get(0)->GetGameObject()->PRS.GetForward();
+			Light* light = args.AllLights->Get(0);
+
+			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.Position();
+			Vector3 lightDirection = light->GetGameObject()->PRS.GetForward();
 
 			manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));
 			terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
-			terrain->SetLight(0, cloddy_Vec3F(lightDirection.arr), Cloddy::API::Util::Colors::Color::White);
+			terrain->SetLight(0, cloddy_Vec3F(lightDirection.arr), Cloddy::API::Util::Colors::Color::FromRGB(light->GetColor().A, light->GetColor().R, light->GetColor().G, light->GetColor().B));
 			terrain->EnableLight(0);
 			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
 			manager->EndTriangulation();
