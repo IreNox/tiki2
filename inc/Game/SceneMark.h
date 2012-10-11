@@ -48,8 +48,6 @@ namespace TikiEngine
 			IPhysicsMaterial* material; 
 			ICharacterController* controller;
 
-			IBoundingBox* bounds1;
-			IBoundingBox* bounds2;
 			IFont* font;
 
 			TikiBot* bot;

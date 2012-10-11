@@ -20,7 +20,7 @@ namespace TikiEngine
 		{
 			this->engine = engine;
 			cellMinZ = 0;
-			cellMaxZ = 20;
+			cellMaxZ = 32;
 			// create queryBox used to calc neighbors
 			queryBox = engine->librarys->CreateResource<IBoundingBox>();
 
@@ -138,7 +138,7 @@ namespace TikiEngine
 			// draw all cells
 			std::vector<Cell<entity> >::const_iterator curCell;
 			for(curCell = cells.begin(); curCell != cells.end(); ++curCell)
-				curCell->BBox->DrawDebug(Color::Red);
+				curCell->BBox->DrawDebug(Color(1, 1, 0, 1));
 			
 		    // and the queryBox
 			queryBox->DrawDebug(Color::Green);

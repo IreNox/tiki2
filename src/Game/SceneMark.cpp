@@ -242,8 +242,6 @@ namespace TikiEngine
 			SafeRelease(&controller);
 			SafeRelease(&material);
 		
-			SafeRelease(&bounds1);
-			SafeRelease(&bounds2);
 
 			SafeRelease(&bot);
 
@@ -265,7 +263,7 @@ namespace TikiEngine
 			GameObject* go = new GameObject(engine);
 			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
 			//cellSpace = new CellSpacePartition<TikiBot*>(engine, 50.0f, 50.0f, 8, 8, 50); 
-			cellSpace = new CellSpacePartition<TikiBot*>(engine, 100, 100, 8, 8, 10);
+			cellSpace = new CellSpacePartition<TikiBot*>(engine, 256, 256, 10, 10, 10);
 			
 			// Create a test navigation mesh
 			naviMesh.Clear();  
@@ -294,26 +292,7 @@ namespace TikiEngine
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
 			bot = new TikiBot(engine, go);
-			//bot->GetSteering()->WanderOn();
 			bot->CreateNav(&naviMesh, 0);
-
-			//TikiBot::Triangle Poly;  
-			//memset(&Poly.color[0][0], 0x00, 4*3);  
-
-			//for (UInt32 i = 0; i < cone_totalpolys; ++i)  
-			//{  
-			//	Poly.vert[0]=cone_points[cone_polys[i][0]];  
-			//	Poly.vert[1]=cone_points[cone_polys[i][1]];  
-			//	Poly.vert[2]=cone_points[cone_polys[i][2]];  
-
-			//	Poly.color[0][0] = 0xff;  
-			//	Poly.color[1][0] = 0xff;  
-			//	Poly.color[2][0] = 0xff; 
-			//	bot->AddTriangle(Poly);  
-			//}  
-
-			//bot->GotoRandomLocation();
-
 
 			cellSpace->AddEntity(bot);
 			EntityMgr->RegisterEntity(bot);
@@ -321,12 +300,7 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			// init BoundingBox
-			bounds1 = engine->librarys->CreateResource<IBoundingBox>();
-			bounds1->Set(Vector3(0, 0, 0), Vector3(10, 10, 10));
 
-			bounds2 = engine->librarys->CreateResource<IBoundingBox>();
-			bounds2->Set(Vector3(-1, -1, -1), Vector3(5, 5, 5));
 
 			//IPhysicsMaterial* material; 
 			//material = engine->content->LoadPhysicsMaterial(L"TODO");
@@ -343,7 +317,7 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			dynamicBox->SetCenter(Vector3(0, 3, -4));
+			dynamicBox->SetCenter(Vector3(10, 10, 20));
 			dynamicBox->SetSize(Vector3(1, 1, 1));
 			dynamicBox->SetDynamic(true);
 			// assign collision groups after object is created, else it won't work!
@@ -355,8 +329,8 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			staticBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			staticBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			staticBox->SetCenter(Vector3(0, 0, 0));
-			staticBox->SetSize(Vector3(10, 0.1f, 10));
+			staticBox->SetCenter(Vector3(100, 5.2f, 100));
+			staticBox->SetSize(Vector3(100, 0.1f, 100));
 			staticBox->SetDynamic(false);
 			staticBox->SetGroup(CG_Collidable_Non_Pushable);
 			this->AddElement(go);
@@ -366,8 +340,8 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			kinematicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			kinematicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			kinematicBox->SetCenter(Vector3(0, 5, 0));
-			kinematicBox->SetSize(Vector3(1, 1, 1));
+			kinematicBox->SetCenter(Vector3(10, 30, 10));
+			kinematicBox->SetSize(Vector3(1, 1.5, 1));
 			kinematicBox->SetDynamic(true);
 			kinematicBox->GetRigidBody()->SetKinematic(true);
 			this->AddElement(go);
@@ -377,7 +351,7 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			triggerSphere = engine->librarys->CreateComponent<ISphereCollider>(go);
 			triggerSphere->SetMaterial(material->GetIndex()); // 0 = default material	
-			triggerSphere->SetCenter(Vector3(3, 2, 0));
+			triggerSphere->SetCenter(Vector3(3, 20, 10));
 			triggerSphere->SetRadius(1.0f);
 			triggerSphere->SetDynamic(false);
 			triggerSphere->SetTrigger(true);
@@ -388,12 +362,12 @@ namespace TikiEngine
 			// init CharacterController
 			go = new GameObject(engine);
 			controller = engine->librarys->CreateComponent<ICharacterController>(go);
-			controller->SetCenter(Vector3(0, 5, 0));
+			controller->SetCenter(Vector3(10, 10, 10));
 			controller->SetRadius(0.25f);
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
-			controller->SetGroup(CG_Collidable_Non_Pushable);
+			controller->SetGroup(CG_Collidable_Pushable);
 			this->AddElement(go);
 			go->Release();
 
@@ -447,11 +421,6 @@ namespace TikiEngine
 			wstring str = s.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 80));
 
-			std::wostringstream s2;
-			s2 << "BoundingBox Intersects" << bounds1->Intersects(*bounds2);
-			str = s2.str();
-			engine->sprites->DrawString(font, str, Vector2(1, 100));
-
 			std::wostringstream s3;
 			Vector3 camPos = fly->GetGameObject()->PRS.Position();
 			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
@@ -473,7 +442,7 @@ namespace TikiEngine
 
 		void SceneMark::Update(const UpdateArgs& args)
 		{
-			cellSpace->CalculateNeighbors(bot->Pos(),  10);
+			cellSpace->CalculateNeighbors(bot->Pos(), 24);
 
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
@@ -495,16 +464,17 @@ namespace TikiEngine
 			bool collidedSides = (cf & CF_Sides) != 0;
 			bool collidedAbove = (cf & CF_Up) != 0;
 
-				// if it is dynamic and also kinematic, use following functions to move/rotate:
-			if (kinematicBox->GetDynamic() && kinematicBox->GetRigidBody()->GetKinematic())
+			// if it is dynamic and also kinematic, use following functions to move/rotate:
+			// PhysX does its rotations in a right-handed manner. 
+			//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
+			//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
+			if (kinematicBox->GetDynamic() && 
+				kinematicBox->GetRigidBody()->GetKinematic())
 			{
-				// PhysX does its rotations in a right-handed manner. 
-				//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
-				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
 				kinematicBox->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
 
-		    // Raycast Test
+		    // F1 - Raycast Test
 		    if (args.Input.GetKey(KEY_F1))
 		    {
 				RaycastHit info;
@@ -529,37 +499,31 @@ namespace TikiEngine
 						}
 					}
 
-					// turn off any wander behavior
-					//bot->GetSteering()->WanderOff();
-
-					//// get the impact point and activate bot movement
-					//impact = info.Point;
+					// stop any steering or Navigation
+					bot->GetSteering()->ArriveOff();
+					bot->GetSteering()->SeekOff();
+					bot->pathActive = false;
+					bot->pathMovement = Vector3::Zero;
+						
+					// get the impact point and activate bot movement
+					impact = info.Point;
 					bot->GetSteering()->SetTarget(Vector2(impact.X, impact.Z));
-					//if (bot->GetSteering()->ArriveIsOn() == false)
 					bot->GetSteering()->ArriveOn();
-
 				}
 		     }
 
-			// stop any steering or Navigation
-			if (args.Input.GetKey(KEY_F3))
-			{
-				bot->GetSteering()->ArriveOff();
-				bot->GetSteering()->SeekOff();
-				bot->pathActive = false;
-				bot->pathMovement = Vector3::Zero;
-
-			}
-
+			// F2 - Navigation Test
 			if (args.Input.GetKey(KEY_F2))
-			{
 				bot->GotoRandomLocation();
-			}
 
+			// F5/F6 - Cellspace debug drawing
+			if (args.Input.GetKey(KEY_F5))
+				drawCellSpace = true; 
+			else if (args.Input.GetKey(KEY_F6))
+				drawCellSpace = false; 
+
+			// Update base
 			Scene::Update(args);
-
-
-
 		}
 	}
 }

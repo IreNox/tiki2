@@ -102,7 +102,16 @@ Vector3 Vector3::Normalize(const Vector3& vector)
 #pragma endregion
 
 
-#pragma region Transform, Unproject
+#pragma region Transform, Project, Unproject
+
+Vector3 Vector3::Project(const Vector3& vec, float x, float y, float width, float height, 
+						 float minZ, float maxZ, const Matrix& worldViewProjection )
+{
+	Vector3 vector = TransformCoordinate(vec, worldViewProjection);
+	return Vector3(((1.0f + vector.X) * 0.5f * width) + x, 
+				   ((1.0f - vector.Y) * 0.5f * height) + y, 
+				   (vector.Z * (maxZ - minZ)) + minZ);
+}
 
 Vector3 Vector3::Unproject(const Vector3& vector, float x, float y, float width, float height, 
 						   float minZ, float maxZ, const Matrix& worldViewProjection)

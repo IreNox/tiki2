@@ -111,15 +111,19 @@ namespace TikiEngine
 
 #pragma endregion
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
-			Matrix vp = Matrix::Transpose(matrices.ViewMatrix) * 
+			
+			//Matrix world = Matrix::CreateTranslation(GetGameObject()->PRS.Position());
+			Matrix vp = //world *
+						Matrix::Transpose(matrices.ViewMatrix) * 
 					    Matrix::Transpose(matrices.ProjectionMatrix);
 
-			Vector3 zNear = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
-			Vector3 zFar = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
+			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
+			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
 
-			Vector3 direction = Vector3::Normalize(zFar - zNear);
+			dir -= orig;
+			dir = Vector3::Normalize(dir);
 
-			return Ray(zNear, direction);
+			return Ray(orig, dir);
 		}
 
 	}

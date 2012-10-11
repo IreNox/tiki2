@@ -36,6 +36,10 @@ public:
 	void Normalize();
 	static Vector3 Normalize(const Vector3& vector);
 
+	// Projects a 3D vector from object space into screen space. 
+	static Vector3 Project(const Vector3& vec, float x, float y, float width, float height, 
+						   float minZ, float maxZ, const Matrix& worldViewProjection);
+
 	// Projects a 3D vector from screen space into object space. 
 	static Vector3 Unproject(const Vector3& vector, float x, float y, float width, float height, 
 							 float minZ, float maxZ, const Matrix& worldViewProjection);

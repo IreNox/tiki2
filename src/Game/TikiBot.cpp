@@ -65,7 +65,7 @@ namespace TikiEngine
 			currentCell = currCell;
 
 			pathMovement = Vector3::Zero;
-			geometry.clear();
+			//geometry.clear();
 
 			if (parent)
 			{
@@ -83,10 +83,6 @@ namespace TikiEngine
 		}
 
 
-		void TikiBot::AddTriangle(const Triangle& triangle)
-		{
-			geometry.push_back(triangle);
-		}
 
 
 		inline void TikiBot::GotoLocation(const Vector3& p, NavigationCell* cell)
@@ -237,8 +233,8 @@ namespace TikiEngine
 			// Adjust Movement
 
 			// scale back movement by our max speed if needed
-			distance = pathMovement.Length();
-			if (distance >  max_distance)
+			distance = pathMovement.LengthSquared();
+			if (distance > max_distance * max_distance)
 			{
 				pathMovement = Vector3::Normalize(pathMovement);
 				pathMovement = pathMovement * max_distance;
@@ -304,12 +300,9 @@ namespace TikiEngine
 					//	steering->ArriveOn();
 					//}
 
-				}
-
-
-				
-
-			}
+				} // else
+				 
+			} // else if (pathActive)
 		}
 
 	}
