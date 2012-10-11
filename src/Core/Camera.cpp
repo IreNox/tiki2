@@ -88,37 +88,13 @@ namespace TikiEngine
 
 		Ray Camera::ScreenPointToRay( const Vector2& screenPos )
 		{
-#pragma region old
-      //// it is important that the width and height values above are correct. 
-      //// We need to use the size of the back buffer which may not be the same as the window size
-      //Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
-
-      //Vector3 v;
-      //v.X =  ( ( ( 2.0f * screenPos.X) / bbDim.X) - 1) / matrices.ProjectionMatrix.M11;
-      //v.Y = -( ( ( 2.0f * screenPos.Y) / bbDim.Y) - 1) / matrices.ProjectionMatrix.M22;
-      //v.Z = 1.0f;
-
-      //Matrix m = Matrix::Invert(Matrix::Transpose(matrices.ViewMatrix));
-
-      //// The direction is a vector defining the direction from the eye through the screen into the 3D world
-      //Vector3 dir(v.X * m.M11 + v.Y * m.M21 + v.Z * m.M31,
-      //            v.X * m.M12 + v.Y * m.M22 + v.Z * m.M32,
-      //            v.X * m.M13 + v.Y * m.M23 + v.Z * m.M33);
-      //
-      //Vector3 orig(m.M41, m.M42, m.M43);
-
-	  // return Ray(orig, dir);
-
-#pragma endregion
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 			
-			//Matrix world = Matrix::CreateTranslation(GetGameObject()->PRS.Position());
-			Matrix vp = //world *
-						Matrix::Transpose(matrices.ViewMatrix) * 
+			Matrix vp = Matrix::Transpose(matrices.ViewMatrix) * 
 					    Matrix::Transpose(matrices.ProjectionMatrix);
 
-			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
-			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1000, 1000, vp);
+			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 			dir -= orig;
 			dir = Vector3::Normalize(dir);
