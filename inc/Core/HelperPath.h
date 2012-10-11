@@ -13,6 +13,7 @@ namespace TikiEngine
 		static wstring GetWorkingPath();
 
 		static wstring Combine(wstring path1, wstring path2);
+		static wstring CombineWorkingPath(wstring path);
 
 		static wstring GetFilename(wstring fullPath);
 		static wstring GetDirectoryName(wstring fullPath);

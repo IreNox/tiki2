@@ -28,6 +28,8 @@ namespace TikiEngine
 		Vector3& Scale();
 		Quaternion& Rotation();
 
+		bool IsDirty();
+
 		void FillWorldMatrix(Matrix* worldMatrix);
 
 	private:

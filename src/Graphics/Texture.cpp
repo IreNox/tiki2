@@ -2,7 +2,7 @@
 #include "Core/Engine.h"
 #include "Graphics/Texture.h"
 
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 #include "Graphics/DllMain.h"
 
 #include "Core/TypeGlobals.h"
@@ -147,7 +147,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't load Texture", r);
+				HelperLog::WriteError("Can't load Texture", 0);
 			}
 
 			ID3D11Resource* res;
@@ -159,28 +159,27 @@ namespace TikiEngine
 
 		void Texture::saveToStream(wcstring fileName, Stream* stream)
 		{
-			ID3D10Blob* blob;
+			//ID3D10Blob* blob = 0;
 
-			HRESULT r = D3DX11SaveTextureToMemory(
+			HRESULT r = D3DX11SaveTextureToFile(
 				DllMain::Context,
 				texture,
-				D3DX11_IFF_PNG,
-				&blob,
-				0
+				D3DX11_IFF_JPG,
+				fileName
 			);
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't save Texture", r);
+				HelperLog::WriteError("Can't save Texture", 0);
 			}
 
-			stream->Write(
-				blob->GetBufferPointer(),
-				0,
-				blob->GetBufferSize()
-			);
+			//stream->Write(
+			//	blob->GetBufferPointer(),
+			//	0,
+			//	blob->GetBufferSize()
+			//);
 
-			SafeRelease(&blob);
+			//SafeRelease(&blob);
 		}
 		#pragma endregion
 

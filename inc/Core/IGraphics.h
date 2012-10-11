@@ -48,7 +48,13 @@ namespace TikiEngine
 			virtual IRenderTarget* GetNormalTarget() = 0;
 			virtual IRenderTarget* GetDepthTarget() = 0;
 
-			virtual void SetLightChanged(List<Light*>* lights) = 0;
+			/*!
+			 * @brief Save an Screen shot image from the last Frame on HDD 
+			 *
+			 * @param fileName Filename for Screen shot. Use NULL for default Name.
+			 */
+			virtual void MakeScreenshot(wcstring fileName = 0) = 0;
+
 		};
 	}
 }

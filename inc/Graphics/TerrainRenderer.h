@@ -69,6 +69,8 @@ namespace TikiEngine
 
 			codex_Ptr<TriangulationCallback> callback;
 
+			CodeX::int32 toCloddyColor(Color c);
+
 		};
 	}
 }

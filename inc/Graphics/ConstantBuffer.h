@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Engine.h"
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 
 namespace TikiEngine
 {
@@ -40,7 +40,7 @@ namespace TikiEngine
 
 				if (FAILED(r))
 				{
-					Console::WriteError("Can't map ConstantBuffer", r);
+					HelperLog::WriteError("Can't map ConstantBuffer", 0);
 				}
 
 				return (T*)mapped.pData;
@@ -83,7 +83,7 @@ namespace TikiEngine
 
 				if (FAILED(r)) 
 				{
-					Console::WriteError("Can't create ConstantBuffer", r);
+					HelperLog::WriteError("Can't create ConstantBuffer", 0);
 				}
 			}
 			#pragma endregion

@@ -141,16 +141,24 @@ namespace TikiEngine
 			Matrix world;
 			gameObject->PRS.FillWorldMatrix(&world);
 
-			Light* light = args.AllLights->Get(0);
+			Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
 
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.Position();
-			Vector3 lightDirection = light->GetGameObject()->PRS.GetForward();
 
 			manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));
 			terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
-			terrain->SetLight(0, cloddy_Vec3F(lightDirection.arr), Cloddy::API::Util::Colors::Color::FromRGB(light->GetColor().A, light->GetColor().R, light->GetColor().G, light->GetColor().B));
-			terrain->EnableLight(0);
+
+			if (light)
+			{
+				terrain->SetLight(0, cloddy_Vec3F(light->GetGameObject()->PRS.GetForward().arr), toCloddyColor(light->GetColor()));
+				terrain->EnableLight(0);
+			}
+			else
+			{
+				terrain->DisableLight(0);
+			}
+
 			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
 			manager->EndTriangulation();
 		}
@@ -158,6 +166,18 @@ namespace TikiEngine
 		void TerrainRenderer::Update(const UpdateArgs& args)
 		{
 			manager->Update(70.0f, engine->graphics->GetViewPort()->Height);
+		}
+		#pragma endregion
+
+		#pragma region Private Member
+		CodeX::int32 TerrainRenderer::toCloddyColor(Color c)
+		{
+			CodeX::int32 a = (int)(c.A * 255.0f);
+			CodeX::int32 r = (int)(c.R * 255.0f);
+			CodeX::int32 g = (int)(c.G * 255.0f);
+			CodeX::int32 b = (int)(c.B * 255.0f);
+
+			return Cloddy::API::Util::Colors::Color::FromRGB(a, r, g ,b);
 		}
 		#pragma endregion
 	}

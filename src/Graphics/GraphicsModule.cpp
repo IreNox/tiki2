@@ -4,16 +4,22 @@
 
 #include "Core/Engine.h"
 #include "Core/IContentManager.h"
-#include "Core/Console.h"
+
+#include "Core/HelperLog.h"
+#include "Core/HelperPath.h"
 
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
 #include "Graphics/DllMain.h"
 
 #include "Core/DrawArgs.h"
-#include "Core/Camera.h"
 
+#include "Core/Camera.h"
 #include "Core/GameObject.h"
+
+#include <ctime>
+#include <sstream>
+using namespace std;
 
 namespace TikiEngine
 {
@@ -24,7 +30,7 @@ namespace TikiEngine
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
 			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets(), postProcesses(), postProcessPassQuads(),
-			defaultPostProcess(0), currentArgs(), alphaBlendState(0), depthStencilStateDisable(0),
+			defaultPostProcess(0), currentArgs(DrawArgs::Empty), alphaBlendState(0), depthStencilStateDisable(0),
 			screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0)
 		{
 			clearColor = Color::TikiBlue;
@@ -108,6 +114,38 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member
+		void GraphicsModule::MakeScreenshot(wcstring fileName)
+		{
+			bool newName = false;
+			if (fileName == 0)
+			{
+				time_t now = time(0);
+
+				tm time;
+				localtime_s(&time, &now);
+
+				wostringstream s;
+				s << L"Screenshot-" << (time.tm_year + 1900) << "-" << (time.tm_mon + 1) << "-" << time.tm_mday << "-" << time.tm_hour << "-" << time.tm_min << "-" << time.tm_sec << ".dds";
+
+				wchar_t* fileName2 = new wchar_t[s.str().length() + 1];
+				memcpy(fileName2, s.str().c_str(), sizeof(wchar_t) * (s.str().length() + 1));
+
+				fileName = fileName2;
+				newName = true;
+			}
+
+			wstring path = HelperPath::CombineWorkingPath(wstring(L"Screenshots/") + fileName);
+
+			rtBackBuffer->SaveToFile(path.c_str());
+
+			if (newName)
+			{
+				SafeDelete(&fileName);
+			}
+		}
+		#pragma endregion
+
 		#pragma region Member - Get
 		void* GraphicsModule::GetDevice()
 		{
@@ -173,30 +211,6 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Set
-		void GraphicsModule::SetLightChanged(List<Light*>* lights)
-		{
-			Lights* buf = lightBuffer->Map();
-			buf->Props = LightProperties();
-
-			buf->Count = (float)lights->Count();
-			if (buf->Count > 32) buf->Count = 32;
-
-			UInt32 i = 0;
-			while (i < buf->Count)
-			{
-				Light* l = lights->Get(i);
-
-				buf->Data[i].Range = l->GetRange();
-				buf->Data[i].Color = l->GetColor().ToVector4();
-				buf->Data[i].Position = l->GetGameObject()->PRS.Position();
-				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation() * Vector3::ForwardRH;
-
-				i++;
-			}
-
-			lightBuffer->Unmap();
-		}
-
 		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target)
 		{
 			while (slot >= renderTargets.Count())
@@ -247,6 +261,11 @@ namespace TikiEngine
 		void GraphicsModule::Begin(const DrawArgs& args)
 		{
 			currentArgs = args;
+
+			if (args.Lights.IsDirty)
+			{
+				setLightChanged(args);
+			}
 
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
@@ -522,7 +541,7 @@ namespace TikiEngine
 
 			if(FAILED(r))
 			{
-				Console::WriteError("Can't create RasterizerState", r);
+				HelperLog::WriteError("Can't create RasterizerState", 0);
 			}
 
 			deviceContext->RSSetState(rasterStateBackfaces); // back face culling
@@ -678,6 +697,32 @@ namespace TikiEngine
 
 				i++;
 			}
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Set - Lights
+		void GraphicsModule::setLightChanged(const DrawArgs& args)
+		{
+			Lights* buf = lightBuffer->Map();
+			buf->Props = LightProperties();
+
+			buf->Count = (float)args.Lights.SceneLights->Count();
+			if (buf->Count > 32) buf->Count = 32;
+
+			UInt32 i = 0;
+			while (i < buf->Count)
+			{
+				Light* l = args.Lights.SceneLights->Get(i);
+
+				buf->Data[i].Range = l->GetRange();
+				buf->Data[i].Color = l->GetColor().ToVector4();
+				buf->Data[i].Position = l->GetGameObject()->PRS.Position();
+				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation() * Vector3::ForwardRH;
+
+				i++;
+			}
+
+			lightBuffer->Unmap();
 		}
 		#pragma endregion
 	}

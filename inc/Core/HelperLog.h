@@ -2,9 +2,11 @@
 
 #include "Core/TypeInc.h"
 
-class Console
+class HelperLog
 {
 public:
+
 	static void Write(string text);
-	static void WriteError(string message, Int32 code);
+	static void WriteError(string message, void* exception);
+
 };

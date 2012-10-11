@@ -105,6 +105,9 @@
     <Filter Include="Headerdateien\Interfaces\Components">
       <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Core\Args/States">
+      <UniqueIdentifier>{dc351ce7-aa5b-483c-8ef2-0b4d59701935}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -130,9 +133,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Console.cpp">
-      <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Material.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
@@ -221,6 +221,12 @@
     <ClCompile Include="src\Core\Line2D.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\AllArgs.cpp">
+      <Filter>Quelldateien\Core\Args/States</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HelperLog.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -297,9 +303,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\ViewPort.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Console.h">
-      <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ComponentType.h">
       <Filter>Headerdateien\Core\Components</Filter>
@@ -507,6 +510,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Line2D.h">
       <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DrawLightArgs.h">
+      <Filter>Headerdateien\Core\Args/States</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperLog.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

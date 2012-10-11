@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/TypeDef.h"
+#include "Core/TypeInc.h"
 #include "Core/Key.h"
 
 namespace TikiEngine

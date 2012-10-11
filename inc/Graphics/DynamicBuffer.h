@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/EngineObject.h"
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 
 #include "Graphics/DllMain.h"
 
@@ -49,7 +49,7 @@ namespace TikiEngine
 
 				if (FAILED(r))
 				{
-					Console::WriteError("Can't map ConstantBuffer", r);
+					HelperLog::WriteError("Can't map ConstantBuffer", 0);
 				}
 
 				return (T*)mapped.pData;
@@ -95,7 +95,7 @@ namespace TikiEngine
 
 				if (FAILED(r)) 
 				{
-					Console::WriteError("Can't create FullSizeBuffer", r);
+					HelperLog::WriteError("Can't create FullSizeBuffer", 0);
 				}
 			}
 			#pragma endregion

@@ -57,6 +57,8 @@ namespace TikiEngine
 			IRenderTarget* GetNormalTarget();
 			IRenderTarget* GetDepthTarget();
 
+			void MakeScreenshot(wcstring fileName);
+
 			ConstantBuffer<Lights>* GetLightBuffer();
 			ConstantBuffer<Matrices>* GetMatrixBuffer();
 
@@ -69,8 +71,6 @@ namespace TikiEngine
 
 			void RemovePostProcess(PostProcess* postProcess);
 			void RemoveScreenSizeRenderTarget(RenderTarget* target);
-
-			void SetLightChanged(List<Light*>* lights);
 
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
@@ -128,6 +128,8 @@ namespace TikiEngine
 			bool initEngine(EngineDescription& desc);
 
 			void drawPostProcess(PostProcess* postProcess);
+
+			void setLightChanged(const DrawArgs& args);
 
 		};
 	}

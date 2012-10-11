@@ -168,18 +168,16 @@ namespace TikiEngine
 			physics->End(args);
 			input->End();
 
-			graphics->SetLightChanged(scene->GetLights());
-
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())
 			{
-				DrawArgs drawArgs = DrawArgs(
+				const DrawArgs drawArgs = DrawArgs(
 					time,
 					scene->GetCameras()->Get(i),
-					scene->GetLights(),
 					graphics,
 					sprites,
-					&args
+					args,
+					scene->GetLighting()
 				);
 				
 				graphics->Begin(drawArgs);

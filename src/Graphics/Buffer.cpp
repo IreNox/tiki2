@@ -1,6 +1,6 @@
 
 #include "Core/Engine.h"
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 
 #include "Core/TypeGlobals.h"
 
@@ -70,7 +70,7 @@ namespace TikiEngine
 		{
 			if (bufferData == 0)
 			{
-				throw "Buffer not init.";
+				HelperLog::WriteError("Buffer not init.", 0);
 			}
 
 			D3D11_MAPPED_SUBRESOURCE mapped;
@@ -85,7 +85,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't map Buffer", r);
+				HelperLog::WriteError("Can't map Buffer", 0);
 			}
 
 			memcpy(bufferData + index, addData, dataSize);
@@ -138,7 +138,7 @@ namespace TikiEngine
 
 			if (buffer == 0)
 			{
-				Console::WriteError("Can't create Buffer", 0);
+				HelperLog::WriteError("Can't create Buffer", 0);
 			}
 		}
 		#pragma endregion

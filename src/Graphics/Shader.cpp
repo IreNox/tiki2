@@ -3,7 +3,7 @@
 
 #include "Core/TypeGlobals.h"
 #include "Core/Engine.h"
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 #include "Core/HelperHash.h"
 #include "Core/HelperPath.h"
 #include "Core/GameObject.h"
@@ -119,7 +119,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't set ConstantBuffer: " + string(key), r);
+				HelperLog::WriteError("Can't set ConstantBuffer: " + string(key), 0);
 			}
 		}
 		#pragma endregion
@@ -306,18 +306,18 @@ namespace TikiEngine
 			{
 				if (r == D3D11_ERROR_FILE_NOT_FOUND)
 				{
-					Console::WriteError("Failed to compile effect. File not found", r);
+					HelperLog::WriteError("Failed to compile effect. File not found", 0);
 				}
 				else
 				{
 					if (errorBlob)
 					{
 						char* error = (char*)errorBlob->GetBufferPointer();
-						Console::WriteError("Failed to compile effect. %s\n" + (string)error, r);
+						HelperLog::WriteError("Failed to compile effect. %s\n" + (string)error, 0);
 					}
 					else
 					{
-						Console::WriteError("Failed to compile effect", r);
+						HelperLog::WriteError("Failed to compile effect", 0);
 					}
 				}
 
@@ -338,9 +338,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::Write("Failed to create effect. Error code: %d\n" + HRESULT_CODE(r));
-
-				throw "Shader: .ctor: An error was corrupted.";
+				HelperLog::WriteError("Failed to create effect.", 0);
 			}
 
 			wstring file = HelperPath::GetFilename(fileName);

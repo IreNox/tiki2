@@ -19,12 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\AllArgs.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\CameraObject.cpp" />
     <ClCompile Include="src\Core\Color.cpp" />
     <ClCompile Include="src\Core\ColorVertex.cpp" />
     <ClCompile Include="src\Core\Component.cpp" />
-    <ClCompile Include="src\Core\Console.cpp" />
+    <ClCompile Include="src\Core\HelperLog.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
     <ClCompile Include="src\Core\FileStream.cpp" />
     <ClCompile Include="src\Core\GameObject.cpp" />
@@ -63,10 +64,11 @@
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ColorVertex.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
-    <ClInclude Include="inc\Core\Console.h" />
+    <ClInclude Include="inc\Core\HelperLog.h" />
     <ClInclude Include="inc\Core\DefaultVertex.h" />
     <ClInclude Include="inc\Core\Dictionary.h" />
     <ClInclude Include="inc\Core\DrawArgs.h" />
+    <ClInclude Include="inc\Core\DrawLightArgs.h" />
     <ClInclude Include="inc\Core\Engine.h" />
     <ClInclude Include="inc\Core\EngineDescription.h" />
     <ClInclude Include="inc\Core\EngineObject.h" />

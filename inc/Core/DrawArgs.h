@@ -1,17 +1,17 @@
 #pragma once
 
-#include "Core/GameTime.h"
 #include "Core/List.h"
+
+#include "Core/GameTime.h"
 #include "Core/UpdateArgs.h"
+#include "Core/DrawLightArgs.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
-		class Light;
 		class Camera;
 	}
-	using TikiEngine::Components::Light;
 	using TikiEngine::Components::Camera;
 
 	namespace Modules
@@ -22,30 +22,41 @@ namespace TikiEngine
 	using TikiEngine::Modules::IGraphics;
 	using TikiEngine::Modules::ISpriteBatch;
 
+	// Implementation in AllArgs.cpp
 	struct DrawArgs
 	{
+		static const DrawArgs Empty;
+
 		GameTime Time;
 
 		Camera* CurrentCamera;
-		List<Light*>* AllLights;
 
 		IGraphics* Graphics;
 		ISpriteBatch* SpriteBatch;
 
-		UpdateArgs* UpdateData;
+		const UpdateArgs& Update;
+		const DrawLightArgs& Lights;
 
-		DrawArgs()
-			: Time(0, 0), CurrentCamera(0), Graphics(0), SpriteBatch(0), AllLights(0), UpdateData(0)
-		{
-		}
-
-		DrawArgs(GameTime time, Camera* camera, List<Light*>* allLights, IGraphics* graphics, ISpriteBatch* spriteBatch, UpdateArgs* updateArgs)
-			: Time(time), CurrentCamera(camera), AllLights(allLights), Graphics(graphics), SpriteBatch(spriteBatch), UpdateData(updateArgs)
+		DrawArgs(GameTime time, Camera* camera, IGraphics* graphics, ISpriteBatch* spriteBatch, const UpdateArgs& updateArgs, const DrawLightArgs& lights)
+			: Time(time), CurrentCamera(camera), Graphics(graphics), SpriteBatch(spriteBatch), Update(updateArgs), Lights(lights)
 		{
 		}
 
 		~DrawArgs()
 		{
 		}
+
+		DrawArgs& operator=(const DrawArgs& rhs)
+		{
+			return *this;
+		}
+	
+	private:
+
+		DrawArgs()
+			: Time(0, 0), CurrentCamera(0), Graphics(0), SpriteBatch(0), Update(UpdateArgs::Empty), Lights(DrawLightArgs::Empty)
+		{
+		}
+
 	};
 }

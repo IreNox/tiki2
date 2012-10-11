@@ -1,7 +1,7 @@
 #pragma once
 
 #include <stdio.h>
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 
 class ErrorStream : public NxUserOutputStream
 {
@@ -18,27 +18,27 @@ public:
 		switch(e)
 		{
 		case NXE_INVALID_PARAMETER:
-			Console::Write( "invalid parameter");
+			HelperLog::Write( "invalid parameter");
 			break;
 		case NXE_INVALID_OPERATION:
-			Console::Write( "invalid operation");
+			HelperLog::Write( "invalid operation");
 			break;
 		case NXE_OUT_OF_MEMORY:
-			Console::Write( "out of memory");
+			HelperLog::Write( "out of memory");
 			break;
 		case NXE_DB_INFO:
-			Console::Write( "info");
+			HelperLog::Write( "info");
 			break;
 		case NXE_DB_WARNING:
-			Console::Write( "warning");
+			HelperLog::Write( "warning");
 			break;
 		default:
-			Console::Write("unknown error");
+			HelperLog::Write("unknown error");
 		}
 
 		std::string error(message);
-		Console::Write(error);
-		Console::Write("\n");
+		HelperLog::Write(error);
+		HelperLog::Write("\n");
 
 	}
 
@@ -61,7 +61,7 @@ public:
 
 	void print(const char* message)
 	{
-		Console::Write(message);
+		HelperLog::Write(message);
 	}
 
 	string GetNxSDKCreateError(const NxSDKCreateError& errorCode) 

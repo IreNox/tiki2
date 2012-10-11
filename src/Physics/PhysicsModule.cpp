@@ -61,7 +61,7 @@ namespace TikiEngine
 		#pragma region Init
 		bool PhysicsModule::Initialize(EngineDescription& desc)
 		{
-			Console::Write("Initializing PhysicsModule");
+			HelperLog::Write("Initializing PhysicsModule");
 
 			if (!userAllocator)
 				userAllocator = new ControllerManagerAllocator();
@@ -76,7 +76,7 @@ namespace TikiEngine
 			physicsSDK = NxCreatePhysicsSDK(NX_PHYSICS_SDK_VERSION, userAllocator, &errorStream, sdkDesc, &errorCode);
 			if (physicsSDK == 0)
 			{
-				Console::Write("Unable to initialize the PhysX SDK, exiting." + errorStream.GetNxSDKCreateError(errorCode));
+				HelperLog::Write("Unable to initialize the PhysX SDK, exiting." + errorStream.GetNxSDKCreateError(errorCode));
 				return false;
 			}
 
@@ -91,7 +91,7 @@ namespace TikiEngine
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == 0)
 			{
-				Console::Write("Error: Unable to create a PhysX scene, exiting. \n");
+				HelperLog::Write("Error: Unable to create a PhysX scene, exiting. \n");
 				return false;
 			}
 			
@@ -118,7 +118,7 @@ namespace TikiEngine
 			cooking = NxGetCookingLib(NX_PHYSICS_SDK_VERSION);			
 			if (!cooking->NxInitCooking()) //userAllocator, &errorStream
 			{
-				Console::Write("Can't init Cooking Library.");
+				HelperLog::Write("Can't init Cooking Library.");
 				return false;
 			}
 

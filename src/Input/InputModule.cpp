@@ -4,7 +4,7 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "Core/Engine.h"
-#include "Core/Console.h"
+#include "Core/HelperLog.h"
 
 #include "Input/InputModule.h"
 
@@ -41,7 +41,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't init DirectInput", r);
+				HelperLog::WriteError("Can't init DirectInput", 0);
 			}
 
 			this->initDevice(&keyboard, GUID_SysKeyboard, &c_dfDIKeyboard);
@@ -117,28 +117,28 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't inited DirectInput", r);
+				HelperLog::WriteError("Can't inited DirectInput", 0);
 			}
 
 			r = (*device)->SetDataFormat(format);
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't set Format", r);
+				HelperLog::WriteError("Can't set Format", 0);
 			}
 
 			r = (*device)->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
 
 			if (FAILED(r))
 			{
-				Console::WriteError("Can't set cooperative level", r);
+				HelperLog::WriteError("Can't set cooperative level", 0);
 			}
 
 			r = (*device)->Acquire();
 
 			if (FAILED(r))
 			{
-				Console::Write("Can't acquire.\n");
+				HelperLog::Write("Can't acquire.\n");
 			}
 		}
 

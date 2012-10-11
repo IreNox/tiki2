@@ -15,6 +15,11 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member
+	bool Transform::IsDirty()
+	{
+		return isDirty;
+	}
+
 	void Transform::FillWorldMatrix(Matrix* worldMatrix)
 	{
 		checkWorldMatrix();

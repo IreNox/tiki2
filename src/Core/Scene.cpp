@@ -12,7 +12,7 @@ namespace TikiEngine
 
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements(), lights(), cameras()
+		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras()
 	{
 #if _DEBUG
 		mouse = engine->content->LoadTexture(L"Data/Textures/mouse.png");
@@ -25,13 +25,30 @@ namespace TikiEngine
 		{
 			elements[i]->Release();
 		}
+
+		SafeDelete(&lighting.SceneLights);
 	}
 	#pragma endregion
 
 	#pragma region Member
-	List<Light*>* Scene::GetLights()
+	const DrawLightArgs& Scene::GetLighting()
 	{
-		return &lights;
+		UInt32 i = 0;
+		Boolean dirty = false;
+		while (i < lighting.SceneLights->Count())
+		{
+			if (lighting.SceneLights->Get(i)->GetGameObject()->PRS.IsDirty())
+			{
+				dirty = true;
+				break;
+			}
+
+			i++;
+		}
+
+		lighting.IsDirty = dirty;		
+
+		return lighting;
 	}
 
 	List<Camera*>* Scene::GetCameras()
@@ -57,7 +74,7 @@ namespace TikiEngine
 		Camera** comCameras = 0;
 
 		element->GetComponents<Light>(&comLights, &len);
-		if (comLights) lights.AddRange(comLights, 0, len);
+		if (comLights) lighting.SceneLights->AddRange(comLights, 0, len);
 		delete(comLights);
 
 		element->GetComponents<Camera>(&comCameras, &len);
@@ -70,17 +87,29 @@ namespace TikiEngine
 	bool Scene::RemoveElement(GameObject* element)
 	{
 		UInt32 i = 0;
-		while (i < lights.Count())
+		while (i < lighting.SceneLights->Count())
 		{
-			if (lights[i]->GetGameObject() == element) lights.Remove(lights[i]);
-			i++;
+			if (lighting.SceneLights->Get(i)->GetGameObject() == element) 
+			{
+				lighting.SceneLights->Remove(lighting.SceneLights->Get(i));
+			}
+			else
+			{
+				i++;
+			}
 		}
 
 		i = 0;
 		while (i < cameras.Count())
 		{
-			if (cameras[i]->GetGameObject() == element) cameras.Remove(cameras[i]);
-			i++;
+			if (cameras[i]->GetGameObject() == element) 
+			{
+				cameras.Remove(cameras[i]);
+			}
+			else
+			{
+				i++;
+			}
 		}
 
 		return elements.Remove(element);
@@ -96,7 +125,7 @@ namespace TikiEngine
 		}
 
 #if _DEBUG
-		Vector2 mouse2 = args.UpdateData->Input.MousePosition;
+		Vector2 mouse2 = args.Update.Input.MousePosition;
 		Vector2 viewPort = engine->graphics->GetViewPort()->GetSize();
 
 		engine->sprites->Draw(

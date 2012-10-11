@@ -54,8 +54,6 @@ namespace TikiEngine
 
 			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
 			mat->GetShader()->SetTexture("tex", tex);
-			model->SetMaterial(mat);
-			mat->Release();
 
 			go->Model->SetMaterial(mat);
 			mat->Release();
@@ -162,6 +160,11 @@ namespace TikiEngine
 
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
+
+			if (args.Input.GetKey(KEY_F12))
+			{
+				engine->graphics->MakeScreenshot();
+			}
 
 			Scene::Update(args);
 		}

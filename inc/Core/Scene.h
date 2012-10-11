@@ -9,6 +9,7 @@
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
+#include "Core/DrawLightArgs.h"
 #include "Core/InitializationArgs.h"
 
 #include <Core/List.h>
@@ -20,6 +21,7 @@ namespace TikiEngine
 	class Scene : public EngineObject
 	{
 	public:
+
 		Scene(Engine* engine);
 		virtual ~Scene();
 
@@ -31,15 +33,16 @@ namespace TikiEngine
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
-		List<Light*>* GetLights();
+		const DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
 
 	protected:
 
 		List<GameObject*> elements;
 
-		List<Light*> lights;
 		List<Camera*> cameras;
+
+		DrawLightArgs lighting;
 
 #if _DEBUG
 		ITexture* mouse;
