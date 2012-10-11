@@ -129,12 +129,16 @@ namespace TikiEngine
 			NavigationMesh* parent;			// the mesh we are sitting on
 			NavigationCell* currentCell;	// our current cell on the mesh
 
+			public:
 			TRIANGLE_POOL geometry;			// a pile of triangles representing our object
 			bool pathActive;				// true when we are using a path to navigate
 			NavigationPath path;			// our path object
 			NavigationPath::WayPointID nextWaypoint; // ID of the next waypoint we will move to
+			NavigationPath::WayPointID lastWaypoint; // ID of the last waypoint we moved to
+			
 			Vector3 pathMovement;
 			Vector3 pathPos;
+
 		};
 
 	}

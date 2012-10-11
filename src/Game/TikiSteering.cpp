@@ -45,7 +45,7 @@ namespace TikiEngine
 
 		Vector2 TikiSteering::CalculatePrioritized()
 		{
-			Vector2 force;
+			Vector2 force = Vector2::Zero;
 
 			if(On(seek))
 			{

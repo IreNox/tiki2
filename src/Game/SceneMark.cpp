@@ -271,9 +271,15 @@ namespace TikiEngine
 			naviMesh.Clear();  
 			for (UInt32 i = 0; i < map_totalpolys; ++i)
 			{  
-				const Vector3& vertA = map_points[map_polys[i][0]];  
-				const Vector3& vertB = map_points[map_polys[i][1]];  
-				const Vector3& vertC = map_points[map_polys[i][2]];  
+
+				Vector3 vertA = map_points[map_polys[i][0]];  
+				Vector3 vertB = map_points[map_polys[i][1]];  
+				Vector3 vertC = map_points[map_polys[i][2]];  
+
+				Matrix m = Matrix::CreateTranslation(100, 0, 100);
+				vertA = Vector3::TransformCoordinate(vertA, m);
+				vertB = Vector3::TransformCoordinate(vertB, m);
+				vertC = Vector3::TransformCoordinate(vertC, m);
 
 				// some art programs can create linear polygons which have two or more  
 				// identical vertices. This creates a poly with no surface area,  
@@ -288,23 +294,23 @@ namespace TikiEngine
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
 			bot = new TikiBot(engine, go);
-			bot->GetSteering()->WanderOn();
+			//bot->GetSteering()->WanderOn();
 			bot->CreateNav(&naviMesh, 0);
 
-			TikiBot::Triangle Poly;  
-			memset(&Poly.color[0][0], 0x00, 4*3);  
+			//TikiBot::Triangle Poly;  
+			//memset(&Poly.color[0][0], 0x00, 4*3);  
 
-			for (UInt32 i = 0; i < cone_totalpolys; ++i)  
-			{  
-				Poly.vert[0]=cone_points[cone_polys[i][0]];  
-				Poly.vert[1]=cone_points[cone_polys[i][1]];  
-				Poly.vert[2]=cone_points[cone_polys[i][2]];  
+			//for (UInt32 i = 0; i < cone_totalpolys; ++i)  
+			//{  
+			//	Poly.vert[0]=cone_points[cone_polys[i][0]];  
+			//	Poly.vert[1]=cone_points[cone_polys[i][1]];  
+			//	Poly.vert[2]=cone_points[cone_polys[i][2]];  
 
-				Poly.color[0][0] = 0xff;  
-				Poly.color[1][0] = 0xff;  
-				Poly.color[2][0] = 0xff; 
-				bot->AddTriangle(Poly);  
-			}  
+			//	Poly.color[0][0] = 0xff;  
+			//	Poly.color[1][0] = 0xff;  
+			//	Poly.color[2][0] = 0xff; 
+			//	bot->AddTriangle(Poly);  
+			//}  
 
 			//bot->GotoRandomLocation();
 
@@ -393,7 +399,7 @@ namespace TikiEngine
 
 
 			go = new CameraObject(engine);
-			go->PRS.Position() = Vector3(0, 3, 7);
+			go->PRS.Position() = Vector3(0, 20, 50);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
 			this->AddElement(go);
 			go->Release();
@@ -437,7 +443,7 @@ namespace TikiEngine
 
 			// Draw some debug text
 			std::wostringstream s;
-			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
+			s << "ControllerPos (" << botPos.X << ", " << botPos.Y  << ", " << botPos.Z << ")";
 			wstring str = s.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 80));
 
@@ -469,9 +475,6 @@ namespace TikiEngine
 		{
 			cellSpace->CalculateNeighbors(bot->Pos(),  10);
 
-
-
-
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
 			if (args.Input.GetKey(KEY_I))
@@ -495,15 +498,6 @@ namespace TikiEngine
 				// if it is dynamic and also kinematic, use following functions to move/rotate:
 			if (kinematicBox->GetDynamic() && kinematicBox->GetRigidBody()->GetKinematic())
 			{
-			
-				//box->GetRigidBody()->MovePosition(Vector3(0, 0.0005f, 0));
-				
-				Vector3 eulerAngles(0.01f, 0.01f, 0.01f);
-
-				Quaternion q1 = q1.CreateFromAxisAngle(Vector3(1, 0, 0), eulerAngles.X);
-				Quaternion q2 = q2.CreateFromAxisAngle(Vector3(0, 1, 0), eulerAngles.Y);
-				Quaternion q3 = q3.CreateFromAxisAngle(Vector3(0, 0, 1), eulerAngles.Z);
-
 				// PhysX does its rotations in a right-handed manner. 
 				//box->GetRigidBody()->MoveRotation(q3 * q2 * q1); // rotating objects araound the global axes
 				//box->GetRigidBody()->MoveRotation(q1 * q2 * q3); // rotating objects around the local axes
@@ -536,17 +530,26 @@ namespace TikiEngine
 					}
 
 					// turn off any wander behavior
-					bot->GetSteering()->WanderOff();
+					//bot->GetSteering()->WanderOff();
 
-					// get the impact point and activate bot movement
-					impact = info.Point;
+					//// get the impact point and activate bot movement
+					//impact = info.Point;
 					bot->GetSteering()->SetTarget(Vector2(impact.X, impact.Z));
-					if (bot->GetSteering()->ArriveIsOn() == false)
-						bot->GetSteering()->ArriveOn();
+					//if (bot->GetSteering()->ArriveIsOn() == false)
+					bot->GetSteering()->ArriveOn();
 
 				}
 		     }
 
+			// stop any steering or Navigation
+			if (args.Input.GetKey(KEY_F3))
+			{
+				bot->GetSteering()->ArriveOff();
+				bot->GetSteering()->SeekOff();
+				bot->pathActive = false;
+				bot->pathMovement = Vector3::Zero;
+
+			}
 
 			if (args.Input.GetKey(KEY_F2))
 			{

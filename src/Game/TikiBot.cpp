@@ -94,6 +94,7 @@ namespace TikiEngine
 			if (parent)
 			{
 				pathMovement = Vector3::Zero;
+				pathPos = Pos3D();
 				pathActive = parent->BuildNavigationPath(path, currentCell, pathPos, cell, p);
 
 				if(pathActive)
@@ -117,7 +118,7 @@ namespace TikiEngine
 
 		void TikiBot::Draw(const DrawArgs& args)
 		{
-			// connect the waypoins to draw lines in blue
+			// connect the waypoins to draw lines in green
 			NavigationPath::WAYPOINT_LIST::const_iterator iter = path.WaypointList().begin();
 			if (iter != path.WaypointList().end())
 			{
@@ -158,11 +159,13 @@ namespace TikiEngine
 		void TikiBot::Update(const UpdateArgs& args)
 		{
 
-			//Calculate the steering force and update the bot's velocity and position
-			//UpdateMovement(args);
-
-
+			
 			UpdateNavigation(args);
+
+			//Calculate the steering force and update the bot's velocity and position
+			UpdateMovement(args);
+
+
 			
 		}
 
@@ -189,7 +192,9 @@ namespace TikiEngine
 			velocity.Truncate((float)maxSpeed);
 
 			// Move the controller and set some gravity
-			Vector3 displacement(velocity.X, -9.81f, velocity.Y); 
+			Vector3 displacement(velocity.X,
+								 0,	// -9.81f 
+								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
 
 			//if the vehicle has a non zero velocity the heading and side vectors must be updated
@@ -228,19 +233,12 @@ namespace TikiEngine
 					pathMovement = Vector3::Zero;
 				}
 			}
-			else
-			{
-				// apply some friction to our current movement (if any)
-				pathMovement.X *= 0.75f;
-				pathMovement.Y *= 0.75f;
-				pathMovement.Z *= 0.75f;
-			}
 
 			// Adjust Movement
 
 			// scale back movement by our max speed if needed
 			distance = pathMovement.Length();
-			if (distance > max_distance)
+			if (distance >  max_distance)
 			{
 				pathMovement = Vector3::Normalize(pathMovement);
 				pathMovement = pathMovement * max_distance;
@@ -265,8 +263,8 @@ namespace TikiEngine
 					// test location on the NavigationMesh and resolve collisions
 					parent->ResolveMotionOnMesh(pathPos, currentCell, NextPosition, &NextCell);
 					pathPos = NextPosition;
-					controller->SetCenter(pathPos);
 					currentCell = NextCell;
+					controller->SetCenter(pathPos);	// this is only for height adjustment
 				}
 			}
 			else if (pathActive)
@@ -275,20 +273,43 @@ namespace TikiEngine
 				// we have arrived at our desired waypoint.
 				// Snap to it's position and figure out where to go next
 				pathPos = (*nextWaypoint).position;
-				controller->SetCenter(pathPos);
+				//controller->SetCenter(pathPos);
 				pathMovement = Vector3::Zero;
 				distance = 0.0f;
+				lastWaypoint = nextWaypoint;
 				nextWaypoint = path.GetFurthestVisibleWayPoint(nextWaypoint);
+				
 
+				// if we have no more waypoints, Stop arriving
 				if (nextWaypoint == path.WaypointList().end())
 				{
+					steering->SeekOff();
 					pathActive = false;
 					pathMovement = Vector3::Zero;
 				}
-			}
+				else
+				{
+					// only set some target if the nextWaypoint changed
+					if (nextWaypoint != lastWaypoint)
+					{
+						steering->SetTarget(Vector2((*nextWaypoint).position.X, (*nextWaypoint).position.Z));
+						if (!steering->SeekIsOn()) steering->SeekOn();	
+					}
 
-			//if (pathMovement != Vector3::Zero)
-			controller->Move(pathMovement);
+					// Override seek with arrive
+					//if (nextWaypoint == --path.WaypointList().end())
+					//{
+					//	if (steering->SeekIsOn()) steering->SeekOff();	
+					//	steering->SetTarget(Vector2((*nextWaypoint).position.X, (*nextWaypoint).position.Z));
+					//	steering->ArriveOn();
+					//}
+
+				}
+
+
+				
+
+			}
 		}
 
 	}
