@@ -25,6 +25,24 @@ namespace TikiEngine
 			return maximum;
 		}
 
+		Vector3 BoundingBox::GetVertexP(const Vector3& normal)
+		{
+			Vector3 p = minimum;
+			if (normal.X >= 0) p.X = maximum.X;
+			if (normal.Y >= 0) p.Y = maximum.Y;
+			if (normal.Z >= 0) p.Z = maximum.Z;
+			return p;
+		}
+
+		Vector3 BoundingBox::GetVertexN(const Vector3& normal)
+		{
+			Vector3 n = maximum; 
+			if (normal.X >= 0) n.X = minimum.X;
+			if (normal.Y >= 0) n.Y = minimum.Y;
+			if (normal.Z >= 0) n.Z = minimum.Z;
+			return n;
+		}
+
 		void BoundingBox::Set(const Vector3& min, const Vector3& max)
 		{
 			minimum = min;
@@ -32,11 +50,10 @@ namespace TikiEngine
 			bounds.set(min.arr, max.arr);
 		}
 
-		bool BoundingBox::Intersects(const IBoundingBox& b) const
+		bool BoundingBox::Intersects(IBoundingBox* b) 
 		{
-			NxBounds3 bb;
-			bb.set(b.GetMin().arr, b.GetMax().arr);
-			return bounds.intersects(bb);
+			NxBounds3* bb = (NxBounds3*)(b->GetNativeResource()); 
+			return bounds.intersects(*bb);
 		}
 
 		void BoundingBox::DrawDebug(Color color)

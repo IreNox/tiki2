@@ -8,6 +8,7 @@
 #include "Core/IRenderTarget.h"
 
 #include "Core/Ray.h"
+#include "Core/Frustum.h"
 
 namespace TikiEngine
 {
@@ -29,6 +30,7 @@ namespace TikiEngine
 			Matrix* GetViewMatrix();
 			Matrix* GetProjectionMatrix();
 			IRenderTarget* GetRenderTarget();
+			Frustum* GetFrustum();
 
 			void SetProjectionMatrix(const Matrix& projection);
 			void SetRenderTarget(IRenderTarget* renderTarget);
@@ -41,7 +43,7 @@ namespace TikiEngine
 
 			Matrices matrices;
 			IRenderTarget* renderTarget;
-
+			Frustum frustum;
 		};
 	}
 }

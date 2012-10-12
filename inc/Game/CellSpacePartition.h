@@ -43,6 +43,8 @@ namespace TikiEngine
 			// adds entities to the class by allocating them to the appropriate cell
 			void AddEntity(const entity& ent);
 
+			IBoundingBox* GetQuerybox() const { return queryBox; }
+
 			//update an entity's cell by calling this from your entity's Update method 
 			void UpdateEntity(const entity& ent, Vector2 oldPos);
 

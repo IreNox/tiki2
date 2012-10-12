@@ -86,6 +86,24 @@ namespace TikiEngine
 		distance = -Vector3::Dot(point, normal);
 	}
 
+	void Plane::SetCoeff(float a, float b, float c, float d)
+	{
+		// set the normal vector
+		normal = Vector3(a,b,c);
+		//compute the lenght of the vector
+		float l = normal.Length();
+		// normalize the vector
+		normal = Vector3(a/l, b/l, c/l);
+		// and divide d by th length as well
+		distance = d/l;
+	}
+
+
+	float Plane::Distance(const Vector3& point)
+	{
+		return(distance + Vector3::Dot(point, normal));
+	}
+
 	// accessors
 	const Vector3& Plane::Normal() const
 	{

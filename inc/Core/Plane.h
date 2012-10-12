@@ -12,6 +12,7 @@ namespace TikiEngine
 		// ctor / dtor
 		Plane();
 		Plane(const Plane& plane);
+		// Setup Plane object given a clockwise ordering of 3D points 
 		Plane(const Vector3& point0, const Vector3& point1, const Vector3& point2);
 		~Plane();
 
@@ -25,6 +26,8 @@ namespace TikiEngine
 
 		// setters
 		void Set(const Vector3& point0, const Vector3& point1, const Vector3& point2); 
+		void SetCoeff(float a, float b, float c, float d);
+
 
 		float SolveForX(float y, float t) const;
 		float SolveForY(float x, float z) const;
@@ -36,7 +39,8 @@ namespace TikiEngine
 		const Vector3& Point() const;
 		const float& Distance() const;
 
-		float SignedDistance(const Vector3& point) const;
+		float Distance(const Vector3& point);
+		//float SignedDistance(const Vector3& point) const;
 
 	private:
 		Vector3 normal;

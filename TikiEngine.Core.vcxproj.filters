@@ -227,6 +227,9 @@
     <ClCompile Include="src\Core\HelperLog.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Frustum.cpp">
+      <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -516,6 +519,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\HelperLog.h">
       <Filter>Headerdateien\Engine\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Frustum.h">
+      <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

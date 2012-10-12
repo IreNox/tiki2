@@ -96,20 +96,23 @@ namespace TikiEngine
 			queryBox->Set(Vector3(targetPos.X - queryRadius, cellMinZ, targetPos.Y - queryRadius),
                           Vector3(targetPos.X + queryRadius, cellMaxZ, targetPos.Y + queryRadius));
 
+			// pre-compute queryradius in squared space
+			float doubleRadius = queryRadius * queryRadius;
+
 			// iterate through each cell and test to see if its bounding box overlaps
 			// with the query box. If it does and it also contains entities then make further proximity tests.
 			std::vector<Cell<entity> >::iterator curCell;
 			for(curCell = cells.begin(); curCell != cells.end(); ++curCell)
 			{
 				//test to see if this cell contains members and if it overlaps the query box
-				if (curCell->BBox->Intersects(*queryBox) && 
+				if (curCell->BBox->Intersects(queryBox) && 
 				    !curCell->Members.empty())
 				{
 					//add any entities found within query radius to the neighbor list
 					std::list<entity>::iterator it = curCell->Members.begin();
 					for (it; it != curCell->Members.end(); ++it)
 					{
-						if (Vector2::DistanceSquared((*it)->Pos(), targetPos) < queryRadius * queryRadius)
+						if (Vector2::DistanceSquared((*it)->Pos(), targetPos) < doubleRadius)
 							*curNbor++ = *it;
 					}
 				}

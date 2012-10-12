@@ -189,43 +189,6 @@ namespace TikiEngine
 		unsigned long map_totalpolys = 75;
 		#pragma endregion
 
-		#pragma region Cone
-		unsigned long cone_totalpoints = 7;  
-
-		Vector3 cone_points[] =   
-		{  
-			Vector3(5.0000f, 10.0000f, 0.0000f),  
-			Vector3(2.5000f, 10.0000f, 4.3301f),  
-			Vector3(-2.5000f, 10.0000f, 4.3301f),  
-			Vector3(-5.0000f, 10.0000f, 0.0000f),  
-			Vector3(-2.5000f, 10.0000f, -4.3301f),  
-			Vector3(2.5000f, 10.0000f, -4.3301f),  
-			Vector3(0.0000f, 0.0000f, 0.0000f),  
-		};  
-
-		unsigned short cone_polys[][3] =   
-		{  
-			{ 5, 4, 3},  
-			{ 0, 5, 3},  
-			{ 0, 3, 2},  
-			{ 0, 2, 1},  
-			{ 6, 0, 1},  
-			{ 6, 1, 2},  
-			{ 6, 2, 3},  
-			{ 6, 3, 4},  
-			{ 6, 4, 5},  
-			{ 6, 5, 0},  
-		};  
-
-		unsigned long cone_totalpolys = 10;  
-		#pragma endregion
-
-		//extern unsigned long cone_totalpoints;  
-		//extern Vector3 cone_points[7];  
-		//extern unsigned long cone_totalpolys;  
-		//extern unsigned short cone_polys[10][3];
-
-
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
 		{
@@ -521,6 +484,20 @@ namespace TikiEngine
 				drawCellSpace = true; 
 			else if (args.Input.GetKey(KEY_F6))
 				drawCellSpace = false; 
+
+
+			// Camera Frustum test
+			//Camera* cam = fly->GetGameObject()->GetComponent<Camera>();
+			//if (cam->GetFrustum()->BoxInFrustum(cellSpace->GetQuerybox()))
+			//	OutputDebugString(L"cellSpace QueryBox InFrustum \n");
+			//else if (cam->GetFrustum()->SphereInFrustum(bot->Pos3D(), (float)bot->BRadius()))
+			//	OutputDebugString(L"Bot Sphere InFrustum \n");
+			//else if (cam->GetFrustum()->PointInFrustum(Vector3::Zero) == Frustum::INSIDE)
+			//	OutputDebugString(L"Point(0, 0, 0) In Frustum \n");
+			//else
+			//	OutputDebugString(L"No intersection \n");
+
+
 
 			// Update base
 			Scene::Update(args);

@@ -16,6 +16,8 @@
 
 #include "Core/IFont.h"
 
+#include "Core/Frustum.h"
+
 namespace TikiEngine
 {
 	namespace Game

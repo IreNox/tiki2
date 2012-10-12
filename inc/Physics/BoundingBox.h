@@ -21,8 +21,11 @@ namespace TikiEngine
 			Vector3 GetMin() const;
 			Vector3 GetMax() const;
 
+			Vector3 GetVertexP(const Vector3& normal);
+			Vector3 GetVertexN(const Vector3& normal);
+
 			void Set(const Vector3& min, const Vector3& max);
-			bool Intersects(const IBoundingBox& b) const;
+			bool Intersects(IBoundingBox* b);
 
 			void DrawDebug(Color color);
 

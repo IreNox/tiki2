@@ -17,6 +17,7 @@ namespace TikiEngine
 		Camera::Camera(Engine* engine, GameObject* gameObject)
 			: Component(engine, gameObject, CT_Camera), renderTarget(0), matrices()
 		{
+
 			ViewPort* vp = &engine->GetEngineDescription()->Graphics.ViewPort;
 
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
@@ -25,6 +26,8 @@ namespace TikiEngine
 				0.01f,
 				1000.0f
 			));
+
+
 		}
 
 		Camera::~Camera()
@@ -57,6 +60,12 @@ namespace TikiEngine
 		{
 			return renderTarget;
 		}
+
+		Frustum* Camera::GetFrustum()
+		{
+			return &frustum;
+		}
+
 		#pragma endregion
 
 		#pragma region Member - Set
@@ -78,11 +87,16 @@ namespace TikiEngine
 
 		void Camera::Update(const UpdateArgs& args)
 		{
-			this->matrices.ViewMatrix = Matrix::Transpose(Matrix::CreateLookAt(
+			// cache non-transposed view
+			Matrix view = Matrix::CreateLookAt(
 				gameObject->PRS.Position(),
 				gameObject->PRS.Position() + gameObject->PRS.GetForward(),
 				Vector3::Up
-			));
+			);
+			this->matrices.ViewMatrix = Matrix::Transpose(view);
+
+			// create frustum from view * re-transposed Proj
+			frustum.Set(view * Matrix::Transpose(matrices.ProjectionMatrix));
 		}
 		#pragma endregion
 
