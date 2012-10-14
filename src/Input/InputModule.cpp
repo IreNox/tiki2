@@ -4,6 +4,8 @@
 #pragma comment(lib, "dxguid.lib")
 
 #include "Core/Engine.h"
+#include "Core/IGraphics.h"
+
 #include "Core/HelperLog.h"
 
 #include "Input/InputModule.h"
@@ -65,19 +67,29 @@ namespace TikiEngine
 				(float)mouseState.lY / viewPort.Height
 			);
 
-			Vector2 pos = mousePos + dis;
+			POINT p;
+			if (GetCursorPos(&p) && ScreenToClient(hWnd, &p))
+			{
+				Vector2 pos = Vector2(
+					(float)p.x / viewPort.Width,
+					(float)p.y / viewPort.Height
+				);
 
-			if (pos.X < 0) pos.X = 0;
-			if (pos.Y < 0) pos.Y = 0;
+				if (pos.X < 0) pos.X = 0;
+				if (pos.Y < 0) pos.Y = 0;
 
-			if (pos.X > 1) pos.X = 1;
-			if (pos.Y > 1) pos.Y = 1;
+				if (pos.X > 1) pos.X = 1;
+				if (pos.Y > 1) pos.Y = 1;
 
-			mousePos = pos;
+				mousePos = pos;
+			}
 
 			*state = InputState(
-				pos,
+				mousePos,
+				engine->graphics->GetViewPort()->GetSize(),
 				dis,
+				(float)mouseState.lZ,
+				mouseState.rgbButtons,
 				keyboardState
 			);				
 		}
@@ -127,7 +139,7 @@ namespace TikiEngine
 				HelperLog::WriteError("Can't set Format", 0);
 			}
 
-			r = (*device)->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_EXCLUSIVE);
+			r = (*device)->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 			if (FAILED(r))
 			{

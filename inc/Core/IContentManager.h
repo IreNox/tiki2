@@ -38,9 +38,6 @@ namespace TikiEngine
 
 			virtual IBoundingBox* LoadBoundingBox(const wstring& name) = 0;
 			virtual IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name) = 0;
-
-			virtual wstring GetWorkingPath() = 0;
-			virtual wstring GetRealFilePath(wstring fileName) = 0;
 		};
 	}
 }

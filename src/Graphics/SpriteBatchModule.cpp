@@ -204,6 +204,46 @@ namespace TikiEngine
 			);
 		}
 
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect)
+		{
+			this->Draw(
+				texture,
+				destRect,
+				texture->GetRectangle()
+			);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const RectangleF& srcRect)
+		{
+			Vector3 tl = transformPoint(
+				Vector3(destRect.X, destRect.Y, 0.0f)
+			); 
+
+			Vector3 br = Vector3(
+				tl.X + (pixelSize.X * destRect.Width),
+				tl.Y - (pixelSize.Y * destRect.Height),
+				0.0f
+			);
+
+			Vector2 size = texture->GetSize();
+
+			Vector4 texCorrd = Vector4(
+				srcRect.X / size.X,
+				srcRect.Y / size.Y,
+				(srcRect.X + srcRect.Width) / size.X,
+				(srcRect.Y + srcRect.Height) / size.Y
+			);
+
+			drawInternal(
+				texture,
+				tl,
+				Vector3(br.X, tl.Y, 0.0f),
+				Vector3(tl.X, br.Y, 0.0f),
+				br,
+				texCorrd
+			);
+		}
+
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth)
 		{
 			this->Draw(

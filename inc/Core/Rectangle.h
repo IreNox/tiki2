@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/RectangleF.h"
+
 namespace TikiEngine
 {
 	struct Rectangle
@@ -33,6 +35,16 @@ namespace TikiEngine
 		bool operator==(const Rectangle& rhs)
 		{
 			return (this->X == rhs.X) && (this->Y == rhs.Y) && (this->Width == rhs.Width) && (this->Height == rhs.Height);
+		}
+
+		operator RectangleF()
+		{
+			return RectangleF(
+				(float)X,
+				(float)Y,
+				(float)Width,
+				(float)Height
+			);
 		}
 
 	};

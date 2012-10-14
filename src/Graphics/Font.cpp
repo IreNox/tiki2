@@ -40,7 +40,33 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		UInt32 Font::GetHeight()
+		Vector2 Font::MeasureString(wstring text)
+		{
+			UInt32 i = 0;
+			float width = 0.0f;
+			while (i < text.length())
+			{
+				wchar_t c = text[i];
+
+				if (charRect.ContainsKey(c))
+				{
+					width += charRect[c].Width;
+				}
+				else
+				{
+					throw "Char not in Font.";
+				}
+
+				i++;
+			}
+
+			return Vector2(
+				width,
+				(float)pixelHeight
+			);
+		}
+
+		float Font::GetHeight()
 		{
 			return pixelHeight;
 		}
@@ -64,7 +90,7 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		float Font::DrawChar(wchar_t c, const Vector2& pos)
 		{
-			Rectangle r;
+			RectangleF r;
 
 			if (charRect.ContainsKey(c))
 			{
@@ -72,11 +98,11 @@ namespace TikiEngine
 
 				DllMain::ModuleSpriteBatch->Draw(
 					texture,
-					Rectangle(
-						(int)pos.X,
-						(int)pos.Y,
-						(int)r.Width,
-						(int)r.Height
+					RectangleF(
+						pos.X,
+						pos.Y,
+						r.Width,
+						r.Height
 					),
 					r
 				);
@@ -109,7 +135,7 @@ namespace TikiEngine
 			PInt len = wcslen(chars);
 
 			Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
-			pixelHeight = (UInt32)ceil(font->GetHeight(96));
+			pixelHeight = font->GetHeight(96);
 
 			*width = 512;
 			*height = 512;
@@ -171,11 +197,11 @@ namespace TikiEngine
 
 				charRect.Add(
 					chars[i],
-					Rectangle(
-						(int)pos.X,
-						(int)pos.Y,
-						(int)(charSize.Width - spaceWidth),
-						(int)pixelHeight
+					RectangleF(
+						pos.X,
+						pos.Y,
+						(charSize.Width - spaceWidth),
+						pixelHeight
 					)
 				);
 

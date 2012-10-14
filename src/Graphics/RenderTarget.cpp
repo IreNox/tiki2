@@ -69,6 +69,12 @@ namespace TikiEngine
 			return texture->GetSize();
 		}
 
+		Rectangle RenderTarget::GetRectangle()
+		{
+			return texture->GetRectangle();
+		}
+
+
 		bool RenderTarget::GetDynamic()
 		{
 			return texture->GetDynamic();

@@ -12,9 +12,6 @@
     <Filter Include="Headerdateien\Scenes">
       <UniqueIdentifier>{d6e0a684-c78f-4f41-b6ea-a4ce65e5f46d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Scene">
-      <UniqueIdentifier>{4292490b-2072-4845-8a69-16a70d2c88ef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Scripts">
       <UniqueIdentifier>{f06ad67d-c0ee-4496-a4c1-7b49b6772397}</UniqueIdentifier>
     </Filter>
@@ -62,6 +59,9 @@
     </Filter>
     <Filter Include="Quelldateien\AI\Messaging">
       <UniqueIdentifier>{9beb7ab9-4fef-4355-82b0-013bed2a3062}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Scenes">
+      <UniqueIdentifier>{4292490b-2072-4845-8a69-16a70d2c88ef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -152,19 +152,22 @@
     <ClInclude Include="inc\Game\NavigationPath.h">
       <Filter>Headerdateien\AI\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SceneMenuMain.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SceneTim.cpp">
-      <Filter>Quelldateien\Scene</Filter>
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SceneMark.cpp">
-      <Filter>Quelldateien\Scene</Filter>
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SceneAdrian.cpp">
-      <Filter>Quelldateien\Scene</Filter>
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CameraFly.cpp">
       <Filter>Quelldateien\Scripts</Filter>
@@ -182,7 +185,7 @@
       <Filter>Quelldateien\SQlite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SceneLevel.cpp">
-      <Filter>Quelldateien\Scene</Filter>
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CameraRTS.cpp">
       <Filter>Quelldateien\Scripts</Filter>
@@ -237,6 +240,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\NavigationPath.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneMenuMain.cpp">
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

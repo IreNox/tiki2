@@ -26,6 +26,13 @@
     <ClCompile Include="src\Core\ColorVertex.cpp" />
     <ClCompile Include="src\Core\Component.cpp" />
     <ClCompile Include="src\Core\Frustum.cpp" />
+    <ClCompile Include="src\Core\GUIButton.cpp" />
+    <ClCompile Include="src\Core\GUIControl.cpp" />
+    <ClCompile Include="src\Core\GUICustomButton.cpp" />
+    <ClCompile Include="src\Core\GUIDialog.cpp" />
+    <ClCompile Include="src\Core\GUIImage.cpp" />
+    <ClCompile Include="src\Core\GUILabel.cpp" />
+    <ClCompile Include="src\Core\GUIWindow.cpp" />
     <ClCompile Include="src\Core\HelperLog.cpp" />
     <ClCompile Include="src\Core\DefaultVertex.cpp" />
     <ClCompile Include="src\Core\FileStream.cpp" />
@@ -65,6 +72,13 @@
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ColorVertex.h" />
     <ClInclude Include="inc\Core\ComponentType.h" />
+    <ClInclude Include="inc\Core\GUIButton.h" />
+    <ClInclude Include="inc\Core\GUIControl.h" />
+    <ClInclude Include="inc\Core\GUICustomButton.h" />
+    <ClInclude Include="inc\Core\GUIDialog.h" />
+    <ClInclude Include="inc\Core\GUIImage.h" />
+    <ClInclude Include="inc\Core\GUILabel.h" />
+    <ClInclude Include="inc\Core\GUIWindow.h" />
     <ClInclude Include="inc\Core\Frustum.h" />
     <ClInclude Include="inc\Core\HelperLog.h" />
     <ClInclude Include="inc\Core\DefaultVertex.h" />
@@ -99,6 +113,7 @@
     <ClInclude Include="inc\Core\PrimitiveTopologies.h" />
     <ClInclude Include="inc\Core\Ray.h" />
     <ClInclude Include="inc\Core\Rectangle.h" />
+    <ClInclude Include="inc\Core\RectangleF.h" />
     <ClInclude Include="inc\Core\TikiPtr.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />

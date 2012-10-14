@@ -2,7 +2,7 @@
 
 #include "Core/IResource.h"
 
-#include "Core/Vector2.h"
+#include "Core/TypeInc.h"
 #include "Core/ITexture.h"
 
 namespace TikiEngine
@@ -20,8 +20,11 @@ namespace TikiEngine
 
 			virtual float DrawChar(wchar_t c, const Vector2& pos) = 0;
 
-			virtual UInt32 GetHeight() = 0;
 			virtual ITexture* GetTexture() = 0;
+
+			virtual float GetHeight() = 0;
+			virtual Vector2 MeasureString(wstring text) = 0;
+
 		};
 	}
 }

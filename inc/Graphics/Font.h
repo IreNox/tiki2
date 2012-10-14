@@ -2,7 +2,7 @@
 
 #include "Core/IFont.h"
 
-#include "Core/Rectangle.h"
+#include "Core/RectangleF.h"
 #include "Core/Dictionary.h"
 
 namespace TikiEngine
@@ -20,7 +20,9 @@ namespace TikiEngine
 
 			float DrawChar(wchar_t c, const Vector2& pos);
 
-			UInt32 GetHeight();
+			float GetHeight();
+			Vector2 MeasureString(wstring text);
+
 			ITexture* GetTexture();
 			void* GetNativeResource();
 
@@ -33,8 +35,8 @@ namespace TikiEngine
 
 		private:
 
-			UInt32 pixelHeight;
-			Dictionary<wchar_t, Rectangle> charRect;
+			float pixelHeight;
+			Dictionary<wchar_t, RectangleF> charRect;
 
 			ITexture* texture;
 

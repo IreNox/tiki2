@@ -3,10 +3,20 @@
 
 #include <Windows.h>
 
+#include "Core/IModel.h"
+#include "Core/ISound.h"
+#include "Core/IShader.h"
+#include "Core/ITexture.h"
+
 namespace TikiEngine
 {
-	wstring HelperPath::workingPath = L"";
+	#pragma region Vars
+	using namespace TikiEngine::Resources;
 
+	wstring HelperPath::workingPath = L"";
+	#pragma endregion
+
+	#pragma region Member - WorkingPath
 	wstring HelperPath::GetWorkingPath()
 	{
 		if (workingPath == L"")
@@ -19,7 +29,9 @@ namespace TikiEngine
 
 		return workingPath;
 	}
+	#pragma endregion
 
+	#pragma region Member - Compine
 	wstring HelperPath::Combine(wstring path1, wstring path2)
 	{
 		wchar_t i1 = path1[path1.size() - 1];
@@ -34,7 +46,7 @@ namespace TikiEngine
 
 		checkPath(
 			HelperPath::GetDirectoryName(fullPath)
-		);
+			);
 
 		return fullPath;
 	}
@@ -44,9 +56,11 @@ namespace TikiEngine
 		return HelperPath::Combine(
 			HelperPath::GetWorkingPath(),
 			path
-		);
+			);
 	}
+	#pragma endregion
 
+	#pragma region Member - Part
 	wstring HelperPath::GetFilename(wstring fullPath)
 	{
 		PInt i1 = fullPath.find_last_of(L'\\');
@@ -64,6 +78,45 @@ namespace TikiEngine
 
 		return fullPath.substr(0, index);
 	}
+	#pragma endregion
+
+	#pragma region Member - Resource
+	wstring HelperPath::GetResourcePath(PInt typeHash, wstring fileName)
+	{
+		wstring typeExt = L"";
+		wstring typeName = L"";
+
+		if (typeid(IModel).hash_code() == typeHash)
+		{
+			typeExt = L"fbx";
+			typeName = L"Models";
+		}
+		else if (typeid(ISound).hash_code() == typeHash)
+		{
+			typeExt = L"wav";
+			typeName = L"Sounds";
+		}
+		else if (typeid(IShader).hash_code() == typeHash)
+		{
+			typeExt = L"fx";
+			typeName = L"Effects";
+		}
+		else if (typeid(ITexture).hash_code() == typeHash)
+		{
+			typeExt = L"dds";
+			typeName = L"Textures";
+		}
+		else
+		{
+			throw "Resource type not found.";
+		}
+
+		return HelperPath::Combine(
+			HelperPath::GetWorkingPath() + L"/Data/" + typeName,
+			fileName + L"." + typeExt
+		);
+	}
+	#pragma endregion
 
 	#pragma region Private Member
 	void HelperPath::checkPath(wstring path)

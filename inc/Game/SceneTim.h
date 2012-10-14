@@ -10,12 +10,15 @@
 #include "Game/PPBlur.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
+#include "Core/GUIButton.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Graphics;
+		using namespace TikiEngine::UserInterface;
 
 		class SceneTim : public Scene
 		{
@@ -40,6 +43,8 @@ namespace TikiEngine
 			PPScreenSpaceAmbientOcclusion* ssao;
 
 			Vector3 tmp;
+
+			GUIButton* button;
 
 		};
 	}

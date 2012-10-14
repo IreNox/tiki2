@@ -29,6 +29,7 @@ namespace TikiEngine
 			Int32 GetWidth();
 			Int32 GetHeight();
 			Vector2 GetSize();
+			Rectangle GetRectangle();
 
 			bool GetDynamic();
 

@@ -202,6 +202,11 @@ namespace TikiEngine
 			);
 		}
 
+		Rectangle Texture::GetRectangle()
+		{
+			return Rectangle(0, 0, desc.Width, desc.Height);
+		}
+
 		void Texture::GetData(Int32 format, void** data)
 		{
 			D3D11_MAPPED_SUBRESOURCE mapped;

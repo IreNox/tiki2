@@ -33,9 +33,6 @@ namespace TikiEngine
 			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
 			IBoundingBox* LoadBoundingBox(const wstring& name);
 
-			wstring GetWorkingPath();
-			wstring GetRealFilePath(wstring fileName);
-
 		private:
 
 			struct ResourceInfo
@@ -51,8 +48,6 @@ namespace TikiEngine
 			};
 
 			IResource* findLoadedResource(PInt hash, wstring name);
-
-			wstring workingPath;
 
 			List<ResourceInfo> loadedResources;
 

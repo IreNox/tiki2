@@ -41,12 +41,7 @@ namespace TikiEngine
 		List<GameObject*> elements;
 
 		List<Camera*> cameras;
-
 		DrawLightArgs lighting;
-
-#if _DEBUG
-		ITexture* mouse;
-#endif
 
 	};
 }

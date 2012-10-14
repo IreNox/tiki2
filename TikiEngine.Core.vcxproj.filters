@@ -108,6 +108,12 @@
     <Filter Include="Quelldateien\Core\Args/States">
       <UniqueIdentifier>{dc351ce7-aa5b-483c-8ef2-0b4d59701935}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Core\UserInterface">
+      <UniqueIdentifier>{de2f1810-f8a0-4b06-8b57-484d8b1cb88d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\UserInterface">
+      <UniqueIdentifier>{2cbc1a70-a40e-47b6-af4f-af2c1f68d097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -229,6 +235,27 @@
     </ClCompile>
     <ClCompile Include="src\Core\Frustum.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUIButton.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUIControl.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUICustomButton.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUIDialog.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUIImage.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUILabel.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\GUIWindow.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,6 +548,30 @@
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Frustum.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIButton.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIControl.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUICustomButton.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIDialog.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIImage.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUILabel.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIWindow.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\RectangleF.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
   </ItemGroup>

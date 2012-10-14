@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/IResource.h"
+#include "Core/Rectangle.h"
 
 namespace TikiEngine
 {
@@ -24,6 +25,7 @@ namespace TikiEngine
 			virtual Int32 GetWidth() = 0;
 			virtual Int32 GetHeight() = 0;
 			virtual Vector2 GetSize() = 0;
+			virtual Rectangle GetRectangle() = 0;
 
 			virtual bool GetDynamic() = 0;
 

@@ -34,6 +34,9 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Rectangle& destinationRectangle);
 			void Draw(ITexture* texture,  const Rectangle& destinationRectangle, const Rectangle& sourceRectangle);
 
+			void Draw(ITexture* texture,  const RectangleF& destinationRectangle);
+			void Draw(ITexture* texture,  const RectangleF& destinationRectangle, const RectangleF& sourceRectangle);
+
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth);
 			

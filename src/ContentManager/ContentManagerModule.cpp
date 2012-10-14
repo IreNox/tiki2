@@ -1,12 +1,11 @@
 
 #include "Core/TypeGlobals.h"
+#include "Core/HelperPath.h"
+
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
 
 #include "ContentManager/ContentManagerModule.h"
-
-#include "Core/MeshIndexed.h"
-#include "Core/DefaultVertex.h"
 
 #include <typeinfo.h>
 
@@ -18,9 +17,6 @@ namespace TikiEngine
 		ContentManagerModule::ContentManagerModule(Engine* engine)
 			: IContentManager(engine) , loadedResources()
 		{
-			wchar_t cd[MAX_PATH];
-			_wgetcwd(cd, MAX_PATH);
-			workingPath = cd;			
 		}
 
 		ContentManagerModule::~ContentManagerModule()
@@ -58,12 +54,12 @@ namespace TikiEngine
 		#pragma region Member - Load
 		IResource* ContentManagerModule::Load(PInt hash, wstring name)
 		{
+			name = HelperPath::GetResourcePath(hash, name);
 			IResource* value = this->findLoadedResource(hash, name);
 
 			if (value == 0)
 			{
 				bool loadFile = true;
-				wstring fileName = this->GetRealFilePath(name);
 
 				if (hash == typeid(ITexture).hash_code())
 				{
@@ -99,7 +95,7 @@ namespace TikiEngine
 						ResourceInfo(hash, name, value)
 					);
 
-					if (loadFile) value->LoadFromFile(fileName.c_str());
+					if (loadFile) value->LoadFromFile(name.c_str());
 				}
 			}
 			
@@ -171,18 +167,6 @@ namespace TikiEngine
 		}
 
 
-		#pragma endregion
-
-		#pragma region Member - Path
-		wstring ContentManagerModule::GetWorkingPath()
-		{
-			return workingPath;
-		}
-
-		wstring ContentManagerModule::GetRealFilePath(wstring fileName)
-		{
-			return workingPath + L"\\" + fileName;
-		}
 		#pragma endregion
 
 		#pragma region Private Member

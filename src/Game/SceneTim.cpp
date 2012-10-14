@@ -49,10 +49,10 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			go->Model = engine->content->LoadModel(L"Data/Models/bridge.fbx");
-			tex = engine->content->LoadTexture(L"Data/Resources/Textures/jumppad_diff.jpg");
+			go->Model = engine->content->LoadModel(L"bridge");
+			tex = engine->content->LoadTexture(L"checker");
 
-			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
+			Material* mat = engine->content->LoadMaterial(L"os_default");
 			mat->GetShader()->SetTexture("tex", tex);
 
 			go->Model->SetMaterial(mat);
@@ -76,32 +76,41 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			go = new GameObject(engine);
-			
-			mat = engine->content->LoadMaterial(L"Data\\Effects\\os_cloddy.fx");
-			mat->GetShader()->SetTexture("tex", tex);
+			//// Cloddy
+			//go = new GameObject(engine);
+			//
+			//mat = engine->content->LoadMaterial(L"os_cloddy");
+			//mat->GetShader()->SetTexture("tex", tex);
 
-			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
-			terrain->SetMaterial(mat);
-			terrain->Release();
-			mat->Release();
+			//ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			//terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
+			//terrain->SetMaterial(mat);
+			//terrain->Release();
+			//mat->Release();
 
-			this->AddElement(go);
-			go->Release();
+			//this->AddElement(go);
+			//go->Release();
 
+			//// Blur
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
+			//// SSAO
 			//ssao = new PPScreenSpaceAmbientOcclusion(engine);
 			//engine->graphics->AddPostProcess(ssao);
-
 			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
 
+			//// Sound
 			//ISound* sound = engine->librarys->CreateResource<ISound>();
-			//sound->LoadFromFile(L"Data/Sound/beep.wav");
+			//sound->LoadFromFile(L"beep");
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 14.0f);
+
+			GUIControl::SetDefaultFont(font);
+
+			button = new GUIButton(engine);
+			button->Position() = Vector2(500, 500);
+			button->Size() = Vector2(512, 128);
 
 			Scene::Initialize(args);
 		}
@@ -109,6 +118,12 @@ namespace TikiEngine
 		void SceneTim::Draw(const DrawArgs& args)
 		{
 			Scene::Draw(args);
+
+			tmp = Vector3(
+				 args.Update.Input.MousePositionDisplay.X,
+				 args.Update.Input.MousePositionDisplay.Y,
+				 args.Update.Input.MousePositionDisplay.X
+			);
 
 			wostringstream s;
 			s << "Light: X: " << tmp.X << ", Y:"  << tmp.Y << ", Z:" << tmp.Z;
@@ -140,6 +155,8 @@ namespace TikiEngine
 				Vector2(1),
 				1
 			);*/
+
+			button->Draw(args);
 		}
 
 		void SceneTim::Update(const UpdateArgs& args)
@@ -165,6 +182,8 @@ namespace TikiEngine
 			{
 				engine->graphics->MakeScreenshot();
 			}
+
+			button->Update(args);
 
 			Scene::Update(args);
 		}

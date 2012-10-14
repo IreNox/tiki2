@@ -21,10 +21,9 @@ namespace TikiEngine
 		template<class T>
 		static wstring GetResourcePath(wstring fileName)
 		{
-			//typeid(T).name(__type_info_root_node
-
-			return workingPath;
+			return HelperPath::GetResourcePath(typeid(T).hash_code(), fileName);
 		}
+		static wstring GetResourcePath(PInt typeHash, wstring fileName);
 
 	private:
 
