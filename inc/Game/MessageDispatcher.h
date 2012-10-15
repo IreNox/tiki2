@@ -3,16 +3,12 @@
 #include <set>
 #include "Game/Telegram.h"
 #include "Core/GameTime.h"
-
-#define Dispatcher MessageDispatcher::Instance()
+#include "Game/EntityManager.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
-		class BaseGameEntity;
-
-
 		const double SEND_MSG_IMMEDIATELY = 0.0;
 		const int NO_ADDITIONAL_INFO   = 0;
 		const int SENDER_ID_IRRELEVANT = -1;
@@ -20,7 +16,7 @@ namespace TikiEngine
 		class MessageDispatcher
 		{
 		public:
-			static MessageDispatcher* Instance();
+			MessageDispatcher::MessageDispatcher(EntityManager* mgr);
 
 			// send a message to another bot. The Receiving bot is referenced by ID.
 			void DispatchMsg(const GameTime& time, double delay, int sender, int receiver, int msg, void* extraInfo);
@@ -37,6 +33,9 @@ namespace TikiEngine
 			// because of the benefit of automatic sorting and avoidance
 			// of duplicates. Messages are sorted by their dispatch time.
 			std::set<Telegram> priorityQ;
+
+			// keep track of the EntityManager
+			EntityManager* entityMgr;
 
 		};
 

@@ -6,22 +6,9 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		EntityManager* EntityManager::instance = 0;
-
-		//   this class is a singleton
-		EntityManager* EntityManager::Instance()
-		{
-			if (instance == 0)
-				instance = new EntityManager;
-
-		    return instance;
-		}
-
-		void EntityManager::Dispose()
+		EntityManager::~EntityManager()
 		{
 			Reset();
-			delete instance;
-			instance = 0;
 		}
 
 		BaseGameEntity* EntityManager::GetEntityFromID(int id) const
@@ -43,16 +30,6 @@ namespace TikiEngine
 		void EntityManager::RegisterEntity(BaseGameEntity* newEntity)
 		{
 			entityMap.insert(std::make_pair(newEntity->ID(), newEntity));
-		}
-
-
-		void EntityManager::RegisterTikiBot(GameObject* gameObject)
-		{
-			//TikiBot* comp = new TikiBot(0, gameObject);
-			//comp->Init();
-			//comp->Release();
-
-		    //entityMap.insert(std::make_pair(comp->ID(), gameObject));
 		}
 
 	}

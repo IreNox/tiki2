@@ -223,9 +223,6 @@
     <ClCompile Include="src\Game\MessageDispatcher.cpp">
       <Filter>Quelldateien\AI\Messaging</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\CellSpacePartition.cpp">
-      <Filter>Quelldateien\AI\Movement</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\NavigationCell.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>

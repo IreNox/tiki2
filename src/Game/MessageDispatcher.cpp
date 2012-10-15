@@ -7,10 +7,9 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		MessageDispatcher* MessageDispatcher::Instance()
+		MessageDispatcher::MessageDispatcher(EntityManager* mgr)
 		{
-		    static MessageDispatcher instance; 
-		    return &instance;
+			this->entityMgr = mgr;
 		}
 
 
@@ -26,7 +25,7 @@ namespace TikiEngine
 
 		void MessageDispatcher::DispatchMsg(const GameTime& time, double delay, int sender, int receiver, int msg, void* extraInfo)
 		{
-			BaseGameEntity* receiverEnt = EntityMgr->GetEntityFromID(receiver);
+			BaseGameEntity* receiverEnt = entityMgr->GetEntityFromID(receiver);
 
 			if (receiverEnt == 0)
 			{

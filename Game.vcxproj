@@ -57,7 +57,6 @@
     <ClCompile Include="src\Game\BasicTransform.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\CameraRTS.cpp" />
-    <ClCompile Include="src\Game\CellSpacePartition.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />
     <ClCompile Include="src\Game\GameHud.cpp" />
     <ClCompile Include="src\Game\GameState.cpp" />

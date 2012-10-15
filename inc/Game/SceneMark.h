@@ -1,31 +1,21 @@
 #pragma once
 
 #include "Core/Scene.h"
-
+#include "Core/IFont.h"
 #include "Core/IBoxCollider.h"
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
-//#include "Core/IBoundingBox.h"
-
-#include "Game/TikiBot.h"
-#include "Game/EntityManager.h"
-#include "Game/CameraFly.h"
-#include "Game/CellSpacePartition.h"
-
-#include "Game/NavigationMesh.h"
-
-#include "Core/IFont.h"
-
-#include "Core/Frustum.h"
 
 #include "Game/GameState.h"
+#include "Game/TikiBot.h"
+#include "Game/CameraFly.h"
+#include "Game/CellSpacePartition.h"
+#include "Game/NavigationMesh.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-
-
 		using namespace TikiEngine::AI;
 		using namespace TikiEngine::Scripts;
 

@@ -5,6 +5,7 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+
 		GameState::GameState(Engine* engine)
 			: EngineObject(engine)
 		{
@@ -19,9 +20,12 @@ namespace TikiEngine
 			return engine;
 		}
 
-		/*void StartLevel(UInt32 id);
+		void GameState::StartLevel(UInt32 id)
+		{
 
-		void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
+		}
+
+		/*void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
 
 		UInt64 GetResource1();
 		UInt64 GetResource2();

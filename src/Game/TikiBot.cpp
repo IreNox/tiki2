@@ -136,8 +136,7 @@ namespace TikiEngine
 				}
 			}
 
-
-			// draw our current heading
+			// draw current heading
 			if (pathActive)
 			{
 				const NavigationPath::WAYPOINT& waypoint = *nextWaypoint;
@@ -147,9 +146,6 @@ namespace TikiEngine
 				Vector3 wp(waypoint.position.X, waypoint.position.Y + 0.1f, waypoint.position.Z);
 				engine->graphics->DrawLine(start, wp, Color(1, 1, 1, 1));
 			}
-
-
-
 		}
 
 		void TikiBot::Update(const UpdateArgs& args)

@@ -44,6 +44,7 @@ namespace TikiEngine
 			GameHud* hud;
 			SceneLevel* scene;
 
+
 			//List<Unit*> selectedUnits;
 
 			//List<Unit*> levelUnits;

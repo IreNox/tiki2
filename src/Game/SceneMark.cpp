@@ -218,8 +218,6 @@ namespace TikiEngine
 
 			cellSpace->EmptyCells();
 			delete cellSpace;
-
-			EntityMgr->Dispose();
 			
 			SafeRelease(&state);
 		}
@@ -263,7 +261,7 @@ namespace TikiEngine
 			bot->CreateNav(&naviMesh, 0);
 
 			cellSpace->AddEntity(bot);
-			EntityMgr->RegisterEntity(bot);
+			// TODO: state->GetEntityMgr()->RegisterEntity(bot);
 
 			this->AddElement(go);
 			go->Release();
