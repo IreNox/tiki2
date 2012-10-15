@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\src\Core\shell.c" />
-    <ClCompile Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\src\Core\sqlite3.c" />
+    <ClCompile Include="src\Core\shell.c" />
+    <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\CameraObject.cpp" />
@@ -71,8 +71,8 @@
     <ClCompile Include="src\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\inc\Core\sqlite3.h" />
-    <ClInclude Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\inc\Core\sqlite3ext.h" />
+    <ClInclude Include="inc\Core\sqlite3.h" />
+    <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />
