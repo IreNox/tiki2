@@ -28,6 +28,7 @@ namespace TikiEngine
 			win.lpszClassName	= desc.Window.WindowClass;
 			win.cbSize			= sizeof(WNDCLASSEX);
 			win.hbrBackground	= (HBRUSH)COLOR_WINDOWFRAME;
+			win.hCursor			= LoadCursor(NULL, IDC_ARROW);
 
 			HRESULT r = RegisterClassEx(&win);
 

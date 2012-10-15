@@ -3,7 +3,7 @@
 #include "Core/TypeGlobals.h"
 
 #include "Core/GameObject.h"
-#include "Game/sqlite3.h"
+#include "Core/sqlite3.h"
 
 namespace TikiEngine
 {

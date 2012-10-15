@@ -114,6 +114,12 @@
     <Filter Include="Headerdateien\Core\UserInterface">
       <UniqueIdentifier>{2cbc1a70-a40e-47b6-af4f-af2c1f68d097}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\SQLite">
+      <UniqueIdentifier>{9dbbac4f-b18e-476f-a285-f4cdee7466b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\SQlite">
+      <UniqueIdentifier>{efcdd597-8a57-48ad-aceb-9d038858560f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -256,6 +262,18 @@
     </ClCompile>
     <ClCompile Include="src\Core\GUIWindow.cpp">
       <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\src\Core\sqlite3.c">
+      <Filter>Quelldateien\Core\SQlite</Filter>
+    </ClCompile>
+    <ClCompile Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\src\Core\shell.c">
+      <Filter>Quelldateien\Core\SQlite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\MemoryStream.cpp">
+      <Filter>Quelldateien\Core\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\File.cpp">
+      <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -573,6 +591,18 @@
     </ClInclude>
     <ClInclude Include="inc\Core\RectangleF.h">
       <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\inc\Core\sqlite3ext.h">
+      <Filter>Headerdateien\Core\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="D:\Eigene Dateien\DevVersioned\TikiEngine 2.0\inc\Core\sqlite3.h">
+      <Filter>Headerdateien\Core\SQLite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\MemoryStream.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\File.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

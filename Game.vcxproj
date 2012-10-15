@@ -26,6 +26,8 @@
     <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\CellSpacePartition.h" />
     <ClInclude Include="inc\Game\EntityManager.h" />
+    <ClInclude Include="inc\Game\GameHud.h" />
+    <ClInclude Include="inc\Game\GameState.h" />
     <ClInclude Include="inc\Game\Level.h" />
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />
@@ -43,11 +45,10 @@
     <ClInclude Include="inc\Game\SceneMenuMain.h" />
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
-    <ClInclude Include="inc\Game\sqlite3.h" />
-    <ClInclude Include="inc\Game\sqlite3ext.h" />
     <ClInclude Include="inc\Game\Telegram.h" />
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
+    <ClInclude Include="inc\Game\UnitFunctions.h" />
     <ClInclude Include="inc\Game\Utils.h" />
   </ItemGroup>
   <ItemGroup>
@@ -58,6 +59,8 @@
     <ClCompile Include="src\Game\CameraRTS.cpp" />
     <ClCompile Include="src\Game\CellSpacePartition.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />
+    <ClCompile Include="src\Game\GameHud.cpp" />
+    <ClCompile Include="src\Game\GameState.cpp" />
     <ClCompile Include="src\Game\Level.cpp" />
     <ClCompile Include="src\Game\LevelChild.cpp" />
     <ClCompile Include="src\Game\LevelEnemy.cpp" />
@@ -76,8 +79,6 @@
     <ClCompile Include="src\Game\SceneMark.cpp" />
     <ClCompile Include="src\Game\SceneMenuMain.cpp" />
     <ClCompile Include="src\Game\SceneTim.cpp" />
-    <ClCompile Include="src\Game\shell.c" />
-    <ClCompile Include="src\Game\sqlite3.c" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
   </ItemGroup>
