@@ -21,7 +21,7 @@ namespace TikiEngine
 		{
 		public:
 
-			TikiBot(Engine* engine, GameObject* gameObject);
+			TikiBot(GameState* gameState, GameObject* gameObject);
 			~TikiBot();
 
 			// Navigation

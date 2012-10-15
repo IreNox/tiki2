@@ -3,13 +3,16 @@
 #include "Core/TypeInc.h"
 #include "Core/Component.h"
 #include "Core/GameObject.h"
+
 #include "Game/Utils.h"
 #include "Game/Telegram.h"
+#include "Game/GameState.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
+		using namespace TikiEngine::Game;
 		using namespace TikiEngine::Components;
 
 		class BaseGameEntity : public Component
@@ -17,7 +20,7 @@ namespace TikiEngine
 
 		public:
 			enum {default_entity_type = -1};
-			BaseGameEntity(Engine* engine, GameObject* gameObject);
+			BaseGameEntity(GameState* gameState, GameObject* gameObject);
 			virtual ~BaseGameEntity() { }
 
 			// TODO:
@@ -57,6 +60,9 @@ namespace TikiEngine
 			bool GetReady() { return true; }
 
 		protected:
+
+			GameState* gameState;
+
 		    Double boundingRadius;   // the magnitude of this object's bounding radius
 
 		private:

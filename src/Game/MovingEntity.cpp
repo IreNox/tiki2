@@ -5,8 +5,8 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		MovingEntity::MovingEntity(Engine* engine, GameObject* gameObject) : 
-					 BaseGameEntity(engine, gameObject)
+		MovingEntity::MovingEntity(GameState* gameState, GameObject* gameObject)
+			: BaseGameEntity(gameState, gameObject)
 		{
 		}
 

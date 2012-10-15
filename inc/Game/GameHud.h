@@ -5,6 +5,8 @@
 #include "Core/GUIButton.h"
 #include "Core/GUICustomButton.h"
 
+#include "Game/UnitFunctions.h"
+
 namespace TikiEngine
 {
 	namespace Game

@@ -17,33 +17,58 @@ namespace TikiEngine
 		InputState()
 			: MousePosition(0, 0), MouseDistance(0, 0)
 		{
+			this->mouseButtonsPrev[0] = 0;
+			this->mouseButtonsPrev[1] = 0;
+			this->mouseButtonsPrev[2] = 0;
 			this->MouseButtons[0] = 0;
 			this->MouseButtons[1] = 0;
 			this->MouseButtons[2] = 0;
 		}
 
-		InputState(Vector2 mousePosition, Vector2 viewPort, Vector2 mouseDistance, float wheel, unsigned char* mouseButtons, Byte* keyboardState)
+		InputState(Vector2 mousePosition, Vector2 viewPort, Vector2 mouseDistance, float wheel, unsigned char* mouseButtonsPrev, unsigned char* mouseButtonsCurrent, Byte* keyboardStatePrev, Byte* keyboardStateCurrent)
 			: MousePosition(mousePosition), MouseDistance(mouseDistance), MouseWheel(wheel), MousePositionDisplay(Vector2(mousePosition.X * viewPort.X, mousePosition.Y * viewPort.Y))
 		{
-			this->MouseButtons[0] = (mouseButtons[0] != 0);
-			this->MouseButtons[1] = (mouseButtons[1] != 0);
-			this->MouseButtons[2] = (mouseButtons[2] != 0);
+			this->mouseButtonsPrev[0] = (mouseButtonsPrev[0] != 0);
+			this->mouseButtonsPrev[1] = (mouseButtonsPrev[1] != 0);
+			this->mouseButtonsPrev[2] = (mouseButtonsPrev[2] != 0);
+			this->MouseButtons[0] = (mouseButtonsCurrent[0] != 0);
+			this->MouseButtons[1] = (mouseButtonsCurrent[1] != 0);
+			this->MouseButtons[2] = (mouseButtonsCurrent[2] != 0);
 
 			memcpy(
-				this->keyboardState,
-				keyboardState,
+				this->keyboardStatePrev,
+				keyboardStatePrev,
+				sizeof(Byte) * 256
+			);
+
+			memcpy(
+				this->keyboardStateCurrent,
+				keyboardStateCurrent,
 				sizeof(Byte) * 256
 			);
 		}
 
 		bool GetKey(Key keyCode) const
 		{
-			return (keyboardState[keyCode] & 0x80) != 0;
+			return (keyboardStateCurrent[keyCode] & 0x80) != 0;
+		}
+
+		bool GetKeyPressed(Key keyCode) const
+		{
+			return !(keyboardStatePrev[keyCode] & 0x80) && (keyboardStateCurrent[keyCode] & 0x80);
+		}
+
+		bool GetKeyReleased(Key keyCode) const
+		{
+			return (keyboardStatePrev[keyCode] & 0x80) && !(keyboardStateCurrent[keyCode] & 0x80);
 		}
 
 	private:
 
-		Byte keyboardState[256];
+		bool mouseButtonsPrev[3];
+
+		Byte keyboardStatePrev[256];
+		Byte keyboardStateCurrent[256];
 
 	};
 }

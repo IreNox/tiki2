@@ -42,8 +42,10 @@ namespace TikiEngine
 			Vector2 mousePos;
 			ViewPort viewPort;
 
-			DIMOUSESTATE mouseState;
-			unsigned char keyboardState[256];
+			DIMOUSESTATE mouseStatePrev;
+			DIMOUSESTATE mouseStateCurrent;
+			unsigned char keyboardStatePrev[256];
+			unsigned char keyboardStateCurrent[256];
 
 			void initDevice(IDirectInputDevice8** device, GUID guid, LPCDIDATAFORMAT format);
 			bool readData(IDirectInputDevice8* device, UINT size, void* destination);

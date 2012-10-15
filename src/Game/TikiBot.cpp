@@ -10,8 +10,8 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		TikiBot::TikiBot(Engine* engine, GameObject* gameObject) 
-			: MovingEntity(engine, gameObject)
+		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject) 
+			: MovingEntity(gameState, gameObject)
 		{
 
 			// Init MovingEntity stats

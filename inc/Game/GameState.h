@@ -15,14 +15,16 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::UserInterface;
 
-		class GameState
+		class GameState : public EngineObject
 		{
 		public:
 
-			GameState();
+			GameState(Engine* engine);
 			~GameState();
 
 			void StartLevel(UInt32 id);
+
+			Engine* GetEngine();
 
 			void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
 
@@ -35,6 +37,7 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 		private:
+
 
 			UInt64 resource1;
 			UInt64 resource2;

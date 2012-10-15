@@ -18,7 +18,8 @@ namespace TikiEngine
 		InputModule::InputModule(Engine* engine)
 			: IInput(engine), input(0), mouse(0), keyboard(0), hWnd(0), hInst(0), mousePos(0, 0), viewPort()
 		{
-			ZeroMemory(keyboardState, sizeof(keyboardState));
+			ZeroMemory(keyboardStatePrev, sizeof(keyboardStatePrev));
+			ZeroMemory(keyboardStateCurrent, sizeof(keyboardStateCurrent));
 		}
 
 		InputModule::~InputModule()
@@ -49,22 +50,23 @@ namespace TikiEngine
 			this->initDevice(&keyboard, GUID_SysKeyboard, &c_dfDIKeyboard);
 			this->initDevice(&mouse, GUID_SysMouse, &c_dfDIMouse);
 			
-			//ShowCursor(true);
-
 			return true;
 		}
 
 		void InputModule::Begin()
 		{
-			this->readData(keyboard, sizeof(keyboardState), (void*)&keyboardState);
-			this->readData(mouse, sizeof(mouseState), (void*)&mouseState);
+			memcpy(&mouseStatePrev, &mouseStateCurrent, sizeof(mouseStatePrev));
+			memcpy(keyboardStatePrev, keyboardStateCurrent, sizeof(keyboardStatePrev));
+
+			this->readData(keyboard, sizeof(keyboardStateCurrent), (void*)&keyboardStateCurrent);
+			this->readData(mouse, sizeof(mouseStateCurrent), (void*)&mouseStateCurrent);
 		}
 
 		void InputModule::FillInputState(InputState* state)
 		{
 			Vector2 dis = Vector2(
-				(float)mouseState.lX / viewPort.Width,
-				(float)mouseState.lY / viewPort.Height
+				(float)mouseStateCurrent.lX / viewPort.Width,
+				(float)mouseStateCurrent.lY / viewPort.Height
 			);
 
 			POINT p;
@@ -88,10 +90,12 @@ namespace TikiEngine
 				mousePos,
 				engine->graphics->GetViewPort()->GetSize(),
 				dis,
-				(float)mouseState.lZ,
-				mouseState.rgbButtons,
-				keyboardState
-			);				
+				(float)mouseStateCurrent.lZ,
+				mouseStatePrev.rgbButtons,
+				mouseStateCurrent.rgbButtons,
+				keyboardStatePrev,
+				keyboardStateCurrent
+			);
 		}
 
 		void InputModule::End()

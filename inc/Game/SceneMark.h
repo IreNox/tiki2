@@ -18,6 +18,8 @@
 
 #include "Core/Frustum.h"
 
+#include "Game/GameState.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -63,7 +65,7 @@ namespace TikiEngine
 			 CellSpacePartition<TikiBot*>* cellSpace;
 			 bool drawCellSpace;
 
-
+			 GameState* state;
 
 			 NavigationMesh naviMesh; 
 			 bool showNaviMesh;

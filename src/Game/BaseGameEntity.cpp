@@ -8,8 +8,8 @@ namespace TikiEngine
 	{
 		int BaseGameEntity::nextValidID = 0;
 
-		BaseGameEntity::BaseGameEntity(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, CT_AI)
+		BaseGameEntity::BaseGameEntity(GameState* gameState, GameObject* gameObject)
+			: Component(gameState->GetEngine(), gameObject, CT_AI), gameState(gameState)
 		{
 			id = nextValidID++;
 

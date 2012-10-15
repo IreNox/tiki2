@@ -10,7 +10,7 @@ namespace TikiEngine
 		{
 
 		public:
-			MovingEntity(Engine* engine, GameObject* gameObject);
+			MovingEntity(GameState* gameState, GameObject* gameObject);
 
 			virtual ~MovingEntity(){}
 

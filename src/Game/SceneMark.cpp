@@ -194,6 +194,8 @@ namespace TikiEngine
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
 		{
+			state = new GameState(engine);
+
 			showNaviMesh = true;
 			drawCellSpace = false;
 		}
@@ -219,6 +221,7 @@ namespace TikiEngine
 
 			EntityMgr->Dispose();
 			
+			SafeRelease(&state);
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -256,7 +259,7 @@ namespace TikiEngine
 			naviMesh.LinkCells();
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
-			bot = new TikiBot(engine, go);
+			bot = new TikiBot(state, go);
 			bot->CreateNav(&naviMesh, 0);
 
 			cellSpace->AddEntity(bot);
@@ -409,10 +412,10 @@ namespace TikiEngine
 		{
 			cellSpace->CalculateNeighbors(bot->Pos(), 24);
 			
-			parallel_invoke(
-				[=](){ cellSpace->UpdateEntity(bot, Vector2::Zero); },
-				[=](){ Vector2::Zero; }
-			);
+			//parallel_invoke(
+			//	[=](){ cellSpace->UpdateEntity(bot, Vector2::Zero); },
+			//	[=](){ Vector2::Zero; }
+			//);
 
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
