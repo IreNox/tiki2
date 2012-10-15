@@ -36,6 +36,8 @@ namespace TikiEngine
 			
 			this->createGdiImage(fontName, fontSize, &pixels, &width, &height);
 			this->fillTexture(pixels, width, height);
+
+			delete[](pixels);
 		}
 		#pragma endregion
 

@@ -37,8 +37,7 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 		private:
-
-
+			
 			UInt64 resource1;
 			UInt64 resource2;
 
