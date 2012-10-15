@@ -11,6 +11,8 @@
 
 #include "Core/IGraphics.h"
 
+#include <ppl.h>
+using namespace Concurrency;
 
 namespace TikiEngine
 {
@@ -406,6 +408,11 @@ namespace TikiEngine
 		void SceneMark::Update(const UpdateArgs& args)
 		{
 			cellSpace->CalculateNeighbors(bot->Pos(), 24);
+			
+			parallel_invoke(
+				[=](){ cellSpace->UpdateEntity(bot, Vector2::Zero); },
+				[=](){ Vector2::Zero; }
+			);
 
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
