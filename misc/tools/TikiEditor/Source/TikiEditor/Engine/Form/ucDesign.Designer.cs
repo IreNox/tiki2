@@ -108,14 +108,14 @@
             this.ucProperties1.Name = "ucProperties1";
             this.ucProperties1.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.ucProperties1.SettingsChanged = false;
-            this.ucProperties1.Size = new System.Drawing.Size(264, 285);
+            this.ucProperties1.Size = new System.Drawing.Size(225, 285);
             this.ucProperties1.TabIndex = 0;
             // 
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.buttonSave.Location = new System.Drawing.Point(179, 294);
+            this.buttonSave.Location = new System.Drawing.Point(137, 294);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(88, 23);
             this.buttonSave.TabIndex = 2;
@@ -195,7 +195,7 @@
             this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(3, 351);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(185, 23);
+            this.button7.Size = new System.Drawing.Size(168, 23);
             this.button7.TabIndex = 12;
             this.button7.Text = "-none-";
             this.button7.UseVisualStyleBackColor = true;
@@ -207,7 +207,7 @@
             this.button8.Enabled = false;
             this.button8.Location = new System.Drawing.Point(3, 322);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(185, 23);
+            this.button8.Size = new System.Drawing.Size(168, 23);
             this.button8.TabIndex = 11;
             this.button8.Text = "-none-";
             this.button8.UseVisualStyleBackColor = true;
@@ -219,7 +219,7 @@
             this.button9.Enabled = false;
             this.button9.Location = new System.Drawing.Point(3, 293);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(185, 23);
+            this.button9.Size = new System.Drawing.Size(168, 23);
             this.button9.TabIndex = 10;
             this.button9.Text = "-none-";
             this.button9.UseVisualStyleBackColor = true;
@@ -231,7 +231,7 @@
             this.button10.Enabled = false;
             this.button10.Location = new System.Drawing.Point(3, 264);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(185, 23);
+            this.button10.Size = new System.Drawing.Size(168, 23);
             this.button10.TabIndex = 9;
             this.button10.Text = "-none-";
             this.button10.UseVisualStyleBackColor = true;
@@ -243,7 +243,7 @@
             this.button11.Enabled = false;
             this.button11.Location = new System.Drawing.Point(3, 235);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(185, 23);
+            this.button11.Size = new System.Drawing.Size(168, 23);
             this.button11.TabIndex = 8;
             this.button11.Text = "-none-";
             this.button11.UseVisualStyleBackColor = true;
@@ -255,7 +255,7 @@
             this.button12.Enabled = false;
             this.button12.Location = new System.Drawing.Point(3, 206);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(185, 23);
+            this.button12.Size = new System.Drawing.Size(168, 23);
             this.button12.TabIndex = 7;
             this.button12.Text = "-none-";
             this.button12.UseVisualStyleBackColor = true;
@@ -267,7 +267,7 @@
             this.buttonAddEnemyBasic.Enabled = false;
             this.buttonAddEnemyBasic.Location = new System.Drawing.Point(3, 177);
             this.buttonAddEnemyBasic.Name = "buttonAddEnemyBasic";
-            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(185, 23);
+            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(168, 23);
             this.buttonAddEnemyBasic.TabIndex = 6;
             this.buttonAddEnemyBasic.Text = "Basic Enemy";
             this.buttonAddEnemyBasic.UseVisualStyleBackColor = true;
@@ -280,7 +280,7 @@
             this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(3, 90);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(185, 23);
+            this.button3.Size = new System.Drawing.Size(168, 23);
             this.button3.TabIndex = 3;
             this.button3.Text = "-none-";
             this.button3.UseVisualStyleBackColor = true;
@@ -292,7 +292,7 @@
             this.button2.Enabled = false;
             this.button2.Location = new System.Drawing.Point(3, 61);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(185, 23);
+            this.button2.Size = new System.Drawing.Size(168, 23);
             this.button2.TabIndex = 2;
             this.button2.Text = "-none-";
             this.button2.UseVisualStyleBackColor = true;
@@ -304,7 +304,7 @@
             this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(3, 119);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(185, 23);
+            this.button1.Size = new System.Drawing.Size(168, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "-none-";
             this.button1.UseVisualStyleBackColor = true;
@@ -315,7 +315,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddObject.Location = new System.Drawing.Point(3, 32);
             this.buttonAddObject.Name = "buttonAddObject";
-            this.buttonAddObject.Size = new System.Drawing.Size(185, 23);
+            this.buttonAddObject.Size = new System.Drawing.Size(168, 23);
             this.buttonAddObject.TabIndex = 0;
             this.buttonAddObject.Text = "Object";
             this.buttonAddObject.UseVisualStyleBackColor = true;
