@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Core/Scene.h"
+#include "Core/LightObject.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::Objects;
+
 		class SceneAdrian : public Scene
 		{
 		public:
@@ -17,6 +20,12 @@ namespace TikiEngine
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+
+		private:
+
+			LightObject* light;
+
+			ITexture* tex;
 		};
 	}
 }

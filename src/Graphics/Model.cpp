@@ -25,11 +25,15 @@ namespace TikiEngine
 			{
 				SafeRelease(&meshes[i]);
 			}
-			FbxDelete(this->scene);
+			FbxArrayDelete(animStackNameArray);
+			this->scene->Destroy();
 
+			SafeRelease(&declaration);
 			SafeRelease(&material);
 			SafeRelease(&indexBuffer);
 			SafeRelease(&vertexBuffer);
+
+			
 		}
 
 		#pragma endregion
@@ -37,7 +41,7 @@ namespace TikiEngine
 		void Model::Initialize()
 		{
 			this->InitializeAnimationStack();
-			this->SetCurrentAnimStack(0);
+			this->SetCurrentAnimStack(1);
 
 			FbxNode* root = scene->GetRootNode();
 			this->InitializeNodeRecursive(root, currentTime, currentAnimLayer, this->GetGlobalPosition(root), NULL);

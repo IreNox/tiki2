@@ -49,7 +49,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			go->Model = engine->content->LoadModel(L"bridge");
+			go->Model = engine->content->LoadModel(L"humanoid");
 			tex = engine->content->LoadTexture(L"checker");
 
 			Material* mat = engine->content->LoadMaterial(L"os_default");
@@ -57,6 +57,8 @@ namespace TikiEngine
 
 			go->Model->SetMaterial(mat);
 			mat->Release();
+
+			go->PRS.Scale() = Vector3(0.01f);
 
 			this->AddElement(go);
 			go->Release();

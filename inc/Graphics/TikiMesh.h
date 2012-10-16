@@ -36,12 +36,6 @@ namespace TikiEngine
 
 			bool GetReady();
 
-			bool GetIndexData(UInt32** indices, UInt32* count);
-			void SetIndexData(UInt32* indices, UInt32 count);
-
-			bool GetVertexData(void** vertices, UInt32* size);
-			void SetVertexData(void* vertices, UInt32 size);
-
 			void Release();
 
 			List<DefaultVertex> verticesList;
@@ -49,7 +43,7 @@ namespace TikiEngine
 
 		private:
 
-			void CopyData();
+
 
 			FbxNode* node;
 			FbxAMatrix* matrix;

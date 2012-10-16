@@ -21,7 +21,7 @@ namespace TikiEngine
 		}
 		void TikiMesh::Release()
 		{
-			FbxDelete(this->node);
+			node->Destroy();
 		}
 		bool TikiMesh::Initialize()
 		{
@@ -98,8 +98,9 @@ namespace TikiEngine
 					indicesList.Add(indicesArray[3]);
 				}
 			}
+			delete[]vertexArray;
+			vertexArray = 0;
 
-			this->CopyData();
 			return true;
 		}
 
@@ -164,57 +165,14 @@ namespace TikiEngine
 
 				verticesList[i] = default;
 			}
+			delete[]vertexArray;
+			vertexArray = 0;
 
-			CopyData();
-		}
-
-		#pragma region Member Data
-
-		void TikiMesh::CopyData()
-		{			
-			this->SetVertexData(this->verticesList.ToArray(), this->verticesList.Count() * sizeof(DefaultVertex));
-			this->SetIndexData(this->indicesList.ToArray(), this->indicesList.Count());
 		}
 
 		bool TikiMesh::GetReady()
 		{
 			return this->updateStructure.Count() != 0;
-		}
-
-		bool TikiMesh::GetIndexData(UInt32** indices, UInt32* count)
-		{
-			*indices = this->indices;
-			*count = indicesCount;
-
-			return (indices != 0);
-		}
-		void TikiMesh::SetIndexData(UInt32* indices, UInt32 count)
-		{
-			SafeDeleteArray(&this->indices);
-			this->indices = new UInt32[count];
-			this->indicesCount = count;
-
-			memcpy(
-				this->indices,
-				indices,
-				count * sizeof(UInt32)
-				);
-		}
-
-		bool TikiMesh::GetVertexData(void** vertices, UInt32* size)
-		{
-			*vertices = this->vertices;
-			*size = this->verticesSize;
-
-			return (vertices != 0);
-		}
-		void TikiMesh::SetVertexData(void* vertices, UInt32 size)
-		{
-			SafeDeleteArray(&this->vertices);
-
-			this->vertices = new Byte[size];
-			this->verticesSize = size;
-			memcpy(this->vertices, vertices, size);
 		}
 		#pragma endregion
 	}

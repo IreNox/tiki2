@@ -14,6 +14,11 @@
 
 #include "Game/CameraFly.h"
 
+#include "Core/ISpriteBatch.h"
+#include "Core/IGraphics.h"
+
+#include "Core/LightObject.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -30,29 +35,37 @@ namespace TikiEngine
 
 		SceneAdrian::~SceneAdrian()
 		{
+			SafeRelease(&tex);
+			SafeRelease(&light);
+
 		}
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
-
 			GameObject* go = new GameObject(engine);
 
-			go->Model = engine->content->LoadModel(L"Data/Models/humanoid.fbx");
+			go->Model = engine->content->LoadModel(L"humanoid");
+			tex = engine->content->LoadTexture(L"checker");
 
-			ITexture* tex = engine->content->LoadTexture(L"Data/Textures/checker.png");
-
-			Material* mat = engine->content->LoadMaterial(L"Data//Effects//os_default.fx");
+			Material* mat = engine->content->LoadMaterial(L"os_default");
 			mat->GetShader()->SetTexture("tex", tex);
 
 			go->Model->SetMaterial(mat);
 			mat->Release();
 
+			go->PRS.Scale() = Vector3(0.01f);
+
 			this->AddElement(go);
-			go->PRS.Position() = Vector3(50);
 			go->Release();
 
+			light = new LightObject(engine);
+			light->GetLight()->SetColor(Color(1, 1, 1, 1));
+			light->GetLight()->SetRange(750.0f);
+			light->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+			this->AddElement(light);
+
 			go = new CameraObject(engine);
-			go->PRS.Position() = Vector3(0, 40.0f, 70.0f);
+			go->PRS.Position() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
@@ -66,6 +79,16 @@ namespace TikiEngine
 		void SceneAdrian::Draw(const DrawArgs& args)
 		{
 			Scene::Draw(args);
+
+			engine->sprites->Draw(
+				engine->graphics->GetDepthTarget(),
+				Rectangle(10, 10, 200, 180)
+				);
+
+			engine->sprites->Draw(
+				engine->graphics->GetNormalTarget(),
+				Rectangle(10, 200, 200, 180)
+				);
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)
