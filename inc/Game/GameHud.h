@@ -27,6 +27,8 @@ namespace TikiEngine
 
 		private:
 
+			GameState* state;
+
 			GUICustomButton* buttonMenu;
 			
 			GUIImage* imageRes1;
@@ -34,8 +36,10 @@ namespace TikiEngine
 
 			GUIImage* imageRes2;
 			GUILabel* labelRes2;
-
+			
 			Dictionary<UnitFunctions, GUIButton*> funcButton;
+
+			List<GUIControl*> enabledControls;
 
 		};
 	}
