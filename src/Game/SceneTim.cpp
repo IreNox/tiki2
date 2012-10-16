@@ -78,20 +78,34 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			//// Cloddy
-			//go = new GameObject(engine);
-			//
-			//mat = engine->content->LoadMaterial(L"os_cloddy");
-			//mat->GetShader()->SetTexture("tex", tex);
+			IPhysicsMaterial* material; 
+			//material = engine->content->LoadPhysicsMaterial(L"TODO");
+			material = engine->librarys->CreateResource<IPhysicsMaterial>();
+			material->SetRestitution(0.7f);
+			material->SetDynamicFriction(0.7f);
+			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
-			//ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			//terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
-			//terrain->SetMaterial(mat);
-			//terrain->Release();
-			//mat->Release();
+			// Cloddy
+			go = new GameObject(engine);
+			
+			mat = engine->content->LoadMaterial(L"os_cloddy");
+			mat->GetShader()->SetTexture("tex", tex);
 
-			//this->AddElement(go);
-			//go->Release();
+			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
+			terrain->SetMaterial(mat);
+			terrain->Release();
+			mat->Release();
+
+			ITriangleMeshCollider* collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
+			collider->SetMaterial(material->GetIndex());
+			collider->SetCenter(Vector3::Zero);
+			collider->SetDynamic(false);
+
+			terrain->UpdateCollider(collider);
+
+			this->AddElement(go);
+			go->Release();
 
 			//// Blur
 			//engine->graphics->AddPostProcess(new PPBlur(engine));

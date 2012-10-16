@@ -35,7 +35,9 @@
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp" />
     <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp" />
+    <ClCompile Include="src\Graphics\TerrainIndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\TerrainRenderer.cpp" />
+    <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\TikiHeightmap.cpp" />
     <ClCompile Include="src\Graphics\TikiMesh.cpp" />
@@ -64,7 +66,9 @@
     <ClInclude Include="inc\Graphics\Shader.h" />
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h" />
     <ClInclude Include="inc\Graphics\SpriteBatchVertex.h" />
+    <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h" />
     <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
+    <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\TikiHeightmap.h" />
     <ClInclude Include="inc\Graphics\TikiMesh.h" />

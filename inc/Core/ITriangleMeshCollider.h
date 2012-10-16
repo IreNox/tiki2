@@ -15,6 +15,7 @@ namespace TikiEngine
 
 			virtual void SetIndices(UInt32* indices, UInt32 count) = 0;
 			virtual void SetVertices(Vector3* vertices, UInt32 count) = 0;
+			virtual void SetMeshData(const UInt32* indices, UInt32 indicesCount, const Vector3* vertices, UInt32 verticesCount) = 0;
 
 		};
 	}

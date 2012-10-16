@@ -10,24 +10,33 @@
 #include "Graphics/DllMain.h"
 #include "Graphics/GraphicsModule.h"
 
-#include "Cloddy/Terrain.h"
-
 namespace TikiEngine
 {
 	namespace Components
 	{
-		//Terrain* t = dynamic_cast<Terrain*>((ICloddyTerrain*)terrain);
-		//MeshBuilder* builder = new MeshBuilder(100000, 100000, 300000);
-		//t->ExportMesh(TerrainMesh_Collision, builder);
-
 		using namespace Cloddy::API;
 		using namespace Cloddy::API::MeshVisitors;
 		using namespace Cloddy::Core::Math::Vectors;
 
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
-			: ITerrainRenderer(engine, gameObject), material(0)
+			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0)
 		{
+			/*
+
+			cloddy_IDataset* dataset = cloddy_Dataset::Open();
+
+			DataRegion region;
+
+			dataset->Begin();
+
+			dataset->Get(region);
+
+			dataset->End();
+
+			*/		
+			
+			
 		}
 
 		TerrainRenderer::~TerrainRenderer()
@@ -125,6 +134,30 @@ namespace TikiEngine
 		bool TerrainRenderer::GetReady()
 		{
 			return (material != 0);
+		}
+		#pragma endregion
+
+		#pragma region Member - Collision
+		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider)
+		{
+			if (collisionIndexBuffer == 0)
+			{
+				collisionIndexBuffer = new TerrainIndexBuffer(10000);
+			}
+
+			if (collisionVertexBuffer == 0)
+			{
+				collisionVertexBuffer = new TerrainVertexBuffer(3000);
+			}
+
+			CloddyCollisionMeshInfo info = terrain->GenerateCollisionMesh(collisionVertexBuffer, collisionIndexBuffer, false, 0.5f);
+
+			collider->SetMeshData(
+				collisionIndexBuffer->GetData(),
+				info.GetIndexCount(),
+				collisionVertexBuffer->GetData(),
+				info.GetVertexCount()
+			);
 		}
 		#pragma endregion
 

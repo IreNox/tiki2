@@ -19,10 +19,11 @@ namespace TikiEngine
 		{
 		public:
 
-			GameState(Engine* engine);
+			GameState(Engine* engine, SceneLevel* scene);
 			~GameState();
 
-			void StartLevel(UInt32 id);
+			bool LoadLevel(UInt32 id);
+			void DisposeLevel();
 
 			Engine* GetEngine();
 
@@ -43,8 +44,7 @@ namespace TikiEngine
 
 			GameHud* hud;
 			SceneLevel* scene;
-
-
+			
 			//List<Unit*> selectedUnits;
 
 			//List<Unit*> levelUnits;

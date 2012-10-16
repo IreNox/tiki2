@@ -218,24 +218,24 @@ namespace TikiEditor
         #region Member - XNA - Draw
         public override void Draw(GameTime gameTime)
         {
-            string text = String.Format("Mouse: {0}\nActive: {1}\n", GI.Control.MouseSimVector(), Program.Form.panelViewport.Focused);
+            //string text = String.Format("Mouse: {0}\nActive: {1}\n", GI.Control.MouseSimVector(), Program.Form.panelViewport.Focused);
 
-            if (_selected != null)
-            {
-                text += String.Format(
-                    "Position: {0}\nScale:{1}\nRotation: {2}",
-                    _selected.Position,
-                    _selected.Scale,
-                    _selected.Rotation
-                );
-            }
+            //if (_selected != null)
+            //{
+            //    text += String.Format(
+            //        "Position: {0}\nScale:{1}\nRotation: {2}",
+            //        _selected.Position,
+            //        _selected.Scale,
+            //        _selected.Rotation
+            //    );
+            //}
 
-            GI.SpriteBatch.DrawString(
-                _font,
-                text,
-                GI.Camera.CurrentPositionNagativ,
-                Color.White
-            );
+            //GI.SpriteBatch.DrawString(
+            //    _font,
+            //    text,
+            //    GI.Camera.CurrentPositionNagativ,
+            //    Color.White
+            //);
 
             foreach (BasicTransform transform in _level.AllTransforms)
             {

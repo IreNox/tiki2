@@ -11,6 +11,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+		class GameState;
+
 		class SceneLevel : public Scene
 		{
 		public:
@@ -33,6 +35,8 @@ namespace TikiEngine
 			Level* level;
 			List<LevelEnemy*> enemies;
 			List<LevelObject*> objects;
+
+			GameState* state;
 
 			sqlite3* db;
 

@@ -194,7 +194,7 @@ namespace TikiEngine
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
 		{
-			state = new GameState(engine);
+			state = new GameState(engine, 0);
 
 			showNaviMesh = true;
 			drawCellSpace = false;

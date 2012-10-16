@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/EngineObject.h"
+
 #include "Core/GUILabel.h"
 #include "Core/GUIImage.h"
 #include "Core/GUIButton.h"
@@ -15,12 +17,14 @@ namespace TikiEngine
 
 		class GameState;
 
-		class GameHud
+		class GameHud : public EngineObject
 		{
 		public:
 
 			GameHud(GameState* state);
 			~GameHud();
+
+			void ResetScreen();
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -31,9 +35,11 @@ namespace TikiEngine
 
 			GUICustomButton* buttonMenu;
 			
+			ITexture* texRes1;
 			GUIImage* imageRes1;
 			GUILabel* labelRes1;
 
+			ITexture* texRes2;
 			GUIImage* imageRes2;
 			GUILabel* labelRes2;
 			

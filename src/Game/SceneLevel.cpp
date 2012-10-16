@@ -1,6 +1,8 @@
 
 #include "Game/SceneLevel.h"
 
+#include "Game/GameState.h"
+
 #include "Core/IGraphics.h"
 #include "Core/ISpriteBatch.h"
 #include "Core/IMeshRenderer.h"
@@ -26,6 +28,8 @@ namespace TikiEngine
 			: Scene(engine), db(0), level(0), enemies(), objects()
 		{
 			sqlite3_open("Data/TikiData.sqlite", &db);
+
+			state = new GameState(engine, this);
 		}
 
 		SceneLevel::~SceneLevel()
@@ -157,7 +161,7 @@ namespace TikiEngine
 			}
 			sqlite3_finalize(state);
 
-			return true;
+			return this->state->LoadLevel(id);
 		}
 
 		void SceneLevel::DisposeLevel()

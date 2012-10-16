@@ -102,6 +102,27 @@ namespace TikiEngine
 
 			this->updateData();
 		}
+
+		void TriangleMeshCollider::SetMeshData(const UInt32* indices, UInt32 indicesCount, const Vector3* vertices, UInt32 verticesCount)
+		{
+			if (this->indexCount != indicesCount)
+			{
+				SafeDeleteArray(&this->indexData);
+				this->indexCount = indicesCount;
+				this->indexData = new NxU32[indicesCount];
+			}
+			memcpy(this->indexData, indices, sizeof(UInt32) * indicesCount);
+
+			if (this->vertexCount != verticesCount)
+			{
+				SafeDeleteArray(&this->vertexData);
+				this->vertexCount = verticesCount;
+				this->vertexData = new NxVec3[verticesCount];
+			}
+			memcpy(this->vertexData, vertices, sizeof(Vector3) * verticesCount);
+
+			this->updateData();
+		}
 		#pragma endregion
 
 		#pragma region Component Methods

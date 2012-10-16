@@ -175,7 +175,7 @@ namespace TikiEditor
                         (float)_background.Width / 2,
                         (float)_background.Height / 2
                     ),
-                    CU.ToDisplayUnits(_level.HeightmapSize / _background.Width),
+                    CU.ToDisplayUnits(_background.Width / _level.HeightmapSize),
                     SpriteEffects.None,
                     0.01f
                 );

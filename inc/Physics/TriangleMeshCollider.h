@@ -34,6 +34,7 @@ namespace TikiEngine
 			// TriangleMeshCollider Methods
 			void SetIndices(UInt32* indices, UInt32 count);
 			void SetVertices(Vector3* vertices, UInt32 count);
+			void SetMeshData(const UInt32* indices, UInt32 indicesCount, const Vector3* vertices, UInt32 verticesCount);
 
 			// Component Methods
 			bool GetReady();

@@ -5,6 +5,7 @@
 #include "Core/Component.h"
 
 #include "Core/Material.h"
+#include "Core/ITriangleMeshCollider.h"
 
 namespace TikiEngine
 {
@@ -29,6 +30,8 @@ namespace TikiEngine
 			virtual void SetMaterial(Material* mat) = 0;
 
 			virtual float SampleHeight(const Vector3& position) = 0;
+
+			virtual void UpdateCollider(ITriangleMeshCollider* collider) = 0;
 
 		};
 	}

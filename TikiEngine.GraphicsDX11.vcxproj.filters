@@ -131,6 +131,12 @@
     <ClCompile Include="src\Graphics\TikiMesh.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\TerrainIndexBuffer.cpp">
+      <Filter>Quelldateien\Internal\Cloddy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp">
+      <Filter>Quelldateien\Internal\Cloddy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -213,6 +219,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\TikiMesh.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h">
+      <Filter>Headerdateien\Internal\Cloddy</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h">
+      <Filter>Headerdateien\Internal\Cloddy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

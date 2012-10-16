@@ -22,14 +22,14 @@ namespace TikiEngine
 			{
 				type = sqlite3_column_int(state, fieldId);
 
-				Material* material = engine->content->LoadMaterial(L"Data/Effects/os_default.fx");
-				ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
+				Material* material = engine->content->LoadMaterial(L"os_default");
+				ITexture* tex = engine->content->LoadTexture(L"checker");
 				material->GetShader()->SetTexture("tex", tex);
 				
 				switch (type)
 				{
 				case 0:
-					Mesh* mesh = engine->content->LoadMesh(L"Data/Models/replaceme_cube.fbx");
+					Mesh* mesh = engine->content->LoadMesh(L"replaceme_cube");
 					renderer->SetMesh(mesh);
 					mesh->Release();
 
