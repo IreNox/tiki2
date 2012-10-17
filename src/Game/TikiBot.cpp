@@ -82,9 +82,6 @@ namespace TikiEngine
 			}
 		}
 
-
-
-
 		inline void TikiBot::GotoLocation(const Vector3& p, NavigationCell* cell)
 		{
 			if (parent)
@@ -99,6 +96,39 @@ namespace TikiEngine
 				}
 			}
 		}
+
+		void TikiBot::GotoLocation(const Vector3& p)
+		{
+			if (parent)
+			{
+				// find the closest target cell we will move to
+				NavigationCell* closestCell = parent->FindClosestCell(p);
+
+				// snap point to cell so we don't freak out!
+				Vector3 targetPos = parent->SnapPointToCell(closestCell, p);
+
+				// get currentCell, we need to update here too :(
+				currentCell = parent->FindClosestCell(Pos3D());
+
+				// if we can see the target, just use steering, else use A*
+				if (parent->LineOfSightTest(currentCell, Pos3D(), closestCell, p))
+				{
+					// stop Navigation and seek
+					pathActive = false;
+					pathMovement = Vector3::Zero;
+					steering->SeekOff();
+					steering->SetTarget(Vector2(p.X, p.Z));
+					steering->ArriveOn();
+				}
+				else
+				{
+					steering->ArriveOff();
+					GotoLocation(p, closestCell);
+				}
+			}
+		}
+
+
 		void TikiBot::GotoRandomLocation()
 		{
 			if (parent)
@@ -106,7 +136,6 @@ namespace TikiEngine
 				// pick a random cell and go there
 				int index = rand() % parent->TotalCells();
 				NavigationCell* pCell = parent->Cell(index);
-
 				GotoLocation(pCell->CenterPoint(), pCell);
 			}
 		}
@@ -151,14 +180,11 @@ namespace TikiEngine
 		void TikiBot::Update(const UpdateArgs& args)
 		{
 
-			
+			// Update navigation
 			UpdateNavigation(args);
 
 			//Calculate the steering force and update the bot's velocity and position
 			UpdateMovement(args);
-
-
-			
 		}
 
 
@@ -193,10 +219,17 @@ namespace TikiEngine
 			if (!velocity.IsZero())
 			{    
 				heading = Vector2::Normalize(velocity);
-
 				side = heading.Cross();
 			}
 
+			// Update the current cell if collider moved and the path is not active
+			if (!pathActive)
+			{
+				NavigationCell* NextCell;
+				Vector3 endPos = Pos3D() + Vector3(force.X, 0, force.Y);
+				parent->ResolveMotionOnMesh(Pos3D(), currentCell, endPos, &NextCell);
+				currentCell = NextCell;
+			}
 		}
 
 		void TikiBot::UpdateNavigation(const UpdateArgs& args)
@@ -265,14 +298,13 @@ namespace TikiEngine
 				// we have arrived at our desired waypoint.
 				// Snap to it's position and figure out where to go next
 				pathPos = (*nextWaypoint).position;
-				//controller->SetCenter(pathPos);
 				pathMovement = Vector3::Zero;
 				distance = 0.0f;
 				lastWaypoint = nextWaypoint;
 				nextWaypoint = path.GetFurthestVisibleWayPoint(nextWaypoint);
 				
 
-				// if we have no more waypoints, Stop arriving
+				// if we have no more waypoints, Stop seeking and nav
 				if (nextWaypoint == path.WaypointList().end())
 				{
 					steering->SeekOff();
@@ -281,23 +313,11 @@ namespace TikiEngine
 				}
 				else
 				{
-					// only set some target if the nextWaypoint changed
-					if (nextWaypoint != lastWaypoint)
-					{
-						steering->SetTarget(Vector2((*nextWaypoint).position.X, (*nextWaypoint).position.Z));
-						if (!steering->SeekIsOn()) steering->SeekOn();	
-					}
+					steering->SetTarget(Vector2((*nextWaypoint).position.X, (*nextWaypoint).position.Z));
+					steering->SeekOn();
+				}
 
-					// Override seek with arrive
-					//if (nextWaypoint == --path.WaypointList().end())
-					//{
-					//	if (steering->SeekIsOn()) steering->SeekOff();	
-					//	steering->SetTarget(Vector2((*nextWaypoint).position.X, (*nextWaypoint).position.Z));
-					//	steering->ArriveOn();
-					//}
 
-				} // else
-				 
 			} // else if (pathActive)
 		}
 

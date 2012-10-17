@@ -213,7 +213,6 @@ namespace TikiEngine
 			SafeRelease(&bot);
 
 			SafeRelease(&fly);
-
 			SafeRelease(&font);
 
 			cellSpace->EmptyCells();
@@ -445,17 +444,16 @@ namespace TikiEngine
 				kinematicBox->GetRigidBody()->MoveRotation(Quaternion::CreateFromYawPitchRoll(0, 0, (float)args.Time.ElapsedTime));
 			}
 
-		    // F1 - Raycast Test
-		    if (args.Input.GetKey(KEY_F1))
+		    // Right Mouse - Raycast Test + Movement
+			if(args.Input.MouseButtons[1])
 		    {
-				RaycastHit info;
+				
 				Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
 		    
 				Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(absMouse);
-		    
 				orig = ray.Origin;
 				dir = ray.Direction;
-				
+				RaycastHit info;
 
 				if (engine->physics->RayCast(ray, &info))
 				{
@@ -469,17 +467,10 @@ namespace TikiEngine
 						   coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
 						}
 					}
-
-					// stop any steering or Navigation
-					bot->GetSteering()->ArriveOff();
-					bot->GetSteering()->SeekOff();
-					bot->pathActive = false;
-					bot->pathMovement = Vector3::Zero;
 						
 					// get the impact point and activate bot movement
 					impact = info.Point;
-					bot->GetSteering()->SetTarget(Vector2(impact.X, impact.Z));
-					bot->GetSteering()->ArriveOn();
+					bot->GotoLocation(impact);
 				}
 		     }
 

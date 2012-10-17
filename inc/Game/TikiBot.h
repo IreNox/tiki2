@@ -27,6 +27,7 @@ namespace TikiEngine
 			// Navigation
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell);
 			void GotoLocation(const Vector3& p, NavigationCell* cell);
+			void GotoLocation(const Vector3& p);
 			void GotoRandomLocation();
 
 			void Draw(const DrawArgs& args);
@@ -37,7 +38,7 @@ namespace TikiEngine
 
 
 
-#pragma region Accessing attribute data
+			#pragma region Accessing attribute data
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
 			//void ReduceHealth(unsigned int val);
@@ -58,7 +59,7 @@ namespace TikiEngine
 			void SetSpawning() {status = spawning;}
 			void SetDead() {status = dead;}
 			void SetAlive() {status = alive;}
-#pragma endregion
+			#pragma endregion
 
 			TikiSteering* const GetSteering() { return steering; }
 
