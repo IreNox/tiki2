@@ -36,7 +36,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
-		bool GameState::LoadLevel(UInt32 id)
+		bool GameState::LoadLevel(Int64 id)
 		{
 			return true;
 		}

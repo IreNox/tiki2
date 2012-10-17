@@ -27,7 +27,7 @@ namespace TikiEngine
 		class TerrainVertexBuffer : public codex_Disposable, public cloddy_IVertexBuffer
 		{
 		public:
-
+			
 			TerrainVertexBuffer(int32 size);
 			~TerrainVertexBuffer();
 			
@@ -63,7 +63,10 @@ namespace TikiEngine
 		private:
 
 			int32 size;
+
+			float* bla;
 			Vector3* data;
+			codex_Ptr<ByteBuffer> buffer;
 
 		};
 	}

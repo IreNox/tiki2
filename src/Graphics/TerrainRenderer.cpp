@@ -149,15 +149,15 @@ namespace TikiEngine
 			{
 				collisionVertexBuffer = new TerrainVertexBuffer(3000);
 			}
-
+			
 			CloddyCollisionMeshInfo info = terrain->GenerateCollisionMesh(collisionVertexBuffer, collisionIndexBuffer, false, 0.5f);
 
-			collider->SetMeshData(
-				collisionIndexBuffer->GetData(),
-				info.GetIndexCount(),
-				collisionVertexBuffer->GetData(),
-				info.GetVertexCount()
-			);
+			//collider->SetMeshData(
+			//	collisionIndexBuffer->GetData(),
+			//	info.GetIndexCount(),
+			//	collisionVertexBuffer->GetData(),
+			//	info.GetVertexCount()
+			//);
 		}
 		#pragma endregion
 

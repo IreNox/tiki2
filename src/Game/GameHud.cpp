@@ -56,11 +56,11 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			imageRes1->Position() = Vector2(vp->Width - 200, 10);
-			labelRes1->Position() = Vector2(vp->Width - 220, 10);
+			imageRes1->Position() = Vector2((float)vp->Width - 200, 10);
+			labelRes1->Position() = Vector2((float)vp->Width - 220, 10);
 
-			imageRes2->Position() = Vector2(vp->Width - 100, 10);
-			labelRes2->Position() = Vector2(vp->Width - 120, 10);
+			imageRes2->Position() = Vector2((float)vp->Width - 100, 10);
+			labelRes2->Position() = Vector2((float)vp->Width - 120, 10);
 		}
 		#pragma endregion
 

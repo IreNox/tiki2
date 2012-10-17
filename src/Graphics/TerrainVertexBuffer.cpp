@@ -7,8 +7,9 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TerrainVertexBuffer::TerrainVertexBuffer(int32 size)
-			: size(size)
+			: size(size), buffer(0)
 		{
+			bla = new float[size * 3];
 			data = new Vector3[size];
 		}
 
@@ -37,16 +38,24 @@ namespace TikiEngine
 
 		#pragma region Member - VertexBuffer
 		void TerrainVertexBuffer::LockBuffer(int32 min, int32 max, int32 count, void* userData, BufferLock* bufferLock)
-		{			
-			//ByteBuffer* buffer = new ByteBuffer(sizeof(Vector3) * size, true, );
+		{	
+			if (buffer == 0)
+			{
+				buffer = ByteBuffer::Allocate(
+					sizeof(Vector3) * size
+				);
+			}
 
-			//bufferLock->Locked()
-			//float bla = bufferLock->
+			bufferLock->Locked(buffer);
 		}
 
 		void TerrainVertexBuffer::Unlock()
 		{
+			void* ptr = buffer->GetRawPointer();
+			int64 size = buffer->GetCapacity();
 
+			memcpy(bla, ptr, size);
+			memcpy(data, ptr, size);
 		}
 		#pragma endregion
 

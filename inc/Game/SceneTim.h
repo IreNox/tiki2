@@ -10,6 +10,9 @@
 #include "Game/PPBlur.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
+#include "Core/ITerrainRenderer.h"
+#include "Core/ITriangleMeshCollider.h"
+
 #include "Core/GUIButton.h"
 
 namespace TikiEngine
@@ -18,6 +21,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Graphics;
+		using namespace TikiEngine::Components;
 		using namespace TikiEngine::UserInterface;
 
 		class SceneTim : public Scene
@@ -45,6 +49,9 @@ namespace TikiEngine
 			Vector3 tmp;
 
 			GUIButton* button;
+
+			ITerrainRenderer* terrain;
+			ITriangleMeshCollider* collider;
 
 		};
 	}

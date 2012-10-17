@@ -12,7 +12,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TriangleMeshCollider::TriangleMeshCollider(Engine* engine, GameObject* gameObject)
-			: Collider(), ITriangleMeshCollider(engine, gameObject), vertexData(0), indexData(0), triangleMesh(0)
+			: Collider(), ITriangleMeshCollider(engine, gameObject), vertexData(0), vertexCount(0), indexData(0), indexCount(0), triangleMesh(0)
 		{
 		}
 
@@ -163,7 +163,9 @@ namespace TikiEngine
 			meshDesc.triangleStrideBytes	= 3 * sizeof(NxU32);
 			meshDesc.points					= vertexData;
 			meshDesc.triangles				= indexData;
-			meshDesc.flags				    = NX_MF_FLIPNORMALS;			
+			meshDesc.flags				    = NX_MF_FLIPNORMALS;
+			meshDesc.materialIndices		= &materialIndex;
+			meshDesc.materialIndexStride	= 4;
 
 			//meshDesc.heightFieldVerticalAxis = NX_Y;
 			//meshDesc.heightFieldVerticalExtent	= -1000.0f;

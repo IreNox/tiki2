@@ -13,6 +13,7 @@ namespace TikiEngine
 
 		TerrainIndexBuffer::~TerrainIndexBuffer()
 		{
+			delete[](data);
 		}
 
 		const UInt32* TerrainIndexBuffer::GetData() const

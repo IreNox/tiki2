@@ -22,7 +22,7 @@ namespace TikiEngine
 			GameState(Engine* engine, SceneLevel* scene);
 			~GameState();
 
-			bool LoadLevel(UInt32 id);
+			bool LoadLevel(Int64 id);
 			void DisposeLevel();
 
 			Engine* GetEngine();

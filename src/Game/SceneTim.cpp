@@ -12,8 +12,6 @@
 #include "Core/IMeshRenderer.h"
 #include "Core/IPhysicsMaterial.h"
 #include "Core/IBoxCollider.h"
-#include "Core/ITerrainRenderer.h"
-#include "Core/ITriangleMeshCollider.h"
 #include "Core/ISound.h"
 
 #include "Core/MeshIndexed.h"
@@ -30,7 +28,6 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Scripts;
 		using namespace TikiEngine::Vertices;
-		using namespace TikiEngine::Components;
 
 		SceneTim::SceneTim(Engine* engine)
 			: Scene(engine)
@@ -91,18 +88,16 @@ namespace TikiEngine
 			mat = engine->content->LoadMaterial(L"os_cloddy");
 			mat->GetShader()->SetTexture("tex", tex);
 
-			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
 			terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
 			terrain->SetMaterial(mat);
 			terrain->Release();
 			mat->Release();
 
-			ITriangleMeshCollider* collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
+			collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
 			collider->SetMaterial(material->GetIndex());
 			collider->SetCenter(Vector3::Zero);
 			collider->SetDynamic(false);
-
-			terrain->UpdateCollider(collider);
 
 			this->AddElement(go);
 			go->Release();
@@ -193,6 +188,11 @@ namespace TikiEngine
 
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
+
+			if (args.Input.GetKeyPressed(KEY_F5))
+			{
+				terrain->UpdateCollider(collider);
+			}
 
 			if (args.Input.GetKey(KEY_F12))
 			{
