@@ -10,6 +10,10 @@
 #include <sstream>
 
 #include "Core/IGraphics.h"
+#include "Core/MeshIndexed.h"
+#include "Core/LightObject.h"
+
+#include "Game/Utils.h"
 
 #include <ppl.h>
 using namespace Concurrency;
@@ -20,6 +24,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Scripts;
+    using namespace TikiEngine::Resources;
 
 		// Geometry
 		#pragma region Map
@@ -186,8 +191,6 @@ namespace TikiEngine
 			{ 25, 27, 29},  
 			{ 25, 29, 26},  
 		};  
-
-
 		unsigned long map_totalpolys = 75;
 		#pragma endregion
 
@@ -218,6 +221,10 @@ namespace TikiEngine
 			cellSpace->EmptyCells();
 			delete cellSpace;
 			
+
+      SafeRelease(&navModel);
+
+      // suckx !
 			SafeRelease(&state);
 		}
 
@@ -225,50 +232,71 @@ namespace TikiEngine
 		{
 
 
-			GameObject* go = new GameObject(engine);
 			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
 			//cellSpace = new CellSpacePartition<TikiBot*>(engine, 50.0f, 50.0f, 8, 8, 50); 
 			cellSpace = new CellSpacePartition<TikiBot*>(engine, 256, 256, 10, 10, 10);
 			
+      navModel = engine->content->LoadModel(L"HeightField");
+      List<DefaultVertex>* vertices = navModel->GetVertices();
+      List<UInt32>* indices = navModel->GetIndices();
 			// Create a test navigation mesh
-			naviMesh.Clear();  
-			for (UInt32 i = 0; i < map_totalpolys; ++i)
-			{  
+      naviMesh.Clear();
+      for(UInt32 i = 0; i < indices->Count(); i+=3)
+      {
+        Vector3 vertA = vertices->Get(indices->Get(i)).Position;
+        Vector3 vertB = vertices->Get(indices->Get(i+1)).Position;
+        Vector3 vertC = vertices->Get(indices->Get(i+2)).Position;
+      
+        Matrix m = Matrix::CreateTranslation(50, 0, 50);
+        vertA = Vector3::TransformCoordinate(vertA, m);
+        vertB = Vector3::TransformCoordinate(vertB, m);
+        vertC = Vector3::TransformCoordinate(vertC, m);
 
-				Vector3 vertA = map_points[map_polys[i][0]];  
-				Vector3 vertB = map_points[map_polys[i][1]];  
-				Vector3 vertC = map_points[map_polys[i][2]];  
+        if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))
+          naviMesh.AddCell(vertA, vertB, vertC);
+      }
+      naviMesh.LinkCells();
+      vertices->Clear();
+      indices->Clear();
+      
 
-				Matrix m = Matrix::CreateTranslation(100, 0, 100);
-				vertA = Vector3::TransformCoordinate(vertA, m);
-				vertB = Vector3::TransformCoordinate(vertB, m);
-				vertC = Vector3::TransformCoordinate(vertC, m);
-
-				// some art programs can create linear polygons which have two or more  
-				// identical vertices. This creates a poly with no surface area,  
-				// which will wreak havok on our navigation mesh algorithms.  
-				// We only except polygons with unique vertices.  
-				if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))  
-				{  
-					naviMesh.AddCell(vertA, vertB, vertC);  
-				}  
-			}  
-			naviMesh.LinkCells();
+      
+// 			naviMesh.Clear();  
+// 			for (UInt32 i = 0; i < map_totalpolys; ++i)
+// 			{  
+// 
+// 				Vector3 vertA = map_points[map_polys[i][0]];  
+// 				Vector3 vertB = map_points[map_polys[i][1]];  
+// 				Vector3 vertC = map_points[map_polys[i][2]];  
+// 
+// 				//Matrix m = Matrix::CreateTranslation(100, 0, 100);
+// 				//vertA = Vector3::TransformCoordinate(vertA, m);
+// 				//vertB = Vector3::TransformCoordinate(vertB, m);
+// 				//vertC = Vector3::TransformCoordinate(vertC, m);
+// 
+// 				// some art programs can create linear polygons which have two or more  
+// 				// identical vertices. This creates a poly with no surface area,  
+// 				// which will wreak havok on our navigation mesh algorithms.  
+// 				// We only except polygons with unique vertices.  
+// 				if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))  
+// 				{  
+// 					naviMesh.AddCell(vertA, vertB, vertC);  
+// 				}  
+// 			}  
+// 			naviMesh.LinkCells();
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
+      GameObject* go = new GameObject(engine);
 			bot = new TikiBot(state, go);
 			bot->CreateNav(&naviMesh, 0);
-
 			cellSpace->AddEntity(bot);
 			// TODO: state->GetEntityMgr()->RegisterEntity(bot);
-
 			this->AddElement(go);
 			go->Release();
 
 
 
 			//IPhysicsMaterial* material; 
-			//material = engine->content->LoadPhysicsMaterial(L"TODO");
 			material = engine->librarys->CreateResource<IPhysicsMaterial>();
 			material->SetRestitution(0.7f);
 			material->SetDynamicFriction(0.7f);
@@ -294,7 +322,7 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			staticBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			staticBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			staticBox->SetCenter(Vector3(100, 5.2f, 100));
+			staticBox->SetCenter(Vector3(100, 0, 100));
 			staticBox->SetSize(Vector3(100, 0.1f, 100));
 			staticBox->SetDynamic(false);
 			staticBox->SetGroup(CG_Collidable_Non_Pushable);

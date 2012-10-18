@@ -6,12 +6,16 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include "Core/DefaultVertex.h"
+
 namespace TikiEngine
 {
 	class GameObject;
 
 	namespace Resources
 	{
+    using namespace TikiEngine::Vertices;
+
 		class IModel : public IResource
 		{
 		public:
@@ -24,6 +28,9 @@ namespace TikiEngine
 
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* material) = 0;
+
+      virtual List<DefaultVertex>* GetVertices() = 0;
+      virtual List<UInt32>* GetIndices() = 0;
 
 		};
 	}

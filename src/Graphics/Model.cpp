@@ -115,6 +115,18 @@ namespace TikiEngine
 			return material;
 		}
 
+    List<DefaultVertex>* Model::GetVertices()
+    {
+      return &verticesList;
+    }
+
+    List<UInt32>* Model::GetIndices()
+    {
+      return &indicesList;
+    }
+
+
+
 		void Model::SetMaterial(Material* material)
 		{
 			SafeAddRef(material, &this->material);

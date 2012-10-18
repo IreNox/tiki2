@@ -105,7 +105,7 @@ namespace TikiEngine
 				NavigationCell* closestCell = parent->FindClosestCell(p);
 
 				// snap point to cell so we don't freak out!
-				Vector3 targetPos = parent->SnapPointToCell(closestCell, p);
+				//Vector3 targetPos = parent->SnapPointToCell(closestCell, p);
 
 				// get currentCell, we need to update here too :(
 				currentCell = parent->FindClosestCell(Pos3D());

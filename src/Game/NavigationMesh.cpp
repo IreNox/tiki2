@@ -333,12 +333,15 @@ namespace TikiEngine
 			for (; iter != cellArray.end(); ++iter)
 			{
 				const NavigationCell* cell = *iter;
-				for (int i = 0; i < 3; ++i)
-				{
-					triangles.Add(cell->Vertex(i));
-				}
+				//for (int i = 0; i < 3; ++i)
+				//{
+					//triangles.Add(cell->Vertex(i));
+          args.Graphics->DrawLine(cell->Vertex(0),cell->Vertex(1), Color::Red);
+          args.Graphics->DrawLine(cell->Vertex(1),cell->Vertex(2), Color::Red);
+          args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
+				//}
 			}
-			args.Graphics->DrawLine(&triangles, Color::Red);
+			//args.Graphics->DrawLine(&triangles, Color::Red);
 
 			// render cell edges as wireframe for added visibility
 			//List<Vector3> edges;

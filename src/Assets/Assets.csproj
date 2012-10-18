@@ -53,6 +53,9 @@
     <None Include="Data\Models\bridge.fbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="Data\Models\HeightField.FBX">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Data\Models\humanoid.fbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

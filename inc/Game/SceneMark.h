@@ -5,6 +5,7 @@
 #include "Core/IBoxCollider.h"
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
+#include "Core/IModel.h"
 
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
@@ -57,6 +58,7 @@ namespace TikiEngine
 
 			 GameState* state;
 
+       IModel* navModel;
 			 NavigationMesh naviMesh; 
 			 bool showNaviMesh;
 

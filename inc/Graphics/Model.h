@@ -33,6 +33,9 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* material);
 
+      List<DefaultVertex>* GetVertices();
+      List<UInt32>* GetIndices();
+
 			bool GetReady();
 
 		protected:
