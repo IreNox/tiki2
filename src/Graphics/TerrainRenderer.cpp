@@ -20,7 +20,7 @@ namespace TikiEngine
 
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
-			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0)
+			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0), collisionRegions(0)
 		{
 			/*
 
@@ -41,6 +41,9 @@ namespace TikiEngine
 
 		TerrainRenderer::~TerrainRenderer()
 		{
+			SafeDelete(&collisionIndexBuffer);
+			SafeDelete(&collisionVertexBuffer);
+
 			manager->Shutdown();
 			SafeRelease(&material);
 			SafeRelease(&layout);
@@ -88,11 +91,14 @@ namespace TikiEngine
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(128);
-			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
+			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()); //->Scale(scale + 1));
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);
+			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
+			//terrain->AddCollisionRegion(cloddy_Vec::To3D(cloddy_Vec3F::Zero), 1.5f);
+			terrain->SetTolerance(1.0f);
 		}
 		#pragma endregion
 
@@ -138,26 +144,41 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Collision
-		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider)
+		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider, List<GameObject*>* poi)
 		{
 			if (collisionIndexBuffer == 0)
 			{
-				collisionIndexBuffer = new TerrainIndexBuffer(10000);
+				collisionIndexBuffer = new TerrainIndexBuffer(225000);
 			}
 
 			if (collisionVertexBuffer == 0)
 			{
-				collisionVertexBuffer = new TerrainVertexBuffer(3000);
+				collisionVertexBuffer = new TerrainVertexBuffer(75000);
+			}
+
+			while (collisionRegions < poi->Count())
+			{
+				terrain->AddCollisionRegion(cloddy_Vec::To3D(Vec3F::Zero), 0.5f);
+				collisionRegions++;
+			}
+			
+			UInt32 i = 0;
+			while (i < poi->Count())
+			{
+				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(poi->Get(i)->PRS.Position().arr)), 10.0f);
+				i++;
 			}
 			
 			CloddyCollisionMeshInfo info = terrain->GenerateCollisionMesh(collisionVertexBuffer, collisionIndexBuffer, false, 0.5f);
 
-			//collider->SetMeshData(
-			//	collisionIndexBuffer->GetData(),
-			//	info.GetIndexCount(),
-			//	collisionVertexBuffer->GetData(),
-			//	info.GetVertexCount()
-			//);
+			collisionIndexBuffer->indexCount = (info.GetIndexCount() * 3) - 6;
+
+			collider->SetMeshData(
+				collisionIndexBuffer->GetDataList(),
+				(info.GetIndexCount() * 3) - 6,
+				collisionVertexBuffer->GetData(),
+				info.GetVertexCount()
+			);
 		}
 		#pragma endregion
 
@@ -178,7 +199,9 @@ namespace TikiEngine
 
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.Position();
 
-			manager->BeginTriangulation();
+			//terrain->UpdateCollisionRegion(0, cloddy_Vec::To3D(cloddy_Vec3F(cameraPos.arr)), 1.5f);
+
+			//manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));
 			terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
 
@@ -192,8 +215,22 @@ namespace TikiEngine
 				terrain->DisableLight(0);
 			}
 
-			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
-			manager->EndTriangulation();
+			//terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
+			//manager->EndTriangulation();
+
+			if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
+			{
+				DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
+
+				UInt32 offset = 0;
+				UInt32 stride = sizeof(CloddyVertex);
+				ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
+
+				DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+				DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
+			}
 		}
 
 		void TerrainRenderer::Update(const UpdateArgs& args)

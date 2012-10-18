@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/TypeGlobals.h"
 #include "Core/EngineObject.h"
 #include "Core/HelperLog.h"
 

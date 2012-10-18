@@ -11,7 +11,6 @@
 
 #include "Core/IMeshRenderer.h"
 #include "Core/IPhysicsMaterial.h"
-#include "Core/IBoxCollider.h"
 #include "Core/ISound.h"
 
 #include "Core/MeshIndexed.h"
@@ -30,7 +29,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 
 		SceneTim::SceneTim(Engine* engine)
-			: Scene(engine)
+			: Scene(engine), lastTime(0), dynamicBox(0)
 		{
 		}
 
@@ -46,19 +45,19 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			go->Model = engine->content->LoadModel(L"humanoid");
+			//go->Model = engine->content->LoadModel(L"humanoid");
 			tex = engine->content->LoadTexture(L"checker");
 
 			Material* mat = engine->content->LoadMaterial(L"os_default");
 			mat->GetShader()->SetTexture("tex", tex);
 
-			go->Model->SetMaterial(mat);
+			//go->Model->SetMaterial(mat);
 			mat->Release();
 
-			go->PRS.Scale() = Vector3(0.01f);
+			//go->PRS.Scale() = Vector3(0.01f);
 
-			this->AddElement(go);
-			go->Release();
+			//this->AddElement(go);
+			//go->Release();
 
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
@@ -66,24 +65,23 @@ namespace TikiEngine
 			light->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 			
-			go = new CameraObject(engine);
-			go->PRS.Position() = Vector3(0, 0, 5.0f);
+			camera = new CameraObject(engine);
+			camera->PRS.Position() = Vector3(0, 0, 5.0f);
 
-			CameraFly* fly = new CameraFly(engine, go);
-			fly->Release();
+			(new CameraFly(engine, camera))->Release();
 
-			this->AddElement(go);
-			go->Release();
+			this->AddElement(camera);
+			camera->Release();
 
 			IPhysicsMaterial* material; 
 			//material = engine->content->LoadPhysicsMaterial(L"TODO");
 			material = engine->librarys->CreateResource<IPhysicsMaterial>();
-			material->SetRestitution(0.7f);
+			material->SetRestitution(0.2f);
 			material->SetDynamicFriction(0.7f);
 			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
 			// Cloddy
-			go = new GameObject(engine);
+			//go = new GameObject(engine);
 			
 			mat = engine->content->LoadMaterial(L"os_cloddy");
 			mat->GetShader()->SetTexture("tex", tex);
@@ -99,6 +97,19 @@ namespace TikiEngine
 			collider->SetCenter(Vector3::Zero);
 			collider->SetDynamic(false);
 
+			this->AddElement(go);
+			go->Release();
+
+			go = new GameObject(engine);
+			go->Model = engine->content->LoadModel(L"replaceme_cube");
+			go->Model->SetMaterial(mat);
+			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			dynamicBox->SetCenter(Vector3(0, 20, 0));
+			dynamicBox->SetSize(Vector3(1, 1, 1));
+			dynamicBox->SetDynamic(true);
+			// assign collision groups after object is created, else it won't work!
+			dynamicBox->SetGroup(CG_Collidable_Pushable);
 			this->AddElement(go);
 			go->Release();
 
@@ -130,14 +141,14 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			tmp = Vector3(
-				 args.Update.Input.MousePositionDisplay.X,
-				 args.Update.Input.MousePositionDisplay.Y,
-				 args.Update.Input.MousePositionDisplay.X
-			);
+			//tmp = Vector3(
+			//	 args.Update.Input.MousePositionDisplay.X,
+			//	 args.Update.Input.MousePositionDisplay.Y,
+			//	 args.Update.Input.MousePositionDisplay.X
+			//);
 
 			wostringstream s;
-			s << "Light: X: " << tmp.X << ", Y:"  << tmp.Y << ", Z:" << tmp.Z;
+			s << "Box: X: " << tmp.X << ", Y:"  << tmp.Y << ", Z:" << tmp.Z;
 
 			engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
@@ -180,7 +191,12 @@ namespace TikiEngine
 			//) * args.Time.ElapsedTime;
 
 			//// tmp = class var
-			//tmp += move;
+			if (dynamicBox)
+			{
+				tmp = dynamicBox->GetGameObject()->PRS.Position();
+			}
+
+			tmp.Z = terrain->SampleHeight(tmp);
 
 			//light->PRS.SetRotation(
 			//	Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z)
@@ -191,7 +207,22 @@ namespace TikiEngine
 
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
-				terrain->UpdateCollider(collider);
+				dynamicBox->SetCenter(Vector3(0, 30, 0));
+			}
+
+			if (args.Input.GetKeyPressed(KEY_F6))
+			{
+				dynamicBox->SetCenter(camera->PRS.Position());
+				dynamicBox->GetRigidBody()->SetVelocity(camera->PRS.GetForward() * 20);
+			}
+
+			if (args.Time.TotalTime - lastTime > 0.1f)
+			{
+				List<GameObject*> list = List<GameObject*>();
+				list.Add(dynamicBox->GetGameObject());
+
+				terrain->UpdateCollider(collider, &list);
+				lastTime = args.Time.TotalTime;
 			}
 
 			if (args.Input.GetKey(KEY_F12))

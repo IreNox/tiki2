@@ -15,6 +15,7 @@
 #include "Cloddy/Cloddy_Extensions.h"
 
 #include "Core/Vector3.h"
+#include "Graphics/DynamicBuffer.h"
 
 namespace TikiEngine
 {
@@ -24,10 +25,20 @@ namespace TikiEngine
 		using namespace Cloddy;
 		using namespace Cloddy::Kernel;
 
+		struct CloddyVertex
+		{
+			float Position[3];
+			float UV[2];
+			float Normal[3];
+			int Color;
+		};
+
 		class TerrainVertexBuffer : public codex_Disposable, public cloddy_IVertexBuffer
 		{
 		public:
 			
+			DynamicBuffer<CloddyVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+
 			TerrainVertexBuffer(int32 size);
 			~TerrainVertexBuffer();
 			
@@ -64,8 +75,11 @@ namespace TikiEngine
 
 			int32 size;
 
-			float* bla;
-			Vector3* data;
+			Vector3* dataVector;
+			CloddyVertex* dataVertices;
+
+			int32 lockMin;
+			int32 lockMax;
 			codex_Ptr<ByteBuffer> buffer;
 
 		};

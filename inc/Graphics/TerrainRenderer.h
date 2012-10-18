@@ -47,7 +47,7 @@ namespace TikiEngine
 
 			float SampleHeight(const Vector3& position);
 
-			void UpdateCollider(ITriangleMeshCollider* collider);
+			void UpdateCollider(ITriangleMeshCollider* collider, List<GameObject*>* poi);
 
 			bool GetReady();
 	
@@ -56,6 +56,7 @@ namespace TikiEngine
 			Material* material;
 			ID3D11InputLayout* layout;
 
+			UInt32 collisionRegions;
 			TerrainIndexBuffer* collisionIndexBuffer;
 			TerrainVertexBuffer* collisionVertexBuffer;
 

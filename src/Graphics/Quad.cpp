@@ -10,12 +10,12 @@ namespace TikiEngine
 		#pragma region Vars
 		PostProcessVertex Quad::quadVertices[6] =
 		{
-			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			-1.0f,  1.0f, 0.0f, 0.0f, 0.0f, // TL
+			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
-			 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, // BR
 			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
+			 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, // BR
 		};
 
 		D3D11_INPUT_ELEMENT_DESC Quad::quadVertexElements[2] =

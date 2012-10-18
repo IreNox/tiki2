@@ -110,6 +110,8 @@ namespace TikiEngine
 			//physicsSDK->setParameter(NX_VISUALIZE_CONTACT_FORCE, 1);
 			//physicsSDK->setParameter(NX_VISUALIZE_BODY_LIN_VELOCITY, 1);
 			//physicsSDK->setParameter(NX_VISUALIZE_BODY_ANG_FORCE, 1);
+			//physicsSDK->setParameter(NX_VISUALIZE_COLLISION_DYNAMIC, 1);
+			physicsSDK->setParameter(NX_VISUALIZE_COLLISION_VNORMALS, 1);
 #endif
 
 			// Also create the controller Manager.
@@ -237,6 +239,35 @@ namespace TikiEngine
 					);
 
 					engine->graphics->DrawLine(start, end, color);
+
+					i++;
+				}
+			}
+
+			i = 0;
+			count = debug->getNbTriangles();
+			if (count > 0)
+			{
+				const NxDebugTriangle* tris = debug->getTriangles();
+
+				while (i < count)
+				{
+					const NxDebugTriangle* tri = tris + i;
+
+					Vector3 p1 = physxToTiki(tri->p0);
+					Vector3 p2 = physxToTiki(tri->p1);
+					Vector3 p3 = physxToTiki(tri->p2);
+
+					Color color = Color(
+						(float)((tri->color >> 16)&0xff)/255.0f,
+						(float)((tri->color >> 8)&0xff)/255.0f,
+						(float)( tri->color & 0xff)/255.0f,
+						1.0f
+					);
+
+					engine->graphics->DrawLine(p1, p2, color);
+					engine->graphics->DrawLine(p2, p3, color);
+					engine->graphics->DrawLine(p3, p1, color);
 
 					i++;
 				}

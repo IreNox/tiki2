@@ -142,6 +142,35 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
+			NxTriangleMeshDesc meshDesc;
+			meshDesc.numVertices			= vertexCount;
+			meshDesc.numTriangles			= indexCount / 3;
+			meshDesc.pointStrideBytes		= sizeof(NxVec3);
+			meshDesc.triangleStrideBytes	= 3 * sizeof(NxU32);
+			meshDesc.points					= vertexData;
+			meshDesc.triangles				= indexData;
+			meshDesc.flags				    = NX_MF_FLIPNORMALS;
+			//meshDesc.materialIndices		= &materialIndex;
+			//meshDesc.materialIndexStride	= 4;
+
+			meshDesc.heightFieldVerticalAxis = NX_Y;
+			meshDesc.heightFieldVerticalExtent	= -5.0f;
+			
+			bool valid = meshDesc.isValid();
+
+			MemoryWriteBuffer buf;
+
+			NxCookingParams params;  
+			params.targetPlatform = PLATFORM_PC;  
+			params.skinWidth = 0.25f;
+			params.hintCollisionSpeed = false;
+			DllMain::Cooking->NxSetCookingParams(params);  
+
+			if (!DllMain::Cooking->NxCookTriangleMesh(meshDesc, buf))
+			{
+				HelperLog::WriteError("Can't cook TriangleMesh.", 0);
+			}
+
 			if (actor != 0)
 			{
 				DllMain::Scene->releaseActor(*actor);
@@ -155,32 +184,6 @@ namespace TikiEngine
 				DllMain::PhysicsSDK->releaseTriangleMesh(*triangleMesh);
 				triangleMesh = 0;
 			}
-
-			NxTriangleMeshDesc meshDesc;
-			meshDesc.numVertices			= vertexCount;
-			meshDesc.numTriangles			= indexCount;
-			meshDesc.pointStrideBytes		= sizeof(NxVec3);
-			meshDesc.triangleStrideBytes	= 3 * sizeof(NxU32);
-			meshDesc.points					= vertexData;
-			meshDesc.triangles				= indexData;
-			meshDesc.flags				    = NX_MF_FLIPNORMALS;
-			meshDesc.materialIndices		= &materialIndex;
-			meshDesc.materialIndexStride	= 4;
-
-			//meshDesc.heightFieldVerticalAxis = NX_Y;
-			//meshDesc.heightFieldVerticalExtent	= -1000.0f;
-			
-			bool valid = meshDesc.isValid();
-
-			MemoryWriteBuffer buf;
-
-			NxCookingParams params;  
-			params.targetPlatform = PLATFORM_PC;  
-			params.skinWidth = 0.1f;  
-			params.hintCollisionSpeed = false;
-			DllMain::Cooking->NxSetCookingParams(params);  
-
-			DllMain::Cooking->NxCookTriangleMesh(meshDesc, buf);
 
 			MemoryReadBuffer readBuf(buf.data);
 			triangleMesh = DllMain::PhysicsSDK->createTriangleMesh(readBuf);

@@ -1,5 +1,9 @@
 
 #include "Graphics/TerrainVertexBuffer.h"
+#include "Graphics/DllMain.h"
+
+#include <iostream>
+using namespace std;
 
 namespace TikiEngine
 {
@@ -9,20 +13,23 @@ namespace TikiEngine
 		TerrainVertexBuffer::TerrainVertexBuffer(int32 size)
 			: size(size), buffer(0)
 		{
-			bla = new float[size * 3];
-			data = new Vector3[size];
+			dataVector = new Vector3[size];
+			dataVertices = new CloddyVertex[size];
+			vertexBuffer = new DynamicBuffer<CloddyVertex, D3D11_BIND_VERTEX_BUFFER>(DllMain::Engine);
 		}
 
 		TerrainVertexBuffer::~TerrainVertexBuffer()
 		{
-			delete[](data);
+			delete[](dataVector);
+			delete[](dataVertices);
+			SafeRelease(&vertexBuffer);
 		}
 		#pragma endregion
 
 		#pragma region Member - Get
 		const Vector3* TerrainVertexBuffer::GetData() const
 		{
-			return data;
+			return dataVector;
 		}
 
 		int32 TerrainVertexBuffer::GetCapacity()
@@ -39,23 +46,34 @@ namespace TikiEngine
 		#pragma region Member - VertexBuffer
 		void TerrainVertexBuffer::LockBuffer(int32 min, int32 max, int32 count, void* userData, BufferLock* bufferLock)
 		{	
-			if (buffer == 0)
-			{
-				buffer = ByteBuffer::Allocate(
-					sizeof(Vector3) * size
-				);
-			}
+			buffer = ByteBuffer::Allocate(
+				sizeof(CloddyVertex) * count
+			);
 
+			lockMin = min;
+			lockMax = max;
 			bufferLock->Locked(buffer);
 		}
 
 		void TerrainVertexBuffer::Unlock()
 		{
-			void* ptr = buffer->GetRawPointer();
+			CloddyVertex* ptr = (CloddyVertex*)buffer->GetRawPointer();
 			int64 size = buffer->GetCapacity();
 
-			memcpy(bla, ptr, size);
-			memcpy(data, ptr, size);
+			UInt32 i = lockMin;
+			while (i < lockMax)
+			{
+				memcpy(&dataVector[i], ptr[i - lockMin].Position, sizeof(Vector3));
+				i++;
+			}
+
+			memcpy(dataVertices + lockMin, ptr, size);
+
+			CloddyVertex* bdata = vertexBuffer->Map(this->size);
+			memcpy(bdata, dataVertices, this->size * sizeof(CloddyVertex));
+			vertexBuffer->Unmap();
+
+			buffer = 0;
 		}
 		#pragma endregion
 
@@ -67,6 +85,7 @@ namespace TikiEngine
 
 		void TerrainVertexBuffer::DisposeUnmanaged()
 		{
+
 			// hire code
 		}
 	}

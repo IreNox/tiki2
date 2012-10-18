@@ -10,6 +10,7 @@
 #include "Game/PPBlur.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
+#include "Core/IBoxCollider.h"
 #include "Core/ITerrainRenderer.h"
 #include "Core/ITriangleMeshCollider.h"
 
@@ -49,6 +50,12 @@ namespace TikiEngine
 			Vector3 tmp;
 
 			GUIButton* button;
+
+			CameraObject* camera;
+
+			double lastTime;
+
+			IBoxCollider* dynamicBox;
 
 			ITerrainRenderer* terrain;
 			ITriangleMeshCollider* collider;

@@ -334,8 +334,8 @@ namespace TikiEngine
 			vertices.Add(vertex[1]);
 			vertices.Add(vertex[2]);
 			vertices.Add(vertex[1]);
-			vertices.Add(vertex[2]);
 			vertices.Add(vertex[3]);
+			vertices.Add(vertex[2]);
 		}
 		#pragma endregion
 	}

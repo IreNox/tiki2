@@ -15,6 +15,7 @@
 #include "Cloddy/Cloddy_Extensions.h"
 
 #include "Core/TypeDef.h"
+#include "Graphics/DynamicBuffer.h"
 
 namespace TikiEngine
 {
@@ -27,10 +28,14 @@ namespace TikiEngine
 		{
 		public:
 
+			UInt32 indexCount;
+			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+
 			TerrainIndexBuffer(int32 size);
 			~TerrainIndexBuffer();
 			
-			const UInt32* GetData() const;
+			UInt32 GetSizeList() const;
+			const UInt32* GetDataList() const;
 
 			int32 GetCapacity();
 
@@ -70,8 +75,11 @@ namespace TikiEngine
 
 		private:
 
-			int32 size;
-			UInt32* data;
+			int32 sizeList;
+			int32 sizeStrip;
+
+			UInt32* dataList;
+			UInt32* dataStrip;
 
 		};
 	}

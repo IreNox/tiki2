@@ -533,7 +533,7 @@ namespace TikiEngine
 			rasterDesc.MultisampleEnable = false;
 			rasterDesc.ScissorEnable = false;
 			rasterDesc.SlopeScaledDepthBias = 0.0f;
-
+			
 			r = device->CreateRasterizerState(
 				&rasterDesc,
 				&rasterStateBackfaces
