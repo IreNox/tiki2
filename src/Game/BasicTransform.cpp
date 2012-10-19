@@ -8,8 +8,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		BasicTransform::BasicTransform(Engine* engine)
-			: BasicDatabase(engine)
+		BasicTransform::BasicTransform(GameState* state)
+			: BasicDatabase(state)
 		{
 		}
 

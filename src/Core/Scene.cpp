@@ -111,6 +111,11 @@ namespace TikiEngine
 
 		return elements.Remove(element);
 	}
+
+	const List<GameObject*>* Scene::GetElements() const
+	{
+		return &elements;
+	}
 	#pragma endregion
 
 	#pragma region Member - Draw/Update

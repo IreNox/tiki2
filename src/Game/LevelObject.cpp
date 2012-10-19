@@ -3,12 +3,14 @@
 
 #include "Core/IContentManager.h"
 
+#include "Game/TikiBot.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
-		LevelObject::LevelObject(Engine* engine)
-			: LevelChild(engine)
+		LevelObject::LevelObject(GameState* state)
+			: LevelChild(state)
 		{
 		}
 
@@ -33,6 +35,13 @@ namespace TikiEngine
 					this->Model->SetMaterial(material);
 					material->Release();
 
+					break;
+				case 1:
+					this->Model = engine->content->LoadModel(L"normals");
+					this->Model->SetMaterial(material);
+					material->Release();
+
+					(new TikiBot(gameState, this))->Release();
 					break;
 				}
 			}

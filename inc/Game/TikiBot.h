@@ -25,7 +25,7 @@ namespace TikiEngine
 			~TikiBot();
 
 			// Navigation
-			void CreateNav(NavigationMesh* par, NavigationCell* currCell);
+			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
 			void GotoLocation(const Vector3& p, NavigationCell* cell);
 			void GotoLocation(const Vector3& p);
 			//void GotoRandomLocation();

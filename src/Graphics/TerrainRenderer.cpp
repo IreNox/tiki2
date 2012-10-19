@@ -217,19 +217,19 @@ namespace TikiEngine
 			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
 			manager->EndTriangulation();
 
-			if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
-			{
-				DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
+			//if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
+			//{
+			//	DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
-				UInt32 offset = 0;
-				UInt32 stride = sizeof(CloddyVertex);
-				ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
+			//	UInt32 offset = 0;
+			//	UInt32 stride = sizeof(CloddyVertex);
+			//	ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
 
-				DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			//	DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+			//	DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-				DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
-			}
+			//	DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
+			//}
 		}
 
 		void TerrainRenderer::Update(const UpdateArgs& args)

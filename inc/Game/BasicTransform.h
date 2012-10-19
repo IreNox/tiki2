@@ -10,7 +10,7 @@ namespace TikiEngine
 		{
 		public:
 
-			BasicTransform(Engine* engine);
+			BasicTransform(GameState* state);
 			~BasicTransform();
 
 			void LoadFromDatabase(sqlite3_stmt* state);

@@ -1,5 +1,10 @@
 
 #include "Game/GameState.h"
+#include "Game/TikiBot.h"
+#include "Game/SceneLevel.h"
+
+#include "Core/IPhysics.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -10,6 +15,7 @@ namespace TikiEngine
 			: EngineObject(engine), scene(scene)
 		{
 			hud = new GameHud(this);
+			navMesh = new NavigationMesh(engine);
 		}
 
 		GameState::~GameState()
@@ -36,8 +42,27 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
-		bool GameState::LoadLevel(Int64 id)
-		{
+		bool GameState::LoadLevel(Level* level)
+		{			
+			navMesh->Clear();
+			navMesh->Load(
+				L"navmesh_" + StringAtoW(scene->GetLevel()->GetName()),
+				Matrix::CreateTranslation(Vector3(0, 6, 0))
+			);
+
+			UInt32 i = 0;
+			while (i < scene->objects.Count())
+			{
+				TikiBot* bot = scene->objects[i]->GetComponent<TikiBot>();
+
+				if (bot != 0)
+				{
+					bot->CreateNav(navMesh);
+				}
+
+				i++;
+			}
+
 			return true;
 		}
 
@@ -50,11 +75,46 @@ namespace TikiEngine
 		void GameState::Draw(const DrawArgs& args)
 		{
 			hud->Draw(args);
+			navMesh->Draw(args);
 		}
 
 		void GameState::Update(const UpdateArgs& args)
 		{
 			hud->Update(args);
+
+			if(args.Input.MouseButtons[1])
+			{
+				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
+				RaycastHit info;
+
+				if (engine->physics->RayCast(ray, &info))
+				{
+					// 
+					ICollider* coll = info.Collider;
+					if (coll)
+					{
+						if(coll->GetDynamic())
+						{
+							coll->GetRigidBody()->SetVelocity(Vector3(0, 10, 0));
+							coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
+						}
+					}
+
+
+					UInt32 i = 0;
+					while (i < scene->objects.Count())
+					{
+						TikiBot* bot = scene->objects[i]->GetComponent<TikiBot>();
+
+						if (bot != 0)
+						{
+							bot->GotoLocation(info.Point);
+						}
+
+						i++;
+					}
+				}
+			}
 		}
 		#pragma endregion
 

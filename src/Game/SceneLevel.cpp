@@ -29,7 +29,7 @@ namespace TikiEngine
 		{
 			sqlite3_open("Data/TikiData.sqlite", &db);
 
-			state = new GameState(engine, this);
+			gameState = new GameState(engine, this);
 		}
 
 		SceneLevel::~SceneLevel()
@@ -47,25 +47,6 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
-			//GameObject* go = new GameObject(engine);
-
-			/*Mesh* mesh = engine->content->LoadMesh(L"Data/Resources/Models/box_ursprung.fbx");
-			ITexture* tex = engine->content->LoadTexture(L"Data/Resources/Textures/box_diffuse.jpg");
-
-			Material* mat = engine->content->LoadMaterial(L"Data\\Effects\\os_default.fx");
-			mat->GetShader()->SetTexture("tex", tex);
-			tex->Release();
-
-			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			render->SetMesh(mesh);
-			render->SetMaterial(mat);
-			mat->Release();
-			mesh->Release();
-			render->Release();
-
-			this->AddElement(go);
-			go->Release();*/
-
 			//Light
 			LightObject* lo = new LightObject(engine);
 			lo->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
@@ -76,12 +57,12 @@ namespace TikiEngine
 			lo->Release();
 
 			// Camera
-			GameObject* go = new CameraObject(engine);
+			CameraObject* go = new CameraObject(engine);
 			go->PRS.Position().Y = 35.0f;
 
-			CameraFly* fly = new CameraFly(engine, go);
-			fly->Release();
+			(new CameraFly(engine, go))->Release();
 
+			mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 			go->Release();
 			
@@ -117,7 +98,7 @@ namespace TikiEngine
 				return false;
 			}
 
-			level = new Level(engine);
+			level = new Level(gameState);
 			level->LoadFromDatabase(state);
 			sqlite3_finalize(state);
 
@@ -131,7 +112,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{
-					LevelEnemy* enemy = new LevelEnemy(engine);
+					LevelEnemy* enemy = new LevelEnemy(gameState);
 					enemy->LoadFromDatabase(state);
 
 					enemies.Add(enemy);
@@ -149,7 +130,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{
-					LevelObject* object = new LevelObject(engine);
+					LevelObject* object = new LevelObject(gameState);
 					object->LoadFromDatabase(state);
 
 					objects.Add(object);
@@ -157,7 +138,7 @@ namespace TikiEngine
 				sqlite3_finalize(state);
 			}
 
-			return this->state->LoadLevel(id);
+			return gameState->LoadLevel(level);
 		}
 
 		void SceneLevel::DisposeLevel()
@@ -182,8 +163,8 @@ namespace TikiEngine
 			}
 			objects.Clear();
 
-
 			SafeRelease(&level);
+			SafeRelease(&gameState);
 		}
 		#pragma endregion
 
@@ -218,6 +199,7 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
+			gameState->Draw(args);
 			Scene::Draw(args);
 		}
 
@@ -241,6 +223,7 @@ namespace TikiEngine
 				i++;
 			}
 
+			gameState->Update(args);
 			Scene::Update(args);
 		}
 		#pragma endregion

@@ -10,14 +10,19 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		Level::Level(Engine* engine)
-			: BasicDatabase(engine), terrain(0)
+		Level::Level(GameState* state)
+			: BasicDatabase(state), terrain(0), collider(0), colliderUpdate(0)
 		{
 		}
 
 		Level::~Level()
 		{
 			SafeRelease(&terrain);
+		}
+
+		string Level::GetName()
+		{
+			return name;
 		}
 
 		ITerrainRenderer* Level::GetTerrain()
@@ -36,6 +41,16 @@ namespace TikiEngine
 				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize);
 				terrain->SetMaterial(mat);
 				mat->Release();
+
+				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
+				material->SetRestitution(0.2f);
+				material->SetDynamicFriction(0.7f);
+				material->SetStaticFriction(0.5f);
+
+				collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(this);
+				collider->SetMaterial(material->GetIndex());
+				collider->SetCenter(Vector3::Zero);
+				collider->SetDynamic(false);
 			}
 		}
 
@@ -57,6 +72,20 @@ namespace TikiEngine
 			{			
 				heightmapSize = sqlite3_column_int(state, fieldId);
 			}
+		}
+
+		void Level::Update(const UpdateArgs& args)
+		{
+			List<GameObject*> poi;
+			poi.Add(this);
+
+			if (colliderUpdate++ > 5)
+			{
+				terrain->UpdateCollider(collider, &poi);
+				colliderUpdate = 0;
+			}
+
+			BasicDatabase::Update(args);
 		}
 	}
 }

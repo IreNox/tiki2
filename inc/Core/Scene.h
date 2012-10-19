@@ -27,6 +27,7 @@ namespace TikiEngine
 
 		GameObject* AddElement(GameObject* element);
 		bool RemoveElement(GameObject* element);
+		const List<GameObject*>* GetElements() const;
 
 		virtual void Initialize(const InitializationArgs& args);
 

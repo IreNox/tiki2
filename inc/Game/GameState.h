@@ -4,8 +4,9 @@
 #include "Core/TypeGlobals.h"
 
 #include "Game/GameHud.h"
-#include "Game/SceneLevel.h"
 #include "Game/UnitFunctions.h"
+
+#include "Game/NavigationMesh.h"
 
 namespace TikiEngine
 {
@@ -13,7 +14,11 @@ namespace TikiEngine
 
 	namespace Game
 	{
+		using namespace TikiEngine::AI;
 		using namespace TikiEngine::UserInterface;
+
+		class Level;
+		class SceneLevel;
 
 		class GameState : public EngineObject
 		{
@@ -22,7 +27,7 @@ namespace TikiEngine
 			GameState(Engine* engine, SceneLevel* scene);
 			~GameState();
 
-			bool LoadLevel(Int64 id);
+			bool LoadLevel(Level* level);
 			void DisposeLevel();
 
 			Engine* GetEngine();
@@ -44,6 +49,8 @@ namespace TikiEngine
 
 			GameHud* hud;
 			SceneLevel* scene;
+
+			NavigationMesh* navMesh;
 			
 			//List<Unit*> selectedUnits;
 

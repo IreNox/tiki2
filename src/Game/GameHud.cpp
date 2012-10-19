@@ -3,6 +3,10 @@
 #include "Game/GameState.h"
 
 #include "Core/IGraphics.h"
+#include "Core/IContentManager.h"
+
+#include <string.h>
+using namespace std;
 
 namespace TikiEngine
 {
@@ -78,6 +82,11 @@ namespace TikiEngine
 
 		void GameHud::Update(const UpdateArgs& args)
 		{
+			//wostringstream str;
+			//str << state->GetResource1() << L"/" << 1000;
+			//labelRes1->Text() = str.str();
+			//
+
 			UInt32 i = 0;
 			while (i < enabledControls.Count())
 			{

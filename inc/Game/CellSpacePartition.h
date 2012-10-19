@@ -57,6 +57,9 @@ namespace TikiEngine
 				cellSizeX = width / cellsX;
 				cellSizeY = height / cellsY;
 
+				Int32 halfCellsX = cellsX / 2;
+				Int32 halfCellsY = cellsY / 2;
+
 				// create cells
 				for(int y = 0; y < numCellsY; ++y)
 				{
@@ -186,8 +189,10 @@ namespace TikiEngine
 			// given a position in the game space this method determines the relevant cell's index
 			int CellSpacePartition<entity>::PositionToIndex(const Vector2& pos)
 			{
-				int idx = (int)(numCellsX * pos.X / spaceWidth) +
-						  ((int)((numCellsY) * pos.Y / spaceHeight) * numCellsX);
+				Vector2 pos2 = pos; // + Vector2(spaceWidth, spaceHeight);
+
+				int idx = (int)(numCellsX * pos2.X / spaceWidth) +
+						  ((int)((numCellsY) * pos2.Y / spaceHeight) * numCellsX);
 
 				//if the entity's position is equal to vector2(spaceWidth, spaceHeight)
 				//then the index will overshoot. We need to check for this and adjust.

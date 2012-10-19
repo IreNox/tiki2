@@ -88,21 +88,31 @@ namespace TikiEngine
 		{
 			navModel = engine->content->LoadModel(name);
 
+			float minX = -3.4E+38f;
+			float minZ = -3.4E+38f;
 			float maxX = -3.4E+38f;
 			float maxZ = -3.4E+38f;
 
 			Clear();
 			for(UInt32 i = 0; i < navModel->GetIndices()->Count(); i+=3)
 			{
-				Vector3 vertA = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i)).Position;
+				Vector3 vertC = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i)).Position;
 				Vector3 vertB = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+1)).Position;
-				Vector3 vertC = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+2)).Position;
+				Vector3 vertA = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+2)).Position;
 				
 				vertA = Vector3::TransformCoordinate(vertA, transform);
 				vertB = Vector3::TransformCoordinate(vertB, transform);
 				vertC = Vector3::TransformCoordinate(vertC, transform);
 
 				// compute level dimensions
+				if (vertA.X < minX) minX = vertA.X;
+				if (vertB.X < minX) minX = vertB.X;
+				if (vertC.X < minX) minX = vertC.X;
+
+				if (vertA.Z < minZ) minZ = vertA.Z;
+				if (vertB.Z < minZ) minZ = vertB.Z;
+				if (vertC.Z < minZ) minZ = vertC.Z;
+
 				if (vertA.X > maxX) maxX = vertA.X;
 				if (vertB.X > maxX) maxX = vertB.X;
 				if (vertC.X > maxX) maxX = vertC.X;
@@ -116,6 +126,9 @@ namespace TikiEngine
 					AddCell(vertA, vertB, vertC);
 			}
 			LinkCells();
+
+			//if (minX < 0) maxX += abs(minX);
+			//if (minZ < 0) maxZ += abs(minZ);
 
 			// Add all NavigationCellls to the CellSpacePartition
 			cellSpace = new CellSpacePartition<NavigationCell*>(engine, maxX, maxZ, 4, 4, TotalCells());
@@ -159,12 +172,16 @@ namespace TikiEngine
 			NavigationCell* ClosestCell = 0;  
 
 
-			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 40);
+			//cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 40);
 
-			//iterate through the neighbors and sum up all the position vectors
-			NavigationCell* pCell = cellSpace->begin();
-			for (; !cellSpace->end(); pCell = cellSpace->next())
-			{
+			////iterate through the neighbors and sum up all the position vectors
+			//NavigationCell* pCell = cellSpace->begin();
+			//for (; !cellSpace->end(); pCell = cellSpace->next())
+			//{
+			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
+			for(;CellIter != cellArray.end(); ++CellIter)  
+			{  
+				NavigationCell* pCell = *CellIter;
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
@@ -403,7 +420,7 @@ namespace TikiEngine
 			}
 			
 			// render cellSpace
-			cellSpace->RenderCells();
+			//cellSpace->RenderCells();
 		}
 
 		int NavigationMesh::TotalCells() const

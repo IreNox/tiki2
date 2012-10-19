@@ -15,6 +15,8 @@ namespace TikiEngine
 
 		class SceneLevel : public Scene
 		{
+			friend class GameState;
+
 		public:
 
 			SceneLevel(Engine* engine);
@@ -35,8 +37,10 @@ namespace TikiEngine
 			Level* level;
 			List<LevelEnemy*> enemies;
 			List<LevelObject*> objects;
+			
+			Camera* mainCamera;
 
-			GameState* state;
+			GameState* gameState;
 
 			sqlite3* db;
 

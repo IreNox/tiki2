@@ -51,14 +51,12 @@ namespace TikiEngine
 		{
 			engine->sprites->Draw(
 				texture,
-				position,
-				0,
-				Vector2::Zero,
-				Vector2(
-					textureSize.X / size.X,
-					textureSize.Y / size.Y
-				),
-				1.0f
+				RectangleF(
+					position.X,
+					position.Y,
+					size.X,
+					size.Y
+				)
 			);
 		}
 		#pragma endregion

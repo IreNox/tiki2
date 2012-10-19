@@ -10,7 +10,7 @@ namespace TikiEngine
 		{
 		public:
 
-			LevelObject(Engine* engine);
+			LevelObject(GameState* state);
 			~LevelObject();
 
 		private:

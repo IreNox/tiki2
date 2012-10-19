@@ -5,8 +5,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		BasicDatabase::BasicDatabase(Engine* engine)
-			: GameObject(engine)
+		BasicDatabase::BasicDatabase(GameState* state)
+			: GameObject(state->GetEngine()), gameState(state)
 		{
 		}
 

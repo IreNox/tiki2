@@ -12,7 +12,7 @@ namespace TikiEngine
 		{
 		public:
 
-			LevelChild(Engine* engine);
+			LevelChild(GameState* state);
 			~LevelChild();
 
 			void LoadFromDatabase(sqlite3_stmt* state);

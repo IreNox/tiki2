@@ -5,8 +5,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		LevelEnemy::LevelEnemy(Engine* engine)
-			: LevelChild(engine)
+		LevelEnemy::LevelEnemy(GameState* state)
+			: LevelChild(state)
 		{
 		}
 

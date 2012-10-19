@@ -10,7 +10,7 @@ namespace TikiEngine
 		{
 		public:
 
-			LevelEnemy(Engine* engine);
+			LevelEnemy(GameState* state);
 			~LevelEnemy();
 
 		protected:

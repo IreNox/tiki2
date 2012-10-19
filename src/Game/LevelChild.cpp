@@ -7,8 +7,8 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		LevelChild::LevelChild(Engine* engine)
-			: BasicTransform(engine)
+		LevelChild::LevelChild(GameState* state)
+			: BasicTransform(state)
 		{
 		}
 

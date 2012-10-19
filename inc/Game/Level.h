@@ -3,6 +3,7 @@
 #include "Game/BasicDatabase.h"
 
 #include "Core/ITerrainRenderer.h"
+#include "Core/ITriangleMeshCollider.h"
 
 namespace TikiEngine
 {
@@ -12,12 +13,15 @@ namespace TikiEngine
 		{
 		public:
 
-			Level(Engine* engine);
+			Level(GameState* state);
 			~Level();
 
 			void LoadFromDatabase(sqlite3_stmt* state);
 
+			string GetName();
 			ITerrainRenderer* GetTerrain();
+
+			void Update(const UpdateArgs& args);
 
 		private:
 
@@ -27,7 +31,9 @@ namespace TikiEngine
 			int heightmapScale;
 			int heightmapSize;
 
+			UInt32 colliderUpdate;
 			ITerrainRenderer* terrain;
+			ITriangleMeshCollider* collider;
 
 		protected:
 
