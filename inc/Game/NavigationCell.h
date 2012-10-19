@@ -113,6 +113,7 @@ namespace TikiEngine
 			bool IsPointInCellCollumn(const Vector2& TestPoint) const;
 			const Vector3& Vertex(int Vert) const;
 			const Vector3& CenterPoint() const;
+			Vector2 Pos() const;					// 2D CenterPoint pos, used in cellSpace for calculating Neighbors
 			NavigationCell* Link(int Side) const;
 
 			//const Vector3& LinkPoint() const;

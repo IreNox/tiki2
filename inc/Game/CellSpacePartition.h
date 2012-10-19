@@ -4,6 +4,8 @@
 #include <list>
 #include <cassert>
 #include "Core/IBoundingBox.h"
+#include "Core/LibraryManager.h"
+#include "Core/TypeGlobals.h"
 
 namespace TikiEngine
 {
@@ -81,6 +83,11 @@ namespace TikiEngine
 				int sz = cells.size();
 				int idx = PositionToIndex(ent->Pos());
 
+				if (idx < 0)
+				{
+					OutputDebugString(L"Error: CellSpace Index < 0, make sure the Cells/Bots/Entities are within positive XZ Dimension. \n");
+					return;
+				}
 				cells[idx].Members.push_back(ent);
 			}
 

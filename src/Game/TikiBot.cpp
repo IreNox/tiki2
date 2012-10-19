@@ -104,7 +104,16 @@ namespace TikiEngine
 				// find the closest target cell we will move to
 				NavigationCell* closestCell = parent->FindClosestCell(p);
 
-				// snap point to cell so we don't freak out!
+				// if we have no closest cell found at the given targetPosition,
+				// we didn't click on any or near a navigation Cell, so just return
+				if (!closestCell)
+					return;
+
+				// don't move if we have a position which is not in navMesh
+				if(!closestCell->IsPointInCellCollumn(p))
+					return;
+
+				// snap point to cell so we don't freak out! no need checked point?
 				//Vector3 targetPos = parent->SnapPointToCell(closestCell, p);
 
 				// get currentCell, we need to update here too :(

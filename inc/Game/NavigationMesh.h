@@ -4,7 +4,9 @@
 
 #include "Game/NavigationCell.h"
 #include "Game/NavigationHeap.h"
+#include "Game/CellSpacePartition.h"
 #include "Core/DrawArgs.h"
+#include "Core/IModel.h"
 
 namespace TikiEngine
 {
@@ -24,7 +26,7 @@ namespace TikiEngine
 			typedef	std::vector<NavigationCell*> CELL_ARRAY;
 
 
-			NavigationMesh();
+			NavigationMesh(Engine* engine);
 			~NavigationMesh();
 
 			// Delete all cells associated with this mesh 
@@ -32,6 +34,8 @@ namespace TikiEngine
 			// Add a new cell, defined by the three vertices in clockwise order, to this mesh 
 			void AddCell(const Vector3& pointA, const Vector3& pointB, const Vector3& pointC);
 			void LinkCells();
+
+			void Load(const wstring& name, const Matrix& transform);
 
 			// Force a point to be inside the cell  
 			Vector3 SnapPointToCell(NavigationCell* Cell, const Vector3& Point);
@@ -65,7 +69,9 @@ namespace TikiEngine
 			int pathSession;
 			NavigationHeap navHeap;
 
-
+			IModel* navModel;
+			CellSpacePartition<NavigationCell*>* cellSpace;
+			Engine* engine;
 		};
 
 

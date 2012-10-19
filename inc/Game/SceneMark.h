@@ -5,7 +5,7 @@
 #include "Core/IBoxCollider.h"
 #include "Core/ISphereCollider.h"
 #include "Core/ICharacterController.h"
-#include "Core/IModel.h"
+
 
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
@@ -53,13 +53,13 @@ namespace TikiEngine
 			 Vector3 dir;
 			 Vector3 impact;
 
-			 CellSpacePartition<TikiBot*>* cellSpace;
+			 //CellSpacePartition<TikiBot*>* cellSpace;
 			 bool drawCellSpace;
 
 			 GameState* state;
 
-       IModel* navModel;
-			 NavigationMesh naviMesh; 
+			 
+			 NavigationMesh* naviMesh; 
 			 bool showNaviMesh;
 
 		};

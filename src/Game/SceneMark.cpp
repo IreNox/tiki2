@@ -24,7 +24,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Scripts;
-    using namespace TikiEngine::Resources;
+		using namespace TikiEngine::Resources;
 
 		// Geometry
 		#pragma region Map
@@ -213,53 +213,29 @@ namespace TikiEngine
 			SafeRelease(&material);
 		
 
+
 			SafeRelease(&bot);
 
 			SafeRelease(&fly);
 			SafeRelease(&font);
-
-			cellSpace->EmptyCells();
-			delete cellSpace;
 			
 
-      SafeRelease(&navModel);
-
-      // suckx !
+			
+			delete naviMesh;
+			
+			// can't release
 			SafeRelease(&state);
+
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
 		{
-
-
-			//TODO: EntityMgr->RegisterMovingEntity(go); //, desc
-			//cellSpace = new CellSpacePartition<TikiBot*>(engine, 50.0f, 50.0f, 8, 8, 50); 
-			cellSpace = new CellSpacePartition<TikiBot*>(engine, 256, 256, 10, 10, 10);
-			
-      navModel = engine->content->LoadModel(L"HeightField");
-      List<DefaultVertex>* vertices = navModel->GetVertices();
-      List<UInt32>* indices = navModel->GetIndices();
 			// Create a test navigation mesh
-      naviMesh.Clear();
-      for(UInt32 i = 0; i < indices->Count(); i+=3)
-      {
-        Vector3 vertA = vertices->Get(indices->Get(i)).Position;
-        Vector3 vertB = vertices->Get(indices->Get(i+1)).Position;
-        Vector3 vertC = vertices->Get(indices->Get(i+2)).Position;
-      
-        Matrix m = Matrix::CreateTranslation(50, 0, 50);
-        vertA = Vector3::TransformCoordinate(vertA, m);
-        vertB = Vector3::TransformCoordinate(vertB, m);
-        vertC = Vector3::TransformCoordinate(vertC, m);
+			naviMesh = new NavigationMesh(engine);
 
-        if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))
-          naviMesh.AddCell(vertA, vertB, vertC);
-      }
-      naviMesh.LinkCells();
-      vertices->Clear();
-      indices->Clear();
-      
-
+			// make sure we are witin positive X-Z space else Cellspace won't work!
+			Matrix m = Matrix::CreateTranslation(50, 0, 50);
+			naviMesh->Load(L"HeightField", m);
       
 // 			naviMesh.Clear();  
 // 			for (UInt32 i = 0; i < map_totalpolys; ++i)
@@ -286,10 +262,10 @@ namespace TikiEngine
 // 			naviMesh.LinkCells();
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
-      GameObject* go = new GameObject(engine);
+			GameObject* go = new GameObject(engine);
 			bot = new TikiBot(state, go);
-			bot->CreateNav(&naviMesh, 0);
-			cellSpace->AddEntity(bot);
+			bot->CreateNav(naviMesh, 0);
+			//cellSpace->AddEntity(bot);
 			// TODO: state->GetEntityMgr()->RegisterEntity(bot);
 			this->AddElement(go);
 			go->Release();
@@ -422,12 +398,10 @@ namespace TikiEngine
 
 
 			if (showNaviMesh)
-				naviMesh.Draw(args);
+				naviMesh->Draw(args);
 
 			#if _DEBUG
 			engine->physics->DrawDebug();
-			if (drawCellSpace)
-				cellSpace->RenderCells();
 			#endif
 
 			Scene::Draw(args);
@@ -435,8 +409,6 @@ namespace TikiEngine
 
 		void SceneMark::Update(const UpdateArgs& args)
 		{
-			cellSpace->CalculateNeighbors(bot->Pos(), 24);
-			
 			//parallel_invoke(
 			//	[=](){ cellSpace->UpdateEntity(bot, Vector2::Zero); },
 			//	[=](){ Vector2::Zero; }

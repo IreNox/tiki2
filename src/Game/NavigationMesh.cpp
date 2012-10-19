@@ -4,21 +4,29 @@
 #include "Core/Color.h"
 #include "Core/List.h"
 #include "Core/IGraphics.h"
+#include "Core/IcontentManager.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
+		//using namespace TikiEngine::Resources;
 
 		// ctor / dtor
-		NavigationMesh::NavigationMesh()
+		NavigationMesh::NavigationMesh(Engine* engine)
 			: pathSession(0)
 		{
+			this->engine = engine;
 			cellArray.clear();
 		}
 
 		NavigationMesh::~NavigationMesh()
 		{
+			SafeRelease(&navModel);
+
+			cellSpace->EmptyCells();
+			delete cellSpace;
+
 			Clear();
 		}
 
@@ -43,6 +51,7 @@ namespace TikiEngine
 
 		void NavigationMesh::LinkCells()  
 		{  
+			// Link all cells
 			CELL_ARRAY::iterator IterA = cellArray.begin();  
 
 			while (IterA != cellArray.end())  
@@ -77,6 +86,50 @@ namespace TikiEngine
 			}  
 		}  
 
+		void NavigationMesh::Load(const wstring& name, const Matrix& transform)
+		{
+			navModel = engine->content->LoadModel(name);
+
+			float maxX = -3.4E+38f;
+			float maxZ = -3.4E+38f;
+
+			Clear();
+			for(UInt32 i = 0; i < navModel->GetIndices()->Count(); i+=3)
+			{
+				Vector3 vertA = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i)).Position;
+				Vector3 vertB = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+1)).Position;
+				Vector3 vertC = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+2)).Position;
+				
+				vertA = Vector3::TransformCoordinate(vertA, transform);
+				vertB = Vector3::TransformCoordinate(vertB, transform);
+				vertC = Vector3::TransformCoordinate(vertC, transform);
+
+				// compute level dimensions
+				if (vertA.X > maxX) maxX = vertA.X;
+				if (vertB.X > maxX) maxX = vertB.X;
+				if (vertC.X > maxX) maxX = vertC.X;
+
+				if (vertA.Z > maxZ) maxZ = vertA.Z;
+				if (vertB.Z > maxZ) maxZ = vertB.Z;
+				if (vertC.Z > maxZ) maxZ = vertC.Z;
+
+
+				if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))
+					AddCell(vertA, vertB, vertC);
+			}
+			LinkCells();
+
+			// Add all NavigationCellls to the CellSpacePartition
+			cellSpace = new CellSpacePartition<NavigationCell*>(engine, maxX, maxZ, 8, 8, TotalCells());
+			CELL_ARRAY::iterator CellIter = cellArray.begin();
+			for(;CellIter != cellArray.end(); ++CellIter)
+			{
+				//NavigationCell* Cell = ;
+				cellSpace->AddEntity(*CellIter);
+			}
+
+		}
+
 		Vector3 NavigationMesh::SnapPointToCell(NavigationCell* Cell, const Vector3& Point)  
 		{  
 			Vector3 PointOut = Point;  
@@ -100,7 +153,7 @@ namespace TikiEngine
 			return (SnapPointToCell(*CellOut, PointOut));  
 		}  
 
-		NavigationCell* NavigationMesh::FindClosestCell(const Vector3& Point) const  
+		inline NavigationCell* NavigationMesh::FindClosestCell(const Vector3& Point) const  
 		{  
 			float ClosestDistance = 3.4E+38f;  
 			float ClosestHeight = 3.4E+38f;  
@@ -108,10 +161,13 @@ namespace TikiEngine
 			float ThisDistance;  
 			NavigationCell* ClosestCell = 0;  
 
-			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
-			for(;CellIter != cellArray.end(); ++CellIter)  
-			{  
-				NavigationCell* pCell = *CellIter;  
+
+			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 10);
+
+			//iterate through the neighbors and sum up all the position vectors
+			NavigationCell* pCell = cellSpace->begin();
+			for (; !cellSpace->end(); pCell = cellSpace->next())
+			{
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
@@ -154,7 +210,7 @@ namespace TikiEngine
 
 						ClosestPoint3D -= Point;  
 
-						ThisDistance = ClosestPoint3D.Length();  
+						ThisDistance = ClosestPoint3D.LengthSquared();  
 
 						if (ThisDistance < ClosestDistance)  
 						{  
@@ -163,9 +219,79 @@ namespace TikiEngine
 						}  
 					}  
 				}  
-			}  
+			}
 
-			return (ClosestCell);  
+			if (!ClosestCell)
+				OutputDebugString(L"No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
+			return ClosestCell;
+
+			#pragma region slow and old
+			//float ClosestDistance = 3.4E+38f;  
+			//float ClosestHeight = 3.4E+38f;  
+			//bool FoundHomeCell = false;  
+			//float ThisDistance;  
+			//NavigationCell* ClosestCell = 0;  
+
+			//CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
+			//for(;CellIter != cellArray.end(); ++CellIter)  
+			//{  
+			//	NavigationCell* pCell = *CellIter;  
+
+			//	if (pCell->IsPointInCellCollumn(Point))  
+			//	{  
+			//		Vector3 NewPosition(Point);  
+			//		pCell->MapVectorHeightToCell(NewPosition);  
+
+			//		ThisDistance = fabs(NewPosition.Y - Point.Y);  
+
+			//		if (FoundHomeCell)  
+			//		{  
+			//			if (ThisDistance < ClosestHeight)  
+			//			{  
+			//				ClosestCell = pCell;  
+			//				ClosestHeight = ThisDistance;  
+			//			}  
+			//		}  
+			//		else  
+			//		{  
+			//			ClosestCell = pCell;  
+			//			ClosestHeight = ThisDistance;  
+			//			FoundHomeCell = true;  
+			//		}  
+			//	}  
+
+			//	if (!FoundHomeCell)  
+			//	{  
+			//		Vector2 Start(pCell->CenterPoint().X, pCell->CenterPoint().Z);  
+			//		Vector2 End(Point.X, Point.Z);  
+			//		Line2D MotionPath(Start, End);  
+			//		NavigationCell* NextCell;  
+			//		NavigationCell::CELL_SIDE WallHit;  
+			//		Vector2 PointOfIntersection;  
+
+			//		NavigationCell::PATH_RESULT Result = pCell->ClassifyPathToCell(MotionPath, &NextCell, WallHit, &PointOfIntersection);  
+
+			//		if (Result == NavigationCell::EXITING_CELL)  
+			//		{  
+			//			Vector3 ClosestPoint3D(PointOfIntersection.X, 0.0f, PointOfIntersection.Y);  
+			//			pCell->MapVectorHeightToCell(ClosestPoint3D);  
+
+			//			ClosestPoint3D -= Point;  
+
+			//			ThisDistance = ClosestPoint3D.Length();  
+
+			//			if (ThisDistance < ClosestDistance)  
+			//			{  
+			//				ClosestDistance=ThisDistance;  
+			//				ClosestCell = pCell;  
+			//			}  
+			//		}  
+			//	}  
+			//}  
+
+			//return (ClosestCell);  
+
+			#pragma endregion
 		}  
 
 		bool NavigationMesh::LineOfSightTest(NavigationCell* StartCell, const Vector3& StartPos, NavigationCell* EndCell, const Vector3& EndPos)  
@@ -233,10 +359,19 @@ namespace TikiEngine
 				// Setup the Path object, clearing out any old data  
 				NavPath.Setup(this, StartPos, StartCell, EndPos, EndCell);  
 
+				int escapeCtr = 0;
 				// Step through each cell linked by our A* algorythm   
 				// from StartCell to EndCell  
 				while (TestCell && TestCell != EndCell)  
 				{  
+					// escape out of while loop it something went wrong.
+					escapeCtr++;
+					if (escapeCtr > 300)
+					{
+						OutputDebugString(L"Escaped out of while loop in BuildNavigationPath() NavigationMesh.cpp \n");
+						return false;
+					}
+
 					// add the link point of the cell as a way point (the exit wall's center)  
 					int LinkWall = TestCell->ArrivalWall();  
 
@@ -333,32 +468,14 @@ namespace TikiEngine
 			for (; iter != cellArray.end(); ++iter)
 			{
 				const NavigationCell* cell = *iter;
-				//for (int i = 0; i < 3; ++i)
-				//{
-					//triangles.Add(cell->Vertex(i));
-          args.Graphics->DrawLine(cell->Vertex(0),cell->Vertex(1), Color::Red);
-          args.Graphics->DrawLine(cell->Vertex(1),cell->Vertex(2), Color::Red);
-          args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
-				//}
+				args.Graphics->DrawLine(cell->Vertex(0),cell->Vertex(1), Color::Red);
+				args.Graphics->DrawLine(cell->Vertex(1),cell->Vertex(2), Color::Red);
+				args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
 			}
-			//args.Graphics->DrawLine(&triangles, Color::Red);
-
-			// render cell edges as wireframe for added visibility
-			//List<Vector3> edges;
-			//iter = cellArray.begin();
-			//for(;iter != cellArray.end(); ++iter)
-			//{
-			//	const NavigationCell* cell = *iter;
-			//	for (int i = 0; i < 3; ++i )
-			//	{
-			//		edges.Add(Vector3(cell->Vertex(i).X, 
-			//						  cell->Vertex(i).Y + 0.2f, 
-			//						  cell->Vertex(i).Z));
-			//	}
-			//}
-			//args.Graphics->DrawLine(&edges, Color::Red);
+			
+			// render cellSpace
+			cellSpace->RenderCells();
 		}
-
 
 		int NavigationMesh::TotalCells() const
 		{

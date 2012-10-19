@@ -454,6 +454,11 @@ namespace TikiEngine
 			return(centerPoint);
 		}
 
+		Vector2 NavigationCell::Pos() const
+		{
+			return Vector2(centerPoint.X, centerPoint.Z);
+		}
+
 		NavigationCell* NavigationCell::Link(int Side) const
 		{
 			return(link[Side]);
