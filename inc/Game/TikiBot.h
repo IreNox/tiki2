@@ -28,7 +28,7 @@ namespace TikiEngine
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell);
 			void GotoLocation(const Vector3& p, NavigationCell* cell);
 			void GotoLocation(const Vector3& p);
-			void GotoRandomLocation();
+			//void GotoRandomLocation();
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);

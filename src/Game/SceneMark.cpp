@@ -475,8 +475,8 @@ namespace TikiEngine
 		     }
 
 			// F2 - Navigation Test
-			if (args.Input.GetKey(KEY_F2))
-				bot->GotoRandomLocation();
+			//if (args.Input.GetKeyPressed(KEY_F2))
+			//	bot->GotoRandomLocation();
 
 			// F5/F6 - Cellspace debug drawing
 			if (args.Input.GetKey(KEY_F5))

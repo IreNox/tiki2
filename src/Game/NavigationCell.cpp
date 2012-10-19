@@ -292,9 +292,9 @@ namespace TikiEngine
 			float Distance = side[SideNumber].SignedDistance(TestPoint);  
 			float Epsilon = 0.001f;  
   
-			if (Distance = Epsilon)  
+			if (Distance <= Epsilon)  
 			{  
-				if (Distance = 0.0f)  
+				if (Distance <= 0.0f)  
 				{  
 					Distance -= Epsilon;  
 				}  
@@ -339,7 +339,7 @@ namespace TikiEngine
 						// abs(i-m_ArrivalWall) is a formula to determine which distance measurement to use.  
 						// The Distance measurements between the wall midpoints of this cell  
 						// are held in the order ABtoBC, BCtoCA and CAtoAB.   
-						// We add this distance to our known m_ArrivalCost to compute  
+						// We add this distance to our known arrivalCost to compute  
 						// the total cost to reach the next adjacent cell.  
 						link[i]->QueryForPath(pHeap, this, arrivalCost+wallDistance[abs(i - arrivalWall)]);  
 					}  

@@ -10,7 +10,6 @@
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
 #include "Game/CameraFly.h"
-#include "Game/CellSpacePartition.h"
 #include "Game/NavigationMesh.h"
 
 namespace TikiEngine

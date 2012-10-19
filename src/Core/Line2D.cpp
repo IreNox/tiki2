@@ -93,7 +93,7 @@ namespace TikiEngine
     
 		if (distance > Epsilon)
 			res = RIGHT_SIDE;
-		else if (distance < -Epsilon)	// CHECK
+		else if (distance < -Epsilon)
 			res = LEFT_SIDE;
 
 		return res;

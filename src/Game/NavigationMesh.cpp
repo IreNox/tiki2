@@ -10,8 +10,6 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		//using namespace TikiEngine::Resources;
-
 		// ctor / dtor
 		NavigationMesh::NavigationMesh(Engine* engine)
 			: pathSession(0)
@@ -124,7 +122,6 @@ namespace TikiEngine
 			CELL_ARRAY::iterator CellIter = cellArray.begin();
 			for(;CellIter != cellArray.end(); ++CellIter)
 			{
-				//NavigationCell* Cell = ;
 				cellSpace->AddEntity(*CellIter);
 			}
 
@@ -162,7 +159,7 @@ namespace TikiEngine
 			NavigationCell* ClosestCell = 0;  
 
 
-			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 10);
+			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 16);
 
 			//iterate through the neighbors and sum up all the position vectors
 			NavigationCell* pCell = cellSpace->begin();
@@ -224,74 +221,6 @@ namespace TikiEngine
 			if (!ClosestCell)
 				OutputDebugString(L"No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
 			return ClosestCell;
-
-			#pragma region slow and old
-			//float ClosestDistance = 3.4E+38f;  
-			//float ClosestHeight = 3.4E+38f;  
-			//bool FoundHomeCell = false;  
-			//float ThisDistance;  
-			//NavigationCell* ClosestCell = 0;  
-
-			//CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
-			//for(;CellIter != cellArray.end(); ++CellIter)  
-			//{  
-			//	NavigationCell* pCell = *CellIter;  
-
-			//	if (pCell->IsPointInCellCollumn(Point))  
-			//	{  
-			//		Vector3 NewPosition(Point);  
-			//		pCell->MapVectorHeightToCell(NewPosition);  
-
-			//		ThisDistance = fabs(NewPosition.Y - Point.Y);  
-
-			//		if (FoundHomeCell)  
-			//		{  
-			//			if (ThisDistance < ClosestHeight)  
-			//			{  
-			//				ClosestCell = pCell;  
-			//				ClosestHeight = ThisDistance;  
-			//			}  
-			//		}  
-			//		else  
-			//		{  
-			//			ClosestCell = pCell;  
-			//			ClosestHeight = ThisDistance;  
-			//			FoundHomeCell = true;  
-			//		}  
-			//	}  
-
-			//	if (!FoundHomeCell)  
-			//	{  
-			//		Vector2 Start(pCell->CenterPoint().X, pCell->CenterPoint().Z);  
-			//		Vector2 End(Point.X, Point.Z);  
-			//		Line2D MotionPath(Start, End);  
-			//		NavigationCell* NextCell;  
-			//		NavigationCell::CELL_SIDE WallHit;  
-			//		Vector2 PointOfIntersection;  
-
-			//		NavigationCell::PATH_RESULT Result = pCell->ClassifyPathToCell(MotionPath, &NextCell, WallHit, &PointOfIntersection);  
-
-			//		if (Result == NavigationCell::EXITING_CELL)  
-			//		{  
-			//			Vector3 ClosestPoint3D(PointOfIntersection.X, 0.0f, PointOfIntersection.Y);  
-			//			pCell->MapVectorHeightToCell(ClosestPoint3D);  
-
-			//			ClosestPoint3D -= Point;  
-
-			//			ThisDistance = ClosestPoint3D.Length();  
-
-			//			if (ThisDistance < ClosestDistance)  
-			//			{  
-			//				ClosestDistance=ThisDistance;  
-			//				ClosestCell = pCell;  
-			//			}  
-			//		}  
-			//	}  
-			//}  
-
-			//return (ClosestCell);  
-
-			#pragma endregion
 		}  
 
 		bool NavigationMesh::LineOfSightTest(NavigationCell* StartCell, const Vector3& StartPos, NavigationCell* EndCell, const Vector3& EndPos)  
@@ -366,7 +295,7 @@ namespace TikiEngine
 				{  
 					// escape out of while loop it something went wrong.
 					escapeCtr++;
-					if (escapeCtr > 300)
+					if (escapeCtr > 512)
 					{
 						OutputDebugString(L"Escaped out of while loop in BuildNavigationPath() NavigationMesh.cpp \n");
 						return false;
