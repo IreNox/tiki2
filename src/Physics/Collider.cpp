@@ -1,4 +1,6 @@
+
 #include "Physics/Collider.h"
+#include "Core/TypeGlobals.h"
 
 namespace TikiEngine 
 {
@@ -11,6 +13,12 @@ namespace TikiEngine
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
 			center = NxVec3(NX_MAX_F32);
+			rigidBody = new RigidBody();
+		}
+
+		Collider::~Collider()
+		{
+			SafeRelease(&rigidBody);
 		}
 
 		#pragma region ICollider Methods

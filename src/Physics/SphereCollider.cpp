@@ -115,7 +115,7 @@ namespace TikiEngine
 
 			// if we are dynamic, we have a Rigid Body attached
 			if (state == CS_DYNAMIC)
-				actorDescription.body = rigidBody.GetDescription();
+				actorDescription.body = rigidBody->GetDescription();
 
 			actorDescription.shapes.pushBack(&sphereDesc);
 			actorDescription.userData = dynamic_cast<ICollider*>(this);	// associate the actor with this object
@@ -126,7 +126,7 @@ namespace TikiEngine
 
 			// (re) set the actor object the rigidBody belongs to if this is a dynamic actor.
 			if (state == CS_DYNAMIC)
-				rigidBody.SetActor(actor);
+				rigidBody->SetActor(actor);
 
 			// if this is or was a trigger or kinematic actor, raise the flags
 			SetTriggerFlag(isTrigger);

@@ -14,6 +14,8 @@ TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCDCDCDCDCD;
 TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCD;
 #endif
 
+#define TIKIOUT(str) OutputDebugStringA(str);
+
 #if _DEBUG
 List<void*> TikiObject::WatchPointer = List<void*>();
 #endif
@@ -28,7 +30,7 @@ TikiObject::~TikiObject()
 #if _DEBUG
 	if (refCount > 0)
 	{
-		throw "Used object destroyed.";
+		TIKIOUT("Used object destroyed.");
 	}
 #endif
 }
@@ -40,14 +42,14 @@ UInt32 TikiObject::AddRef()
 
 	if (this == wrongPtr)
 	{
-		throw "AddRef wrong Pointer.";
+		TIKIOUT("AddRef wrong Pointer.");
 	}
 
-	if (WatchPointer.Contains(this))
+	if (TikiObject::WatchPointer.Contains(this))
 	{
-		std::wostringstream s;
-		s << L"AddRef: " << this << L" to " << refCount << L"\n";
-		OutputDebugString(s.str().c_str());
+		std::ostringstream s;
+		s << "AddRef: " << this << " to " << refCount << "\n";
+		TIKIOUT(s.str().c_str());
 	}
 
 	return refCount;
@@ -63,19 +65,19 @@ UInt32 TikiObject::Release()
 #if _DEBUG
 	if (refCount == 0xfeeefeed)
 	{
-		throw "Release Released Object.";
+		TIKIOUT("Release Released Object.");
 	}
 
 	if (this == wrongPtr)
 	{
-		throw "Release wrong Pointer.";
+		TIKIOUT( "Release wrong Pointer.");
 	}
 
-	if (WatchPointer.Contains(this))
+	if (TikiObject::WatchPointer.Contains(this))
 	{
-		std::wostringstream s;
-		s << L"Release: " << this << L" to " << refCount << L"\n";
-		OutputDebugString(s.str().c_str());
+		std::ostringstream s;
+		s << "Release: " << this << " to " << refCount << "\n";
+		TIKIOUT(s.str().c_str());
 	}
 #endif
 

@@ -181,7 +181,7 @@ namespace TikiEngine
 
 			// set the underlying kinematic actor from controller
 			actor = controller->getActor();
-			rigidBody.SetActor(actor);
+			rigidBody->SetActor(actor);
 		}
 
 		void CharacterController::Update(const UpdateArgs& args)

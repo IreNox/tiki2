@@ -19,10 +19,10 @@ namespace TikiEngine
 		{
 		public: 
 			Collider();
-			virtual ~Collider() {}
+			virtual ~Collider();
 
 			// TODO: is this the right way to downcast?
-			IRigidBody* GetBody() { return &rigidBody; }
+			IRigidBody* GetBody() { return rigidBody; }
 
 		protected:
 			void SetMaterialIndex(int index);
@@ -45,7 +45,7 @@ namespace TikiEngine
 		protected:
 			ColliderState state;
 			bool isTrigger;
-			RigidBody rigidBody;
+			RigidBody* rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;
 			int materialIndex;

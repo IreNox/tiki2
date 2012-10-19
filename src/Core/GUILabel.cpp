@@ -10,7 +10,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GUILabel::GUILabel(Engine* engine)
-			: GUIControl(engine), font(0)
+			: GUIControl(engine), font(GUIControl::defaultFont)
 		{
 		}
 

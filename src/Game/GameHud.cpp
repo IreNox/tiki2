@@ -5,7 +5,7 @@
 #include "Core/IGraphics.h"
 #include "Core/IContentManager.h"
 
-#include <string.h>
+#include <sstream>
 using namespace std;
 
 namespace TikiEngine
@@ -17,6 +17,9 @@ namespace TikiEngine
 			: EngineObject(state->GetEngine()), state(state)
 		{
 			//buttonMenu
+			IFont* font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 12);
+			GUIControl::SetDefaultFont(font);
 
 			texRes1 = engine->content->LoadTexture(L"hud/mass");
 			imageRes1 = new GUIImage(state->GetEngine());
@@ -43,7 +46,7 @@ namespace TikiEngine
 
 		GameHud::~GameHud()
 		{
-			SafeRelease(&buttonMenu);
+			//SafeRelease(&buttonMenu);
 
 			SafeRelease(&texRes1);
 			SafeRelease(&imageRes1);
@@ -61,10 +64,10 @@ namespace TikiEngine
 			ViewPort* vp = engine->graphics->GetViewPort();
 
 			imageRes1->Position() = Vector2((float)vp->Width - 200, 10);
-			labelRes1->Position() = Vector2((float)vp->Width - 220, 10);
+			labelRes1->Position() = Vector2((float)vp->Width - 180, 10);
 
 			imageRes2->Position() = Vector2((float)vp->Width - 100, 10);
-			labelRes2->Position() = Vector2((float)vp->Width - 120, 10);
+			labelRes2->Position() = Vector2((float)vp->Width - 80, 10);
 		}
 		#pragma endregion
 
@@ -82,10 +85,13 @@ namespace TikiEngine
 
 		void GameHud::Update(const UpdateArgs& args)
 		{
-			//wostringstream str;
-			//str << state->GetResource1() << L"/" << 1000;
-			//labelRes1->Text() = str.str();
-			//
+			wostringstream str;
+			str << state->GetResource1() << L"/" << 1000;
+			labelRes1->Text() = str.str();
+
+			str = wostringstream();
+			str << state->GetResource2() << L"/" << 100;
+			labelRes2->Text() = str.str();
 
 			UInt32 i = 0;
 			while (i < enabledControls.Count())

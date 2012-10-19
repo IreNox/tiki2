@@ -12,7 +12,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GameState::GameState(Engine* engine, SceneLevel* scene)
-			: EngineObject(engine), scene(scene)
+			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
 		{
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);

@@ -27,6 +27,7 @@ namespace TikiEngine
 				Material* material = engine->content->LoadMaterial(L"os_default");
 				ITexture* tex = engine->content->LoadTexture(L"checker");
 				material->GetShader()->SetTexture("tex", tex);
+				TikiObject::WatchPointer.Add(material->GetShader());
 				
 				switch (type)
 				{
