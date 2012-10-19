@@ -14,20 +14,11 @@ namespace TikiEngine
 
 		LevelChild::~LevelChild()
 		{
-			SafeRelease(&renderer);
 		}
 
 		void LevelChild::LoadFromDatabase(sqlite3_stmt* state)
 		{
-			renderer = engine->librarys->CreateComponent<IMeshRenderer>(this);
-
 			BasicTransform::LoadFromDatabase(state);
-
-			if (!renderer->GetReady())
-			{
-				this->RemoveComponent(renderer);
-				SafeRelease(&renderer);
-			}
 		}
 
 		Int64 LevelChild::GetLevelID()

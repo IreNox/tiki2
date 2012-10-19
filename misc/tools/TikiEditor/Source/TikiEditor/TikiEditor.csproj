@@ -155,10 +155,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TikiEditor.Cloddy\TikiEditor.Cloddy.vcxproj">
-      <Project>{4F25939D-C9FA-452A-805C-96E4EDFE3137}</Project>
-      <Name>TikiEditor.Cloddy</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TikiEditorContent\TikiEditorContent.contentproj">
       <Name>TikiEditorContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>

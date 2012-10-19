@@ -90,15 +90,14 @@ namespace TikiEngine
 
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
-			terrainDescription->SetElevation(128);
-			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()); //->Scale(scale + 1));
+			terrainDescription->SetElevation(32);
+			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);
 			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
-			//terrain->AddCollisionRegion(cloddy_Vec::To3D(cloddy_Vec3F::Zero), 1.5f);
-			terrain->SetTolerance(1.0f);
+			terrain->SetTolerance(0.05f);
 		}
 		#pragma endregion
 
@@ -201,7 +200,7 @@ namespace TikiEngine
 
 			//terrain->UpdateCollisionRegion(0, cloddy_Vec::To3D(cloddy_Vec3F(cameraPos.arr)), 1.5f);
 
-			//manager->BeginTriangulation();
+			manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));
 			terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
 
@@ -215,8 +214,8 @@ namespace TikiEngine
 				terrain->DisableLight(0);
 			}
 
-			//terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
-			//manager->EndTriangulation();
+			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
+			manager->EndTriangulation();
 
 			if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
 			{

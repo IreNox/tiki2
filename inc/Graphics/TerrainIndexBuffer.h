@@ -46,10 +46,6 @@ namespace TikiEngine
 		  protected:
 
 			void DisposeUnmanaged();
-
-			/*!
-			 * @brief Disposes managed allocated memory.
-			 */
 			void DisposeManaged();
 
 			/*!

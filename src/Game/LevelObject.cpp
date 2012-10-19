@@ -29,15 +29,12 @@ namespace TikiEngine
 				switch (type)
 				{
 				case 0:
-					Mesh* mesh = engine->content->LoadMesh(L"replaceme_cube");
-					renderer->SetMesh(mesh);
-					mesh->Release();
+					this->Model = engine->content->LoadModel(L"replaceme_cube");
+					this->Model->SetMaterial(material);
+					material->Release();
 
 					break;
 				}
-
-				renderer->SetMaterial(material);
-				SafeRelease(&material);
 			}
 
 			LevelChild::databaseToField(fieldName, state, fieldId);

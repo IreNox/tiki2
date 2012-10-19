@@ -1,10 +1,14 @@
 #pragma once
 
-#include "Core/TypeDef.h"
+#include "Core/TypeInc.h"
 
 class TikiObject
 {
 public:
+
+#if _DEBUG
+	static List<void*> WatchPointer;
+#endif
 
 	TikiObject();
 	virtual ~TikiObject();

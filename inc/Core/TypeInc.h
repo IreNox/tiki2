@@ -1,6 +1,5 @@
 #pragma once
 
-//#include <crtdbg.h>
 #include "Core/TypeDef.h"
 
 #include "Core/Vector2.h"
@@ -22,9 +21,3 @@
 #include <string>
 using std::string;
 using std::wstring;
-
-//#if defined(DEBUG) || defined(_DEBUG)
-//#define TIKINEW new (_NORMAL_BLOCK, __FILE__,__LINE__)
-//#else 
-//#define TIKINEW new
-//#endif

@@ -22,14 +22,14 @@ namespace TikiEditor
         private Designer.formMain _formMain;
 
         private string _heightmapName;
-        private Heightmap _heightmap;
+        //private Heightmap _heightmap;
         private Texture2D _background;
         #endregion
 
         #region Init
         public GameMain()
         {
-            _heightmap = new Heightmap();
+            //_heightmap = new Heightmap();
 
             _initForm();
 
@@ -117,41 +117,41 @@ namespace TikiEditor
         #region Member - EventHandler
         private void Level_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == "HeightmapFilename")
-            {
-                if (_heightmapName != _level.HeightmapFilename && File.Exists(_level.HeightmapFilename))
-                {
-                    try
-                    {
-                        _heightmap.LoadHeightmap(_level.HeightmapFilename);
+            //if (e.PropertyName == "HeightmapFilename")
+            //{
+            //    if (_heightmapName != _level.HeightmapFilename && File.Exists(_level.HeightmapFilename))
+            //    {
+            //        try
+            //        {
+            //            _heightmap.LoadHeightmap(_level.HeightmapFilename);
 
-                        int[] data = new int[_heightmap.GetWidth() * _heightmap.GetHeight()];
-                        _heightmap.FillData(data);
+            //            int[] data = new int[_heightmap.GetWidth() * _heightmap.GetHeight()];
+            //            _heightmap.FillData(data);
 
-                        Texture2D tex = new Texture2D(
-                            this.GraphicsDevice,
-                            _heightmap.GetWidth(),
-                            _heightmap.GetHeight()
-                        );
+            //            Texture2D tex = new Texture2D(
+            //                this.GraphicsDevice,
+            //                _heightmap.GetWidth(),
+            //                _heightmap.GetHeight()
+            //            );
 
-                        int max = data.Max();
+            //            int max = data.Max();
 
-                        tex.SetData(
-                            data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()
-                        );
+            //            tex.SetData(
+            //                data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()
+            //            );
 
-                        if (_background != null)
-                        {
-                            _background.Dispose();
-                        }
-                        _background = tex;
-                        _heightmapName = _level.HeightmapFilename;
-                    }
-                    catch
-                    { 
-                    }
-                }
-            }
+            //            if (_background != null)
+            //            {
+            //                _background.Dispose();
+            //            }
+            //            _background = tex;
+            //            _heightmapName = _level.HeightmapFilename;
+            //        }
+            //        catch
+            //        { 
+            //        }
+            //    }
+            //}
         }
         #endregion
 

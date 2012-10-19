@@ -68,7 +68,7 @@ namespace TikiEngine
 
 			//Light
 			LightObject* lo = new LightObject(engine);
-			lo->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(1, 0, 1);
+			lo->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			lo->GetLight()->SetColor(Color::White);
 			lo->GetLight()->SetRange(1000);
 
@@ -77,7 +77,7 @@ namespace TikiEngine
 
 			// Camera
 			GameObject* go = new CameraObject(engine);
-			go->PRS.Position().Z = 5.0f;
+			go->PRS.Position().Y = 35.0f;
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();
@@ -127,19 +127,17 @@ namespace TikiEngine
 
 			r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
 
-			if (r != SQLITE_OK)
+			if (r == SQLITE_OK)
 			{
-				return false;
-			}
+				while (sqlite3_step(state) == SQLITE_ROW)
+				{
+					LevelEnemy* enemy = new LevelEnemy(engine);
+					enemy->LoadFromDatabase(state);
 
-			while (sqlite3_step(state) == SQLITE_ROW)
-			{
-				LevelEnemy* enemy = new LevelEnemy(engine);
-				enemy->LoadFromDatabase(state);
-
-				enemies.Add(enemy);
+					enemies.Add(enemy);
+				}
+				sqlite3_finalize(state);
 			}
-			sqlite3_finalize(state);
 
 			// Load Objects
 			sql = ostringstream();
@@ -147,19 +145,17 @@ namespace TikiEngine
 
 			r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
 
-			if (r != SQLITE_OK)
+			if (r == SQLITE_OK)
 			{
-				return false;
-			}
+				while (sqlite3_step(state) == SQLITE_ROW)
+				{
+					LevelObject* object = new LevelObject(engine);
+					object->LoadFromDatabase(state);
 
-			while (sqlite3_step(state) == SQLITE_ROW)
-			{
-				LevelObject* object = new LevelObject(engine);
-				object->LoadFromDatabase(state);
-
-				objects.Add(object);
+					objects.Add(object);
+				}
+				sqlite3_finalize(state);
 			}
-			sqlite3_finalize(state);
 
 			return this->state->LoadLevel(id);
 		}

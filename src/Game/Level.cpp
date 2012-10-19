@@ -31,7 +31,7 @@ namespace TikiEngine
 
 			if (heightmapFilename != "" && heightmapScale != 0 && heightmapSize != 0)
 			{
-				Material* mat = engine->content->LoadMaterial(L"Data/Effects/os_cloddy.fx");
+				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
 				terrain = engine->librarys->CreateComponent<ITerrainRenderer>(this);
 				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize);
 				terrain->SetMaterial(mat);

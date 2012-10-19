@@ -23,8 +23,6 @@ namespace TikiEngine
 
 			Int64 levelId;
 
-			IMeshRenderer* renderer;
-
 			void databaseToField(string fieldName, sqlite3_stmt* state, int fieldId);
 
 		};

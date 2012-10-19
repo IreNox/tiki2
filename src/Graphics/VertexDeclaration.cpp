@@ -16,9 +16,7 @@ namespace TikiEngine
 		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, List<InputElement>* elements)
 			: EngineObject(engine)
 		{
-			this->shader = (Shader*)shader;
-
-			this->shader->AddRef();
+			SafeAddRef((Shader*)shader, &this->shader);
 			createInputLayout(elements->GetInternalData(), elements->Count());
 		}
 
@@ -26,23 +24,13 @@ namespace TikiEngine
 			: EngineObject(engine)
 		{
 			SafeAddRef((Shader*)shader, &this->shader);
-
 			createInputLayout(elements, elementsCount);
 		}
 
 		VertexDeclaration::~VertexDeclaration()
 		{
-			if (shader != 0)
-			{
-				shader->Release();
-				shader = 0;
-			}
-
-			if (inputLayout != 0)
-			{
-				inputLayout->Release();
-				inputLayout = 0;
-			}
+			SafeRelease(&shader);
+			SafeRelease(&inputLayout);
 		}
 		#pragma endregion
 

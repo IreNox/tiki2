@@ -128,7 +128,7 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 
 RasterizerState bla
 {
-	FillMode = 2;
+	FillMode = 3;
 };
 
 technique11 basic
