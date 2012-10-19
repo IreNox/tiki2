@@ -115,7 +115,7 @@ namespace TikiEngine
 				Vector3 targetPos = parent->SnapPointToCell(endCell, p);
 
 				// Check if needed!
-				//currentCell = parent->FindClosestCell(Pos3D());
+				currentCell = parent->FindClosestCell(Pos3D());
 
 				// if we can see the target, just use steering, else use A*
 				if (parent->LineOfSightTest(currentCell, Pos3D(), endCell, p))

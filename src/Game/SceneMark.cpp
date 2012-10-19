@@ -26,174 +26,6 @@ namespace TikiEngine
 		using namespace TikiEngine::Scripts;
 		using namespace TikiEngine::Resources;
 
-		// Geometry
-		#pragma region Map
-		unsigned long map_totalpoints = 77;  
-
-		Vector3 map_points[] =   
-		{  
-			Vector3(-41.4328f, 40.0000f, 24.0671f),  
-			Vector3(-23.1315f, 40.0000f, 42.3684f),  
-			Vector3(-23.1315f, 40.0000f, 92.3684f),  
-			Vector3(-16.4328f, 40.0000f, 67.3684f),  
-			Vector3(-66.4328f, 40.0000f, 17.3684f),  
-			Vector3(-91.4328f, 40.0000f, 24.0671f),  
-			Vector3(-109.7341f, 40.0000f, 42.3684f),  
-			Vector3(-116.4328f, 40.0000f, 67.3684f),  
-			Vector3(-109.7341f, 40.0000f, 92.3684f),  
-			Vector3(-91.4328f, 40.0000f, 110.6697f),  
-			Vector3(-66.4328f, 40.0000f, 117.3684f),  
-			Vector3(-41.4328f, 40.0000f, 110.6697f),  
-			Vector3(-40.4520f, 40.0000f, 82.3684f),  
-			Vector3(-51.4328f, 40.0000f, 93.3492f),  
-			Vector3(-66.4328f, 40.0000f, 97.3684f),  
-			Vector3(-81.4328f, 40.0000f, 93.3492f),  
-			Vector3(-92.4136f, 40.0000f, 82.3684f),  
-			Vector3(-96.4328f, 40.0000f, 67.3684f),  
-			Vector3(-92.4136f, 40.0000f, 52.3684f),  
-			Vector3(-81.4328f, 40.0000f, 41.3876f),  
-			Vector3(-66.4328f, 40.0000f, 37.3684f),  
-			Vector3(-51.4328f, 40.0000f, 41.3876f),  
-			Vector3(-40.4520f, 40.0000f, 52.3684f),  
-			Vector3(-36.4328f, 40.0000f, 67.3684f),  
-			Vector3(-56.5907f, 10.0000f, 67.1996f),  
-			Vector3(-56.5907f, 10.0000f, 67.1996f),  
-			Vector3(-81.4328f, 40.0000f, 93.3492f),  
-			Vector3(-67.5715f, 10.0000f, 56.2188f),  
-			Vector3(-67.5715f, 10.0000f, 56.2188f),  
-			Vector3(-92.4136f, 40.0000f, 82.3684f),  
-			Vector3(65.0024f, 5.7630f, -65.5516f),  
-			Vector3(35.0030f, 5.7630f, -84.3647f),  
-			Vector3(0.4275f, 5.7630f, -91.4832f),  
-			Vector3(-33.1311f, 5.7630f, -83.8563f),  
-			Vector3(-63.6390f, 5.7630f, -65.0431f),  
-			Vector3(-83.9775f, 5.7630f, -36.0606f),  
-			Vector3(-93.1299f, 5.7630f, -0.4682f),  
-			Vector3(-88.0453f, 5.7630f, 20.3789f),  
-			Vector3(-66.1813f, 5.7630f, 14.2773f),  
-			Vector3(-52.4528f, 5.7630f, 18.3450f),  
-			Vector3(-44.3174f, 5.7630f, 21.3958f),  
-			Vector3(-60.0797f, 5.7630f, 41.7344f),  
-			Vector3(-63.4004f, 5.7630f, 51.8567f),  
-			Vector3(-52.4528f, 5.7630f, 62.7418f),  
-			Vector3(-39.2327f, 5.7630f, 55.4629f),  
-			Vector3(-19.4026f, 5.7630f, 43.2598f),  
-			Vector3(-13.8095f, 5.7630f, 64.6152f),  
-			Vector3(-19.4026f, 5.7630f, 89.0215f),  
-			Vector3(0.4275f, 5.7630f, 92.0723f),  
-			Vector3(36.0200f, 5.7630f, 84.4454f),  
-			Vector3(65.5109f, 5.7630f, 66.6491f),  
-			Vector3(85.8495f, 5.7630f, 34.6159f),  
-			Vector3(93.4764f, 5.7630f, 0.5488f),  
-			Vector3(86.3579f, 5.7630f, -35.0437f),  
-			Vector3(86.3579f, 5.7630f, -35.0437f),  
-			Vector3(63.9855f, 5.7630f, -21.8236f),  
-			Vector3(41.1046f, 5.7630f, -18.7729f),  
-			Vector3(63.4770f, 5.7630f, 3.0911f),  
-			Vector3(49.2400f, 5.7630f, 25.9720f),  
-			Vector3(27.3761f, 5.7630f, 36.1413f),  
-			Vector3(0.4275f, 5.7630f, 35.6328f),  
-			Vector3(-21.9449f, 5.7630f, 22.4127f),  
-			Vector3(-33.6396f, 5.7630f, 3.0911f),  
-			Vector3(-36.6904f, 5.7630f, -24.3660f),  
-			Vector3(-23.4703f, 5.7630f, -45.2130f),  
-			Vector3(0.4275f, 5.7630f, -59.9585f),  
-			Vector3(26.3592f, 5.7630f, -59.9585f),  
-			Vector3(19.2407f, 5.7630f, -37.5860f),  
-			Vector3(6.5291f, 5.7630f, -38.0945f),  
-			Vector3(-5.1656f, 5.7630f, -30.4675f),  
-			Vector3(-11.7756f, 5.7630f, -18.2644f),  
-			Vector3(-11.2672f, 5.7630f, -5.0443f),  
-			Vector3(-4.1487f, 5.7630f, 7.6673f),  
-			Vector3(6.0206f, 5.7630f, 14.2773f),  
-			Vector3(20.2576f, 5.7630f, 14.7858f),  
-			Vector3(32.4607f, 5.7630f, 7.6673f),  
-			Vector3(39.0708f, 5.7630f, -3.0105f),  
-		};  
-
-
-
-		unsigned short map_polys[][3] =   
-		{  
-			{ 67, 68, 69},  
-			{ 67, 69, 70},  
-			{ 67, 70, 71},  
-			{ 67, 71, 72},  
-			{ 67, 72, 73},  
-			{ 67, 73, 74},  
-			{ 67, 74, 75},  
-			{ 67, 75, 76},  
-			{ 67, 76, 56},  
-			{ 60, 61, 45},  
-			{ 60, 45, 46},  
-			{ 36, 37, 38},  
-			{ 35, 36, 38},  
-			{ 46, 47, 48},  
-			{ 46, 48, 49},  
-			{ 60, 46, 49},  
-			{ 42, 43, 44},  
-			{ 60, 49, 50},  
-			{ 41, 42, 44},  
-			{ 40, 41, 44},  
-			{ 40, 44, 45},  
-			{ 40, 45, 61},  
-			{ 40, 61, 62},  
-			{ 39, 40, 62},  
-			{ 39, 62, 63},  
-			{ 34, 35, 38},  
-			{ 38, 39, 63},  
-			{ 34, 38, 63},  
-			{ 33, 34, 63},  
-			{ 32, 33, 63},  
-			{ 66, 67, 56},  
-			{ 66, 56, 55},  
-			{ 59, 60, 50},  
-			{ 59, 50, 51},  
-			{ 58, 59, 51},  
-			{ 57, 58, 51},  
-			{ 57, 51, 52},  
-			{ 55, 57, 52},  
-			{ 55, 52, 53},  
-			{ 66, 55, 53},  
-			{ 54, 30, 31},  
-			{ 54, 31, 32},  
-			{ 32, 63, 64},  
-			{ 32, 64, 65},  
-			{ 32, 65, 66},  
-			{ 66, 53, 54},  
-			{ 54, 32, 66},  
-			{ 28, 24, 43},  
-			{ 28, 43, 42},  
-			{ 11, 2, 12},  
-			{ 12, 2, 3},  
-			{ 12, 3, 1},  
-			{ 10, 11, 12},  
-			{ 1, 0, 4},  
-			{ 1, 4, 5},  
-			{ 6, 7, 8},  
-			{ 6, 8, 9},  
-			{ 10, 12, 13},  
-			{ 9, 10, 13},  
-			{ 23, 12, 1},  
-			{ 22, 23, 1},  
-			{ 21, 22, 1},  
-			{ 21, 1, 5},  
-			{ 20, 21, 5},  
-			{ 20, 5, 6},  
-			{ 19, 20, 6},  
-			{ 18, 19, 6},  
-			{ 17, 18, 6},  
-			{ 17, 6, 9},  
-			{ 16, 17, 9},  
-			{ 15, 16, 9},  
-			{ 9, 13, 14},  
-			{ 9, 14, 15},  
-			{ 25, 27, 29},  
-			{ 25, 29, 26},  
-		};  
-		unsigned long map_totalpolys = 75;
-		#pragma endregion
-
 		SceneMark::SceneMark(Engine* engine)
 			: Scene(engine)
 		{
@@ -234,32 +66,8 @@ namespace TikiEngine
 			naviMesh = new NavigationMesh(engine);
 
 			// make sure we are witin positive X-Z space else Cellspace won't work!
-			Matrix m = Matrix::CreateTranslation(50, 0, 50);
-			naviMesh->Load(L"HeightField", m);
-      
-// 			naviMesh.Clear();  
-// 			for (UInt32 i = 0; i < map_totalpolys; ++i)
-// 			{  
-// 
-// 				Vector3 vertA = map_points[map_polys[i][0]];  
-// 				Vector3 vertB = map_points[map_polys[i][1]];  
-// 				Vector3 vertC = map_points[map_polys[i][2]];  
-// 
-// 				//Matrix m = Matrix::CreateTranslation(100, 0, 100);
-// 				//vertA = Vector3::TransformCoordinate(vertA, m);
-// 				//vertB = Vector3::TransformCoordinate(vertB, m);
-// 				//vertC = Vector3::TransformCoordinate(vertC, m);
-// 
-// 				// some art programs can create linear polygons which have two or more  
-// 				// identical vertices. This creates a poly with no surface area,  
-// 				// which will wreak havok on our navigation mesh algorithms.  
-// 				// We only except polygons with unique vertices.  
-// 				if ((vertA != vertB) && (vertB != vertC) && (vertC != vertA))  
-// 				{  
-// 					naviMesh.AddCell(vertA, vertB, vertC);  
-// 				}  
-// 			}  
-// 			naviMesh.LinkCells();
+			Matrix m = Matrix::CreateTranslation(128, 0, 128);
+			naviMesh->Load(L"NavMesh_Pitch", m);
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
 			GameObject* go = new GameObject(engine);
@@ -298,8 +106,8 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			staticBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			staticBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			staticBox->SetCenter(Vector3(100, 0, 100));
-			staticBox->SetSize(Vector3(100, 0.1f, 100));
+			staticBox->SetCenter(Vector3(128, 5, 128));
+			staticBox->SetSize(Vector3(128, 1, 128));
 			staticBox->SetDynamic(false);
 			staticBox->SetGroup(CG_Collidable_Non_Pushable);
 			this->AddElement(go);
@@ -475,8 +283,8 @@ namespace TikiEngine
 		     }
 
 			// F2 - Navigation Test
-			//if (args.Input.GetKeyPressed(KEY_F2))
-			//	bot->GotoRandomLocation();
+			if (args.Input.GetKeyPressed(KEY_F2))
+				showNaviMesh = !showNaviMesh;
 
 			// F5/F6 - Cellspace debug drawing
 			if (args.Input.GetKey(KEY_F5))

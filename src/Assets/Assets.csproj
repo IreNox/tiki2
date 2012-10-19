@@ -56,14 +56,14 @@
     <None Include="Data\Models\bridge.fbx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Data\Models\HeightField.FBX">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Data\Models\humanoid.fbx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Data\Models\multiple_meshes.FBX">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Data\Models\NavMesh_Pitch.FBX">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Data\Models\Radar.FBX">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

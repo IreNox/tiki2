@@ -52,7 +52,7 @@ namespace TikiEngine
 			 Vector3 dir;
 			 Vector3 impact;
 
-			 //CellSpacePartition<TikiBot*>* cellSpace;
+
 			 bool drawCellSpace;
 
 			 GameState* state;

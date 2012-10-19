@@ -118,7 +118,7 @@ namespace TikiEngine
 			LinkCells();
 
 			// Add all NavigationCellls to the CellSpacePartition
-			cellSpace = new CellSpacePartition<NavigationCell*>(engine, maxX, maxZ, 8, 8, TotalCells());
+			cellSpace = new CellSpacePartition<NavigationCell*>(engine, maxX, maxZ, 4, 4, TotalCells());
 			CELL_ARRAY::iterator CellIter = cellArray.begin();
 			for(;CellIter != cellArray.end(); ++CellIter)
 			{
@@ -159,7 +159,7 @@ namespace TikiEngine
 			NavigationCell* ClosestCell = 0;  
 
 
-			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 16);
+			cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 40);
 
 			//iterate through the neighbors and sum up all the position vectors
 			NavigationCell* pCell = cellSpace->begin();
