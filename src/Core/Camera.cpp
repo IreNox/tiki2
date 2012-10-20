@@ -15,7 +15,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, CT_Camera), renderTarget(0), matrices()
+			: Component(engine, gameObject), renderTarget(0), matrices()
 		{
 
 			ViewPort* vp = &engine->GetEngineDescription()->Graphics.ViewPort;
@@ -41,7 +41,7 @@ namespace TikiEngine
 			return true;
 		}
 
-		Matrices* Camera::GetMatrices()
+		CBMatrices* Camera::GetMatrices()
 		{
 			return &matrices;
 		}
@@ -89,8 +89,8 @@ namespace TikiEngine
 		{
 			// cache non-transposed view
 			Matrix view = Matrix::CreateLookAt(
-				gameObject->PRS.Position(),
-				gameObject->PRS.Position() + gameObject->PRS.GetForward(),
+				gameObject->PRS.GPosition(),
+				gameObject->PRS.GPosition() + gameObject->PRS.GetForward(),
 				Vector3::Up
 			);
 			this->matrices.ViewMatrix = Matrix::Transpose(view);

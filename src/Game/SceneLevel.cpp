@@ -49,7 +49,7 @@ namespace TikiEngine
 		{
 			//Light
 			LightObject* lo = new LightObject(engine);
-			lo->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+			lo->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			lo->GetLight()->SetColor(Color::White);
 			lo->GetLight()->SetRange(1000);
 
@@ -58,7 +58,7 @@ namespace TikiEngine
 
 			// Camera
 			CameraObject* go = new CameraObject(engine);
-			go->PRS.Position().Y = 35.0f;
+			go->PRS.SPosition().Y = 35.0f;
 
 			(new CameraFly(engine, go))->Release();
 
@@ -172,7 +172,7 @@ namespace TikiEngine
 		void SceneLevel::Draw(const DrawArgs& args)
 		{
 			if (level) level->Draw(args);
-
+			
 			UInt32 i = 0;
 			while (i < enemies.Count())
 			{
@@ -205,6 +205,14 @@ namespace TikiEngine
 
 		void SceneLevel::Update(const UpdateArgs& args)
 		{
+			#if _DEBUG
+			if (args.Input.GetKeyPressed(KEY_F1))
+			{
+				//this->lighting.Properties.IsDirty = true;
+				//this->lighting.Properties.DefaultShading = this->lighting.Properties.DefaultShading;
+			}
+			#endif
+
 			if (level) level->Update(args);
 
 			UInt32 i = 0;

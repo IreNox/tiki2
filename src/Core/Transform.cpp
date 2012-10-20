@@ -20,6 +20,11 @@ namespace TikiEngine
 		return isDirty;
 	}
 
+	void Transform::MarkAsClean()
+	{
+		isDirty = false;
+	}
+
 	void Transform::FillWorldMatrix(Matrix* worldMatrix)
 	{
 		checkWorldMatrix();
@@ -46,34 +51,34 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Get/Set
-	const Vector3& Transform::Position() const
+	const Vector3& Transform::GPosition() const
 	{
 		return position;
 	}
 
-	Vector3& Transform::Position()
+	Vector3& Transform::SPosition()
 	{
 		this->isDirty = true;
 		return position;
 	}
 
-	const Vector3& Transform::Scale() const
+	const Vector3& Transform::GScale() const
 	{
 		return scale;
 	}
 
-	Vector3& Transform::Scale()
+	Vector3& Transform::SScale()
 	{		
 		this->isDirty = true;
 		return scale;
 	}
 
-	const Quaternion& Transform::Rotation() const
+	const Quaternion& Transform::GRotation() const
 	{
 		return rotation;
 	}
 
-	Quaternion& Transform::Rotation()
+	Quaternion& Transform::SRotation()
 	{
 		this->isDirty = true;
 		return rotation;

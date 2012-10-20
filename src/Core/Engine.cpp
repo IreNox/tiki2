@@ -171,7 +171,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())
 			{
-				const DrawArgs drawArgs = DrawArgs(
+				DrawArgs drawArgs = DrawArgs(
 					time,
 					scene->GetCameras()->Get(i),
 					graphics,

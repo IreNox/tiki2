@@ -13,6 +13,9 @@ namespace TikiEngine
 		#pragma region Class
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
+#if _DEBUG
+			, drawNavMesh(false)
+#endif
 		{
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
@@ -75,12 +78,19 @@ namespace TikiEngine
 		void GameState::Draw(const DrawArgs& args)
 		{
 			hud->Draw(args);
-			navMesh->Draw(args);
+
+			#if _DEBUG
+			if (drawNavMesh) navMesh->Draw(args);
+			#endif
 		}
 
 		void GameState::Update(const UpdateArgs& args)
 		{
 			hud->Update(args);
+
+			#if _DEBUG
+			if (args.Input.GetKeyPressed(KEY_F2)) drawNavMesh = !drawNavMesh;
+			#endif
 
 			if(args.Input.MouseButtons[1])
 			{
@@ -99,8 +109,7 @@ namespace TikiEngine
 							coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
 						}
 					}
-
-
+					
 					UInt32 i = 0;
 					while (i < scene->objects.Count())
 					{

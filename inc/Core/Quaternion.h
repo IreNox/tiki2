@@ -61,15 +61,15 @@ public:
 	bool operator == (const Quaternion& rhs);
 	bool operator != (const Quaternion& rhs);
 
-	Quaternion  operator +	(const Quaternion& rhs);
+	Quaternion  operator +	(const Quaternion& rhs) const;
 	Quaternion& operator +=	(const Quaternion& rhs);
-	Quaternion  operator -	(const Quaternion& rhs);
+	Quaternion  operator -	(const Quaternion& rhs) const;
 	Quaternion& operator -=	(const Quaternion& rhs);
 
-	Quaternion  operator *	(const Quaternion& rhs);
-	Vector3     operator *  (const Vector3& rhs);
+	Quaternion  operator *	(const Quaternion& rhs) const;
+	Vector3     operator *  (const Vector3& rhs) const;
 	Quaternion& operator *=	(const Quaternion& rhs);
-	Quaternion  operator /	(const Quaternion& rhs);
+	Quaternion  operator /	(const Quaternion& rhs) const;
 	Quaternion& operator /=	(const Quaternion& rhs);
 
 	static Quaternion Identity;

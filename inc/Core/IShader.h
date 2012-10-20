@@ -9,6 +9,8 @@
 #include "Core/IResource.h"
 #include "Core/ITexture.h"
 
+
+
 namespace TikiEngine
 {
 	class GameObject;
@@ -21,6 +23,8 @@ namespace TikiEngine
 			ST_PostProcess,
 			ST_Unknown = 0xFF
 		};
+
+		class Material;
 
 		class IShader : public IResource
 		{
@@ -36,7 +40,7 @@ namespace TikiEngine
 			virtual void SelectSubByName(cstring name) = 0;
 
 			virtual void Apply() = 0;
-			virtual void ApplyVars(GameObject* gameObject) = 0;
+			virtual void ApplyVars(GameObject* gameObject, Material* material) = 0;
 
 			virtual Int32 GetInt(cstring key) = 0;
 			virtual Single GetSingle(cstring key) = 0;

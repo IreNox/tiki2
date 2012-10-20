@@ -1,13 +1,13 @@
+/////////////
+// DEFINES //
+/////////////
+#define VS_INPUT_NODEF 1
+#define PS_INPUT_NODEF 1
+
 //////////////
 // TYPEDEFS //
 //////////////
-struct Light
-{
-	float3 Position;
-	float3 Direction;
-	float3 Color;
-	float Range;
-};
+#include "Data/Effects/IncOS/is_structs.fx"
 
 struct VS_INPUT
 {
@@ -24,36 +24,9 @@ struct PS_INPUT
 /////////////
 // GLOBALS //
 /////////////
-matrix worldMatrix;
-matrix worldMatrixInverseTranspose;
-
-cbuffer MatrixBuffer : register(b0)
-{
-    matrix viewMatrix;
-    matrix projectionMatrix;
-};
-
-cbuffer LightBuffer : register(b1)
-{
-    float LightsCount;
-	float DiffuseIntensity;
-	float AmbientIntensity;
-	float EmissiveIntensity;
-
-	float4 AmbientColor		: COLOR;
-	float4 EmissiveColor	: COLOR;
-
-	Light Lights[32];
-};
+#include "Data/Effects/IncOS/is_input.fx"
 
 Texture2D tex;
-
-SamplerState sam : register(s0)
-{    
-  AddressU  = CLAMP;
-  AddressV = CLAMP;
-  FILTER = MIN_MAG_LINEAR_MIP_POINT;
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -73,22 +46,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	int i = (int)input.UV.z;
-
 	return tex.Sample(sam, input.UV.xy);
 }
 
-RasterizerState bla
-{
-	FillMode = 3;
-};
-
-technique11 basic
-{
-    pass p0
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-		SetRasterizerState(bla);
-    }
-}
+#include "Data/Effects/IncOS/is_technique.fx"

@@ -18,7 +18,7 @@ namespace TikiEngine
 		public:
 
 			ITerrainRenderer(Engine* engine, GameObject* gameObject)
-				: Component(engine, gameObject, CT_Renderer)
+				: Component(engine, gameObject)
 			{
 			}
 

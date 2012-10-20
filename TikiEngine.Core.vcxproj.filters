@@ -42,9 +42,6 @@
     <Filter Include="Headerdateien\Core\Graphics">
       <UniqueIdentifier>{4017730b-2b4a-4fab-81b9-a863c67082fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Components">
-      <UniqueIdentifier>{4f1acbf8-fec5-4b04-8ff7-0baada5080d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Engine\Components">
       <UniqueIdentifier>{bbc58230-b969-45fa-8986-b0055ced6fcf}</UniqueIdentifier>
     </Filter>
@@ -99,9 +96,6 @@
     <Filter Include="Quelldateien\Engine\GameObjects\Basic">
       <UniqueIdentifier>{525a7a6e-9ebe-4c79-af72-43ca91d6da0a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Enums">
-      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Interfaces\Components">
       <UniqueIdentifier>{35691f97-e12e-47cf-96de-5fcb37de75a8}</UniqueIdentifier>
     </Filter>
@@ -119,6 +113,12 @@
     </Filter>
     <Filter Include="Quelldateien\Core\SQlite">
       <UniqueIdentifier>{efcdd597-8a57-48ad-aceb-9d038858560f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Graphics\Enums/Structs">
+      <UniqueIdentifier>{5b4d1b20-348c-4344-9be1-d652162d9f65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Input">
+      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -346,15 +346,6 @@
     <ClInclude Include="inc\Core\InputDescription.h">
       <Filter>Headerdateien\Core\Descriptions</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Color.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ViewPort.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ComponentType.h">
-      <Filter>Headerdateien\Core\Components</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Scene.h">
       <Filter>Headerdateien\Engine</Filter>
     </ClInclude>
@@ -413,7 +404,7 @@
       <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
-      <Filter>Headerdateien\Core\Enums</Filter>
+      <Filter>Headerdateien\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\GameTime.h">
       <Filter>Headerdateien\Core\Args/States</Filter>
@@ -435,9 +426,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Stream.h">
       <Filter>Headerdateien\Core\I/O</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\MeshAnimated.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TypeGlobals.h">
       <Filter>Headerdateien</Filter>
@@ -466,15 +454,6 @@
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\Matrices.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\LightProperties.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Matrices.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\CameraObject.h">
       <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
     </ClInclude>
@@ -486,9 +465,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\QuadObject.h">
       <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\PrimitiveTopologies.h">
-      <Filter>Headerdateien\Core\Enums</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ColorVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
@@ -603,6 +579,21 @@
     </ClInclude>
     <ClInclude Include="inc\Core\File.h">
       <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Color.h">
+      <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LightProperties.h">
+      <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ViewPort.h">
+      <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\PrimitiveTopologies.h">
+      <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CBMatrices.h">
+      <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

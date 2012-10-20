@@ -44,6 +44,10 @@ namespace TikiEngine
 
 		private:
 			
+#if _DEBUG
+			bool drawNavMesh;
+#endif
+
 			UInt64 resource1;
 			UInt64 resource2;
 

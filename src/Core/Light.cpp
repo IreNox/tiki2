@@ -7,7 +7,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Light::Light(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject, CT_Light), color(), range(0), type(LT_None)
+			: Component(engine, gameObject), color(), range(0), type(LT_None)
 		{
 		}
 

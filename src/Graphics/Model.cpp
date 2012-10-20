@@ -41,7 +41,7 @@ namespace TikiEngine
 		void Model::Initialize()
 		{
 			this->InitializeAnimationStack();
-			this->SetCurrentAnimStack(1);
+			this->SetCurrentAnimStack(0);
 
 			FbxNode* root = scene->GetRootNode();
 			this->InitializeNodeRecursive(root, currentTime, currentAnimLayer, this->GetGlobalPosition(root), NULL);
@@ -115,18 +115,16 @@ namespace TikiEngine
 			return material;
 		}
 
-    List<DefaultVertex>* Model::GetVertices()
-    {
-      return &verticesList;
-    }
+		List<DefaultVertex>* Model::GetVertices()
+		{
+			return &verticesList;
+		}
 
-    List<UInt32>* Model::GetIndices()
-    {
-      return &indicesList;
-    }
-
-
-
+		List<UInt32>* Model::GetIndices()
+		{
+			return &indicesList;
+		}
+		
 		void Model::SetMaterial(Material* material)
 		{
 			SafeAddRef(material, &this->material);
@@ -326,9 +324,7 @@ namespace TikiEngine
 						DefaultVertex default = {
 							(float)position[0],(float)position[1],(float)position[2],
 							(float)uv[0],(float)uv[1],
-							(float)normals[0],(float)normals[1],(float)normals[2],
-							(float)binormal[0],(float)binormal[1],(float)binormal[2],
-							(float)tangent[0],(float)tangent[1],(float)tangent[2]
+							(float)normals[0],(float)normals[1],(float)normals[2]
 						};	
 
 						indicesArray[k] = verticesList.IndexOf(default);

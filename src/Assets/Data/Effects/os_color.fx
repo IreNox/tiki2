@@ -1,13 +1,13 @@
+/////////////
+// DEFINES //
+/////////////
+#define VS_INPUT_NODEF 1
+#define PS_INPUT_NODEF 1
+
 //////////////
 // TYPEDEFS //
 //////////////
-struct Light
-{
-	float3 Position;
-	float3 Direction;
-	float3 Color;
-	float Range;
-};
+#include "Data/Effects/IncOS/is_structs.fx"
 
 struct VS_INPUT
 {
@@ -24,39 +24,19 @@ struct PS_INPUT
 /////////////
 // GLOBALS //
 /////////////
-matrix worldMatrix;
-matrix worldMatrixInverseTranspose;
-
-cbuffer MatrixBuffer : register(b0)
-{
-    matrix viewMatrix;
-    matrix projectionMatrix;
-};
-
-cbuffer LightBuffer : register(b1)
-{
-    float LightsCount;
-	float DiffuseIntensity;
-	float AmbientIntensity;
-	float EmissiveIntensity;
-
-	float4 AmbientColor		: COLOR;
-	float4 EmissiveColor	: COLOR;
-
-	Light Lights[32];
-};
+#include "Data/Effects/IncOS/is_input.fx"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
 PS_INPUT VS_Main(VS_INPUT input)
 {
-    PS_INPUT output = (PS_INPUT)0;    
+    PS_INPUT output = (PS_INPUT)0;
 
 	output.Pos = float4(input.Pos, 1.0f);
-    output.Pos = mul(output.Pos, worldMatrix);
-    output.Pos = mul(output.Pos, viewMatrix);
-    output.Pos = mul(output.Pos, projectionMatrix);
+    //output.Pos = mul(output.Pos, WorldM);
+    output.Pos = mul(output.Pos, ViewM);
+    output.Pos = mul(output.Pos, ProjectionM);
     
 	output.Color = input.Color;
     
@@ -71,11 +51,4 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return input.Color;
 }
 
-technique11 basic
-{
-    pass p0
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-    }
-}
+#include "Data/Effects/IncOS/is_technique.fx"

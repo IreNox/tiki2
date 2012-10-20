@@ -15,7 +15,7 @@ namespace TikiEngine
 		{
 		public:
 			IMeshRenderer(Engine* engine, GameObject* gameObject)
-				: Component(engine, gameObject, CT_Renderer)
+				: Component(engine, gameObject)
 			{
 			}
 			~IMeshRenderer() {}

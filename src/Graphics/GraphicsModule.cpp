@@ -28,10 +28,10 @@ namespace TikiEngine
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), matrixBuffer(0),
-			lightBuffer(0), rtScreen(0), rtBackBuffer(0), renderTargets(), postProcesses(), postProcessPassQuads(),
-			defaultPostProcess(0), currentArgs(DrawArgs::Empty), alphaBlendState(0), depthStencilStateDisable(0),
-			screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0)
+			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtScreen(0), rtBackBuffer(0),
+			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
+			alphaBlendState(0), depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0),
+			depthStencilBuffer(0), cbufferLights(0), cbufferCamera(0), cbufferObject(0)
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -92,8 +92,9 @@ namespace TikiEngine
 			SafeRelease(&lineRenderer);
 #endif
 
-			SafeDelete(&matrixBuffer);
-			SafeDelete(&lightBuffer);
+			SafeDelete(&cbufferLights);
+			SafeDelete(&cbufferCamera);
+			SafeDelete(&cbufferObject);
 
 			SafeRelease(&alphaBlendState);
 			SafeRelease(&depthStencilStateDisable);
@@ -184,14 +185,19 @@ namespace TikiEngine
 			return indexBuffer;
 		}
 
-		ConstantBuffer<Lights>* GraphicsModule::GetLightBuffer()
+		ConstantBuffer<CBLights>* GraphicsModule::GetCBufferLight()
 		{
-			return lightBuffer;
+			return cbufferLights;
 		}
 
-		ConstantBuffer<Matrices>* GraphicsModule::GetMatrixBuffer()
+		ConstantBuffer<CBMatrices>* GraphicsModule::GetCBufferCamera()
 		{
-			return matrixBuffer;
+			return cbufferCamera;
+		}
+
+		ConstantBuffer<CBObjectData>* GraphicsModule::GetCBufferObject()
+		{
+			return cbufferObject;
 		}
 
 		VertexBuffer* GraphicsModule::GetVertexBuffer(VertexDeclaration* decl, bool dynamic)
@@ -258,13 +264,15 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Begin/End
-		void GraphicsModule::Begin(const DrawArgs& args)
+		void GraphicsModule::Begin(DrawArgs& args)
 		{
 			currentArgs = args;
 
-			if (args.Lights.IsDirty)
+			if (args.Lights.IsDirty) // || args.Lights.Properties.IsDirty)
 			{
 				setLightChanged(args);
+				args.Lights.IsDirty = false;
+				//args.Lights.Properties.IsDirty = false;
 			}
 
 			rtScreen->Apply(0);
@@ -279,9 +287,9 @@ namespace TikiEngine
 
 			if (args.CurrentCamera)
 			{
-				Matrices* matrices = matrixBuffer->Map();
+				CBMatrices* matrices = cbufferCamera->Map();
 				*matrices = *args.CurrentCamera->GetMatrices();
-				matrixBuffer->Unmap();
+				cbufferCamera->Unmap();
 			}
 
 #if _DEBUG
@@ -630,8 +638,10 @@ namespace TikiEngine
 		bool GraphicsModule::initEngine(EngineDescription& desc)
 		{
 			this->indexBuffer = new IndexBuffer(engine);
-			this->lightBuffer = new ConstantBuffer<Lights>(engine);
-			this->matrixBuffer = new ConstantBuffer<Matrices>(engine);
+
+			this->cbufferLights = new ConstantBuffer<CBLights>(engine);
+			this->cbufferCamera = new ConstantBuffer<CBMatrices>(engine);
+			this->cbufferObject = new ConstantBuffer<CBObjectData>(engine);
 
 			this->rtBackBuffer = new RenderTarget(engine, renderTargetView);
 
@@ -648,7 +658,9 @@ namespace TikiEngine
 			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
-			pass->AddInput("backBuffer", rtScreen);
+			pass->AddInput("rtScreen", rtScreen);
+			pass->AddInput("rtNormal", rtNormal);
+			//pass->AddInput("rtDepth", rtDepth);
 			pass->AddOutput(0, rtBackBuffer);
 
 			defaultPostProcess = new PostProcess(engine);
@@ -703,8 +715,8 @@ namespace TikiEngine
 		#pragma region Private Member - Set - Lights
 		void GraphicsModule::setLightChanged(const DrawArgs& args)
 		{
-			Lights* buf = lightBuffer->Map();
-			buf->Props = LightProperties();
+			CBLights* buf = cbufferLights->Map();
+			buf->Props = args.Lights.Properties;
 
 			buf->Count = (float)args.Lights.SceneLights->Count();
 			if (buf->Count > 32) buf->Count = 32;
@@ -716,13 +728,13 @@ namespace TikiEngine
 
 				buf->Data[i].Range = l->GetRange();
 				buf->Data[i].Color = l->GetColor().ToVector4();
-				buf->Data[i].Position = l->GetGameObject()->PRS.Position();
-				buf->Data[i].Direction = l->GetGameObject()->PRS.Rotation() * Vector3::ForwardRH;
+				buf->Data[i].Position = l->GetGameObject()->PRS.GPosition();
+				buf->Data[i].Direction = l->GetGameObject()->PRS.GRotation() * Vector3::ForwardRH;
 
 				i++;
 			}
 
-			lightBuffer->Unmap();
+			cbufferLights->Unmap();
 		}
 		#pragma endregion
 	}

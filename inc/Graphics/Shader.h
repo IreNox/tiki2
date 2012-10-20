@@ -21,7 +21,7 @@ namespace TikiEngine
 			void SelectSubByName(cstring name);
 
 			void Apply();
-			void ApplyVars(GameObject* gameObject);
+			void ApplyVars(GameObject* gameObject, Material* material);
 
 			void SetConstantBuffer(cstring key, ID3D11Buffer* constantBuffer);
 

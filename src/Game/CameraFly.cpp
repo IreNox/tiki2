@@ -34,10 +34,10 @@ namespace TikiEngine
 			
 			Vector3 pos = (gameObject->PRS.GetLeft() * move.X) + (gameObject->PRS.GetForward() * move.Y);
 			
-			gameObject->PRS.Position() += pos * (float)args.Time.ElapsedTime;
+			gameObject->PRS.SPosition() += pos * (float)args.Time.ElapsedTime;
 
 			rot -= args.Input.MouseDistance;
-			gameObject->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(rot.X, rot.Y, 0);
+			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(rot.X, rot.Y, 0);
 		}
 	}
 }

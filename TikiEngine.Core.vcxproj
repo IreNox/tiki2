@@ -71,13 +71,13 @@
     <ClCompile Include="src\Core\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Core\CBMatrices.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />
     <ClInclude Include="inc\Core\ColorVertex.h" />
-    <ClInclude Include="inc\Core\ComponentType.h" />
     <ClInclude Include="inc\Core\File.h" />
     <ClInclude Include="inc\Core\GUIButton.h" />
     <ClInclude Include="inc\Core\GUIControl.h" />
@@ -112,7 +112,6 @@
     <ClInclude Include="inc\Core\ITriangleMeshCollider.h" />
     <ClInclude Include="inc\Core\LightProperties.h" />
     <ClInclude Include="inc\Core\Line2D.h" />
-    <ClInclude Include="inc\Core\Matrices.h" />
     <ClInclude Include="inc\Core\MemoryStream.h" />
     <ClInclude Include="inc\Core\Plane.h" />
     <ClInclude Include="inc\Core\Point.h" />
@@ -125,7 +124,6 @@
     <ClInclude Include="inc\Core\TikiPtr.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
-    <ClInclude Include="inc\Core\MeshAnimated.h" />
     <ClInclude Include="inc\Core\IResource.h" />
     <ClInclude Include="inc\Core\Stream.h" />
     <ClInclude Include="inc\Core\LibraryManager.h" />
@@ -180,7 +178,6 @@
     <ClInclude Include="inc\Core\Window.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
     <ClCompile Include="src\Core\HelperPath.cpp" />
-    <ClInclude Include="inc\Graphics\Matrices.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>

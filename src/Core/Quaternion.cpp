@@ -179,7 +179,7 @@ bool Quaternion::operator!=(const Quaternion& q2)
 	return X != q2.X || Y != q2.Y || Z != q2.Z || W != q2.W;
 }
 
-Quaternion Quaternion::operator+(const Quaternion& rhs)
+Quaternion Quaternion::operator+(const Quaternion& rhs) const
 {
 	return Quaternion(this->X + rhs.X, this->Y + rhs.Y,  this->Z + rhs.Z, this->W + rhs.W);
 }
@@ -188,7 +188,7 @@ Quaternion& Quaternion::operator+=(const Quaternion& rhs)
 	return  *this = *this + rhs;
 }
 
-Quaternion Quaternion::operator-(const Quaternion& rhs)
+Quaternion Quaternion::operator-(const Quaternion& rhs) const
 {
 	return Quaternion(X - rhs.X, Y - rhs.Y,  Z - rhs.Z, W - rhs.W);
 }
@@ -197,7 +197,7 @@ Quaternion& Quaternion::operator-=(const Quaternion& rhs)
 	return *this = *this - rhs;
 }
 
-Quaternion Quaternion::operator*(const Quaternion& rhs)
+Quaternion Quaternion::operator*(const Quaternion& rhs) const
 {
 	float x = X;
 	float y = Y;
@@ -222,7 +222,7 @@ Quaternion Quaternion::operator*(const Quaternion& rhs)
 	return result;
 }
 
-Vector3 Quaternion::operator *(const Vector3& point)
+Vector3 Quaternion::operator *(const Vector3& point) const
 {
 	Vector3 vector;
 
@@ -251,7 +251,7 @@ Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 	return *this = *this * rhs;
 }
 
-Quaternion Quaternion::operator/(const Quaternion& rhs)
+Quaternion Quaternion::operator/(const Quaternion& rhs) const
 {
 	float x = X;
 	float y = Y;

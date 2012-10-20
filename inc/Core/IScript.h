@@ -13,7 +13,7 @@ namespace TikiEngine
 		public:
 
 			IScript(Engine* engine, GameObject* gameObject)
-				: Component(engine, gameObject, CT_Script)
+				: Component(engine, gameObject)
 			{
 			}
 			~IScript() {}

@@ -164,7 +164,8 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < poi->Count())
 			{
-				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(poi->Get(i)->PRS.Position().arr)), 10.0f);
+				Vector3 pos = poi->Get(i)->PRS.GPosition();
+				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(pos.arr)), 10.0f);
 				i++;
 			}
 			
@@ -196,7 +197,7 @@ namespace TikiEngine
 
 			Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
 
-			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.Position();
+			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
 
 			//terrain->UpdateCollisionRegion(0, cloddy_Vec::To3D(cloddy_Vec3F(cameraPos.arr)), 1.5f);
 

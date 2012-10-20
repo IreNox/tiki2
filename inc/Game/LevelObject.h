@@ -13,6 +13,10 @@ namespace TikiEngine
 			LevelObject(GameState* state);
 			~LevelObject();
 
+			#if _DEBUG
+			void Update(const UpdateArgs& args);
+			#endif
+
 		private:
 
 			Int32 type;

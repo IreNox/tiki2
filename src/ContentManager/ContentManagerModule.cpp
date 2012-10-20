@@ -140,11 +140,8 @@ namespace TikiEngine
 		{
 			Material* mat = new Material(engine);
 			mat->SetShader(
-				(IShader*)this->Load(
-				typeid(IShader).hash_code(),
-				name
-				)
-				);
+				(IShader*)this->Load(typeid(IShader).hash_code(), name)
+			);
 			mat->GetShader()->Release();
 
 			return mat;

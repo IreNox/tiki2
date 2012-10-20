@@ -62,11 +62,11 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
-			light->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 			
 			camera = new CameraObject(engine);
-			camera->PRS.Position() = Vector3(0, 0, 5.0f);
+			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			(new CameraFly(engine, camera))->Release();
 
@@ -193,7 +193,7 @@ namespace TikiEngine
 			//// tmp = class var
 			if (dynamicBox)
 			{
-				tmp = dynamicBox->GetGameObject()->PRS.Position();
+				tmp = dynamicBox->GetGameObject()->PRS.GPosition();
 			}
 
 			tmp.Z = terrain->SampleHeight(tmp);
@@ -212,7 +212,7 @@ namespace TikiEngine
 
 			if (args.Input.GetKeyPressed(KEY_F6))
 			{
-				dynamicBox->SetCenter(camera->PRS.Position());
+				dynamicBox->SetCenter(camera->PRS.GPosition());
 				dynamicBox->GetRigidBody()->SetVelocity(camera->PRS.GetForward() * 20);
 			}
 

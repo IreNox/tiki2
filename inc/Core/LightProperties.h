@@ -15,9 +15,13 @@ namespace TikiEngine
 			Color AmbientColor;
 			Color EmissiveColor;
 
+			//float IsDirty;
+			//float DefaultShading;
+			//float Unused[2];
+
 			LightProperties()
 				: DiffuseIntensity(1.0f), AmbientIntensity(0.1f), EmissiveIntensity(0.2f),
-				  AmbientColor(0.3f, 0.2f, 0.0f, 1.0f), EmissiveColor(1.0f, 1.0f, 1.0f, 1.0f)
+				  AmbientColor(0.3f, 0.2f, 0.0f, 1.0f), EmissiveColor(1.0f, 1.0f, 1.0f, 1.0f) //, IsDirty(true), DefaultShading(true)
 			{
 			}
 

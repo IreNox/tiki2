@@ -11,6 +11,12 @@ namespace TikiEngine
 		{
 		public:
 
+			bool FlipTexcorrdV;
+
+			ITexture* TexDiffuse;
+			ITexture* TexNormalMap;
+			ITexture* TexSpecular;
+
 			Material(Engine* engine);
 			~Material();
 
@@ -26,6 +32,7 @@ namespace TikiEngine
 		protected:
 
 			IShader* shader;
+
 		};
 	}
 }

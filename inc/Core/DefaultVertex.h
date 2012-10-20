@@ -13,11 +13,9 @@ namespace TikiEngine
 			Single UV[2];
 
 			Single Normal[3];
-			Single Binormal[3];
-			Single Tangent[3];
 
 			static UInt32 DeclarationCount;
-			static InputElement Declaration[5];
+			static InputElement Declaration[3];
 
 			bool operator==(const DefaultVertex& rhs)
 			{

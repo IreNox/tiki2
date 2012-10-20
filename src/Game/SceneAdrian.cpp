@@ -53,7 +53,7 @@ namespace TikiEngine
 			go->Model->SetMaterial(mat);
 			mat->Release();
 
-			go->PRS.Scale() = Vector3(0.01f);
+			go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
 			go->Release();
@@ -61,11 +61,11 @@ namespace TikiEngine
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
-			light->PRS.Rotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 
 			go = new CameraObject(engine);
-			go->PRS.Position() = Vector3(0, 0, 5.0f);
+			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
 			fly->Release();

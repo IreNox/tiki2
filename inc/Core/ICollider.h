@@ -21,7 +21,7 @@ namespace TikiEngine
 
 			/*! @brief Create Collider Component */
 			ICollider(Engine* engine, GameObject* gameObject)
-				: Component(engine, gameObject, CT_Collider)
+				: Component(engine, gameObject)
 			{
 			}
 			virtual ~ICollider() {}

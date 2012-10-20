@@ -34,7 +34,7 @@ namespace TikiEngine
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
 
-		const DrawLightArgs& GetLighting();
+		DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
 
 	protected:

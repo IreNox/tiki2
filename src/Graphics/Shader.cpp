@@ -7,6 +7,7 @@
 #include "Core/HelperHash.h"
 #include "Core/HelperPath.h"
 #include "Core/GameObject.h"
+#include "Core/Material.h"
 
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
@@ -57,20 +58,33 @@ namespace TikiEngine
 			pass->Apply(0, context);
 		}
 
-		void Shader::ApplyVars(GameObject* gameObject)
+		void Shader::ApplyVars(GameObject* gameObject, Material* material)
 		{
 			if (type == ST_Object)
 			{
-				Matrix worldMatrix = Matrix();
-				gameObject->PRS.FillWorldMatrix(&worldMatrix);
+				CBObjectData* objData = DllMain::ModuleGraphics->GetCBufferObject()->Map();
 
-				this->SetMatrix("worldMatrix", worldMatrix);
+				Matrix mat;
+				gameObject->PRS.FillWorldMatrix(&mat);
 
-				worldMatrix = Matrix::Transpose(
-					Matrix::Invert(worldMatrix)
+				this->SetMatrix("fuckYouAsshole", mat);
+
+				//memcpy(&objData->WorldM, &mat, sizeof(Matrix));
+				objData->WorldM = Matrix::Identity;
+				objData->WorldMIT = Matrix::Transpose(
+					Matrix::Invert(mat)
 				);
 
-				this->SetMatrix("worldMatrixInverseTranspose", worldMatrix);				
+				objData->UseDiffuse = (material->TexDiffuse != 0);
+				objData->UseNormalMap = (material->TexNormalMap != 0);
+				objData->UseSpecular = (material->TexSpecular != 0);
+				objData->FlipTexcoordV = material->FlipTexcorrdV;
+
+				if (objData->UseDiffuse) this->SetTexture("TexDiffuse", material->TexDiffuse);
+				if (objData->UseNormalMap) this->SetTexture("TexNormalMap", material->TexNormalMap);
+				if (objData->UseSpecular) this->SetTexture("TexSpecular", material->TexSpecular);
+
+				DllMain::ModuleGraphics->GetCBufferObject()->Unmap();
 			}
 		}
 
@@ -350,18 +364,28 @@ namespace TikiEngine
 				type = ST_Object;
 
 				this->SetConstantBuffer(
-					"MatrixBuffer",
-					DllMain::ModuleGraphics->GetMatrixBuffer()->GetBuffer()
+					"ObjectData",
+					DllMain::ModuleGraphics->GetCBufferObject()->GetBuffer()
 				);
 
 				this->SetConstantBuffer(
 					"LightBuffer",
-					DllMain::ModuleGraphics->GetLightBuffer()->GetBuffer()
+					DllMain::ModuleGraphics->GetCBufferLight()->GetBuffer()
+				);
+
+				this->SetConstantBuffer(
+					"MatrixBuffer",
+					DllMain::ModuleGraphics->GetCBufferCamera()->GetBuffer()
 				);
 				break;
 			case 'p':
 			case 'P':
 				type = ST_PostProcess;
+
+				this->SetConstantBuffer(
+					"LightBuffer",
+					DllMain::ModuleGraphics->GetCBufferLight()->GetBuffer()
+				);
 				break;
 			default:
 				type = ST_Unknown;

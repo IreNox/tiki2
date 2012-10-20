@@ -17,6 +17,18 @@ namespace TikiEngine
 		LevelObject::~LevelObject()
 		{
 		}
+
+		#if _DEBUG
+		void LevelObject::Update(const UpdateArgs& args)
+		{
+			if (args.Input.GetKeyPressed(KEY_F3))
+			{
+				this->Model->GetMaterial()->TexNormalMap = 0;
+			}
+
+			LevelObject::Update(args);
+		}
+		#endif
 		
 		void LevelObject::databaseToField(string fieldName, sqlite3_stmt* state, int fieldId)
 		{
@@ -25,8 +37,9 @@ namespace TikiEngine
 				type = sqlite3_column_int(state, fieldId);
 
 				Material* material = engine->content->LoadMaterial(L"os_default");
-				ITexture* tex = engine->content->LoadTexture(L"checker");
-				material->GetShader()->SetTexture("tex", tex);
+				material->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_diff");
+				material->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_normal");
+				material->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_spec");
 				TikiObject::WatchPointer.Add(material->GetShader());
 				
 				switch (type)
@@ -38,11 +51,15 @@ namespace TikiEngine
 
 					break;
 				case 1:
-					this->Model = engine->content->LoadModel(L"normals");
+					this->Model = engine->content->LoadModel(L"Soldier_S");
 					this->Model->SetMaterial(material);
+					
+					material->FlipTexcorrdV = false;
 					material->Release();
 
-					(new TikiBot(gameState, this))->Release();
+					TikiBot* bot = new TikiBot(gameState, this);
+					bot->SetScale(0.06f);
+					bot->Release();
 					break;
 				}
 			}

@@ -150,7 +150,7 @@ namespace TikiEngine
 
 
 			go = new CameraObject(engine);
-			go->PRS.Position() = Vector3(0, 20, 50);
+			go->PRS.SPosition() = Vector3(0, 20, 50);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
 			this->AddElement(go);
 			go->Release();
@@ -182,12 +182,12 @@ namespace TikiEngine
 		void SceneMark::Draw(const DrawArgs& args)
 		{
 			// Draw Mouse Ray
-		    Vector3 forwardCam = fly->GetGameObject()->PRS.Position() + fly->GetGameObject()->PRS.GetForward();
+		    Vector3 forwardCam = fly->GetGameObject()->PRS.GPosition() + fly->GetGameObject()->PRS.GetForward();
 		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
 			engine->graphics->DrawLine(forwardCam, impact, Color::Green);
 
 			// Draw bot Velocity
-			Vector3 botPos = Vector3(bot->GetGameObject()->PRS.Position());
+			Vector3 botPos = bot->GetGameObject()->PRS.GPosition();
 			Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
 			engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
 
@@ -199,7 +199,7 @@ namespace TikiEngine
 			engine->sprites->DrawString(font, str, Vector2(1, 80));
 
 			std::wostringstream s3;
-			Vector3 camPos = fly->GetGameObject()->PRS.Position();
+			Vector3 camPos = fly->GetGameObject()->PRS.GPosition();
 			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
 			str = s3.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 120));

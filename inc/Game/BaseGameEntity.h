@@ -37,9 +37,9 @@ namespace TikiEngine
 			static void ResetNextValidID() {nextValidID = 0;}
 
 
-			Vector2 Pos() { return Vector2(GetGameObject()->PRS.Position().X, GetGameObject()->PRS.Position().Z); }
-			Vector3 Pos3D() { return GetGameObject()->PRS.Position(); }
-			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.Position() = newPos; }
+			Vector2 Pos() { return Vector2(GetGameObject()->PRS.GPosition().X, GetGameObject()->PRS.GPosition().Z); }
+			Vector3 Pos3D() { return GetGameObject()->PRS.GPosition(); }
+			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.SPosition() = newPos; }
 
 			Double BRadius() const { return boundingRadius; }
 			void SetBRadius(Double r) { boundingRadius = r; }
@@ -50,7 +50,7 @@ namespace TikiEngine
 			void Tag() { tag = true; }
 			void UnTag() {tag = false; }
 
-			Vector3 Scale() { return GetGameObject()->PRS.Scale(); }
+			Vector3 Scale() { return GetGameObject()->PRS.GScale(); }
 			void SetScale(Vector3 val);
 			void SetScale(float val);
 

@@ -28,8 +28,8 @@ namespace TikiEngine
 			}
 			virtual ~IGraphics() {}
 
-			void Begin() {}
-			virtual void Begin(const DrawArgs& args) = 0;
+			void Begin() { throw "Not supported"; }
+			virtual void Begin(DrawArgs& args) = 0;
 			
 #if _DEBUG
 			virtual void DrawLine(const Vector3& start, const Vector3& end, const Color& color) = 0;

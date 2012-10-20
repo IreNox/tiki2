@@ -3,8 +3,9 @@
 #include "Core/TypeGlobals.h"
 #include "Core/Dictionary.h"
 
-#include "Core/Matrices.h"
-#include "Graphics/Lights.h"
+#include "Core/CBMatrices.h"
+#include "Graphics/CBLights.h"
+#include "Graphics/CBObjectData.h"
 
 #include "Core/IGraphics.h"
 
@@ -37,7 +38,7 @@ namespace TikiEngine
 
 			bool Initialize(EngineDescription& desc);
 
-			void Begin(const DrawArgs& args);
+			void Begin(DrawArgs& args);
 			void End();
 
 #if _DEBUG
@@ -59,8 +60,9 @@ namespace TikiEngine
 
 			void MakeScreenshot(wcstring fileName);
 
-			ConstantBuffer<Lights>* GetLightBuffer();
-			ConstantBuffer<Matrices>* GetMatrixBuffer();
+			ConstantBuffer<CBLights>* GetCBufferLight();
+			ConstantBuffer<CBMatrices>* GetCBufferCamera();
+			ConstantBuffer<CBObjectData>* GetCBufferObject();
 
 			IndexBuffer* GetIndexBuffer();
 			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
@@ -101,8 +103,9 @@ namespace TikiEngine
 			ID3D11RasterizerState* rasterStateBackfaces;
 
 			Color clearColor;
-			ConstantBuffer<Lights>* lightBuffer;
-			ConstantBuffer<Matrices>* matrixBuffer;
+			ConstantBuffer<CBLights>* cbufferLights;
+			ConstantBuffer<CBMatrices>* cbufferCamera;
+			ConstantBuffer<CBObjectData>* cbufferObject;
 
 			IndexBuffer* indexBuffer;
 			Dictionary<ULONG, VertexBuffer*> vertexBuffers;

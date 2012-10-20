@@ -60,6 +60,9 @@
     <Filter Include="Quelldateien\Internal\FBX">
       <UniqueIdentifier>{39e88201-8a24-43fb-8fc4-29b0feeb7e7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Internal\Data">
+      <UniqueIdentifier>{bbcc8707-8f12-4c91-885f-e62f0dfb08c7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
@@ -172,9 +175,6 @@
     <ClInclude Include="inc\Graphics\RenderTarget.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\Lights.h">
-      <Filter>Headerdateien\Internal</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\d3dx11effect.h">
       <Filter>Headerdateien\Internal</Filter>
     </ClInclude>
@@ -225,6 +225,15 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h">
       <Filter>Headerdateien\Internal\Cloddy</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\CBLights.h">
+      <Filter>Headerdateien\Internal\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\CBObjectData.h">
+      <Filter>Headerdateien\Internal\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\LightData.h">
+      <Filter>Headerdateien\Internal\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

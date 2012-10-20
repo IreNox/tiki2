@@ -131,10 +131,10 @@ namespace TikiEngine
 
 		void BoxCollider::Update(const UpdateArgs& args)
 		{
-			gameObject->PRS.Position() = actor->getGlobalPosition().get();
+			gameObject->PRS.SPosition() = actor->getGlobalPosition().get();
 
 			NxQuat rot = actor->getGlobalOrientationQuat();
-			gameObject->PRS.Rotation() = Quaternion(rot.x, rot.y, rot.z, rot.w);
+			gameObject->PRS.SRotation() = Quaternion(rot.x, rot.y, rot.z, rot.w);
 		}
 	}
 }

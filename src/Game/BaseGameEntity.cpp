@@ -9,7 +9,7 @@ namespace TikiEngine
 		int BaseGameEntity::nextValidID = 0;
 
 		BaseGameEntity::BaseGameEntity(GameState* gameState, GameObject* gameObject)
-			: Component(gameState->GetEngine(), gameObject, CT_AI), gameState(gameState)
+			: Component(gameState->GetEngine(), gameObject), gameState(gameState)
 		{
 			id = nextValidID++;
 
@@ -20,23 +20,23 @@ namespace TikiEngine
 
 		void BaseGameEntity::SetScale(Vector3 val)
 		{
-			Vector3 scale = this->GetGameObject()->PRS.Scale();
+			Vector3 scale = this->GetGameObject()->PRS.GScale();
 
 			boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
 				MaxOf(MaxOf(scale.X, 
 				scale.Y), 
 				scale.Z); 
-			GetGameObject()->PRS.Scale() = val;
+			GetGameObject()->PRS.SScale() = val;
 		}
 
 		void BaseGameEntity::SetScale(float val)
 		{
-			Vector3 scale = this->GetGameObject()->PRS.Scale();
+			Vector3 scale = this->GetGameObject()->PRS.GScale();
 
 			boundingRadius *= (val / MaxOf(MaxOf(scale.X, 
 												 scale.Y),
 												 scale.Z)); 
-			GetGameObject()->PRS.Scale() = val;
+			gameObject->PRS.SScale() = val;
 		}
 
 	}

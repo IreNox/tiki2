@@ -28,7 +28,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member
-	const DrawLightArgs& Scene::GetLighting()
+	DrawLightArgs& Scene::GetLighting()
 	{
 		UInt32 i = 0;
 		Boolean dirty = false;
@@ -36,6 +36,7 @@ namespace TikiEngine
 		{
 			if (lighting.SceneLights->Get(i)->GetGameObject()->PRS.IsDirty())
 			{
+				lighting.SceneLights->Get(i)->GetGameObject()->PRS.MarkAsClean();
 				dirty = true;
 				break;
 			}

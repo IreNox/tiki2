@@ -7,7 +7,7 @@ namespace TikiEngine
 	namespace Resources
 	{
 		Material::Material(Engine* engine)
-			: EngineObject(engine), shader(0)
+			: EngineObject(engine), shader(0), TexDiffuse(0), TexNormalMap(0), TexSpecular(0), FlipTexcorrdV(false)
 		{
 		}
 
@@ -25,7 +25,7 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			shader->ApplyVars(gameObject);
+			shader->ApplyVars(gameObject, this);
 		}
 
 		IShader* Material::GetShader()

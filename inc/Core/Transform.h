@@ -20,15 +20,16 @@ namespace TikiEngine
 		Vector3 GetUp();
 		Vector3 GetLeft();
 
-		const Vector3& Position() const;
-		const Vector3& Scale() const;
-		const Quaternion& Rotation() const;
+		const Vector3& GPosition() const;
+		const Vector3& GScale() const;
+		const Quaternion& GRotation() const;
 
-		Vector3& Position();
-		Vector3& Scale();
-		Quaternion& Rotation();
+		Vector3& SPosition();
+		Vector3& SScale();
+		Quaternion& SRotation();
 
 		bool IsDirty();
+		void MarkAsClean();
 
 		void FillWorldMatrix(Matrix* worldMatrix);
 

@@ -3,7 +3,7 @@
 #include "Core/Component.h"
 
 #include "Core/Matrix.h"
-#include "Core/Matrices.h"
+#include "Core/CBMatrices.h"
 
 #include "Core/IRenderTarget.h"
 
@@ -26,7 +26,7 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 			
-			Matrices* GetMatrices();
+			CBMatrices* GetMatrices();
 			Matrix* GetViewMatrix();
 			Matrix* GetProjectionMatrix();
 			IRenderTarget* GetRenderTarget();
@@ -41,7 +41,7 @@ namespace TikiEngine
 
 		private:
 
-			Matrices matrices;
+			CBMatrices matrices;
 			IRenderTarget* renderTarget;
 			Frustum frustum;
 		};

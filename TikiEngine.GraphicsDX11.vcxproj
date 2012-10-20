@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h" />
+    <ClInclude Include="inc\Graphics\CBLights.h" />
+    <ClInclude Include="inc\Graphics\CBObjectData.h" />
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
     <ClInclude Include="inc\Graphics\DebugLineRenderer.h" />
@@ -58,7 +60,7 @@
     <ClInclude Include="inc\Graphics\DynamicBuffer.h" />
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
     <ClInclude Include="inc\Graphics\IndexBuffer.h" />
-    <ClInclude Include="inc\Graphics\Lights.h" />
+    <ClInclude Include="inc\Graphics\LightData.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Model.h" />
     <ClInclude Include="inc\Graphics\Quad.h" />

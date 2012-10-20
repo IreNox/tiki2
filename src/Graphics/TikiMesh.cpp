@@ -71,9 +71,7 @@ namespace TikiEngine
 					DefaultVertex default = {
 						(float)position[0],(float)position[1],(float)position[2],
 						(float)uv[0],(float)uv[1],
-						(float)normals[0],(float)normals[1],(float)normals[2],
-						(float)binormal[0],(float)binormal[1],(float)binormal[2],
-						(float)tangent[0],(float)tangent[1],(float)tangent[2]
+						(float)normals[0],(float)normals[1],(float)normals[2]
 					};	
 
 					indicesArray[k] = verticesList.IndexOf(default);
@@ -158,9 +156,7 @@ namespace TikiEngine
 				DefaultVertex default = {
 					(float)position[0],(float)position[1],(float)position[2],
 					(float)uv[0],(float)uv[1],
-					(float)normals[0],(float)normals[1],(float)normals[2],
-					(float)binormal[0],(float)binormal[1],(float)binormal[2],
-					(float)tangent[0],(float)tangent[1],(float)tangent[2]
+					(float)normals[0],(float)normals[1],(float)normals[2]
 				};	
 
 				verticesList[i] = default;
