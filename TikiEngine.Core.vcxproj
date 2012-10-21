@@ -72,6 +72,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\CBMatrices.h" />
+    <ClInclude Include="inc\Core\Event.h" />
+    <ClInclude Include="inc\Core\EventHandler.h" />
+    <ClInclude Include="inc\Core\EventScreenSizeChanged.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />

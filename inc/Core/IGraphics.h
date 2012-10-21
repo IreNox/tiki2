@@ -8,6 +8,8 @@
 #include "Core/Light.h"
 #include "Core/PostProcess.h"
 
+#include "Core/EventScreenSizeChanged.h"
+
 namespace TikiEngine
 {
 	namespace Modules
@@ -21,6 +23,8 @@ namespace TikiEngine
 		class IGraphics : public IModule
 		{
 		public:
+
+			ScreenSizeChangedEvent ScreenSizeChanged;
 
 			IGraphics(Engine* engine)
 				: IModule(engine)
@@ -47,6 +51,11 @@ namespace TikiEngine
 			virtual IRenderTarget* GetScreenTarget() = 0;
 			virtual IRenderTarget* GetNormalTarget() = 0;
 			virtual IRenderTarget* GetDepthTarget() = 0;
+
+			/*!
+			 * @brief Reset the Graphics Device and apply new values. Use values from Engine::GetDescription()
+			 */
+			virtual void Reset() = 0;
 
 			/*!
 			 * @brief Save an Screen shot image from the last Frame on HDD 

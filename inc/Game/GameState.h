@@ -46,6 +46,7 @@ namespace TikiEngine
 			
 #if _DEBUG
 			bool drawNavMesh;
+			bool drawRenderTarget;
 #endif
 
 			UInt64 resource1;

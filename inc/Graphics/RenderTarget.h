@@ -26,6 +26,9 @@ namespace TikiEngine
 			void ApplyFirstAndOnly();
 			void Clear(const Color& color);
 
+			void Resize(UInt32 width, UInt32 height);
+			void Resize(ID3D11RenderTargetView* renderTarget);
+
 			Int32 GetWidth();
 			Int32 GetHeight();
 			Vector2 GetSize();

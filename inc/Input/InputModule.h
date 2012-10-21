@@ -40,7 +40,7 @@ namespace TikiEngine
 			IDirectInputDevice8* keyboard;
 
 			Vector2 mousePos;
-			ViewPort viewPort;
+			ViewPort* viewPort;
 
 			DIMOUSESTATE mouseStatePrev;
 			DIMOUSESTATE mouseStateCurrent;

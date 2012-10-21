@@ -32,7 +32,7 @@ namespace TikiEngine
 		{
 			this->hWnd = desc.Window.hWnd;
 			this->hInst = desc.hInst;
-			this->viewPort = desc.Graphics.ViewPort;
+			this->viewPort = engine->graphics->GetViewPort();
 
 			HRESULT r = DirectInput8Create(
 				hInst,
@@ -65,16 +65,16 @@ namespace TikiEngine
 		void InputModule::FillInputState(InputState* state)
 		{
 			Vector2 dis = Vector2(
-				(float)mouseStateCurrent.lX / viewPort.Width,
-				(float)mouseStateCurrent.lY / viewPort.Height
+				(float)mouseStateCurrent.lX / viewPort->Width,
+				(float)mouseStateCurrent.lY / viewPort->Height
 			);
 
 			POINT p;
 			if (GetCursorPos(&p) && ScreenToClient(hWnd, &p))
 			{
 				Vector2 pos = Vector2(
-					(float)p.x / viewPort.Width,
-					(float)p.y / viewPort.Height
+					(float)p.x / viewPort->Width,
+					(float)p.y / viewPort->Height
 				);
 
 				if (pos.X < 0) pos.X = 0;

@@ -30,6 +30,8 @@ namespace TikiEngine
 
 		protected:
 
+			static bool resetScreen;
+
 			MSG msg;
 			HWND hWnd;
 			HINSTANCE hInst;

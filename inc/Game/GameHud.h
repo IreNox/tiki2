@@ -9,6 +9,8 @@
 
 #include "Game/UnitFunctions.h"
 
+#include "Core/EventScreenSizeChanged.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -17,7 +19,7 @@ namespace TikiEngine
 
 		class GameState;
 
-		class GameHud : public EngineObject
+		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler
 		{
 		public:
 
@@ -28,6 +30,8 @@ namespace TikiEngine
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+
+			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
 
 		private:
 

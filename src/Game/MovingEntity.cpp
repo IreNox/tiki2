@@ -26,7 +26,7 @@ namespace TikiEngine
 
 		//  first checks that the given heading is not a vector of zero length. If the
 		//  new heading is valid this fumction sets the entity's heading and side vectors accordingly
-		inline void MovingEntity::SetHeading(Vector2 newHeading)
+		void MovingEntity::SetHeading(Vector2 newHeading)
 		{
 			assert( (newHeading.LengthSquared() - 1.0) < 0.00001 );
 			this->heading = newHeading;

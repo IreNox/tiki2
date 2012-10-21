@@ -13,7 +13,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0)
+			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1)
 		{
 			indexBuffer = new DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
 			vertexBuffer = new DynamicBuffer<DefaultVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
@@ -31,11 +31,8 @@ namespace TikiEngine
 			SafeRelease(&declaration);
 			SafeRelease(&material);
 			SafeRelease(&indexBuffer);
-			SafeRelease(&vertexBuffer);
-
-			
+			SafeRelease(&vertexBuffer);			
 		}
-
 		#pragma endregion
 
 		void Model::Initialize()
@@ -55,6 +52,7 @@ namespace TikiEngine
 		{
 			this->scene->FillAnimStackNameArray(this->animStackNameArray);
 		}
+
 		bool Model::SetCurrentAnimStack(int pIndex)
 		{
 			const int lAnimStackCount = animStackNameArray.GetCount();
@@ -96,6 +94,16 @@ namespace TikiEngine
 			currentTime = start;
 
 			return true;
+		}
+
+		float Model::GetAnimationSpeed()
+		{
+			return animationSpeed;
+		}
+
+		void Model::SetAnimationSpeed(float speed)
+		{
+			animationSpeed = speed;
 		}
 		#pragma endregion
 
@@ -176,7 +184,7 @@ namespace TikiEngine
 
 			FbxNode* root = this->scene->GetRootNode();
 
-			currentTime += frameTime;
+			currentTime += (frameTime * animationSpeed);
 
 			if (currentTime > stop)
 			{

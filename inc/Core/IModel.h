@@ -29,8 +29,11 @@ namespace TikiEngine
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* material) = 0;
 
-      virtual List<DefaultVertex>* GetVertices() = 0;
-      virtual List<UInt32>* GetIndices() = 0;
+			virtual List<DefaultVertex>* GetVertices() = 0;
+			virtual List<UInt32>* GetIndices() = 0;
+
+			virtual float GetAnimationSpeed() = 0;
+			virtual void SetAnimationSpeed(float speed) = 0;
 
 		};
 	}

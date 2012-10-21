@@ -28,7 +28,7 @@ namespace TikiEngine
 			Vector2 Size() const;
 			Vector2& Size();
 
-			virtual void Click();
+			virtual bool Clicked();
 
 			virtual void Draw(const DrawArgs& args);
 			virtual void Update(const UpdateArgs& args);
@@ -46,7 +46,8 @@ namespace TikiEngine
 
 			bool isDirty;
 			bool mouseOver;
-
+			bool mouseClicked;
+			
 			static IFont* defaultFont;
 
 			virtual RectangleF createBoundingBox();

@@ -3,10 +3,7 @@
 
 #include "Core/Engine.h"
 
-#include "Game/SceneTim.h"
-#include "Game/SceneMark.h"
-#include "Game/SceneAdrian.h"
-#include "Game/SceneLevel.h"
+#include "Game/SceneMenuMain.h"
 
 using namespace TikiEngine;
 using namespace TikiEngine::Game;
@@ -34,30 +31,29 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
+			//if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
+			//{
+			//	engine->scene = new SceneTim(engine);
+			//	//engine->scene = new SceneAdrian(engine);
+			//	//engine->scene = new SceneMark(engine);
+			//}
+			//else if (name == L"adrian.lück" || name == L"Adrian")
+			//{
+			//	//engine->scene = new SceneTim(engine);
+			//	engine->scene = new SceneAdrian(engine);
+			//	//engine->scene = new SceneMark(engine);
+			//}
+			//else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
+			//{				
+			//	engine->scene = new SceneMark(engine);
+			//	//engine->scene = new SceneTim(engine);
+			//	//engine->scene = new SceneAdrian(engine);
+			//}
+			//else
 			{
-				engine->scene = new SceneTim(engine);
-				//engine->scene = new SceneAdrian(engine);
-				//engine->scene = new SceneMark(engine);
-			}
-			else if (name == L"adrian.lück" || name == L"Adrian")
-			{
-				//engine->scene = new SceneTim(engine);
-				engine->scene = new SceneAdrian(engine);
-				//engine->scene = new SceneMark(engine);
-			}
-			else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
-			{				
-				engine->scene = new SceneMark(engine);
-				//engine->scene = new SceneTim(engine);
-				//engine->scene = new SceneAdrian(engine);
-			}
-			else
-			{
-				SceneLevel* level = new SceneLevel(engine);
-				engine->scene = level;
-
-				level->LoadLevel(1);
+				engine->SetScene(
+					new SceneMenuMain(engine)
+				);
 			}
 
 			engine->Run();

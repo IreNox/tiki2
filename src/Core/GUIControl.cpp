@@ -18,14 +18,9 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		void GUIControl::Click()
+		bool GUIControl::Clicked()
 		{
-			bool test = false;
-
-			if (test)
-			{
-				this->GetReady();
-			}
+			return mouseClicked;
 		}
 
 		bool GUIControl::GetReady()
@@ -72,11 +67,7 @@ namespace TikiEngine
 			}
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
-
-			if (args.Input.MouseButtons[0] && mouseOver)
-			{
-				this->Click();
-			}
+			mouseClicked = (args.Input.MouseButtons[0] && mouseOver);
 		}
 		#pragma endregion
 

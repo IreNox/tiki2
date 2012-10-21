@@ -147,6 +147,70 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member - Reset
+		void GraphicsModule::Reset()
+		{
+			EngineDescription desc = *engine->GetEngineDescription();
+			
+			DXGI_MODE_DESC modeDesc;
+			modeDesc.Format = DXGI_FORMAT_UNKNOWN;
+			modeDesc.Width = desc.Graphics.Width;
+			modeDesc.Height = desc.Graphics.Height;
+			modeDesc.RefreshRate.Denominator = 1;
+			modeDesc.RefreshRate.Numerator = 60;
+			modeDesc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
+			modeDesc.Scaling = DXGI_MODE_SCALING_UNSPECIFIED;
+
+			HRESULT r = swapChain->ResizeTarget(&modeDesc);
+
+			if (FAILED(r))
+			{
+				HelperLog::Write("Warning: Can't resize BackTarget.");
+				return;
+			}
+
+			depthStencilView->Release();
+			depthStencilBuffer->Release();
+
+			renderTargets.Clear();
+			deviceContext->OMSetRenderTargets(0, 0, 0);
+			renderTargetView->Release();
+
+			ID3D11Texture2D* backBuffer;
+			swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+			while (backBuffer->Release()) {}
+
+			r = swapChain->ResizeBuffers(
+				0,
+				desc.Graphics.Width,
+				desc.Graphics.Height,
+				DXGI_FORMAT_UNKNOWN,
+				0
+			);
+
+			if (FAILED(r))
+			{
+				HelperLog::Write("Warning: Can't resize BackBuffer.");
+			}
+
+			if (initDirectXBackBuffer(desc) &&
+				initDirectXDepthStencil(desc) &&
+				initDirectXViewPort(desc))
+			{
+				this->rtBackBuffer->Resize(renderTargetView);
+
+				UInt32 i = 0;
+				while (i < screenSizeRenderTargets.Count())
+				{
+					screenSizeRenderTargets[i]->Resize(desc.Graphics.Width, desc.Graphics.Height);
+					i++;
+				}
+
+				this->ScreenSizeChanged.RaiseEvent(this, ScreenSizeChangedArgs(this, &viewPort));
+			}
+		}
+		#pragma endregion
+
 		#pragma region Member - Get
 		void* GraphicsModule::GetDevice()
 		{
@@ -224,22 +288,14 @@ namespace TikiEngine
 				renderTargets.Add(0);
 			}
 
-			if (renderTargets[slot] == target)
-			{
-				return;
-			}
-
+			if (renderTargets[slot] == target) return;
 			renderTargets[slot] = target;
-
-			ID3D11RenderTargetView** targets = renderTargets.ToArray();
 
 			deviceContext->OMSetRenderTargets(
 				renderTargets.Count(),
-				targets,
+				renderTargets.GetInternalData(),
 				depthStencilView
 			);
-
-			delete[](targets);
 		}
 
 		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target)
@@ -393,17 +449,14 @@ namespace TikiEngine
 		#pragma region Private Member - Init - DirectX
 		bool GraphicsModule::initDirectX(EngineDescription& desc)
 		{
-			RECT rect;
-			GetClientRect(desc.Window.hWnd, &rect);
-
 			#pragma region SwapChain
 			DXGI_SWAP_CHAIN_DESC swapDesc;
 			ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
 
 			swapDesc.BufferCount = 2;
 			swapDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
-			swapDesc.BufferDesc.Height = rect.bottom;
-			swapDesc.BufferDesc.Width = rect.right;
+			swapDesc.BufferDesc.Height = desc.Graphics.Height;
+			swapDesc.BufferDesc.Width = desc.Graphics.Width;
 			swapDesc.BufferDesc.RefreshRate.Denominator = 1;
 			swapDesc.BufferDesc.RefreshRate.Numerator = 60;
 			swapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
@@ -412,7 +465,7 @@ namespace TikiEngine
 			swapDesc.SampleDesc.Quality = 0;
 			swapDesc.Windowed = true;
 			swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
-
+			
 			D3D_FEATURE_LEVEL level;
 			D3D_FEATURE_LEVEL levels = D3D_FEATURE_LEVEL_11_0;
 
@@ -437,46 +490,10 @@ namespace TikiEngine
 			DllMain::Context = deviceContext;
 			#pragma endregion
 
-			#pragma region BackBuffer
-			ID3D11Texture2D* backBufferPtr;
-			r = swapChain->GetBuffer(
-				0,
-				__uuidof(ID3D11Texture2D),
-				(LPVOID*)&backBufferPtr
-				);
+			if (!initDirectXBackBuffer(desc)) return false;
+			if (!initDirectXDepthStencil(desc)) return false;
 
-			if (FAILED(r)) { return false; }
-
-			r = device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView);
-			backBufferPtr->Release();
-
-			if (FAILED(r)) { return false; }
-			#pragma endregion
-
-			#pragma region DepthBuffer
-			D3D11_TEXTURE2D_DESC depthDesc;
-			ZeroMemory(&depthDesc, sizeof(depthDesc));
-
-			depthDesc.Width = swapDesc.BufferDesc.Width;
-			depthDesc.Height = swapDesc.BufferDesc.Height;
-			depthDesc.MipLevels = 1;
-			depthDesc.ArraySize = 1;
-			depthDesc.Format =  DXGI_FORMAT_D24_UNORM_S8_UINT;
-			depthDesc.SampleDesc.Count = 1;
-			depthDesc.SampleDesc.Quality = 0;
-			depthDesc.Usage = D3D11_USAGE_DEFAULT;
-			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-			depthDesc.CPUAccessFlags = 0;
-			depthDesc.MiscFlags = 0;
-
-			r = device->CreateTexture2D(
-				&depthDesc,
-				NULL,
-				&depthStencilBuffer
-				);
-
-			if (FAILED(r)) { return false; }
-
+			#pragma region DepthStencilState
 			D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 			ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 
@@ -501,31 +518,10 @@ namespace TikiEngine
 			r = device->CreateDepthStencilState(
 				&depthStencilDesc,
 				&depthStencilState
-				);
+			);
 			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
 
 			if (FAILED(r)) { return false; }
-
-			D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
-			ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
-
-			depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
-			depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-			depthStencilViewDesc.Texture2D.MipSlice = 0;
-
-			r = device->CreateDepthStencilView(
-				depthStencilBuffer,
-				&depthStencilViewDesc,
-				&depthStencilView
-				);
-
-			if (FAILED(r)) { return false; }
-
-			deviceContext->OMSetRenderTargets(
-				1,
-				&renderTargetView,
-				depthStencilView
-			);
 			#pragma endregion
 
 			#pragma region RasterizerState
@@ -606,12 +602,92 @@ namespace TikiEngine
 			deviceContext->OMSetBlendState(alphaBlendState, blendFactor, 0xffffffff);
 			#pragma endregion
 
-			#pragma region ViewPort
+			if (!initDirectXViewPort(desc)) return false;
+
+			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - DirectX - BackBuffer
+		bool GraphicsModule::initDirectXBackBuffer(EngineDescription& desc)
+		{
+			ID3D11Texture2D* backBufferPtr;
+			HRESULT r = swapChain->GetBuffer(
+				0,
+				__uuidof(ID3D11Texture2D),
+				(LPVOID*)&backBufferPtr
+			);
+
+			if (FAILED(r)) { return false; }
+
+			r = device->CreateRenderTargetView(backBufferPtr, NULL, &renderTargetView);
+			backBufferPtr->Release();
+
+			if (FAILED(r)) { return false; }
+
+			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - DirectX - DepthStencil
+		bool GraphicsModule::initDirectXDepthStencil(EngineDescription& desc)
+		{
+			D3D11_TEXTURE2D_DESC depthDesc;
+			ZeroMemory(&depthDesc, sizeof(depthDesc));
+
+			depthDesc.Width = desc.Graphics.Width;
+			depthDesc.Height = desc.Graphics.Height;
+			depthDesc.MipLevels = 1;
+			depthDesc.ArraySize = 1;
+			depthDesc.Format =  DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthDesc.SampleDesc.Count = 1;
+			depthDesc.SampleDesc.Quality = 0;
+			depthDesc.Usage = D3D11_USAGE_DEFAULT;
+			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+			depthDesc.CPUAccessFlags = 0;
+			depthDesc.MiscFlags = 0;
+
+			HRESULT r = device->CreateTexture2D(
+				&depthDesc,
+				NULL,
+				&depthStencilBuffer
+				);
+
+			if (FAILED(r)) { return false; }
+
+			D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+			ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+
+			depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+			depthStencilViewDesc.Texture2D.MipSlice = 0;
+
+			r = device->CreateDepthStencilView(
+				depthStencilBuffer,
+				&depthStencilViewDesc,
+				&depthStencilView
+			);
+
+			if (FAILED(r)) { return false; }
+
+			deviceContext->OMSetRenderTargets(
+				1,
+				&renderTargetView,
+				depthStencilView
+			);
+
+			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Init - DirectX - ViewPort
+		bool GraphicsModule::initDirectXViewPort(EngineDescription& desc)
+		{
 			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
 			ZeroMemory(&viewPort, sizeof(viewPort));
 
-			viewPort.Width = (float)swapDesc.BufferDesc.Width;
-			viewPort.Height = (float)swapDesc.BufferDesc.Height;
+			viewPort.Width = (float)desc.Graphics.Width;
+			viewPort.Height = (float)desc.Graphics.Height;
 			viewPort.MinDepth = 0.0f;
 			viewPort.MaxDepth = 1.0f;
 			viewPort.TopLeftX = 0;
@@ -628,7 +704,6 @@ namespace TikiEngine
 			desc.Graphics.ViewPort = this->viewPort;
 
 			deviceContext->RSSetViewports(1, &viewPort);
-			#pragma endregion
 
 			return true;
 		}

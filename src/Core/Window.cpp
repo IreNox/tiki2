@@ -1,11 +1,16 @@
 // Main.cpp
-#include "Core\Window.h"
+#include "Core/Window.h"
+
+#include "Core/IGraphics.h"
+
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		#pragma region Class
+		bool Window::resetScreen = false;
+
 		Window::Window(Engine* engine)
 			: IModule(engine), hWnd(0), hInst(0)
 		{
@@ -58,6 +63,11 @@ namespace TikiEngine
 				return false;
 			}
 
+			RECT rect;
+			GetClientRect(hWnd, &rect);
+			desc.Graphics.Width = rect.right - rect.left;
+			desc.Graphics.Height = rect.bottom - rect.top;
+
 			desc.Window.hWnd = hWnd;
 
 			ShowWindow(hWnd, 1);
@@ -91,6 +101,23 @@ namespace TikiEngine
 		#pragma region Member - Show
 		__inline void Window::Begin()
 		{
+			if (resetScreen)
+			{
+				EngineDescription* desc = engine->GetEngineDescription();
+
+				RECT rect;
+				GetClientRect(hWnd, &rect);
+
+				if (desc->Graphics.Width != rect.right || desc->Graphics.Height != rect.bottom)
+				{
+					desc->Graphics.Width = rect.right;
+					desc->Graphics.Height = rect.bottom;
+					engine->graphics->Reset();
+				}
+
+				resetScreen = false;
+			}
+
 			if (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
 			{
 				TranslateMessage(&msg);
@@ -111,6 +138,8 @@ namespace TikiEngine
 			case WM_DESTROY:
 				PostQuitMessage(0);
 				break;
+			case WM_SIZE:
+				resetScreen = true;
 			default:
 				return DefWindowProc(hWnd, message, wParam, lParam);
 				break;

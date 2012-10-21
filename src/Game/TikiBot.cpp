@@ -205,6 +205,19 @@ namespace TikiEngine
 				velocity = velocity * BrakingRate;
 			}
 
+			if (velocity != Vector2::Zero)
+			{
+				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
+					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
+				);
+
+				if (gameObject->Model) gameObject->Model->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
+			}
+			else
+			{
+				if (gameObject->Model) gameObject->Model->SetAnimationSpeed(0);
+			}
+
 			//calculate the acceleration
 			Vector2 accel = force / (float)mass;
 

@@ -49,6 +49,27 @@ namespace TikiEngine
 			DllMain::Context->ClearRenderTargetView(renderTarget, color.arr);
 		}
 
+		void RenderTarget::Resize(UInt32 width, UInt32 height)
+		{
+			SafeRelease(&texture);
+			SafeRelease(&renderTarget);
+
+			this->Create(width, height, false);
+		}
+
+		void RenderTarget::Resize(ID3D11RenderTargetView* renderTarget)
+		{
+			SafeRelease(&texture);
+
+			this->renderTarget = renderTarget;
+
+			ID3D11Resource* res = 0;
+			renderTarget->GetResource(&res);
+
+			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
+			texture = new Texture(engine, tex, false);
+		}
+
 		void RenderTarget::SaveToFile(wcstring fileName)
 		{
 			texture->SaveToFile(fileName);

@@ -127,7 +127,7 @@ namespace TikiEngine
 	}
 	#pragma endregion
 
-	#pragma region Member - Run
+	#pragma region Member - Run/Exit
 	void Engine::Run()
 	{
 		int wait = 0;
@@ -142,9 +142,6 @@ namespace TikiEngine
 			return;
 		}
 		QueryPerformanceCounter(&last);
-
-		InitializationArgs initArgs = InitializationArgs(content);
-		scene->Initialize(initArgs);
 
 		while (window->GetReady())
 		{
@@ -189,18 +186,31 @@ namespace TikiEngine
 				i++;
 			}
 
-			if (args.Input.GetKey(KEY_ESCAPE))
-			{
-				DestroyWindow(window->GetHWND());
-			}
-
+			if (args.Input.GetKey(KEY_ESCAPE)) this->Exit();
 			window->End();
+		}
+	}
 
-			//float fps = 1.0f / elapsedTime;
-			//wait += (fps > 70.0f ? 1 : -1);
-			//wait = abs(wait);
+	void Engine::Exit()
+	{
+		DestroyWindow(window->GetHWND());
+	}
+	#pragma endregion
 
-			//Sleep(wait);
+	#pragma region Member - Scene
+	Scene* Engine::GetScene() const
+	{
+		return scene;
+	}
+
+	void Engine::SetScene(Scene* scene)
+	{
+		this->scene = scene;
+
+		if (!scene->IsInitialized())
+		{
+			InitializationArgs initArgs = InitializationArgs(content);
+			scene->Initialize(initArgs);
 		}
 	}
 	#pragma endregion

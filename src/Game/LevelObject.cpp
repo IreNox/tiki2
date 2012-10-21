@@ -26,7 +26,7 @@ namespace TikiEngine
 				this->Model->GetMaterial()->TexNormalMap = 0;
 			}
 
-			LevelObject::Update(args);
+			LevelChild::Update(args);
 		}
 		#endif
 		

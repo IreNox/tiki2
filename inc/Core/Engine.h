@@ -44,35 +44,32 @@ namespace TikiEngine
 		Window* window;
 		LibraryManager* librarys;
 	
-		Scene* scene;
-
 		/*!
-		 * @brief Erstellt eine neue instanz von Engine.
+		 * @brief Create new instance of Engine.
 		 */
 		Engine();
-		
-		/*!
-		 * @brief Zerstört die Engine
-		 */
 		~Engine();
 
 		/*!
-		 * @brief Iniziert die Engine.
+		 * @brief Initialize the Engine.
 		 *
-		 * @param desc Inizierungs Variable
+		 * @param desc Variable
 		 *
-		 * @return Erfolgreich
+		 * @return Successful
 		 */
 		bool Initialize(EngineDescription& desc);
 
-		/*!
-		 * @brief Startet die Anwendungsschleife
-		 */
+		/*! @brief Start Render loop */
 		void Run();
-		
-		/*!
-		 * @brief Gibt die Engine wieder frei.
-		 */
+		/*! @brief Exit Render loop */
+		void Exit();
+
+		/*! @brief Get current Scene */
+		Scene* GetScene() const;
+		/*! @brief Set and initialize a new Scene */
+		void SetScene(Scene* scene);
+
+		/*! @brief Destroy Engine-Object and unload all Modules */
 		void Dispose();
 
 		EngineDescription* GetEngineDescription(); 
@@ -83,6 +80,8 @@ namespace TikiEngine
 		virtual void Update(const UpdateArgs& args);
 
 	private:
+
+		Scene* scene;
 
 		EngineDescription desc;
 

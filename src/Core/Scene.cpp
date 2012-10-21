@@ -12,7 +12,7 @@ namespace TikiEngine
 
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras()
+		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false)
 	{
 	}
 
@@ -56,8 +56,18 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Init
+	bool Scene::IsInitialized()
+	{
+		return initialized;
+	}
+
 	void Scene::Initialize(const InitializationArgs& args)
 	{
+		#if _DEBUG
+		if (initialized) throw "Scene already initialized.";
+		#endif
+
+		initialized = true;
 	}
 	#pragma endregion
 

@@ -21,7 +21,7 @@ namespace TikiEngine
 		{
 			BasicDatabase::LoadFromDatabase(state);
 
-			SceneLevel* scene = (SceneLevel*)engine->scene;
+			SceneLevel* scene = (SceneLevel*)engine->GetScene();
 			if (scene && scene->GetLevel()->GetTerrain())
 			{
 				this->PRS.SPosition().Y = scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.GPosition());

@@ -79,6 +79,12 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GUIButton::Draw(const DrawArgs& args)
 		{
+			engine->sprites->DrawString(
+				GUIControl::GetDefaultFont(),
+				text,
+				posText
+			);
+
 			if (mouseOver)
 			{
 				engine->sprites->Draw(texMoLT, position);
@@ -104,12 +110,6 @@ namespace TikiEngine
 				engine->sprites->Draw(texCB, rectCB);
 				engine->sprites->Draw(texRC, rectRC);
 			}
-
-			engine->sprites->DrawString(
-				GUIControl::GetDefaultFont(),
-				text,
-				posText
-			);
 		}
 		#pragma endregion
 

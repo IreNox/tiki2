@@ -5,6 +5,7 @@
 
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
+#include "Core/ISpriteBatch.h"
 
 namespace TikiEngine
 {
@@ -14,7 +15,7 @@ namespace TikiEngine
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
 #if _DEBUG
-			, drawNavMesh(false)
+			, drawNavMesh(false), drawRenderTarget(false)
 #endif
 		{
 			hud = new GameHud(this);
@@ -81,6 +82,12 @@ namespace TikiEngine
 
 			#if _DEBUG
 			if (drawNavMesh) navMesh->Draw(args);
+
+			if (drawRenderTarget)
+			{
+				engine->sprites->Draw(engine->graphics->GetDepthTarget(), Rectangle(10, 10, 200, 180));
+				engine->sprites->Draw(engine->graphics->GetNormalTarget(), Rectangle(10, 200, 200, 180));
+			}
 			#endif
 		}
 
@@ -90,6 +97,7 @@ namespace TikiEngine
 
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) drawNavMesh = !drawNavMesh;
+			if (args.Input.GetKeyPressed(KEY_F3)) drawRenderTarget = !drawRenderTarget;
 			#endif
 
 			if(args.Input.MouseButtons[1])

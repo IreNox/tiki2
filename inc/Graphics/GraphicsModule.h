@@ -58,6 +58,8 @@ namespace TikiEngine
 			IRenderTarget* GetNormalTarget();
 			IRenderTarget* GetDepthTarget();
 
+			void Reset();
+
 			void MakeScreenshot(wcstring fileName);
 
 			ConstantBuffer<CBLights>* GetCBufferLight();
@@ -128,6 +130,9 @@ namespace TikiEngine
 
 			bool initSelectAdapter(EngineDescription& desc);
 			bool initDirectX(EngineDescription& desc);
+			bool initDirectXBackBuffer(EngineDescription& desc);
+			bool initDirectXDepthStencil(EngineDescription& desc);
+			bool initDirectXViewPort(EngineDescription& desc);
 			bool initEngine(EngineDescription& desc);
 
 			void drawPostProcess(PostProcess* postProcess);

@@ -41,6 +41,7 @@ namespace TikiEngine
 			labelRes2->Text() = L"5/10";
 			enabledControls.Add(labelRes2);
 
+			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
 		}
 
@@ -68,6 +69,11 @@ namespace TikiEngine
 
 			imageRes2->Position() = Vector2((float)vp->Width - 100, 10);
 			labelRes2->Position() = Vector2((float)vp->Width - 80, 10);
+		}
+
+		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
+		{
+			this->ResetScreen();
 		}
 		#pragma endregion
 

@@ -189,16 +189,6 @@ namespace TikiEngine
 				i++;
 			}
 
-			engine->sprites->Draw(
-				engine->graphics->GetDepthTarget(),
-				Rectangle(10, 10, 200, 180)
-			);
-
-			engine->sprites->Draw(
-				engine->graphics->GetNormalTarget(),
-				Rectangle(10, 200, 200, 180)
-			);
-
 			gameState->Draw(args);
 			Scene::Draw(args);
 		}

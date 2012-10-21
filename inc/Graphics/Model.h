@@ -33,8 +33,11 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* material);
 
-      List<DefaultVertex>* GetVertices();
-      List<UInt32>* GetIndices();
+			List<DefaultVertex>* GetVertices();
+			List<UInt32>* GetIndices();
+
+			float GetAnimationSpeed();
+			void SetAnimationSpeed(float speed);
 
 			bool GetReady();
 
@@ -72,6 +75,7 @@ namespace TikiEngine
 			FbxTime stop;
 			FbxTime frameTime;
 			FbxTime currentTime;
+			float animationSpeed;
 
 			List<DefaultVertex> verticesList;
 			List<UInt32> indicesList;

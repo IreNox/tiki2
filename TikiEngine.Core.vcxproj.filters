@@ -120,6 +120,12 @@
     <Filter Include="Headerdateien\Core\Input">
       <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\Args/States\Gameloop">
+      <UniqueIdentifier>{d52b0eef-ff21-4d43-afc0-13a574bc2b05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Args/States\Events">
+      <UniqueIdentifier>{d7dafc6d-7578-4a93-a57e-875b28c8b498}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -331,12 +337,6 @@
     <ClInclude Include="inc\Core\IPhysics.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\DrawArgs.h">
-      <Filter>Headerdateien\Core\Args/States</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\UpdateArgs.h">
-      <Filter>Headerdateien\Core\Args/States</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IInput.h">
       <Filter>Headerdateien\Interfaces\Modules</Filter>
     </ClInclude>
@@ -405,12 +405,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Key.h">
       <Filter>Headerdateien\Core\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\GameTime.h">
-      <Filter>Headerdateien\Core\Args/States</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\InputState.h">
-      <Filter>Headerdateien\Core\Args/States</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\GameObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
@@ -535,9 +529,6 @@
     <ClInclude Include="inc\Core\Line2D.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\DrawLightArgs.h">
-      <Filter>Headerdateien\Core\Args/States</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\HelperLog.h">
       <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
@@ -594,6 +585,30 @@
     </ClInclude>
     <ClInclude Include="inc\Core\CBMatrices.h">
       <Filter>Headerdateien\Core\Graphics\Enums/Structs</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DrawArgs.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GameTime.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DrawLightArgs.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\InputState.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\UpdateArgs.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EventScreenSizeChanged.h">
+      <Filter>Headerdateien\Core\Args/States\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EventHandler.h">
+      <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Event.h">
+      <Filter>Headerdateien\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
