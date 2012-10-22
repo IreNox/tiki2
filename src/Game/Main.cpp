@@ -2,8 +2,9 @@
 #include <Windows.h>
 
 #include "Core/Engine.h"
-
 #include "Game/SceneMenuMain.h"
+
+#include "../misc/res/resource.h"
 
 using namespace TikiEngine;
 using namespace TikiEngine::Game;
@@ -20,6 +21,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.hInst = hInst;
 		desc.Window.Width = 1100;
 		desc.Window.Height = 750;
+		desc.Window.Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 
 		Engine* engine = new Engine();
 		

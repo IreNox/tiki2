@@ -72,7 +72,7 @@ namespace TikiEngine
 		/*! @brief Destroy Engine-Object and unload all Modules */
 		void Dispose();
 
-		EngineDescription* GetEngineDescription(); 
+		EngineDescription& GetEngineDescription(); 
 
 	protected:
 

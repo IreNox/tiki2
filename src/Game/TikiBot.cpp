@@ -151,6 +151,9 @@ namespace TikiEngine
 		void TikiBot::Draw(const DrawArgs& args)
 		{
 			// connect the waypoins to draw lines in green
+			#if _DEBUG
+			if (!gameState->DrawNavMesh) return;
+
 			NavigationPath::WAYPOINT_LIST::const_iterator iter = path.WaypointList().begin();
 			if (iter != path.WaypointList().end())
 			{
@@ -167,9 +170,7 @@ namespace TikiEngine
 										   waypoint.position.Y + 0.1f,
 										   waypoint.position.Z);
 
-					#if _DEBUG
 					engine->graphics->DrawLine(last, curr, Color::Green);
-					#endif
 
 					LastWaypoint = waypoint;
 				}
@@ -182,10 +183,9 @@ namespace TikiEngine
 				Vector3 start(pathPos.X, pathPos.Y + 0.1f, pathPos.Z);
 				Vector3 wp(waypoint.position.X, waypoint.position.Y + 0.1f, waypoint.position.Z);
 
-				#if _DEBUG
 				engine->graphics->DrawLine(start, wp, Color(1, 1, 1, 1));
-				#endif
 			}
+			#endif
 		}
 
 		void TikiBot::Update(const UpdateArgs& args)

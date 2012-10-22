@@ -35,9 +35,9 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member
-	EngineDescription* Engine::GetEngineDescription()
+	EngineDescription& Engine::GetEngineDescription()
 	{
-		return &desc;
+		return desc;
 	}
 	#pragma endregion
 
@@ -227,7 +227,7 @@ namespace TikiEngine
 	void Engine::Update(const UpdateArgs& args)
 	{
 		std::wostringstream s;
-		s << "TikiEngine 2.0 - FPS: " << (1.0f / args.Time.ElapsedTime) << " - Mouse: " << args.Input.MousePosition.X << " : " << args.Input.MousePosition.Y;
+		s << "TikiEngine 2.0 - FPS: " << (1.0f / args.Time.ElapsedTime);
 
 		wstring str = s.str();
 
@@ -235,6 +235,12 @@ namespace TikiEngine
 			window->GetHWND(),
 			str.c_str()
 		);
+
+		if (args.Input.GetKeyPressed(KEY_F11))
+		{
+			desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
+			graphics->Reset();
+		}
 
 		if (scene)
 		{

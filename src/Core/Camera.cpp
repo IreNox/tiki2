@@ -17,8 +17,7 @@ namespace TikiEngine
 		Camera::Camera(Engine* engine, GameObject* gameObject)
 			: Component(engine, gameObject), renderTarget(0), matrices()
 		{
-
-			ViewPort* vp = &engine->GetEngineDescription()->Graphics.ViewPort;
+			ViewPort* vp = engine->graphics->GetViewPort();
 
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
 				MATH_PI / 4,				

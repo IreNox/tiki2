@@ -150,8 +150,18 @@ namespace TikiEngine
 		#pragma region Member - Reset
 		void GraphicsModule::Reset()
 		{
-			EngineDescription desc = *engine->GetEngineDescription();
+			EngineDescription& desc = engine->GetEngineDescription();
 			
+			if (desc.Graphics.Fullscreen)
+			{
+				RECT rect;
+				HWND hDesktop = GetDesktopWindow();
+				GetWindowRect(hDesktop, &rect);
+
+				desc.Graphics.Width = rect.right;
+				desc.Graphics.Height = rect.bottom;
+			}
+
 			DXGI_MODE_DESC modeDesc;
 			modeDesc.Format = DXGI_FORMAT_UNKNOWN;
 			modeDesc.Width = desc.Graphics.Width;
@@ -185,8 +195,15 @@ namespace TikiEngine
 				desc.Graphics.Width,
 				desc.Graphics.Height,
 				DXGI_FORMAT_UNKNOWN,
-				0
+				DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 			);
+
+			//r = swapChain->SetFullscreenState(desc.Graphics.Fullscreen, NULL);
+
+			//if (FAILED(r))
+			//{
+			//	HelperLog::Write("Warning: Can't change Fullscreen mode.");
+			//}
 
 			if (FAILED(r))
 			{
@@ -450,6 +467,16 @@ namespace TikiEngine
 		bool GraphicsModule::initDirectX(EngineDescription& desc)
 		{
 			#pragma region SwapChain
+			if (desc.Graphics.Fullscreen)
+			{
+				RECT rect;
+				HWND hDesktop = GetDesktopWindow();
+				GetWindowRect(hDesktop, &rect);
+
+				desc.Graphics.Width = rect.right;
+				desc.Graphics.Height = rect.bottom;
+			}
+
 			DXGI_SWAP_CHAIN_DESC swapDesc;
 			ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
 
@@ -463,8 +490,9 @@ namespace TikiEngine
 			swapDesc.OutputWindow = desc.Window.hWnd;
 			swapDesc.SampleDesc.Count = 1;
 			swapDesc.SampleDesc.Quality = 0;
-			swapDesc.Windowed = true;
+			swapDesc.Windowed = !desc.Graphics.Fullscreen;
 			swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+			swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 			
 			D3D_FEATURE_LEVEL level;
 			D3D_FEATURE_LEVEL levels = D3D_FEATURE_LEVEL_11_0;

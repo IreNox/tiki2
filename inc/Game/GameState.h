@@ -24,6 +24,11 @@ namespace TikiEngine
 		{
 		public:
 
+			#if _DEBUG
+			bool DrawNavMesh;
+			bool DrawRenderTarget;
+			#endif
+
 			GameState(Engine* engine, SceneLevel* scene);
 			~GameState();
 
@@ -44,11 +49,6 @@ namespace TikiEngine
 
 		private:
 			
-#if _DEBUG
-			bool drawNavMesh;
-			bool drawRenderTarget;
-#endif
-
 			UInt64 resource1;
 			UInt64 resource2;
 

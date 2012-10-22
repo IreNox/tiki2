@@ -63,6 +63,9 @@
     <Filter Include="Quelldateien\Gameplay">
       <UniqueIdentifier>{27533a18-50b3-4941-8f1b-ceb3327b8bc5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{ddc500a7-223a-4a4c-8f62-e267bd854925}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -158,6 +161,9 @@
     <ClInclude Include="inc\Game\GameHud.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="misc\res\resource.h">
+      <Filter>Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -244,5 +250,15 @@
     <ClCompile Include="src\Game\GameHud.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="misc\res\icon.ico">
+      <Filter>Resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="misc\res\resources.rc">
+      <Filter>Resources</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

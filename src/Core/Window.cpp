@@ -34,7 +34,8 @@ namespace TikiEngine
 			win.cbSize			= sizeof(WNDCLASSEX);
 			win.hbrBackground	= (HBRUSH)COLOR_WINDOWFRAME;
 			win.hCursor			= LoadCursor(NULL, IDC_ARROW);
-
+			win.hIcon			= desc.Window.Icon;
+	
 			HRESULT r = RegisterClassEx(&win);
 
 			if (FAILED(r))
@@ -103,15 +104,15 @@ namespace TikiEngine
 		{
 			if (resetScreen)
 			{
-				EngineDescription* desc = engine->GetEngineDescription();
+				EngineDescription& desc = engine->GetEngineDescription();
 
 				RECT rect;
 				GetClientRect(hWnd, &rect);
 
-				if (desc->Graphics.Width != rect.right || desc->Graphics.Height != rect.bottom)
+				if (desc.Graphics.Width != rect.right || desc.Graphics.Height != rect.bottom)
 				{
-					desc->Graphics.Width = rect.right;
-					desc->Graphics.Height = rect.bottom;
+					desc.Graphics.Width = rect.right;
+					desc.Graphics.Height = rect.bottom;
 					engine->graphics->Reset();
 				}
 

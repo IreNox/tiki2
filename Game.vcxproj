@@ -50,6 +50,7 @@
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\UnitFunctions.h" />
     <ClInclude Include="inc\Game\Utils.h" />
+    <ClInclude Include="misc\res\resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
@@ -80,6 +81,12 @@
     <ClCompile Include="src\Game\SceneTim.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="misc\res\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="misc\res\resources.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}</ProjectGuid>

@@ -15,7 +15,7 @@ namespace TikiEngine
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
 #if _DEBUG
-			, drawNavMesh(false), drawRenderTarget(false)
+			, DrawNavMesh(false), DrawRenderTarget(false)
 #endif
 		{
 			hud = new GameHud(this);
@@ -82,9 +82,9 @@ namespace TikiEngine
 			hud->Draw(args);
 
 			#if _DEBUG
-			if (drawNavMesh) navMesh->Draw(args);
+			if (DrawNavMesh) navMesh->Draw(args);
 
-			if (drawRenderTarget)
+			if (DrawRenderTarget)
 			{
 				engine->sprites->Draw(engine->graphics->GetDepthTarget(), Rectangle(10, 10, 200, 180));
 				engine->sprites->Draw(engine->graphics->GetNormalTarget(), Rectangle(10, 200, 200, 180));
@@ -97,8 +97,8 @@ namespace TikiEngine
 			hud->Update(args);
 
 			#if _DEBUG
-			if (args.Input.GetKeyPressed(KEY_F2)) drawNavMesh = !drawNavMesh;
-			if (args.Input.GetKeyPressed(KEY_F3)) drawRenderTarget = !drawRenderTarget;
+			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;
+			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
 			#endif
 
 			if(args.Input.MouseButtons[1])

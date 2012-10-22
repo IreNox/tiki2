@@ -28,17 +28,16 @@ namespace TikiEngine
 			 * @brief The window title.
 			 */
 			const wchar_t* WindowTitle;
-	
-			/*!
-			 * @brief The window handle.
-			 */
-			HWND hWnd;
 
-			/*!
-			 * @brief Creates an instance of WINDOW_DESCRIPTION
-			 */
+			/*! @brief Window Icon */
+			HICON Icon;
+	
+			/*! @brief The window handle. Fill by Window class */
+			HWND hWnd;
+			
+			/*! @brief Creates an instance of WindowDescription */
 			WindowDescription()
-				: hWnd(0)
+				: hWnd(0), Icon(0)
 			{
 				this->Width = 800;
 				this->Height = 600;
