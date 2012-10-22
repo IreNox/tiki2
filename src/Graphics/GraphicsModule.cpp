@@ -583,6 +583,7 @@ namespace TikiEngine
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
 			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
@@ -594,7 +595,7 @@ namespace TikiEngine
 			r = device->CreateBlendState(
 				&blendStateDesc,
 				&alphaBlendState
-				);
+			);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
 

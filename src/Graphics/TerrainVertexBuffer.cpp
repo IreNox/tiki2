@@ -60,7 +60,7 @@ namespace TikiEngine
 			CloddyVertex* ptr = (CloddyVertex*)buffer->GetRawPointer();
 			int64 size = buffer->GetCapacity();
 
-			UInt32 i = lockMin;
+			int32 i = lockMin;
 			while (i < lockMax)
 			{
 				memcpy(&dataVector[i], ptr[i - lockMin].Position, sizeof(Vector3));

@@ -43,7 +43,7 @@ namespace TikiEngine
 
 			UInt32 counter = 0;
 
-			for(Int32 i = 0; i < mesh->GetPolygonVertexCount();i++)
+			for(Int32 i = 0; i < mesh->GetPolygonCount();i++)
 			{
 				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 

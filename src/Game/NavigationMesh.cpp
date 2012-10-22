@@ -12,7 +12,7 @@ namespace TikiEngine
 	{
 		// ctor / dtor
 		NavigationMesh::NavigationMesh(Engine* engine)
-			: pathSession(0)
+			: pathSession(0), navModel(0)
 		{
 			this->engine = engine;
 			cellArray.clear();
@@ -22,8 +22,8 @@ namespace TikiEngine
 		{
 			SafeRelease(&navModel);
 
-			cellSpace->EmptyCells();
-			delete cellSpace;
+			//cellSpace->EmptyCells();
+			//delete cellSpace;
 
 			Clear();
 		}
@@ -414,9 +414,12 @@ namespace TikiEngine
 			for (; iter != cellArray.end(); ++iter)
 			{
 				const NavigationCell* cell = *iter;
+
+#if _DEBUG
 				args.Graphics->DrawLine(cell->Vertex(0),cell->Vertex(1), Color::Red);
 				args.Graphics->DrawLine(cell->Vertex(1),cell->Vertex(2), Color::Red);
 				args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
+#endif
 			}
 			
 			// render cellSpace

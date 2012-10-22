@@ -181,6 +181,7 @@ namespace TikiEngine
 
 		void SceneMark::Draw(const DrawArgs& args)
 		{
+			#if _DEBUG
 			// Draw Mouse Ray
 		    Vector3 forwardCam = fly->GetGameObject()->PRS.GPosition() + fly->GetGameObject()->PRS.GetForward();
 		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
@@ -208,7 +209,6 @@ namespace TikiEngine
 			if (showNaviMesh)
 				naviMesh->Draw(args);
 
-			#if _DEBUG
 			engine->physics->DrawDebug();
 			#endif
 

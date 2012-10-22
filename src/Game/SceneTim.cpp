@@ -167,7 +167,9 @@ namespace TikiEngine
 			//	Rectangle(10, 390, 200, 180)
 			//);
 
+			#if _DEBUG
 			engine->physics->DrawDebug();
+			#endif
 
 			/*engine->sprites->Draw(
 				tex,

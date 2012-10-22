@@ -60,7 +60,7 @@ namespace TikiEngine
 				->Append(cloddy_VertexFormat::N3F())
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());
-
+			
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
 			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 2);
 

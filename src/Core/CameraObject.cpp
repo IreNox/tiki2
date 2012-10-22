@@ -1,5 +1,6 @@
 
 #include "Core/CameraObject.h"
+#include "Core/TypeGlobals.h"
 
 namespace TikiEngine
 {
@@ -13,6 +14,7 @@ namespace TikiEngine
 
 		CameraObject::~CameraObject()
 		{
+			SafeRelease(&camera);
 		}
 
 		Camera* CameraObject::GetCameraComponent()

@@ -34,7 +34,9 @@ namespace TikiEngine
 				@param b - Bounds to test for intersection. */
 			virtual bool Intersects(IBoundingBox* b) = 0;
 
+#if _DEBUG
 			virtual void DrawDebug(Color color) = 0;
+#endif
 
 		};
 	}

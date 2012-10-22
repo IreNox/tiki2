@@ -56,6 +56,7 @@ namespace TikiEngine
 			return bounds.intersects(*bb);
 		}
 
+#if _DEBUG
 		void BoundingBox::DrawDebug(Color color)
 		{
 			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, minimum.Z), Vector3(maximum.X, minimum.Y, minimum.Z), color);
@@ -73,6 +74,6 @@ namespace TikiEngine
 			engine->graphics->DrawLine(Vector3(minimum.X, minimum.Y, maximum.Z), Vector3(minimum.X, maximum.Y, maximum.Z), color);
 			engine->graphics->DrawLine(Vector3(maximum.X, minimum.Y, maximum.Z), Vector3(maximum.X, maximum.Y, maximum.Z), color);
 		}
-
+#endif
 	}
 }

@@ -11,7 +11,7 @@
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
 
-#include "Game/CameraFly.h"
+#include "Game/CameraRTS.h"
 
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
@@ -35,6 +35,7 @@ namespace TikiEngine
 		SceneLevel::~SceneLevel()
 		{
 			this->DisposeLevel();
+			SafeRelease(&gameState);
 
 			if (db != 0)
 			{
@@ -60,7 +61,7 @@ namespace TikiEngine
 			CameraObject* go = new CameraObject(engine);
 			go->PRS.SPosition().Y = 35.0f;
 
-			(new CameraFly(engine, go))->Release();
+			(new CameraRTS(engine, go))->Release();
 
 			mainCamera = go->GetCameraComponent();
 			this->AddElement(go);

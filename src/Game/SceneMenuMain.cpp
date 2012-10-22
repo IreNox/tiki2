@@ -16,6 +16,13 @@ namespace TikiEngine
 		SceneMenuMain::~SceneMenuMain()
 		{
 			SafeRelease(&sceneLevel);
+
+			UInt32 i = 0;
+			while (i < controls.Count())
+			{
+				SafeRelease(&controls[i]);
+				i++;
+			}
 		}
 		#pragma endregion
 
@@ -24,7 +31,9 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			this->AddElement(new CameraObject(engine));
+			GameObject* obj = new CameraObject(engine);
+			this->AddElement(obj);
+			obj->Release();
 
 			ITexture* logo = engine->content->LoadTexture(L"logo");
 

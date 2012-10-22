@@ -166,7 +166,10 @@ namespace TikiEngine
 					Vector3 curr = Vector3(waypoint.position.X, 
 										   waypoint.position.Y + 0.1f,
 										   waypoint.position.Z);
+
+					#if _DEBUG
 					engine->graphics->DrawLine(last, curr, Color::Green);
+					#endif
 
 					LastWaypoint = waypoint;
 				}
@@ -178,7 +181,10 @@ namespace TikiEngine
 				const NavigationPath::WAYPOINT& waypoint = *nextWaypoint;
 				Vector3 start(pathPos.X, pathPos.Y + 0.1f, pathPos.Z);
 				Vector3 wp(waypoint.position.X, waypoint.position.Y + 0.1f, waypoint.position.Z);
+
+				#if _DEBUG
 				engine->graphics->DrawLine(start, wp, Color(1, 1, 1, 1));
+				#endif
 			}
 		}
 

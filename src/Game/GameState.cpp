@@ -25,6 +25,7 @@ namespace TikiEngine
 		GameState::~GameState()
 		{
 			SafeRelease(&hud);
+			SafeDelete(&navMesh);
 		}
 		#pragma endregion
 

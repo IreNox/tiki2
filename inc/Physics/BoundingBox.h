@@ -27,7 +27,9 @@ namespace TikiEngine
 			void Set(const Vector3& min, const Vector3& max);
 			bool Intersects(IBoundingBox* b);
 
+#if _DEBUG
 			void DrawDebug(Color color);
+#endif
 
 			#pragma region IResource Members
 			void* GetNativeResource() { return (void*)&bounds; }
