@@ -155,7 +155,7 @@ namespace TikiEngine
 				position.X + texLT->GetWidth(),
 				position.Y + texLT->GetHeight(),
 				(rect.Width - texLT->GetWidth()) - texRT->GetWidth(),
-				(rect.Height - texRT->GetHeight()) - texRB->GetHeight()
+				(rect.Height - texCT->GetHeight()) - texCB->GetHeight()
 			);
 
 			rectCB = RectangleF(

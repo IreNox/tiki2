@@ -70,6 +70,7 @@ namespace TikiEngine
 
 		void SpriteBatchModule::End()
 		{
+			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 			DllMain::ModuleGraphics->GetScreenTarget()->ApplyFirstAndOnly();
 
 			UInt32 count = vertices.Count();

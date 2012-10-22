@@ -30,8 +30,8 @@ namespace TikiEngine
 			: IGraphics(engine), inited(false), indexBuffer(0), vertexBuffers(), rasterStateBackfaces(0), device(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtScreen(0), rtBackBuffer(0),
 			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
-			alphaBlendState(0), depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0),
-			depthStencilBuffer(0), cbufferLights(0), cbufferCamera(0), cbufferObject(0)
+			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
+			cbufferLights(0), cbufferCamera(0), cbufferObject(0), blendStateAlphaBlend(0), blendStateAlphaBlendDisabled(0)
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -96,12 +96,13 @@ namespace TikiEngine
 			SafeDelete(&cbufferCamera);
 			SafeDelete(&cbufferObject);
 
-			SafeRelease(&alphaBlendState);
+			SafeRelease(&blendStateAlphaBlend);
+			SafeRelease(&blendStateAlphaBlendDisabled);
+			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilStateDisable);
 			SafeRelease(&rasterStateBackfaces);
 
 			SafeRelease(&depthStencilView);
-			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilBuffer);
 			SafeRelease(&renderTargetView);
 			SafeRelease(&deviceContext);
@@ -320,6 +321,32 @@ namespace TikiEngine
 			renderTargets.Clear();
 			this->SetRenderTarget(0, target);
 		}
+
+		void GraphicsModule::SetStateAlphaBlend(bool value)
+		{			
+			float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+
+			if (value)
+			{
+				deviceContext->OMSetBlendState(blendStateAlphaBlend, blendFactor, 0xffffffff);
+			}
+			else
+			{
+				deviceContext->OMSetBlendState(blendStateAlphaBlendDisabled, blendFactor, 0xffffffff);
+			}
+		}
+
+		void GraphicsModule::SetStateDepthEnabled(bool value)
+		{
+			if (value)
+			{
+				deviceContext->OMSetDepthStencilState(depthStencilState, 1);
+			}
+			else
+			{
+				deviceContext->OMSetDepthStencilState(depthStencilStateDisable, 1);
+			}
+		}
 		#pragma endregion
 
 		#pragma region Member - Debug
@@ -350,7 +377,7 @@ namespace TikiEngine
 
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
-			deviceContext->OMSetDepthStencilState(depthStencilState, 1);
+			this->SetStateDepthEnabled(true);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 						
 			rtDepth->Clear(Color::Black);
@@ -622,13 +649,22 @@ namespace TikiEngine
 
 			r = device->CreateBlendState(
 				&blendStateDesc,
-				&alphaBlendState
+				&blendStateAlphaBlend
 			);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
 
-			float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
-			deviceContext->OMSetBlendState(alphaBlendState, blendFactor, 0xffffffff);
+			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
+			blendStateDesc.RenderTarget[0].BlendEnable = FALSE;
+
+			r = device->CreateBlendState(
+				&blendStateDesc,
+				&blendStateAlphaBlendDisabled
+			);
+
+			if (FAILED(r)) { this->Dispose(); return false; }
+
+			this->SetStateAlphaBlend(true);
 			#pragma endregion
 
 			if (!initDirectXViewPort(desc)) return false;

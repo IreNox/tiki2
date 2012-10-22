@@ -52,4 +52,11 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return color;
 }
 
-#include "Data/Effects/IncOS/is_technique.fx"
+technique11 basic
+{
+    pass p0
+    {
+        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+    }
+}

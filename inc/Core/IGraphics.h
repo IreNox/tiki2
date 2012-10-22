@@ -52,6 +52,9 @@ namespace TikiEngine
 			virtual IRenderTarget* GetNormalTarget() = 0;
 			virtual IRenderTarget* GetDepthTarget() = 0;
 
+			virtual void SetStateAlphaBlend(bool value) = 0;
+			virtual void SetStateDepthEnabled(bool value) = 0;
+
 			/*!
 			 * @brief Reset the Graphics Device and apply new values. Use values from Engine::GetDescription()
 			 */
