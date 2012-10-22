@@ -57,7 +57,7 @@ namespace TikiEngine
 
 			NavigationMesh* navMesh;
 			
-			//List<Unit*> selectedUnits;
+			//List<LevelUnit*> selectedUnits; // LevelUnity erbt von LevelChild = GameObject
 
 			//List<Unit*> levelUnits;
 			//List<Building*> levelBuildings;
