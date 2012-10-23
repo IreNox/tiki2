@@ -28,6 +28,7 @@ namespace TikiEngine
 		{
 			SafeRelease(&hud);
 			SafeDelete(&navMesh);
+			SafeDelete(&unitSelection);
 		}
 		#pragma endregion
 

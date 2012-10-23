@@ -67,10 +67,14 @@ namespace TikiEngine
 				if (selectionStartPoint.X > args.Input.MousePositionDisplay.X)
 				{
 					selectionRect.X = args.Input.MousePositionDisplay.X;
-					selectionRect.Y = args.Input.MousePositionDisplay.Y;
-					selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
 				}
 
+				if (selectionStartPoint.Y > args.Input.MousePositionDisplay.Y)
+				{
+					selectionRect.Y = args.Input.MousePositionDisplay.Y;
+				}
+				
+				selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
 				selectButton->Size() = Vector2(selectionRect.Width, selectionRect.Height);
 
 				wostringstream str;
