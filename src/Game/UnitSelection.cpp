@@ -44,6 +44,8 @@ namespace TikiEngine
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
 			{
+				selectionStartPoint = args.Input.MousePositionDisplay;
+
 				// Set the selection box starting point
 				selectionRect.X = args.Input.MousePositionDisplay.X;
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
@@ -59,9 +61,18 @@ namespace TikiEngine
 			{
 				// Mouse left button is being held down ( dragging )
 				// Calculate new width,height
-				selectionRect.Width = args.Input.MousePositionDisplay.X - selectionRect.X;
-				selectionRect.Height = args.Input.MousePositionDisplay.Y - selectionRect.Y;
+				selectionRect.Width = abs(args.Input.MousePositionDisplay.X - selectionStartPoint.X);
+				selectionRect.Height = abs(args.Input.MousePositionDisplay.Y - selectionStartPoint.Y);
+
+				if (selectionStartPoint.X > args.Input.MousePositionDisplay.X)
+				{
+					selectionRect.X = args.Input.MousePositionDisplay.X;
+					selectionRect.Y = args.Input.MousePositionDisplay.Y;
+					selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
+				}
+
 				selectButton->Size() = Vector2(selectionRect.Width, selectionRect.Height);
+
 				wostringstream str;
 				str << "Mouse left button dragging Width=" << selectionRect.Width << " Height=" << selectionRect.Height << "\n";
 				OutputDebugString(str.str().c_str());
@@ -76,10 +87,7 @@ namespace TikiEngine
 				selectionRect.Height = 0;
 				OutputDebugString(L"Reset\n");
 			}
-
-
-
-
+			
 			// Check entity intersection
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetObjects()->Count())
@@ -109,11 +117,11 @@ namespace TikiEngine
 				//	continue;
  
 
- 
- 
+
  				i++;
 			}
 
+			selectButton->Update(args);
 		}
 
 		void UnitSelection::Draw(const DrawArgs& args)

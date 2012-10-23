@@ -30,7 +30,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Get/Set
-		Vector2 GUIControl::Position() const
+		const Vector2 GUIControl::Position() const
 		{
 			return position;
 		}
@@ -41,7 +41,7 @@ namespace TikiEngine
 			return position;
 		}
 
-		Vector2 GUIControl::Size() const
+		const Vector2 GUIControl::Size() const
 		{
 			return size;
 		}
@@ -62,7 +62,7 @@ namespace TikiEngine
 		{
 			if (isDirty)
 			{
-				boundingBox = createBoundingBox();
+				boundingBox = this->createBoundingBox();
 				isDirty = false;
 			}
 

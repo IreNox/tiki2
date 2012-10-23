@@ -23,7 +23,9 @@ namespace TikiEngine
 			
 		private:
 
+			Vector2 selectionStartPoint;
 			RectangleF selectionRect;
+
 			GameState* gameState;
 			List<GameObject*> selectedUnits;
 

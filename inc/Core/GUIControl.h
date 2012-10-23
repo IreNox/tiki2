@@ -22,10 +22,10 @@ namespace TikiEngine
 			GUIControl(Engine* engine);
 			~GUIControl();
 
-			Vector2 Position() const;
+			const Vector2 Position() const;
 			Vector2& Position();
 
-			Vector2 Size() const;
+			const Vector2 Size() const;
 			Vector2& Size();
 
 			virtual bool Clicked();
