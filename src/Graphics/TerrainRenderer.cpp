@@ -173,15 +173,12 @@ namespace TikiEngine
 
 			collisionIndexBuffer->indexCount = (info.GetIndexCount() * 3) - 6;
 
-			
 			collider->SetMeshData(
 				collisionIndexBuffer->GetDataList(),
 				(info.GetIndexCount() * 3) - 6,
 				collisionVertexBuffer->GetData(),
 				info.GetVertexCount()
 			);
-			collider->SetGroup(CG_Collidable_Non_Pushable);
-
 		}
 		#pragma endregion
 
