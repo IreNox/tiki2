@@ -72,6 +72,9 @@ namespace TikiEngine
 				if (bot != 0)
 				{
 					bot->CreateNav(navMesh);
+// 					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
+// 					pos = pos + Vector3(0, 20, 0);
+// 					bot->GetController()->SetCenter(pos);
 				}
 
 				i++;
@@ -111,7 +114,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
 			#endif
 
-			if(args.Input.GetMousePressed(MB_Left))
+			if(args.Input.GetMousePressed(MB_Right))
 			{
 				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
 				RaycastHit info;
@@ -129,10 +132,12 @@ namespace TikiEngine
 						}
 					}
 					
+					;
+
 					UInt32 i = 0;
-					while (i < scene->objects.Count())
+					while (i < unitSelection->GetSelectedUnits()->Count())
 					{
-						TikiBot* bot = scene->objects[i]->GetComponent<TikiBot>();
+						TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
 
 						if (bot != 0)
 						{

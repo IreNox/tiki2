@@ -33,9 +33,13 @@ namespace TikiEngine
 
 		UnitSelection::~UnitSelection()
 		{
-			//selectedUnits.Clear();
+			selectedUnits.Clear();
 		}
 
+		List<GameObject*>* UnitSelection::GetSelectedUnits()
+		{
+			return &selectedUnits;
+		}
 
 
 		void UnitSelection::Update(const UpdateArgs& args)
@@ -44,16 +48,15 @@ namespace TikiEngine
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
 			{
+				// clear list from last selection
+				selectedUnits.Clear();
+
 				selectionStartPoint = args.Input.MousePositionDisplay;
 
 				// Set the selection box starting point
 				selectionRect.X = args.Input.MousePositionDisplay.X;
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
 				selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
-				
-				wostringstream str;
-				str << "GetKeyReleased X=" << selectionRect.X << " Y=" << selectionRect.Y << "\n";
-				OutputDebugString(str.str().c_str());
 			}
 
 
@@ -76,11 +79,6 @@ namespace TikiEngine
 				
 				selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
 				selectButton->Size() = Vector2(selectionRect.Width, selectionRect.Height);
-
-				wostringstream str;
-				str << "Mouse left button dragging Width=" << selectionRect.Width << " Height=" << selectionRect.Height << "\n";
-				OutputDebugString(str.str().c_str());
-
 			}
 
 			if (args.Input.GetMouseRelease(MB_Left))
@@ -89,7 +87,6 @@ namespace TikiEngine
 				selectionRect.Y = 0;
 				selectionRect.Width = 0;
 				selectionRect.Height = 0;
-				OutputDebugString(L"Reset\n");
 			}
 			
 			// Check entity intersection
@@ -110,18 +107,29 @@ namespace TikiEngine
 					Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 
-
-
+					
 					if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)))
 					{
-						OutputDebugString(L"Selected unit");
+						OutputDebugString(L"Rect-Select unit.\n");
 						selectedUnits.Add(go);
 					}
+
+					float eps = 15.0f;
+					if (args.Input.GetMousePressed(MB_Left))
+					{
+						if(screenPos.X <= selectionRect.X + eps && 
+							screenPos.X >= selectionRect.X - eps &&
+							screenPos.Y <= selectionRect.Y + eps && 
+							screenPos.Y >= selectionRect.Y - eps)
+						{
+							OutputDebugString(L"click-Select unit.\n");
+							selectedUnits.Add(go);
+						}
+
+					}
+
+
 				}
-				//	continue;
- 
-
-
  				i++;
 			}
 

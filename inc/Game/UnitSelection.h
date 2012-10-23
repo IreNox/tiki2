@@ -18,6 +18,8 @@ namespace TikiEngine
 			UnitSelection(GameState* gameState);
 			~UnitSelection();
 
+			List<GameObject*>* GetSelectedUnits();
+
 			void Update(const UpdateArgs& args);
 			void Draw(const DrawArgs& args);
 			

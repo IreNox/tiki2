@@ -13,7 +13,7 @@ namespace TikiEngine
 		{
 			id = nextValidID++;
 
-			boundingRadius = 0.0;
+			boundingRadius = 2.0;
             type = default_entity_type;
             tag = false;
 		}
@@ -22,10 +22,10 @@ namespace TikiEngine
 		{
 			Vector3 scale = this->GetGameObject()->PRS.GScale();
 
-			boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
-				MaxOf(MaxOf(scale.X, 
-				scale.Y), 
-				scale.Z); 
+			//boundingRadius *= MaxOf(MaxOf(val.X, val.Y), val.Z) /
+			//	MaxOf(MaxOf(scale.X, 
+			//	scale.Y), 
+			//	scale.Z); 
 			GetGameObject()->PRS.SScale() = val;
 		}
 
@@ -33,9 +33,9 @@ namespace TikiEngine
 		{
 			Vector3 scale = this->GetGameObject()->PRS.GScale();
 
-			boundingRadius *= (val / MaxOf(MaxOf(scale.X, 
-												 scale.Y),
-												 scale.Z)); 
+			//boundingRadius *= (val / MaxOf(MaxOf(scale.X, 
+			//									 scale.Y),
+			//									 scale.Z)); 
 			gameObject->PRS.SScale() = val;
 		}
 

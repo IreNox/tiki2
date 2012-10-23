@@ -51,6 +51,7 @@ namespace TikiEngine
 				collider->SetMaterial(material->GetIndex());
 				collider->SetCenter(Vector3::Zero);
 				collider->SetDynamic(false);
+				collider->SetGroup(CG_Collidable_Non_Pushable);
 			}
 		}
 

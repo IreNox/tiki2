@@ -223,7 +223,7 @@ namespace TikiEngine
 
 			// Move the controller and set some gravity
 			Vector3 displacement(velocity.X,
-								 0,	// -9.81f 
+								 0, //-9.81f, 
 								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
 

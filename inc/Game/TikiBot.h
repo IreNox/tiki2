@@ -39,6 +39,8 @@ namespace TikiEngine
 
 
 			#pragma region Accessing attribute data
+			ICharacterController* GetController() { return controller; }
+
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
 			//void ReduceHealth(unsigned int val);
