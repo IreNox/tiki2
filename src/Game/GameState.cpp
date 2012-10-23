@@ -2,6 +2,7 @@
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
 #include "Game/SceneLevel.h"
+#include "Game/UnitSelection.h"
 
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
@@ -20,6 +21,7 @@ namespace TikiEngine
 		{
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
+			unitSelection = new UnitSelection(this);
 		}
 
 		GameState::~GameState()
@@ -34,6 +36,12 @@ namespace TikiEngine
 		{
 			return engine;
 		}
+
+		SceneLevel* GameState::GetScene()
+		{
+			return scene;
+		}
+
 
 		UInt64 GameState::GetResource1()
 		{
@@ -80,7 +88,7 @@ namespace TikiEngine
 		void GameState::Draw(const DrawArgs& args)
 		{
 			hud->Draw(args);
-
+			unitSelection->Draw(args);
 			#if _DEBUG
 			if (DrawNavMesh) navMesh->Draw(args);
 
@@ -95,6 +103,7 @@ namespace TikiEngine
 		void GameState::Update(const UpdateArgs& args)
 		{
 			hud->Update(args);
+			unitSelection->Update(args);
 
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;

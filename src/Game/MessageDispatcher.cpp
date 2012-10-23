@@ -30,7 +30,7 @@ namespace TikiEngine
 			if (receiverEnt == 0)
 			{
 				std::wostringstream s;
-				s << "\nTelegram dispatched at time: " << time.ElapsedTime	// Get current frame
+				s << "\nTelegram dispatched at time: " << time.TotalTime	// Get current frame
 				  << " by " << sender << " for " << receiver  << ". Msg is " << msg << "";
 				OutputDebugString(s.str().c_str());
 			}
@@ -43,7 +43,7 @@ namespace TikiEngine
 			{
 				#ifdef _DEBUG
 				std::wostringstream s;
-				s << "\nTelegram dispatched at time: " << time.ElapsedTime // Get current frame
+				s << "\nTelegram dispatched at time: " << time.TotalTime // Get current frame
 				  << " by " << sender << " for " << receiver 
 				  << ". Msg is " << msg << "";
 				#endif

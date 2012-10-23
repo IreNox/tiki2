@@ -253,7 +253,7 @@ namespace TikiEngine
 			}
 
 		    // Right Mouse - Raycast Test + Movement
-			if(args.Input.GetMousePressed(MB_Right))
+			if(args.Input.GetMousePressed(MB_Left))
 		    {
 				
 				Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
@@ -291,18 +291,6 @@ namespace TikiEngine
 				drawCellSpace = true; 
 			else if (args.Input.GetKey(KEY_F6))
 				drawCellSpace = false; 
-
-
-			// Camera Frustum test
-			//Camera* cam = fly->GetGameObject()->GetComponent<Camera>();
-			//if (cam->GetFrustum()->BoxInFrustum(cellSpace->GetQuerybox()))
-			//	OutputDebugString(L"cellSpace QueryBox InFrustum \n");
-			//else if (cam->GetFrustum()->SphereInFrustum(bot->Pos3D(), (float)bot->BRadius()))
-			//	OutputDebugString(L"Bot Sphere InFrustum \n");
-			//else if (cam->GetFrustum()->PointInFrustum(Vector3::Zero) == Frustum::INSIDE)
-			//	OutputDebugString(L"Point(0, 0, 0) In Frustum \n");
-			//else
-			//	OutputDebugString(L"No intersection \n");
 
 
 

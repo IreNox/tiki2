@@ -76,6 +76,16 @@ namespace TikiEngine
 		{
 			return level;
 		}
+
+		List<LevelObject*>* SceneLevel::GetObjects()
+		{
+			return &objects;
+		}
+
+		Camera* SceneLevel::GetCamera()
+		{
+			return mainCamera;
+		}
 		#pragma endregion
 
 		#pragma region Member - Level

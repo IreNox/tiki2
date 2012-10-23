@@ -49,6 +49,7 @@
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\UnitFunctions.h" />
+    <ClInclude Include="inc\Game\UnitSelection.h" />
     <ClInclude Include="inc\Game\Utils.h" />
     <ClInclude Include="misc\res\resource.h" />
   </ItemGroup>
@@ -81,6 +82,7 @@
     <ClCompile Include="src\Game\SceneTim.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
+    <ClCompile Include="src\Game\UnitSelection.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="misc\res\icon.ico" />

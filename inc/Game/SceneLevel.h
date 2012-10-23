@@ -31,6 +31,8 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 			Level* GetLevel();
+			List<LevelObject*>* GetObjects();
+			Camera* GetCamera();
 
 		private:
 

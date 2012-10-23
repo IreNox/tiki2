@@ -136,18 +136,6 @@ namespace TikiEngine
 		}
 
 
-		//void TikiBot::GotoRandomLocation()
-		//{
-		//	if (parent)
-		//	{
-		//		// pick a random cell and go there
-		//		int index = rand() % parent->TotalCells();
-		//		NavigationCell* pCell = parent->Cell(index);
-		//		GotoLocation(pCell->CenterPoint(), pCell);
-		//	}
-		//}
-
-
 		void TikiBot::Draw(const DrawArgs& args)
 		{
 			// connect the waypoins to draw lines in green

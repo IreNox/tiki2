@@ -19,6 +19,7 @@ namespace TikiEngine
 
 		class Level;
 		class SceneLevel;
+		class UnitSelection;
 
 		class GameState : public EngineObject
 		{
@@ -36,6 +37,7 @@ namespace TikiEngine
 			void DisposeLevel();
 
 			Engine* GetEngine();
+			SceneLevel* GetScene();
 
 			void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
 
@@ -57,7 +59,8 @@ namespace TikiEngine
 
 			NavigationMesh* navMesh;
 			
-			//List<LevelUnit*> selectedUnits; // LevelUnity erbt von LevelChild = GameObject
+			UnitSelection* unitSelection;
+			List<GameObject*> selectedUnits; // LevelUnity erbt von LevelChild = GameObject
 
 			//List<Unit*> levelUnits;
 			//List<Building*> levelBuildings;

@@ -164,6 +164,9 @@
     <ClInclude Include="misc\res\resource.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\UnitSelection.h">
+      <Filter>Headerdateien\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -248,6 +251,9 @@
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GameHud.cpp">
+      <Filter>Quelldateien\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\UnitSelection.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
