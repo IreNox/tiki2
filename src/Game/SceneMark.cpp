@@ -253,7 +253,7 @@ namespace TikiEngine
 			}
 
 		    // Right Mouse - Raycast Test + Movement
-			if(args.Input.MouseButtons[1])
+			if(args.Input.GetMousePressed(MB_Right))
 		    {
 				
 				Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);

@@ -59,7 +59,7 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GUICustomButton::Draw(const DrawArgs& args)
 		{
-			if (args.Update.Input.MouseButtons[0] && mouseOver)
+			if (args.Update.Input.GetMousePressed(MB_Left) && mouseOver)
 			{
 				engine->sprites->Draw(texClick, position);
 			}

@@ -5,24 +5,32 @@
 
 namespace TikiEngine
 {
+	enum MouseButtons
+	{
+		MB_Left = 0,
+		MB_Right = 1,
+		MB_Middle = 2
+	};
+
 	struct InputState
 	{
+		#pragma region Vars
 		float MouseWheel;
 		Vector2 MousePosition;
 		Vector2 MousePositionDisplay;
 		Vector2 MouseDistance;
+		#pragma endregion
 
-		bool MouseButtons[3];
-
+		#pragma region Class
 		InputState()
 			: MousePosition(0, 0), MouseDistance(0, 0)
 		{
 			this->mouseButtonsPrev[0] = 0;
 			this->mouseButtonsPrev[1] = 0;
 			this->mouseButtonsPrev[2] = 0;
-			this->MouseButtons[0] = 0;
-			this->MouseButtons[1] = 0;
-			this->MouseButtons[2] = 0;
+			this->mouseButtonsCurrent[0] = 0;
+			this->mouseButtonsCurrent[1] = 0;
+			this->mouseButtonsCurrent[2] = 0;
 		}
 
 		InputState(Vector2 mousePosition, Vector2 viewPort, Vector2 mouseDistance, float wheel, unsigned char* mouseButtonsPrev, unsigned char* mouseButtonsCurrent, Byte* keyboardStatePrev, Byte* keyboardStateCurrent)
@@ -31,23 +39,25 @@ namespace TikiEngine
 			this->mouseButtonsPrev[0] = (mouseButtonsPrev[0] != 0);
 			this->mouseButtonsPrev[1] = (mouseButtonsPrev[1] != 0);
 			this->mouseButtonsPrev[2] = (mouseButtonsPrev[2] != 0);
-			this->MouseButtons[0] = (mouseButtonsCurrent[0] != 0);
-			this->MouseButtons[1] = (mouseButtonsCurrent[1] != 0);
-			this->MouseButtons[2] = (mouseButtonsCurrent[2] != 0);
+			this->mouseButtonsCurrent[0] = (mouseButtonsCurrent[0] != 0);
+			this->mouseButtonsCurrent[1] = (mouseButtonsCurrent[1] != 0);
+			this->mouseButtonsCurrent[2] = (mouseButtonsCurrent[2] != 0);
 
 			memcpy(
 				this->keyboardStatePrev,
 				keyboardStatePrev,
 				sizeof(Byte) * 256
-			);
+				);
 
 			memcpy(
 				this->keyboardStateCurrent,
 				keyboardStateCurrent,
 				sizeof(Byte) * 256
-			);
+				);
 		}
+		#pragma endregion
 
+		#pragma region Member - Get
 		bool GetKey(Key keyCode) const
 		{
 			return (keyboardStateCurrent[keyCode] & 0x80) != 0;
@@ -63,9 +73,26 @@ namespace TikiEngine
 			return (keyboardStatePrev[keyCode] & 0x80) && !(keyboardStateCurrent[keyCode] & 0x80);
 		}
 
+		bool GetMouse(MouseButtons button) const
+		{
+			return mouseButtonsCurrent[button];
+		}
+
+		bool GetMousePressed(MouseButtons button) const
+		{
+			return (mouseButtonsCurrent[button] && !mouseButtonsPrev[button]);
+		}
+
+		bool GetMouseRelease(MouseButtons button) const
+		{
+			return (!mouseButtonsCurrent[button] && mouseButtonsPrev[button]);
+		}
+		#pragma endregion
+
 	private:
 
 		bool mouseButtonsPrev[3];
+		bool mouseButtonsCurrent[3];
 
 		Byte keyboardStatePrev[256];
 		Byte keyboardStateCurrent[256];

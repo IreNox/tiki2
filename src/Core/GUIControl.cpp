@@ -67,7 +67,7 @@ namespace TikiEngine
 			}
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
-			mouseClicked = (args.Input.MouseButtons[0] && mouseOver);
+			mouseClicked = (args.Input.GetMousePressed(MB_Left) && mouseOver);
 		}
 		#pragma endregion
 

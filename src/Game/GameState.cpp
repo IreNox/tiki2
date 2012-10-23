@@ -101,7 +101,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
 			#endif
 
-			if(args.Input.MouseButtons[1])
+			if(args.Input.GetMousePressed(MB_Left))
 			{
 				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
 				RaycastHit info;
