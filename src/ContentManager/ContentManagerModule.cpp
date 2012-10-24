@@ -1,11 +1,13 @@
 
 #include "Core/TypeGlobals.h"
+#include "Core/HelperLog.h"
 #include "Core/HelperPath.h"
 
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
 
 #include "ContentManager/ContentManagerModule.h"
+#include "ContentManager/DllMain.h"
 
 #include <typeinfo.h>
 
@@ -28,19 +30,81 @@ namespace TikiEngine
 		#pragma region Member - Module
 		bool ContentManagerModule::Initialize(EngineDescription& desc)
 		{
+			#if _DEBUG
+			InitializeCriticalSection(&threadCriticle);
+
+			threadHandle = CreateThread(
+				0,
+				2000,
+				(LPTHREAD_START_ROUTINE)initThread,
+				0,
+				THREAD_TERMINATE,
+				&threadId
+			);
+			#endif
+
 			return true;
 		}
 
 		void ContentManagerModule::Begin()
 		{
+			#if _DEBUG
+			EnterCriticalSection(&threadCriticle);
+
+			UInt32 i = 0;
+			while (i < changedFiles.Count())
+			{
+				UInt32 a = 0;
+				while (a < loadedResources.Count())
+				{
+					if (loadedResources[a].fileName == changedFiles[i])
+					{
+						try
+						{
+							loadedResources[a].resource->LoadFromFile(
+								changedFiles[i].c_str()
+							);
+						}
+						catch (const char*)
+						{
+							HelperLog::Write("Can't reload Resource");
+						}
+						catch (const wchar_t*)
+						{
+							HelperLog::Write("Can't reload Resource");
+						}
+						catch (wstring)
+						{
+							HelperLog::Write("Can't reload Resource");
+						}
+						catch (string)
+						{
+							HelperLog::Write("Can't reload Resource");
+						}
+					}
+
+					a++;
+				}
+
+				i++;
+			}
+			changedFiles.Clear();
+
+			LeaveCriticalSection(&threadCriticle);
+			#endif
 		}
 
 		void ContentManagerModule::End()
 		{
+			
 		}
 
 		void ContentManagerModule::Dispose()
 		{
+			#if _DEBUG
+			TerminateThread(threadHandle, 0);
+			#endif
+
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{
@@ -182,6 +246,58 @@ namespace TikiEngine
 			}
 
 			return 0;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Debug - DynamicReload
+		void ContentManagerModule::initThread()
+		{
+			DllMain::Module->threadDynamicReload();
+		}
+
+		void ContentManagerModule::threadDynamicReload()
+		{
+			wstring filePath = HelperPath::CombineWorkingPath(L"Data");
+			HANDLE hDir = CreateFile(
+				filePath.c_str(),
+				FILE_LIST_DIRECTORY,                
+				FILE_SHARE_READ | FILE_SHARE_DELETE,
+				NULL,                               
+				OPEN_EXISTING,                      
+				FILE_FLAG_BACKUP_SEMANTICS,         
+				NULL                                
+			);
+
+			DWORD returnSize;
+			FILE_NOTIFY_INFORMATION infos[1024];
+
+			while (ReadDirectoryChangesW(hDir, &infos, sizeof(infos), TRUE, FILE_NOTIFY_CHANGE_LAST_WRITE, &returnSize, 0, 0))
+			{
+				EnterCriticalSection(&threadCriticle);
+
+				Byte* dataBin = (Byte*)infos;
+				FILE_NOTIFY_INFORMATION* dataInfo = infos;
+
+				do 
+				{
+					wstring fileName = HelperPath::Combine(
+						filePath,
+						wstring(dataInfo->FileName, dataInfo->FileNameLength / sizeof(wchar_t))
+					);
+
+					HANDLE handle;
+					while((handle = CreateFile(fileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
+					CloseHandle(handle);
+
+					changedFiles.Add(fileName);
+
+					dataBin += dataInfo->NextEntryOffset;
+					dataInfo = (FILE_NOTIFY_INFORMATION*)dataBin;
+				} 
+				while (dataInfo->NextEntryOffset);
+
+				LeaveCriticalSection(&threadCriticle);
+			}
 		}
 		#pragma endregion
 	}

@@ -23,8 +23,9 @@ namespace TikiEngine
 		{
 			WCHAR cd[MAX_PATH];
 			GetModuleFileName(0, cd, MAX_PATH);
-
+			
 			workingPath = HelperPath::GetDirectoryName(cd);
+			checkSlashes(workingPath);
 		}
 
 		return workingPath;
@@ -46,7 +47,8 @@ namespace TikiEngine
 
 		checkPath(
 			HelperPath::GetDirectoryName(fullPath)
-			);
+		);
+		checkSlashes(fullPath);
 
 		return fullPath;
 	}
@@ -56,7 +58,7 @@ namespace TikiEngine
 		return HelperPath::Combine(
 			HelperPath::GetWorkingPath(),
 			path
-			);
+		);
 	}
 	#pragma endregion
 
@@ -72,6 +74,8 @@ namespace TikiEngine
 
 	wstring HelperPath::GetDirectoryName(wstring fullPath)
 	{
+		checkSlashes(fullPath);
+
 		PInt i1 = fullPath.find_last_of(L'\\');
 		PInt i2 = fullPath.find_last_of(L'/');
 		PInt index = (i1 > i2 ? i1 : i2);
@@ -124,6 +128,17 @@ namespace TikiEngine
 		if (GetFileAttributes(path.c_str()) == INVALID_FILE_ATTRIBUTES)
 		{
 			CreateDirectory(path.c_str(), 0);
+		}
+	}
+
+	void HelperPath::checkSlashes(wstring& path)
+	{
+		UInt32 i = 0;
+		while (i < path.length())
+		{
+			if (path[i] == '\\') path[i] = '/';
+
+			i++;
 		}
 	}
 	#pragma endregion

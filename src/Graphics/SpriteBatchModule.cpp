@@ -1,6 +1,8 @@
 
 #include "Core/TypeGlobals.h"
 
+#include "Core/IContentManager.h"
+
 #include "Graphics/RenderTarget.h"
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
@@ -26,8 +28,10 @@ namespace TikiEngine
 		{
 			UInt32 temp = 0;
 
-			shader = new Shader(engine);
-			shader->LoadFromFile(L"Data/Effects/os_spritebatch.fx");
+			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
+
+			//shader = new Shader(engine);
+			//shader->LoadFromFile(L"Data/Effects/os_spritebatch.fx");
 
 			renderTarget = new RenderTarget(engine);
 			renderTarget->CreateScreenSize();

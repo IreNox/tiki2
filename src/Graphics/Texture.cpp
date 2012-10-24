@@ -133,6 +133,9 @@ namespace TikiEngine
 
 			stream->Read(data, 0, size);
 
+			ID3D11Texture2D* oldTexture = texture;
+			ID3D11ShaderResourceView* oldResource = textureResource;
+
 			HRESULT r = D3DX11CreateShaderResourceViewFromMemory(
 				DllMain::Device,
 				data,
@@ -147,8 +150,14 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
+				texture = oldTexture;
+				textureResource = oldResource;
+
 				HelperLog::WriteError("Can't load Texture", 0);
 			}
+
+			SafeRelease(&oldTexture);
+			SafeRelease(&oldResource);
 
 			ID3D11Resource* res;
 			textureResource->GetResource(&res);

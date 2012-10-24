@@ -60,6 +60,13 @@ namespace TikiEngine
 			return false;
 		}
 
+		content = librarys->CreateModule<IContentManager>();
+		if (!initModule(content))
+		{
+			MessageBox(window->GetHWND(), L"Can't init ContentManager.", L"TikiEngine 2.0", MB_ICONERROR);
+			return false;
+		}
+
 		graphics = librarys->CreateModule<IGraphics>();
 		if (!initModule(graphics))
 		{
@@ -92,13 +99,6 @@ namespace TikiEngine
 		if (!initModule(physics))
 		{
 			MessageBox(window->GetHWND(), L"Can't init Physics.", L"TikiEngine 2.0", MB_ICONERROR);
-			return false;
-		}
-
-		content = librarys->CreateModule<IContentManager>();
-		if (!initModule(content))
-		{
-			MessageBox(window->GetHWND(), L"Can't init ContentManager.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
@@ -158,11 +158,13 @@ namespace TikiEngine
 			UpdateArgs args = UpdateArgs(time);
 			input->Begin();
 			input->FillInputState(&args.Input);
+			content->Begin();
 			physics->Begin();
 
 			this->Update(args);
 
 			physics->End(args);
+			content->End();
 			input->End();
 
 			UInt32 i = 0;

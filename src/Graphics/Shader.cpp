@@ -340,6 +340,8 @@ namespace TikiEngine
 
 			delete[](data);
 
+			ID3DX11Effect* oldEffect = effect;
+
 			r = D3DX11CreateEffectFromMemory(
 				blob->GetBufferPointer(),
 				blob->GetBufferSize(),
@@ -352,8 +354,11 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
+				effect = oldEffect;
+
 				HelperLog::WriteError("Failed to create effect.", 0);
 			}
+			SafeRelease(&oldEffect);
 
 			wstring file = HelperPath::GetFilename(fileName);
 

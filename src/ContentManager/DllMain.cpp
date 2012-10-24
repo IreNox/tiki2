@@ -11,12 +11,12 @@ namespace TikiEngine
 	TikiInfo DllMain::DllInfo = TikiInfo();
 
 	Engine* DllMain::Engine = 0;
-	ContentManagerModule* DllMain::ModuleGraphics = 0;
+	ContentManagerModule* DllMain::Module = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::ModuleGraphics = new ContentManagerModule(engine);
+		DllMain::Module = new ContentManagerModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
@@ -32,7 +32,7 @@ namespace TikiEngine
 			return 0;
 		}
 
-		return DllMain::ModuleGraphics;
+		return DllMain::Module;
 	}
 
 	IResource* DllMain::CreateResource(PInt hash)

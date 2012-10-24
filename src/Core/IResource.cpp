@@ -24,8 +24,16 @@ namespace TikiEngine
 		{
 			FileStream* stream = new FileStream(fileName, FM_Read);
 
-			loadFromStream(fileName, stream);
-
+			try
+			{
+				loadFromStream(fileName, stream);
+			}
+			catch (const char* e)
+			{
+				delete(stream);
+				throw e;
+			}
+			
 			delete(stream);
 		}
 

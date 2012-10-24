@@ -2,6 +2,7 @@
 
 #include "Core/IContentManager.h"
 
+#include "ContentManager/ResourceInfo.h"
 
 namespace TikiEngine
 {
@@ -34,22 +35,21 @@ namespace TikiEngine
 			IBoundingBox* LoadBoundingBox(const wstring& name);
 
 		private:
+			
+			List<ResourceInfo> loadedResources;
 
-			struct ResourceInfo
-			{
-				ResourceInfo() : hash(0), fileName(), resource(0) {}
-				ResourceInfo(PInt hash, wstring name, IResource* res) : hash(hash), fileName(name), resource(res) {}
+			#if _DEBUG
+			DWORD threadId;
+			HANDLE threadHandle;
+			CRITICAL_SECTION threadCriticle;
 
-				~ResourceInfo() { fileName.erase(); }
+			List<wstring> changedFiles;
 
-				PInt hash;
-				wstring fileName;
-				IResource* resource;
-			};
+			static void initThread();
+			void threadDynamicReload();
+			#endif
 
 			IResource* findLoadedResource(PInt hash, wstring name);
-
-			List<ResourceInfo> loadedResources;
 
 		};
 	}

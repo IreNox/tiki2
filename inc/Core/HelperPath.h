@@ -33,6 +33,7 @@ namespace TikiEngine
 		static wstring workingPath;
 
 		static void checkPath(wstring path);
+		static void checkSlashes(wstring& path);
 
 	};
 }
