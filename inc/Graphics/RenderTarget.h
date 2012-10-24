@@ -14,7 +14,7 @@ namespace TikiEngine
 		public:
 
 			RenderTarget(Engine* engine);
-			RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget);
+			RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget, bool shaderView);
 			~RenderTarget();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic);
@@ -27,6 +27,8 @@ namespace TikiEngine
 			void Clear(const Color& color);
 
 			void Resize(UInt32 width, UInt32 height);
+
+			/*! @brief Resize RenderTarget. Create no ShaderResourceView! */
 			void Resize(ID3D11RenderTargetView* renderTarget);
 
 			Int32 GetWidth();

@@ -14,14 +14,14 @@ namespace TikiEngine
 		{
 		}
 
-		RenderTarget::RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget)
+		RenderTarget::RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget, bool shaderView)
 			: IRenderTarget(engine), renderTarget(renderTarget), texture(0)
 		{
 			ID3D11Resource* res = 0;
 			renderTarget->GetResource(&res);
 
 			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
-			texture = new Texture(engine, tex, false);
+			texture = new Texture(engine, tex, shaderView, false);
 		}
 
 		RenderTarget::~RenderTarget()
@@ -67,7 +67,7 @@ namespace TikiEngine
 			renderTarget->GetResource(&res);
 
 			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
-			texture = new Texture(engine, tex, false);
+			texture = new Texture(engine, tex, false, false);
 		}
 
 		void RenderTarget::SaveToFile(wcstring fileName)
@@ -157,7 +157,7 @@ namespace TikiEngine
 				&texture
 			);
 						
-			this->texture = new Texture(engine, texture, dynamic);
+			this->texture = new Texture(engine, texture, true, dynamic);
 
 			D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
 			rtDesc.Format = desc.Format;

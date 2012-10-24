@@ -24,7 +24,7 @@ namespace TikiEngine
 			);
 		}
 
-		Texture::Texture(Engine* engine, ID3D11Texture2D* tex, bool dynamic)
+		Texture::Texture(Engine* engine, ID3D11Texture2D* tex, bool createShaderView, bool dynamic)
 			: ITexture(engine), texture(tex), dynamic(dynamic)
 		{
 			tex->GetDesc(&desc);
@@ -37,11 +37,14 @@ namespace TikiEngine
 			srDesc.Texture2D.MostDetailedMip = 0;
 			srDesc.Texture2D.MipLevels = 1;
 
-			HRESULT r = DllMain::Device->CreateShaderResourceView(
-				tex,
-				&srDesc,
-				&textureResource
-			);
+			if (createShaderView)
+			{
+				DllMain::Device->CreateShaderResourceView(
+					tex,
+					&srDesc,
+					&textureResource
+				);
+			}
 			
 			// TODO: Can't create ShaderResourceView
 			//if (FAILED(r))

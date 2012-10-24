@@ -783,7 +783,7 @@ namespace TikiEngine
 			this->cbufferCamera = new ConstantBuffer<CBMatrices>(engine);
 			this->cbufferObject = new ConstantBuffer<CBObjectData>(engine);
 
-			this->rtBackBuffer = new RenderTarget(engine, renderTargetView);
+			this->rtBackBuffer = new RenderTarget(engine, renderTargetView, false);
 
 			this->rtScreen = new RenderTarget(engine);
 			this->rtScreen->CreateScreenSize();

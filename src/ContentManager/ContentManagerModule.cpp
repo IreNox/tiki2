@@ -250,6 +250,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member - Debug - DynamicReload
+		#if _DEBUG
 		void ContentManagerModule::initThread()
 		{
 			DllMain::Module->threadDynamicReload();
@@ -299,6 +300,7 @@ namespace TikiEngine
 				LeaveCriticalSection(&threadCriticle);
 			}
 		}
+		#endif
 		#pragma endregion
 	}
 }
