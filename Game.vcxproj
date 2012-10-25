@@ -22,6 +22,7 @@
     <ClInclude Include="inc\Game\BaseGameEntity.h" />
     <ClInclude Include="inc\Game\BasicDatabase.h" />
     <ClInclude Include="inc\Game\BasicTransform.h" />
+    <ClInclude Include="inc\Game\BoxSide.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\CellSpacePartition.h" />
@@ -38,6 +39,7 @@
     <ClInclude Include="inc\Game\NavigationHeap.h" />
     <ClInclude Include="inc\Game\NavigationMesh.h" />
     <ClInclude Include="inc\Game\NavigationPath.h" />
+    <ClInclude Include="inc\Game\OcTree.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
@@ -48,9 +50,11 @@
     <ClInclude Include="inc\Game\Telegram.h" />
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
+    <ClInclude Include="inc\Game\TriBox.h" />
     <ClInclude Include="inc\Game\UnitFunctions.h" />
     <ClInclude Include="inc\Game\UnitSelection.h" />
     <ClInclude Include="inc\Game\Utils.h" />
+    <ClInclude Include="inc\Game\VoidList.h" />
     <ClInclude Include="misc\res\resource.h" />
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +77,7 @@
     <ClCompile Include="src\Game\NavigationHeap.cpp" />
     <ClCompile Include="src\Game\NavigationMesh.cpp" />
     <ClCompile Include="src\Game\NavigationPath.cpp" />
+    <ClCompile Include="src\Game\OcTree.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
@@ -83,6 +88,7 @@
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
     <ClCompile Include="src\Game\UnitSelection.cpp" />
+    <ClCompile Include="src\Game\VoidList.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="misc\res\icon.ico" />

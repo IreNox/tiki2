@@ -15,6 +15,8 @@
 
 #include "Game/Utils.h"
 
+
+
 #include <ppl.h>
 using namespace Concurrency;
 
@@ -53,9 +55,9 @@ namespace TikiEngine
 			
 
 			
-			delete naviMesh;
-			
-			// can't release
+			SafeDelete(&naviMesh);
+			//SafeDelete(&tree);
+
 			SafeRelease(&state);
 
 		}
@@ -78,6 +80,21 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
+			// Create static Octree for NavMesh triangles
+			tree = new OcTree(engine);
+			int totalCells = naviMesh->TotalCells();
+			TRI tris[191]; // = TotalCells
+			for (int i = 0; i < totalCells; i++)
+			{
+				NavigationCell* cell = naviMesh->Cell(i);
+				for(int j = 0; j < 3; j++)
+				{
+					tris[i].Pt[j] = cell->Vertex(j);
+					tris[i].UserData = (void*) cell;
+				}
+
+			}
+			tree->Create(&tris[0], totalCells, 4);
 
 
 			//IPhysicsMaterial* material; 
@@ -149,13 +166,17 @@ namespace TikiEngine
 			go->Release();
 
 
+
+
 			go = new CameraObject(engine);
 			go->PRS.SPosition() = Vector3(0, 20, 50);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
+			
+			fly = new CameraFly(engine, go);
+			
 			this->AddElement(go);
 			go->Release();
 
-			fly = new CameraFly(engine, go);
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
@@ -208,6 +229,8 @@ namespace TikiEngine
 
 			if (showNaviMesh)
 				naviMesh->Draw(args);
+
+			tree->DrawDebug();
 
 			engine->physics->DrawDebug();
 			#endif

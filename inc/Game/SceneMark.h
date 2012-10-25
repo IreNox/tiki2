@@ -11,6 +11,7 @@
 #include "Game/TikiBot.h"
 #include "Game/CameraFly.h"
 #include "Game/NavigationMesh.h"
+#include "Game/OcTree.h"
 
 namespace TikiEngine
 {
@@ -56,6 +57,8 @@ namespace TikiEngine
 			 bool drawCellSpace;
 
 			 GameState* state;
+
+			 OcTree* tree;
 
 			 
 			 NavigationMesh* naviMesh; 

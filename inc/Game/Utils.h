@@ -33,6 +33,15 @@ inline T MinOf(const T& a, const T& b)
   if (a<b) return a; return b;
 }
 
+inline float ABS(float x)
+{
+	return x < 0 ? (-x) : x;
+}
+
+inline bool ApproxEqual(float x, float v)
+{
+	return ABS(x - v) <= 0.001f ? true : false;
+}
 
 
 //returns a random float between zero and 1

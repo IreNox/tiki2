@@ -66,6 +66,12 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{ddc500a7-223a-4a4c-8f62-e267bd854925}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\OcTree">
+      <UniqueIdentifier>{217db9dc-55b2-4d21-a6c2-342e1ce53dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\OcTree">
+      <UniqueIdentifier>{3445e5b7-03a9-45c1-975a-d6ca029d5005}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -167,6 +173,18 @@
     <ClInclude Include="inc\Game\UnitSelection.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\VoidList.h">
+      <Filter>Headerdateien\AI\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\OcTree.h">
+      <Filter>Headerdateien\AI\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TriBox.h">
+      <Filter>Headerdateien\AI\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BoxSide.h">
+      <Filter>Headerdateien\AI\OcTree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -255,6 +273,12 @@
     </ClCompile>
     <ClCompile Include="src\Game\UnitSelection.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\VoidList.cpp">
+      <Filter>Quelldateien\AI\OcTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\OcTree.cpp">
+      <Filter>Quelldateien\AI\OcTree</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
