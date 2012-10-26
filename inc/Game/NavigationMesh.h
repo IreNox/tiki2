@@ -4,14 +4,16 @@
 
 #include "Game/NavigationCell.h"
 #include "Game/NavigationHeap.h"
-#include "Game/CellSpacePartition.h"
 #include "Core/DrawArgs.h"
 #include "Core/IModel.h"
+#include "Core/LibraryManager.h"
+#include "Game/OcTree.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
+		using namespace TikiEngine::Resources;
 
 		// forward declaration required
 		class NavigationPath;
@@ -23,8 +25,10 @@ namespace TikiEngine
 		class NavigationMesh
 		{
 		public:
-			typedef	std::vector<NavigationCell*> CELL_ARRAY;
 
+
+
+			typedef	std::vector<NavigationCell*> CELL_ARRAY;
 
 			NavigationMesh(Engine* engine);
 			~NavigationMesh();
@@ -70,8 +74,11 @@ namespace TikiEngine
 			NavigationHeap navHeap;
 
 			IModel* navModel;
-			CellSpacePartition<NavigationCell*>* cellSpace;
 			Engine* engine;
+
+			OcTree* tree;
+			TRI tris[191]; // = TotalCells
+
 		};
 
 

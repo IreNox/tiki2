@@ -16,16 +16,18 @@ namespace TikiEngine
 		{
 			this->engine = engine;
 			cellArray.clear();
+			tree = 0;
 		}
 
 		NavigationMesh::~NavigationMesh()
 		{
-			SafeRelease(&navModel);
-
-			//cellSpace->EmptyCells();
-			//delete cellSpace;
 
 			Clear();
+
+			
+			SafeRelease(&navModel);
+
+			SafeDelete(&tree);
 		}
 
 		void NavigationMesh::Clear()
@@ -127,17 +129,25 @@ namespace TikiEngine
 			}
 			LinkCells();
 
+
+			tree = new OcTree();
+			int totalCells = TotalCells();
+
+			for (int i = 0; i < totalCells; i++)
+			{
+				NavigationCell* cell = Cell(i);
+				tris[i].UserData = (void*) cell;
+
+				for(int j = 0; j < 3; j++)
+				{
+					tris[i].Pt[j] = cell->Vertex(j);
+				}
+
+			}
+			tree->Create(engine, &tris[0], totalCells, 32);
+
 			//if (minX < 0) maxX += abs(minX);
 			//if (minZ < 0) maxZ += abs(minZ);
-
-			// Add all NavigationCellls to the CellSpacePartition
-			cellSpace = new CellSpacePartition<NavigationCell*>(engine, maxX, maxZ, 4, 4, TotalCells());
-			CELL_ARRAY::iterator CellIter = cellArray.begin();
-			for(;CellIter != cellArray.end(); ++CellIter)
-			{
-				cellSpace->AddEntity(*CellIter);
-			}
-
 		}
 
 		Vector3 NavigationMesh::SnapPointToCell(NavigationCell* Cell, const Vector3& Point)  
@@ -171,17 +181,17 @@ namespace TikiEngine
 			float ThisDistance;  
 			NavigationCell* ClosestCell = 0;  
 
+			List<TRI>* triangles = tree->GetTrianglesAt(Point);
 
-			//cellSpace->CalculateNeighbors(Vector2(Point.X, Point.Z), 40);
+			for(UInt32 i = 0; i < triangles->Count(); i++)
+			{
+				NavigationCell* pCell = (NavigationCell*)triangles->Get(i).UserData;
+			
 
-			////iterate through the neighbors and sum up all the position vectors
-			//NavigationCell* pCell = cellSpace->begin();
-			//for (; !cellSpace->end(); pCell = cellSpace->next())
-			//{
-			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
-			for(;CellIter != cellArray.end(); ++CellIter)  
-			{  
-				NavigationCell* pCell = *CellIter;
+// 			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
+// 			for(;CellIter != cellArray.end(); ++CellIter)  
+// 			{  
+// 				NavigationCell* pCell = *CellIter;
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
@@ -421,9 +431,9 @@ namespace TikiEngine
 				args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
 #endif
 			}
-			
-			// render cellSpace
-			//cellSpace->RenderCells();
+
+			// Draw Octree
+			tree->DrawDebug();
 		}
 
 		int NavigationMesh::TotalCells() const

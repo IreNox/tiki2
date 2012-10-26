@@ -3,7 +3,7 @@
 
 #include "Core/Engine.h"
 #include "Game/SceneMenuMain.h"
-
+#include "Game/SceneMark.h"
 #include "../misc/res/resource.h"
 
 using namespace TikiEngine;
@@ -55,6 +55,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			{
 				engine->SetScene(
 					new SceneMenuMain(engine)
+					//new SceneMark(engine)
 				);
 			}
 

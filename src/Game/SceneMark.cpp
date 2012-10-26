@@ -36,12 +36,7 @@ namespace TikiEngine
 			showNaviMesh = true;
 			drawCellSpace = false;
 
-			octTable = 0;
-			triIdxTable = 0;
-			drawIdx = 0;
-
-			showTree = 0;
-
+			fly = 0;
 		}
 
 		SceneMark::~SceneMark()
@@ -55,18 +50,20 @@ namespace TikiEngine
 		
 
 
+
 			SafeRelease(&bot);
 
-			SafeRelease(&fly);
+			
 			SafeRelease(&font);
 			
 
 			
 			SafeDelete(&naviMesh);
-			//SafeDelete(&tree);
+
+			SafeRelease(&fly);
+
 
 			SafeRelease(&state);
-
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -87,22 +84,22 @@ namespace TikiEngine
 			this->AddElement(go);
 			go->Release();
 
-			// Create static Octree for NavMesh triangles and get the tables
-			tree = new OcTree(engine);
-			int totalCells = naviMesh->TotalCells();
-			
-			for (int i = 0; i < totalCells; i++)
-			{
-				NavigationCell* cell = naviMesh->Cell(i);
-				for(int j = 0; j < 3; j++)
-				{
-					tris[i].Pt[j] = cell->Vertex(j);
-					tris[i].UserData = (void*) cell;
-				}
+			// Create static Octree for NavMesh triangles
+			//tree = new OcTree(engine);
+			//int totalCells = naviMesh->TotalCells();
+			//
+			//for (int i = 0; i < totalCells; i++)
+			//{
+			//	NavigationCell* cell = naviMesh->Cell(i);
+			//	tris[i].UserData = (void*) cell;
 
-			}
-			tree->Create(&tris[0], totalCells, 32);
-			tree->GetTables(&octTable, &octCount, &triIdxTable, &triIdxCount);
+			//	for(int j = 0; j < 3; j++)
+			//	{
+			//		tris[i].Pt[j] = cell->Vertex(j);
+			//	}
+
+			//}
+			//tree->Create(&tris[0], totalCells, 32);
 
 			//IPhysicsMaterial* material; 
 			material = engine->librarys->CreateResource<IPhysicsMaterial>();
@@ -194,7 +191,7 @@ namespace TikiEngine
 			if (dynamicBox->GetDynamic())
 			{
 				// set some mass, this won't affect kinematic actors.
-				dynamicBox->GetRigidBody()->SetMass(5);
+				dynamicBox->GetRigidBody()->SetMass(0.5f);
 				//assert(box->GetRigidBody()->GetMass() == 5);
 
 				// give this tiny box a force pointing upwards
@@ -237,52 +234,11 @@ namespace TikiEngine
 			if (showNaviMesh)
 				naviMesh->Draw(args);
 
-			tree->DrawDebug();
-
-			int idx = drawIdx;
-			// draw the whole tree
-			if (showTree)
-			{
-				for (int i = 0; i < octCount; i++)
-					octTable[i].BBox->DrawDebug(Color::White);
-			}
-			// Draw one node with its neighbors and tris
-			else
-			{
-				// Draw Neighbors
-				for (int i = 0; i < NUM_NEIGHBORS; i++)
-				{
-					if (octTable[idx].NeighborIdx[i] != NULL_NODE)
-						octTable[octTable[idx].NeighborIdx[i]].BBox->DrawDebug(Color::Red);
-				}
-
-				// Draw Box
-				octTable[idx].BBox->DrawDebug(Color::White);
-
-			}
-
-			// Draw triangles
-			int start = octTable[idx].TriIdxStart;
-			int end = octTable[idx].TriIdxStart + octTable[idx].TriIdxCount;
-			for (int i = start; i < end; i++)
-			{
-				unsigned int triIdx = triIdxTable[i];
-				for (int i = 0; i < 3; i++)
-				{
-					Vector3 start = tris[triIdx].Pt[i];
-					Vector3 end = tris[triIdx].Pt[(i + 1) % 3];
-					NavigationCell* cell = (NavigationCell*)tris[triIdx].UserData;
-					engine->graphics->DrawLine(start, end, Color::Blue);
-				}
-
-			}
+			//List<TRI>* triangles = tree->GetTrianglesAt(bot->Pos3D());
+			//tree->DrawDebug();
 
 
 			engine->physics->DrawDebug();
-
-
-
-
 			#endif
 
 
@@ -297,36 +253,6 @@ namespace TikiEngine
 			//	[=](){ cellSpace->UpdateEntity(bot, Vector2::Zero); },
 			//	[=](){ Vector2::Zero; }
 			//);
-
-			// TODO: PositionToIndex(Vector3 pos)
-			Vector3 testPos = bot->Pos3D();
-			for (int idx = 1; idx < octCount - 1; idx++)
-			{
-				if (octTable[idx].BBox->Contains(testPos))
-					drawIdx = idx;
-			}
-			// = foundIdx;
-
-
-			if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				showTree = 0;
-				if (drawIdx < octCount - 1)
-					drawIdx++;
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F6))
-			{
-				showTree = 0;
-				if (drawIdx > 0)
-					drawIdx--;
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F7))
-			{
-				showTree = 1;
-				drawIdx = 0;
-			}
 
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);

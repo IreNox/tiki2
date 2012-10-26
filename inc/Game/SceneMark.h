@@ -11,7 +11,8 @@
 #include "Game/TikiBot.h"
 #include "Game/CameraFly.h"
 #include "Game/NavigationMesh.h"
-#include "Game/OcTree.h"
+//#include "Game/OcTree.h"
+
 
 namespace TikiEngine
 {
@@ -58,14 +59,8 @@ namespace TikiEngine
 
 			 GameState* state;
 
-			 OcTree* tree;
-			 OctNode* octTable;
-			 int octCount;
-			 unsigned int* triIdxTable;
-			 int triIdxCount;
-			 int drawIdx;
-			 int showTree;
-			 TRI tris[191]; // = TotalCells
+			 //OcTree* tree;
+ 			// TRI tris[191]; // = TotalCells
 
 			 NavigationMesh* naviMesh; 
 			 bool showNaviMesh;

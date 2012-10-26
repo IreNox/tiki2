@@ -1,19 +1,47 @@
 #include "Game/OcTree.h"
 #include "Game/Utils.h"
 #include "Core/LibraryManager.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
-		OcTree::OcTree(Engine* engine)
+		OcTree::OcTree()
 		{
-			this->engine = engine;
+			//this->octreeTable = 0;
+			//this->triangleIdxTable = 0;
+			this->drawIdx = 0;
+			this->showTree = false;
+			this->foundTriangles = new List<TRI>();
 		}
 
 		OcTree::~OcTree()
 		{
+			if (octreeTable != 0)
+			for (int i = 0; i < octreeCount; i++)
+				octreeTable[i].Dispose();
+
+			SafeDelete(&octreeTable);
+			SafeDelete(&triangleIdxTable);
+
+			foundTriangles->Clear();
 		}
+
+		void OcTree::Dispose()
+		{
+			//if (octreeTable != 0)
+			//for (int i = 0; i < octreeCount; i++)
+			//	octreeTable[i].Dispose();
+			//	SafeRelease(&octreeTable[i].BBox);
+
+			//SafeDelete(&octreeTable);
+			//SafeDelete(&triangleIdxTable);
+
+
+			//foundTriangles->Clear();
+		}
+
 
 		int OcTree::GetOppositeIdx(int idx)
 		{
@@ -198,8 +226,9 @@ namespace TikiEngine
 		}
 
 
-		int OcTree::Create(TRI* tris, int triCount, int trisPerNode)
+		int OcTree::Create(Engine* engine, TRI* tris, int triCount, int trisPerNode)
 		{
+			this->engine = engine;
 
 			// Build our root node
 			if (!BuildRootNode(tris, triCount))
@@ -231,7 +260,15 @@ namespace TikiEngine
 				} // for (j)
 			} // for (i)
 
+		
 			free(octTable);
+
+			this->triangles = tris;
+
+			// Get the final tables
+			GetTables(&octreeTable, &octreeCount, &triangleIdxTable, &triangleIdxCount);
+
+
 
 			return 1;
 		}
@@ -243,9 +280,72 @@ namespace TikiEngine
 			*triIdxTable = (unsigned int*)TriIdxList.BuildLinearTable(triIdxCount);
 		}
 
+		int OcTree::PositionToIndex(const Vector3& pos)
+		{
+			int ret; 
+			for (int i = 1; i < octreeCount - 1; i++)
+				if (octreeTable[i].BBox->Contains(pos))
+					ret = i;
+
+			return ret;
+		}
+
+		//Vector3
+		List<TRI>* OcTree::GetTrianglesAt(const Vector3& pos)
+		{
+			foundTriangles->Clear();
+
+			int idx = PositionToIndex(pos);
+			drawIdx = idx;
+
+			int start = octreeTable[idx].TriIdxStart;
+			int end = octreeTable[idx].TriIdxStart + octreeTable[idx].TriIdxCount;
+			for (int i = start; i < end; i++)
+			{
+				unsigned int triIdx = triangleIdxTable[i];
+				foundTriangles->Add(triangles[triIdx]);
+			}
+
+			return foundTriangles;
+		}
+
+
 		void OcTree::DrawDebug()
 		{
-			//root.BBox->DrawDebug(Color::White);
+			// draw the whole tree
+			if (showTree)
+			{
+				for (int i = 0; i < octreeCount; i++)
+					octreeTable[i].BBox->DrawDebug(Color::White);
+			}
+			// Draw one node with its neighbors and tris
+			else
+			{
+				// Draw Neighbors
+				for (int i = 0; i < NUM_NEIGHBORS; i++)
+				{
+					if (octreeTable[drawIdx].NeighborIdx[i] != NULL_NODE)
+						octreeTable[octreeTable[drawIdx].NeighborIdx[i]].BBox->DrawDebug(Color::Red);
+				}
+
+				// Draw current box
+				octreeTable[drawIdx].BBox->DrawDebug(Color::White);
+
+			}
+
+			// draw found triangles via GetTrianglesAt
+			for(unsigned int i = 0; i < foundTriangles->Count(); i++)
+			{
+				TRI t = foundTriangles->Get(i);
+
+				for (int j = 0; j < 3; j++)
+				{
+					Vector3 start = t.Pt[j];
+					Vector3 end = t.Pt[(j + 1) % 3];
+					engine->graphics->DrawLine(start, end, Color::Blue);
+				}
+			}
+
 		}
 
 	}

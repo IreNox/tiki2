@@ -26,13 +26,8 @@ namespace TikiEngine
 			int TriIdxStart;
 			int TriIdxCount;
 
-			void Dispose()
-			{
-				SafeRelease(&BBox);
-			}
-
-			OctNode() {BBox = 0;}
-			~OctNode() { /* SafeRelease(&BBox); */ }
+			// todo!
+			void Dispose() { SafeRelease(&BBox); }
 		};
 
 
@@ -61,14 +56,17 @@ namespace TikiEngine
 			// i refers to the octant of the new box 0-7
 			void GetBox(IBoundingBox* parentBox, IBoundingBox* newBox, int i);
 
+
 		public:
-			OcTree(Engine* engine);
+			OcTree();
 			~OcTree();
+
+			void Dispose();
 
 			// Tris - Array of triangles to construct Octree with
 			// TriCount - Number of Triangles in the Tris array
 			// TrisPerNode - Max number of triangles in each octree node
-			int Create(TRI* tris, int triCount, int trisPerNode);
+			int Create(Engine* engine, TRI* tris, int triCount, int trisPerNode);
 
 			// OctTable - Gets a pointer to a linear block of oct node data
 			// OctCount - Number of node's in OctTable
@@ -78,6 +76,12 @@ namespace TikiEngine
 						   unsigned int** triIdxTable, int* triIdxCount);
 
 
+			// Receive the octIndex from position
+			int PositionToIndex(const Vector3& pos);
+
+			// get all intersecting triangles from the box positioned within pos
+			List<TRI>* GetTrianglesAt(const Vector3& pos);
+
 			void DrawDebug();
 
 		protected:
@@ -85,7 +89,16 @@ namespace TikiEngine
 			VoidList TriIdxList;
 			Engine* engine;
 
-			
+			OctNode* octreeTable;
+			int octreeCount;
+			unsigned int* triangleIdxTable;
+			int triangleIdxCount;
+			int drawIdx;
+			bool showTree;
+			TRI* triangles; // = TotalCells
+
+			List<TRI>* foundTriangles;
+
 			
 		};
 
