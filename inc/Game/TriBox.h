@@ -15,7 +15,11 @@ namespace TikiEngine
 		};
 
 
-		int TriBoxIntersect(IBoundingBox* BBox, TRI Tri);
+		const int INSIDE = 0;
+		const int OUTSIDE = 1;
 
+		// Determine if a bounding box and triangle intersect
+		// return 1 = OUTSIDE, 0 = INSIDE
+		int TriBoxIntersect(IBoundingBox* box, TRI Tri);
 	}
 }

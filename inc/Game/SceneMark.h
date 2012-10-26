@@ -59,8 +59,14 @@ namespace TikiEngine
 			 GameState* state;
 
 			 OcTree* tree;
+			 OctNode* octTable;
+			 int octCount;
+			 unsigned int* triIdxTable;
+			 int triIdxCount;
+			 int drawIdx;
+			 int showTree;
+			 TRI tris[191]; // = TotalCells
 
-			 
 			 NavigationMesh* naviMesh; 
 			 bool showNaviMesh;
 

@@ -26,21 +26,32 @@ namespace TikiEngine
 			int TriIdxStart;
 			int TriIdxCount;
 
-			OctNode() {}
-			~OctNode() { SafeRelease(&BBox); }
+			void Dispose()
+			{
+				SafeRelease(&BBox);
+			}
+
+			OctNode() {BBox = 0;}
+			~OctNode() { /* SafeRelease(&BBox); */ }
 		};
 
 
 		class OcTree
 		{
 		protected:
+			//  Given a cube side index, return an index to the side opposite it
+			int GetOppositeIdx(int idx);
+
+			// Given the side of a cube face, search through the Octree to find the best fit neighbor
+			void FindNeighbor(OctNode** octTable, OctNode* node, BoxSide* side, 
+							  int idx, int* found, float* foundSize);
+
 			// Given a list of triangles, finds a cube centered at the origin which fully encloses all points
 			void FindBox(TRI* tris, int triCount, IBoundingBox* BBox);
 
 			// Build the first node in the tree which encloses all the triangles
 			int BuildRootNode(TRI* tris, int triCount);
 
-			// TODO:
 			// After building the root node, this function recursively subdivides the tree into octants.  
 			// Each octants gets a new bounding box and all the polygons in the parent are tested to see
 			// which lie within the new box.  Stops once each node contains no more than trisPerNode
@@ -58,6 +69,13 @@ namespace TikiEngine
 			// TriCount - Number of Triangles in the Tris array
 			// TrisPerNode - Max number of triangles in each octree node
 			int Create(TRI* tris, int triCount, int trisPerNode);
+
+			// OctTable - Gets a pointer to a linear block of oct node data
+			// OctCount - Number of node's in OctTable
+			// TriIdxTable - Gets a pointer to a linear block of all triangle indices
+			// TriIdxCount - Number of indices in TriIdxTable
+			void GetTables(OctNode** octTable, int* octCount,
+						   unsigned int** triIdxTable, int* triIdxCount);
 
 
 			void DrawDebug();

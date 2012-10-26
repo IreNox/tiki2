@@ -61,6 +61,7 @@
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\BasicDatabase.cpp" />
     <ClCompile Include="src\Game\BasicTransform.cpp" />
+    <ClCompile Include="src\Game\BoxSide.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\CameraRTS.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />
@@ -87,6 +88,7 @@
     <ClCompile Include="src\Game\SceneTim.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
+    <ClCompile Include="src\Game\TriBox.cpp" />
     <ClCompile Include="src\Game\UnitSelection.cpp" />
     <ClCompile Include="src\Game\VoidList.cpp" />
   </ItemGroup>

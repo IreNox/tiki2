@@ -7,7 +7,7 @@
 /* misc utility functions and constants */
 const float   Pi        = 3.14159f;
 const float   TwoPi     = Pi * 2;
-
+const float	  Eps		= 10e-5f;
 
 inline Double DegsToRads(double degrees)
 {
@@ -43,6 +43,28 @@ inline bool ApproxEqual(float x, float v)
 	return ABS(x - v) <= 0.001f ? true : false;
 }
 
+inline float LERP(float a, float b, float c)
+{
+	return b + a * (c-b);
+}
+
+inline float Min3(float a, float b, float c)
+{
+	return ( ( (a<b) && (a<c) ) ? a : ( (b<c) ? b : c) );
+}
+
+inline float Max3(float a, float b, float c)
+{
+	return ( ( (a>b) && (a>c) ) ? a : ( (b>c) ? b : c) );
+}
+
+// Extract X,Y,Z signs as 0..7 or 0...63 integer
+inline int Sign3(Vector3 a)
+{
+	return ((a.X < Eps) ? 4 : 0 | (a.X > -Eps) ? 32 : 0 | 
+		    (a.Y < Eps) ? 2 : 0 | (a.Y > -Eps) ? 16 : 0 | 
+			(a.Z < Eps) ? 1 : 0 | (a.Z > -Eps) ? 8 : 0	);
+}
 
 //returns a random float between zero and 1
 inline float RandFloat() {return ((rand())/(RAND_MAX+1.0f));}

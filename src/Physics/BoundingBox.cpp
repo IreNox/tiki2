@@ -56,6 +56,11 @@ namespace TikiEngine
 			return bounds.intersects(*bb);
 		}
 
+		bool BoundingBox::Contains(const Vector3& p)
+		{
+			return bounds.contain(p.arr);
+		}
+
 #if _DEBUG
 		void BoundingBox::DrawDebug(Color color)
 		{

@@ -15,6 +15,54 @@ namespace TikiEngine
 		{
 		}
 
+		int OcTree::GetOppositeIdx(int idx)
+		{
+			if (idx % 2 == 0)
+				return (idx + 1);
+			else
+				return (idx - 1);
+		}
+
+
+		void OcTree::FindNeighbor(OctNode** octTable, OctNode* node, BoxSide* side, int idx, int* found, float* foundSize)
+		{
+			if (node && node->ChildIdx[0] != NULL_NODE)
+			{
+				// loop all childs
+				for (int i = 0; i < NUM_CHILDREN; i++)
+				{
+					// get the current one
+					OctNode* child = octTable[node->ChildIdx[i]];
+
+					// Find the side of the test box facing the opposite direction of the current side
+					BoxSide testSide;
+					int testIdx = GetOppositeIdx(idx);
+					testSide.SetFromBox(child->BBox, testIdx);
+					
+					//  If it's the same size or greater, test to see if planes are neighbors
+					if (side->GetSize() <= testSide.GetSize())
+					{
+						if (side->Neighbors(testSide))
+							if (testSide.GetSize() < *foundSize)
+							{
+								*found = node->ChildIdx[i];
+								*foundSize = testSide.GetSize();
+							} // if
+
+					// keep searching if we haven't found a prefect fit
+					if (*foundSize != side->GetSize())
+						FindNeighbor(octTable, child, side, idx, found, foundSize);
+
+
+					} // if
+
+				} // for (i)
+
+			} // if
+		}
+
+
+
 		void OcTree::FindBox(TRI* tris, int triCount, IBoundingBox* BBox)
 		{
 			float extend = 0;
@@ -73,8 +121,8 @@ namespace TikiEngine
 
 		void OcTree::GetBox(IBoundingBox* parentBox, IBoundingBox* newBox, int i)
 		{
-			Vector3 center =  (parentBox->GetMax() + parentBox->GetMin()) / 2;
-			Vector3 boxSize =  parentBox->GetMax() - parentBox->GetMin();
+			Vector3 center = (parentBox->GetMax() + parentBox->GetMin()) / 2;
+			Vector3 boxSize = parentBox->GetMax() - parentBox->GetMin();
 			
 			Vector3 newCenter;
 			if(i % 2 == 0)
@@ -99,6 +147,53 @@ namespace TikiEngine
 
 		void OcTree::BuildTree(OctNode* node, int trisPerNode, TRI* tris, int triCount)
 		{
+			//	if the node has more than threshold number of triangles, create children
+			if (node->TriIdxCount > trisPerNode)
+			{
+
+				for (int i = 0; i < NUM_CHILDREN; i++)
+				{
+					OctNode newNode;
+
+					// Set this node's child pointer.
+					node->ChildIdx[i] = OctNodeList.GetCount();
+
+					// partition the new box for the child.
+					newNode.BBox = engine->librarys->CreateResource<IBoundingBox>();
+					GetBox(node->BBox, newNode.BBox, i);
+
+					//	Initialize fields
+					for (int j = 0; j < NUM_CHILDREN; j++)
+						newNode.ChildIdx[i] = NULL_NODE;
+
+					for (int j = 0; j < NUM_NEIGHBORS; j++)
+						newNode.NeighborIdx[i] = NULL_NODE;
+
+					//	See which of the parent's triangles lie within the new node.
+					newNode.TriIdxCount = 0;
+					newNode.TriIdxStart = TriIdxList.GetCount();
+					TriIdxList.PositionAt(node->TriIdxStart);
+
+					for (int j = 0; j < node->TriIdxCount; j++)
+					{
+						unsigned int* TriIdx = (unsigned int*)TriIdxList.GetCurrent();
+						TRI* Tri = &tris[*TriIdx];
+
+						if (TriBoxIntersect(newNode.BBox, *Tri) == INSIDE)
+						{
+							TriIdxList.Append(TriIdx, sizeof(unsigned int));
+							newNode.TriIdxCount++;
+						} // if 
+
+						TriIdxList.Advance();
+					} // for (j)
+
+					// Add the new node ad recurse on its children
+					OctNodeList.Append(&newNode, sizeof(OctNode));
+					BuildTree((OctNode*)OctNodeList.GetLast(), trisPerNode, tris, triCount);
+
+				} // for (i)
+			} // if 
 
 		}
 
@@ -106,22 +201,47 @@ namespace TikiEngine
 		int OcTree::Create(TRI* tris, int triCount, int trisPerNode)
 		{
 
-			
+			// Build our root node
 			if (!BuildRootNode(tris, triCount))
 				return 0;
 
+			// Build tree recursively
 			BuildTree((OctNode*)OctNodeList.GetLast(), trisPerNode, tris, triCount);
 
+			// Get the table and find neighbors
+			int octCount;
+			OctNode** octTable = (OctNode**)OctNodeList.BuildTable(&octCount);
 
-			//OctNode** octTable;
-			//int octCount;
+			for (int i = 0; i < octCount; i++)
+			{
+				OctNode* node = octTable[i];
 
+				for (int j = 0; j < NUM_NEIGHBORS; j++)
+				{
+					int found = NULL_NODE;
+					float foundSize = (float)(unsigned int)(1 << 31); // Max val
+
+					BoxSide side;
+					side.SetFromBox(node->BBox, j);
+
+					FindNeighbor(octTable, octTable[0], &side, j, &found, &foundSize);
+
+					node->NeighborIdx[j] = found;
+
+				} // for (j)
+			} // for (i)
+
+			free(octTable);
 
 			return 1;
-
 		}
 
-
+		void OcTree::GetTables(OctNode** octTable, int* octCount, 
+							   unsigned int** triIdxTable, int* triIdxCount)
+		{
+			*octTable = (OctNode*)OctNodeList.BuildLinearTable(octCount);
+			*triIdxTable = (unsigned int*)TriIdxList.BuildLinearTable(triIdxCount);
+		}
 
 		void OcTree::DrawDebug()
 		{

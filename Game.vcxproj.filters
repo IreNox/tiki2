@@ -280,6 +280,12 @@
     <ClCompile Include="src\Game\OcTree.cpp">
       <Filter>Quelldateien\AI\OcTree</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\TriBox.cpp">
+      <Filter>Quelldateien\AI\OcTree</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BoxSide.cpp">
+      <Filter>Quelldateien\AI\OcTree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="misc\res\icon.ico">

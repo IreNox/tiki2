@@ -26,6 +26,7 @@ namespace TikiEngine
 
 			void Set(const Vector3& min, const Vector3& max);
 			bool Intersects(IBoundingBox* b);
+		    bool Contains(const Vector3& p);
 
 #if _DEBUG
 			void DrawDebug(Color color);
