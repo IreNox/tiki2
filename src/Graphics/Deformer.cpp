@@ -101,6 +101,9 @@ void Deformer::ComputeSkinDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMes
 
 void Deformer::ComputeLinearDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMesh, FbxTime& pTime, FbxVector4* pVertexArray, FbxPose* pPose)
 {
+
+	int counterDebug = 0;
+
 	FbxCluster::ELinkMode lClusterMode = ((FbxSkin*)pMesh->GetDeformer(0, FbxDeformer::eSkin))->GetCluster(0)->GetLinkMode();
 
 	int lVertexCount = pMesh->GetControlPointsCount();
@@ -172,10 +175,13 @@ void Deformer::ComputeLinearDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pM
 
 					// Add to the sum of weights to either normalize or complete the vertex.
 					lClusterWeight[lIndex] += lWeight;
+					counterDebug++;
 				}
 			}//For each vertex			
 		}//lClusterCount
 	}
+
+	counterDebug = counterDebug;
 
 	//Actually deform each vertices here by information stored in lClusterDeformation and lClusterWeight
 	for (int i = 0; i < lVertexCount; i++) 
