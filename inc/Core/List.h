@@ -37,17 +37,17 @@ public:
 	#pragma endregion
 
 	#pragma region Member
-	UInt32 FirstIndex() const
+	inline UInt32 FirstIndex() const
 	{
 		return 0;
 	}
 
-	UInt32 Count() const
+	inline UInt32 Count() const
 	{
 		return this->lengthData + 1;
 	}
 
-	int IndexOf(T item) const
+	inline int IndexOf(T item) const
 	{
 		for (int i = 0; i < this->lengthData + 1; i++)
 		{
@@ -57,17 +57,17 @@ public:
 		return -1;
 	}
 
-	void Clear()
+	inline void Clear()
 	{
 		this->lengthData = -1;
 	}
 
-	bool Contains(T item) const
+	inline bool Contains(T item) const
 	{
 		return (this->IndexOf(item) != -1);
 	}
 
-	T* ToArray() const
+	inline T* ToArray() const
 	{
 		UInt32 c = lengthData + 1; 
 		T* arr = new T[c];
@@ -85,7 +85,7 @@ public:
 	#pragma endregion
 
 	#pragma region Member - Add
-	void Add(T item)
+	inline void Add(T item)
 	{
 		if (this->IsReadOnly) return;
 
@@ -94,7 +94,7 @@ public:
 		this->data[index] = item;
 	}
 
-	void AddRange(const T* src, Int32 offset, UInt32 length)
+	inline void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
 		Int32 badFix = lengthData;
 		int index = getNewIndex(this->lengthData + (length - 2), true);
@@ -110,7 +110,7 @@ public:
 		}
 	}
 
-	void Insert(UInt32 index, T item)
+	inline void Insert(UInt32 index, T item)
 	{
 		if (this->IsReadOnly) return;
 
@@ -130,14 +130,14 @@ public:
 		this->data[index] = item;
 	}
 
-	const T* GetInternalData() const
+	inline const T* GetInternalData() const
 	{
 		return data;
 	}
 	#pragma endregion
 
 	#pragma region Member - Remove
-	bool Remove(T item)
+	inline bool Remove(T item)
 	{
 		if (this->IsReadOnly) return false;
 
@@ -152,7 +152,7 @@ public:
 		return false;
 	}
 
-	void RemoveAt(UInt32 index)
+	inline void RemoveAt(UInt32 index)
 	{
 		if (this->IsReadOnly) return;
 
@@ -179,22 +179,22 @@ public:
 	#pragma endregion
 
 	#pragma region Indexer
-	T Get(const int index) const
+	inline T Get(const int index) const
 	{
 		return this->data[index];
 	}
 
-	void Set(const int index, T value)
+	inline void Set(const int index, T value)
 	{
 		this->data[index] = value;
 	}
 
-	T operator[](const int index) const
+	inline T operator[](const int index) const
 	{
 		return this->data[index];
 	}  
 
-	T& operator[](const int index)
+	inline T& operator[](const int index)
 	{
 		return this->data[index];
 	} 
@@ -209,12 +209,12 @@ protected:
 private:
 
 	#pragma region Private Member
-	int getNextSize()
+	inline int getNextSize()
 	{
 		return this->lengthArr * 2;
 	}
 
-	int getNewIndex(UInt32 in, bool used)
+	inline int getNewIndex(UInt32 in, bool used)
 	{
 		UInt32 index = in + 1;
 

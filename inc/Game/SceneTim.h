@@ -15,6 +15,7 @@
 #include "Core/ITriangleMeshCollider.h"
 
 #include "Core/GUIButton.h"
+#include "Game/ParticleTest.h"
 
 namespace TikiEngine
 {
@@ -22,6 +23,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::Graphics;
+		using namespace TikiEngine::Particles;
 		using namespace TikiEngine::Components;
 		using namespace TikiEngine::UserInterface;
 
@@ -42,23 +44,16 @@ namespace TikiEngine
 			IFont* font;
 
 			LightObject* light;
-
-			ITexture* tex;
-
-			PPScreenSpaceAmbientOcclusion* ssao;
-
-			Vector3 tmp;
-
-			GUIButton* button;
-
 			CameraObject* camera;
 
-			double lastTime;
+			ParticleTest* behavior;
 
-			IBoxCollider* dynamicBox;
-
-			ITerrainRenderer* terrain;
-			ITriangleMeshCollider* collider;
+			//ITexture* tex;
+			//Vector3 tmp;
+			//double lastTime;
+			//IBoxCollider* dynamicBox;
+			//ITerrainRenderer* terrain;
+			//ITriangleMeshCollider* collider;
 
 		};
 	}

@@ -281,6 +281,9 @@
     <ClCompile Include="src\Core\File.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\ParticleBehavior.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -514,9 +517,6 @@
     <ClInclude Include="inc\Core\IModel.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\IModelRenderer.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\ITriangleMeshCollider.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
@@ -609,6 +609,15 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Event.h">
       <Filter>Headerdateien\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IParticleEffect.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ParticleBehavior.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Particle.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

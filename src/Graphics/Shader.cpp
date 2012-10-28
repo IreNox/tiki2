@@ -75,14 +75,17 @@ namespace TikiEngine
 					Matrix::Invert(mat)
 				);
 
-				objData->UseDiffuse = (material->TexDiffuse != 0);
-				objData->UseNormalMap = (material->TexNormalMap != 0);
-				objData->UseSpecular = (material->TexSpecular != 0);
-				objData->FlipTexcoordV = material->FlipTexcorrdV;
+				if (material)
+				{
+					objData->UseDiffuse = (material->TexDiffuse != 0);
+					objData->UseNormalMap = (material->TexNormalMap != 0);
+					objData->UseSpecular = (material->TexSpecular != 0);
+					objData->FlipTexcoordV = material->FlipTexcorrdV;
 
-				if (objData->UseDiffuse) this->SetTexture("TexDiffuse", material->TexDiffuse);
-				if (objData->UseNormalMap) this->SetTexture("TexNormalMap", material->TexNormalMap);
-				if (objData->UseSpecular) this->SetTexture("TexSpecular", material->TexSpecular);
+					if (objData->UseDiffuse) this->SetTexture("TexDiffuse", material->TexDiffuse);
+					if (objData->UseNormalMap) this->SetTexture("TexNormalMap", material->TexNormalMap);
+					if (objData->UseSpecular) this->SetTexture("TexSpecular", material->TexSpecular);
+				}
 
 				DllMain::ModuleGraphics->GetCBufferObject()->Unmap();
 			}

@@ -37,7 +37,7 @@ namespace TikiEngine
 			renderTarget->CreateScreenSize();
 			DllMain::ModuleGraphics->AddDefaultProcessTarget("spriteBatch", renderTarget);
 
-			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, 2, true);
+			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, SpriteBatchVertex::DeclarationCount, true);
 
 			declaration = new VertexDeclaration(
 				engine,
@@ -74,24 +74,22 @@ namespace TikiEngine
 
 		void SpriteBatchModule::End()
 		{
+			UInt32 count = vertices.Count();
+			if (count == 0) return;
+
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 			DllMain::ModuleGraphics->GetScreenTarget()->ApplyFirstAndOnly();
 
-			UInt32 count = vertices.Count();
 
-			if (count == 0) return;
-
-			SpriteBatchVertex* data = vertices.ToArray();
 			SpriteBatchVertex* bufferData = this->buffer->Map(count);
 			
 			memcpy(
 				bufferData,
-				data,
+				vertices.GetInternalData(),
 				sizeof(SpriteBatchVertex) * count
 			);
 
 			this->buffer->Unmap();
-			delete[](data);
 
 			UINT offset = 0;
 			UINT stride = declaration->GetElementSize();

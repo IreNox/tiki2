@@ -382,7 +382,7 @@ namespace TikiEngine
 						
 			rtDepth->Clear(Color::Black);
 			rtDepth->Apply(1);
-			rtNormal->Clear(Color::NormalDefault);
+			rtNormal->Clear(Color::Black);
 			rtNormal->Apply(2);
 
 			if (args.CurrentCamera)

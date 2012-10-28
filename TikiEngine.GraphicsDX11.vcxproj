@@ -30,11 +30,12 @@
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
+    <ClCompile Include="src\Graphics\ParticleEffect.cpp" />
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp" />
-    <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp" />
+    <ClCompile Include="src\Graphics\GraphicsVertexFormats.cpp" />
     <ClCompile Include="src\Graphics\TerrainIndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\TerrainRenderer.cpp" />
     <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp" />
@@ -63,6 +64,8 @@
     <ClInclude Include="inc\Graphics\LightData.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Model.h" />
+    <ClInclude Include="inc\Graphics\ParticleEffect.h" />
+    <ClInclude Include="inc\Graphics\ParticleVertex.h" />
     <ClInclude Include="inc\Graphics\Quad.h" />
     <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />

@@ -21,12 +21,15 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include <time.h>
+
 namespace TikiEngine
 {
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
 	{
+		srand(time(0));
 	}
 
 	Engine::~Engine()

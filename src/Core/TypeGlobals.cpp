@@ -1,6 +1,11 @@
 
 #include "Core/TypeGlobals.h"
 
+float Random(float min, float max)
+{
+	return (((float)rand() / RAND_MAX) * (max - min)) + min;
+}
+
 string StringWtoA(wstring str)
 {
 	size_t size = str.length() + 1;

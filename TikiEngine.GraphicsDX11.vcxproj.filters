@@ -101,9 +101,6 @@
     <ClCompile Include="src\Graphics\SpriteBatchModule.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\SpriteBatchVertex.cpp">
-      <Filter>Quelldateien\Internal\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Font.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
@@ -139,6 +136,12 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp">
       <Filter>Quelldateien\Internal\Cloddy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ParticleEffect.cpp">
+      <Filter>Quelldateien\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsVertexFormats.cpp">
+      <Filter>Quelldateien\Internal\Vertex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,6 +237,12 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\LightData.h">
       <Filter>Headerdateien\Internal\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ParticleEffect.h">
+      <Filter>Headerdateien\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ParticleVertex.h">
+      <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

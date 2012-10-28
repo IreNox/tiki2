@@ -55,5 +55,7 @@ inline void SafeRelease(T** ptr)
 	}
 }
 
+float Random(float min, float max);
+
 string StringWtoA(wstring str);
 wstring StringAtoW(string str);

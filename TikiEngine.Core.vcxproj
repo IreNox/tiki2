@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\ParticleBehavior.cpp" />
     <ClCompile Include="src\Core\shell.c" />
     <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
@@ -75,6 +76,9 @@
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventHandler.h" />
     <ClInclude Include="inc\Core\EventScreenSizeChanged.h" />
+    <ClInclude Include="inc\Core\IParticleEffect.h" />
+    <ClInclude Include="inc\Core\Particle.h" />
+    <ClInclude Include="inc\Core\ParticleBehavior.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
@@ -105,7 +109,6 @@
     <ClInclude Include="inc\Core\ICharacterController.h" />
     <ClInclude Include="inc\Core\IFont.h" />
     <ClInclude Include="inc\Core\IModel.h" />
-    <ClInclude Include="inc\Core\IModelRenderer.h" />
     <ClInclude Include="inc\Core\IScript.h" />
     <ClInclude Include="inc\Core\ISound.h" />
     <ClInclude Include="inc\Core\ISoundSystem.h" />

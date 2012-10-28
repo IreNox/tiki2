@@ -20,8 +20,8 @@ namespace TikiEngine
 			ViewPort* vp = engine->graphics->GetViewPort();
 
 			this->matrices.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
-				MATH_PI / 4,				
-				(float)vp->Width / vp->Width,
+				MATH_PI / 4,
+				(float)vp->Width / vp->Height,
 				0.01f,
 				1000.0f
 			));

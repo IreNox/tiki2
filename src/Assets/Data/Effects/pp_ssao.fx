@@ -302,6 +302,7 @@ technique11 basic
     pass pass01
     {
         SetVertexShader(CompileShader(vs_5_0, VS_Main()));
+		SetGeometryShader( NULL );
         SetPixelShader(CompileShader(ps_5_0, PSPP_Main()));
 		SetBlendState( DisableBlend, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
     }

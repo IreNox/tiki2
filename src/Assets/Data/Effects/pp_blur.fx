@@ -92,12 +92,14 @@ technique11 basic
     pass blurVertical
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_5_0, PSPP_BlurVertical() ) );
     }
 
     pass blurHorizontal
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_5_0, PSPP_BlurHorizontal() ) );
     }
 }

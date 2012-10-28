@@ -10,6 +10,7 @@
 #include "Core/IContentManager.h"
 
 #include "Core/IMeshRenderer.h"
+#include "Core/IParticleEffect.h"
 #include "Core/IPhysicsMaterial.h"
 #include "Core/ISound.h"
 
@@ -29,13 +30,13 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 
 		SceneTim::SceneTim(Engine* engine)
-			: Scene(engine), lastTime(0), dynamicBox(0)
+			: Scene(engine) //, lastTime(0), dynamicBox(0)
 		{
 		}
 
 		SceneTim::~SceneTim()
 		{
-			SafeRelease(&tex);
+			//SafeRelease(&tex);
 			//SafeRelease(&ssao);
 			SafeRelease(&light);
 			SafeRelease(&font);
@@ -45,26 +46,40 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 			
-			//go->Model = engine->content->LoadModel(L"humanoid");
-			tex = engine->content->LoadTexture(L"checker");
+			behavior = new ParticleTest(engine);
 
-			Material* mat = engine->content->LoadMaterial(L"os_default");
-			mat->GetShader()->SetTexture("tex", tex);
+			IParticleEffect* effect = engine->librarys->CreateComponent<IParticleEffect>(go);
+			effect->SetTexture(engine->content->LoadTexture(L"checker"));
+			effect->SetParticleBehavior(behavior);
+			effect->Release();
+
+			this->AddElement(go);
+
+
+			//// Model
+			//go = new GameObject(engine);
+			//go->Model = engine->content->LoadModel(L"Soldier_S");
+
+			//Material* mat = engine->content->LoadMaterial(L"os_default");
+			//mat->GetShader()->SetTexture("tex", engine->content->LoadTexture(L"checker"));
 
 			//go->Model->SetMaterial(mat);
-			mat->Release();
+			//mat->Release();
 
-			//go->PRS.Scale() = Vector3(0.01f);
+			//go->PRS.SScale() = Vector3(0.01f);
 
 			//this->AddElement(go);
 			//go->Release();
 
+
+			// Light
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 			
+			// Camera
 			camera = new CameraObject(engine);
 			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
@@ -73,45 +88,46 @@ namespace TikiEngine
 			this->AddElement(camera);
 			camera->Release();
 
-			IPhysicsMaterial* material; 
-			//material = engine->content->LoadPhysicsMaterial(L"TODO");
-			material = engine->librarys->CreateResource<IPhysicsMaterial>();
-			material->SetRestitution(0.2f);
-			material->SetDynamicFriction(0.7f);
-			material->SetStaticFriction(0.5f); // static friction may be higher than 1.
+			#pragma region Old Stuff
+			//IPhysicsMaterial* material; 
+			////material = engine->content->LoadPhysicsMaterial(L"TODO");
+			//material = engine->librarys->CreateResource<IPhysicsMaterial>();
+			//material->SetRestitution(0.2f);
+			//material->SetDynamicFriction(0.7f);
+			//material->SetStaticFriction(0.5f); // static friction may be higher than 1.
 
 			// Cloddy
 			//go = new GameObject(engine);
-			
-			mat = engine->content->LoadMaterial(L"os_cloddy");
-			mat->GetShader()->SetTexture("tex", tex);
 
-			terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
-			terrain->SetMaterial(mat);
-			terrain->Release();
-			mat->Release();
+			//mat = engine->content->LoadMaterial(L"os_cloddy");
+			//mat->GetShader()->SetTexture("tex", tex);
 
-			collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
-			collider->SetMaterial(material->GetIndex());
-			collider->SetCenter(Vector3::Zero);
-			collider->SetDynamic(false);
+			//terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			//terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
+			//terrain->SetMaterial(mat);
+			//terrain->Release();
+			//mat->Release();
 
-			this->AddElement(go);
-			go->Release();
+			//collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
+			//collider->SetMaterial(material->GetIndex());
+			//collider->SetCenter(Vector3::Zero);
+			//collider->SetDynamic(false);
 
-			go = new GameObject(engine);
-			go->Model = engine->content->LoadModel(L"replaceme_cube");
-			go->Model->SetMaterial(mat);
-			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			dynamicBox->SetCenter(Vector3(0, 20, 0));
-			dynamicBox->SetSize(Vector3(1, 1, 1));
-			dynamicBox->SetDynamic(true);
-			// assign collision groups after object is created, else it won't work!
-			dynamicBox->SetGroup(CG_Collidable_Pushable);
-			this->AddElement(go);
-			go->Release();
+			//this->AddElement(go);
+			//go->Release();
+
+			//go = new GameObject(engine);
+			//go->Model = engine->content->LoadModel(L"replaceme_cube");
+			//go->Model->SetMaterial(mat);
+			//dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+			//dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			//dynamicBox->SetCenter(Vector3(0, 20, 0));
+			//dynamicBox->SetSize(Vector3(1, 1, 1));
+			//dynamicBox->SetDynamic(true);
+			//// assign collision groups after object is created, else it won't work!
+			//dynamicBox->SetGroup(CG_Collidable_Pushable);
+			//this->AddElement(go);
+			//go->Release();
 
 			//// Blur
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
@@ -124,16 +140,11 @@ namespace TikiEngine
 			//// Sound
 			//ISound* sound = engine->librarys->CreateResource<ISound>();
 			//sound->LoadFromFile(L"beep");
+			#pragma endregion
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 14.0f);
-
-			GUIControl::SetDefaultFont(font);
-
-			button = new GUIButton(engine);
-			button->Position() = Vector2(500, 500);
-			button->Size() = Vector2(512, 128);
-
+			
 			Scene::Initialize(args);
 		}
 
@@ -148,19 +159,18 @@ namespace TikiEngine
 			//);
 
 			wostringstream s;
-			s << "Box: X: " << tmp.X << ", Y:"  << tmp.Y << ", Z:" << tmp.Z;
-
+			s << "Particle: " << behavior->GParticleUsed();
 			engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
-			engine->sprites->Draw(
-				engine->graphics->GetDepthTarget(),
-				Rectangle(10, 10, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	engine->graphics->GetDepthTarget(),
+			//	Rectangle(10, 10, 200, 180)
+			//);
 
-			engine->sprites->Draw(
-				engine->graphics->GetNormalTarget(),
-				Rectangle(10, 200, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	engine->graphics->GetNormalTarget(),
+			//	Rectangle(10, 200, 200, 180)
+			//);
 
 			//engine->sprites->Draw(
 			//	ssao->GetAO(),
@@ -168,7 +178,7 @@ namespace TikiEngine
 			//);
 
 			#if _DEBUG
-			engine->physics->DrawDebug();
+			//engine->physics->DrawDebug();
 			#endif
 
 			/*engine->sprites->Draw(
@@ -179,8 +189,6 @@ namespace TikiEngine
 				Vector2(1),
 				1
 			);*/
-
-			button->Draw(args);
 		}
 
 		void SceneTim::Update(const UpdateArgs& args)
@@ -193,12 +201,12 @@ namespace TikiEngine
 			//) * args.Time.ElapsedTime;
 
 			//// tmp = class var
-			if (dynamicBox)
-			{
-				tmp = dynamicBox->GetGameObject()->PRS.GPosition();
-			}
+			//if (dynamicBox)
+			//{
+			//	tmp = dynamicBox->GetGameObject()->PRS.GPosition();
+			//}
 
-			tmp.Z = terrain->SampleHeight(tmp);
+			//tmp.Z = terrain->SampleHeight(tmp);
 
 			//light->PRS.SetRotation(
 			//	Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z)
@@ -207,7 +215,7 @@ namespace TikiEngine
 
 			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
 
-			if (args.Input.GetKeyPressed(KEY_F5))
+			/*if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				dynamicBox->SetCenter(Vector3(0, 30, 0));
 			}
@@ -225,14 +233,12 @@ namespace TikiEngine
 
 				terrain->UpdateCollider(collider, &list);
 				lastTime = args.Time.TotalTime;
-			}
+			}*/
 
-			if (args.Input.GetKey(KEY_F12))
-			{
-				engine->graphics->MakeScreenshot();
-			}
-
-			button->Update(args);
+			//if (args.Input.GetKey(KEY_F12))
+			//{
+			//	engine->graphics->MakeScreenshot();
+			//}
 
 			Scene::Update(args);
 		}

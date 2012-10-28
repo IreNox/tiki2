@@ -48,8 +48,6 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	if (LightsCount != 0.0f && true)
 	{
-		float3 termAmbient = AmbientColor.rgb * AmbientIntensity;
-		float3 termEmissive = EmissiveColor.rgb * EmissiveIntensity;
 		float3 termLight = float3(1, 1, 1);
 
 		float3 pixelNormal = rtNormal.Sample(sam, input.UV).xyz;
@@ -65,10 +63,6 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 		}		
 
 		bbColor.rgb *= termLight;
-		bbColor = float4(
-			saturate(bbColor.rgb + termAmbient + termEmissive),
-			bbColor.a
-		);
 	}
 
 	color = ((bbColor * alColor) * (1 - dlColor.a)) + dlColor;
@@ -77,11 +71,5 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return color;
 }
 
-technique11 basic
-{
-    pass p0
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-    }
-}
+
+#include "Data/Effects/IncOS/is_technique.fx"
