@@ -10,6 +10,10 @@ namespace TikiEditor.Designer
 {
     internal partial class formMain : Form
     {
+        #region Vars
+        private Control _leftControl;
+        #endregion
+
         #region Init
         public formMain()
         {
@@ -49,9 +53,21 @@ namespace TikiEditor.Designer
         #endregion
 
         #region Properties
-        public ucDesign Designer
+        public Control LeftControl
         {
-            get { return ucDesign1; }
+            get { return _leftControl; }
+            set
+            {
+                if (_leftControl != value)
+                {
+                    _leftControl = value;
+
+                    splitContainer1.Panel1.Controls.Clear();
+                    splitContainer1.Panel1.Controls.Add(_leftControl);
+
+                    _leftControl.Dock = DockStyle.Fill;
+                }
+            }
         }
 
         public bool DesignShow

@@ -36,7 +36,7 @@ namespace TikiEngine
 	#pragma region  Member - Get Direction
 	Vector3 Transform::GetForward()
 	{
-		return rotation * Vector3::ForwardRH;
+		return rotation * Vector3::Forward;
 	}
 
 	Vector3 Transform::GetUp()

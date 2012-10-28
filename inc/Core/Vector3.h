@@ -56,22 +56,64 @@ public:
 	static Vector3 Clamp(const Vector3& value1, const Vector3& min, const Vector3& max);
 	static Vector3 Lerp(const Vector3& value1, const Vector3& value2,const float amount);
 
-	//boolean operators
-	bool operator== (const Vector3& rhs) const;
-	bool operator!= (const Vector3& rhs) const;
+	#pragma region Operators - Boolean
+	inline bool operator==(const Vector3& rhs) const
+	{
+		return this->X == rhs.X && this->Y == rhs.Y && this->Z == rhs.Z;
+	}
 
-	//arithmetic operations
-	Vector3 operator+ (const Vector3& rhs) const;
-	Vector3 operator- () const;
-	Vector3 operator- (const Vector3& rhs) const;
-	Vector3 operator* (float rhs) const;
-	Vector3 operator/ (float rhs) const;
+	inline bool operator!=(const Vector3& rhs) const
+	{
+		return !(this->X == rhs.X && this->Y == rhs.Y && this->Z == rhs.Z);
+	}
+	#pragma endregion
 
-	//arithmetic update
-	Vector3& operator-= (const Vector3& rhs) ;
-	Vector3& operator+= (const Vector3& rhs) ;
+	#pragma region Operations - Arithmetic
+	inline Vector3 operator+ (const Vector3& vector) const
+	{
+		return Vector3(this->X + vector.X, this->Y + vector.Y, this->Z + vector.Z);
+	}
 
+	inline Vector3 operator- () const
+	{
+		return Vector3(-this->X, -this->Y, -this->Z);
+	}
 
+	inline Vector3 operator- (const Vector3& vector) const
+	{
+		return Vector3(this->X - vector.X, this->Y - vector.Y, this->Z - vector.Z);
+	}
+
+	inline Vector3 operator* (float rhs) const
+	{
+		return Vector3(this->X * rhs, this->Y * rhs, this->Z * rhs);
+	}
+
+	inline Vector3 operator/ (float rhs) const 
+	{
+		return Vector3(this->X / rhs, this->Y / rhs, this->Z / rhs);
+	}
+	#pragma endregion
+
+	#pragma region Operations - Arithmetic - Update
+	inline Vector3& Vector3::operator+= (const Vector3& rhs) 
+	{
+		this->X += rhs.X;
+		this->Y += rhs.Y;
+		this->Z += rhs.Z;
+
+		return *this;
+	}
+	
+	inline Vector3& Vector3::operator-= (const Vector3& rhs) 
+	{
+		this->X -= rhs.X;
+		this->Y -= rhs.Y;
+		this->Z -= rhs.Z;
+
+		return *this;
+	}
+	#pragma endregion
 
 	//static attributes
 	static Vector3 Zero;
@@ -84,8 +126,7 @@ public:
 	static Vector3 Down;
 	static Vector3 Right;
 	static Vector3 Left;
-	static Vector3 ForwardLH;
-	static Vector3 BackwardLH;
-	static Vector3 ForwardRH;
-	static Vector3 BackwardRH;
+	static Vector3 Forward;
+	static Vector3 Backward;
+
 };

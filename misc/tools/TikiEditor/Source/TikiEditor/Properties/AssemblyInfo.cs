@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("TikiEditor")]
-[assembly: AssemblyProduct("TikiEditor")]
+[assembly: AssemblyTitle("TikiEditor 2.0")]
+[assembly: AssemblyProduct("TikiEditor 2.0")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyCompany("TikiTek")]
 [assembly: AssemblyCopyright("Copyright TikiTek©  2012")]
@@ -31,4 +31,4 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]

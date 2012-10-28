@@ -7,14 +7,14 @@ using TikiEditor.Objects;
 
 namespace TikiEditor.Designer
 {
-    internal partial class ucDesign : UserControl
+    internal partial class ucDesignLevel : UserControl
     {
         #region Vars
         private DataBaseObject _object;
         #endregion
 
         #region Init
-        public ucDesign()
+        public ucDesignLevel()
         {
             InitializeComponent();
         }
@@ -36,7 +36,7 @@ namespace TikiEditor.Designer
         #region Member - EventHandler
         private void buttonNew_Click(object sender, EventArgs e)
         {
-            GI.Level.Objects.Add(
+            GI.ModeLevel.Level.Objects.Add(
                 new LevelObject()
             );
         }
@@ -48,26 +48,26 @@ namespace TikiEditor.Designer
 
         private void checkShowPoints_CheckedChanged(object sender, EventArgs e)
         {
-            GI.BasicDraw.ShowPoints = checkShowPoints.Checked;
+            GI.ModeLevel.LevelDraw.ShowPoints = checkShowPoints.Checked;
         }
 
         private void checkShowBoundingBox_CheckedChanged(object sender, EventArgs e)
         {
-            GI.BasicDraw.ShowBounding = checkShowBoundingBox.Checked;
+            GI.ModeLevel.LevelDraw.ShowBounding = checkShowBoundingBox.Checked;
         }
         #endregion
 
         #region Member - EventHandler - Add
         private void buttonAddObject_Click(object sender, EventArgs e)
         {
-            GI.Level.Objects.Add(
+            GI.ModeLevel.Level.Objects.Add(
                 new LevelObject()
             );
         }
 
         private void buttonAddEnemyBasic_Click(object sender, EventArgs e)
         {
-            GI.Level.Enemies.Add(
+            GI.ModeLevel.Level.Enemies.Add(
                 new LevelEnemy()
             );
         }

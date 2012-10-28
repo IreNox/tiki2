@@ -869,7 +869,7 @@ namespace TikiEngine
 				buf->Data[i].Range = l->GetRange();
 				buf->Data[i].Color = l->GetColor().ToVector4();
 				buf->Data[i].Position = l->GetGameObject()->PRS.GPosition();
-				buf->Data[i].Direction = l->GetGameObject()->PRS.GRotation() * Vector3::ForwardRH;
+				buf->Data[i].Direction = l->GetGameObject()->PRS.GRotation() * Vector3::Forward;
 
 				i++;
 			}

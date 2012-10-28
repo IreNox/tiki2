@@ -14,10 +14,11 @@ namespace TikiEditor
         private static DB _db;
 
         private static GameMain _game;
+        private static ModeGUI _modeGUI;
+        private static ModeLevel _modeLevel;
 
         private static GraphicsDevice _device;
 
-        private static BasicDraw _basicDraw;
         private static SpriteBatch _spriteBatch;
         private static PolygonBatch _polygonBatch;
 
@@ -25,10 +26,6 @@ namespace TikiEditor
         private static ControlComponent _control;
 
         private static ContentManager _content;
-
-        private static Level _level;
-
-        private static object _debug;
         #endregion
 
         #region Init
@@ -46,19 +43,6 @@ namespace TikiEditor
 
             _db = new DB("Data/TikiData.sqlite");
             _db.Open();
-
-            var row = _db.Select<Level>(1);
-            
-            if (row != null)
-            {
-                _level = row.ToObject();
-            }
-            else
-            {
-                _level = _db.InsertNew<Level>();
-            }
-
-            _basicDraw = new BasicDraw();
         }
         #endregion
 
@@ -78,11 +62,6 @@ namespace TikiEditor
         public static DB DB
         {
             get { return _db; }
-        }
-
-        public static BasicDraw BasicDraw
-        {
-            get { return _basicDraw; }
         }
 
         public static SpriteBatch SpriteBatch
@@ -120,16 +99,17 @@ namespace TikiEditor
             get { return _content; }
         }
 
-        public static Level Level
+        public static ModeGUI ModeGUI
         {
-            get { return _level; }
+            get { return GI._modeGUI; }
+            set { GI._modeGUI = value; }
+        }
+
+        public static ModeLevel ModeLevel
+        {
+            get { return GI._modeLevel; }
+            set { GI._modeLevel = value; }
         }
         #endregion
-
-        public static object Debug
-        {
-            get { return GI._debug; }
-            set { GI._debug = value; }
-        }
     }
 }
