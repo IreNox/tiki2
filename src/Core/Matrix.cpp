@@ -592,6 +592,26 @@ Matrix Matrix::Transpose(const Matrix& matrix)
 		matrix.M44);
 
 }
+Matrix Matrix::Transpose()
+{
+	return Matrix(		
+		M11,
+		M21,
+		M31,
+		M41,
+		M12,
+		M22,
+		M32,
+		M42,
+		M13,
+		M23,
+		M33,
+		M43,
+		M14,
+		M24,
+		M34,
+		M44);
+}
 #pragma endregion
 
 #pragma region Operators

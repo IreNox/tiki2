@@ -47,13 +47,13 @@ namespace TikiEngine
 			go->Model = engine->content->LoadModel(L"links");
 			tex = engine->content->LoadTexture(L"checker");
 
-			Material* mat = engine->content->LoadMaterial(L"os_default");
-			mat->GetShader()->SetTexture("tex", tex);
+			//Material* mat = engine->content->LoadMaterial(L"os_default");
+			//mat->GetShader()->SetTexture("tex", tex);
 
-			go->Model->SetMaterial(mat);
-			mat->Release();
+			go->Model->GetMaterial()->GetShader()->SetTexture("Tex", tex);//SetMaterial(mat);
+			//mat->Release();
 
-			//go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
 			go->Release();

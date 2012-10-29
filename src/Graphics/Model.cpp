@@ -1,6 +1,7 @@
 
 #include "Graphics/Model.h"
 #include "Core/TypeGlobals.h"
+#include "Core/IGraphics.h"
 
 #include "Graphics/DllMain.h"
 #include "Graphics/FbxLoader.h"
@@ -16,7 +17,18 @@ namespace TikiEngine
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1)
 		{
 			indexBuffer = new DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
-			vertexBuffer = new DynamicBuffer<DefaultVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			vertexBuffer = new DynamicBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+
+			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
+
+			shader = new Shader(engine);
+			shader->LoadFromFile(L"Data/Effects/os_skinning.fx");
+			shader->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
+
+			Material* material = new Material(engine);
+			material->SetShader(shader);
+			shader->Release();
+			this->SetMaterial(material);
 		}
 
 		Model::~Model()
@@ -26,7 +38,7 @@ namespace TikiEngine
 				SafeRelease(&meshes[i]);
 			}
 			FbxArrayDelete(animStackNameArray);
-			this->scene->Destroy();
+			//this->scene->Destroy();
 
 			SafeRelease(&declaration);
 			SafeRelease(&material);
@@ -37,6 +49,14 @@ namespace TikiEngine
 
 		void Model::Initialize()
 		{
+			FbxAxisSystem directX(FbxAxisSystem::eDirectX);
+			FbxAxisSystem sceneAxis = scene->GetGlobalSettings().GetAxisSystem();
+
+			if(sceneAxis != directX)
+			{
+				directX.ConvertScene(scene);
+			}
+
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
 
@@ -90,8 +110,14 @@ namespace TikiEngine
 
 			frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
 
+			startTime = start.GetSecondDouble();
+			stopTime = stop.GetSecondDouble();
+			timer = startTime;
+
+
 			// move to beginning
 			currentTime = start;
+
 
 			return true;
 		}
@@ -123,7 +149,7 @@ namespace TikiEngine
 			return material;
 		}
 
-		List<DefaultVertex>* Model::GetVertices()
+		List<SkinningVertex>* Model::GetVertices()
 		{
 			return &verticesList;
 		}
@@ -141,7 +167,7 @@ namespace TikiEngine
 
 			if (material != 0 && material->GetReady())
 			{
-				declaration = new VertexDeclaration(engine, material->GetShader(), DefaultVertex::Declaration, DefaultVertex::DeclarationCount);
+				declaration = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
 		}
 		#pragma endregion
@@ -176,6 +202,10 @@ namespace TikiEngine
 			declaration->Apply();
 
 			DllMain::Context->DrawIndexed(indicesList.Count(), 0, 0);
+
+			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
+			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
+			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
 		}
 
 		void Model::Update(const UpdateArgs& args)
@@ -184,12 +214,12 @@ namespace TikiEngine
 
 			FbxNode* root = this->scene->GetRootNode();
 
-			currentTime += (frameTime * animationSpeed);
+			timer += args.Time.ElapsedTime;
 
-			if (currentTime > stop)
-			{
-				currentTime = start;
-			}
+			if(timer > stopTime)
+				timer = startTime;
+			
+			currentTime.SetSecondDouble(timer);
 
 			UInt32 i = 0;
 			while (i < meshes.Count())
@@ -198,173 +228,15 @@ namespace TikiEngine
 				i++;
 			}
 
-			this->CopyVertexData();			
+			SkinMatrices* matrices = constantBufferMatrices->Map();
+			int matrixCount = meshes[0]->skinMatrices.Count();
+			for(int i = 0; i < matrixCount; i++)
+			{
+				matrices->bones[i] = meshes[0]->skinMatrices[i].Transpose();
+			}
+			constantBufferMatrices->Unmap();		
 		}
 		#pragma endregion
-
-		void Model::HandleNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose)
-		{
-			FbxAMatrix lGlobalPosition = GetGlobalPosition(node, time);
-
-			//root has no NodeAttribute
-			if(node->GetNodeAttribute())
-			{
-				FbxAMatrix lGeometryOffset = GetGeometry(node);
-				FbxAMatrix lGlobalOffPosition = lGlobalPosition * lGeometryOffset;
-
-				HandleNode(node, time, animLayer, parentGlobalPosition, lGlobalOffPosition, pose);
-			}
-			for(int i = 0; i < node->GetChildCount(); i++)
-			{
-				HandleNodeRecursive(node->GetChild(i), time, animLayer, lGlobalPosition, pose);
-			}
-		}
-
-		void Model::HandleNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose)
-		{
-			if(node->GetNodeAttribute())
-			{
-				if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-				{
-					HandleMesh(node, time, animLayer, globalPosition, pose);
-				}
-				else if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
-				{
-					HandleSkeleton(node, parentGlobalPosition, globalPosition);
-				}
-			}
-		}
-		
-		void Model::HandleSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition)
-		{
-			//FbxSkeleton* lSkeleton = (FbxSkeleton*) pNode->GetNodeAttribute();
-
-			////Only draw the skeleton if it's a limb node and if 
-			////the parent also has an attribute of type skeleton.
-			//if (lSkeleton->GetSkeletonType() == FbxSkeleton::eLimbNode &&
-			//	pNode->GetParent() &&
-			//	pNode->GetParent()->GetNodeAttribute() &&
-			//	pNode->GetParent()->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
-			//{
-
-			//	this->skeletonList.Add(pParentGlobalPosition.GetT());
-			//	this->skeletonList.Add(pGlobalPosition.GetT());
-			//}
-		}
-		
-		void Model::HandleMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
-			FbxAMatrix& globalPosition, FbxPose* pose)
-		{
-			FbxMesh* mesh = node->GetMesh();
-
-			int vertexCount = mesh->GetControlPointsCount();
-
-			if(vertexCount == 0)
-				return;
-
-			TikiMesh tm = TikiMesh(engine, node);
-			tm.Initialize();
-
-			bool hasShape = mesh->GetShapeCount() > 0;
-			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
-			bool hasDeformation = hasShape || hasSkin;
-
-			FbxVector4* vertexArray = new FbxVector4[vertexCount];
-			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
-			
-			if(hasDeformation)
-			{
-				if(hasShape)
-				{
-					Deformer::ComputeShapeDeformation(mesh, time, animLayer, vertexArray);
-				}
-
-				const int skinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
-				int clusterCount = 0;
-				for(int i = 0; i < skinCount; i++)
-				{
-					clusterCount += ((FbxSkin *)(mesh->GetDeformer(i, FbxDeformer::eSkin)))->GetClusterCount();
-				}
-				if(clusterCount)
-				{
-					Deformer::ComputeSkinDeformation(globalPosition, mesh, time, vertexArray, pose);
-				}
-			}
-
-			for(int i = 0; i < vertexCount; i++)
-			{
-				vertexArray[i] = (static_cast<FbxMatrix>(globalPosition).MultNormalize(vertexArray[i]));
-			}
-
-			if(!this->GetReady())
-			{
-				UInt32 indicesOffset = this->verticesList.Count();
-
-				UInt32 counter = 0;
-
-				for(Int32 i = 0; i < mesh->GetPolygonVertexCount();i++)
-				{
-					Int32 verticesInPolygon = mesh->GetPolygonSize(i);
-
-					UInt32 indicesArray[4];
-
-					for(Int32 k = 0; k < verticesInPolygon; k++)
-					{
-						int index = mesh->GetPolygonVertex(i,k);
-
-						FbxVector4 position = vertexArray[index];
-
-						FbxVector2 uv = FbxVector2(0,0);
-						int uvIndex = -1;
-
-						if(mesh->GetElementUVCount() != 0)
-						{
-							uvIndex = mesh->GetElementUV(0)->GetIndexArray().GetAt(counter);
-							uv = mesh->GetElementUV(0)->GetDirectArray().GetAt(uvIndex);
-						}
-
-						FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter);
-
-						int blub = mesh->GetElementTangentCount();
-						FbxVector4 binormal = FbxVector4();
-						FbxVector4 tangent = FbxVector4();
-
-						DefaultVertex default = {
-							(float)position[0],(float)position[1],(float)position[2],
-							(float)uv[0],(float)uv[1],
-							(float)normals[0],(float)normals[1],(float)normals[2]
-						};	
-
-						indicesArray[k] = verticesList.IndexOf(default);
-						if(indicesArray[k] == -1)
-						{
-							//UpdateStructure us = 
-							//{
-							//	i,k,uvIndex,counter
-							//};
-							//this->updateStructure.Add(us);
-							indicesArray[k] = verticesList.Count();
-							verticesList.Add(default);
-						}
-					}
-
-					indicesList.Add(indicesArray[0]);
-					indicesList.Add(indicesArray[1]);
-					indicesList.Add(indicesArray[2]);
-
-					if(verticesInPolygon == 4)
-					{
-						indicesList.Add(indicesArray[0]);
-						indicesList.Add(indicesArray[2]);
-						indicesList.Add(indicesArray[3]);
-					}
-				}
-			}
-			else
-			{
-				
-			}
-		}
 
 		void Model::InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose)
 		{
@@ -424,9 +296,11 @@ namespace TikiEngine
 
 				i++;
 			}
+			SkinningVertex tmp = verticesList[0];
+			SkinningVertex tmp2 = verticesList[1];
 
-			DefaultVertex* vertexData = vertexBuffer->Map(verticesList.Count());
-			memcpy(vertexData, verticesList.GetInternalData(), sizeof(DefaultVertex) * verticesList.Count());
+			SkinningVertex* vertexData = vertexBuffer->Map(verticesList.Count());
+			memcpy(vertexData, verticesList.GetInternalData(), sizeof(SkinningVertex) * verticesList.Count());
 			vertexBuffer->Unmap();
 		}
 
@@ -459,8 +333,6 @@ namespace TikiEngine
 		}
 
 
-
-
 		#pragma region Math
 		FbxAMatrix& Model::GetGlobalPosition(FbxNode* node, FbxTime pTime)
 		{
@@ -484,15 +356,6 @@ namespace TikiEngine
 				throw L"FBXfile not found";
 
 			Initialize();
-
-			//DllMain::FBXLoader->LoadFile(
-			//	fileName,
-			//	&indices,
-			//	&indicesCount,
-			//	&vertices,
-			//	&verticesSize,
-			//	&scene
-			//);
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)

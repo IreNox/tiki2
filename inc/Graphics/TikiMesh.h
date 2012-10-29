@@ -4,6 +4,7 @@
 
 #include "Core/List.h"
 #include "Core/DefaultVertex.h"
+#include "Core/SkinningVertex.h"
 #include "Core/IModel.h"
 
 #define FBXSDK_NEW_API
@@ -20,6 +21,8 @@ namespace TikiEngine
 			int VertexIndex;
 			int UVIndex;
 			int NormalIndex;
+			Vector4 Weights;
+			Vector4 Indices;
 		};
 
 		class TikiMesh
@@ -31,35 +34,32 @@ namespace TikiEngine
 			~TikiMesh();
 
 			bool Initialize();
+			void InitializeGPUSkinning();
 
 			void Update(FbxTime& time, FbxAnimLayer* animLayer, FbxPose* pose);
+			void UpdateVertexBuffer();
 
 			bool GetReady();
 
 			void Release();
 
-			List<DefaultVertex> verticesList;
+			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
+			List<Matrix> skinMatrices;
 
+			
 		private:
 
-
+			void ComputeClusterDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMesh, FbxCluster* pCluster, 
+				FbxAMatrix& pVertexTransformMatrix, FbxTime pTime, FbxPose* pPose);
+			FbxAMatrix GetGeometry(FbxNode* pNode);
 
 			FbxNode* node;
-			FbxAMatrix* matrix;
 			Engine* engine;
-
 
 			List<UpdateStructure> updateStructure;
 
 			bool hasDeformation;
-
-			UInt32* indices;
-			void* vertices;
-
-			UInt32 indicesCount;
-			UInt32 verticesSize;
-
 		};
 	}
 }

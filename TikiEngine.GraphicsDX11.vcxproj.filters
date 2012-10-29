@@ -244,5 +244,8 @@
     <ClInclude Include="inc\Graphics\ParticleVertex.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\SkinMatrices.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -2,11 +2,14 @@
 
 #include "Core/List.h"
 #include "Core/DefaultVertex.h"
+#include "Core/SkinningVertex.h"
 #include "Core/IModel.h"
 
 #include "Graphics/TikiMesh.h"
 #include "Graphics/DynamicBuffer.h"
 #include "Graphics/VertexDeclaration.h"
+#include "Graphics/ConstantBuffer.h"
+#include "Graphics/SkinMatrices.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -33,7 +36,7 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* material);
 
-			List<DefaultVertex>* GetVertices();
+			List<SkinningVertex>* GetVertices();
 			List<UInt32>* GetIndices();
 
 			float GetAnimationSpeed();
@@ -53,11 +56,6 @@ namespace TikiEngine
 			void InitializeAnimationStack();
 			bool SetCurrentAnimStack(int pIndex);
 
-			void HandleNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose);
-			void HandleNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose);
-			void HandleSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition);
-			void HandleMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
-				FbxAMatrix& globalPosition, FbxPose* pose);
 
 			void InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose);
 			void InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose);
@@ -77,7 +75,12 @@ namespace TikiEngine
 			FbxTime currentTime;
 			float animationSpeed;
 
-			List<DefaultVertex> verticesList;
+			double startTime;
+			double stopTime;
+			double timer;
+
+
+			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 
 			List<TikiMesh*> meshes;
@@ -86,7 +89,7 @@ namespace TikiEngine
 			VertexDeclaration* declaration;
 
 			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			DynamicBuffer<DefaultVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			DynamicBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
 			UInt32 updateCounter;
 			//List<UpdateStructure> updateStructure;
@@ -95,6 +98,11 @@ namespace TikiEngine
 			FbxAnimLayer* currentAnimLayer;
 			
 			FbxScene* scene;
+
+			SkinMatrices matrices;
+			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
+
+			Shader* shader;
 
 		};
 	}

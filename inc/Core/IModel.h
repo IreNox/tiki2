@@ -7,6 +7,7 @@
 #include "Core/UpdateArgs.h"
 
 #include "Core/DefaultVertex.h"
+#include "Core/SkinningVertex.h"
 
 namespace TikiEngine
 {
@@ -29,7 +30,7 @@ namespace TikiEngine
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* material) = 0;
 
-			virtual List<DefaultVertex>* GetVertices() = 0;
+			virtual List<SkinningVertex>* GetVertices() = 0;
 			virtual List<UInt32>* GetIndices() = 0;
 
 			virtual float GetAnimationSpeed() = 0;

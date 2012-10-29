@@ -190,6 +190,8 @@ void Deformer::ComputeLinearDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pM
 		FbxVector4& lDstVertex = pVertexArray[i];
 		double lWeight = lClusterWeight[i];
 
+		FbxAMatrix tmp = lClusterDeformation[i];
+
 		// Deform the vertex if there was at least a link with an influence on the vertex,
 		if (lWeight != 0.0) 
 		{

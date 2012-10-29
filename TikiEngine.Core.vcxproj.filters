@@ -284,6 +284,9 @@
     <ClCompile Include="src\Core\ParticleBehavior.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\SkinningVertex.cpp">
+      <Filter>Quelldateien\Core\Vertex</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -618,6 +621,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Particle.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SkinningVertex.h">
+      <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

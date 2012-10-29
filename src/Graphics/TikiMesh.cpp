@@ -1,5 +1,6 @@
 #include "Graphics/TikiMesh.h"
 #include "Graphics/Deformer.h"
+#include "Graphics/FBXConverter.h"
 
 namespace TikiEngine
 {
@@ -7,12 +8,7 @@ namespace TikiEngine
 	{
 		TikiMesh::TikiMesh(Engine* engine, FbxNode* node)
 			:engine(engine),
-			node(node),
-			indices(0),
-			vertices(0),
-			indicesCount(0),
-			verticesSize(0),
-			matrix(0)
+			node(node)
 		{
 
 		}
@@ -21,7 +17,7 @@ namespace TikiEngine
 		}
 		void TikiMesh::Release()
 		{
-			node->Destroy();
+			//node->Destroy();
 		}
 		bool TikiMesh::Initialize()
 		{
@@ -43,7 +39,9 @@ namespace TikiEngine
 
 			UInt32 counter = 0;
 
-			for(Int32 i = 0; i < mesh->GetPolygonCount();i++)
+			Int32 polygonCount = mesh->GetPolygonCount();
+
+			for(Int32 i = 0; i < polygonCount; i++)
 			{
 				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
 
@@ -68,19 +66,21 @@ namespace TikiEngine
 					FbxVector4 binormal = FbxVector4();
 					FbxVector4 tangent = FbxVector4();
 
-					DefaultVertex default = {
+					SkinningVertex skin = {
 						(float)position[0],(float)position[1],(float)position[2],
 						(float)uv[0],(float)uv[1],
-						(float)normals[0],(float)normals[1],(float)normals[2]
-					};	
+						(float)normals[0],(float)normals[1],(float)normals[2],
+						0.0f, 0.0f, 0.0f, 0.0f,
+						0.0f, 0.0f, 0.0f, 0.0f
+					};
 
-					indicesArray[k] = verticesList.IndexOf(default);
+					indicesArray[k] = verticesList.IndexOf(skin);
 					if(indicesArray[k] == -1)
 					{
-						UpdateStructure us = {index, uvIndex, counter};
+						UpdateStructure us = {index, uvIndex, counter, Vector4(-1), Vector4(0.0f)};
 						this->updateStructure.Add(us);
 						indicesArray[k] = verticesList.Count();
-						verticesList.Add(default);
+						verticesList.Add(skin);
 					}
 					counter++;
 				}
@@ -99,47 +99,79 @@ namespace TikiEngine
 			delete[]vertexArray;
 			vertexArray = 0;
 
+			this->InitializeGPUSkinning();
+			this->UpdateVertexBuffer();
+
 			return true;
 		}
 
-		void TikiMesh::Update(FbxTime& time, FbxAnimLayer* animLayer, FbxPose* pose)
+		void TikiMesh::InitializeGPUSkinning()
 		{
-			if(!hasDeformation)
+			FbxMesh* mesh = this->node->GetMesh();
+			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+
+			if(!hasSkin)
 				return;
 
-			FbxAMatrix globalPosition = node->EvaluateGlobalTransform(time);
+			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
+			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
+			{
+				FbxSkin *  skinDeformer = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
 
+				int clusterCount = skinDeformer->GetClusterCount();
+				for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+				{
+					FbxCluster* cluster = skinDeformer->GetCluster(clusterIndex);
+					if (!cluster->GetLink())
+						continue;
+					int vertexCount = cluster->GetControlPointIndicesCount();
+					for(int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+					{
+						int index = cluster->GetControlPointIndices()[vertexIndex];
+
+						if (index >= mesh->GetControlPointsCount())
+							continue;
+
+						int updatestructureCount = updateStructure.Count();
+						for(int updateIndex = 0; updateIndex < updatestructureCount; updateIndex++)
+						{
+							if(updateStructure[updateIndex].VertexIndex == index)
+							{
+								UpdateStructure us = updateStructure[updateIndex];
+
+								int vsIndex = 0;
+								while(us.Weights.arr[vsIndex] != -1)
+									vsIndex++;
+
+								us.Indices.arr[vsIndex] = (float)clusterIndex;
+								us.Weights.arr[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
+								updateStructure.Set(updateIndex,us);
+							}
+						}
+					}
+				}
+			}
+			int updateCount = updateStructure.Count();
+			for(int updateIndex = 0; updateIndex < updateCount; updateIndex++)
+			{
+				UpdateStructure us = updateStructure[updateIndex];
+				for(int i = 0; i < 4; i++)
+				{
+					if(us.Weights.arr[i] == -1)
+						us.Weights.arr[i] = 0;
+				}
+				updateStructure.Set(updateIndex, us);
+			}
+		}
+
+		void TikiMesh::UpdateVertexBuffer()
+		{
 			FbxMesh* mesh = node->GetMesh();
 
 			int vertexCount = mesh->GetControlPointsCount();
 
-			bool hasShape = mesh->GetShapeCount() > 0;
-
 			FbxVector4* vertexArray = new FbxVector4[vertexCount];
 			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
-
-			if(hasDeformation)
-			{
-				if(hasShape)
-				{
-					Deformer::ComputeShapeDeformation(mesh, time, animLayer, vertexArray);
-				}
-
-				const int skinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
-				int clusterCount = 0;
-				for(int i = 0; i < skinCount; i++)
-				{
-					clusterCount += ((FbxSkin *)(mesh->GetDeformer(i, FbxDeformer::eSkin)))->GetClusterCount();
-				}
-				if(clusterCount)
-				{
-					Deformer::ComputeSkinDeformation(globalPosition, mesh, time, vertexArray, pose);
-				}
-			}
-			for(int i = 0; i < vertexCount; i++)
-			{
-				vertexArray[i] = (static_cast<FbxMatrix>(globalPosition).MultNormalize(vertexArray[i]));
-			}
 
 			for(UInt32 i = 0; i < updateStructure.Count(); i++)
 			{
@@ -153,17 +185,94 @@ namespace TikiEngine
 				FbxVector4 binormal = FbxVector4();
 				FbxVector4 tangent = FbxVector4();
 
-				DefaultVertex default = {
+
+				SkinningVertex skin = {
 					(float)position[0],(float)position[1],(float)position[2],
 					(float)uv[0],(float)uv[1],
-					(float)normals[0],(float)normals[1],(float)normals[2]
-				};	
-
-				verticesList[i] = default;
+					(float)normals[0],(float)normals[1],(float)normals[2],
+					us.Weights.X, us.Weights.Y, us.Weights.Z, us.Weights.W,
+					us.Indices.X, us.Indices.Y, us.Indices.Z, us.Indices.W
+				};
+				verticesList.Set(i, skin);
+				//verticesList[i] = skin;
 			}
 			delete[]vertexArray;
 			vertexArray = 0;
+			SkinningVertex tmp = verticesList[0];
+			SkinningVertex tmp2 = verticesList[45];
 
+		}
+
+		void TikiMesh::Update(FbxTime& time, FbxAnimLayer* animLayer, FbxPose* pose)
+		{
+			this->skinMatrices.Clear();
+
+			FbxMesh* mesh = node->GetMesh();
+			FbxSkin* skin = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
+
+			int clusterCount = skin->GetClusterCount();
+			for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+			{
+				FbxCluster* cluster = skin->GetCluster(clusterIndex);
+
+				if(!cluster->GetLink())
+					continue;
+
+				FbxAMatrix transform;
+				ComputeClusterDeformation(node->EvaluateGlobalTransform(),mesh, cluster, transform, time, 0);
+
+				Matrix tmp = FBXConverter::Convert(transform);
+				skinMatrices.Add(tmp);
+			}
+		}
+		void TikiMesh::ComputeClusterDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& pVertexTransformMatrix, FbxTime pTime, FbxPose* pPose)
+		{
+
+			FbxCluster::ELinkMode lClusterMode = pCluster->GetLinkMode();
+
+			FbxAMatrix lReferenceGlobalInitPosition;
+			FbxAMatrix lReferenceGlobalCurrentPosition;
+			FbxAMatrix lAssociateGlobalInitPosition;
+			FbxAMatrix lAssociateGlobalCurrentPosition;
+			FbxAMatrix lClusterGlobalInitPosition;
+			FbxAMatrix lClusterGlobalCurrentPosition;
+
+			FbxAMatrix lReferenceGeometry;
+			FbxAMatrix lAssociateGeometry;
+			FbxAMatrix lClusterGeometry;
+
+			FbxAMatrix lClusterRelativeInitPosition;
+			FbxAMatrix lClusterRelativeCurrentPositionInverse;
+
+
+			pCluster->GetTransformMatrix(lReferenceGlobalInitPosition);
+			lReferenceGlobalCurrentPosition = pGlobalPosition;
+			// Multiply lReferenceGlobalInitPosition by Geometric Transformation
+			lReferenceGeometry = GetGeometry(pMesh->GetNode());
+			lReferenceGlobalInitPosition *= lReferenceGeometry;
+
+			// Get the link initial global position and the link current global position.
+			pCluster->GetTransformLinkMatrix(lClusterGlobalInitPosition);
+			lClusterGlobalCurrentPosition = pCluster->GetLink()->EvaluateGlobalTransform(pTime);//GetGlobalPosition(pCluster->GetLink(), pTime, pPose);
+
+			// Compute the initial position of the link relative to the reference.
+			lClusterRelativeInitPosition = lClusterGlobalInitPosition.Inverse() * lReferenceGlobalInitPosition;
+
+			// Compute the current position of the link relative to the reference.
+			lClusterRelativeCurrentPositionInverse = lReferenceGlobalCurrentPosition.Inverse() * lClusterGlobalCurrentPosition;
+
+			// Compute the shift of the link relative to the reference.
+			pVertexTransformMatrix = lClusterRelativeCurrentPositionInverse * lClusterRelativeInitPosition;
+
+		}
+
+		FbxAMatrix TikiMesh::GetGeometry(FbxNode* pNode)
+		{
+			const FbxVector4 lT = pNode->GetGeometricTranslation(FbxNode::eSourcePivot);
+			const FbxVector4 lR = pNode->GetGeometricRotation(FbxNode::eSourcePivot);
+			const FbxVector4 lS = pNode->GetGeometricScaling(FbxNode::eSourcePivot);
+
+			return FbxAMatrix(lT, lR, lS);
 		}
 
 		bool TikiMesh::GetReady()

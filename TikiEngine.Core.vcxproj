@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Core\ParticleBehavior.cpp" />
     <ClCompile Include="src\Core\shell.c" />
+    <ClCompile Include="src\Core\SkinningVertex.cpp" />
     <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
@@ -79,6 +80,7 @@
     <ClInclude Include="inc\Core\IParticleEffect.h" />
     <ClInclude Include="inc\Core\Particle.h" />
     <ClInclude Include="inc\Core\ParticleBehavior.h" />
+    <ClInclude Include="inc\Core\SkinningVertex.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />

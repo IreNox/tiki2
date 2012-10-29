@@ -70,6 +70,7 @@ public:
 
 	static Matrix Invert(const Matrix& matrix);
 	static Matrix Transpose(const Matrix& matrix);
+	Matrix Transpose();
 
 	static Matrix Multiply(const Matrix& matrix1, const Matrix& matrix2 );
 	static Matrix Multiply(const Matrix& matrix1, float scaleFactor);
