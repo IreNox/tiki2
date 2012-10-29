@@ -9,6 +9,8 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include "Core/EventControls.h"
+
 namespace TikiEngine
 {
 	namespace UserInterface
@@ -19,20 +21,25 @@ namespace TikiEngine
 		{
 		public:
 
+			ClickEvent Click;
+
 			GUIControl(Engine* engine);
 			~GUIControl();
 
-			const Vector2 Position() const;
-			Vector2& Position();
+			const Vector2& GPosition() const;
+			Vector2& SPosition();
 
-			const Vector2 Size() const;
-			Vector2& Size();
+			const Vector2& GSize() const;
+			Vector2& SSize();
+
+			void AddChild(GUIControl* child);
+			bool RemoveChild(GUIControl* child);
 
 			virtual bool Clicked();
 
 			virtual void Draw(const DrawArgs& args);
 			virtual void Update(const UpdateArgs& args);
-
+			
 			virtual bool GetReady();
 
 			static IFont* GetDefaultFont();
@@ -48,9 +55,14 @@ namespace TikiEngine
 			bool mouseOver;
 			bool mouseClicked;
 			
+			virtual RectangleF createBoundingBox();
+
 			static IFont* defaultFont;
 
-			virtual RectangleF createBoundingBox();
+		private:
+
+			GUIControl* parent;
+			List<GUIControl*> childs;
 
 		};
 	}

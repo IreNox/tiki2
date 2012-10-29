@@ -247,5 +247,8 @@
     <ClInclude Include="inc\Graphics\ParticleRenderer.h">
       <Filter>Headerdateien\Components</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\StaticBuffer.h">
+      <Filter>Headerdateien\Internal\Buffer</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

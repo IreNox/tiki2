@@ -72,6 +72,7 @@
     <ClInclude Include="inc\Graphics\SkinMatrices.h" />
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h" />
     <ClInclude Include="inc\Graphics\SpriteBatchVertex.h" />
+    <ClInclude Include="inc\Graphics\StaticBuffer.h" />
     <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h" />
     <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />

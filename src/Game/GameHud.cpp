@@ -25,7 +25,7 @@ namespace TikiEngine
 			texRes1 = engine->content->LoadTexture(L"hud/mass");
 			imageRes1 = new GUIImage(state->GetEngine());
 			imageRes1->SetTexture(texRes1);
-			imageRes1->Size() = Vector2(16, 16);
+			imageRes1->SSize() = Vector2(16, 16);
 			enabledControls.Add(imageRes1);
 
 			labelRes1 = new GUILabel(state->GetEngine());
@@ -35,7 +35,7 @@ namespace TikiEngine
 			texRes2 = engine->content->LoadTexture(L"hud/energy");
 			imageRes2 = new GUIImage(state->GetEngine());
 			imageRes2->SetTexture(texRes2);
-			imageRes2->Size() = Vector2(16, 16);
+			imageRes2->SSize() = Vector2(16, 16);
 			enabledControls.Add(imageRes2);
 
 			labelRes2 = new GUILabel(state->GetEngine());
@@ -67,11 +67,11 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			imageRes1->Position() = Vector2((float)vp->Width - 200, 10);
-			labelRes1->Position() = Vector2((float)vp->Width - 180, 10);
+			imageRes1->SPosition() = Vector2((float)vp->Width - 200, 10);
+			labelRes1->SPosition() = Vector2((float)vp->Width - 180, 10);
 
-			imageRes2->Position() = Vector2((float)vp->Width - 100, 10);
-			labelRes2->Position() = Vector2((float)vp->Width - 80, 10);
+			imageRes2->SPosition() = Vector2((float)vp->Width - 100, 10);
+			labelRes2->SPosition() = Vector2((float)vp->Width - 80, 10);
 		}
 
 		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)

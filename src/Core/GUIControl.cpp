@@ -8,7 +8,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GUIControl::GUIControl(Engine* engine)
-			: EngineObject(engine), isDirty(true), mouseOver(false)
+			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0)
 		{
 		}
 
@@ -29,24 +29,48 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member - Childs
+		void GUIControl::AddChild(GUIControl* child)
+		{
+			if (child->parent)
+			{
+				child->parent->RemoveChild(child);
+			}
+
+			child->parent = this;
+			childs.Add(child);
+		}
+
+		bool GUIControl::RemoveChild(GUIControl* child)
+		{
+			if (child->parent == this)
+			{
+				child->parent = 0;
+				return childs.Remove(child);
+			}
+
+			return false;
+		}
+		#pragma endregion
+
 		#pragma region Member - Get/Set
-		const Vector2 GUIControl::Position() const
+		const Vector2& GUIControl::GPosition() const
 		{
 			return position;
 		}
 
-		Vector2& GUIControl::Position()
+		Vector2& GUIControl::SPosition()
 		{
 			isDirty = true;
 			return position;
 		}
 
-		const Vector2 GUIControl::Size() const
+		const Vector2& GUIControl::GSize() const
 		{
 			return size;
 		}
 
-		Vector2& GUIControl::Size()
+		Vector2& GUIControl::SSize()
 		{
 			isDirty = true;
 			return size;
@@ -56,6 +80,12 @@ namespace TikiEngine
 		#pragma region Member - Draw/Update
 		void GUIControl::Draw(const DrawArgs& args)
 		{
+			UInt32 i = 0;
+			while (i < childs.Count())
+			{
+				childs[i]->Draw(args);
+				i++;
+			}
 		}
 
 		void GUIControl::Update(const UpdateArgs& args)
@@ -68,6 +98,13 @@ namespace TikiEngine
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
 			mouseClicked = (args.Input.GetMousePressed(MB_Left) && mouseOver);
+
+			UInt32 i = 0;
+			while (i < childs.Count())
+			{
+				childs[i]->Update(args);
+				i++;
+			}
 		}
 		#pragma endregion
 

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/GUIControl.h"
+#include "Core/GUIControlRectangles.h"
 
 #include "Core/ITexture.h"
 
@@ -29,51 +30,15 @@ namespace TikiEngine
 		private:
 
 			wstring text;
-
 			ITexture* tex;
 			
 			Vector2 posText;
-
-			RectangleF rectLT;
-			RectangleF rectLC;
-			RectangleF rectLB;
-			RectangleF rectCT;
-			RectangleF rectCC;
-			RectangleF rectCB;
-			RectangleF rectRT;
-			RectangleF rectRC;
-			RectangleF rectRB;
-
-			class ButtonRectangles : public TikiObject
-			{
-			public:
-
-				union
-				{
-					struct 
-					{
-						RectangleF rectLT;
-						RectangleF rectLC;
-						RectangleF rectLB;
-						RectangleF rectCT;
-						RectangleF rectCC;
-						RectangleF rectCB;
-						RectangleF rectRT;
-						RectangleF rectRC;
-						RectangleF rectRB;
-					};
-					RectangleF rects[9];
-				};
-
-				ButtonRectangles(string control);
-				~ButtonRectangles();
-
-			};
+			GUIControlRectangles rects;
 
 			/*! @brief Rectangle Data from Database */
-			static ButtonRectangles* rdNormal;
-			static ButtonRectangles* rdHover;
-			static ButtonRectangles* rdClick;
+			static GUIControlRectangles* rdNormal;
+			static GUIControlRectangles* rdHover;
+			static GUIControlRectangles* rdClick;
 
 		};
 	}

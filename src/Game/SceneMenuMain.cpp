@@ -43,11 +43,11 @@ namespace TikiEngine
 
 			GUIImage* img = new GUIImage(engine);
 			img->SetTexture(logo);
-			img->Position() = Vector2(
+			img->SPosition() = Vector2(
 				((float)vp->Width / 2) - 100,
 				25.0f
 			);
-			img->Size() = Vector2(200);
+			img->SSize() = Vector2(200);
 			controls.Add(img);
 
 			logo->Release();
@@ -64,11 +64,11 @@ namespace TikiEngine
 			while (i < 5)
 			{
 				GUIButton* cmd = new GUIButton(engine);
-				cmd->Position() = Vector2(
+				cmd->SPosition() = Vector2(
 					((float)vp->Width / 2) - 150,
 					250.0f + (i * 75)
 				);
-				cmd->Size() = Vector2(300, 50);
+				cmd->SSize() = Vector2(300, 50);
 				cmd->Text() = text[i];
 
 				buttons.Add(cmd);
@@ -80,19 +80,6 @@ namespace TikiEngine
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 
 			Scene::Initialize(args);
-		}
-
-		void SceneMenuMain::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
-		{
-			UInt32 i = 0;
-			while (i < controls.Count())
-			{
-				controls[i]->Position() = Vector2(
-					(args.CurrentViewPort->Width / 2) - (controls[i]->Size().X / 2),
-					controls[i]->Position().Y
-				);
-				i++;
-			}
 		}
 		#pragma endregion
 
@@ -153,6 +140,26 @@ namespace TikiEngine
 			}
 
 			Scene::Update(args);
+		}
+		#pragma endregion
+
+		#pragma region Member - EventHandler
+		void SceneMenuMain::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
+		{
+			UInt32 i = 0;
+			while (i < controls.Count())
+			{
+				controls[i]->SPosition() = Vector2(
+					(args.CurrentViewPort->Width / 2) - (controls[i]->GSize().X / 2),
+					controls[i]->GPosition().Y
+					);
+				i++;
+			}
+		}
+
+		void SceneMenuMain::Handle(GUIControl* sender, const ClickEventArgs& args)
+		{
+
 		}
 		#pragma endregion
 

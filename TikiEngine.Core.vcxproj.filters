@@ -287,6 +287,9 @@
     <ClCompile Include="src\Core\SkinningVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\GUIControlRectangles.cpp">
+      <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -624,6 +627,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\ParticleEffect.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\GUIControlRectangles.h">
+      <Filter>Headerdateien\Core\UserInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EventControls.h">
+      <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

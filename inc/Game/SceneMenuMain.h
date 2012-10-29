@@ -5,6 +5,7 @@
 #include "Core/GUIButton.h"
 #include "Core/CameraObject.h"
 
+#include "Core/EventControls.h"
 #include "Core/EventScreenSizeChanged.h"
 
 #include "Game/SceneLevel.h"
@@ -16,7 +17,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Objects;
 		using namespace TikiEngine::UserInterface;
 
-		class SceneMenuMain : public Scene, public ScreenSizeChangedEventHandler
+		class SceneMenuMain : public Scene, public ScreenSizeChangedEventHandler, public ClickEventHandler
 		{
 		public:
 
@@ -28,6 +29,7 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
+			void Handle(GUIControl* sender, const ClickEventArgs& args);
 			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
 
 		private:

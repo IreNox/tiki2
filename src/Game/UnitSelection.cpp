@@ -56,7 +56,7 @@ namespace TikiEngine
 				// Set the selection box starting point
 				selectionRect.X = args.Input.MousePositionDisplay.X;
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
-				selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
+				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
 			}
 
 
@@ -77,8 +77,8 @@ namespace TikiEngine
 					selectionRect.Y = args.Input.MousePositionDisplay.Y;
 				}
 				
-				selectButton->Position() = Vector2(selectionRect.X, selectionRect.Y);
-				selectButton->Size() = Vector2(selectionRect.Width, selectionRect.Height);
+				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
+				selectButton->SSize() = Vector2(selectionRect.Width, selectionRect.Height);
 			}
 
 			if (args.Input.GetMouseRelease(MB_Left))

@@ -41,15 +41,15 @@ namespace TikiEngine
 
 		inline bool operator==(const RectangleF& rhs)
 		{
-			return (this->X == rhs.X) && (this->Y == rhs.Y) && (this->Width == rhs.Width) && (this->Height == rhs.Height);
+			return (this->X == rhs.X && this->Y == rhs.Y && this->Width == rhs.Width && this->Height == rhs.Height);
 		}
 
-		inline float Right()
+		inline float Right() const
 		{
 			return this->X + this->Width;
 		}
 
-		inline float Bottom()
+		inline float Bottom() const
 		{
 			return this->Y + this->Height;
 		}

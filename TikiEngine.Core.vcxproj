@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\GUIControlRectangles.cpp" />
     <ClCompile Include="src\Core\ParticleBehavior.cpp" />
     <ClCompile Include="src\Core\shell.c" />
     <ClCompile Include="src\Core\SkinningVertex.cpp" />
@@ -75,8 +76,10 @@
   <ItemGroup>
     <ClInclude Include="inc\Core\CBMatrices.h" />
     <ClInclude Include="inc\Core\Event.h" />
+    <ClInclude Include="inc\Core\EventControls.h" />
     <ClInclude Include="inc\Core\EventHandler.h" />
     <ClInclude Include="inc\Core\EventScreenSizeChanged.h" />
+    <ClInclude Include="inc\Core\GUIControlRectangles.h" />
     <ClInclude Include="inc\Core\IParticleRenderer.h" />
     <ClInclude Include="inc\Core\Particle.h" />
     <ClInclude Include="inc\Core\ParticleEffect.h" />

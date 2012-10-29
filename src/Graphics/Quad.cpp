@@ -8,13 +8,13 @@ namespace TikiEngine
 	namespace Graphics
 	{
 		#pragma region Vars
-		PostProcessVertex Quad::quadVertices[6] =
+		PostProcessVertex Quad::quadVertices[4] =
 		{
 			-1.0f,  1.0f, 0.0f, 0.0f, 0.0f, // TL
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
-			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
-			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
+			//-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
+			// 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, // BR
 		};
 
@@ -31,12 +31,12 @@ namespace TikiEngine
 		{
 			UInt32 temp;
 
-			vertexBuffer = new VertexBuffer(engine, sizeof(PostProcessVertex), false);
-			vertexBuffer->Allocate(
-				Quad::quadVertices,
-				6,
-				&temp
-			);
+			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices); //VertexBuffer(engine, sizeof(PostProcessVertex), false);
+			//vertexBuffer->Allocate(
+			//	Quad::quadVertices,
+			//	6,
+			//	&temp
+			//);
 		}
 
 		Quad::~Quad()
@@ -107,12 +107,12 @@ namespace TikiEngine
 		void Quad::Draw()
 		{
 			shader->Apply();
-			vertexBuffer->Apply(0);
+			vertexBuffer->Apply();
 
 			DllMain::Context->IASetInputLayout(inputLayout);
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
-			DllMain::Context->Draw(6, 0);
+			DllMain::Context->Draw(4, 0);
 		}
 		#pragma endregion
 	}

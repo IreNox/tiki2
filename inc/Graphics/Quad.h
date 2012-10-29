@@ -7,7 +7,7 @@
 
 #include "Graphics/Shader.h"
 #include "Graphics/RenderTarget.h"
-#include "Graphics/VertexBuffer.h"
+#include "Graphics/StaticBuffer.h"
 
 namespace TikiEngine
 {
@@ -35,11 +35,12 @@ namespace TikiEngine
 
 			Shader* shader;
 
-			VertexBuffer* vertexBuffer;
+			//VertexBuffer* vertexBuffer;
+			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
 			ID3D11InputLayout* inputLayout;
 
-			static PostProcessVertex quadVertices[6];
+			static PostProcessVertex quadVertices[4];
 			static D3D11_INPUT_ELEMENT_DESC Quad::quadVertexElements[2];
 
 		};
