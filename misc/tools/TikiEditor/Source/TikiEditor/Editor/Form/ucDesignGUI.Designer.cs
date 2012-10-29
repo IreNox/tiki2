@@ -30,6 +30,7 @@
         {
             this.ucProperties1 = new TikiEditor.Designer.ucProperties();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.buttonCreate = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ucProperties1
@@ -57,10 +58,22 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // buttonCreate
+            // 
+            this.buttonCreate.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonCreate.Location = new System.Drawing.Point(0, 316);
+            this.buttonCreate.Name = "buttonCreate";
+            this.buttonCreate.Size = new System.Drawing.Size(75, 23);
+            this.buttonCreate.TabIndex = 2;
+            this.buttonCreate.Text = "Create";
+            this.buttonCreate.UseVisualStyleBackColor = true;
+            this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
+            // 
             // ucDesignGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonCreate);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.ucProperties1);
             this.Name = "ucDesignGUI";
@@ -73,5 +86,6 @@
 
         private Designer.ucProperties ucProperties1;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonCreate;
     }
 }

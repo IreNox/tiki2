@@ -13,8 +13,6 @@ namespace TikiEditor
         #region Init
         public DrawGUI()
         {
-            showPoints = true;
-
             pointColors = new Dictionary<string, Color>()
             {
                 { "top", Color.Blue },
@@ -22,10 +20,6 @@ namespace TikiEditor
                 { "width", Color.Blue },
                 { "height", Color.Blue }
             };
-
-            GI.DB.Insert(
-                new GUIRect() { Top = 10, Left = 15, Width = 20, Height = 30 }
-            );
         }
         #endregion
 
@@ -64,6 +58,8 @@ namespace TikiEditor
                 points["left"] = CU.ToSimUnits(new Vector2(rect.Left, rect.Top + (rect.Height / 2)));
                 points["width"] = CU.ToSimUnits(new Vector2(rect.Left + rect.Width, rect.Top + (rect.Height / 2)));
                 points["height"] = CU.ToSimUnits(new Vector2(rect.Left + (rect.Width / 2), rect.Top + rect.Height));
+
+                GI.ModeGUI.Designer.SelectedObject = rect;
             }
 
             return rect;
@@ -108,7 +104,19 @@ namespace TikiEditor
 
         protected override void SelectedMovePoint(ref Vector2 mouse, ref Vector2 localMouse)
         {
-            
+            switch (dragPoint)
+            { 
+                case "top":
+                    selected.Top = (int)CU.ToDisplayUnits(localMouse).Y;
+                    localMouse.X = CU.ToSimUnits(selected.Left + (selected.Width / 2));
+                    break;
+                case "left":
+                    break;
+                case "width":
+                    break;
+                case "height":
+                    break;
+            }
         }
 
         protected override Matrix World()
@@ -133,6 +141,5 @@ namespace TikiEditor
             base.Draw(gameTime);
         }
         #endregion
-
     }
 }

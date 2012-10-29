@@ -3,6 +3,10 @@
 
 #include "Core/IGraphics.h"
 
+#include "Game/SceneTim.h"
+#include "Game/SceneMark.h"
+#include "Game/SceneAdrian.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -119,6 +123,8 @@ namespace TikiEngine
 			{
 				if (buttons[i]->Clicked())
 				{
+					Scene* s = 0;
+
 					switch (i)
 					{
 					case 0:
@@ -126,8 +132,16 @@ namespace TikiEngine
 						sceneLevel->LoadLevel(1);
 						break;
 					case 1:
+						s = new SceneTim(engine);
+						engine->SetScene(s);
+						break;
 					case 2:
+						s = new SceneMark(engine);
+						engine->SetScene(s);
+						break;
 					case 3:
+						s = new SceneAdrian(engine);
+						engine->SetScene(s);
 						break;
 					case 4:
 						engine->Exit();

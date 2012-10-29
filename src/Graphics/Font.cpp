@@ -100,7 +100,7 @@ namespace TikiEngine
 
 				DllMain::ModuleSpriteBatch->Draw(
 					texture,
-					RectangleF(
+					RectangleF::Create(
 						pos.X,
 						pos.Y,
 						r.Width,
@@ -199,8 +199,8 @@ namespace TikiEngine
 
 				charRect.Add(
 					chars[i],
-					RectangleF(
-						pos.X,
+					RectangleF::Create(
+						pos.X + 2,
 						pos.Y,
 						(charSize.Width - spaceWidth),
 						pixelHeight

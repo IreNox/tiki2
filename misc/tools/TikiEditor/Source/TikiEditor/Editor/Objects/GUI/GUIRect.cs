@@ -11,43 +11,69 @@ namespace TikiEditor.Objects
     public class GUIRect : DataBaseObject
     {
         #region Vars
-        private int top;
-        private int left;
-        private int width;
-        private int height;
+        private int _index;
+
+        private string _key;
+        private string _control;
+
+        private float top;
+        private float left;
+        private float width;
+        private float height;
         #endregion
 
         #region Properties
+        [DataField("ArrayIndex")]
+        public int ArrayIndex
+        {
+            get { return _index; }
+            set { SetProperty(ref _index, value, "ArrayIndex"); }
+        }
+
+        [DataField("Control")]
+        public string Control
+        {
+            get { return _control; }
+            set { SetProperty(ref _control, value, "Control"); }
+        }
+        
+        [DataField("Key")]
+        public string Key
+        {
+            get { return _key; }
+            set { SetProperty(ref _key, value, "Key"); }
+        }
+
         [DataField("Top")]
-        public int Top
+        public float Top
         {
             get { return top; }
             set { SetProperty(ref top, value, "Top"); }
         }
 
         [DataField("Left")]
-        public int Left
+        public float Left
         {
             get { return left; }
             set { SetProperty(ref left, value, "Left"); }
         }
 
         [DataField("Width")]
-        public int Width
+        public float Width
         {
             get { return width; }
             set { SetProperty(ref width, value, "Width"); }
         }
 
         [DataField("Height")]
-        public int Height
+        public float Height
         {
             get { return height; }
             set { SetProperty(ref height, value, "Height"); }
         }
         #endregion
 
-        #region Properties
+        #region Properties - Dynamic
         public Vector2[] Vertices
         {
             get

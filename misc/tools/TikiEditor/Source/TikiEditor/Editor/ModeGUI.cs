@@ -67,5 +67,11 @@ namespace TikiEditor
         }
         #endregion
 
+        #region Properties
+        public ucDesignGUI Designer
+        {
+            get { return _designer; }
+        }
+        #endregion
     }
 }

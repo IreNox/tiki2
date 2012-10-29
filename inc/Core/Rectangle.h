@@ -39,7 +39,7 @@ namespace TikiEngine
 
 		operator RectangleF()
 		{
-			return RectangleF(
+			return RectangleF::Create(
 				(float)X,
 				(float)Y,
 				(float)Width,

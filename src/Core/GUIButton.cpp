@@ -4,6 +4,11 @@
 #include "Core/ISpriteBatch.h"
 #include "Core/IContentManager.h"
 
+#include "Core/sqlite3.h"
+
+#include <sstream>
+using namespace std;
+
 namespace TikiEngine
 {
 	namespace UserInterface
@@ -12,54 +17,29 @@ namespace TikiEngine
 		GUIButton::GUIButton(Engine* engine)
 			: GUIControl(engine)
 		{
-			texLT = engine->content->LoadTexture(L"Controls/button-lt");
-			texLC = engine->content->LoadTexture(L"Controls/button-lc");
-			texLB = engine->content->LoadTexture(L"Controls/button-lb");
+			tex = engine->content->LoadTexture(L"controls");
 
-			texCT = engine->content->LoadTexture(L"Controls/button-ct");
-			texCB = engine->content->LoadTexture(L"Controls/button-cb");
-
-			texRT = engine->content->LoadTexture(L"Controls/button-rt");
-			texRC = engine->content->LoadTexture(L"Controls/button-rc");
-			texRB = engine->content->LoadTexture(L"Controls/button-rb");
-
-			texMoLT = engine->content->LoadTexture(L"Controls/button-mo-lt");
-			texMoLC = engine->content->LoadTexture(L"Controls/button-mo-lc");
-			texMoLB = engine->content->LoadTexture(L"Controls/button-mo-lb");
-
-			texMoCT = engine->content->LoadTexture(L"Controls/button-mo-ct");
-			texMoCC = engine->content->LoadTexture(L"Controls/button-mo-cc");
-			texMoCB = engine->content->LoadTexture(L"Controls/button-mo-cb");
-
-			texMoRT = engine->content->LoadTexture(L"Controls/button-mo-rt");
-			texMoRC = engine->content->LoadTexture(L"Controls/button-mo-rc");
-			texMoRB = engine->content->LoadTexture(L"Controls/button-mo-rb");
+			if (rdNormal == 0)
+			{
+				rdNormal = new GUIButton::ButtonRectangles("button_normal");
+				rdHover = new GUIButton::ButtonRectangles("button_hover");
+				rdClick = new GUIButton::ButtonRectangles("button_click");
+			}
+			else
+			{
+				rdNormal->AddRef();
+				rdHover->AddRef();
+				rdClick->AddRef();
+			}
 		}
 
 		GUIButton::~GUIButton()
 		{
-			SafeRelease(&texLT);
-			SafeRelease(&texLC);
-			SafeRelease(&texLB);
-
-			SafeRelease(&texCT);
-			SafeRelease(&texCB);
-
-			SafeRelease(&texRT);
-			SafeRelease(&texRC);
-			SafeRelease(&texRB);
-
-			SafeRelease(&texMoLT);
-			SafeRelease(&texMoLC);
-			SafeRelease(&texMoLB);
-
-			SafeRelease(&texMoCT);
-			SafeRelease(&texMoCC);
-			SafeRelease(&texMoCB);
-
-			SafeRelease(&texMoRT);
-			SafeRelease(&texMoRC);
-			SafeRelease(&texMoRB);
+			SafeRelease(&tex);
+			
+			rdNormal->Release();
+			rdHover->Release();
+			rdClick->Release();
 		}
 		#pragma endregion
 
@@ -79,37 +59,25 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GUIButton::Draw(const DrawArgs& args)
 		{
+			ButtonRectangles* rd = (mouseOver ? (args.Update.Input.GetMouse(MB_Left) ? rdClick : rdHover) : rdNormal);
+
 			engine->sprites->DrawString(
 				GUIControl::GetDefaultFont(),
 				text,
 				posText
 			);
 
-			if (mouseOver)
-			{
-				engine->sprites->Draw(texMoLT, position);
-				engine->sprites->Draw(texMoLB, posLB);
-				engine->sprites->Draw(texMoRT, posRT);
-				engine->sprites->Draw(texMoRB, posRB);
+			engine->sprites->Draw(tex, rectLT, rd->rectLT);
+			engine->sprites->Draw(tex, rectLC, rd->rectLC);
+			engine->sprites->Draw(tex, rectLB, rd->rectLB);
 
-				engine->sprites->Draw(texMoLC, rectLC);
-				engine->sprites->Draw(texMoCT, rectCT);
-				engine->sprites->Draw(texMoCC, rectCC);
-				engine->sprites->Draw(texMoCB, rectCB);
-				engine->sprites->Draw(texMoRC, rectRC);
-			}
-			else
-			{
-				engine->sprites->Draw(texLT, position);
-				engine->sprites->Draw(texLB, posLB);
-				engine->sprites->Draw(texRT, posRT);
-				engine->sprites->Draw(texRB, posRB);
+			engine->sprites->Draw(tex, rectCT, rd->rectCT);
+			engine->sprites->Draw(tex, rectCC, rd->rectCC);
+			engine->sprites->Draw(tex, rectCB, rd->rectCB);
 
-				engine->sprites->Draw(texLC, rectLC);
-				engine->sprites->Draw(texCT, rectCT);
-				engine->sprites->Draw(texCB, rectCB);
-				engine->sprites->Draw(texRC, rectRC);
-			}
+			engine->sprites->Draw(tex, rectRT, rd->rectRT);
+			engine->sprites->Draw(tex, rectRC, rd->rectRC);
+			engine->sprites->Draw(tex, rectRB, rd->rectRB);
 		}
 		#pragma endregion
 
@@ -122,57 +90,140 @@ namespace TikiEngine
 
 			posText = position + (size / 2) - sizeText;
 
-			posLB = Vector2(
+			rectLT = RectangleF::Create(
 				position.X,
-				rect.Bottom() - texLB->GetHeight()
-			);
-
-			posRT = Vector2(
-				rect.Right() - texRT->GetWidth(),
-				position.Y
-			);
-
-			posRB = Vector2(
-				rect.Right() - texRB->GetWidth(),
-				rect.Bottom() - texRB->GetHeight()
-			);
-
-			rectLC = RectangleF(
-				position.X,
-				position.Y + texLT->GetHeight(),
-				(float)texLC->GetWidth(),
-				(rect.Height - texLT->GetHeight()) - texLB->GetHeight()
-			);
-
-			rectCT = RectangleF(
-				position.X + texLT->GetWidth(),
 				position.Y,
-				(rect.Width - texLT->GetWidth()) - texRT->GetWidth(),
-				(float)texCT->GetHeight()
+				rdNormal->rectLT.Width,
+				rdNormal->rectLT.Height
 			);
 
-			rectCC = RectangleF(
-				position.X + texLT->GetWidth(),
-				position.Y + texLT->GetHeight(),
-				(rect.Width - texLT->GetWidth()) - texRT->GetWidth(),
-				(rect.Height - texCT->GetHeight()) - texCB->GetHeight()
+			rectLC = RectangleF::Create(
+				position.X,
+				position.Y + rdNormal->rectLT.Height,
+				rdNormal->rectLC.Width,
+				(rect.Height - rdNormal->rectLT.Height) - rdNormal->rectLB.Height
 			);
 
-			rectCB = RectangleF(
-				position.X + texLT->GetWidth(),
-				rect.Bottom() - texCB->GetHeight(),
-				(rect.Width - texLB->GetWidth()) - texRB->GetWidth(),
-				(float)texCB->GetHeight()
+			rectLB = RectangleF::Create(
+				position.X,
+				rect.Bottom() - rdNormal->rectLB.Height,
+				rdNormal->rectLB.Width,
+				rdNormal->rectLB.Height
 			);
 
-			rectRC = RectangleF(
-				rect.Right() - texRC->GetWidth(),
-				position.Y + texRT->GetHeight(),
-				(float)texRC->GetWidth(),
-				(rect.Height - texRT->GetHeight()) - texRB->GetHeight()
+			rectCT = RectangleF::Create(
+				position.X + rdNormal->rectLT.Width,
+				position.Y,
+				(rect.Width - rdNormal->rectLT.Width) - rdNormal->rectRT.Width,
+				rdNormal->rectCT.Height
+			);
+
+			rectCC = RectangleF::Create(
+				position.X + rdNormal->rectLC.Width,
+				position.Y + rdNormal->rectLT.Height,
+				(rect.Width - rdNormal->rectLC.Width) - rdNormal->rectRC.Width,
+				(rect.Height - rdNormal->rectLT.Height) - rdNormal->rectCB.Height
+			);
+
+			rectCB = RectangleF::Create(
+				position.X + rdNormal->rectLB.Width,
+				rect.Bottom() - rdNormal->rectCB.Height,
+				(rect.Width - rdNormal->rectLB.Width) - rdNormal->rectRB.Width,
+				rdNormal->rectCB.Height
+			);
+
+			rectRT = RectangleF::Create(
+				rect.Right() - rdNormal->rectRT.Width,
+				position.Y,
+				rdNormal->rectRT.Width,
+				rdNormal->rectRT.Height
+			);
+
+			rectRC = RectangleF::Create(
+				rect.Right() - rdNormal->rectRC.Width,
+				position.Y + rdNormal->rectRT.Height,
+				rdNormal->rectRC.Width,
+				(rect.Height - rdNormal->rectRT.Height) - rdNormal->rectRB.Height
+			);
+
+			rectRB = RectangleF::Create(
+				rect.Right() - rdNormal->rectRB.Width,
+				rect.Bottom() - rdNormal->rectRB.Height,
+				rdNormal->rectRB.Width,
+				rdNormal->rectRB.Height
 			);
 
 			return rect;
+		}
+		#pragma endregion
+
+		#pragma region Rechtangles
+		GUIButton::ButtonRectangles* GUIButton::rdNormal = 0;
+		GUIButton::ButtonRectangles* GUIButton::rdHover = 0;
+		GUIButton::ButtonRectangles* GUIButton::rdClick = 0;
+
+		GUIButton::ButtonRectangles::ButtonRectangles(string control)
+		{
+			sqlite3* db;
+			sqlite3_open("Data/TikiData.sqlite", &db);
+
+			const char* tmp = 0;
+			sqlite3_stmt* state = 0;
+
+			ostringstream sql;
+			sql << "SELECT * FROM \"tiki_gui\" WHERE \"Control\" = '" << control << "';";
+
+			int r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
+
+			if (r == SQLITE_OK)
+			{
+				while (sqlite3_step(state) == SQLITE_ROW)
+				{					
+					RectangleF* rect = new RectangleF();
+
+					Int32 i = 0;
+					Int32 count = sqlite3_column_count(state);
+
+					while (i < count)
+					{
+						string name = sqlite3_column_name(state, i);
+
+						if (name == "Top")
+						{
+							rect->Y = (float)sqlite3_column_double(state, i);
+						}
+						else if (name == "Left")
+						{
+							rect->X = (float)sqlite3_column_double(state, i);
+						}
+						else if (name == "Width")
+						{
+							rect->Width = (float)sqlite3_column_double(state, i);
+						}
+						else if (name == "Height")
+						{
+							rect->Height = (float)sqlite3_column_double(state, i);
+						}
+						else if (name == "ArrayIndex")
+						{
+							int index = sqlite3_column_int(state, i);
+
+							rects[index] = *rect;
+							delete(rect);
+
+							rect = &rects[index];
+						}
+
+						i++;
+					}
+										
+				}
+				sqlite3_finalize(state);
+			}
+		}
+
+		GUIButton::ButtonRectangles::~ButtonRectangles()
+		{
 		}
 		#pragma endregion
 	}

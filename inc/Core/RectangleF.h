@@ -20,17 +20,24 @@ namespace TikiEngine
 			float arr[4];
 		};
 
-		RectangleF()
-			: X(0), Y(0)
+		static RectangleF Create(float x, float y, float width, float height)		
 		{
+			RectangleF rect = { x, y, width, height };
+
+			return rect;
 		}
 
-		RectangleF(float x, float y, float width, float height)
-			: X(x), Y(y), Width(width), Height(height)
-		{
-		}
+		//RectangleF()
+		//	: X(0), Y(0)
+		//{
+		//}
 
-		~RectangleF() {}
+		//RectangleF(float x, float y, float width, float height)
+		//	: X(x), Y(y), Width(width), Height(height)
+		//{
+		//}
+
+		//~RectangleF() {}
 
 		inline bool operator==(const RectangleF& rhs)
 		{

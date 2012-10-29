@@ -9,9 +9,9 @@ namespace TikiEngine
 			: ParticleBehavior(engine)
 		{
 			this->SParticleBudget(1000000);
-			lifeTime = 10;
-			triggerCount = 1000;
-			triggerTime = 0.05f;
+			lifeTime = 1;
+			triggerCount = 10;
+			triggerTime = 0.1f;
 		}
 
 		ParticleTest::~ParticleTest()

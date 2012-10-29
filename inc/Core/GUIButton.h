@@ -30,39 +30,50 @@ namespace TikiEngine
 
 			wstring text;
 
-			ITexture* texLT;
-			ITexture* texLC;
-			ITexture* texLB;
-
-			ITexture* texCT;
-			ITexture* texCB;
-
-			ITexture* texRT;
-			ITexture* texRC;
-			ITexture* texRB;
-
-			ITexture* texMoLT;
-			ITexture* texMoLC;
-			ITexture* texMoLB;
-
-			ITexture* texMoCT;
-			ITexture* texMoCC;
-			ITexture* texMoCB;
-
-			ITexture* texMoRT;
-			ITexture* texMoRC;
-			ITexture* texMoRB;
+			ITexture* tex;
 			
-			Vector2 posLB;
-			Vector2 posRT;
-			Vector2 posRB;
 			Vector2 posText;
 
+			RectangleF rectLT;
 			RectangleF rectLC;
+			RectangleF rectLB;
 			RectangleF rectCT;
 			RectangleF rectCC;
 			RectangleF rectCB;
+			RectangleF rectRT;
 			RectangleF rectRC;
+			RectangleF rectRB;
+
+			class ButtonRectangles : public TikiObject
+			{
+			public:
+
+				union
+				{
+					struct 
+					{
+						RectangleF rectLT;
+						RectangleF rectLC;
+						RectangleF rectLB;
+						RectangleF rectCT;
+						RectangleF rectCC;
+						RectangleF rectCB;
+						RectangleF rectRT;
+						RectangleF rectRC;
+						RectangleF rectRB;
+					};
+					RectangleF rects[9];
+				};
+
+				ButtonRectangles(string control);
+				~ButtonRectangles();
+
+			};
+
+			/*! @brief Rectangle Data from Database */
+			static ButtonRectangles* rdNormal;
+			static ButtonRectangles* rdHover;
+			static ButtonRectangles* rdClick;
 
 		};
 	}

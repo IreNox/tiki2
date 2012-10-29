@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using TikiEditor.Objects;
 
 namespace TikiEditor
 {
@@ -22,6 +23,18 @@ namespace TikiEditor
         private void buttonSave_Click(object sender, EventArgs e)
         {
             ucProperties1.Save();
+        }
+
+        private void buttonCreate_Click(object sender, EventArgs e)
+        {
+            GUIRect rect = new GUIRect();
+
+            rect.Top = 256;
+            rect.Left = 256;
+            rect.Width = 100;
+            rect.Height = 100;
+
+            GI.DB.Insert(rect);
         }
         #endregion
 

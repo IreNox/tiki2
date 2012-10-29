@@ -51,7 +51,7 @@ namespace TikiEngine
 		{
 			engine->sprites->Draw(
 				texture,
-				RectangleF(
+				RectangleF::Create(
 					position.X,
 					position.Y,
 					size.X,

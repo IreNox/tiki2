@@ -89,7 +89,7 @@ namespace TikiEngine
 		#pragma region Protected Member
 		RectangleF GUIControl::createBoundingBox()
 		{
-			return RectangleF(
+			return RectangleF::Create(
 				position.X,
 				position.Y,
 				size.X,

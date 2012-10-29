@@ -8,10 +8,6 @@ namespace TikiEditor
 {
     public class EditorMode : DrawableGameComponent
     {
-        #region Vars
-        //private List<
-        #endregion
-
         #region Init
         public EditorMode(Game game)
             : base(game)
@@ -26,17 +22,6 @@ namespace TikiEditor
         }
 
         public virtual void ResetAfter(object userData)
-        {
-        }
-        #endregion
-
-        #region Member - Draw/Update
-        public override void Draw(GameTime time)
-        {
-            
-        }
-
-        public override void Update(GameTime time)
         {
         }
         #endregion

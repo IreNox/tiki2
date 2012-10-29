@@ -88,12 +88,14 @@ namespace TikiEngine
 			// Create the PhysX Scene and set the current one
 			NxSceneDesc sceneDesc;
 			sceneDesc.gravity = NxVec3(0.0f, -9.81f, 0.0f);
+			sceneDesc.flags = NX_SF_SIMULATE_SEPARATE_THREAD;
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == 0)
 			{
 				HelperLog::Write("Error: Unable to create a PhysX scene, exiting. \n");
 				return false;
 			}
+
 			
 			// perform 5/1 substeps? to advance simulation by 1/60th of a second.
 			//scene->setTiming((1.0f/60.0f) / 5.0f, 5, NX_TIMESTEP_FIXED);
@@ -145,40 +147,58 @@ namespace TikiEngine
 			return scene; 
 		}
 
-    Boolean PhysicsModule::RayCast(Ray ray, RaycastHit* hitInfo, float distance)
-    {
-      NxRay worldRay(ray.Origin.arr, Vector3::Normalize(ray.Direction).arr);
-      NxRaycastHit hit;
+		Boolean PhysicsModule::RayCast(Ray ray, RaycastHit* hitInfo, float distance)
+		{
+		  NxRay worldRay(ray.Origin.arr, Vector3::Normalize(ray.Direction).arr);
+		  NxRaycastHit hit;
 
-      scene->raycastClosestShape(worldRay, NX_ALL_SHAPES, hit, 0xffffffff, distance);
+		  scene->raycastClosestShape(worldRay, NX_ALL_SHAPES, hit, 0xffffffff, distance);
       
-      if (hit.shape)
-      {
-        hitInfo->Point = hit.worldImpact.get();
-        hitInfo->Normal = hit.worldNormal.get();
-        hitInfo->Distance = hit.distance;
-		    hitInfo->Collider = (ICollider*)hit.shape->getActor().userData;
-        return true;
-      }
+		  if (hit.shape)
+		  {
+			hitInfo->Point = hit.worldImpact.get();
+			hitInfo->Normal = hit.worldNormal.get();
+			hitInfo->Distance = hit.distance;
+				hitInfo->Collider = (ICollider*)hit.shape->getActor().userData;
+			return true;
+		  }
 
-      return false;
-    }
+		  return false;
+		}
 
 
 		void PhysicsModule::Begin()
 		{
+			frameCnt++;
+
+			if (scene && !pause && frameCnt > 1)
+			{
+				NxU32 errorCode = NXCE_NO_ERROR;
+				scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+
+				// Update controllers!
+				NxReal maxTimestep;
+				NxTimeStepMethod method;
+				NxU32 maxIter, numSubSteps;
+				scene->getTiming(maxTimestep, maxIter, method, &numSubSteps);
+				if(numSubSteps)
+				{
+					controllerManager->updateControllers();
+				}
+
+				//frameCnt = 0;
+			}
 		}
 
 		void PhysicsModule::End(const UpdateArgs& args)
 		{
 			// only update every 5th frame.
-			++frameCnt;
 			timeSinceLastUpdate += (float)args.Time.ElapsedTime;
-			if (scene && !pause && frameCnt == 5)
+			if (scene && !pause) //&& frameCnt == 5
 			{
-				// the new method to start the SDK
-				scene->simulate(timeSinceLastUpdate); 
+				scene->simulate(timeSinceLastUpdate); 			
 				scene->flushStream();
+				// the new method to start the SDK				
 
 				// in here we can do computations which depend only on the old state of the scene "actors". 
 				// Writing to the scene is not allowed. Write calls in here are skipped.
@@ -187,7 +207,7 @@ namespace TikiEngine
 				// method to sync with the SDK after it has finished.it waits (non)blocking for the end of a given NxSimulationStatus, 
 				// if the end is reached it swaps the buffers, fires the callbacks and removes the writelock, 
 				// if all simulations of the scene have reached its end. at the moment there is only a NX_RIGID_BODY_FINISHED status.
-				scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
+				//scene->fetchResults(NX_RIGID_BODY_FINISHED, true);
 
 				// we could also do this with non blocking calls
 				//while(!scene->fetchResults(NX_RIGID_BODY_FINISHED, false))
@@ -197,17 +217,8 @@ namespace TikiEngine
 
 				// then we can use isWritable() to test if we fetched  all simulation results and made the scene writable again.
 				// Since there is only one status flag it is obvious that we fetched everything and the scene is writable.
-				NX_ASSERT(scene->isWritable());
+				//NX_ASSERT(scene->isWritable());
 
-				// Update controllers!
-				NxReal maxTimestep;
-				NxTimeStepMethod method;
-				NxU32 maxIter, numSubSteps;
-				scene->getTiming(maxTimestep, maxIter, method, &numSubSteps);
-				if(numSubSteps)
-					controllerManager->updateControllers();
-				
-				frameCnt = 0;
 				timeSinceLastUpdate = 0;
 			}
 		}
