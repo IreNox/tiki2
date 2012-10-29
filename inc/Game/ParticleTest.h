@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Core/ParticleBehavior.h"
+#include "Core/ParticleEffect.h"
 
 namespace TikiEngine
 {
 	namespace Particles
 	{
-		class ParticleTest : public ParticleBehavior
+		class ParticleTest : public ParticleEffect
 		{
 		public:
 

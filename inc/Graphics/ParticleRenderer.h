@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Core/IParticleEffect.h"
+#include "Core/IParticleRenderer.h"
 #include "Core/IShader.h"
 
 #include "Graphics/DynamicBuffer.h"
@@ -15,18 +15,18 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Graphics;
 
-		class ParticleEffect : public IParticleEffect
+		class ParticleRenderer : public IParticleRenderer
 		{
 		public:
 
-			ParticleEffect(Engine* engine, GameObject* gameObject);
-			~ParticleEffect();
+			ParticleRenderer(Engine* engine, GameObject* gameObject);
+			~ParticleRenderer();
 
 			ITexture* GetTexture();
 			void SetTexture(ITexture* texture);
 
-			ParticleBehavior* GetParticleBehavior();
-			void SetParticleBehavior(ParticleBehavior* behavior);
+			ParticleEffect* GetParticleEffect();
+			void SetParticleEffect(ParticleEffect* behavior);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -38,7 +38,7 @@ namespace TikiEngine
 			IShader* shader;
 			ITexture* texture;
 
-			ParticleBehavior* behavior;
+			ParticleEffect* behavior;
 
 			VertexDeclaration* decl;
 			DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;

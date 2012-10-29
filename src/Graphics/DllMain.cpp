@@ -8,8 +8,8 @@
 #include "Graphics/Model.h"
 
 #include "Graphics/MeshRenderer.h"
-#include "Graphics/ParticleEffect.h"
 #include "Graphics/TerrainRenderer.h"
+#include "Graphics/ParticleRenderer.h"
 
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
@@ -55,8 +55,8 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(IModel).hash_code());
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
-		DllInfo.Components.Add(typeid(IParticleEffect).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
+		DllInfo.Components.Add(typeid(IParticleRenderer).hash_code());
 	}
 
 	void DllMain::DisposeDll()
@@ -109,13 +109,13 @@ namespace TikiEngine
 		{
 			return new MeshRenderer(DllMain::Engine, gameObject);
 		}
-		else if (hash == typeid(IParticleEffect).hash_code())
-		{
-			return new ParticleEffect(DllMain::Engine, gameObject);
-		}
 		else if (hash == typeid(ITerrainRenderer).hash_code())
 		{
 			return new TerrainRenderer(DllMain::Engine, gameObject);
+		}
+		else if (hash == typeid(IParticleRenderer).hash_code())
+		{
+			return new ParticleRenderer(DllMain::Engine, gameObject);
 		}
 
 		return 0;

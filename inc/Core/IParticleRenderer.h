@@ -3,7 +3,7 @@
 #include "Core/Component.h"
 
 #include "Core/ITexture.h"
-#include "Core/ParticleBehavior.h"
+#include "Core/ParticleEffect.h"
 
 namespace TikiEngine
 {
@@ -12,18 +12,18 @@ namespace TikiEngine
 		using namespace TikiEngine::Resources;
 		using namespace TikiEngine::Particles;
 
-		class IParticleEffect : public Component
+		class IParticleRenderer : public Component
 		{
 		public:
 
-			IParticleEffect(Engine* engine, GameObject* gameObject) : Component(engine, gameObject) {}
-			~IParticleEffect() {}
+			IParticleRenderer(Engine* engine, GameObject* gameObject) : Component(engine, gameObject) {}
+			~IParticleRenderer() {}
 
 			virtual ITexture* GetTexture() = 0;
 			virtual void SetTexture(ITexture* texture) = 0;
 
-			virtual ParticleBehavior* GetParticleBehavior() = 0;
-			virtual void SetParticleBehavior(ParticleBehavior* behavior) = 0;
+			virtual ParticleEffect* GetParticleEffect() = 0;
+			virtual void SetParticleEffect(ParticleEffect* behavior) = 0;
 
 		};
 	}

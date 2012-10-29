@@ -1,5 +1,5 @@
 
-#include "Graphics/ParticleEffect.h"
+#include "Graphics/ParticleRenderer.h"
 
 #include "Core/TypeGlobals.h"
 #include "Core/IContentManager.h"
@@ -12,8 +12,8 @@ namespace TikiEngine
 	namespace Components
 	{
 		#pragma region Class
-		ParticleEffect::ParticleEffect(Engine* engine, GameObject* gameObject)
-			: IParticleEffect(engine, gameObject), shader(0), texture(0), behavior(0)
+		ParticleRenderer::ParticleRenderer(Engine* engine, GameObject* gameObject)
+			: IParticleRenderer(engine, gameObject), shader(0), texture(0), behavior(0)
 		{
 			shader = engine->content->LoadShader(L"os_particle");
 
@@ -21,7 +21,7 @@ namespace TikiEngine
 			vertexBuffer = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 		}
 
-		ParticleEffect::~ParticleEffect()
+		ParticleRenderer::~ParticleRenderer()
 		{
 			SafeRelease(&shader);
 			SafeRelease(&texture);
@@ -31,17 +31,17 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Get/Set
-		bool ParticleEffect::GetReady()
+		bool ParticleRenderer::GetReady()
 		{
 			return (texture != 0) && (behavior != 0);
 		}
 
-		ITexture* ParticleEffect::GetTexture()
+		ITexture* ParticleRenderer::GetTexture()
 		{
 			return texture;
 		}
 
-		void ParticleEffect::SetTexture(ITexture* texture)
+		void ParticleRenderer::SetTexture(ITexture* texture)
 		{
 			SafeRelease(&this->texture);
 			SafeAddRef(texture, &this->texture);
@@ -52,12 +52,12 @@ namespace TikiEngine
 			}
 		}
 
-		ParticleBehavior* ParticleEffect::GetParticleBehavior()
+		ParticleEffect* ParticleRenderer::GetParticleEffect()
 		{
 			return behavior;
 		}
 
-		void ParticleEffect::SetParticleBehavior(ParticleBehavior* behavior)
+		void ParticleRenderer::SetParticleEffect(ParticleEffect* behavior)
 		{
 			SafeRelease(&this->behavior);
 			SafeAddRef(behavior, &this->behavior);
@@ -65,7 +65,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Draw
-		void ParticleEffect::Draw(const DrawArgs& args)
+		void ParticleRenderer::Draw(const DrawArgs& args)
 		{
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 
@@ -88,7 +88,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Update
-		void ParticleEffect::Update(const UpdateArgs& args)
+		void ParticleRenderer::Update(const UpdateArgs& args)
 		{
 			if (!this->GetReady()) return;
 

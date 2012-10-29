@@ -6,7 +6,7 @@ namespace TikiEngine
 	namespace Particles
 	{
 		ParticleTest::ParticleTest(Engine* engine)
-			: ParticleBehavior(engine)
+			: ParticleEffect(engine)
 		{
 			this->SParticleBudget(1000000);
 			lifeTime = 1;

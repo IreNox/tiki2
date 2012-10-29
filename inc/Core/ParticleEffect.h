@@ -10,13 +10,13 @@ namespace TikiEngine
 {
 	namespace Particles
 	{
-		class ParticleBehavior : public EngineObject
+		class ParticleEffect : public EngineObject
 		{
 		public:
 
 			#pragma region Class
-			ParticleBehavior(Engine* engine);
-			~ParticleBehavior();
+			ParticleEffect(Engine* engine);
+			~ParticleEffect();
 			#pragma endregion
 
 			bool GIsAlive();

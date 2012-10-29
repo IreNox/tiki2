@@ -77,9 +77,9 @@
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventHandler.h" />
     <ClInclude Include="inc\Core\EventScreenSizeChanged.h" />
-    <ClInclude Include="inc\Core\IParticleEffect.h" />
+    <ClInclude Include="inc\Core\IParticleRenderer.h" />
     <ClInclude Include="inc\Core\Particle.h" />
-    <ClInclude Include="inc\Core\ParticleBehavior.h" />
+    <ClInclude Include="inc\Core\ParticleEffect.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\sqlite3ext.h" />

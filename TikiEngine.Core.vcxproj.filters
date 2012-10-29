@@ -613,17 +613,17 @@
     <ClInclude Include="inc\Core\Event.h">
       <Filter>Headerdateien\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\IParticleEffect.h">
-      <Filter>Headerdateien\Interfaces\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\ParticleBehavior.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\Particle.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\SkinningVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\IParticleRenderer.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ParticleEffect.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

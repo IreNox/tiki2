@@ -10,7 +10,7 @@
 #include "Core/IContentManager.h"
 
 #include "Core/IMeshRenderer.h"
-#include "Core/IParticleEffect.h"
+#include "Core/IParticleRenderer.h"
 #include "Core/IPhysicsMaterial.h"
 #include "Core/ISound.h"
 
@@ -48,9 +48,9 @@ namespace TikiEngine
 			
 			behavior = new ParticleTest(engine);
 
-			IParticleEffect* effect = engine->librarys->CreateComponent<IParticleEffect>(go);
+			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
 			effect->SetTexture(engine->content->LoadTexture(L"checker"));
-			effect->SetParticleBehavior(behavior);
+			effect->SetParticleEffect(behavior);
 			effect->Release();
 
 			this->AddElement(go);

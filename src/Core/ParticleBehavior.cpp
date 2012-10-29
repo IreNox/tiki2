@@ -1,91 +1,91 @@
 
-#include "Core/ParticleBehavior.h"
+#include "Core/ParticleEffect.h"
 
 namespace TikiEngine
 {
 	namespace Particles
 	{
 		#pragma region Class
-		ParticleBehavior::ParticleBehavior(Engine* engine)
+		ParticleEffect::ParticleEffect(Engine* engine)
 			: EngineObject(engine), isAlive(true), worldPosition(false), lifeTime(1), triggerTime(0.1f),
 			  particleBudget(1000), particleUsed(0), triggerCount(100)
 		{
 			particles = new Particle[particleBudget];
 		}
 
-		ParticleBehavior::~ParticleBehavior()
+		ParticleEffect::~ParticleEffect()
 		{
 			SafeDeleteArray(&particles);
 		}
 		#pragma endregion
 		
 		#pragma region Member - Get/Set
-		UInt32 ParticleBehavior::GParticleUsed()
+		UInt32 ParticleEffect::GParticleUsed()
 		{
 			return particleUsed;
 		}
 
-		const Particle* ParticleBehavior::GParticles() const
+		const Particle* ParticleEffect::GParticles() const
 		{
 			return particles;
 		}
 
-		bool ParticleBehavior::GIsAlive()
+		bool ParticleEffect::GIsAlive()
 		{
 			return isAlive;
 		}
 
-		void ParticleBehavior::SIsAlive(bool alive)
+		void ParticleEffect::SIsAlive(bool alive)
 		{
 			isAlive = alive;
 		}
 
-		bool ParticleBehavior::GWorldSpace()
+		bool ParticleEffect::GWorldSpace()
 		{
 			return worldPosition;
 		}
 
-		void ParticleBehavior::SWorldSpace(bool worldSpace)
+		void ParticleEffect::SWorldSpace(bool worldSpace)
 		{
 			worldPosition = worldSpace;
 		}
 
-		double ParticleBehavior::GLifeTime()
+		double ParticleEffect::GLifeTime()
 		{
 			return lifeTime;
 		}
 
-		void ParticleBehavior::SLifeTime(double time)
+		void ParticleEffect::SLifeTime(double time)
 		{
 			lifeTime = time;
 		}
 
-		double ParticleBehavior::GTriggerTime()
+		double ParticleEffect::GTriggerTime()
 		{
 			return triggerTime;
 		}
 
-		void ParticleBehavior::STriggerTime(double time)
+		void ParticleEffect::STriggerTime(double time)
 		{
 			triggerTime = time;
 		}
 
-		UInt32 ParticleBehavior::GTriggerCount()
+		UInt32 ParticleEffect::GTriggerCount()
 		{
 			return triggerCount;
 		}
 
-		void ParticleBehavior::STriggerCount(UInt32 count)
+		void ParticleEffect::STriggerCount(UInt32 count)
 		{
 			triggerCount = count;
 		}
 
-		UInt32 ParticleBehavior::GParticleBudget()
+		UInt32 ParticleEffect::GParticleBudget()
 		{
 			return particleBudget;
 		}
 
-		void ParticleBehavior::SParticleBudget(UInt32 budget)
+		void ParticleEffect::SParticleBudget(UInt32 budget)
 		{
 			if (particleBudget == budget) return;
 
@@ -98,7 +98,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Update
-		void ParticleBehavior::Update(const UpdateArgs& args)
+		void ParticleEffect::Update(const UpdateArgs& args)
 		{
 			if (args.Time.TotalTime - lastTrigger >= triggerTime)
 			{
