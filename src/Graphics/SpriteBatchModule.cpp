@@ -76,9 +76,9 @@ namespace TikiEngine
 			UInt32 count = vertices.Count();
 			if (count == 0) return;
 
+			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 			DllMain::ModuleGraphics->GetScreenTarget()->ApplyFirstAndOnly();
-
 
 			SpriteBatchVertex* bufferData = this->buffer->Map(count);
 			
@@ -120,6 +120,7 @@ namespace TikiEngine
 				i++;
 			}
 
+			DllMain::ModuleGraphics->SetStateAlphaBlend(false);
 		}
 		#pragma endregion
 

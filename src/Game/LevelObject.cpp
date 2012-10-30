@@ -21,11 +21,6 @@ namespace TikiEngine
 		#if _DEBUG
 		void LevelObject::Update(const UpdateArgs& args)
 		{
-			if (args.Input.GetKeyPressed(KEY_F3))
-			{
-				this->GModel()->GetMaterial()->TexNormalMap = 0;
-			}
-
 			LevelChild::Update(args);
 		}
 		#endif
@@ -45,7 +40,7 @@ namespace TikiEngine
 				switch (type)
 				{
 				case 0:
-					this->SModel(engine->content->LoadModel(L"Soldier_S"));
+					this->SModel(engine->content->LoadModel(L"links"));
 					this->GModel()->SetMaterial(material);
 
 					break;

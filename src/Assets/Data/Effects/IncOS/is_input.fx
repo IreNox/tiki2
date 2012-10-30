@@ -15,7 +15,7 @@ cbuffer ObjectData //: register(b0)
 	bool FlipTexcoordV;
 
 	bool UnusedObjectData[12];
-}
+};
 
 #include "Data/Effects/Inc/is_input_light.fx"
 

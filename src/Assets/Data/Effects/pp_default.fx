@@ -46,7 +46,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	float4 alColor = float4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);
 	float4 color = float4(0, 0, 0, 0);
 
-	if (LightsCount != 0.0f && true)
+	if (LightsCount != 0.0f && false)
 	{
 		float3 termLight = float3(1, 1, 1);
 
