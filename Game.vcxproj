@@ -29,6 +29,8 @@
     <ClInclude Include="inc\Game\EntityManager.h" />
     <ClInclude Include="inc\Game\GameHud.h" />
     <ClInclude Include="inc\Game\GameState.h" />
+    <ClInclude Include="inc\Game\Goal.h" />
+    <ClInclude Include="inc\Game\GoalComposite.h" />
     <ClInclude Include="inc\Game\Level.h" />
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />

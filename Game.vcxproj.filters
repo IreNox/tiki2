@@ -78,6 +78,15 @@
     <Filter Include="Quelldateien\Particle">
       <UniqueIdentifier>{b7811ccb-7da3-44b4-9836-2a55afa2bbdc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Goals">
+      <UniqueIdentifier>{916dd52a-210a-48f4-a781-920a42deb46f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Goals\atomic">
+      <UniqueIdentifier>{00e99b86-bfb2-4ae7-b04a-fd9fdbc163be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Goals\Composite">
+      <UniqueIdentifier>{34c19c77-e97d-4b7d-94f5-9781c836291c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -193,6 +202,12 @@
     </ClInclude>
     <ClInclude Include="inc\Game\ParticleTest.h">
       <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Goal.h">
+      <Filter>Headerdateien\AI\Goals\atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalComposite.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
