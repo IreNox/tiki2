@@ -8,12 +8,19 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GUIControl::GUIControl(Engine* engine)
-			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0)
+			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0), UserData(0)
 		{
 		}
 
 		GUIControl::~GUIControl()
 		{
+			UInt32 i = 0;
+			while (i < childs.Count())
+			{
+				childs[i]->Release();
+				i++;
+			}
+			childs.Clear();
 		}
 		#pragma endregion
 
@@ -38,6 +45,7 @@ namespace TikiEngine
 			}
 
 			child->parent = this;
+			child->AddRef();
 			childs.Add(child);
 		}
 
@@ -46,10 +54,16 @@ namespace TikiEngine
 			if (child->parent == this)
 			{
 				child->parent = 0;
+				child->Release();
 				return childs.Remove(child);
 			}
 
 			return false;
+		}
+
+		const List<GUIControl*>& GUIControl::ChildControls()
+		{
+			return childs;
 		}
 		#pragma endregion
 
@@ -90,14 +104,15 @@ namespace TikiEngine
 
 		void GUIControl::Update(const UpdateArgs& args)
 		{
-			if (isDirty)
+			if (isDirty || (parent && parent->isDirty))
 			{
 				boundingBox = this->createBoundingBox();
-				isDirty = false;
 			}
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
+
 			mouseClicked = (args.Input.GetMousePressed(MB_Left) && mouseOver);
+			if (mouseClicked) this->Click.RaiseEvent(this, ClickEventArgs(this));
 
 			UInt32 i = 0;
 			while (i < childs.Count())
@@ -105,6 +120,8 @@ namespace TikiEngine
 				childs[i]->Update(args);
 				i++;
 			}
+
+			isDirty = false;
 		}
 		#pragma endregion
 
@@ -126,9 +143,11 @@ namespace TikiEngine
 		#pragma region Protected Member
 		RectangleF GUIControl::createBoundingBox()
 		{
+			Vector2 base = (parent ? parent->position : Vector2::Zero);
+
 			return RectangleF::Create(
-				position.X,
-				position.Y,
+				base.X + position.X,
+				base.Y + position.Y,
 				size.X,
 				size.Y
 			);

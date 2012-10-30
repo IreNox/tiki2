@@ -44,10 +44,14 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->Model = engine->content->LoadModel(L"NavMesh_Pitch");
+			go->SModel(engine->content->LoadModel(L"links"));
 			tex = engine->content->LoadTexture(L"checker");
 
-			go->Model->GetMaterial()->GetShader()->SetTexture("Tex", tex);
+			//Material* mat = engine->content->LoadMaterial(L"os_default");
+			//mat->GetShader()->SetTexture("tex", tex);
+
+			go->GModel()->GetMaterial()->GetShader()->SetTexture("Tex", tex);//SetMaterial(mat);
+			//mat->Release();
 
 			go->PRS.SScale() = Vector3(0.01f);
 

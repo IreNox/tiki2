@@ -10,6 +10,7 @@ namespace TikiEngine
 			: GameObject(engine), light(0)
 		{
 			light = new Light(engine, this);
+			light->AddRef();
 		}
 
 		LightObject::~LightObject()

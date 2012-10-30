@@ -13,6 +13,7 @@ namespace TikiEngine
 			: GUIControl(engine)
 		{
 			tex = engine->content->LoadTexture(L"controls");
+			tex->AddRef();
 
 			if (rdNormal == 0)
 			{
@@ -20,12 +21,10 @@ namespace TikiEngine
 				rdHover = new GUIControlRectangles("button_hover");
 				rdClick = new GUIControlRectangles("button_click");
 			}
-			else
-			{
-				rdNormal->AddRef();
-				rdHover->AddRef();
-				rdClick->AddRef();
-			}
+
+			rdNormal->AddRef();
+			rdHover->AddRef();
+			rdClick->AddRef();
 		}
 
 		GUIButton::~GUIButton()
@@ -56,17 +55,17 @@ namespace TikiEngine
 		{
 			GUIControlRectangles* rd = (mouseOver ? (args.Update.Input.GetMouse(MB_Left) ? rdClick : rdHover) : rdNormal);
 
-			engine->sprites->DrawString(
-				GUIControl::GetDefaultFont(),
-				text,
-				posText
-			);
-
 			GUIControlRectangles::Draw(
 				engine->sprites,
 				tex,
 				&rects,
 				rd
+			);
+
+			engine->sprites->DrawString(
+				GUIControl::GetDefaultFont(),
+				text,
+				posText
 			);
 
 			GUIControl::Draw(args);
@@ -80,7 +79,7 @@ namespace TikiEngine
 
 			Vector2 sizeText = GUIControl::GetDefaultFont()->MeasureString(text) / 2;
 
-			posText = position + (size / 2) - sizeText;
+			posText = rect.Position() + (size / 2) - sizeText;
 			rects = GUIControlRectangles(rect, rdNormal);
 
 			return rect;

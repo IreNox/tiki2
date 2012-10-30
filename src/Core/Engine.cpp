@@ -1,8 +1,4 @@
 
-#include <math.h>
-#include <string>
-#include <sstream>
-
 #include "Core/Engine.h"
 
 #include "Core/Window.h"
@@ -16,11 +12,12 @@
 #include "Core/ISoundSystem.h"
 #include "Core/ISpriteBatch.h"
 
-#include "Core/GameTime.h"
-
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include <math.h>
+#include <string>
+#include <sstream>
 #include <time.h>
 
 namespace TikiEngine
@@ -29,7 +26,7 @@ namespace TikiEngine
 	Engine::Engine()
 		: scene(0), loadedModules(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
 	{
-		srand(time(0));
+		srand((UInt32)time(0));
 	}
 
 	Engine::~Engine()
@@ -210,7 +207,8 @@ namespace TikiEngine
 
 	void Engine::SetScene(Scene* scene)
 	{
-		this->scene = scene;
+		SafeRelease(&this->scene);
+		SafeAddRef(scene, &this->scene);
 
 		if (!scene->IsInitialized())
 		{
@@ -259,6 +257,7 @@ namespace TikiEngine
 	{
 		if (module != 0)
 		{
+			module->AddRef();
 			if (!module->Initialize(desc)) return false;
 
 			loadedModules.Add(module);

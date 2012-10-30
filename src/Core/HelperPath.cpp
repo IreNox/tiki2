@@ -12,22 +12,27 @@ namespace TikiEngine
 {
 	#pragma region Vars
 	using namespace TikiEngine::Resources;
+	#pragma endregion
 
-	wstring HelperPath::workingPath = L"";
+	#pragma region Init/Dispose
+	HelperPath::HelperPath()
+	{
+		WCHAR cd[MAX_PATH];
+		GetModuleFileName(0, cd, MAX_PATH);
+
+		workingPath = HelperPath::GetDirectoryName(cd);
+		checkSlashes(workingPath);	
+	}
+
+	HelperPath::~HelperPath()
+	{
+		workingPath.erase();
+	}
 	#pragma endregion
 
 	#pragma region Member - WorkingPath
 	wstring HelperPath::GetWorkingPath()
 	{
-		if (workingPath == L"")
-		{
-			WCHAR cd[MAX_PATH];
-			GetModuleFileName(0, cd, MAX_PATH);
-			
-			workingPath = HelperPath::GetDirectoryName(cd);
-			checkSlashes(workingPath);
-		}
-
 		return workingPath;
 	}
 	#pragma endregion
@@ -55,10 +60,12 @@ namespace TikiEngine
 
 	wstring HelperPath::CombineWorkingPath(wstring path)
 	{
-		return HelperPath::Combine(
-			HelperPath::GetWorkingPath(),
-			path
-		);
+		wchar_t i2 = path[0];
+		int rightV = (i2 == '/' || i2 == '\\' ? 1 : 0);
+
+		wstring right = path.substr(rightV, path.size() - rightV);
+
+		return workingPath + L"/" + right;
 	}
 	#pragma endregion
 

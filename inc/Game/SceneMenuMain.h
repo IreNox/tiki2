@@ -1,9 +1,11 @@
 #pragma once
 
 #include "Core/Scene.h"
+#include "Core/CameraObject.h"
+
 #include "Core/GUIImage.h"
 #include "Core/GUIButton.h"
-#include "Core/CameraObject.h"
+#include "Core/GUIWindow.h"
 
 #include "Core/EventControls.h"
 #include "Core/EventScreenSizeChanged.h"
@@ -36,8 +38,11 @@ namespace TikiEngine
 
 			SceneLevel* sceneLevel;
 
-			List<GUIButton*> buttons;
-			List<GUIControl*> controls;
+			GUIImage* image;
+			GUIWindow* window;
+
+			//List<GUIButton*> buttons;
+			//List<GUIControl*> controls;
 
 		};
 	}

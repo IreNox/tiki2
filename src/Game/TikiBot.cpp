@@ -44,6 +44,7 @@ namespace TikiEngine
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
 			controller->SetGroup(CG_Collidable_Pushable);
+			controller->AddRef();
 
 			// Navigation
 			pathActive = false;
@@ -205,11 +206,11 @@ namespace TikiEngine
 					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
 				);
 
-				if (gameObject->Model) gameObject->Model->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
+				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
 			}
 			else
 			{
-				if (gameObject->Model) gameObject->Model->SetAnimationSpeed(0);
+				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(0);
 			}
 
 			//calculate the acceleration

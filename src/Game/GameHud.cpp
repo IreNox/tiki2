@@ -20,9 +20,9 @@ namespace TikiEngine
 			IFont* font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 12);
 			GUIControl::SetDefaultFont(font);
-			font->Release();
 
 			texRes1 = engine->content->LoadTexture(L"hud/mass");
+			texRes1->AddRef();
 			imageRes1 = new GUIImage(state->GetEngine());
 			imageRes1->SetTexture(texRes1);
 			imageRes1->SSize() = Vector2(16, 16);
@@ -33,6 +33,7 @@ namespace TikiEngine
 			enabledControls.Add(labelRes1);
 
 			texRes2 = engine->content->LoadTexture(L"hud/energy");
+			texRes2->AddRef();
 			imageRes2 = new GUIImage(state->GetEngine());
 			imageRes2->SetTexture(texRes2);
 			imageRes2->SSize() = Vector2(16, 16);

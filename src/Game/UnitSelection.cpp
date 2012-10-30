@@ -27,13 +27,13 @@ namespace TikiEngine
 			selectionRect.Height = 0;
 
 			selectButton = new GUIButton(gameState->GetEngine());
-		
-
+			selectButton->AddRef();
 		}
 
 		UnitSelection::~UnitSelection()
 		{
 			selectedUnits.Clear();
+			SafeRelease(&selectButton);
 		}
 
 		List<GameObject*>* UnitSelection::GetSelectedUnits()

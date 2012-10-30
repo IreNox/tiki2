@@ -30,6 +30,7 @@ namespace TikiEngine
 			sqlite3_open("Data/TikiData.sqlite", &db);
 
 			gameState = new GameState(engine, this);
+			gameState->AddRef();
 		}
 
 		SceneLevel::~SceneLevel()
@@ -53,25 +54,21 @@ namespace TikiEngine
 			lo->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			lo->GetLight()->SetColor(Color::White);
 			lo->GetLight()->SetRange(1000);
-
 			this->AddElement(lo);
-			lo->Release();
 
 			// Camera
 			CameraObject* go = new CameraObject(engine);
 			go->PRS.SPosition().Y = 35.0f;
-
-			(new CameraRTS(engine, go))->Release();
+			(new CameraRTS(engine, go));
 
 			mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
-			go->Release();
 			
 			Scene::Initialize(args);
 		}
 		#pragma endregion
 
-		#pragma region Member
+		#pragma region Member - Get
 		Level* SceneLevel::GetLevel()
 		{
 			return level;
@@ -111,6 +108,7 @@ namespace TikiEngine
 
 			level = new Level(gameState);
 			level->LoadFromDatabase(state);
+			level->AddRef();
 			sqlite3_finalize(state);
 
 			// Load Enemies
@@ -125,6 +123,7 @@ namespace TikiEngine
 				{
 					LevelEnemy* enemy = new LevelEnemy(gameState);
 					enemy->LoadFromDatabase(state);
+					enemy->AddRef();
 
 					enemies.Add(enemy);
 				}
@@ -143,6 +142,7 @@ namespace TikiEngine
 				{
 					LevelObject* object = new LevelObject(gameState);
 					object->LoadFromDatabase(state);
+					object->AddRef();
 
 					objects.Add(object);
 				}
@@ -160,7 +160,6 @@ namespace TikiEngine
 			while (i < enemies.Count())
 			{
 				SafeRelease(&enemies[i]);
-
 				i++;
 			}
 			enemies.Clear();
@@ -169,13 +168,11 @@ namespace TikiEngine
 			while (i < objects.Count())
 			{
 				SafeRelease(&objects[i]);
-
 				i++;
 			}
 			objects.Clear();
 
 			SafeRelease(&level);
-			SafeRelease(&gameState);
 		}
 		#pragma endregion
 
@@ -188,7 +185,6 @@ namespace TikiEngine
 			while (i < enemies.Count())
 			{
 				enemies[i]->Draw(args);
-
 				i++;
 			}
 
@@ -196,7 +192,6 @@ namespace TikiEngine
 			while (i < objects.Count())
 			{
 				objects[i]->Draw(args);
-
 				i++;
 			}
 
@@ -220,7 +215,6 @@ namespace TikiEngine
 			while (i < enemies.Count())
 			{
 				enemies[i]->Update(args);
-
 				i++;
 			}
 
@@ -228,7 +222,6 @@ namespace TikiEngine
 			while (i < objects.Count())
 			{
 				objects[i]->Update(args);
-
 				i++;
 			}
 

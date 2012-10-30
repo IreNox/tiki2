@@ -40,7 +40,7 @@ namespace TikiEngine
 				terrain = engine->librarys->CreateComponent<ITerrainRenderer>(this);
 				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize);
 				terrain->SetMaterial(mat);
-				mat->Release();
+				terrain->AddRef();
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
 				material->SetRestitution(0.2f);
@@ -52,6 +52,7 @@ namespace TikiEngine
 				collider->SetCenter(Vector3::Zero);
 				collider->SetDynamic(false);
 				collider->SetGroup(CG_Collidable_Non_Pushable);
+				collider->AddRef();
 			}
 		}
 

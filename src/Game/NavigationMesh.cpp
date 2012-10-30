@@ -89,6 +89,7 @@ namespace TikiEngine
 		void NavigationMesh::Load(const wstring& name, const Matrix& transform)
 		{
 			navModel = engine->content->LoadModel(name);
+			navModel->AddRef();
 
 			float minX = -3.4E+38f;
 			float minZ = -3.4E+38f;

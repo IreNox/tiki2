@@ -21,8 +21,6 @@ namespace TikiEngine
 
 	public:
 
-		IModel* Model;
-
 		Transform PRS;
 
 		GameObject(Engine* engine);
@@ -33,7 +31,7 @@ namespace TikiEngine
 
 		Component* GetComponent(PInt hash);
 
-		#pragma region Member - GetElement
+		#pragma region Member - Get
 		template <class T>
 		T* GetComponent()
 		{
@@ -67,7 +65,12 @@ namespace TikiEngine
 
 		bool RemoveComponent(Component* comp);
 
+		IModel* GModel() const;
+		void SModel(IModel* model);
+
 	protected:
+
+		IModel* model;
 
 		List<Component*> components;
 

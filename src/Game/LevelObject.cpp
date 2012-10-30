@@ -23,7 +23,7 @@ namespace TikiEngine
 		{
 			if (args.Input.GetKeyPressed(KEY_F3))
 			{
-				this->Model->GetMaterial()->TexNormalMap = 0;
+				this->GModel()->GetMaterial()->TexNormalMap = 0;
 			}
 
 			LevelChild::Update(args);
@@ -40,26 +40,25 @@ namespace TikiEngine
 				material->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_diff");
 				material->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_normal");
 				material->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_spec");
-				//TikiObject::WatchPointer.Add(material->GetShader());
+				TikiObject::WatchPointer.Add(material->GetShader());
 				
 				switch (type)
 				{
 				case 0:
-					this->Model = engine->content->LoadModel(L"links");
-					this->Model->SetMaterial(material);
-					material->Release();
+					this->SModel(engine->content->LoadModel(L"Soldier_S"));
+					this->GModel()->SetMaterial(material);
 
 					break;
 				case 1:
-					this->Model = engine->content->LoadModel(L"Soldier_S");
-					this->Model->SetMaterial(material);
+					this->SModel(engine->content->LoadModel(L"Soldier_S"));
+					this->GModel()->SetMaterial(material);
 					
 					material->FlipTexcorrdV = false;
-					material->Release();
 
-					TikiBot* bot = new TikiBot(gameState, this);
-					bot->SetScale(0.06f);
-					bot->Release();
+					(new TikiBot(gameState, this))->SetScale(0.06f);
+					break;
+				default:
+					material->Release();
 					break;
 				}
 			}

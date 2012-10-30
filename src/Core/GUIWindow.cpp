@@ -1,6 +1,7 @@
 
 #include "Core/GUIWindow.h"
 
+#include "Core/IGraphics.h"
 #include "Core/IContentManager.h"
 
 namespace TikiEngine
@@ -14,6 +15,7 @@ namespace TikiEngine
 			: GUIControl(engine)
 		{
 			tex = engine->content->LoadTexture(L"controls");
+			tex->AddRef();
 
 			if (rd == 0)
 			{
@@ -28,6 +30,7 @@ namespace TikiEngine
 		GUIWindow::~GUIWindow()
 		{
 			rd->Release();
+			SafeRelease(&tex);
 		}
 		#pragma endregion
 		

@@ -13,10 +13,10 @@ public:
 	TikiObject();
 	virtual ~TikiObject();
 
-	UInt32 AddRef();
-	UInt32 Release();
+	Int32 AddRef();
+	Int32 Release();
 
 private:
 
-	UInt32 refCount;
+	Int32 refCount;
 };

@@ -105,7 +105,6 @@ namespace TikiEngine
 
 			ViewPort viewPort; 
 			ID3D11BlendState* blendStateAlphaBlend;
-			ID3D11BlendState* blendStateAlphaBlendDisabled;
 			ID3D11RasterizerState* rasterStateBackfaces;
 
 			Color clearColor;

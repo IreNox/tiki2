@@ -121,7 +121,7 @@ namespace TikiEngine
 			Particle* particle = particles;
 			while (i < particleUsed)
 			{
-				particle->Age = (args.Time.TotalTime - particle->BirthTime) / lifeTime;
+				particle->Age = (float)((args.Time.TotalTime - particle->BirthTime) / lifeTime);
 
 				if (particle->Age > 1.0f)
 				{
@@ -129,7 +129,7 @@ namespace TikiEngine
 				}
 				else
 				{
-					particle->Position += particle->Velocity * args.Time.ElapsedTime;
+					particle->Position += particle->Velocity * (float)args.Time.ElapsedTime;
 					this->UpdateParticle(particle);
 				}
 

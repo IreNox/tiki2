@@ -209,13 +209,7 @@
     <ClCompile Include="src\Core\CameraObject.cpp">
       <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\QuadObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\LightObject.cpp">
-      <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\MeshObject.cpp">
       <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\ColorVertex.cpp">
@@ -281,14 +275,14 @@
     <ClCompile Include="src\Core\File.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ParticleBehavior.cpp">
-      <Filter>Quelldateien\Core\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\SkinningVertex.cpp">
       <Filter>Quelldateien\Core\Vertex</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\GUIControlRectangles.cpp">
       <Filter>Quelldateien\Core\UserInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ParticleEffect.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -461,12 +455,6 @@
       <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\LightObject.h">
-      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\MeshObject.h">
-      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\QuadObject.h">
       <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\ColorVertex.h">

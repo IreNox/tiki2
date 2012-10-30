@@ -22,31 +22,36 @@ namespace TikiEngine
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
 			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0), collisionRegions(0)
 		{
-			/*
-
-			cloddy_IDataset* dataset = cloddy_Dataset::Open();
-
-			DataRegion region;
-
-			dataset->Begin();
-
-			dataset->Get(region);
-
-			dataset->End();
-
-			*/		
-			
-			
 		}
 
 		TerrainRenderer::~TerrainRenderer()
 		{
 			SafeDelete(&collisionIndexBuffer);
 			SafeDelete(&collisionVertexBuffer);
-
-			manager->Shutdown();
 			SafeRelease(&material);
 			SafeRelease(&layout);
+
+			terrain->Dispose();
+			terrain = 0;
+
+			manager->Shutdown();
+			manager->Dispose();
+			manager = 0;
+
+			vertexFormat = 0;
+
+			indexBuffer->Dispose();
+			indexBuffer = 0;
+			vertexBuffer->Dispose();
+			vertexBuffer = 0;
+
+			callback->Dispose();
+			callback = 0;
+
+			terrainDescription = 0;
+			
+			datasetElevation->Dispose();
+			datasetElevation = 0;
 		}
 		#pragma endregion
 		

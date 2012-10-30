@@ -22,6 +22,7 @@ namespace TikiEngine
 		public:
 
 			ClickEvent Click;
+			void* UserData;
 
 			GUIControl(Engine* engine);
 			~GUIControl();
@@ -34,6 +35,7 @@ namespace TikiEngine
 
 			void AddChild(GUIControl* child);
 			bool RemoveChild(GUIControl* child);
+			const List<GUIControl*>& ChildControls();
 
 			virtual bool Clicked();
 

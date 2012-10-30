@@ -3,6 +3,8 @@
 #include "Core/TypeDef.h"
 #include "Core/List.h"
 
+#include "Core/HelperPath.h"
+
 #include "Core/EngineDescription.h"
 
 namespace TikiEngine
@@ -43,6 +45,8 @@ namespace TikiEngine
 
 		Window* window;
 		LibraryManager* librarys;
+
+		HelperPath HPath;
 	
 		/*!
 		 * @brief Create new instance of Engine.

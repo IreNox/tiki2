@@ -20,7 +20,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Class Database
+		#pragma region Class - Database
 		GUIControlRectangles::GUIControlRectangles(string control)
 		{
 			sqlite3* db;
@@ -79,6 +79,8 @@ namespace TikiEngine
 				}
 				sqlite3_finalize(state);
 			}
+
+			sqlite3_close(db);
 		}
 		#pragma endregion
 

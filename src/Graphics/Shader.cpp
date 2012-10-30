@@ -363,7 +363,7 @@ namespace TikiEngine
 			}
 			SafeRelease(&oldEffect);
 
-			wstring file = HelperPath::GetFilename(fileName);
+			wstring file = engine->HPath.GetFilename(fileName);
 
 			switch (file[0])
 			{

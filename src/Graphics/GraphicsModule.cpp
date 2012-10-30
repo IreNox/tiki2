@@ -31,7 +31,7 @@ namespace TikiEngine
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtScreen(0), rtBackBuffer(0),
 			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
 			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
-			cbufferLights(0), cbufferCamera(0), cbufferObject(0), blendStateAlphaBlend(0), blendStateAlphaBlendDisabled(0)
+			cbufferLights(0), cbufferCamera(0), cbufferObject(0), blendStateAlphaBlend(0)
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -97,7 +97,6 @@ namespace TikiEngine
 			SafeDelete(&cbufferObject);
 
 			SafeRelease(&blendStateAlphaBlend);
-			SafeRelease(&blendStateAlphaBlendDisabled);
 			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilStateDisable);
 			SafeRelease(&rasterStateBackfaces);
@@ -137,7 +136,7 @@ namespace TikiEngine
 				newName = true;
 			}
 
-			wstring path = HelperPath::CombineWorkingPath(wstring(L"Screenshots/") + fileName);
+			wstring path = engine->HPath.CombineWorkingPath(wstring(L"Screenshots/") + fileName);
 
 			rtBackBuffer->SaveToFile(path.c_str());
 
@@ -332,7 +331,7 @@ namespace TikiEngine
 			}
 			else
 			{
-				deviceContext->OMSetBlendState(blendStateAlphaBlendDisabled, blendFactor, 0xffffffff);
+				deviceContext->OMSetBlendState(0, blendFactor, 0xffffffff);
 			}
 		}
 
@@ -377,6 +376,7 @@ namespace TikiEngine
 
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
+			this->SetStateAlphaBlend(true);
 			this->SetStateDepthEnabled(true);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 						
@@ -404,6 +404,8 @@ namespace TikiEngine
 #if _DEBUG
 			lineRenderer->End();
 #endif
+
+			this->SetStateAlphaBlend(false);
 
 			UInt32 i = 0;
 			while (i < postProcesses.Count())
@@ -638,11 +640,10 @@ namespace TikiEngine
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
 			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
-			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
 			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
 			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;
@@ -653,18 +654,6 @@ namespace TikiEngine
 			);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
-
-			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
-			blendStateDesc.RenderTarget[0].BlendEnable = FALSE;
-
-			r = device->CreateBlendState(
-				&blendStateDesc,
-				&blendStateAlphaBlendDisabled
-			);
-
-			if (FAILED(r)) { this->Dispose(); return false; }
-
-			this->SetStateAlphaBlend(true);
 			#pragma endregion
 
 			if (!initDirectXViewPort(desc)) return false;
@@ -778,21 +767,26 @@ namespace TikiEngine
 		bool GraphicsModule::initEngine(EngineDescription& desc)
 		{
 			this->indexBuffer = new IndexBuffer(engine);
+			this->indexBuffer->AddRef();
 
 			this->cbufferLights = new ConstantBuffer<CBLights>(engine);
 			this->cbufferCamera = new ConstantBuffer<CBMatrices>(engine);
 			this->cbufferObject = new ConstantBuffer<CBObjectData>(engine);
 
 			this->rtBackBuffer = new RenderTarget(engine, renderTargetView, false);
+			this->rtBackBuffer->AddRef();
 
 			this->rtScreen = new RenderTarget(engine);
 			this->rtScreen->CreateScreenSize();
+			this->rtScreen->AddRef();
 
 			this->rtNormal = new RenderTarget(engine);
 			this->rtNormal->CreateScreenSize();
+			this->rtNormal->AddRef();
 
 			this->rtDepth = new RenderTarget(engine);
 			this->rtDepth->CreateScreenSize();
+			this->rtDepth->AddRef();
 
 			IShader* shader = new Shader(engine);
 			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
@@ -805,9 +799,7 @@ namespace TikiEngine
 
 			defaultPostProcess = new PostProcess(engine);
 			defaultPostProcess->AddPass(pass);
-
-			SafeRelease(&pass);
-			SafeRelease(&shader);
+			defaultPostProcess->AddRef();
 
 #if _DEBUG
 			lineRenderer = new DebugLineRenderer(engine);

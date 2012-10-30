@@ -54,6 +54,16 @@ namespace TikiEngine
 			return this->Y + this->Height;
 		}
 
+		inline Vector2 Position()
+		{
+			return Vector2(X, Y);
+		}	
+			
+		inline Vector2 Size()
+		{
+			return Vector2(Width, Height);
+		}
+
 		inline bool Contains(const Vector2& point)
 		{
 			return (this->X < point.X && this->Right() > point.X) &&

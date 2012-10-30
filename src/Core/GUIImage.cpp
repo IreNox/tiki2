@@ -16,6 +16,7 @@ namespace TikiEngine
 
 		GUIImage::~GUIImage()
 		{
+			SafeRelease(&texture);
 		}
 		#pragma endregion
 

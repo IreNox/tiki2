@@ -2,20 +2,23 @@
 #include "Graphics/DebugLineRenderer.h"
 #include "Graphics/GraphicsModule.h"
 
+#include "Core/IContentManager.h"
+
 namespace TikiEngine
 {
 	DebugLineRenderer::DebugLineRenderer(Engine* engine)
 		: EngineObject(engine)
 	{
-		shader = new Shader(engine);
-		shader->LoadFromFile(L"Data/Effects/os_color.fx");
+		shader = (Shader*)engine->content->LoadShader(L"os_color");
 		shader->SetMatrix("worldMatrix", Matrix::Identity);
+		shader->AddRef();
 
 		List<InputElement> elements = List<InputElement>(ColorVertex::Declaration, ColorVertex::DeclarationCount, true);
 		decl = new VertexDeclaration(engine, shader, &elements);
 
 		renderTarget = new RenderTarget(engine);
 		renderTarget->CreateScreenSize();
+		renderTarget->AddRef();
 		DllMain::ModuleGraphics->AddDefaultProcessTarget("debugLines", renderTarget);
 
 		vertexBuffer = new DynamicBuffer<ColorVertex, D3D11_BIND_VERTEX_BUFFER>(engine);

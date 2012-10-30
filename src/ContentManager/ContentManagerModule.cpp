@@ -33,6 +33,8 @@ namespace TikiEngine
 			#if _DEBUG
 			InitializeCriticalSection(&threadCriticle);
 
+			filePath = engine->HPath.CombineWorkingPath(L"Data");
+
 			threadHandle = CreateThread(
 				0,
 				2000,
@@ -108,7 +110,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{
-				while (loadedResources[i].resource->Release()) { }
+				loadedResources[i].resource->Release();
 				i++;
 			}
 			loadedResources.Clear();
@@ -118,7 +120,7 @@ namespace TikiEngine
 		#pragma region Member - Load
 		IResource* ContentManagerModule::Load(PInt hash, wstring name)
 		{
-			name = HelperPath::GetResourcePath(hash, name);
+			name = engine->HPath.GetResourcePath(hash, name);
 			IResource* value = this->findLoadedResource(hash, name);
 
 			if (value == 0)
@@ -206,7 +208,6 @@ namespace TikiEngine
 			mat->SetShader(
 				(IShader*)this->Load(typeid(IShader).hash_code(), name)
 			);
-			mat->GetShader()->Release();
 
 			return mat;
 		}
@@ -238,7 +239,6 @@ namespace TikiEngine
 			{
 				if (loadedResources[i].hash == hash && loadedResources[i].fileName == name)
 				{
-					loadedResources[i].resource->AddRef();
 					return loadedResources[i].resource;
 				}
 
@@ -258,7 +258,6 @@ namespace TikiEngine
 
 		void ContentManagerModule::threadDynamicReload()
 		{
-			wstring filePath = HelperPath::CombineWorkingPath(L"Data");
 			HANDLE hDir = CreateFile(
 				filePath.c_str(),
 				FILE_LIST_DIRECTORY,                
@@ -281,7 +280,7 @@ namespace TikiEngine
 
 				do 
 				{
-					wstring fileName = HelperPath::Combine(
+					wstring fileName = engine->HPath.Combine(
 						filePath,
 						wstring(dataInfo->FileName, dataInfo->FileNameLength / sizeof(wchar_t))
 					);

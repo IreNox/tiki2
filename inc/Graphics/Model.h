@@ -103,8 +103,6 @@ namespace TikiEngine
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
 
-			Shader* shader;
-
 		};
 	}
 }

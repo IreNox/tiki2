@@ -17,7 +17,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(11171);
+	//_CrtSetBreakAlloc(13305);
 
 	{
 		EngineDescription desc;
@@ -31,41 +31,30 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		
 		if (engine->Initialize(desc))
 		{
+			Scene* scene = 0;
+				
 			DWORD buffer;
 			WCHAR username[100];
 			GetUserName(username, &buffer);
-			
+
 			wstring name = username;
 
-// 			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
-// 			{
-// 				//engine->SetScene(new SceneMark(engine));
-// 				//engine->SetScene(new SceneAdrian(engine));
-// 				engine->SetScene(new SceneTim(engine));
-// 			}
-// 			else if (name == L"adrian.lück" || name == L"Adrian")
-// 			{
-// 				//engine->SetScene(new SceneLevel(engine));
-// 				engine->SetScene(new SceneMenuMain(engine));
-// 				//engine->SetScene(new SceneMark(engine));
-// 				//engine->SetScene(new SceneAdrian(engine));
-// 				//engine->SetScene(new SceneTim(engine));
-// 			}
-// 			else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
-// 			{				
-// 				engine->SetScene(new SceneMark(engine));
-// 				//engine->SetScene(new SceneAdrian(engine));
-// 				//engine->SetScene(new SceneTim(engine));
-// 			}
-// 			else
-// 			{
-				engine->SetScene(
-					new SceneMenuMain(engine)
-					//new SceneMark(engine)
-				);
-			//}
+			if (name == L"tim.boden")
+			{
+				scene = new SceneTim(engine);
+				//scene = new SceneLevel(engine);
+				//((SceneLevel*)scene)->LoadLevel(1);
+			}
+			else
+			{
+				scene = new SceneMenuMain(engine);
+			}
+			scene->AddRef();
 
+			engine->SetScene(scene);
 			engine->Run();
+
+			SafeRelease(&scene);
 		}
 		
 		engine->Dispose();

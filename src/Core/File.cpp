@@ -65,7 +65,7 @@ namespace TikiEngine
 		File* File::CreateResourceFile(PInt typeHash, const wstring& name)
 		{
 			return File::CreateFile(
-				HelperPath::GetResourcePath(typeHash, name)
+				 L"" //HelperPath::GetResourcePath(typeHash, name)
 			);
 		}
 		#pragma endregion

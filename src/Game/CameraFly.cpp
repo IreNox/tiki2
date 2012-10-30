@@ -13,12 +13,10 @@ namespace TikiEngine
 		CameraFly::CameraFly(Engine* engine, GameObject* gameObject)
 			: IScript(engine, gameObject)
 		{
-			camera = gameObject->GetComponent<Camera>();
 		}
 
 		CameraFly::~CameraFly()
 		{
-			SafeRelease(&camera);
 		}
 
 		void CameraFly::Draw(const DrawArgs& args)

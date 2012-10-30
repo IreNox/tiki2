@@ -43,6 +43,7 @@ namespace TikiEngine
 			HANDLE threadHandle;
 			CRITICAL_SECTION threadCriticle;
 
+			wstring filePath;
 			List<wstring> changedFiles;
 
 			static void initThread();

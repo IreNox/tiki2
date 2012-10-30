@@ -29,12 +29,11 @@ namespace TikiEngine
 			UInt32 temp = 0;
 
 			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
-
-			//shader = new Shader(engine);
-			//shader->LoadFromFile(L"Data/Effects/os_spritebatch.fx");
+			shader->AddRef();
 
 			renderTarget = new RenderTarget(engine);
 			renderTarget->CreateScreenSize();
+			renderTarget->AddRef();
 			DllMain::ModuleGraphics->AddDefaultProcessTarget("spriteBatch", renderTarget);
 
 			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, SpriteBatchVertex::DeclarationCount, true);

@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\GUIControlRectangles.cpp" />
-    <ClCompile Include="src\Core\ParticleBehavior.cpp" />
+    <ClCompile Include="src\Core\ParticleEffect.cpp" />
     <ClCompile Include="src\Core\shell.c" />
     <ClCompile Include="src\Core\SkinningVertex.cpp" />
     <ClCompile Include="src\Core\sqlite3.c" />
@@ -55,13 +55,11 @@
     <ClCompile Include="src\Core\MemoryStream.cpp" />
     <ClCompile Include="src\Core\Mesh.cpp" />
     <ClCompile Include="src\Core\MeshIndexed.cpp" />
-    <ClCompile Include="src\Core\MeshObject.cpp" />
     <ClCompile Include="src\Core\Plane.cpp" />
     <ClCompile Include="src\Core\TikiObject.cpp" />
     <ClCompile Include="src\Core\PostProcess.cpp" />
     <ClCompile Include="src\Core\PostProcessPass.cpp" />
     <ClCompile Include="src\Core\PostProcessVertex.cpp" />
-    <ClCompile Include="src\Core\QuadObject.cpp" />
     <ClCompile Include="src\Core\Quaternion.cpp" />
     <ClCompile Include="src\Core\IResource.cpp" />
     <ClCompile Include="src\Core\Scene.cpp" />
@@ -176,10 +174,8 @@
     <ClInclude Include="inc\Core\Matrix.h" />
     <ClInclude Include="inc\Core\Matrix2x2.h" />
     <ClInclude Include="inc\Core\Matrix3x3.h" />
-    <ClInclude Include="inc\Core\MeshObject.h" />
     <ClInclude Include="inc\Core\TikiInfo.h" />
     <ClInclude Include="inc\Core\TikiObject.h" />
-    <ClInclude Include="inc\Core\QuadObject.h" />
     <ClInclude Include="inc\Core\Scene.h" />
     <ClInclude Include="inc\Core\Transform.h" />
     <ClInclude Include="inc\Core\Vector2.h" />

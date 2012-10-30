@@ -10,30 +10,30 @@ namespace TikiEngine
 	{
 	public:
 
-		static wstring GetWorkingPath();
+		HelperPath();
+		~HelperPath();
 
-		static wstring Combine(wstring path1, wstring path2);
-		static wstring CombineWorkingPath(wstring path);
+		wstring GetWorkingPath();
 
-		static wstring GetFilename(wstring fullPath);
-		static wstring GetDirectoryName(wstring fullPath);
+		wstring Combine(wstring path1, wstring path2);
+		wstring CombineWorkingPath(wstring path);
+
+		wstring GetFilename(wstring fullPath);
+		wstring GetDirectoryName(wstring fullPath);
 
 		template<class T>
-		static wstring GetResourcePath(wstring fileName)
+		wstring GetResourcePath(wstring fileName)
 		{
 			return HelperPath::GetResourcePath(typeid(T).hash_code(), fileName);
 		}
-		static wstring GetResourcePath(PInt typeHash, wstring fileName);
+		wstring GetResourcePath(PInt typeHash, wstring fileName);
 
 	private:
 
-		HelperPath() {}
-		~HelperPath() {}
+		wstring workingPath;
 
-		static wstring workingPath;
-
-		static void checkPath(wstring path);
-		static void checkSlashes(wstring& path);
+		void checkPath(wstring path);
+		void checkSlashes(wstring& path);
 
 	};
 }

@@ -16,6 +16,7 @@ namespace TikiEngine
 			: IParticleRenderer(engine, gameObject), shader(0), texture(0), behavior(0)
 		{
 			shader = engine->content->LoadShader(L"os_particle");
+			shader->AddRef();
 
 			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
 			vertexBuffer = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
@@ -23,8 +24,10 @@ namespace TikiEngine
 
 		ParticleRenderer::~ParticleRenderer()
 		{
+			SafeRelease(&decl);
 			SafeRelease(&shader);
 			SafeRelease(&texture);
+			SafeRelease(&vertexBuffer);
 
 			SafeRelease(&behavior);
 		}

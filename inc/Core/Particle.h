@@ -16,7 +16,7 @@ namespace TikiEngine
 			Vector3 Velocity;
 
 			float Age;
-			float BirthTime;
+			double BirthTime;
 
 			void* userData;
 

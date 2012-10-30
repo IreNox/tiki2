@@ -37,8 +37,9 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			//SafeRelease(&tex);
-			//SafeRelease(&ssao);
 			SafeRelease(&light);
+			SafeRelease(&camera);
+
 			SafeRelease(&font);
 		}
 
@@ -51,7 +52,6 @@ namespace TikiEngine
 			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
 			effect->SetTexture(engine->content->LoadTexture(L"checker"));
 			effect->SetParticleEffect(behavior);
-			effect->Release();
 
 			this->AddElement(go);
 
@@ -77,16 +77,18 @@ namespace TikiEngine
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+			light->AddRef();
+
 			this->AddElement(light);
 			
 			// Camera
-			camera = new CameraObject(engine);
+			camera = new CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
+			camera->AddRef();
 
-			(new CameraFly(engine, camera))->Release();
+			(new CameraFly(engine, camera));
 
 			this->AddElement(camera);
-			camera->Release();
 
 			#pragma region Old Stuff
 			//IPhysicsMaterial* material; 
@@ -144,6 +146,7 @@ namespace TikiEngine
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 14.0f);
+			font->AddRef();
 			
 			Scene::Initialize(args);
 		}

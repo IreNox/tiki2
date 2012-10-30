@@ -22,6 +22,7 @@ namespace TikiEngine
 		void AddHandler(EventHandler<T, TArgs>* handler)
 		{
 			eventHandler.Add(handler);
+			handler->handled.Add(this);
 		}
 
 		void RemoveHandler(EventHandler<T, TArgs>* handler)

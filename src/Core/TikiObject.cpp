@@ -21,7 +21,7 @@ List<void*> TikiObject::WatchPointer = List<void*>();
 #endif
 
 TikiObject::TikiObject()
-	: refCount(1)
+	: refCount(0)
 {	
 }
 
@@ -35,7 +35,7 @@ TikiObject::~TikiObject()
 #endif
 }
 
-UInt32 TikiObject::AddRef()
+Int32 TikiObject::AddRef()
 {	
 #if _DEBUG
 	 refCount++;
@@ -43,6 +43,7 @@ UInt32 TikiObject::AddRef()
 	if (this == wrongPtr)
 	{
 		TIKIOUT("AddRef wrong Pointer.");
+		return -1;
 	}
 
 	if (TikiObject::WatchPointer.Contains(this))
@@ -58,7 +59,7 @@ UInt32 TikiObject::AddRef()
 #endif
 }
 
-UInt32 TikiObject::Release()
+Int32 TikiObject::Release()
 {
 	refCount--;
 
@@ -66,11 +67,13 @@ UInt32 TikiObject::Release()
 	if (refCount == 0xfeeefeed)
 	{
 		TIKIOUT("Release Released Object.");
+		return -1;
 	}
 
 	if (this == wrongPtr)
 	{
 		TIKIOUT( "Release wrong Pointer.");
+		return -1;
 	}
 
 	if (TikiObject::WatchPointer.Contains(this))
@@ -81,7 +84,7 @@ UInt32 TikiObject::Release()
 	}
 #endif
 
-	if (refCount == 0)
+	if (refCount < 1)
 	{
 		delete this;
 		return 0;

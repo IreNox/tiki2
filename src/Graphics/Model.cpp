@@ -2,6 +2,7 @@
 #include "Graphics/Model.h"
 #include "Core/TypeGlobals.h"
 #include "Core/IGraphics.h"
+#include "Core/IContentManager.h"
 
 #include "Graphics/DllMain.h"
 #include "Graphics/FbxLoader.h"
@@ -23,13 +24,8 @@ namespace TikiEngine
 			
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
-			shader = new Shader(engine);
-			shader->LoadFromFile(L"Data/Effects/os_skinning.fx");
-			shader->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
-
-			Material* material = new Material(engine);
-			material->SetShader(shader);
-			shader->Release();
+			Material* material = engine->content->LoadMaterial(L"os_skinning");
+			((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
 			this->SetMaterial(material);
 		}
 
@@ -144,7 +140,7 @@ namespace TikiEngine
 
 		bool Model::GetReady()
 		{
-			return (scene != 0);
+			return (scene != 0 && material != 0);
 		}
 
 		Material* Model::GetMaterial()
@@ -164,6 +160,7 @@ namespace TikiEngine
 		
 		void Model::SetMaterial(Material* material)
 		{
+			SafeRelease(&this->material);
 			SafeAddRef(material, &this->material);
 
 			SafeRelease(&declaration);
