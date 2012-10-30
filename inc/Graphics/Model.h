@@ -7,6 +7,7 @@
 
 #include "Graphics/TikiMesh.h"
 #include "Graphics/DynamicBuffer.h"
+#include "Graphics/StaticBuffer.h"
 #include "Graphics/VertexDeclaration.h"
 #include "Graphics/ConstantBuffer.h"
 #include "Graphics/SkinMatrices.h"
@@ -88,8 +89,8 @@ namespace TikiEngine
 			Material* material;
 			VertexDeclaration* declaration;
 
-			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			DynamicBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+			StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
 			UInt32 updateCounter;
 			//List<UpdateStructure> updateStructure;

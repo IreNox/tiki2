@@ -15,12 +15,16 @@ namespace TikiEngine
 		TikiMesh::~TikiMesh()
 		{
 		}
+
 		void TikiMesh::Release()
 		{
 			//node->Destroy();
 		}
+
 		bool TikiMesh::Initialize()
 		{
+			int bonesCount = MaxBonesPerVertex();
+
 			FbxMesh* mesh = node->GetMesh();
 
 			int vertexCount = mesh->GetControlPointsCount();
@@ -110,8 +114,8 @@ namespace TikiEngine
 			FbxMesh* mesh = this->node->GetMesh();
 			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
 
-			if(!hasSkin)
-				return;
+			//if(!hasSkin)
+			//	return;
 
 			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
 			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
@@ -151,6 +155,7 @@ namespace TikiEngine
 					}
 				}
 			}
+
 			int updateCount = updateStructure.Count();
 			for(int updateIndex = 0; updateIndex < updateCount; updateIndex++)
 			{
@@ -172,6 +177,11 @@ namespace TikiEngine
 
 			FbxVector4* vertexArray = new FbxVector4[vertexCount];
 			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
+
+			for(int i = 0; i < vertexCount; i++)
+			{
+				vertexArray[i] = (static_cast<FbxMatrix>(node->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE)).MultNormalize(vertexArray[i]));
+			}
 
 			for(UInt32 i = 0; i < updateStructure.Count(); i++)
 			{
@@ -208,23 +218,29 @@ namespace TikiEngine
 			this->skinMatrices.Clear();
 
 			FbxMesh* mesh = node->GetMesh();
-			FbxSkin* skin = (FbxSkin*)mesh->GetDeformer(0, FbxDeformer::eSkin);
 
-			int clusterCount = skin->GetClusterCount();
-			for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
+			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
 			{
-				FbxCluster* cluster = skin->GetCluster(clusterIndex);
+				FbxSkin *  skin = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
 
-				if(!cluster->GetLink())
-					continue;
+				int clusterCount = skin->GetClusterCount();
+				for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+				{
+					FbxCluster* cluster = skin->GetCluster(clusterIndex);
 
-				FbxAMatrix transform;
-				ComputeClusterDeformation(node->EvaluateGlobalTransform(),mesh, cluster, transform, time, 0);
+					if(!cluster->GetLink())
+						continue;
 
-				Matrix tmp = FBXConverter::Convert(transform);
-				skinMatrices.Add(tmp);
+					FbxAMatrix transform;
+					ComputeClusterDeformation(node->EvaluateGlobalTransform(),mesh, cluster, transform, time, 0);
+
+					Matrix tmp = FBXConverter::Convert(transform);
+					skinMatrices.Add(tmp);
+				}
 			}
 		}
+
 		void TikiMesh::ComputeClusterDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMesh, FbxCluster* pCluster, FbxAMatrix& pVertexTransformMatrix, FbxTime pTime, FbxPose* pPose)
 		{
 
@@ -278,6 +294,55 @@ namespace TikiEngine
 		bool TikiMesh::GetReady()
 		{
 			return this->updateStructure.Count() != 0;
+		}
+
+		int TikiMesh::MaxBonesPerVertex()
+		{
+			FbxMesh* mesh = this->node->GetMesh();
+			bool hasSkin = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+
+			if(!hasSkin)
+				return -1;
+
+			int* testData = new int[mesh->GetControlPointsCount()];
+			for(int i = 0; i < mesh->GetControlPointsCount(); i++)
+				testData[i] = 0;
+
+			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
+			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
+			{
+				FbxSkin *  skinDeformer = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
+
+				int clusterCount = skinDeformer->GetClusterCount();
+				for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+				{
+					FbxCluster* cluster = skinDeformer->GetCluster(clusterIndex);
+					if (!cluster->GetLink())
+						continue;
+					int vertexCount = cluster->GetControlPointIndicesCount();
+					for(int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+					{
+						int index = cluster->GetControlPointIndices()[vertexIndex];
+
+						if (index >= mesh->GetControlPointsCount())
+							continue;
+
+						testData[index]++;
+					}
+
+				}
+			}
+
+			int max = 0;
+			for(int i = 0; i < mesh->GetControlPointsCount(); i++)
+			{
+				if(testData[i] > max)
+					max = testData[i];
+
+			}
+
+			delete[] testData;
+			return max;
 		}
 		#pragma endregion
 	}

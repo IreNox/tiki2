@@ -45,7 +45,7 @@ namespace TikiEngine
 				switch (type)
 				{
 				case 0:
-					this->Model = engine->content->LoadModel(L"replaceme_cube");
+					this->Model = engine->content->LoadModel(L"links");
 					this->Model->SetMaterial(material);
 					material->Release();
 

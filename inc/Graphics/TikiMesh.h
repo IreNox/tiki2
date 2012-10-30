@@ -54,6 +54,8 @@ namespace TikiEngine
 				FbxAMatrix& pVertexTransformMatrix, FbxTime pTime, FbxPose* pPose);
 			FbxAMatrix GetGeometry(FbxNode* pNode);
 
+			int MaxBonesPerVertex();
+
 			FbxNode* node;
 			Engine* engine;
 

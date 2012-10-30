@@ -9,16 +9,27 @@ PS_INPUT VS_Main(VS_INPUT input)
 	float indices[4] = (float[4])input.SkinningIndices;
 
 	matrix transform = 0;
+	float weight = 0;
 
 	for(int i = 0; i < 4;i++)
 	{
 		transform += bones[indices[i]] * weights[i];
+		weight += weights[i];
 	}
 
 	float4 pos = mul(float4(input.Pos,1.0f), transform);
 
 	//output.Pos = float4(input.Pos, 1.0f);
-    output.Pos = mul(pos, fuckYouAsshole);
+
+	if(weight != 0)
+	{
+		output.Pos = mul(pos, fuckYouAsshole);
+	}
+	else
+	{
+		output.Pos = mul(float4(input.Pos,1.0f), fuckYouAsshole);
+	}
+    
 	output.WorldPos = output.Pos.xyz;
 
     output.Pos = mul(output.Pos, ViewM);

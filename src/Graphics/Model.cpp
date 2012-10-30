@@ -8,6 +8,7 @@
 #include "Graphics/Deformer.h"
 #include "Graphics/TikiMesh.h"
 
+
 namespace TikiEngine
 {
 	namespace Resources
@@ -16,9 +17,10 @@ namespace TikiEngine
 		Model::Model(Engine* engine)
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1)
 		{
-			indexBuffer = new DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
-			vertexBuffer = new DynamicBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 
+			indexBuffer = new StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
+			vertexBuffer = new StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
 			shader = new Shader(engine);
@@ -52,10 +54,10 @@ namespace TikiEngine
 			FbxAxisSystem directX(FbxAxisSystem::eDirectX);
 			FbxAxisSystem sceneAxis = scene->GetGlobalSettings().GetAxisSystem();
 
-			if(sceneAxis != directX)
-			{
-				directX.ConvertScene(scene);
-			}
+			//if(sceneAxis != directX)
+			//{
+			//	directX.ConvertScene(scene);
+			//}
 
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
@@ -65,6 +67,7 @@ namespace TikiEngine
 
 			this->CopyIndexData();
 			this->CopyVertexData();
+
 		}
 
 		#pragma region Animation
@@ -203,8 +206,8 @@ namespace TikiEngine
 
 			DllMain::Context->DrawIndexed(indicesList.Count(), 0, 0);
 
-			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
 			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
+			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
 			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
 		}
 
@@ -296,12 +299,8 @@ namespace TikiEngine
 
 				i++;
 			}
-			SkinningVertex tmp = verticesList[0];
-			SkinningVertex tmp2 = verticesList[1];
 
-			SkinningVertex* vertexData = vertexBuffer->Map(verticesList.Count());
-			memcpy(vertexData, verticesList.GetInternalData(), sizeof(SkinningVertex) * verticesList.Count());
-			vertexBuffer->Unmap();
+			this->vertexBuffer->FillBuffer(verticesList.GetInternalData(), verticesList.Count());
 		}
 
 		void Model::CopyIndexData()
@@ -326,10 +325,7 @@ namespace TikiEngine
 				offset += meshes[i]->verticesList.Count();
 				i++;
 			}
-
-			UInt32* indexData = indexBuffer->Map(indicesList.Count());
-			memcpy(indexData, indicesList.GetInternalData(), sizeof(UInt32) * indicesList.Count());
-			indexBuffer->Unmap();
+			this->indexBuffer->FillBuffer(indicesList.GetInternalData(), indicesList.Count());
 		}
 
 

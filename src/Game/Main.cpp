@@ -3,9 +3,11 @@
 
 #include "Core/Engine.h"
 #include "Game/SceneMenuMain.h"
-#include "Game/SceneMark.h"
 #include "Game/SceneAdrian.h"
+#include "Game/SceneMark.h"
 #include "Game/SceneTim.h"
+#include "Game/SceneLevel.h"
+
 #include "../misc/res/resource.h"
 
 using namespace TikiEngine;
@@ -35,26 +37,27 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			//if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
-			//{
-			//	engine->SetScene(new SceneTim(engine));
-			//	//engine->SetScene(new SceneAdrian(engine));
-			//	//engine->SetScene(new SceneMark(engine));
-
-			//}
-			//else if (name == L"adrian.lück" || name == L"Adrian")
-			//{
-			//	engine->SetScene(new SceneAdrian(engine));
-			//	//engine->SetScene(new SceneTim(engine));
-			//	//engine->SetScene(new SceneMark(engine));
-			//}
-			//else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
-			//{				
-			//	//engine->SetScene(new SceneAdrian(engine));
-			//	//engine->SetScene(new SceneTim(engine));
-			//	engine->SetScene(new SceneMark(engine));
-			//}
-			//else
+			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
+			{
+				//engine->SetScene(new SceneMark(engine));
+				//engine->SetScene(new SceneAdrian(engine));
+				engine->SetScene(new SceneTim(engine));
+			}
+			else if (name == L"adrian.lück" || name == L"Adrian")
+			{
+				//engine->SetScene(new SceneLevel(engine));
+				engine->SetScene(new SceneMenuMain(engine));
+				//engine->SetScene(new SceneMark(engine));
+				//engine->SetScene(new SceneAdrian(engine));
+				//engine->SetScene(new SceneTim(engine));
+			}
+			else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
+			{				
+				engine->SetScene(new SceneMark(engine));
+				//engine->SetScene(new SceneAdrian(engine));
+				//engine->SetScene(new SceneTim(engine));
+			}
+			else
 			{
 				engine->SetScene(
 					new SceneMenuMain(engine)
