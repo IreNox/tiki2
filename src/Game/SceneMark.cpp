@@ -311,8 +311,32 @@ namespace TikiEngine
 					// get the impact point and activate bot movement
 					impact = info.Point;
 					bot->GotoLocation(impact);
+
+                    for(int i = 0; i < 10; i++)
+                    {
+                        Vector3 center = impact + Vector3(0, i, 0);
+                        GameObject* go = new GameObject(engine);
+                        dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+                        dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+                        dynamicBox->SetCenter(center);
+                        dynamicBox->SetSize(Vector3(1, 1, 1));
+                        dynamicBox->SetDynamic(true);
+                        // assign collision groups after object is created, else it won't work!
+                        dynamicBox->SetGroup(CG_Collidable_Pushable);
+                        this->AddElement(go);
+                        go->Release();
+                    }
+
+
+
 				}
 		     }
+
+            if (args.Input.GetKey(KEY_F1))
+            {
+
+            }
+
 
 			// F2 - Navigation Test
 			if (args.Input.GetKeyPressed(KEY_F2))

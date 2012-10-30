@@ -88,7 +88,9 @@ namespace TikiEngine
 			// Create the PhysX Scene and set the current one
 			NxSceneDesc sceneDesc;
 			sceneDesc.gravity = NxVec3(0.0f, -9.81f, 0.0f);
-			sceneDesc.flags = NX_SF_SIMULATE_SEPARATE_THREAD;
+            sceneDesc.flags &= ~NX_SF_SIMULATE_SEPARATE_THREAD;
+            sceneDesc.flags |= NX_SF_ENABLE_MULTITHREAD;
+            sceneDesc.internalThreadCount = 2;
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == 0)
 			{

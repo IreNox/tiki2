@@ -37,33 +37,33 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
-			{
-				//engine->SetScene(new SceneMark(engine));
-				//engine->SetScene(new SceneAdrian(engine));
-				engine->SetScene(new SceneTim(engine));
-			}
-			else if (name == L"adrian.lück" || name == L"Adrian")
-			{
-				//engine->SetScene(new SceneLevel(engine));
-				engine->SetScene(new SceneMenuMain(engine));
-				//engine->SetScene(new SceneMark(engine));
-				//engine->SetScene(new SceneAdrian(engine));
-				//engine->SetScene(new SceneTim(engine));
-			}
-			else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
-			{				
-				engine->SetScene(new SceneMark(engine));
-				//engine->SetScene(new SceneAdrian(engine));
-				//engine->SetScene(new SceneTim(engine));
-			}
-			else
-			{
+// 			if ((name == L"tim.boden" || name == L"Der Hans von Morgen" || name == L"Tim") && false)
+// 			{
+// 				//engine->SetScene(new SceneMark(engine));
+// 				//engine->SetScene(new SceneAdrian(engine));
+// 				engine->SetScene(new SceneTim(engine));
+// 			}
+// 			else if (name == L"adrian.lück" || name == L"Adrian")
+// 			{
+// 				//engine->SetScene(new SceneLevel(engine));
+// 				engine->SetScene(new SceneMenuMain(engine));
+// 				//engine->SetScene(new SceneMark(engine));
+// 				//engine->SetScene(new SceneAdrian(engine));
+// 				//engine->SetScene(new SceneTim(engine));
+// 			}
+// 			else if (name == L"mark.reichert" || name == L"Mark.Reichert" || name == L"Shekk")
+// 			{				
+// 				engine->SetScene(new SceneMark(engine));
+// 				//engine->SetScene(new SceneAdrian(engine));
+// 				//engine->SetScene(new SceneTim(engine));
+// 			}
+// 			else
+// 			{
 				engine->SetScene(
 					new SceneMenuMain(engine)
 					//new SceneMark(engine)
 				);
-			}
+			//}
 
 			engine->Run();
 		}
