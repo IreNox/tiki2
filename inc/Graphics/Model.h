@@ -89,8 +89,8 @@ namespace TikiEngine
 			Material* material;
 			VertexDeclaration* declaration;
 
-			StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
 			UInt32 updateCounter;
 			//List<UpdateStructure> updateStructure;

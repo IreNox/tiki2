@@ -18,8 +18,8 @@ namespace TikiEngine
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1)
 		{
 
-			indexBuffer = new StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
-			vertexBuffer = new StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			//indexBuffer = new StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
+			//vertexBuffer = new StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 			
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
@@ -183,23 +183,26 @@ namespace TikiEngine
 			material->UpdateDrawArgs(args, gameObject);
 			material->Apply();
 
-			UINT offset = 0;
-			UINT stride = declaration->GetElementSize();
+			indexBuffer->Apply();
+			vertexBuffer->Apply();
 
-			ID3D11Buffer* buffer = this->vertexBuffer->GetBuffer();
-			DllMain::Context->IASetVertexBuffers(
-				0,
-				1,
-				&buffer,
-				&stride,
-				&offset
-			);
+			//UINT offset = 0;
+			//UINT stride = declaration->GetElementSize();
 
-			DllMain::Context->IASetIndexBuffer(
-				this->indexBuffer->GetBuffer(),
-				DXGI_FORMAT_R32_UINT,
-				0
-			);
+			//ID3D11Buffer* buffer = this->vertexBuffer->GetBuffer();
+			////DllMain::Context->IASetVertexBuffers(
+			////	0,
+			////	1,
+			////	&buffer,
+			////	&stride,
+			////	&offset
+			////);
+
+			////DllMain::Context->IASetIndexBuffer(
+			////	this->indexBuffer->GetBuffer(),
+			////	DXGI_FORMAT_R32_UINT,
+			////	0
+			////);
 
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			declaration->Apply();
@@ -300,7 +303,9 @@ namespace TikiEngine
 				i++;
 			}
 
-			this->vertexBuffer->FillBuffer(verticesList.GetInternalData(), verticesList.Count());
+			this->vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), verticesList.Count(), (void*)verticesList.GetInternalData());
+
+			//this->vertexBuffer->FillBuffer(verticesList.GetInternalData(), verticesList.Count());
 		}
 
 		void Model::CopyIndexData()
@@ -325,7 +330,9 @@ namespace TikiEngine
 				offset += meshes[i]->verticesList.Count();
 				i++;
 			}
-			this->indexBuffer->FillBuffer(indicesList.GetInternalData(), indicesList.Count());
+			//this->indexBuffer->FillBuffer(indicesList.GetInternalData(), indicesList.Count());
+			this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
+
 		}
 
 
