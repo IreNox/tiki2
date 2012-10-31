@@ -16,7 +16,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1)
+			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1), rootBone(0)
 		{
 
 			//indexBuffer = new StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
@@ -268,7 +268,7 @@ namespace TikiEngine
 				}
 				else if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
 				{
-					//Ini(node, parentGlobalPosition, globalPosition);
+					InitializeSkeleton(node, parentGlobalPosition, globalPosition);
 				}
 			}
 		}
@@ -282,6 +282,16 @@ namespace TikiEngine
 			tm->Initialize();
 
 			meshes.Add(tm);
+		}
+		void Model::InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition)
+		{
+			//FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
+
+			//if(rootBone != 0)
+			//	return;
+
+			//rootBone = new TikiBone(node);
+			//rootBone->Initialize();
 		}
 
 		void Model::CopyVertexData()

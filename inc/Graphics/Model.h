@@ -12,6 +12,8 @@
 #include "Graphics/ConstantBuffer.h"
 #include "Graphics/SkinMatrices.h"
 
+#include "Graphics/TikiBone.h"
+
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
 
@@ -62,6 +64,7 @@ namespace TikiEngine
 			void InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose);
 			void InitializeMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
 				FbxAMatrix& globalPosition, FbxPose* pose);
+			void InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition);
 
 			void CopyVertexData();
 			void CopyIndexData();
@@ -102,6 +105,8 @@ namespace TikiEngine
 
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
+
+			TikiBone* rootBone;
 
 		};
 	}

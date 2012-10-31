@@ -143,6 +143,9 @@
     <ClCompile Include="src\Graphics\ParticleRenderer.cpp">
       <Filter>Quelldateien\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\TikiBone.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -249,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\StaticBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiBone.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -178,6 +178,8 @@ namespace TikiEngine
 			FbxVector4* vertexArray = new FbxVector4[vertexCount];
 			memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
 
+			FbxAMatrix blhkjh = node->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE);
+
 			for(int i = 0; i < vertexCount; i++)
 			{
 				vertexArray[i] = (static_cast<FbxMatrix>(node->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE)).MultNormalize(vertexArray[i]));
@@ -259,6 +261,11 @@ namespace TikiEngine
 
 			FbxAMatrix lClusterRelativeInitPosition;
 			FbxAMatrix lClusterRelativeCurrentPositionInverse;
+			FbxAMatrix nodeTransform;
+			FbxAMatrix nodeTransformInverse;
+
+			nodeTransform = node->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE);
+			nodeTransformInverse = nodeTransform.Inverse();
 
 
 			pCluster->GetTransformMatrix(lReferenceGlobalInitPosition);
@@ -278,8 +285,7 @@ namespace TikiEngine
 			lClusterRelativeCurrentPositionInverse = lReferenceGlobalCurrentPosition.Inverse() * lClusterGlobalCurrentPosition;
 
 			// Compute the shift of the link relative to the reference.
-			pVertexTransformMatrix = lClusterRelativeCurrentPositionInverse * lClusterRelativeInitPosition;
-
+			pVertexTransformMatrix = nodeTransform * lClusterRelativeCurrentPositionInverse * lClusterRelativeInitPosition * nodeTransformInverse;
 		}
 
 		FbxAMatrix TikiMesh::GetGeometry(FbxNode* pNode)

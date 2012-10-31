@@ -40,6 +40,7 @@
     <ClCompile Include="src\Graphics\TerrainRenderer.cpp" />
     <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Graphics\TikiBone.cpp" />
     <ClCompile Include="src\Graphics\TikiHeightmap.cpp" />
     <ClCompile Include="src\Graphics\TikiMesh.cpp" />
     <ClCompile Include="src\Graphics\VertexBuffer.cpp" />
@@ -77,6 +78,7 @@
     <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
+    <ClInclude Include="inc\Graphics\TikiBone.h" />
     <ClInclude Include="inc\Graphics\TikiHeightmap.h" />
     <ClInclude Include="inc\Graphics\TikiMesh.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />
