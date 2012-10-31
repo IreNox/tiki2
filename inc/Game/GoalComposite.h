@@ -43,8 +43,11 @@ namespace TikiEngine
             // method before deleting the subgoal and removing it from the subgoal list
             void RemoveAllSubgoals();
 
+			virtual void Draw(const DrawArgs& args);
+
         protected:
-            // process any subgoals that may be present
+			//  this method first removes any completed goals from the front of the
+			//  subgoal list. It then processes the next goal in the list (if there is one)
             int ProcessSubgoals();
 
             // passes the message to the front-most subgoal
@@ -54,6 +57,11 @@ namespace TikiEngine
             SubgoalList subGoals;
         };
 
+		template <class entity_type>
+		void GoalComposite<entity_type>::AddSubgoal(Goal<entity_type>* g)
+		{
+			subGoals.push_front(g);
+		}
 
         template <class entity_type>
         void GoalComposite<entity_type>::RemoveAllSubgoals()
@@ -67,6 +75,57 @@ namespace TikiEngine
             subGoals.clear();
         }
 
+
+		template <class entity_type>
+		int GoalComposite<entity_type>::ProcessSubgoals()
+		{
+			// remove all completed and failed goals from the front of the subgoal list
+			while(!subGoals.empty() && 
+				  subGoals.front()->IsComplete() || subGoals.front()->HasFailed())
+			{
+				subGoals.front()->Terminate();
+				delete subGoals.front();
+				subGoals.pop_front();
+			}
+
+			// if any subgoals remain, process the one at the front of the list
+			if (!subGoals.empty())
+			{
+				// grab the status of the front-most subgoal
+				int statusOfSubGoals = subGoals.front()->Process();
+
+				// we have to test for the special case where the front-most subgoal reports 'completed'
+				// *and* the subgoal list contains additional goals.When this is the case,
+				// to ensure the parent keeps processing its subgoal list we must return the 'active' status.
+				if (statusOfSubGoals == Completed && subGoals.size() > 1)
+					return Active;
+
+				return statusOfSubGoals;
+			}
+			else // no more subgoals to process - return 'completed'
+				return Completed;
+
+		}
+
+
+
+		template <class entity_type>
+		bool GoalComposite<entity_type>::ForwardMessageToFrontMostSubgoal(const Telegram& msg)
+		{
+			// pass the message to the goal at the front of the queue
+			if (!subGoals.empty())
+				return subGoals.front()->HandleMessage(msg);
+
+			// return false if the message has not been handled
+			return false;
+		}
+
+		template <class entity_type>
+		void GoalComposite<entity_type>::Draw(const DrawArgs& args)
+		{
+			if (!subGoals.empty())
+				subGoals.front()->Draw(args);
+		}
 
     }
 }

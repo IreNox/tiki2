@@ -61,7 +61,7 @@ namespace TikiEngine
             bool IsActive()   const { return status == Active;    }
             bool IsInactive() const { return status == Inactive;  }
             bool HasFailed()  const { return status == Failed;    }
-
+			int  GetType()	  const { return goalType; }
 
         protected:
             //if status = inactive this method sets it to active and calls Activate()

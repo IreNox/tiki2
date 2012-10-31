@@ -81,11 +81,20 @@
     <Filter Include="Headerdateien\AI\Goals">
       <UniqueIdentifier>{916dd52a-210a-48f4-a781-920a42deb46f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\AI\Goals\atomic">
-      <UniqueIdentifier>{00e99b86-bfb2-4ae7-b04a-fd9fdbc163be}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\AI\Goals\Composite">
       <UniqueIdentifier>{34c19c77-e97d-4b7d-94f5-9781c836291c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Goals">
+      <UniqueIdentifier>{293211ee-d60b-4b0f-8879-6f4aa1a2b7c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Goals\Atomic">
+      <UniqueIdentifier>{00e99b86-bfb2-4ae7-b04a-fd9fdbc163be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Goals\Atomic">
+      <UniqueIdentifier>{8c6e3587-7b1c-4676-b9f6-d45869753a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Goals\Composite">
+      <UniqueIdentifier>{4ce544bd-46b8-4f09-b2e1-95482ab91e67}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -204,10 +213,22 @@
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\Goal.h">
-      <Filter>Headerdateien\AI\Goals\atomic</Filter>
+      <Filter>Headerdateien\AI\Goals\Atomic</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\GoalComposite.h">
       <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalThink.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalTypes.h">
+      <Filter>Headerdateien\AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalWander.h">
+      <Filter>Headerdateien\AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalSeekToPosition.h">
+      <Filter>Headerdateien\AI\Goals\Atomic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -312,6 +333,15 @@
     </ClCompile>
     <ClCompile Include="src\Game\ParticleTest.cpp">
       <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalThink.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalWander.cpp">
+      <Filter>Quelldateien\AI\Goals\Atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalSeekToPosition.cpp">
+      <Filter>Quelldateien\AI\Goals\Atomic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

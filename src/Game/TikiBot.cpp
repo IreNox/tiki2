@@ -4,6 +4,8 @@
 #include "Core/TypeGlobals.h"
 #include "Core/IGraphics.h"
 
+#include "Game/GoalThink.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -24,7 +26,7 @@ namespace TikiEngine
 			numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
 			hit = false;
 			score = 0;
-			status = spawning;
+			status = alive; //spawning;
 			possessed = false;
 			fieldOfView = DegsToRads(180);
 
@@ -34,6 +36,7 @@ namespace TikiEngine
 			// a bot starts off facing in the direction it is heading
 			facing = heading;
 
+			// Create steering behavior
 			steering = new TikiSteering(this);
 
 			// init CharacterController
@@ -46,6 +49,14 @@ namespace TikiEngine
 			controller->SetGroup(CG_Collidable_Pushable);
 			controller->AddRef();
 
+			// Create the goal queue
+			brain = new GoalThink(this);
+			brain->RemoveAllSubgoals();
+			// we must always have a goal in our brain
+			brain->AddGoalWander();
+			brain->AddGoalSeek(Vector2(50, 50));
+
+
 			// Navigation
 			pathActive = false;
 			currentCell = 0;
@@ -55,8 +66,18 @@ namespace TikiEngine
 
 		TikiBot::~TikiBot()
 		{
+
+			SafeDelete(&brain);
+
 			SafeRelease(&controller);
-			delete steering;
+			
+			SafeDelete(&steering);
+		}
+
+		bool TikiBot::IsAtPosition(Vector2 pos)
+		{
+			const static float tolerance = 2.0f;
+			return Vector2::DistanceSquared(Pos(), pos) < tolerance;
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
@@ -174,11 +195,21 @@ namespace TikiEngine
 
 				engine->graphics->DrawLine(start, wp, Color(1, 1, 1, 1));
 			}
+
+			brain->Draw(args);
+
+
 			#endif
 		}
 
 		void TikiBot::Update(const UpdateArgs& args)
 		{
+			// process the currently active goal. Note this is required even if the bot
+			// is under user control. This is because a goal is created whenever a user 
+			// clicks on an area of the map that necessitates a path planning request.
+			//brain->AddGoalWander();
+			brain->Process();
+			//brain->AddGoalWander();
 
 			// Update navigation
 			UpdateNavigation(args);

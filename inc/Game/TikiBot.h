@@ -15,6 +15,7 @@ namespace TikiEngine
 	namespace AI
 	{
 		class TikiSteering;
+		class GoalThink;
 		//class ICharacterController;
 
 		class TikiBot : public MovingEntity
@@ -39,8 +40,6 @@ namespace TikiEngine
 
 
 			#pragma region Accessing attribute data
-			ICharacterController* GetController() { return controller; }
-
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
 			//void ReduceHealth(unsigned int val);
@@ -53,18 +52,24 @@ namespace TikiEngine
 			Vector2 Facing() const {return facing;}
 			double FieldOfView() const {return fieldOfView;}
 
-			bool isPossessed() const {return possessed;}
-			bool isDead() const {return status == dead;}
-			bool isAlive() const {return status == alive;}
-			bool isSpawning() const {return status == spawning;}
+			bool IsPossessed() const {return possessed;}
+			bool IsDead() const {return status == dead;}
+			bool IsAlive() const {return status == alive;}
+			bool IsSpawning() const {return status == spawning;}
   
 			void SetSpawning() {status = spawning;}
 			void SetDead() {status = dead;}
 			void SetAlive() {status = alive;}
 			#pragma endregion
 
-			TikiSteering* const GetSteering() { return steering; }
+			//returns true if the bot is close to the given position
+			bool IsAtPosition(Vector2 pos);
 
+
+
+			ICharacterController* GetController() { return controller; }
+			TikiSteering* const GetSteering() { return steering; }
+			GoalThink*	  const GetBrain() { return brain; }
 
 
 		private:
@@ -85,6 +90,9 @@ namespace TikiEngine
 
 			// PhysX Controller
 			ICharacterController* controller;
+
+			// this object handles the arbitration and processing of high level goals
+			GoalThink* brain;
 
 			// the bot uses this object to steer
 			TikiSteering* steering;

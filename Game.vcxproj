@@ -31,6 +31,10 @@
     <ClInclude Include="inc\Game\GameState.h" />
     <ClInclude Include="inc\Game\Goal.h" />
     <ClInclude Include="inc\Game\GoalComposite.h" />
+    <ClInclude Include="inc\Game\GoalSeekToPosition.h" />
+    <ClInclude Include="inc\Game\GoalThink.h" />
+    <ClInclude Include="inc\Game\GoalTypes.h" />
+    <ClInclude Include="inc\Game\GoalWander.h" />
     <ClInclude Include="inc\Game\Level.h" />
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />
@@ -70,6 +74,9 @@
     <ClCompile Include="src\Game\EntityManager.cpp" />
     <ClCompile Include="src\Game\GameHud.cpp" />
     <ClCompile Include="src\Game\GameState.cpp" />
+    <ClCompile Include="src\Game\GoalSeekToPosition.cpp" />
+    <ClCompile Include="src\Game\GoalThink.cpp" />
+    <ClCompile Include="src\Game\GoalWander.cpp" />
     <ClCompile Include="src\Game\Level.cpp" />
     <ClCompile Include="src\Game\LevelChild.cpp" />
     <ClCompile Include="src\Game\LevelEnemy.cpp" />
