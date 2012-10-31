@@ -190,6 +190,7 @@ namespace TikiEngine
 			
 			NxTriangleMeshShapeDesc terrainShapeDesc;
 			terrainShapeDesc.meshData				= triangleMesh;
+			terrainShapeDesc.group				    = CG_Collidable_Non_Pushable;	// set group here, important els CD won't work
 			terrainShapeDesc.shapeFlags				= NX_SF_FEATURE_INDICES;
 			
 			actorDescription.shapes.pushBack(&terrainShapeDesc);

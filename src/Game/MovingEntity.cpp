@@ -14,10 +14,10 @@ namespace TikiEngine
 		{
 			this->heading = heading;
 			this->velocity = velocity;
-			this->mass = 5;
+			this->mass = 1;
 			this->side = heading.Cross();	
 			this->maxSpeed = 10.0; //maxSpeed;
-			this->maxTurnRate = turnRate;
+			this->maxTurnRate = 20.0; //turnRate;
 			this->maxForce = maxForce;
 
 			// BaseGameEntity

@@ -255,7 +255,7 @@ namespace TikiEngine
 
 			// Move the controller and set some gravity
 			Vector3 displacement(velocity.X,
-								 0, //-9.81f, 
+								 -9.81f, 
 								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
 
@@ -338,7 +338,7 @@ namespace TikiEngine
 					parent->ResolveMotionOnMesh(pathPos, currentCell, NextPosition, &NextCell);
 					pathPos = NextPosition;
 					currentCell = NextCell;
-					controller->SetCenter(pathPos);	// this is only for height adjustment
+					//controller->SetCenter(pathPos);	// this is only for height adjustment
 				}
 			}
 			else if (pathActive)

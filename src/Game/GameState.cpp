@@ -72,9 +72,9 @@ namespace TikiEngine
 				if (bot != 0)
 				{
 					bot->CreateNav(navMesh);
-// 					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
-// 					pos = pos + Vector3(0, 20, 0);
-// 					bot->GetController()->SetCenter(pos);
+ 					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
+ 					pos = pos + Vector3(0, 60, 0);
+ 					bot->GetController()->SetCenter(pos);
 				}
 
 				i++;
