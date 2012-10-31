@@ -67,7 +67,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			memcpy(dataVertices + lockMin, ptr, size);
+			memcpy(dataVertices + lockMin, ptr, (PInt)size);
 
 			CloddyVertex* bdata = vertexBuffer->Map(this->size);
 			memcpy(bdata, dataVertices, this->size * sizeof(CloddyVertex));

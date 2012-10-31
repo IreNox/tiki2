@@ -7,8 +7,9 @@ namespace TikiEngine
 {
 	#pragma region Class
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), PRS(this), components(), model(0)
+		: EngineObject(engine), PRS(0), components(), model(0)
 	{
+		this->PRS = Transform(this);
 	}
 
 	GameObject::~GameObject()

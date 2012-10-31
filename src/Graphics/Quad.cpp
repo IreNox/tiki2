@@ -13,8 +13,6 @@ namespace TikiEngine
 			-1.0f,  1.0f, 0.0f, 0.0f, 0.0f, // TL
 			 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
-			//-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
-			// 1.0f,  1.0f, 0.0f, 1.0f, 0.0f, // TR
 			 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, // BR
 		};
 
@@ -29,14 +27,7 @@ namespace TikiEngine
 		Quad::Quad(Engine* engine)
 			: EngineObject(engine), vertexBuffer(0), shader(0), inputLayout(0)
 		{
-			UInt32 temp;
-
-			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices); //VertexBuffer(engine, sizeof(PostProcessVertex), false);
-			//vertexBuffer->Allocate(
-			//	Quad::quadVertices,
-			//	6,
-			//	&temp
-			//);
+			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices);
 		}
 
 		Quad::~Quad()

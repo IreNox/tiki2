@@ -70,6 +70,7 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void ParticleRenderer::Draw(const DrawArgs& args)
 		{
+			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 
 			decl->Apply();
@@ -87,6 +88,7 @@ namespace TikiEngine
 			DllMain::Context->Draw(behavior->GParticleUsed(), 0);
 
 			DllMain::ModuleGraphics->SetStateDepthEnabled(true);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(false);
 		}
 		#pragma endregion
 
