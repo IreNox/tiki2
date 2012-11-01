@@ -127,13 +127,14 @@ Matrix3x3 Matrix3x3::Rotate(const Vector2 &fwd, const Vector2& side)
 					 0,		 0,		 1);
 }
 
-void Matrix3x3::TransformVector(Vector2 point)
+Vector2 Matrix3x3::TransformVector(const Vector2& point)
 {
-	float tempX = (M00 * point.X) + (M01 * point.Y) + M02;
-	float tempY = (M10 * point.X) + (M11 * point.Y) + M12;
+	//float tempX = (M00 * point.X) + (M01 * point.Y) + M02;
+	//float tempY = (M10 * point.X) + (M11 * point.Y) + M12;
+    float tempX = (M00 * point.X) + (M10 * point.Y) + M20;
+    float tempY = (M01 * point.X) + (M11 * point.Y) + M21;
 
-	point.X = tempX;
-	point.Y = tempY;
+    return Vector2(tempX, tempY);
 }
 
 

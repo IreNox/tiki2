@@ -91,6 +91,6 @@ inline Vector2 PointToWorldSpace(const Vector2 &point,
 	//now transform the vertices
 	matTransform.TransformVector(transPoint);
 
-  return transPoint;
+    return transPoint;
 }
 #pragma endregion

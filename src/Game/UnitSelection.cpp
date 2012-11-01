@@ -108,7 +108,8 @@ namespace TikiEngine
 
 
 					
-					if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)))
+					if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y))&&
+                       !selectedUnits.Contains(go))
 					{
 						OutputDebugString(L"Rect-Select unit.\n");
 						selectedUnits.Add(go);

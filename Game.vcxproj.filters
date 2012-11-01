@@ -230,6 +230,9 @@
     <ClInclude Include="inc\Game\GoalSeekToPosition.h">
       <Filter>Headerdateien\AI\Goals\Atomic</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PathPlanner.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -342,6 +345,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\GoalSeekToPosition.cpp">
       <Filter>Quelldateien\AI\Goals\Atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PathPlanner.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

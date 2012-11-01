@@ -1,4 +1,5 @@
 #include "Game/TikiSteering.h"
+#include "Game/TikiBot.h"
 
 namespace TikiEngine
 {

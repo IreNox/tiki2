@@ -3,12 +3,9 @@
 #include <vector>
 #include "Game/MovingEntity.h"
 #include "Game/TikiSteering.h"
-#include "Core/ICharacterController.h"
+#include "Game/PathPlanner.h"
 
-// NavMesh includes
-#include "Game/NavigationCell.h"
-#include "Game/NavigationPath.h"
-#include "Game/NavigationMesh.h"
+#include "Core/ICharacterController.h"
 
 namespace TikiEngine
 {
@@ -27,17 +24,13 @@ namespace TikiEngine
 
 			// Navigation
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
-			void GotoLocation(const Vector3& p, NavigationCell* cell);
 			void GotoLocation(const Vector3& p);
-			//void GotoRandomLocation();
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 			//bool HandleMessage(const Telegram& msg); // TODO
-			void Write(std::ostream&  os)const{ }
-		    void Read (std::ifstream& is){ }
-
-
+			void Write(std::ostream&  os)const { }
+		    void Read(std::ifstream& is) { }
 
 			#pragma region Accessing attribute data
 			int Health() const {return health;}
@@ -65,8 +58,6 @@ namespace TikiEngine
 			//returns true if the bot is close to the given position
 			bool IsAtPosition(Vector2 pos);
 
-
-
 			ICharacterController* GetController() { return controller; }
 			TikiSteering* const GetSteering() { return steering; }
 			GoalThink*	  const GetBrain() { return brain; }
@@ -81,8 +72,6 @@ namespace TikiEngine
 			// the steering force for this time-step.
 			void UpdateMovement(const UpdateArgs& args);
 
-			void UpdateNavigation(const UpdateArgs& args);
-
 			enum Status {alive, dead, spawning};
 
 			// alive, dead or spawning?
@@ -96,6 +85,9 @@ namespace TikiEngine
 
 			// the bot uses this object to steer
 			TikiSteering* steering;
+            
+            // object for planning paths
+            PathPlanner* pathPlanner;
 
 			// the bot's health. Every time the bot is shot this value is decreased. If
 			// it reaches zero then the bot dies (and respawns)
@@ -127,21 +119,6 @@ namespace TikiEngine
 
 			// set to true when a human player takes over control of the bot
 			bool possessed;
-
-			// Navigation
-			NavigationMesh* parent;			// the mesh we are sitting on
-			NavigationCell* currentCell;	// our current cell on the mesh
-
-			// TODO: PathPlanner
-			public:
-			bool pathActive;				// true when we are using a path to navigate
-			NavigationPath path;			// our path object
-			NavigationPath::WayPointID nextWaypoint; // ID of the next waypoint we will move to
-			NavigationPath::WayPointID lastWaypoint; // ID of the last waypoint we moved to
-			
-			Vector3 pathMovement;
-			Vector3 pathPos;
-
 		};
 
 	}

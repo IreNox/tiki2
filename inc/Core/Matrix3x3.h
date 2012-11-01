@@ -30,7 +30,7 @@ public:
 	Matrix3x3 Rotate(const Vector2 &fwd, const Vector2& side);
 
 	// applies a 2D transformation matrix to a single Vector2
-	void TransformVector(Vector2 point);
+	Vector2 TransformVector(const Vector2& point);
 
 	float Determinant();
 	Matrix3x3 Adjugate();

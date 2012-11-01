@@ -1,7 +1,7 @@
 #pragma once
 
 #include <vector>
-#include "Game/TikiBot.h"
+#include "Core/Vector2.h"
 
 namespace TikiEngine
 {
@@ -11,9 +11,9 @@ namespace TikiEngine
 
 		//Wander Constants
 		//the radius of the constraining circle for the wander behavior
-		const float WanderRad    = 10.0f; //1.2f;
+		const float WanderRad    =  20.0f; //1.2f; // 10.0f;
 		//distance the wander circle is projected in front of the agent
-		const float WanderDist   = 2.0f;
+		const float WanderDist   = 50.0f; //2.0f;
 		//the maximum amount of displacement along the circle each frame
 		const float WanderJitterPerSec = 40.0f;
 

@@ -145,7 +145,7 @@ namespace TikiEngine
 				}
 
 			}
-			tree->Create(engine, &tris[0], totalCells, 32);
+			tree->Create(engine, &tris[0], totalCells, 64);
 
 			//if (minX < 0) maxX += abs(minX);
 			//if (minZ < 0) maxZ += abs(minZ);
