@@ -97,7 +97,7 @@ namespace TikiEngine
 			bool showTree;
 			TRI* triangles; // = TotalCells
 
-			List<TRI>* foundTriangles;
+			List<TRI> foundTriangles;
 
 			
 		};

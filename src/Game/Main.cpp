@@ -17,7 +17,7 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(13305);
+	//_CrtSetBreakAlloc(282190);
 
 	{
 		EngineDescription desc;
@@ -41,8 +41,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			if (name == L"tim.boden" && true)
 			{
-				scene = new SceneLevel(engine);
-				((SceneLevel*)scene)->LoadLevel(1);
+				scene = new SceneTim(engine);
+				//scene = new SceneLevel(engine);
+				//((SceneLevel*)scene)->LoadLevel(1);
 			}
 			else
 			{

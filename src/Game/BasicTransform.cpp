@@ -24,7 +24,7 @@ namespace TikiEngine
 			SceneLevel* scene = (SceneLevel*)engine->GetScene();
 			if (scene && scene->GetLevel()->GetTerrain())
 			{
-				this->PRS.SPosition().Y = scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.GPosition());
+				//this->PRS.SPosition().Y = scene->GetLevel()->GetTerrain()->SampleHeight(this->PRS.GPosition());
 			}			
 		}
 

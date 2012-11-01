@@ -31,26 +31,20 @@ namespace TikiEngine
 			SafeRelease(&material);
 			SafeRelease(&layout);
 
-			terrain->Dispose();
 			terrain = 0;
 
 			manager->Shutdown();
-			manager->Dispose();
 			manager = 0;
 
 			vertexFormat = 0;
 
-			indexBuffer->Dispose();
 			indexBuffer = 0;
-			vertexBuffer->Dispose();
 			vertexBuffer = 0;
 
-			callback->Dispose();
 			callback = 0;
 
 			terrainDescription = 0;
 			
-			datasetElevation->Dispose();
 			datasetElevation = 0;
 		}
 		#pragma endregion

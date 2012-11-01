@@ -55,6 +55,13 @@ namespace TikiEngine
 
 			this->AddElement(go);
 
+			go = new GameObject(engine);
+			Material* mat = engine->content->LoadMaterial(L"os_cloddy");
+			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			terrain->LoadTerrain("Data/Cloddy/Datasets/pitch.E16C24.rect.dat", 8192, 512);
+			terrain->SetMaterial(mat);
+
+			this->AddElement(go);
 
 			//// Model
 			//go = new GameObject(engine);

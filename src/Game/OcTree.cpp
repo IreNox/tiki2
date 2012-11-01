@@ -8,12 +8,12 @@ namespace TikiEngine
 	namespace AI
 	{
 		OcTree::OcTree()
+			: foundTriangles()
 		{
 			//this->octreeTable = 0;
 			//this->triangleIdxTable = 0;
 			this->drawIdx = 0;
 			this->showTree = false;
-			this->foundTriangles = new List<TRI>();
 		}
 
 		OcTree::~OcTree()
@@ -25,7 +25,7 @@ namespace TikiEngine
 			SafeDelete(&octreeTable);
 			SafeDelete(&triangleIdxTable);
 
-			foundTriangles->Clear();
+			foundTriangles.Clear();
 		}
 
 		void OcTree::Dispose()
@@ -293,7 +293,7 @@ namespace TikiEngine
 		//Vector3
 		List<TRI>* OcTree::GetTrianglesAt(const Vector3& pos)
 		{
-			foundTriangles->Clear();
+			foundTriangles.Clear();
 
 			int idx = PositionToIndex(pos);
 			drawIdx = idx;
@@ -303,10 +303,10 @@ namespace TikiEngine
 			for (int i = start; i < end; i++)
 			{
 				unsigned int triIdx = triangleIdxTable[i];
-				foundTriangles->Add(triangles[triIdx]);
+				foundTriangles.Add(triangles[triIdx]);
 			}
 
-			return foundTriangles;
+			return &foundTriangles;
 		}
 
 
@@ -334,9 +334,9 @@ namespace TikiEngine
 			}
 
 			// draw found triangles via GetTrianglesAt
-			for(unsigned int i = 0; i < foundTriangles->Count(); i++)
+			for(unsigned int i = 0; i < foundTriangles.Count(); i++)
 			{
-				TRI t = foundTriangles->Get(i);
+				TRI t = foundTriangles.Get(i);
 
 				for (int j = 0; j < 3; j++)
 				{
