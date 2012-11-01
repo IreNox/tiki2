@@ -14,10 +14,6 @@ namespace TikiEngine
 		}
 		TikiMesh::~TikiMesh()
 		{
-		}
-
-		void TikiMesh::Release()
-		{
 			//node->Destroy();
 		}
 

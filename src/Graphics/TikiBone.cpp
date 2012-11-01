@@ -16,7 +16,10 @@ namespace TikiEngine
 
 		TikiBone::~TikiBone()
 		{
-
+			for(int i = 0; i < childs.Count(); i++)
+			{
+				SafeRelease(&childs[i]);
+			}
 		}
 
 		void TikiBone::Initialize()

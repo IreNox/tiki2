@@ -25,7 +25,7 @@ namespace TikiEngine
 			Vector4 Indices;
 		};
 
-		class TikiMesh
+		class TikiMesh : public TikiObject
 		{
 
 		public:
@@ -40,8 +40,6 @@ namespace TikiEngine
 			void UpdateVertexBuffer();
 
 			bool GetReady();
-
-			void Release();
 
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;

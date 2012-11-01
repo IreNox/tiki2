@@ -3,12 +3,14 @@
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
 #include <Core\List.h>
+#include "Core/TikiObject.h"
+#include "Core/TypeGlobals.h"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-		class TikiBone
+		class TikiBone : public TikiObject
 		{
 		public:
 			TikiBone(FbxNode* node);

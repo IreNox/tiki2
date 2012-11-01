@@ -18,10 +18,6 @@ namespace TikiEngine
 		Model::Model(Engine* engine)
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1), rootBone(0)
 		{
-
-			//indexBuffer = new StaticBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(engine);
-			//vertexBuffer = new StaticBuffer<SkinningVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
-			
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
 			Material* material = engine->content->LoadMaterial(L"os_skinning");
@@ -36,12 +32,15 @@ namespace TikiEngine
 				SafeRelease(&meshes[i]);
 			}
 			FbxArrayDelete(animStackNameArray);
-			//this->scene->Destroy();
+			this->scene->Destroy();
 
 			SafeRelease(&declaration);
 			SafeRelease(&material);
 			SafeRelease(&indexBuffer);
-			SafeRelease(&vertexBuffer);			
+			SafeRelease(&vertexBuffer);
+			SafeDelete(&constantBufferMatrices);
+			if(rootBone != 0)
+				SafeRelease(&rootBone);
 		}
 		#pragma endregion
 
@@ -49,11 +48,6 @@ namespace TikiEngine
 		{
 			FbxAxisSystem directX(FbxAxisSystem::eDirectX);
 			FbxAxisSystem sceneAxis = scene->GetGlobalSettings().GetAxisSystem();
-
-			//if(sceneAxis != directX)
-			//{
-			//	directX.ConvertScene(scene);
-			//}
 
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
@@ -63,6 +57,8 @@ namespace TikiEngine
 
 			this->CopyIndexData();
 			this->CopyVertexData();
+
+			int bla = this->rootBone->Count();
 
 		}
 
@@ -285,13 +281,13 @@ namespace TikiEngine
 		}
 		void Model::InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition)
 		{
-			//FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
+			FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
 
-			//if(rootBone != 0)
-			//	return;
+			if(rootBone != 0)
+				return;
 
-			//rootBone = new TikiBone(node);
-			//rootBone->Initialize();
+			rootBone = new TikiBone(node);
+			rootBone->Initialize();
 		}
 
 		void Model::CopyVertexData()

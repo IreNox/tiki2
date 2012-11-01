@@ -46,15 +46,16 @@ namespace TikiEngine
 
 			go->SModel(engine->content->LoadModel(L"soldier_S"));
 			tex = engine->content->LoadTexture(L"checker");
-
+			tex->AddRef();
 			go->GModel()->GetMaterial()->GetShader()->SetTexture("Tex", tex);
 
 			go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
-			go->Release();
+			//go->Release(); //AddRef();
 
 			light = new LightObject(engine);
+			light->AddRef();
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
@@ -64,10 +65,10 @@ namespace TikiEngine
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
-			fly->Release();
+			//fly->Release();
 
 			this->AddElement(go);
-			go->Release();
+			//go->Release();
 
 			Scene::Initialize(args);
 		}
