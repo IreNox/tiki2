@@ -126,6 +126,9 @@
     <Filter Include="Headerdateien\Core\Args/States\Events">
       <UniqueIdentifier>{d7dafc6d-7578-4a93-a57e-875b28c8b498}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\Graphics\Particle">
+      <UniqueIdentifier>{0d96c49b-c6f7-43f7-82f5-910ac38be5cb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -604,23 +607,23 @@
     <ClInclude Include="inc\Core\Event.h">
       <Filter>Headerdateien\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Particle.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\SkinningVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IParticleRenderer.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\ParticleEffect.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\GUIControlRectangles.h">
       <Filter>Headerdateien\Core\UserInterface</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\EventControls.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\ParticleEffect.h">
+      <Filter>Headerdateien\Core\Graphics\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Particle.h">
+      <Filter>Headerdateien\Core\Graphics\Particle</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

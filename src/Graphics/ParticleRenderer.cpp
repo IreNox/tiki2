@@ -114,6 +114,5 @@ namespace TikiEngine
 			vertexBuffer->Unmap();
 		}
 		#pragma endregion
-
 	}
 }

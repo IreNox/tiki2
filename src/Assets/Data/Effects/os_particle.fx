@@ -123,10 +123,16 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return tex.Sample(sam, input.UV) * input.Color;
 }
 
+RasterizerState bla
+{
+	FillMode = Wireframe;
+};
+
 technique11 basic
 {
     pass p0
     {
+		SetRasterizerState(bla);
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( CompileShader( gs_5_0, GS_Main() ) );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
