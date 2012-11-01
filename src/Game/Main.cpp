@@ -17,11 +17,11 @@ using namespace TikiEngine::Description;
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
 	//TODO: 141 = KA; 23977 = font; 712/713 = Spritebatch
-	//_CrtSetBreakAlloc(282190);
+	//_CrtSetBreakAlloc(282494);
 
 	{
 		EngineDescription desc;
-
+		
 		desc.hInst = hInst;
 		desc.Window.Width = 1100;
 		desc.Window.Height = 750;
@@ -39,11 +39,11 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			wstring name = username;
 
-			if (name == L"tim.boden" && false)
+			if (name == L"tim.boden" && true)
 			{
-				scene = new SceneTim(engine);
-				//scene = new SceneLevel(engine);
-				//((SceneLevel*)scene)->LoadLevel(1);
+				//scene = new SceneTim(engine);
+				scene = new SceneLevel(engine);
+				((SceneLevel*)scene)->LoadLevel(1);
 			}
 			else
 			{

@@ -35,7 +35,6 @@ namespace TikiEngine
 				material->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_diff");
 				material->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_normal");
 				material->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_spec");
-				TikiObject::WatchPointer.Add(material->GetShader());
 				
 				switch (type)
 				{

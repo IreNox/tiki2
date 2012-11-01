@@ -58,7 +58,7 @@ namespace TikiEngine
 			this->CopyIndexData();
 			this->CopyVertexData();
 
-			int bla = this->rootBone->Count();
+			//int bla = this->rootBone->Count();
 
 		}
 

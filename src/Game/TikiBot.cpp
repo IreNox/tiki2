@@ -63,12 +63,11 @@ namespace TikiEngine
 
 		TikiBot::~TikiBot()
 		{
-
-			SafeDelete(&brain);
-
 			SafeRelease(&controller);
 			
+			SafeDelete(&brain);
 			SafeDelete(&steering);
+			SafeDelete(&pathPlanner);
 		}
 
 		bool TikiBot::IsAtPosition(Vector2 pos)

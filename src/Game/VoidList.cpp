@@ -24,6 +24,8 @@ namespace TikiEngine
 			{
 				ListNode* del = node;
 				node = node->Next;
+
+				free(del->Data);
 				free(del);
 			}
 		}
