@@ -32,12 +32,17 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 {
 	PS_OUTPUT output = PS_Main(input);
 	
-	output.Depth = float4(0, 1, 1, 1);
-	output.Normal = float4(0, 1, 0, 1);
-	output.Screen = float4(1, 0, 1, 1); //input.Color;
+	output.Screen = input.Color;
 
 	return output;
 }
 
-
-#include "Data/Effects/IncOS/is_technique.fx"
+technique11 basic
+{
+    pass p0
+    {
+        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		SetGeometryShader( NULL );
+        SetPixelShader( CompileShader( ps_5_0, PS_Main_Cloddy() ) );
+    }
+}
