@@ -787,8 +787,7 @@ namespace TikiEngine
 			this->rtDepth->CreateScreenSize();
 			this->rtDepth->AddRef();
 
-			IShader* shader = new Shader(engine);
-			shader->LoadFromFile(L"Data/Effects/pp_default.fx");
+			IShader* shader = engine->content->LoadShader(L"pp_default");
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
 			pass->AddInput("rtScreen", rtScreen);

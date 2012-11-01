@@ -55,13 +55,13 @@ namespace TikiEngine
 
 			this->AddElement(go);
 
-			go = new GameObject(engine);
-			Material* mat = engine->content->LoadMaterial(L"os_cloddy");
-			ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			terrain->LoadTerrain("Data/Cloddy/Datasets/pitch.E16C24.rect.dat", 8192, 512);
-			terrain->SetMaterial(mat);
+			//go = new GameObject(engine);
+			//Material* mat = engine->content->LoadMaterial(L"os_cloddy");
+			//ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
+			//terrain->LoadTerrain("Data/Cloddy/Datasets/pitch.E16C24.rect.dat", 8192, 512);
+			//terrain->SetMaterial(mat);
 
-			this->AddElement(go);
+			//this->AddElement(go);
 
 			//// Model
 			//go = new GameObject(engine);
@@ -172,20 +172,20 @@ namespace TikiEngine
 			s << "Particle: " << behavior->GParticleUsed();
 			engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetDepthTarget(),
-			//	Rectangle(10, 10, 200, 180)
-			//);
+			engine->sprites->Draw(
+				engine->graphics->GetDepthTarget(),
+				Rectangle(10, 10, 200, 180)
+			);
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetNormalTarget(),
-			//	Rectangle(10, 200, 200, 180)
-			//);
+			engine->sprites->Draw(
+				engine->graphics->GetNormalTarget(),
+				Rectangle(10, 200, 200, 180)
+			);
 
-			//engine->sprites->Draw(
-			//	ssao->GetAO(),
-			//	Rectangle(10, 390, 200, 180)
-			//);
+			engine->sprites->Draw(
+				engine->graphics->GetScreenTarget(),
+				Rectangle(10, 390, 200, 180)
+			);
 
 			#if _DEBUG
 			//engine->physics->DrawDebug();
@@ -201,6 +201,7 @@ namespace TikiEngine
 			);*/
 		}
 
+		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{
 			//// light settings test
@@ -252,5 +253,6 @@ namespace TikiEngine
 
 			Scene::Update(args);
 		}
+		#pragma endregion
 	}
 }

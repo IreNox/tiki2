@@ -47,7 +47,6 @@ PS_INPUT VS_Main(VS_INPUT input)
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
 	float4 color = tex.Sample(sam, input.UV.xy);
-	//color *= color.a;
 
 	return color;
 }
