@@ -45,6 +45,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 				scene = new SceneLevel(engine);
 				((SceneLevel*)scene)->LoadLevel(1);
 			}
+			else if(name == L"adrian.lück")
+			{
+				scene = new SceneAdrian(engine);
+			}
 			else
 			{
 				scene = new SceneMenuMain(engine);
