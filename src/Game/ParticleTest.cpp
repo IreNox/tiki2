@@ -9,9 +9,9 @@ namespace TikiEngine
 			: ParticleEffect(engine)
 		{
 			this->SParticleBudget(1000000);
-			lifeTime = 1;
-			triggerCount = 10;
-			triggerTime = 0.1f;
+			lifeTime = 10;
+			triggerCount = 1;
+			triggerTime = 0.5f;
 		}
 
 		ParticleTest::~ParticleTest()
@@ -25,9 +25,9 @@ namespace TikiEngine
 			particle->Rotation = 0;
 			particle->Size = Vector2::One / 10;
 			particle->Velocity = Vector3(
-				Random(-2, 2),
-				Random(-2, 2),
-				Random(-2, 2)
+				Random(-0.2, 0.2),
+				Random(-0.2, 0.2),
+				Random(-0.2, 0.2)
 			);
 		}
 

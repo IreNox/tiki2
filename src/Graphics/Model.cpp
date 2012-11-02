@@ -57,9 +57,6 @@ namespace TikiEngine
 
 			this->CopyIndexData();
 			this->CopyVertexData();
-
-			int bla = this->rootBone->Count();
-
 		}
 
 		#pragma region Animation
