@@ -26,6 +26,13 @@ namespace TikiEngine
 		{
 			name = node->GetName();
 
+			if(this->parent != 0)
+			{
+				this->boneInitTransform =  parent->BoneInitTransform();
+			}
+			this->boneInitTransform = this->boneCurrentTransform = this->boneInitTransform * this->node->EvaluateLocalTransform();
+			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
+
 			for(int i = 0; i < node->GetChildCount(); i++)
 			{
 				TikiBone* tmp = new TikiBone(node->GetChild(i));
@@ -33,28 +40,35 @@ namespace TikiEngine
 				tmp->Initialize();
 				childs.Add(tmp);
 			}
-
-			if(this->parent != 0)
-			{
-				this->boneInitTransform =  parent->BoneInitTransform();
-			}
-			this->boneInitTransform = this->boneCurrentTransform = this->boneInitTransform * this->node->EvaluateLocalTransform();
-			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
 		}
 
 		void TikiBone::Update(FbxTime& time)
 		{
-			if(this->parent != 0)
+			if(this->parent == 0)
 			{
-				this->boneCurrentTransform = parent->BoneCurrentTransform();
+				this->boneCurrentTransform = node->EvaluateLocalTransform(time);
 			}
-			this->boneCurrentTransform *= this->node->EvaluateLocalTransform(time);
+			else
+			{
+				this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(time);
+			}
+
+			for(int i = 0; i < childs.Count();i++)
+			{
+				childs[i]->Update(time);
+			}
+
+			if(boneCurrentTransform != node->EvaluateGlobalTransform(time))
+			{
+				int tzzzz = 1;
+			}
 		}
 
 		TikiBone* TikiBone::GetParent()
 		{
 			return this->parent;
 		}
+
 		void TikiBone::SetParent(TikiBone* parent)
 		{
 			this->parent = parent;
@@ -62,6 +76,8 @@ namespace TikiEngine
 
 		FbxAMatrix& TikiBone::BoneInitTransform()
 		{
+
+
 			return boneInitTransform;
 		}
 
@@ -72,7 +88,7 @@ namespace TikiEngine
 
 		FbxAMatrix TikiBone::ShiftMatrix()
 		{
-			return this->boneInitTransformInverse * this->boneCurrentTransform;
+			return this->boneCurrentTransform * this->boneInitTransformInverse;
 		}
 
 		int TikiBone::Count()
@@ -83,6 +99,24 @@ namespace TikiEngine
 				count += childs[i]->Count();
 			}
 			return count;
+		}
+
+		TikiBone* TikiBone::GetBoneByName(const char* name)
+		{
+			if(this->name == name)
+				return this;
+			for(int i = 0; i < childs.Count();i++)
+			{
+				TikiBone* tmp = childs[i]->GetBoneByName(name);
+				if(tmp != 0)
+					return tmp;
+			}
+			return 0;
+		}
+
+		const char* TikiBone::Name()
+		{
+			return name;
 		}
 	}
 }

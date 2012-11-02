@@ -57,6 +57,9 @@ namespace TikiEngine
 
 			this->CopyIndexData();
 			this->CopyVertexData();
+
+			meshes[0]->InitializeBones(*rootBone);
+
 		}
 
 		#pragma region Animation
@@ -176,24 +179,6 @@ namespace TikiEngine
 			indexBuffer->Apply();
 			vertexBuffer->Apply();
 
-			//UINT offset = 0;
-			//UINT stride = declaration->GetElementSize();
-
-			//ID3D11Buffer* buffer = this->vertexBuffer->GetBuffer();
-			////DllMain::Context->IASetVertexBuffers(
-			////	0,
-			////	1,
-			////	&buffer,
-			////	&stride,
-			////	&offset
-			////);
-
-			////DllMain::Context->IASetIndexBuffer(
-			////	this->indexBuffer->GetBuffer(),
-			////	DXGI_FORMAT_R32_UINT,
-			////	0
-			////);
-
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			declaration->Apply();
 
@@ -216,6 +201,9 @@ namespace TikiEngine
 				timer = startTime;
 			
 			currentTime.SetSecondDouble(timer);
+
+			if(this->rootBone != 0)
+				rootBone->Update(currentTime);
 
 			UInt32 i = 0;
 			while (i < meshes.Count())

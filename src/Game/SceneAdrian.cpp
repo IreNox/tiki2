@@ -44,7 +44,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(engine->content->LoadModel(L"mark"));
+			go->SModel(engine->content->LoadModel(L"soldier_s"));
 			tex = engine->content->LoadTexture(L"checker");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->GetShader()->SetTexture("Tex", tex);

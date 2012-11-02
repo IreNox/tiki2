@@ -6,6 +6,7 @@
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
 #include "Core/IModel.h"
+#include "Graphics/TikiBone.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -35,6 +36,7 @@ namespace TikiEngine
 
 			bool Initialize();
 			void InitializeGPUSkinning();
+			void InitializeBones(TikiBone& rootBone);
 
 			void Update(FbxTime& time, FbxAnimLayer* animLayer, FbxPose* pose);
 			void UpdateVertexBuffer();
@@ -44,6 +46,8 @@ namespace TikiEngine
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
+
+			List<TikiBone*> bones;
 
 			
 		private:

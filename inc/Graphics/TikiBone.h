@@ -27,7 +27,11 @@ namespace TikiEngine
 			FbxAMatrix& BoneCurrentTransform();
 			FbxAMatrix ShiftMatrix();
 
+			TikiBone* GetBoneByName(const char* name);
+
 			int Count();
+
+			const char* Name();
 
 		private:
 			FbxNode* node;
