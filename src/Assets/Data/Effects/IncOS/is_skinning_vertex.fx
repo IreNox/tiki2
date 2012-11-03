@@ -19,15 +19,13 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 	float4 pos = mul(float4(input.Pos,1.0f), transform);
 
-	//output.Pos = float4(input.Pos, 1.0f);
-
 	if(weight != 0)
 	{
-		output.Pos = mul(pos, fuckYouAsshole);
+		output.Pos = mul(pos, WorldM);
 	}
 	else
 	{
-		output.Pos = mul(float4(input.Pos,1.0f), fuckYouAsshole);
+		output.Pos = mul(float4(input.Pos,1.0f), WorldM);
 	}
     
 	output.WorldPos = output.Pos.xyz;

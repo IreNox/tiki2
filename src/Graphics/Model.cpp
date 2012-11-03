@@ -197,8 +197,8 @@ namespace TikiEngine
 
 			timer += args.Time.ElapsedTime;
 
-			if(timer > stopTime)
-				timer = startTime;
+			if(timer >= stopTime)
+				timer -= stopTime - startTime;
 			
 			currentTime.SetSecondDouble(timer);
 

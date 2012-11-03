@@ -16,7 +16,7 @@ namespace TikiEngine
 
 		TikiBone::~TikiBone()
 		{
-			for(int i = 0; i < childs.Count(); i++)
+			for(UInt32 i = 0; i < childs.Count(); i++)
 			{
 				SafeRelease(&childs[i]);
 			}
@@ -53,14 +53,9 @@ namespace TikiEngine
 				this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(time);
 			}
 
-			for(int i = 0; i < childs.Count();i++)
+			for(UInt32 i = 0; i < childs.Count();i++)
 			{
 				childs[i]->Update(time);
-			}
-
-			if(boneCurrentTransform != node->EvaluateGlobalTransform(time))
-			{
-				int tzzzz = 1;
 			}
 		}
 
@@ -94,7 +89,7 @@ namespace TikiEngine
 		int TikiBone::Count()
 		{
 			int count = 1;
-			for(int i = 0; i < childs.Count(); i++)
+			for(UInt32 i = 0; i < childs.Count(); i++)
 			{
 				count += childs[i]->Count();
 			}
@@ -105,7 +100,7 @@ namespace TikiEngine
 		{
 			if(this->name == name)
 				return this;
-			for(int i = 0; i < childs.Count();i++)
+			for(UInt32 i = 0; i < childs.Count();i++)
 			{
 				TikiBone* tmp = childs[i]->GetBoneByName(name);
 				if(tmp != 0)
