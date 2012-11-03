@@ -58,7 +58,7 @@ namespace TikiEngine
 
 			void Unmap()
 			{
-				DllMain::Context->Unmap(buffer, 0);
+				if (buffer) DllMain::Context->Unmap(buffer, 0);
 			}
 
 			ID3D11Buffer* GetBuffer()

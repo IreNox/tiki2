@@ -7,8 +7,9 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ParticleEffect::ParticleEffect(Engine* engine)
-			: EngineObject(engine), isAlive(true), worldPosition(false), lifeTime(1), triggerTime(0.1f),
-			  particleBudget(1000), particleUsed(0), triggerCount(100)
+			: EngineObject(engine), isAlive(true), worldPosition(false), lifeTime(1), releasePerSecound(10.0),
+			  particleBudget(1000), particleUsed(0), renderType(PRT_PointList), deltaTime(0), totalTime(0),
+			  multiplayReleaseCount(false)
 		{
 			particles = new Particle[particleBudget];
 		}
@@ -28,6 +29,16 @@ namespace TikiEngine
 		const Particle* ParticleEffect::GParticles() const
 		{
 			return particles;
+		}
+
+		ParticleRenderType ParticleEffect::GRenderType()
+		{
+			return renderType;
+		}
+
+		void ParticleEffect::SRenderType(ParticleRenderType type)
+		{
+			renderType = type;
 		}
 
 		bool ParticleEffect::GIsAlive()
@@ -60,24 +71,14 @@ namespace TikiEngine
 			lifeTime = time;
 		}
 
-		double ParticleEffect::GTriggerTime()
+		double ParticleEffect::GReleasePerSecound()
 		{
-			return triggerTime;
+			return releasePerSecound;
 		}
 
-		void ParticleEffect::STriggerTime(double time)
+		void ParticleEffect::SReleasePerSecound(double count)
 		{
-			triggerTime = time;
-		}
-
-		UInt32 ParticleEffect::GTriggerCount()
-		{
-			return triggerCount;
-		}
-
-		void ParticleEffect::STriggerCount(UInt32 count)
-		{
-			triggerCount = count;
+			releasePerSecound = count;
 		}
 
 		UInt32 ParticleEffect::GParticleBudget()
@@ -97,24 +98,41 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member - Trigger
+		void ParticleEffect::Trigger(UInt32 count)
+		{
+			if (multiplayReleaseCount) count *= renderType + 1;
+
+			UInt32 i = 0;
+			while (i < count && particleUsed < particleBudget)
+			{
+				Particle* particle = &particles[particleUsed++];
+				particle->BirthTime = totalTime;
+
+				this->CreateParticle(particle);
+
+				i++;
+			}
+		}
+		#pragma endregion
+
 		#pragma region Member - Update
 		void ParticleEffect::Update(const UpdateArgs& args)
 		{
-			if (args.Time.TotalTime - lastTrigger >= triggerTime)
+			totalTime = args.Time.TotalTime;
+
+			if (isAlive)
 			{
-				lastTrigger = args.Time.TotalTime;
+				deltaTime -= args.Time.ElapsedTime;
 
-				UInt32 i = 0;
-				while (i < triggerCount && particleUsed < particleBudget)
+				UInt32 count = 0;
+				while (deltaTime < 0)
 				{
-					Particle* particle = &particles[particleUsed];
-					particle->BirthTime = args.Time.TotalTime;
-
-					this->CreateParticle(particle);
-
-					particleUsed++;
-					i++;
+					deltaTime += 1.0f / releasePerSecound;
+					count++;
 				}
+
+				this->Trigger(count);
 			}
 
 			UInt32 i = 0;
@@ -138,6 +156,5 @@ namespace TikiEngine
 			}
 		}
 		#pragma endregion
-
 	}
 }

@@ -50,8 +50,9 @@ namespace TikiEngine
 			behavior = new ParticleTest(engine);
 
 			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
-			effect->SetTexture(engine->content->LoadTexture(L"checker"));
+			effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
 			effect->SetParticleEffect(behavior);
+			//effect->SetRenderType(PRT_LineList);
 
 			this->AddElement(go);
 

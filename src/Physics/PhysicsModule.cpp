@@ -69,7 +69,7 @@ namespace TikiEngine
 
 			// init PhysX SDK
 			NxPhysicsSDKDesc sdkDesc;
-			//sdkDesc.flags &= ~NX_SDKF_NO_HARDWARE; // enables HardWare support
+			sdkDesc.flags &= ~NX_SDKF_NO_HARDWARE; // enables HardWare support
 			NxSDKCreateError errorCode = NXCE_NO_ERROR;
 
 			ErrorStream errorStream;

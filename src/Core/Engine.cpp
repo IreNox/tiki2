@@ -148,8 +148,9 @@ namespace TikiEngine
 			window->Begin();
 
 			QueryPerformanceCounter(&current);
+			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
 			GameTime time = GameTime(
-				(double)(current.QuadPart - last.QuadPart) / freq.QuadPart,				
+				(elapsedTime > 1 ? 1 : elapsedTime),
 				gameTime
 			);
 			gameTime += time.ElapsedTime;

@@ -39,12 +39,12 @@ namespace TikiEngine
 				switch (type)
 				{
 				case 0:
-					this->SModel(engine->content->LoadModel(L"links"));
+					this->SModel(engine->content->LoadModel(L"replaceme_cube"));
 					this->GModel()->SetMaterial(material);
 
 					break;
 				case 1:
-					this->SModel(engine->content->LoadModel(L"Soldier_S"));
+					this->SModel(engine->content->LoadModel(L"mark"));
 					this->GModel()->SetMaterial(material);
 					
 					material->FlipTexcorrdV = false;

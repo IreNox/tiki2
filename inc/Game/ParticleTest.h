@@ -16,6 +16,13 @@ namespace TikiEngine
 			void CreateParticle(Particle* particle);
 			void UpdateParticle(Particle* particle);
 
+			void Update(const UpdateArgs& args);
+
+		private:
+
+			Vector3 offset; 
+			double birthTime;
+
 		};
 	}
 }

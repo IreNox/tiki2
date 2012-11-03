@@ -10,6 +10,13 @@ namespace TikiEngine
 {
 	namespace Particles
 	{
+		enum ParticleRenderType
+		{
+			PRT_PointList = 0,
+			PRT_LineList = 1,
+			PRT_LineStrip = 2
+		};
+
 		class ParticleEffect : public EngineObject
 		{
 		public:
@@ -25,20 +32,18 @@ namespace TikiEngine
 			bool GWorldSpace();
 			void SWorldSpace(bool worldSpace);
 
+			ParticleRenderType GRenderType();
+			void SRenderType(ParticleRenderType type);
+
 			/*! @brief Get the Life Time */
 			double GLifeTime();
 			/*! @brief Set the Life Time */
 			void SLifeTime(double time);
 
-			/*! @brief Get the Trigger Time */
-			double GTriggerTime();
-			/*! @brief Set the Trigger Time */
-			void STriggerTime(double time);
-
-			/*! @brief Get the trigger Quantity */
-			UInt32 GTriggerCount();
-			/*! @brief Set the trigger Quantity */
-			void STriggerCount(UInt32 count);
+			/*! @brief Get the Triggered Particle per Second */
+			double GReleasePerSecound();
+			/*! @brief Set the Triggered Particle per Second */
+			void SReleasePerSecound(double count);
 
 			/*! @brief Get the Particle Budget */
 			UInt32 GParticleBudget();
@@ -48,26 +53,28 @@ namespace TikiEngine
 			UInt32 GParticleUsed();
 			const Particle* GParticles() const;
 
-			void Update(const UpdateArgs& args);
+			void Trigger(UInt32 count);
+			virtual void Update(const UpdateArgs& args);
 
 
 		protected:
 
 			bool isAlive;
 			bool worldPosition;
+			bool multiplayReleaseCount;
 
 			double lifeTime;
-			double triggerTime;
+			double totalTime;
+			double deltaTime;
+			double releasePerSecound;
 
-			UInt32 triggerCount;
+			ParticleRenderType renderType;
 
 			virtual void CreateParticle(Particle* particle) = 0;
 			virtual void UpdateParticle(Particle* particle) = 0;
 
 
 		private:
-
-			double lastTrigger;
 
 			UInt32 particleUsed;
 			UInt32 particleBudget;

@@ -69,8 +69,7 @@ namespace TikiEngine
 
 				this->SetMatrix("fuckYouAsshole", mat);
 
-				//memcpy(&objData->WorldM, &mat, sizeof(Matrix));
-				objData->WorldM = Matrix::Identity;
+				objData->WorldM = mat;
 				objData->WorldMIT = Matrix::Transpose(
 					Matrix::Invert(mat)
 				);

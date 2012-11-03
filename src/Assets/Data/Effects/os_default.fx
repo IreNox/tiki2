@@ -2,7 +2,6 @@
 // TYPEDEFS //
 //////////////
 #include "Data/Effects/IncOS/is_structs.fx"
-#include "Data/Effects/IncOS/is_vertex_default.fx"
 
 /////////////
 // GLOBALS //

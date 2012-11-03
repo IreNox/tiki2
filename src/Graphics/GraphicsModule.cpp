@@ -597,7 +597,7 @@ namespace TikiEngine
 			r = device->CreateRasterizerState(
 				&rasterDesc,
 				&rasterStateBackfaces
-				);
+			);
 
 			if(FAILED(r))
 			{
@@ -638,12 +638,22 @@ namespace TikiEngine
 			D3D11_BLEND_DESC blendStateDesc;
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
-			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+			// GUT!!
+			/*blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
 			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;*/
+
+			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
+			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
 			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;
 

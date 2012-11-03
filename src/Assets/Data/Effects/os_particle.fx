@@ -41,65 +41,9 @@ Texture2D tex;
 // Geometry Shader
 ////////////////////////////////////////////////////////////////////////////////
 
-[maxvertexcount(4)]
-void GS_Main(point GS_INPUT input[1], inout TriangleStream<PS_INPUT> triStream )
-{
-	PS_INPUT output = (PS_INPUT)0;
-	output.Color = input[0].Color;
-
-	matrix view = transpose(ViewM);
-
-	float3 a = view[2];
-	float s = sin(input[0].ScaleRot.z);
-	float c = cos(input[0].ScaleRot.z);
-
-	float xx = a.x * a.x;
-	float yy = a.y * a.y;
-	float zz = a.z * a.z;
-	float xy = a.x * a.y;
-	float xz = a.x * a.z;
-	float yz = a.y * a.z;
-
-	matrix rot = matrix(
-		xx + c * (1 - xx),		xy - c * xy + s * a.z,	xz - c * xz - s * a.y,	0,
-		xy - c * xy - s * a.z,	yy + c * (1 - yy),		yz - c * yz + s * a.x,	0,
-		xz - c * xz + s * a.y,	yz + c * yz - s * a.x,	zz + c * (1 - zz),		0,
-		0,						0,						0,						1
-	);
-
-	float4 right = float4(normalize(view[0].xyz), 0) * input[0].ScaleRot.x;
-	float4 up = float4(normalize(view[1].xyz), 0) * input[0].ScaleRot.y;
-
-	right = mul(right, rot);
-	up = mul(up, rot);
-
-	output.Pos = input[0].Pos + ((-right) + (-up));
-    output.Pos = mul(output.Pos, ViewM);
-    output.Pos = mul(output.Pos, ProjectionM);
-	output.UV = float2(0, 0);
-	triStream.Append(output);
-
-	output.Pos = input[0].Pos + ((-right) + up);
-    output.Pos = mul(output.Pos, ViewM);
-    output.Pos = mul(output.Pos, ProjectionM);
-	output.UV = float2(0, 1);
-	triStream.Append(output);
-
-	output.Pos = input[0].Pos + (right + (-up));
-    output.Pos = mul(output.Pos, ViewM);
-    output.Pos = mul(output.Pos, ProjectionM);
-	output.UV = float2(1, 0);
-	triStream.Append(output);
-
-	output.Pos = input[0].Pos + (right + up);
-    output.Pos = mul(output.Pos, ViewM);
-    output.Pos = mul(output.Pos, ProjectionM);
-	output.UV = float2(1, 1);
-	triStream.Append(output);
-
-	triStream.RestartStrip();
-}
-
+#include "Data/Effects/IncOS/is_particle_gs_point.fx"
+#include "Data/Effects/IncOS/is_particle_gs_linelist.fx"
+//#include "Data/Effects/IncOS/is_particle_gs_linestrip.fx"
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -120,21 +64,37 @@ GS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
+	input.Color.a = 0.5f;
+
 	return tex.Sample(sam, input.UV) * input.Color;
 }
 
-RasterizerState bla
+RasterizerState NoCulling
 {
-	FillMode = Wireframe;
+	CullMode = NONE;
 };
 
-technique11 basic
+technique11 Particle
 {
-    pass p0
+    pass Particle_PointList
     {
-		SetRasterizerState(bla);
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-		SetGeometryShader( CompileShader( gs_5_0, GS_Main() ) );
+		SetGeometryShader( CompileShader( gs_5_0, GS_Main_Point() ) );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
     }
+
+    pass Particle_LineList
+    {
+        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		SetGeometryShader( CompileShader( gs_5_0, GS_Main_LineList() ) );
+        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+		SetRasterizerState(NoCulling);
+    }
+
+  //  pass Particle_LineStrip
+  //  {
+  //      SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		//SetGeometryShader( CompileShader( gs_5_0, GS_Main_Point() ) );
+  //      SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+  //  }
 }

@@ -64,6 +64,13 @@ namespace TikiEngine
 		{
 			SafeRelease(&this->behavior);
 			SafeAddRef(behavior, &this->behavior);
+
+			if (behavior != 0)
+			{
+				shader->SelectSubByIndex(
+					behavior->GRenderType()
+				);
+			}
 		}
 		#pragma endregion
 
@@ -79,7 +86,19 @@ namespace TikiEngine
 			UInt32 offset = 0;
 			ID3D11Buffer* buffer = vertexBuffer->GetBuffer();
 
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+			switch (behavior->GRenderType())
+			{
+			case PRT_PointList:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+				break;
+			case PRT_LineList:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+				break;
+			case PRT_LineStrip:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+				break;
+			}
+
 			DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
 
 			shader->Apply();

@@ -134,19 +134,6 @@ namespace TikiEngine
 				velocity = velocity * BrakingRate;
 			}
 
-			if (velocity != Vector2::Zero)
-			{
-				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
-					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
-				);
-
-				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
-			}
-			else
-			{
-				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(0);
-			}
-
 			//calculate the acceleration
 			Vector2 accel = force / (float)mass;
 
@@ -167,7 +154,19 @@ namespace TikiEngine
 			{    
 				heading = Vector2::Normalize(velocity);
 				side = heading.Cross();
+
+				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
+					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
+				);
+
+				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
 			}
+			else
+			{
+				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(0);
+			}
+
+			//velocity[bufferState.UpdateIndex] = new value;
 
 			// Update the current cell if collider moved and the path is not active
 			//if (!pathActive)

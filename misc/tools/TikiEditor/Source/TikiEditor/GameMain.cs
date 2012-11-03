@@ -63,8 +63,8 @@ namespace TikiEditor
             GI.Init(this);
 
             formStartUp startForm = new formStartUp();
-            //startForm.ShowDialog();
-            GI.ModeGUI = new ModeGUI(this);
+            startForm.ShowDialog();
+            //GI.ModeGUI = new ModeGUI(this);
 
             if (GI.ModeLevel != null)
             {

@@ -25,6 +25,9 @@ namespace TikiEngine
 			ITexture* GetTexture();
 			void SetTexture(ITexture* texture);
 
+			ParticleRenderType GRenderType();
+			void SRenderType(ParticleRenderType type);
+
 			ParticleEffect* GetParticleEffect();
 			void SetParticleEffect(ParticleEffect* behavior);
 
