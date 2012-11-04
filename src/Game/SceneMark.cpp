@@ -314,7 +314,7 @@ namespace TikiEngine
 
                     for(int i = 0; i < 10; i++)
                     {
-                        Vector3 center = impact + Vector3(0, i, 0);
+                        Vector3 center = impact + Vector3(0, (float)i, 0);
                         GameObject* go = new GameObject(engine);
                         dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
                         dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	

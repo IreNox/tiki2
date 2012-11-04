@@ -32,7 +32,7 @@ namespace TikiEngine
 			ostringstream sql;
 			sql << "SELECT * FROM \"tiki_gui\" WHERE \"Control\" = '" << control << "';";
 
-			int r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
+			int r = sqlite3_prepare(db, sql.str().c_str(), (int)sql.str().size(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{
