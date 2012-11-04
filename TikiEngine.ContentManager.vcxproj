@@ -19,13 +19,13 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\inc\ContentManager\ContentManagerModule.h" />
-    <ClInclude Include="..\..\inc\ContentManager\DllMain.h" />
-    <ClInclude Include="..\..\inc\ContentManager\ResourceInfo.h" />
+    <ClInclude Include="inc\ContentManager\ContentManagerModule.h" />
+    <ClInclude Include="inc\ContentManager\DllMain.h" />
+    <ClInclude Include="inc\ContentManager\ResourceInfo.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\ContentManager\ContentManagerModule.cpp" />
-    <ClCompile Include="..\..\src\ContentManager\DllMain.cpp" />
+    <ClCompile Include="src\ContentManager\ContentManagerModule.cpp" />
+    <ClCompile Include="src\ContentManager\DllMain.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{60826F76-797B-476A-A4A0-237278730964}</ProjectGuid>
@@ -64,27 +64,27 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\props\Output_dd_bin.props" />
-    <Import Project="..\..\props\TikiEngine.props" />
-    <Import Project="..\..\props\TikiEngine_Debug.props" />
+    <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\TikiEngine_Debug.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\props\Output_dd_bin.props" />
-    <Import Project="..\..\props\TikiEngine.props" />
-    <Import Project="..\..\props\TikiEngine_Debug.props" />
-    <Import Project="..\..\props\TikiEngine_X64.props" />
+    <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\TikiEngine_Debug.props" />
+    <Import Project="props\TikiEngine_X64.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\props\Output_dd_bin.props" />
-    <Import Project="..\..\props\TikiEngine.props" />
+    <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-    <Import Project="..\..\props\Output_dd_bin.props" />
-    <Import Project="..\..\props\TikiEngine.props" />
-    <Import Project="..\..\props\TikiEngine_X64.props" />
+    <Import Project="props\Output_dd_bin.props" />
+    <Import Project="props\TikiEngine.props" />
+    <Import Project="props\TikiEngine_X64.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
