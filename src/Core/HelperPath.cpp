@@ -31,14 +31,14 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - WorkingPath
-	wstring HelperPath::GetWorkingPath()
+	wstring HelperPath::GetWorkingPath() const
 	{
 		return workingPath;
 	}
 	#pragma endregion
 
 	#pragma region Member - Compine
-	wstring HelperPath::Combine(wstring path1, wstring path2)
+	wstring HelperPath::Combine(wstring path1, wstring path2) const
 	{
 		wchar_t i1 = path1[path1.size() - 1];
 		wchar_t i2 = path2[0];
@@ -58,7 +58,7 @@ namespace TikiEngine
 		return fullPath;
 	}
 
-	wstring HelperPath::CombineWorkingPath(wstring path)
+	wstring HelperPath::CombineWorkingPath(wstring path) const
 	{
 		wchar_t i2 = path[0];
 		int rightV = (i2 == '/' || i2 == '\\' ? 1 : 0);
@@ -70,7 +70,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Part
-	wstring HelperPath::GetFilename(wstring fullPath)
+	wstring HelperPath::GetFilename(wstring fullPath) const
 	{
 		PInt i1 = fullPath.find_last_of(L'\\');
 		PInt i2 = fullPath.find_last_of(L'/');
@@ -79,7 +79,7 @@ namespace TikiEngine
 		return fullPath.substr(index, fullPath.size() - index);
 	}
 
-	wstring HelperPath::GetDirectoryName(wstring fullPath)
+	wstring HelperPath::GetDirectoryName(wstring fullPath) const
 	{
 		checkSlashes(fullPath);
 
@@ -92,7 +92,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Resource
-	wstring HelperPath::GetResourcePath(PInt typeHash, wstring fileName)
+	wstring HelperPath::GetResourcePath(PInt typeHash, wstring fileName) const
 	{
 		wstring typeExt = L"";
 		wstring typeName = L"";
@@ -130,7 +130,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Private Member
-	void HelperPath::checkPath(wstring path)
+	void HelperPath::checkPath(wstring path) const
 	{
 		if (GetFileAttributes(path.c_str()) == INVALID_FILE_ATTRIBUTES)
 		{
@@ -138,7 +138,7 @@ namespace TikiEngine
 		}
 	}
 
-	void HelperPath::checkSlashes(wstring& path)
+	void HelperPath::checkSlashes(wstring& path) const
 	{
 		UInt32 i = 0;
 		while (i < path.length())

@@ -69,9 +69,10 @@
     <ClCompile Include="src\Core\Vector2.cpp" />
     <ClCompile Include="src\Core\Vector3.cpp" />
     <ClCompile Include="src\Core\Vector4.cpp" />
-    <ClCompile Include="src\Core\Window.cpp" />
+    <ClCompile Include="src\Core\WindowModule.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Core\BufferState.h" />
     <ClInclude Include="inc\Core\CBMatrices.h" />
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventControls.h" />
@@ -182,7 +183,7 @@
     <ClInclude Include="inc\Core\Vector3.h" />
     <ClInclude Include="inc\Core\Vector4.h" />
     <ClInclude Include="inc\Core\ViewPort.h" />
-    <ClInclude Include="inc\Core\Window.h" />
+    <ClInclude Include="inc\Core\WindowModule.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
     <ClCompile Include="src\Core\HelperPath.cpp" />
   </ItemGroup>

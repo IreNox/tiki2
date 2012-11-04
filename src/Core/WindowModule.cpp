@@ -1,5 +1,5 @@
 // Main.cpp
-#include "Core/Window.h"
+#include "Core/WindowModule.h"
 
 #include "Core/IGraphics.h"
 
@@ -9,27 +9,27 @@ namespace TikiEngine
 	namespace Modules
 	{
 		#pragma region Class
-		bool Window::resetScreen = false;
+		bool WindowModule::resetScreen = false;
 
-		Window::Window(Engine* engine)
+		WindowModule::WindowModule(Engine* engine)
 			: IModule(engine), hWnd(0), hInst(0)
 		{
 			ZeroMemory(&msg, sizeof(MSG));
 		}
 
-		Window::~Window(void)
+		WindowModule::~WindowModule(void)
 		{
 		}
 		#pragma endregion
 
 		#pragma region Member - Init
-		bool Window::Initialize(EngineDescription& desc)
+		bool WindowModule::Initialize(EngineDescription& desc)
 		{
 			this->hInst = desc.hInst;
 
 			WNDCLASSEX win = WNDCLASSEX();
 			win.hInstance		= hInst;
-			win.lpfnWndProc		= &Window::WndProc;
+			win.lpfnWndProc		= &WindowModule::WndProc;
 			win.lpszClassName	= desc.Window.WindowClass;
 			win.cbSize			= sizeof(WNDCLASSEX);
 			win.hbrBackground	= (HBRUSH)COLOR_WINDOWFRAME;
@@ -79,17 +79,17 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		HWND Window::GetHWND()
+		HWND WindowModule::GetHWND()
 		{
 			return this->hWnd;
 		}
 
-		bool Window::GetReady()
+		bool WindowModule::GetReady()
 		{
 			return (hWnd != 0) && (hInst != 0) && (msg.message != WM_QUIT);
 		}
 
-		void Window::Dispose()
+		void WindowModule::Dispose()
 		{
 			if (hWnd != 0)
 			{
@@ -100,7 +100,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Show
-		__inline void Window::Begin()
+		__inline void WindowModule::Begin()
 		{
 			if (resetScreen)
 			{
@@ -126,13 +126,13 @@ namespace TikiEngine
 			}
 		}
 
-		__inline void Window::End()
+		__inline void WindowModule::End()
 		{
 		}
 		#pragma endregion
 
 		#pragma region Member - Static - WndProc
-		LRESULT CALLBACK Window::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+		LRESULT CALLBACK WindowModule::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		{
 			switch (message)
 			{

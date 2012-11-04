@@ -9,11 +9,11 @@ namespace TikiEngine
 	{
 		using TikiEngine::Description::EngineDescription;
 
-		class Window : public IModule
+		class WindowModule : public IModule
 		{
 		public:
-			Window(Engine* engine);
-			~Window(void);
+			WindowModule(Engine* engine);
+			~WindowModule(void);
 
 			bool Initialize(EngineDescription& desc);
 

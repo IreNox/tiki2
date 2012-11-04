@@ -1,7 +1,7 @@
 
 #include "Core/Engine.h"
 
-#include "Core/Window.h"
+#include "Core/WindowModule.h"
 #include "Core/LibraryManager.h"
 
 #include "Core/Scene.h"
@@ -24,7 +24,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Engine::Engine()
-		: scene(0), loadedModules(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
+		: scene(0), loadedModules(), state(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
 	{
 		srand((UInt32)time(0));
 	}
@@ -46,7 +46,7 @@ namespace TikiEngine
 	{
 		this->desc = desc;
 
-		window = new Window(this);		
+		window = new WindowModule(this);
 		if (!initModule(window))
 		{
 			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
@@ -149,12 +149,13 @@ namespace TikiEngine
 
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
+			gameTime += elapsedTime;
 			GameTime time = GameTime(
 				(elapsedTime > 1 ? 1 : elapsedTime),
 				gameTime
 			);
-			gameTime += time.ElapsedTime;
 			last = current;
+			state.Swap(time);
 
 			UpdateArgs args = UpdateArgs(time);
 			input->Begin();

@@ -4,7 +4,7 @@
 #include "Core/List.h"
 
 #include "Core/HelperPath.h"
-
+#include "Core/BufferState.h"
 #include "Core/EngineDescription.h"
 
 namespace TikiEngine
@@ -18,7 +18,7 @@ namespace TikiEngine
 	{
 		class IModule;
 
-		class Window;
+		class WindowModule;
 		class LibraryManager;
 
 		class IInput;
@@ -43,10 +43,10 @@ namespace TikiEngine
 		ISpriteBatch* sprites;
 		IContentManager* content;
 
-		Window* window;
+		WindowModule* window;
 		LibraryManager* librarys;
 
-		HelperPath HPath;
+		const HelperPath HPath;
 	
 		/*!
 		 * @brief Create new instance of Engine.
@@ -54,12 +54,9 @@ namespace TikiEngine
 		Engine();
 		~Engine();
 
-		/*!
-		 * @brief Initialize the Engine.
-		 *
-		 * @param desc Variable
-		 *
-		 * @return Successful
+		/*! @brief Initialize the Engine.
+		 *  @param desc Description for Engine initialization
+		 *  @return Successful
 		 */
 		bool Initialize(EngineDescription& desc);
 
@@ -76,6 +73,7 @@ namespace TikiEngine
 		/*! @brief Destroy Engine-Object and unload all Modules */
 		void Dispose();
 
+		/*! @brief Get the Description of this Engine instance. */
 		EngineDescription& GetEngineDescription(); 
 
 	protected:
@@ -87,6 +85,7 @@ namespace TikiEngine
 
 		Scene* scene;
 
+		BufferState state;
 		EngineDescription desc;
 
 		List<IModule*> loadedModules;

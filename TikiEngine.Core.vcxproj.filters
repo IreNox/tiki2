@@ -173,9 +173,6 @@
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Window.cpp">
-      <Filter>Quelldateien\Engine\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\LibraryManager.cpp">
       <Filter>Quelldateien\Engine\Modules</Filter>
     </ClCompile>
@@ -287,6 +284,9 @@
     <ClCompile Include="src\Core\ParticleEffect.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\WindowModule.cpp">
+      <Filter>Quelldateien\Engine\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -354,9 +354,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Scene.h">
       <Filter>Headerdateien\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Window.h">
-      <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TypeDef.h">
       <Filter>Headerdateien</Filter>
@@ -624,6 +621,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\Particle.h">
       <Filter>Headerdateien\Core\Graphics\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\BufferState.h">
+      <Filter>Headerdateien\Core\Args/States\Gameloop</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\WindowModule.h">
+      <Filter>Headerdateien\Engine\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
