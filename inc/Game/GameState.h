@@ -28,6 +28,7 @@ namespace TikiEngine
 			#if _DEBUG
 			bool DrawNavMesh;
 			bool DrawRenderTarget;
+			bool DrawPhysX;
 			#endif
 
 			GameState(Engine* engine, SceneLevel* scene);

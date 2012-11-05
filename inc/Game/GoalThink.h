@@ -19,10 +19,9 @@ namespace TikiEngine
 
 
 			#pragma region GoalComposite 
-			void Activate();
-			int Process();
+			void Activate(const UpdateArgs& args);
+			int  Process(const UpdateArgs& args);
 			void Terminate() { }
-
 			void Draw(const DrawArgs& args);
 			#pragma endregion
 
@@ -31,7 +30,8 @@ namespace TikiEngine
 
 			// top/low level goal types
 			void AddGoalWander();
-			void AddGoalSeek(Vector2 pos);
+			void QueueGoalMoveToPosition(Vector3 pos);
+			void AddGoalMoveToPosition(Vector3 pos);
 
 
 		};

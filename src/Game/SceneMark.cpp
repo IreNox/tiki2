@@ -310,7 +310,7 @@ namespace TikiEngine
 						
 					// get the impact point and activate bot movement
 					impact = info.Point;
-					bot->GotoLocation(impact);
+					//bot->GotoLocation(impact);
 
                     for(int i = 0; i < 10; i++)
                     {

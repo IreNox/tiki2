@@ -24,7 +24,6 @@ namespace TikiEngine
 
 			// Navigation
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
-			void GotoLocation(const Vector3& p);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -58,6 +57,7 @@ namespace TikiEngine
 			//returns true if the bot is close to the given position
 			bool IsAtPosition(Vector2 pos);
 
+			PathPlanner* GetPathPlanner() { return pathPlanner; }
 			ICharacterController* GetController() { return controller; }
 			TikiSteering* const GetSteering() { return steering; }
 			GoalThink*	  const GetBrain() { return brain; }

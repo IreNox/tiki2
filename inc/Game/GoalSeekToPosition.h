@@ -14,8 +14,8 @@ namespace TikiEngine
 		public:
 			GoalSeekToPosition(TikiBot* bot, Vector2 target);
 
-			void Activate();
-			int Process();
+			void Activate(const UpdateArgs& args);
+			int Process(const UpdateArgs& args);
 			void Terminate();
 
 			void Draw(const DrawArgs& args);

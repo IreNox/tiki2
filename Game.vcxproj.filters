@@ -233,6 +233,18 @@
     <ClInclude Include="inc\Game\PathPlanner.h">
       <Filter>Headerdateien\AI\Movement</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PathEdge.h">
+      <Filter>Headerdateien\AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalTraverseEdge.h">
+      <Filter>Headerdateien\AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalFollowPath.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalMoveToPosition.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -348,6 +360,15 @@
     </ClCompile>
     <ClCompile Include="src\Game\PathPlanner.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalTraverseEdge.cpp">
+      <Filter>Quelldateien\AI\Goals\Atomic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalFollowPath.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalMoveToPosition.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -35,10 +35,10 @@ namespace TikiEngine
             virtual ~Goal() {}
 
             // logic to run when the goal is activated.
-            virtual void Activate() = 0;
+            virtual void Activate(const UpdateArgs& args) = 0;
 
             // logic to run each update-step
-            virtual int Process() = 0;
+            virtual int Process(const UpdateArgs& args) = 0;
 
             // logic to run when the goal is satisfied. (typically used to switch off any active steering behaviors)
             virtual void Terminate() = 0;
@@ -65,7 +65,7 @@ namespace TikiEngine
 
         protected:
             //if status = inactive this method sets it to active and calls Activate()
-            void ActivateIfInactive();
+            void ActivateIfInactive(const UpdateArgs& args);
 
             // if status is failed this method sets it to inactive so that the goal will be reactivated (+ re-planned) on next update.
             void ReactivateIfFailed();
@@ -90,10 +90,10 @@ namespace TikiEngine
         }
 
         template <class entity_type>
-        void Goal<entity_type>::ActivateIfInactive()
+        void Goal<entity_type>::ActivateIfInactive(const UpdateArgs& args)
         {
             if (IsInactive())
-                Activate();
+                Activate(args);
         }
 
     }

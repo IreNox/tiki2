@@ -15,7 +15,7 @@ namespace TikiEngine
 		}
 
 
-		void GoalSeekToPosition::Activate()
+		void GoalSeekToPosition::Activate(const UpdateArgs& args)
 		{
 			status = Active;
 
@@ -30,10 +30,10 @@ namespace TikiEngine
 			owner->GetSteering()->SeekOn();
 		}
 
-		int GoalSeekToPosition::Process()
+		int GoalSeekToPosition::Process(const UpdateArgs& args)
 		{
 			// if status is inactive, call Activate
-			ActivateIfInactive();
+			ActivateIfInactive(args);
 
 			// TODO: 
 			if (IsStuck())

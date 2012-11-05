@@ -1,7 +1,9 @@
 #include "Game/GoalThink.h"
 
 #include "Game/GoalWander.h"
-#include "Game/GoalSeekToPosition.h"
+//#include "Game/GoalSeekToPosition.h"
+//#include "Game/GoalFollowPath.h"
+#include "Game/GoalMoveToPosition.h"
 #include "Game/GoalTypes.h"
 
 
@@ -25,7 +27,7 @@ namespace TikiEngine
 
 		#pragma region GoalComposite 
 
-		void GoalThink::Activate()
+		void GoalThink::Activate(const UpdateArgs& args)
 		{
 			if (!owner->IsPossessed())
 			{
@@ -36,15 +38,15 @@ namespace TikiEngine
 			status = Active;
 		}
 
-		int GoalThink::Process()
+		int GoalThink::Process(const UpdateArgs& args)
 		{
-			ActivateIfInactive();
+			ActivateIfInactive(args);
 
-			int subgoalStatus = ProcessSubgoals();
+			int subgoalStatus = ProcessSubgoals(args);
 
 			if (subgoalStatus == Completed || subgoalStatus == Failed)
 			{
-				if (owner->IsPossessed())
+				if (!owner->IsPossessed())
 					status = Inactive;
 			}
 
@@ -75,9 +77,15 @@ namespace TikiEngine
 			AddSubgoal(new GoalWander(owner));
 		}
 
-		void GoalThink::AddGoalSeek(Vector2 pos)
+
+		void GoalThink::AddGoalMoveToPosition(Vector3 pos)
 		{
-			AddSubgoal(new GoalSeekToPosition(owner, pos));
+			AddSubgoal( new GoalMoveToPosition(owner, pos));
+		}
+
+		void GoalThink::QueueGoalMoveToPosition(Vector3 pos)
+		{
+			subGoals.push_back(new GoalMoveToPosition(owner, pos));
 		}
 
 

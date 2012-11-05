@@ -102,14 +102,14 @@ float Vector2::LengthSquared() const
 
 float Vector2::Distance(const Vector2& vector1, const Vector2& vector2)
 {
-	float num = vector1.X - vector2.X;
-	float num2 = vector1.Y - vector1.Y;
+	float num =  vector2.X - vector1.X;
+	float num2 = vector2.Y - vector1.Y;
 	return sqrt(num * num + num2 * num2);
 }
 float Vector2::DistanceSquared(const Vector2& vector1, const Vector2& vector2)
 {
-	float num = vector1.X - vector2.X;
-	float num2 = vector1.Y - vector1.Y;
+	float num =  vector2.X - vector1.X;
+	float num2 = vector2.Y - vector1.Y;
 	return num * num + num2 * num2;
 }
 

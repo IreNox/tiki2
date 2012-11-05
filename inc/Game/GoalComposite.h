@@ -21,10 +21,10 @@ namespace TikiEngine
             virtual ~GoalComposite() { RemoveAllSubgoals(); }
             
             // logic to run when the goal is activated.
-            virtual void Activate() = 0;
+            virtual void Activate(const UpdateArgs& args) = 0;
 
             // logic to run each update-step.
-            virtual int Process() = 0;
+            virtual int Process(const UpdateArgs& args) = 0;
 
             // logic to run prior to the goal's destruction
             virtual void Terminate() = 0;
@@ -48,7 +48,7 @@ namespace TikiEngine
         protected:
 			//  this method first removes any completed goals from the front of the
 			//  subgoal list. It then processes the next goal in the list (if there is one)
-            int ProcessSubgoals();
+            int ProcessSubgoals(const UpdateArgs& args);
 
             // passes the message to the front-most subgoal
             bool ForwardMessageToFrontMostSubgoal(const Telegram& msg);
@@ -77,11 +77,11 @@ namespace TikiEngine
 
 
 		template <class entity_type>
-		int GoalComposite<entity_type>::ProcessSubgoals()
+		int GoalComposite<entity_type>::ProcessSubgoals(const UpdateArgs& args)
 		{
 			// remove all completed and failed goals from the front of the subgoal list
 			while(!subGoals.empty() && 
-				  subGoals.front()->IsComplete() || subGoals.front()->HasFailed())
+				  (subGoals.front()->IsComplete() || subGoals.front()->HasFailed()) )
 			{
 				subGoals.front()->Terminate();
 				delete subGoals.front();
@@ -92,7 +92,7 @@ namespace TikiEngine
 			if (!subGoals.empty())
 			{
 				// grab the status of the front-most subgoal
-				int statusOfSubGoals = subGoals.front()->Process();
+				int statusOfSubGoals = subGoals.front()->Process(args);
 
 				// we have to test for the special case where the front-most subgoal reports 'completed'
 				// *and* the subgoal list contains additional goals.When this is the case,

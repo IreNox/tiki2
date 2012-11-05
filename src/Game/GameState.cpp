@@ -8,6 +8,8 @@
 #include "Core/IGraphics.h"
 #include "Core/ISpriteBatch.h"
 
+#include "Game/GoalThink.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -16,7 +18,7 @@ namespace TikiEngine
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
 #if _DEBUG
-			, DrawNavMesh(false), DrawRenderTarget(false)
+			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false)
 #endif
 		{
 			hud = new GameHud(this);
@@ -102,6 +104,8 @@ namespace TikiEngine
 				engine->sprites->Draw(engine->graphics->GetNormalTarget(), Rectangle(10, 200, 200, 180));
 				engine->sprites->Draw(engine->graphics->GetScreenTarget(), Rectangle(10, 400, 200, 180));
 			}
+
+			if (DrawPhysX) engine->physics->DrawDebug();
 			#endif
 		}
 
@@ -113,6 +117,7 @@ namespace TikiEngine
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
+			if (args.Input.GetKeyPressed(KEY_F4)) DrawPhysX = !DrawPhysX;
 			#endif
 
 			if(args.Input.GetMousePressed(MB_Right))
@@ -142,7 +147,18 @@ namespace TikiEngine
 
 						if (bot != 0)
 						{
-							bot->GotoLocation(info.Point);
+							// if the shift key is pressed down at the same time as clicking then the
+							// movement command will be queued
+							if (args.Input.GetKey(KEY_LSHIFT))
+							{
+								bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
+							}
+							else
+							{
+								bot->GetBrain()->RemoveAllSubgoals();
+								bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+							}
+
 						}
 
 						i++;

@@ -13,8 +13,8 @@ namespace TikiEngine
 		public:
 			GoalWander(TikiBot* bot);
 
-			void Activate();
-			int Process();
+			void Activate(const UpdateArgs& args);
+			int Process(const UpdateArgs& args);
 			void Terminate();
 		};
 

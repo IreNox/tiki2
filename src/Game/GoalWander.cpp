@@ -12,16 +12,16 @@ namespace TikiEngine
 
 		}
 
-		void GoalWander::Activate()
+		void GoalWander::Activate(const UpdateArgs& args)
 		{
 			status = Active;
 			owner->GetSteering()->WanderOn();
 		}
 
-		int GoalWander::Process()
+		int GoalWander::Process(const UpdateArgs& args)
 		{
 			// if status is inactive, call Activate()
-			ActivateIfInactive();
+			ActivateIfInactive(args);
 			return status;
 		}
 

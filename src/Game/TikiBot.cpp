@@ -26,7 +26,7 @@ namespace TikiEngine
 			numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
 			hit = false;
 			score = 0;
-			status = alive; //spawning;
+			status = spawning;
 			possessed = false;
 			fieldOfView = DegsToRads(180);
 
@@ -43,7 +43,7 @@ namespace TikiEngine
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
 			controller->SetCenter(Pos3D());
 			controller->SetRadius((float)boundingRadius);
-			controller->SetHeight(1.0f);
+			controller->SetHeight(5.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
 			controller->SetGroup(CG_Collidable_Pushable);
@@ -51,14 +51,11 @@ namespace TikiEngine
 
 			// Create the goal queue
 			brain = new GoalThink(this);
-			//brain->RemoveAllSubgoals();
-			// we must always have a goal in our brain
-			brain->AddGoalWander();
-			//brain->AddGoalSeek(Vector2(50, 50));
-
 
 			// Navigation
             pathPlanner = new PathPlanner(this);
+
+			
 		}
 
 		TikiBot::~TikiBot()
@@ -72,23 +69,12 @@ namespace TikiEngine
 
 		bool TikiBot::IsAtPosition(Vector2 pos)
 		{
-			const static float tolerance = 2.0f;
-			return Vector2::DistanceSquared(Pos(), pos) < tolerance;
+			return ( Vector2::DistanceSquared(Pos(), pos) < 0.1f);
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
 		{
-
             pathPlanner->Create(par);
-		}
-
-
-		void TikiBot::GotoLocation(const Vector3& p)
-		{
-            if (!pathPlanner->RequestPathTo(p))
-            {
-                OutputDebugString(L"No path found, steering toward target. \n");
-            }
 		}
 
 
@@ -101,8 +87,6 @@ namespace TikiEngine
             pathPlanner->Draw(args);
 
 			brain->Draw(args);
-
-
 			#endif
 		}
 
@@ -111,11 +95,7 @@ namespace TikiEngine
 			// process the currently active goal. Note this is required even if the bot
 			// is under user control. This is because a goal is created whenever a user 
 			// clicks on an area of the map that necessitates a path planning request.
-			brain->Process();
-
-			// Update navigation
-			//UpdateNavigation(args);
-            pathPlanner->Update(args);
+			brain->Process(args);
 
 			//Calculate the steering force and update the bot's velocity and position
 			UpdateMovement(args);
@@ -159,23 +139,16 @@ namespace TikiEngine
 					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
 				);
 
-				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
+				if (gameObject->GModel()) 
+					gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
 			}
 			else
 			{
-				if (gameObject->GModel()) gameObject->GModel()->SetAnimationSpeed(0);
+				if (gameObject->GModel()) 
+					gameObject->GModel()->SetAnimationSpeed(0);
 			}
 
 			//velocity[bufferState.UpdateIndex] = new value;
-
-			// Update the current cell if collider moved and the path is not active
-			//if (!pathActive)
-			//{
-			//	NavigationCell* NextCell;
-			//	Vector3 endPos = Pos3D() + Vector3(velocity.X, 0, velocity.Y);
-			//	parent->ResolveMotionOnMesh(Pos3D(), currentCell, endPos, &NextCell);
-			//	currentCell = NextCell;
-			//}
 		}
 
 	}
