@@ -31,11 +31,11 @@ namespace TikiEngine
 				Vector2 t = Vector2(owner->GetPathPlanner()->GetTargetSnap().X,
 									owner->GetPathPlanner()->GetTargetSnap().Z);
 				AddSubgoal(new GoalSeekToPosition(owner, t));
-				OutputDebugString(L"has LOS - Seeking To position. \n");
+				OutputDebugString(L"has Path LOS - Seeking To position. \n");
 			}
 			else
 			{
-				OutputDebugString(L"No LOS - pathfinding To position. \n");
+				OutputDebugString(L"No Path LOS - pathfinding To position. \n");
 				AddSubgoal(new GoalFollowPath(owner, owner->GetPathPlanner()->GetPath(true)));
 			}
 		}

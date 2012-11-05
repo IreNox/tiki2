@@ -8,7 +8,7 @@ namespace TikiEngine
 	namespace Physics
 	{
 		CharacterController::CharacterController(Engine* engine, GameObject* gameObject)
-				: ICharacterController(engine, gameObject)
+				: Collider(), ICharacterController(engine, gameObject)
 		{
 			controller = 0;
 			

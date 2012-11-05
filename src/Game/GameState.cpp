@@ -157,7 +157,16 @@ namespace TikiEngine
 							{
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+
+								if (bot->HasLOSTo(info.Point))
+									OutputDebugString(L"HAS Raycast LOS. \n");
+								else
+									OutputDebugString(L"NO Raycast LOS. \n");
+
 							}
+
+							
+						
 
 						}
 

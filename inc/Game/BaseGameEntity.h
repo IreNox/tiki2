@@ -59,6 +59,8 @@ namespace TikiEngine
 
 			bool GetReady() { return true; }
 
+			GameState* GetGameState() { return gameState; }
+
 		protected:
 
 			GameState* gameState;

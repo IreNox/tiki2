@@ -155,7 +155,6 @@ namespace TikiEngine
 		  NxRaycastHit hit;
 
 		  scene->raycastClosestShape(worldRay, NX_ALL_SHAPES, hit, 0xffffffff, distance);
-      
 		  if (hit.shape)
 		  {
 			hitInfo->Point = hit.worldImpact.get();

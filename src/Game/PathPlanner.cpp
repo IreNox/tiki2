@@ -51,11 +51,13 @@ namespace TikiEngine
             NavigationCell* endCell = parent->FindClosestCell(target);
 
             // don't move if we have a position outisde of navMesh
-            if (!endCell || !endCell->IsPointInCellCollumn(target))
+            if (!endCell)
                 return false;
 
-            // snap the point to the cell
-            targetSnap = parent->SnapPointToCell(endCell, target);
+			// snap the point to the cell
+			targetSnap = target;
+			if (!endCell->IsPointInCellCollumn(target))
+				targetSnap = parent->SnapPointToCell(endCell, target);
 
 
             // find closest cell to the bot position

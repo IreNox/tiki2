@@ -96,6 +96,12 @@
     <Filter Include="Quelldateien\AI\Goals\Composite">
       <UniqueIdentifier>{4ce544bd-46b8-4f09-b2e1-95482ab91e67}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Targeting">
+      <UniqueIdentifier>{802dd064-fbd6-4d01-af9d-b67bd8a005d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Targeting">
+      <UniqueIdentifier>{eb926976-7b70-493d-a6a2-c79ed62f6027}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -245,6 +251,9 @@
     <ClInclude Include="inc\Game\GoalMoveToPosition.h">
       <Filter>Headerdateien\AI\Goals\Composite</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SensorMemory.h">
+      <Filter>Headerdateien\AI\Targeting</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -369,6 +378,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\GoalMoveToPosition.cpp">
       <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SensorMemory.cpp">
+      <Filter>Quelldateien\AI\Targeting</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

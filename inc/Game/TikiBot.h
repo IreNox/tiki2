@@ -7,13 +7,14 @@
 
 #include "Core/ICharacterController.h"
 
+
 namespace TikiEngine
 {
 	namespace AI
 	{
 		class TikiSteering;
 		class GoalThink;
-		//class ICharacterController;
+		class SensorMemory;
 
 		class TikiBot : public MovingEntity
 		{
@@ -57,6 +58,8 @@ namespace TikiEngine
 			//returns true if the bot is close to the given position
 			bool IsAtPosition(Vector2 pos);
 
+			bool HasLOSTo(Vector3 pos);
+
 			PathPlanner* GetPathPlanner() { return pathPlanner; }
 			ICharacterController* GetController() { return controller; }
 			TikiSteering* const GetSteering() { return steering; }
@@ -82,6 +85,9 @@ namespace TikiEngine
 
 			// this object handles the arbitration and processing of high level goals
 			GoalThink* brain;
+
+			// Whenever this bot sees or hears an opponent, a record of the event is updated in the memory.
+			SensorMemory* sensorMem;
 
 			// the bot uses this object to steer
 			TikiSteering* steering;
@@ -119,6 +125,9 @@ namespace TikiEngine
 
 			// set to true when a human player takes over control of the bot
 			bool possessed;
+
+			Vector3 orig;
+			Vector3 dir;
 		};
 
 	}

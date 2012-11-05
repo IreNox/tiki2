@@ -3,8 +3,11 @@
 #include "Core/LibraryManager.h"
 #include "Core/TypeGlobals.h"
 #include "Core/IGraphics.h"
+#include "Core/IPhysics.h"
+#include "Core/Ray.h"
 
 #include "Game/GoalThink.h"
+#include "Game/SensorMemory.h"
 
 namespace TikiEngine
 {
@@ -26,7 +29,7 @@ namespace TikiEngine
 			numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
 			hit = false;
 			score = 0;
-			status = spawning;
+			status = alive; //spawning;
 			possessed = false;
 			fieldOfView = DegsToRads(180);
 
@@ -43,7 +46,7 @@ namespace TikiEngine
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
 			controller->SetCenter(Pos3D());
 			controller->SetRadius((float)boundingRadius);
-			controller->SetHeight(5.0f);
+			controller->SetHeight(3.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
 			controller->SetGroup(CG_Collidable_Pushable);
@@ -55,6 +58,8 @@ namespace TikiEngine
 			// Navigation
             pathPlanner = new PathPlanner(this);
 
+			sensorMem = new SensorMemory(this, 5);
+
 			
 		}
 
@@ -65,11 +70,7 @@ namespace TikiEngine
 			SafeDelete(&brain);
 			SafeDelete(&steering);
 			SafeDelete(&pathPlanner);
-		}
-
-		bool TikiBot::IsAtPosition(Vector2 pos)
-		{
-			return ( Vector2::DistanceSquared(Pos(), pos) < 0.1f);
+			SafeDelete(&sensorMem);
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
@@ -77,6 +78,40 @@ namespace TikiEngine
             pathPlanner->Create(par);
 		}
 
+		bool TikiBot::IsAtPosition(Vector2 pos)
+		{
+			return ( Vector2::DistanceSquared(Pos(), pos) < 0.1f);
+		}
+
+		bool TikiBot::HasLOSTo(Vector3 pos)
+		{
+			bool los = false;
+
+			Ray ray(Vector3::Zero, Vector3::Zero);
+
+			// Move y Up, else we raycast against the bot's own collider.
+			float heightEps = 1.0f;
+			ray.Origin = Pos3D();
+			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+			ray.Direction = pos - ray.Origin;
+
+			orig = ray.Origin;
+			dir = ray.Direction;
+
+			RaycastHit info;
+
+			if (engine->physics->RayCast(ray, &info))
+			{				
+				float eps = 5.0f;
+				// check the intersection points for nearly equal
+				if (info.Point.X >= pos.X - eps && info.Point.X <= pos.X + eps &&
+					info.Point.Y >= pos.Y - eps && info.Point.Y <= pos.Y + eps &&
+					info.Point.Z >= pos.Z - eps && info.Point.Z <= pos.Z + eps)
+					los = true;
+			}
+
+			return los;
+		}
 
 		void TikiBot::Draw(const DrawArgs& args)
 		{
@@ -87,6 +122,9 @@ namespace TikiEngine
             pathPlanner->Draw(args);
 
 			brain->Draw(args);
+
+			// draw raycast Check
+			args.Graphics->DrawLine(orig, orig + dir, Color::Blue);
 			#endif
 		}
 
