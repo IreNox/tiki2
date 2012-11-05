@@ -43,7 +43,7 @@ namespace TikiEngine
 			void IncrementScore() {++score;}
 
 			Vector2 Facing() const {return facing;}
-			double FieldOfView() const {return fieldOfView;}
+			float FieldOfView() const {return fieldOfView;}
 
 			bool IsPossessed() const {return possessed;}
 			bool IsDead() const {return status == dead;}
@@ -111,7 +111,7 @@ namespace TikiEngine
 			Vector2 facing;
 
 			// a bot only perceives other bots within this field of view
-			double fieldOfView;
+			float fieldOfView;
   
 			// to show that a player has been hit it is surrounded by a thick 
 			// red circle for a fraction of a second. This variable represents

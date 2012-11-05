@@ -31,7 +31,7 @@ namespace TikiEngine
 			score = 0;
 			status = alive; //spawning;
 			possessed = false;
-			fieldOfView = DegsToRads(180);
+			fieldOfView = DegsToRads(180.0f);
 
 			// TODO: game types
 			//SetEntityType(type_bot);
@@ -125,6 +125,9 @@ namespace TikiEngine
 
 			// draw raycast Check
 			args.Graphics->DrawLine(orig, orig + dir, Color::Blue);
+
+			// draw recently sensed opponents
+			sensorMem->Draw(args);
 			#endif
 		}
 
@@ -137,6 +140,13 @@ namespace TikiEngine
 
 			//Calculate the steering force and update the bot's velocity and position
 			UpdateMovement(args);
+
+			// if the bot is under AI control but not scripted
+			//if (!IsPossessed())
+			//{
+				sensorMem->UpdateVision(args);
+			//}
+
 		}
 
 
@@ -166,6 +176,7 @@ namespace TikiEngine
 								 -9.81f, 
 								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
+
 
 			//if the vehicle has a non zero velocity the heading and side vectors must be updated
 			if (!velocity.IsZero())

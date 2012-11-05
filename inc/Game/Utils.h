@@ -1,6 +1,7 @@
 #pragma once
 
 #include <random>
+#include <limits>
 #include "Core/Matrix3x3.h"
 #include "Core/TypeDef.h"
 
@@ -9,14 +10,17 @@ const float   Pi        = 3.14159f;
 const float   TwoPi     = Pi * 2;
 const float	  Eps		= 10e-5f;
 
-inline Double DegsToRads(double degrees)
+const float   MaxFloat  = (std::numeric_limits<float>::max)();
+const double  MaxDouble = (std::numeric_limits<double>::max)();
+
+inline float DegsToRads(float degrees)
 {
-  return degrees * 0.0174532925;
+  return degrees * 0.0174532925f;
 }
 
-inline Double RadsToDegs(double radians)
+inline float RadsToDegs(float radians)
 {
-  return radians * 57.2957795;
+  return radians * 57.2957795f;
 }
 
 //returns the maximum of two values
@@ -94,3 +98,11 @@ inline Vector2 PointToWorldSpace(const Vector2 &point,
     return transPoint;
 }
 #pragma endregion
+
+//  returns true if the target position is in the field of view of the entity
+//  positioned at posFirst facing in facingFirst
+inline bool IsSecondInFOVOfFirst(Vector2 posFirst, Vector2 facingFirst, Vector2 posSecond, float fov)
+{
+	Vector2 toTarget = Vector2::Normalize(posSecond - posFirst);
+	return Vector2::Dot(facingFirst, toTarget) >= cosf(fov / 2.0f);
+}

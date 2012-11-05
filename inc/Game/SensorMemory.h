@@ -2,16 +2,16 @@
 
 
 #include <map>
+#include <list>
 #include "Core/Vector3.h"
 #include "Core/UpdateArgs.h"
+#include "Core/DrawArgs.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
-
 		class TikiBot;
-
 
 		// Each time a bot encounters a new opponent, an instance of a MemoryRecord
 		// is created and added to the memory map. Once a record has been made,
@@ -53,7 +53,6 @@ namespace TikiEngine
 
 				WithinFOV = false;
 				Shootable = false;
-
 			}
 
 		};
@@ -67,8 +66,34 @@ namespace TikiEngine
 			// this removes a bot's record from memory
 			void RemoveBotFromMemory(TikiBot* bot);
 
-
+			// this method iterates through all the opponents in the game world and 
+			// updates the records of those that are in the owner's FOV
 			void UpdateVision(const UpdateArgs& args);
+
+			// returns true if the bot given as a parameter can be shot (ie. its not obscured by walls or terrain)
+			bool IsOpponentShootable(TikiBot* opponent) const;
+
+			// returns true if the bot given as a parameter is within FOV
+			bool IsOpponentWithinFOV(TikiBot* opponent) const;
+
+			// returns the last recorded position of the bot
+			Vector3 GetLastRecordedPositionOfOpponent(TikiBot* opponent) const;
+
+			//  returns the amount of time the given bot has been visible
+			double GetTimeOpponentHasBeenVisible(TikiBot* opponent, const GameTime& time) const;
+
+			// returns the amount of time the given opponent has remained out of view
+			// returns a high value if opponent has never been seen or not present
+			double GetTimeOpponentHasBeenOutOfView(TikiBot* opponent, const GameTime& time) const;
+
+			// returns the amount of time the given bot has been visible
+			double GetTimeSinceLastSensed(TikiBot* opponent, const GameTime& time) const;
+
+			// this method returns a list of all the opponents that have had their
+			// records updated within the last memorySpan seconds.
+			std::list<TikiBot*> GetListOfRecentlySensedOpponents(const GameTime& time) const;
+
+			void Draw(const DrawArgs& args);
 
 		private:
 			typedef std::map<TikiBot*, MemoryRecord> MemoryMap;
