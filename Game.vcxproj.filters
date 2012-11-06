@@ -254,6 +254,12 @@
     <ClInclude Include="inc\Game\SensorMemory.h">
       <Filter>Headerdateien\AI\Targeting</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\TargetingSystem.h">
+      <Filter>Headerdateien\AI\Targeting</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Regulator.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -381,6 +387,12 @@
     </ClCompile>
     <ClCompile Include="src\Game\SensorMemory.cpp">
       <Filter>Quelldateien\AI\Targeting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\TargetingSystem.cpp">
+      <Filter>Quelldateien\AI\Targeting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Regulator.cpp">
+      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

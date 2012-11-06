@@ -47,6 +47,15 @@ inline bool ApproxEqual(float x, float v)
 	return ABS(x - v) <= 0.001f ? true : false;
 }
 
+// compares two real numbers. Returns true if they are equal
+inline bool IsEqual(double a, double b)
+{
+	if (fabs(a-b) < 1E-12)
+		return true;
+
+	return false;
+}
+
 inline float LERP(float a, float b, float c)
 {
 	return b + a * (c-b);
@@ -72,6 +81,11 @@ inline int Sign3(Vector3 a)
 
 //returns a random float between zero and 1
 inline float RandFloat() {return ((rand())/(RAND_MAX+1.0f));}
+
+inline double RandInRange(double x, double y)
+{
+	return x + RandFloat() * (y - x);
+}
 
 //returns a random float in the range -1 < n < 1
 inline float RandomClamped() {return RandFloat() - RandFloat();}

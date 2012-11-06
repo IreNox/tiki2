@@ -39,6 +39,9 @@ namespace TikiEngine
 			// a bot starts off facing in the direction it is heading
 			facing = heading;
 
+			// create the navigation module
+			pathPlanner = new PathPlanner(this);
+
 			// Create steering behavior
 			steering = new TikiSteering(this);
 
@@ -52,13 +55,18 @@ namespace TikiEngine
 			controller->SetGroup(CG_Collidable_Pushable);
 			controller->AddRef();
 
+			// create regulators
+			visionUpdateRegulator = new Regulator(4.0);
+			targetSelectionRegulator = new Regulator(2.0);
+
 			// Create the goal queue
 			brain = new GoalThink(this);
 
-			// Navigation
-            pathPlanner = new PathPlanner(this);
 
-			sensorMem = new SensorMemory(this, 5);
+			// create Targeting System
+			targSys = new TargetingSystem(this);
+
+			sensorMem = new SensorMemory(this, 1);
 
 			
 		}
@@ -71,6 +79,10 @@ namespace TikiEngine
 			SafeDelete(&steering);
 			SafeDelete(&pathPlanner);
 			SafeDelete(&sensorMem);
+			SafeDelete(&targSys);
+			SafeDelete(&visionUpdateRegulator);
+			SafeDelete(&targetSelectionRegulator);
+
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
@@ -141,11 +153,16 @@ namespace TikiEngine
 			//Calculate the steering force and update the bot's velocity and position
 			UpdateMovement(args);
 
-			// if the bot is under AI control but not scripted
-			//if (!IsPossessed())
-			//{
+
+			//examine all the opponents in the bots sensory memory and select one to be the current target
+			if (targetSelectionRegulator->IsReady())
+				targSys->Update(args);
+
+			// update the sensory memory with any visual stimulus
+			if (visionUpdateRegulator->IsReady())
 				sensorMem->UpdateVision(args);
-			//}
+		
+			
 
 		}
 

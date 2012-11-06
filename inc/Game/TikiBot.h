@@ -4,6 +4,8 @@
 #include "Game/MovingEntity.h"
 #include "Game/TikiSteering.h"
 #include "Game/PathPlanner.h"
+#include "Game/TargetingSystem.h"
+#include "Game/Regulator.h"
 
 #include "Core/ICharacterController.h"
 
@@ -55,16 +57,19 @@ namespace TikiEngine
 			void SetAlive() {status = alive;}
 			#pragma endregion
 
-			//returns true if the bot is close to the given position
+			// returns true if the bot is close to the given position
 			bool IsAtPosition(Vector2 pos);
 
+			// returns true if the bot has line of sight to the given position.
 			bool HasLOSTo(Vector3 pos);
 
 			PathPlanner* GetPathPlanner() { return pathPlanner; }
 			ICharacterController* GetController() { return controller; }
 			TikiSteering* const GetSteering() { return steering; }
-			GoalThink*	  const GetBrain() { return brain; }
-
+			GoalThink* const GetBrain() { return brain; }
+			TargetingSystem* const GetTargetSys(){ return targSys; }
+			TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
+			SensorMemory* const GetSensorMem() const {return sensorMem; }
 
 		private:
 			// bots shouldn't be copied, only created or respawned
@@ -94,6 +99,15 @@ namespace TikiEngine
             
             // object for planning paths
             PathPlanner* pathPlanner;
+
+			// this is responsible for choosing the bot's current target
+			TargetingSystem* targSys;
+
+			// A regulator object limits the update frequency of a specific AI component
+			// In combination with a distance check, this can be used to create LOD for AI
+			Regulator* visionUpdateRegulator;
+			Regulator* targetSelectionRegulator;
+
 
 			// the bot's health. Every time the bot is shot this value is decreased. If
 			// it reaches zero then the bot dies (and respawns)
