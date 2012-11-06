@@ -1,10 +1,13 @@
 
 #include "Core/Engine.h"
 
+#include "Core/Scene.h"
+
+#include "Core/Mutex.h"
+#include "Core/Thread.h"
+
 #include "Core/WindowModule.h"
 #include "Core/LibraryManager.h"
-
-#include "Core/Scene.h"
 
 #include "Core/IInput.h"
 #include "Core/IPhysics.h"
@@ -19,9 +22,14 @@
 #include <string>
 #include <sstream>
 #include <time.h>
+#include <ppl.h>
+
+int bla = 1;
 
 namespace TikiEngine
 {
+	using namespace Concurrency;
+
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), state(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
@@ -34,18 +42,12 @@ namespace TikiEngine
 	}
 	#pragma endregion
 
-	#pragma region Member
-	EngineDescription& Engine::GetEngineDescription()
-	{
-		return desc;
-	}
-	#pragma endregion
-
 	#pragma region Member - Init
 	bool Engine::Initialize(EngineDescription& desc)
 	{
 		this->desc = desc;
 
+		#pragma region Modules
 		window = new WindowModule(this);
 		if (!initModule(window))
 		{
@@ -101,6 +103,19 @@ namespace TikiEngine
 			MessageBox(window->GetHWND(), L"Can't init Physics.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
+		#pragma endregion
+
+		#pragma region Threading
+		//function<void(void*)> funcDraw = &;
+		//function<void(void*)> funcUpdate = &;
+
+		//threadDraw = new Thread<Engine>(&Engine::Draw);
+		//threadUpdate = new Thread<Engine>(&Engine::Update);
+
+		//csDraw = new Mutex();
+		//csUpdate = new Mutex();
+		//csEngine = new Mutex();
+		#pragma endregion
 
 		return true;
 	}
@@ -110,6 +125,12 @@ namespace TikiEngine
 	void Engine::Dispose()
 	{
 		SafeRelease(&scene);
+
+		//SafeRelease(&threadDraw);
+		//SafeRelease(&threadUpdate);
+		//SafeRelease(&csDraw);
+		//SafeRelease(&csUpdate);
+		//SafeRelease(&csEngine);
 
 		loadedModules.Remove(librarys);
 
@@ -142,55 +163,55 @@ namespace TikiEngine
 			return;
 		}
 		QueryPerformanceCounter(&last);
+				
+		//threadUpdate->Start(this, 0);
+		//threadDraw->Start(this, 0);
+
+		UpdateArgs updateArgs0 = UpdateArgs(state.CurrentTime);
+		UpdateArgs updateArgs1 = UpdateArgs(state.CurrentTime);
+		state.UpdateState[0] = &updateArgs0;
+		state.UpdateState[1] = &updateArgs1;
+
+		auto funcDraw = make_task([=]{ this->Draw(); });
+		auto funcUpdate = make_task([=]{ this->Update(); });
 
 		while (window->GetReady())
 		{
 			window->Begin();
 
+			//Mutex::WaitForMultiple(csDraw, 2);
+			//OutputDebugString(L"Engine\n");
+
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
+			elapsedTime = (elapsedTime > 1 ? 1 : elapsedTime);
 			gameTime += elapsedTime;
-			GameTime time = GameTime(
-				(elapsedTime > 1 ? 1 : elapsedTime),
-				gameTime
-			);
+
+			GameTime time = GameTime(elapsedTime, gameTime);
 			last = current;
+
+			std::wostringstream s;
+			s << "TikiEngine 2.0 - FPS: " << (1.0f / elapsedTime);
+
+			wstring str = s.str();
+			SetWindowText(window->GetHWND(), str.c_str());
+
 			state.Swap(time);
 
-			UpdateArgs args = UpdateArgs(time);
-			input->Begin();
-			input->FillInputState(&args.Input);
-			content->Begin();
-			physics->Begin();
+#ifdef TIKI_MULTITHREADING
 
-			this->Update(args);
+			structured_task_group tg;
+			tg.run(funcUpdate);
+			tg.run_and_wait(funcDraw);
+#else
+			this->Update();
+			this->Draw();
+#endif
 
-			physics->End(args);
-			content->End();
-			input->End();
+			//csEngine->Unlock();
+			//csUpdate->Unlock();
+			//csDraw->Unlock();
 
-			UInt32 i = 0;
-			while (i < scene->GetCameras()->Count())
-			{
-				DrawArgs drawArgs = DrawArgs(
-					time,
-					scene->GetCameras()->Get(i),
-					graphics,
-					sprites,
-					args,
-					scene->GetLighting()
-				);
-				
-				graphics->Begin(drawArgs);
-				sprites->Begin();
-				this->Draw(drawArgs);
-				sprites->End();
-				graphics->End();
-
-				i++;
-			}
-
-			if (args.Input.GetKey(KEY_ESCAPE)) this->Exit();
 			window->End();
 		}
 	}
@@ -221,36 +242,79 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Draw/Update
-	void Engine::Draw(const DrawArgs& args)
+	void Engine::Draw()
 	{
-		if (scene)
-		{
-			scene->Draw(args);
-		}
+		//while (state.Running)
+		//{
+			//OutputDebugString(L"Draw\n");
+
+			UInt32 i = 0;
+			while (i < scene->GetCameras()->Count())
+			{
+				DrawArgs drawArgs = DrawArgs(
+					state.CurrentTime,
+					scene->GetCameras()->Get(i),
+					graphics,
+					sprites,
+					*state.UpdateState[state.DrawIndex],
+					scene->GetLighting()
+				);
+
+				graphics->Begin(drawArgs);
+				sprites->Begin();
+
+				if (scene)
+				{
+					scene->Draw(drawArgs);
+				}
+
+				sprites->End();
+				graphics->End();
+
+				i++;
+			}
+
+			//csDraw->Unlock();
+			//csEngine->Wait();
+		//}
 	}
 
-	void Engine::Update(const UpdateArgs& args)
+	void Engine::Update()
 	{
-		std::wostringstream s;
-		s << "TikiEngine 2.0 - FPS: " << (1.0f / args.Time.ElapsedTime);
+		//while (state.Running)
+		//{
+			//OutputDebugString(L"Update\n");
 
-		wstring str = s.str();
+			// TODO: 
+			//if (args.Input.GetKeyPressed(KEY_F11))
+			//{
+			//	desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
+			//	graphics->Reset();
+			//}
 
-		SetWindowText(
-			window->GetHWND(),
-			str.c_str()
-		);
+			UpdateArgs args = UpdateArgs(state.CurrentTime);
 
-		if (args.Input.GetKeyPressed(KEY_F11))
-		{
-			desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
-			graphics->Reset();
-		}
+			input->Begin();
+			input->FillInputState(&args.Input);
+			content->Begin();
+			physics->Begin();
 
-		if (scene)
-		{
-			scene->Update(args);
-		}
+			if (scene)
+			{
+				scene->Update(args);
+			}
+
+			physics->End(args);
+			content->End();
+			input->End();
+
+			if (args.Input.GetKey(KEY_ESCAPE)) this->Exit();
+
+			*state.UpdateState[state.UpdateIndex] = args;
+
+			//csUpdate->Unlock();
+			//csEngine->Wait();
+		//}
 	}
 	#pragma endregion
 

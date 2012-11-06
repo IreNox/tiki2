@@ -44,7 +44,7 @@ namespace TikiEngine
 			ParticleEffect* behavior;
 
 			VertexDeclaration* decl;
-			DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer[2];
 
 		};
 	}

@@ -37,22 +37,21 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			//SafeRelease(&tex);
-			SafeRelease(&light);
-			SafeRelease(&camera);
+			//SafeRelease(&light);
+			//SafeRelease(&camera);
 
-			SafeRelease(&font);
+			//SafeRelease(&font);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
 			GameObject* go = new GameObject(engine);
-			
+
 			behavior = new ParticleTest(engine);
 
 			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
 			effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
 			effect->SetParticleEffect(behavior);
-			//effect->SetRenderType(PRT_LineList);
 
 			this->AddElement(go);
 
@@ -152,13 +151,14 @@ namespace TikiEngine
 			//sound->LoadFromFile(L"beep");
 			#pragma endregion
 
-			font = engine->librarys->CreateResource<IFont>();
-			font->Create(L"Arial", 14.0f);
-			font->AddRef();
+			//font = engine->librarys->CreateResource<IFont>();
+			//font->Create(L"Arial", 14.0f);
+			//font->AddRef();
 			
 			Scene::Initialize(args);
 		}
 
+		#pragma region Member - Draw
 		void SceneTim::Draw(const DrawArgs& args)
 		{
 			Scene::Draw(args);
@@ -169,9 +169,9 @@ namespace TikiEngine
 			//	 args.Update.Input.MousePositionDisplay.X
 			//);
 
-			wostringstream s;
-			s << "Particle: " << behavior->GParticleUsed();
-			engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
+			//wostringstream s;
+			//s << "Particle: " << behavior->GParticleUsed();
+			//engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
 			engine->sprites->Draw(
 				engine->graphics->GetDepthTarget(),
@@ -201,6 +201,7 @@ namespace TikiEngine
 				1
 			);*/
 		}
+		#pragma endregion
 
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)

@@ -2,6 +2,8 @@
 
 #include "Core/Component.h"
 
+#include "Core/EventScreenSizeChanged.h"
+
 #include "Core/Matrix.h"
 #include "Core/CBMatrices.h"
 
@@ -16,7 +18,7 @@ namespace TikiEngine
 	{
 		using TikiEngine::Resources::IRenderTarget;
 
-		class Camera : public Component
+		class Camera : public Component, public ScreenSizeChangedEventHandler
 		{
 		public:
 
@@ -29,21 +31,24 @@ namespace TikiEngine
 			CBMatrices* GetMatrices();
 			Matrix* GetViewMatrix();
 			Matrix* GetProjectionMatrix();
-			IRenderTarget* GetRenderTarget();
-			Frustum* GetFrustum();
 
-			void SetProjectionMatrix(const Matrix& projection);
+			Frustum* GetFrustum();
+			Ray ScreenPointToRay(const Vector2& screenPos);
+
+			IRenderTarget* GetRenderTarget();
 			void SetRenderTarget(IRenderTarget* renderTarget);
+
+			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
 
 			bool GetReady();
 
-		    Ray ScreenPointToRay(const Vector2& screenPos);
-
 		private:
 
-			CBMatrices matrices;
+			Frustum frustum[2];
+			CBMatrices matrices[2];
+
 			IRenderTarget* renderTarget;
-			Frustum frustum;
+
 		};
 	}
 }

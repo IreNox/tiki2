@@ -117,9 +117,6 @@
     <Filter Include="Headerdateien\Core\Graphics\Enums/Structs">
       <UniqueIdentifier>{5b4d1b20-348c-4344-9be1-d652162d9f65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Input">
-      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Core\Args/States\Gameloop">
       <UniqueIdentifier>{d52b0eef-ff21-4d43-afc0-13a574bc2b05}</UniqueIdentifier>
     </Filter>
@@ -128,6 +125,18 @@
     </Filter>
     <Filter Include="Headerdateien\Core\Graphics\Particle">
       <UniqueIdentifier>{0d96c49b-c6f7-43f7-82f5-910ac38be5cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Math\Vector">
+      <UniqueIdentifier>{b60c5f1c-876a-4389-ae0a-f929aa72a112}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\Math\Matrix">
+      <UniqueIdentifier>{ac25f26b-59b0-4505-872e-0a13d85c38d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Core\System">
+      <UniqueIdentifier>{26c927ee-d8eb-4093-a551-da26e03774fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\System">
+      <UniqueIdentifier>{1ca36b5b-57b9-4baf-88df-a18466a4a583}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +296,18 @@
     <ClCompile Include="src\Core\WindowModule.cpp">
       <Filter>Quelldateien\Engine\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Thread.cpp">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Mutex.cpp">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\SyncBarrier.cpp">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HelperThreading.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -306,24 +327,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\List.h">
       <Filter>Headerdateien\Core\List</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Matrix.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Matrix3x3.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Matrix2x2.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Vector2.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Vector4.h">
-      <Filter>Headerdateien\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Vector3.h">
-      <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Transform.h">
       <Filter>Headerdateien\Core\Math</Filter>
@@ -405,9 +408,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\LibraryManager.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Key.h">
-      <Filter>Headerdateien\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\GameObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
@@ -505,9 +505,6 @@
     <ClInclude Include="inc\Core\TikiObject.h">
       <Filter>Headerdateien\Core</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\TikiPtr.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IModel.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
@@ -598,12 +595,6 @@
     <ClInclude Include="inc\Core\EventScreenSizeChanged.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\EventHandler.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Event.h">
-      <Filter>Headerdateien\Core</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\SkinningVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
@@ -627,6 +618,45 @@
     </ClInclude>
     <ClInclude Include="inc\Core\WindowModule.h">
       <Filter>Headerdateien\Engine\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix.h">
+      <Filter>Headerdateien\Core\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix3x3.h">
+      <Filter>Headerdateien\Core\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Matrix2x2.h">
+      <Filter>Headerdateien\Core\Math\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector2.h">
+      <Filter>Headerdateien\Core\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector4.h">
+      <Filter>Headerdateien\Core\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Vector3.h">
+      <Filter>Headerdateien\Core\Math\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Key.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Event.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\EventHandler.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Thread.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Mutex.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SyncBarrier.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\HelperThreading.h">
+      <Filter>Headerdateien\Engine\Static</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

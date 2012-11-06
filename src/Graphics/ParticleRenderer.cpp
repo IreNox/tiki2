@@ -19,7 +19,8 @@ namespace TikiEngine
 			shader->AddRef();
 
 			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
-			vertexBuffer = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			vertexBuffer[0] = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			vertexBuffer[1] = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 		}
 
 		ParticleRenderer::~ParticleRenderer()
@@ -27,7 +28,8 @@ namespace TikiEngine
 			SafeRelease(&decl);
 			SafeRelease(&shader);
 			SafeRelease(&texture);
-			SafeRelease(&vertexBuffer);
+			SafeRelease(&vertexBuffer[0]);
+			SafeRelease(&vertexBuffer[1]);
 
 			SafeRelease(&behavior);
 		}
@@ -84,7 +86,7 @@ namespace TikiEngine
 
 			UInt32 stride = sizeof(ParticleVertex);
 			UInt32 offset = 0;
-			ID3D11Buffer* buffer = vertexBuffer->GetBuffer();
+			ID3D11Buffer* buffer = vertexBuffer[engine->GetState().DrawIndex]->GetBuffer();
 
 			switch (behavior->GRenderType())
 			{
@@ -120,7 +122,7 @@ namespace TikiEngine
 
 			int count = behavior->GParticleUsed();
 			const Particle* particles = behavior->GParticles();
-			ParticleVertex* vertices = vertexBuffer->Map(count);
+			ParticleVertex* vertices = vertexBuffer[engine->GetState().UpdateIndex]->Map(count);
 
 			int i = 0;
 			while (i < count)
@@ -130,7 +132,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			vertexBuffer->Unmap();
+			vertexBuffer[engine->GetState().UpdateIndex]->Unmap();
 		}
 		#pragma endregion
 	}

@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\HelperThreading.cpp" />
+    <ClCompile Include="src\Core\Mutex.cpp" />
     <ClCompile Include="src\Core\GUIControlRectangles.cpp" />
     <ClCompile Include="src\Core\ParticleEffect.cpp" />
     <ClCompile Include="src\Core\shell.c" />
@@ -56,6 +58,8 @@
     <ClCompile Include="src\Core\Mesh.cpp" />
     <ClCompile Include="src\Core\MeshIndexed.cpp" />
     <ClCompile Include="src\Core\Plane.cpp" />
+    <ClCompile Include="src\Core\SyncBarrier.cpp" />
+    <ClCompile Include="src\Core\Thread.cpp" />
     <ClCompile Include="src\Core\TikiObject.cpp" />
     <ClCompile Include="src\Core\PostProcess.cpp" />
     <ClCompile Include="src\Core\PostProcessPass.cpp" />
@@ -74,6 +78,8 @@
   <ItemGroup>
     <ClInclude Include="inc\Core\BufferState.h" />
     <ClInclude Include="inc\Core\CBMatrices.h" />
+    <ClInclude Include="inc\Core\HelperThreading.h" />
+    <ClInclude Include="inc\Core\Mutex.h" />
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventControls.h" />
     <ClInclude Include="inc\Core\EventHandler.h" />
@@ -131,7 +137,8 @@
     <ClInclude Include="inc\Core\Ray.h" />
     <ClInclude Include="inc\Core\Rectangle.h" />
     <ClInclude Include="inc\Core\RectangleF.h" />
-    <ClInclude Include="inc\Core\TikiPtr.h" />
+    <ClInclude Include="inc\Core\SyncBarrier.h" />
+    <ClInclude Include="inc\Core\Thread.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
     <ClInclude Include="inc\Core\IResource.h" />

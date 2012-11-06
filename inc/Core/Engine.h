@@ -11,6 +11,10 @@ namespace TikiEngine
 {
 	class Scene;
 	
+	class Mutex;
+	template <typename T>
+	class Thread;
+
 	struct DrawArgs;
 	struct UpdateArgs;
 
@@ -73,17 +77,32 @@ namespace TikiEngine
 		/*! @brief Destroy Engine-Object and unload all Modules */
 		void Dispose();
 
+		/*! @brief Get the BufferState for multi threading. */
+		inline BufferState& GetState()
+		{
+			return state;
+		}
+
 		/*! @brief Get the Description of this Engine instance. */
-		EngineDescription& GetEngineDescription(); 
+		inline EngineDescription& GetEngineDescription()
+		{
+			return desc;
+		}
 
 	protected:
 
-		virtual void Draw(const DrawArgs& args);
-		virtual void Update(const UpdateArgs& args);
+		void Draw();
+		void Update();
 
 	private:
 
 		Scene* scene;
+
+		Thread<Engine>* threadDraw;
+		Thread<Engine>* threadUpdate;
+		Mutex* csDraw;
+		Mutex* csUpdate;
+		Mutex* csEngine;
 
 		BufferState state;
 		EngineDescription desc;
