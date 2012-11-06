@@ -7,19 +7,28 @@ namespace TikiEngine
 	{
 
 		TikiBone::TikiBone(FbxNode* node)
-			:node(node), parent(0), childs(),
+			:node(node), curve(new TikiAnimationCurve(node)), parent(0), childs(),
 			boneInitTransform(), 
 			boneInitTransformInverse(),
-			boneCurrentTransform()
+			boneCurrentTransform(),
+			initGlobalTranslation(),
+			currGlobalTranslation()
 		{
 		}
 
 		TikiBone::~TikiBone()
 		{
+			SafeRelease(&curve);
+
 			for(UInt32 i = 0; i < childs.Count(); i++)
 			{
 				SafeRelease(&childs[i]);
 			}
+		}
+		void TikiBone::SetBind(FbxAMatrix& init)
+		{
+			this->boneInitTransform = init;
+			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
 		}
 
 		void TikiBone::Initialize()
@@ -29,9 +38,15 @@ namespace TikiEngine
 			if(this->parent != 0)
 			{
 				this->boneInitTransform =  parent->BoneInitTransform();
+				//this->initGlobalTranslation = parent->InitGlobalTranslation();
 			}
 			this->boneInitTransform = this->boneCurrentTransform = this->boneInitTransform * this->node->EvaluateLocalTransform();
 			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
+
+			//FbxAMatrix controlBoneInitTransform = this->node->EvaluateGlobalTransform();
+
+			//if(controlBoneInitTransform != boneInitTransform)
+			//	_CrtDbgBreak();
 
 			for(int i = 0; i < node->GetChildCount(); i++)
 			{
@@ -41,9 +56,26 @@ namespace TikiEngine
 				childs.Add(tmp);
 			}
 		}
+		Vector3& TikiBone::InitGlobalTranslation()
+		{
+			return initGlobalTranslation;
+		}
+		Vector3& TikiBone::CurrGlobalTranslation()
+		{
+			return currGlobalTranslation;
+		}
+
+		void TikiBone::InitializeAnimation(TikiAnimation* animation)
+		{
+			curve->SetAnimation(animation->Layer());
+
+			for(int i = 0; i <  childs.Count(); i++)
+				childs[i]->InitializeAnimation(animation);
+		}
 
 		void TikiBone::Update(FbxTime& time)
 		{
+
 			if(this->parent == 0)
 			{
 				this->boneCurrentTransform = node->EvaluateLocalTransform(time);
@@ -52,6 +84,14 @@ namespace TikiEngine
 			{
 				this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(time);
 			}
+
+			//FbxAMatrix controlTransform = this->node->EvaluateGlobalTransform(time);
+
+			//if(controlTransform != boneCurrentTransform)
+			//{
+			//	_CrtDbgBreak();
+			//	this->name = name;
+			//}
 
 			for(UInt32 i = 0; i < childs.Count();i++)
 			{

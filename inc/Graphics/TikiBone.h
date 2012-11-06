@@ -5,6 +5,8 @@
 #include <Core\List.h>
 #include "Core/TikiObject.h"
 #include "Core/TypeGlobals.h"
+#include "Graphics/TikiAnimationCurve.h"
+#include "Graphics/TikiAnimation.h"
 
 namespace TikiEngine
 {
@@ -27,7 +29,14 @@ namespace TikiEngine
 			FbxAMatrix& BoneCurrentTransform();
 			FbxAMatrix ShiftMatrix();
 
+			Vector3& InitGlobalTranslation();
+			Vector3& CurrGlobalTranslation();
+
 			TikiBone* GetBoneByName(const char* name);
+
+			void InitializeAnimation(TikiAnimation* animation);
+
+			void SetBind(FbxAMatrix& init);
 
 			int Count();
 
@@ -37,9 +46,14 @@ namespace TikiEngine
 			FbxNode* node;
 			const char* name;
 
+			Vector3 initGlobalTranslation;
+			Vector3 currGlobalTranslation;
+
 			FbxAMatrix boneInitTransform;
 			FbxAMatrix boneInitTransformInverse;
 			FbxAMatrix boneCurrentTransform;
+
+			TikiAnimationCurve* curve;
 
 			TikiBone* parent;
 			List<TikiBone*> childs;

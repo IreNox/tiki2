@@ -44,7 +44,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(engine->content->LoadModel(L"links"));
+			go->SModel(engine->content->LoadModel(L"mark"));//soldier_l_testForAgga3
 			tex = engine->content->LoadTexture(L"checker");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->GetShader()->SetTexture("Tex", tex);
@@ -53,6 +53,7 @@ namespace TikiEngine
 
 			this->AddElement(go);
 			//go->Release(); //AddRef();
+
 
 			light = new LightObject(engine);
 			light->AddRef();

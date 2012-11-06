@@ -27,6 +27,11 @@ namespace TikiEngine
 
 		Model::~Model()
 		{
+			for(UInt32 i = 0; i < animations.Count(); i++)
+			{
+				SafeRelease(&animations[i]);
+			}
+
 			for(UInt32 i = 0; i < meshes.Count(); i++)
 			{
 				SafeRelease(&meshes[i]);
@@ -54,18 +59,53 @@ namespace TikiEngine
 
 			FbxNode* root = scene->GetRootNode();
 			this->InitializeNodeRecursive(root, currentTime, currentAnimLayer, this->GetGlobalPosition(root), NULL);
+			this->BuildBoneHierachy(root);
+			int boneCount = rootBone->Count();
+
+			int meshCount = scene->GetSrcObjectCount<FbxMesh>();
 
 			this->CopyIndexData();
 			this->CopyVertexData();
 
-			meshes[0]->InitializeBones(*rootBone);
+			InitializeBoneMapping();
+			//InitializeAnimation();
+			
 
+		}
+		void Model::InitializeAnimation()
+		{
+			if(this->rootBone == 0)
+				return;
+			for(int i = 0; i < this->animations.Count(); i++)
+				rootBone->InitializeAnimation(animations[i]);
+		}
+		void Model::InitializeBoneMapping()
+		{
+			if(rootBone == 0)
+				return;
+			for(int i = 0; i < meshes.Count(); i++)
+				meshes[0]->InitializeBones(*rootBone);
+		}
+		void Model::BuildBoneHierachy(FbxNode* node)
+		{
+			if(rootBone != 0)
+				return;
+
+			rootBone = new TikiBone(node);
+			rootBone->Initialize();
 		}
 
 		#pragma region Animation
 		void Model::InitializeAnimationStack()
 		{
 			this->scene->FillAnimStackNameArray(this->animStackNameArray);
+
+			int animationStackcount = this->scene->GetSrcObjectCount<FbxAnimStack>();
+			for(int i = 0; i < animationStackcount; i++)
+			{
+				TikiAnimation* animation = new TikiAnimation(this->scene->GetSrcObject<FbxAnimStack>(i));
+				this->animations.Add(animation);
+			}
 		}
 
 		bool Model::SetCurrentAnimStack(int pIndex)
@@ -75,6 +115,7 @@ namespace TikiEngine
 			{
 				return false;
 			}
+			
 
 			FbxAnimStack* lCurrentAnimationStack = this->scene->FindMember<FbxAnimStack>(animStackNameArray[pIndex]->Buffer());
 			//// select the base layer from the animation stack
@@ -266,13 +307,13 @@ namespace TikiEngine
 		}
 		void Model::InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition)
 		{
-			FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
+			//FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
 
-			if(rootBone != 0)
-				return;
+			//if(rootBone != 0)
+			//	return;
 
-			rootBone = new TikiBone(node);
-			rootBone->Initialize();
+			//rootBone = new TikiBone(node);
+			//rootBone->Initialize();
 		}
 
 		void Model::CopyVertexData()

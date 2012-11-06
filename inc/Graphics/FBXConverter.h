@@ -13,6 +13,9 @@ public:
 
 	static Vector2 Convert(const FbxVector2 &vector);
 	static Vector4 Convert(const FbxVector4 &vector);
+	static Vector2 Convert(const FbxDouble2 &vecotr);
+	static Vector3 Convert(const FbxDouble3 &vector);
+	static Vector4 Convert(const FbxDouble4 &vector);
 	static Matrix Convert(const FbxAMatrix &mat);
 	static Matrix ConvertTranspose(const FbxAMatrix& mat);
 

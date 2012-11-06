@@ -40,6 +40,9 @@
     <ClCompile Include="src\Graphics\TerrainRenderer.cpp" />
     <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Graphics\TikiAnimationCurve.cpp" />
+    <ClCompile Include="src\Graphics\TikiAnimation.cpp" />
+    <ClCompile Include="src\Graphics\TikiAnimationKey.cpp" />
     <ClCompile Include="src\Graphics\TikiBone.cpp" />
     <ClCompile Include="src\Graphics\TikiHeightmap.cpp" />
     <ClCompile Include="src\Graphics\TikiMesh.cpp" />
@@ -52,6 +55,7 @@
     <ClInclude Include="inc\Graphics\CBLights.h" />
     <ClInclude Include="inc\Graphics\CBObjectData.h" />
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
+    <ClInclude Include="inc\Graphics\CurveInterpolator.h" />
     <ClInclude Include="inc\Graphics\d3dx11effect.h" />
     <ClInclude Include="inc\Graphics\DebugLineRenderer.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
@@ -78,7 +82,10 @@
     <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
+    <ClInclude Include="inc\Graphics\TikiAnimation.h" />
+    <ClInclude Include="inc\Graphics\TikiAnimationKey.h" />
     <ClInclude Include="inc\Graphics\TikiBone.h" />
+    <ClInclude Include="inc\Graphics\TikiAnimationCurve.h" />
     <ClInclude Include="inc\Graphics\TikiHeightmap.h" />
     <ClInclude Include="inc\Graphics\TikiMesh.h" />
     <ClInclude Include="inc\Graphics\VertexBuffer.h" />

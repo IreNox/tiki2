@@ -2,26 +2,35 @@
 
 Vector2 FBXConverter::Convert(const FbxVector2 &vector)
 {
-	Vector2 v = Vector2(
+	return Vector2(
 		(float)vector[0],
 		(float)vector[1]
 	);
-
-	return v;
 }
 
 
 Vector4 FBXConverter::Convert(const FbxVector4 &vector)
 {
-	Vector4 v = Vector4(
+	return Vector4(
 		(float)vector[0],
 		(float)vector[1],
 		(float)vector[2],
 		(float)vector[3]
 	);
-
-	return v;
 }
+Vector2 FBXConverter::Convert(const FbxDouble2 &vector)
+{
+	return Vector2((float)vector[0], (float)vector[1]);
+}
+Vector3 FBXConverter::Convert(const FbxDouble3 &vector)
+{
+	return Vector3((float)vector[0], (float)vector[1], (float)vector[2]);
+}
+Vector4 FBXConverter::Convert(const FbxDouble4 &vector)
+{
+	return Vector4((float)vector[0], (float)vector[1], (float)vector[2], (float)vector[3]);
+}
+
 Matrix FBXConverter::Convert(const FbxAMatrix& mat)
 {
 	return Matrix(

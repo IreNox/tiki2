@@ -13,6 +13,7 @@
 #include "Graphics/SkinMatrices.h"
 
 #include "Graphics/TikiBone.h"
+#include "Graphics/TikiAnimation.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -55,6 +56,10 @@ namespace TikiEngine
 		private:
 
 			void Initialize();
+			void InitializeAnimation();
+			void InitializeBoneMapping();
+
+			void BuildBoneHierachy(FbxNode* node);
 
 			void InitializeAnimationStack();
 			bool SetCurrentAnimStack(int pIndex);
@@ -88,6 +93,7 @@ namespace TikiEngine
 			List<UInt32> indicesList;
 
 			List<TikiMesh*> meshes;
+			List<TikiAnimation*> animations;
 
 			Material* material;
 			VertexDeclaration* declaration;

@@ -146,6 +146,15 @@
     <ClCompile Include="src\Graphics\TikiBone.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\TikiAnimationCurve.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TikiAnimation.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TikiAnimationKey.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -254,6 +263,18 @@
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\TikiBone.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimationCurve.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimation.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\CurveInterpolator.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimationKey.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
