@@ -8,6 +8,8 @@
 
 #include "Graphics/ParticleVertex.h"
 
+#include "Core/BufferedVariable.h"
+
 namespace TikiEngine
 {
 	namespace Components
@@ -44,7 +46,7 @@ namespace TikiEngine
 			ParticleEffect* behavior;
 
 			VertexDeclaration* decl;
-			DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer[2];
+			BPoint<DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>> vertexBuffer;
 
 		};
 	}

@@ -15,7 +15,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Camera::Camera(Engine* engine, GameObject* gameObject)
-			: Component(engine, gameObject), renderTarget(0), matrices()
+			: Component(engine, gameObject), renderTarget(0), matrices(), frustum()
 		{
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 
@@ -35,8 +35,8 @@ namespace TikiEngine
 		{
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
-			Matrix vp = Matrix::Transpose(matrices[engine->GetState().UpdateIndex].ViewMatrix) * 
-				Matrix::Transpose(matrices[engine->GetState().UpdateIndex].ProjectionMatrix);
+			Matrix vp = Matrix::Transpose(matrices->ViewMatrix) * 
+				Matrix::Transpose(matrices->ProjectionMatrix);
 
 			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
@@ -56,22 +56,22 @@ namespace TikiEngine
 
 		Frustum* Camera::GetFrustum()
 		{
-			return &frustum[0];
+			return &((Frustum)frustum);
 		}
 
 		CBMatrices* Camera::GetMatrices()
 		{
-			return &matrices[0];
+			return &((CBMatrices)matrices);
 		}
 
 		Matrix* Camera::GetViewMatrix()
 		{
-			return &matrices[0].ViewMatrix;
+			return &matrices->ViewMatrix;
 		}
 
 		Matrix* Camera::GetProjectionMatrix()
 		{
-			return &matrices[0].ProjectionMatrix;
+			return &matrices->ProjectionMatrix;
 		}
 
 		IRenderTarget* Camera::GetRenderTarget()
@@ -98,11 +98,11 @@ namespace TikiEngine
 				gameObject->PRS.GPosition() + gameObject->PRS.GetForward(),
 				Vector3::Up
 			);
-			matrices[engine->GetState().UpdateIndex].ViewMatrix = Matrix::Transpose(view);
+			matrices->ViewMatrix = Matrix::Transpose(view);
 
 			// create frustum from view * re-transposed Proj
-			frustum[engine->GetState().UpdateIndex].Set(
-				view * Matrix::Transpose(matrices[engine->GetState().UpdateIndex].ProjectionMatrix)
+			frustum->Set(
+				view * Matrix::Transpose(matrices->ProjectionMatrix)
 			);
 		}
 		#pragma endregion
@@ -110,12 +110,16 @@ namespace TikiEngine
 		#pragma region Member - EventHandler
 		void Camera::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
 		{
-			matrices[0].ProjectionMatrix = matrices[1].ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
-				MATH_PI / 4,
-				(float)args.CurrentViewPort->Width / args.CurrentViewPort->Height,
-				0.01f,
-				1000.0f
-			));
+			matrices.ToAll(
+				[=](CBMatrices& cb) {
+					cb.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
+						MATH_PI / 4,
+						(float)args.CurrentViewPort->Width / args.CurrentViewPort->Height,
+						0.01f,
+						1000.0f
+					));
+				}
+			);
 		}
 		#pragma endregion
 

@@ -14,6 +14,7 @@ namespace TikiEngine
 		TS_New,
 		TS_Starting,
 		TS_Running,
+		TS_Suspend,
 		TS_Aborted,	
 		TS_Terminated
 	};
@@ -47,6 +48,21 @@ namespace TikiEngine
 				0,
 				&threadId
 			);
+		}
+
+		void Suspend()
+		{
+			state = TS_Suspend;
+			SuspendThread(threadHandle);
+		}
+
+		void Resume()
+		{
+			if (state == TS_Suspend)
+			{
+				ResumeThread(threadHandle);
+				state = TS_Running;
+			}
 		}
 
 		void Abort(DWORD exitCode = 1)

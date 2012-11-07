@@ -11,15 +11,23 @@
 
 struct VS_INPUT
 {
-    float3 Pos	: POSITION;
-	float3 UV	: TEXCOORD0;
+    float3 Pos		: POSITION;
+	float3 UV		: TEXCOORD0;
+	float4 Color	: COLOR;
 };
 
 struct PS_INPUT
 {
-    float4 Pos	: SV_POSITION;
-	float3 UV	: TEXCOORD0;
+    float4 Pos		: SV_POSITION;
+	float3 UV		: TEXCOORD0;
+	float4 Color	: COLOR;
 };
+
+matrix spViewM;
+matrix spProjM;
+
+matrix spLocalM;
+matrix spWorldM;
 
 /////////////
 // GLOBALS //
@@ -36,7 +44,10 @@ PS_INPUT VS_Main(VS_INPUT input)
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
+	output.Pos = mul(output.Pos, spLocalM);
+	output.Pos = mul(output.Pos, spWorldM);
 	output.UV = input.UV;
+	output.Color = input.Color;
 	    
     return output;
 }
@@ -46,9 +57,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	float4 color = tex.Sample(sam, input.UV.xy);
-
-	return color;
+	return tex.Sample(sam, input.UV.xy) * input.Color;
 }
 
 

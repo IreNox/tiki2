@@ -91,18 +91,26 @@ namespace TikiEngine
 
 	protected:
 
-		void Draw();
-		void Update();
+		void Draw(void*);
+		void Update(void*);
 
 	private:
 
 		Scene* scene;
 
-		Thread<Engine>* threadDraw;
-		Thread<Engine>* threadUpdate;
-		Mutex* csDraw;
-		Mutex* csUpdate;
-		Mutex* csEngine;
+		//Thread<Engine>* threadDraw;
+		//Thread<Engine>* threadUpdate;
+		//Mutex* csDraw;
+		//Mutex* csUpdate;
+		//Mutex* csEngine;
+
+#if _DEBUG
+		UInt32 fpsIndex;
+		double fpsMin;
+		double fpsAve;
+		double fpsMax;
+		double fpsCache[5];
+#endif
 
 		BufferState state;
 		EngineDescription desc;

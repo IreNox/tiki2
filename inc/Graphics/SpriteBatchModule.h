@@ -3,6 +3,8 @@
 #include "Core/ISpriteBatch.h"
 #include "Core/IRenderTarget.h"
 
+#include "Core/EventScreenSizeChanged.h"
+
 #include "Graphics/Shader.h"
 #include "Graphics/DynamicBuffer.h"
 #include "Graphics/VertexDeclaration.h"
@@ -15,7 +17,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 
-		class SpriteBatchModule : public ISpriteBatch
+		class SpriteBatchModule : public ISpriteBatch, public ScreenSizeChangedEventHandler
 		{
 		public:
 
@@ -40,9 +42,19 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth);
 			
+			void Draw3D(ITexture* texture, const Matrix& world, const Matrix& local);
+
 			void DrawString(IFont* font, wstring text, const Vector2& position);
 
+			void Handle(IGraphics* graphics, const ScreenSizeChangedArgs& args);
+
 		private:
+
+			struct LocalWorldMatrices
+			{
+				Matrix LocalM;
+				Matrix WorldM;
+			};
 
 			Shader* shader;
 			VertexDeclaration* declaration;
@@ -50,13 +62,17 @@ namespace TikiEngine
 
 			List<ITexture*> textures;
 			List<SpriteBatchVertex> vertices;
+			Dictionary<UInt32, LocalWorldMatrices> matrices;
 
 			Vector2 pixelSize;
 			Vector2 screenSize;
 
+			Matrix viewMatrix;
+			Matrix projMatrix;
+
 			Vector3 transformPoint(Vector3 point);
 
-			void drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCorrd);
+			void drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCorrd, const Color& color);
 
 		};
 	}

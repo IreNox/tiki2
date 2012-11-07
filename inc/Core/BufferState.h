@@ -2,23 +2,36 @@
 
 #include "Core/TypeDef.h"
 #include "Core/GameTime.h"
+#include "Core/UpdateArgs.h"
+
+#include "Core/BufferedVariable.h"
 
 namespace TikiEngine
 {
-	struct UpdateArgs;
-
 	struct BufferState
 	{
 		bool Running;
 
-		Byte DrawIndex;
-		Byte UpdateIndex;
+		union
+		{
+			struct
+			{
+				Byte DrawIndex;
+				Byte UpdateIndex;
+			};
+			Byte Indices[2];
+		};
 
 		GameTime CurrentTime;
-		UpdateArgs* UpdateState[2];
+#ifdef TIKI_MULTITHREADING
+		BVar<UpdateArgs> UpdateState;
+#else
+		UpdateArgs UpdateState;
+#endif
+
 
 		BufferState()
-			: Running(true), CurrentTime()
+			: Running(true), CurrentTime(), UpdateState()
 		{
 			this->DrawIndex = 0;
 
@@ -27,9 +40,6 @@ namespace TikiEngine
 #else
 			this->UpdateIndex = 0;
 #endif
-
-			this->UpdateState[0] = 0;
-			this->UpdateState[1] = 0;
 		}
 
 		void Swap(GameTime time)

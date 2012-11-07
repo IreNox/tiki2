@@ -20,7 +20,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < inputTargets.Count())
 			{
-				IRenderTarget* target = inputTargets.Get(i).GetKey();
+				IRenderTarget* target = inputTargets.GetKVP(i).GetKey();
 				SafeRelease(&target);
 
 				i++;
@@ -29,7 +29,7 @@ namespace TikiEngine
 			i = 0;
 			while (i < outputTargets.Count())
 			{
-				IRenderTarget* target = outputTargets.Get(i).GetKey();
+				IRenderTarget* target = outputTargets.GetKVP(i).GetKey();
 				SafeRelease(&target);
 
 				i++;

@@ -1,5 +1,6 @@
 #pragma once
 
+#pragma region TypeDef
 #ifdef _WIN64
 //typedef __int64 IntPtr;
 
@@ -30,5 +31,10 @@ typedef bool Boolean;
 
 typedef const char* cstring;
 typedef const wchar_t* wcstring;
+#pragma endregion
 
+#pragma region Define
 #define MATH_PI 3.1415926535f
+
+//#define TIKI_MULTITHREADING
+#pragma endregion

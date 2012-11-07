@@ -151,9 +151,9 @@ namespace TikiEngine
 			//sound->LoadFromFile(L"beep");
 			#pragma endregion
 
-			//font = engine->librarys->CreateResource<IFont>();
-			//font->Create(L"Arial", 14.0f);
-			//font->AddRef();
+			font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 14.0f);
+			font->AddRef();
 			
 			Scene::Initialize(args);
 		}
@@ -163,14 +163,10 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			//tmp = Vector3(
-			//	 args.Update.Input.MousePositionDisplay.X,
-			//	 args.Update.Input.MousePositionDisplay.Y,
-			//	 args.Update.Input.MousePositionDisplay.X
-			//);
+			//Vector3 tmp = Vector3((float*)camera->PRS.GRotation().arr);
 
 			//wostringstream s;
-			//s << "Particle: " << behavior->GParticleUsed();
+			//s << "Time: " << args.Time.TotalTime;
 			//engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
 			engine->sprites->Draw(
@@ -186,6 +182,12 @@ namespace TikiEngine
 			engine->sprites->Draw(
 				engine->graphics->GetScreenTarget(),
 				Rectangle(10, 390, 200, 180)
+			);
+
+			engine->sprites->Draw3D(
+				engine->content->LoadTexture(L"particle/mg"),
+				Matrix::CreateTranslation(sin(args.Time.TotalTime), 0, 0),
+				Matrix::CreateTranslation(0, sin(args.Time.TotalTime), 0)
 			);
 
 			#if _DEBUG

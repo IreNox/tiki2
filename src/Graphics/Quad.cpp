@@ -74,7 +74,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < input->Count())
 			{
-				auto kvp  = input->Get(i);
+				auto kvp  = input->GetKVP(i);
 				shader->SetTexture(kvp.GetValue(), kvp.GetKey());
 
 				i++;
@@ -86,7 +86,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < output->Count())
 			{
-				auto kvp  = output->Get(i);
+				auto kvp  = output->GetKVP(i);
 				kvp.GetKey()->Apply(kvp.GetValue());
 
 				i++;

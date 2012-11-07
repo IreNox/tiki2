@@ -17,28 +17,59 @@ public:
 	{
 	}
 
-	TKey GetKey() const
+	inline TKey GetKey() const
 	{
 		return key;
 	}
 
-	TValue GetValue() const
+	inline TValue GetValue() const
 	{
 		return value;
 	}
 
-	bool operator==(const KeyValuePair<TKey, TValue>& kvp) const
+	inline bool operator<(const TKey& rhs) const
 	{
-		return this->GetKey() == kvp.GetKey();
+		return this->key < rhs;
 	}
 
-	bool operator!=(const KeyValuePair<TKey, TValue>& kvp) const
+	inline bool operator>(const TKey& rhs) const
 	{
-		return !(this->GetKey() == kvp.GetKey());
+		return this->key > rhs;
+	}
+
+	inline bool operator<(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key < kvp.key;
+	}
+
+	inline bool operator>(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key > kvp.key;
+	}
+
+	inline bool operator<=(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key <= kvp.key;
+	}
+
+	inline bool operator>=(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key >= kvp.key;
+	}
+
+	inline bool operator==(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key == kvp.key;
+	}
+
+	inline bool operator!=(const KeyValuePair<TKey, TValue>& kvp) const
+	{
+		return this->key != kvp.key;
 	}
 
 private:
 
 	TKey key;
 	TValue value;
+
 };

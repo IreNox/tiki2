@@ -1,6 +1,5 @@
 
 #include "Core/Engine.h"
-
 #include "Core/Scene.h"
 
 #include "Core/Mutex.h"
@@ -18,13 +17,13 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include "Core/HelperThreading.h"
+
 #include <math.h>
 #include <string>
 #include <sstream>
 #include <time.h>
 #include <ppl.h>
-
-int bla = 1;
 
 namespace TikiEngine
 {
@@ -33,6 +32,9 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), state(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
+#if _DEBUG
+		, fpsMin(1000000000), fpsMax(0), fpsIndex(0), fpsAve(0)
+#endif
 	{
 		srand((UInt32)time(0));
 	}
@@ -167,13 +169,14 @@ namespace TikiEngine
 		//threadUpdate->Start(this, 0);
 		//threadDraw->Start(this, 0);
 
-		UpdateArgs updateArgs0 = UpdateArgs(state.CurrentTime);
-		UpdateArgs updateArgs1 = UpdateArgs(state.CurrentTime);
-		state.UpdateState[0] = &updateArgs0;
-		state.UpdateState[1] = &updateArgs1;
+		state.UpdateState = UpdateArgs(state.CurrentTime);
 
-		auto funcDraw = make_task([=]{ this->Draw(); });
-		auto funcUpdate = make_task([=]{ this->Update(); });
+#ifdef TIKI_MULTITHREADING
+		state.UpdateState = UpdateArgs(state.CurrentTime);
+
+		auto funcDraw = make_task([=]{ this->Draw(0); });
+		auto funcUpdate = make_task([=]{ this->Update(0); });
+#endif
 
 		while (window->GetReady())
 		{
@@ -190,27 +193,44 @@ namespace TikiEngine
 			GameTime time = GameTime(elapsedTime, gameTime);
 			last = current;
 
+#if _DEBUG
+			double fps = 1.0 / elapsedTime;
+			if (fps < fpsMin) fpsMin = fps;
+			if (fps > fpsMax) fpsMax = fps;
+			fpsAve = (fpsCache[0] + fpsCache[1] + fpsCache[2] + fpsCache[3] + fpsCache[4] + fps) / 6.0; 
+			fpsIndex = (++fpsIndex) % 5;
+			fpsCache[fpsIndex] = fps;
+
 			std::wostringstream s;
-			s << "TikiEngine 2.0 - FPS: " << (1.0f / elapsedTime);
+			s << "TikiEngine 2.0 - FPS - Min: " << fpsMin << " - Max: " << fpsMax << " - Average: " << fpsAve;
 
 			wstring str = s.str();
 			SetWindowText(window->GetHWND(), str.c_str());
+#endif
 
 			state.Swap(time);
 
 #ifdef TIKI_MULTITHREADING
+			HelperThreading::Swap();
 
 			structured_task_group tg;
 			tg.run(funcUpdate);
 			tg.run_and_wait(funcDraw);
 #else
-			this->Update();
-			this->Draw();
+			this->Update(0);
+			this->Draw(0);
 #endif
 
 			//csEngine->Unlock();
 			//csUpdate->Unlock();
 			//csDraw->Unlock();
+
+			// TODO: 
+			//if (args.Input.GetKeyPressed(KEY_F11))
+			//{
+			//	desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
+			//	graphics->Reset();
+			//}
 
 			window->End();
 		}
@@ -242,11 +262,18 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Draw/Update
-	void Engine::Draw()
-	{
+	void Engine::Draw(void*)
+	{		
+		HelperThreading::InitThread(state.DrawIndex);
+
 		//while (state.Running)
 		//{
-			//OutputDebugString(L"Draw\n");
+			//csEngine->Wait();
+
+			//wostringstream s;
+			//s << L"Draw: " << HelperThreading::GIndex() << L"\n";
+
+			//OutputDebugString(s.str().c_str());
 
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())
@@ -256,7 +283,7 @@ namespace TikiEngine
 					scene->GetCameras()->Get(i),
 					graphics,
 					sprites,
-					*state.UpdateState[state.DrawIndex],
+					state.UpdateState,
 					scene->GetLighting()
 				);
 
@@ -274,46 +301,47 @@ namespace TikiEngine
 				i++;
 			}
 
-			//csDraw->Unlock();
 			//csEngine->Wait();
+			//csDraw->Unlock();
+			//threadDraw->Suspend();
 		//}
 	}
 
-	void Engine::Update()
+	void Engine::Update(void*)
 	{
+		HelperThreading::InitThread(state.UpdateIndex);
+
 		//while (state.Running)
 		//{
-			//OutputDebugString(L"Update\n");
+			//csEngine->Wait();
 
-			// TODO: 
-			//if (args.Input.GetKeyPressed(KEY_F11))
-			//{
-			//	desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
-			//	graphics->Reset();
-			//}
+			//wostringstream s;
+			//s << L"Update: " << HelperThreading::GIndex() << L"\n";
 
-			UpdateArgs args = UpdateArgs(state.CurrentTime);
+			//OutputDebugString(s.str().c_str());
+
+			state.UpdateState = UpdateArgs(state.CurrentTime);
 
 			input->Begin();
-			input->FillInputState(&args.Input);
+			input->FillInputState(&state.UpdateState.Input);
 			content->Begin();
 			physics->Begin();
 
 			if (scene)
 			{
-				scene->Update(args);
+				scene->Update(state.UpdateState);
 			}
 
-			physics->End(args);
+			physics->End(state.UpdateState);
 			content->End();
 			input->End();
 
-			if (args.Input.GetKey(KEY_ESCAPE)) this->Exit();
+			if (state.UpdateState.Input.GetKey(KEY_ESCAPE)) this->Exit();
 
-			*state.UpdateState[state.UpdateIndex] = args;
+			//state.UpdateState = args;
 
 			//csUpdate->Unlock();
-			//csEngine->Wait();
+			//threadUpdate->Suspend();
 		//}
 	}
 	#pragma endregion

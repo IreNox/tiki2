@@ -10,12 +10,18 @@ namespace TikiEngine
 
 		static void InitThread(UInt32 id);
 
+		static void Swap();
+
 		static UInt32 GIndex();
 
 
 	private:
 
-		static UInt32 id;
+#ifdef TIKI_MULTITHREADING
+		static UInt32 threadId[2];
+#else
+		static UInt32 threadId[1];
+#endif
 
 	};
 }

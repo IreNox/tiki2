@@ -4,13 +4,14 @@
 
 #include "Core/EventScreenSizeChanged.h"
 
+#include "Core/Ray.h"
 #include "Core/Matrix.h"
+#include "Core/Frustum.h"
 #include "Core/CBMatrices.h"
 
 #include "Core/IRenderTarget.h"
 
-#include "Core/Ray.h"
-#include "Core/Frustum.h"
+#include "Core/BufferedVariable.h"
 
 namespace TikiEngine
 {
@@ -44,8 +45,8 @@ namespace TikiEngine
 
 		private:
 
-			Frustum frustum[2];
-			CBMatrices matrices[2];
+			BVar<Frustum> frustum;
+			BVar<CBMatrices> matrices;
 
 			IRenderTarget* renderTarget;
 

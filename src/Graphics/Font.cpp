@@ -94,10 +94,8 @@ namespace TikiEngine
 		{
 			RectangleF r;
 
-			if (charRect.ContainsKey(c))
+			if (charRect.TryGetValue(c, &r))
 			{
-				r = charRect[c];
-
 				DllMain::ModuleSpriteBatch->Draw(
 					texture,
 					RectangleF::Create(
@@ -246,6 +244,8 @@ namespace TikiEngine
 			memcpy(mapped.pData, pixels, sizeof(DWORD) * width * height);
 
 			DllMain::Context->Unmap(res, 0);
+
+			charRect.Optimize();
 		}
 		#pragma endregion
 	}

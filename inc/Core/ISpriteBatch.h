@@ -32,6 +32,8 @@ namespace TikiEngine
 			virtual void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth) = 0;
 			virtual void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth) = 0;
 
+			virtual void Draw3D(ITexture* texture, const Matrix& world, const Matrix& local) = 0;
+
 			virtual void DrawString(IFont* font, wstring text, const Vector2& position) = 0;
 
 		};

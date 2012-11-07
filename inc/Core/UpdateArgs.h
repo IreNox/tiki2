@@ -8,10 +8,16 @@ namespace TikiEngine
 	// Implementation in AllArgs.cpp
 	struct UpdateArgs
 	{
+	public:
 		static const UpdateArgs Empty;
 
 		GameTime Time;
 		InputState Input;
+
+		UpdateArgs()
+			: Time(), Input()
+		{
+		}
 
 		UpdateArgs(GameTime time)
 			: Time(time), Input()
@@ -19,13 +25,6 @@ namespace TikiEngine
 		}
 
 		~UpdateArgs()
-		{
-		}
-
-	private:
-
-		UpdateArgs()
-			: Time(), Input()
 		{
 		}
 
