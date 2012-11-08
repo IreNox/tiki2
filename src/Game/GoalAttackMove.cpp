@@ -42,6 +42,7 @@ namespace TikiEngine
 			// just set the state to inactive, so it always gets reactivated if there's some target to shoot to
 			if (owner->GetTargetSys()->IsTargetShootable())
 			{
+				//Activate(args);
 				status = Inactive;
 			}
 

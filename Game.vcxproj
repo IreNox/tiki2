@@ -40,6 +40,7 @@
     <ClInclude Include="inc\Game\GoalFollowPath.h" />
     <ClInclude Include="inc\Game\GoalHuntTarget.h" />
     <ClInclude Include="inc\Game\GoalMoveToPosition.h" />
+    <ClInclude Include="inc\Game\GoalPatrol.h" />
     <ClInclude Include="inc\Game\GoalSeekToPosition.h" />
     <ClInclude Include="inc\Game\GoalThink.h" />
     <ClInclude Include="inc\Game\GoalTraverseEdge.h" />
@@ -97,6 +98,7 @@
     <ClCompile Include="src\Game\GoalFollowPath.cpp" />
     <ClCompile Include="src\Game\GoalHuntTarget.cpp" />
     <ClCompile Include="src\Game\GoalMoveToPosition.cpp" />
+    <ClCompile Include="src\Game\GoalPatrol.cpp" />
     <ClCompile Include="src\Game\GoalSeekToPosition.cpp" />
     <ClCompile Include="src\Game\GoalThink.cpp" />
     <ClCompile Include="src\Game\GoalTraverseEdge.cpp" />

@@ -5,6 +5,7 @@
 #include "Game/GoalMoveToPosition.h"
 #include "Game/GoalAttackTarget.h"
 #include "Game/GoalAttackMove.h"
+#include "Game/GoalPatrol.h"
 
 
 #include "Game/AttackTargetGoalEvaluator.h"
@@ -69,7 +70,14 @@ namespace TikiEngine
 		{
 			if (!owner->IsPossessed())
 			{
-				Arbitrate();
+				//Arbitrate();
+				std::list<Vector2> wayPoints;
+				wayPoints.push_back(Vector2(0, -100));
+				wayPoints.push_back(Vector2(100, -100));
+				wayPoints.push_back(Vector2(100, 100));
+				wayPoints.push_back(Vector2(-100, 100));
+				wayPoints.push_back(Vector2(-100, -100));
+				AddGoalPatrol(wayPoints);
 			}
 
 			status = Active;
@@ -117,6 +125,15 @@ namespace TikiEngine
 			}
 		}
 
+		void GoalThink::AddGoalPatrol(std::list<Vector2> wayPoints)
+		{
+			if (NotPresent(Goal_Patrol))
+			{
+				RemoveAllSubgoals();
+				AddSubgoal(new GoalPatrol(owner, wayPoints));
+			}
+		}
+
 		void GoalThink::AddGoalAttackTarget()
 		{
 			if (NotPresent(Goal_Attack_Target))
@@ -133,9 +150,6 @@ namespace TikiEngine
  				RemoveAllSubgoals();
  				AddSubgoal(new GoalAttackMove(owner, pos));
  			}
-
-			//AddSubgoal(new GoalAttackMove(owner, pos));
-			//subGoals.push_back(new GoalAttackMove(owner, pos));
 		}
 
 		void GoalThink::AddGoalMoveToPosition(Vector3 pos)

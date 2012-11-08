@@ -15,7 +15,8 @@ namespace TikiEngine
 			Goal_Explore,
 			Goal_Hunt_Target,
 			Goal_Attack_Target,
-			Goal_Attack_Move
+			Goal_Attack_Move,
+			Goal_Patrol
 		};
 
 

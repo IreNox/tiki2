@@ -31,10 +31,13 @@ namespace TikiEngine
 
 			// top level goal types
 			void AddGoalExplore();
+			void AddGoalPatrol(std::list<Vector2> wayPoints);
 			void AddGoalAttackTarget();
 			void AddGoalAttackMove(Vector3 pos);
 			void AddGoalMoveToPosition(Vector3 pos);
 			void QueueGoalMoveToPosition(Vector3 pos);
+
+
 
 		private:
 			typedef std::vector<GoalEvaluator*> GoalEvaluators;
