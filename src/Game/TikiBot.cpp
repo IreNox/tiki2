@@ -66,7 +66,8 @@ namespace TikiEngine
 			// create Targeting System
 			targSys = new TargetingSystem(this);
 
-			sensorMem = new SensorMemory(this, 1);
+			// we can remember bots for 10 secs
+			sensorMem = new SensorMemory(this, 3);
 
 			
 		}
@@ -92,7 +93,7 @@ namespace TikiEngine
 
 		bool TikiBot::IsAtPosition(Vector2 pos)
 		{
-			return ( Vector2::DistanceSquared(Pos(), pos) < 0.1f);
+			return ( Vector2::DistanceSquared(Pos(), pos) < 0.5f);
 		}
 
 		bool TikiBot::HasLOSTo(Vector3 pos)
@@ -123,6 +124,19 @@ namespace TikiEngine
 			}
 
 			return los;
+		}
+
+		void TikiBot::TakePossession()
+		{
+			// TODO: Player + enemy bots check
+			if ( !(IsSpawning() || IsDead()) )
+				possessed = true;
+		}
+
+		void TikiBot::Exorcise()
+		{
+			possessed = false;
+			//brain->AddGoalExplore();
 		}
 
 		void TikiBot::Draw(const DrawArgs& args)
@@ -200,6 +214,9 @@ namespace TikiEngine
 			{    
 				heading = Vector2::Normalize(velocity);
 				side = heading.Cross();
+				// TODO: RotateHeadingToFacePosition!
+				facing = heading;
+
 
 				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
 					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0

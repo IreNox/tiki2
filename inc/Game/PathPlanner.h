@@ -25,6 +25,9 @@ namespace TikiEngine
             //  is unreachable or the target may seek directly, the method returns false. 
             bool RequestPathTo(const Vector3& target);
 
+			// pick a random cell and get the Center position
+			Vector3 GetRandomPosOnPath();
+
 			// Gets the Snapped target the agent should move to. This is always snapped to a cell so we don't move outisde of navmesh 
 			Vector3 GetTargetSnap() const;
 

@@ -3,6 +3,7 @@
 #include "Game/TikiBot.h"
 #include "Core/IGraphics.h"
 
+
 namespace TikiEngine
 {
     namespace AI
@@ -87,6 +88,23 @@ namespace TikiEngine
             }
 
         }
+
+		Vector3 PathPlanner::GetRandomPosOnPath()
+		{
+			Vector3 ret = Vector3::Zero;
+
+			if (!parent)
+				return ret;
+
+			int index = rand() % parent->TotalCells();
+			NavigationCell* cell = parent->Cell(index);
+
+			if (cell != 0)
+				ret = cell->CenterPoint();
+
+			return ret;
+		}
+
 
 		Vector3 PathPlanner::GetTargetSnap() const
 		{

@@ -63,6 +63,13 @@ namespace TikiEngine
 			// returns true if the bot has line of sight to the given position.
 			bool HasLOSTo(Vector3 pos);
 
+			// this is called to allow a human player to control the bot
+			void TakePossession();
+
+			// called when a human is exorcised from this bot and the AI takes control
+			void Exorcise();
+
+
 			PathPlanner* GetPathPlanner() { return pathPlanner; }
 			ICharacterController* GetController() { return controller; }
 			TikiSteering* const GetSteering() { return steering; }

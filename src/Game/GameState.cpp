@@ -75,7 +75,7 @@ namespace TikiEngine
 				{
 					bot->CreateNav(navMesh);
  					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
- 					pos = pos + Vector3(0, 60, 0);
+ 					pos = pos + Vector3(0, 30, 0);
  					bot->GetController()->SetCenter(pos);
 				}
 
@@ -147,26 +147,28 @@ namespace TikiEngine
 
 						if (bot != 0)
 						{
+							bot->TakePossession();
+
 							// if the shift key is pressed down at the same time as clicking then the
 							// movement command will be queued
 							if (args.Input.GetKey(KEY_LSHIFT))
 							{
 								bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
 							}
+							else if (args.Input.GetKey(KEY_RSHIFT))
+							{
+								bot->GetBrain()->RemoveAllSubgoals();
+								bot->GetBrain()->AddGoalAttackMove(info.Point);
+							}
 							else
 							{
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalMoveToPosition(info.Point);
-
-								if (bot->HasLOSTo(info.Point))
-									OutputDebugString(L"HAS Raycast LOS. \n");
-								else
-									OutputDebugString(L"NO Raycast LOS. \n");
-
+// 								if (bot->HasLOSTo(info.Point))
+// 									OutputDebugString(L"HAS Raycast LOS. \n");
+// 								else
+// 									OutputDebugString(L"NO Raycast LOS. \n");
 							}
-
-							
-						
 
 						}
 
@@ -174,6 +176,7 @@ namespace TikiEngine
 					}
 				}
 			}
+
 		}
 		#pragma endregion
 

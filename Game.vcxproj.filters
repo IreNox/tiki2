@@ -102,6 +102,12 @@
     <Filter Include="Quelldateien\AI\Targeting">
       <UniqueIdentifier>{eb926976-7b70-493d-a6a2-c79ed62f6027}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Goals\Evaluation">
+      <UniqueIdentifier>{05a633a7-e2f7-4192-bb28-0452d52f523c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Goals\Evaluation">
+      <UniqueIdentifier>{f6092538-ec1e-4cb0-b179-7645fd28da62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -260,6 +266,27 @@
     <ClInclude Include="inc\Game\Regulator.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\GoalHuntTarget.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalExplore.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackTarget.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalEvaluator.h">
+      <Filter>Headerdateien\AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\ExploreGoalEvaluator.h">
+      <Filter>Headerdateien\AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h">
+      <Filter>Headerdateien\AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackMove.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -393,6 +420,24 @@
     </ClCompile>
     <ClCompile Include="src\Game\Regulator.cpp">
       <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalHuntTarget.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalExplore.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalAttackTarget.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\ExploreGoalEvaluator.cpp">
+      <Filter>Quelldateien\AI\Goals\Evaluation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp">
+      <Filter>Quelldateien\AI\Goals\Evaluation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GoalAttackMove.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
