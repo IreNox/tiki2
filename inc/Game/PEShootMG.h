@@ -6,12 +6,12 @@ namespace TikiEngine
 {
 	namespace Particles
 	{
-		class ParticleTest : public ParticleEffect
+		class PEShootMG : public ParticleEffect
 		{
 		public:
 
-			ParticleTest(Engine* engine);
-			~ParticleTest();
+			PEShootMG(Engine* engine);
+			~PEShootMG();
 
 			void CreateParticle(Particle* particle);
 			void UpdateParticle(Particle* particle);

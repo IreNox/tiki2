@@ -45,16 +45,20 @@ namespace TikiEngine
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
-			GameObject* go = new GameObject(engine);
+			///////////////////
+			////Particle Effect
+			//GameObject* go = new GameObject(engine);
 
-			behavior = new ParticleTest(engine);
+			//behavior = new ParticleTest(engine);
 
-			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
-			effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
-			effect->SetParticleEffect(behavior);
+			//IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
+			//effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
+			//effect->SetParticleEffect(behavior);
 
-			this->AddElement(go);
+			//this->AddElement(go);
 
+			//////////
+			////Cloddy
 			//go = new GameObject(engine);
 			//Material* mat = engine->content->LoadMaterial(L"os_cloddy");
 			//ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
@@ -63,26 +67,26 @@ namespace TikiEngine
 
 			//this->AddElement(go);
 
-			//// Model
-			//go = new GameObject(engine);
-			//go->Model = engine->content->LoadModel(L"Soldier_S");
+			////////
+			// Model
+			GameObject* go = new GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"Soldier_S"));
 
-			//Material* mat = engine->content->LoadMaterial(L"os_default");
-			//mat->GetShader()->SetTexture("tex", engine->content->LoadTexture(L"checker"));
+			Material* mat = engine->content->LoadMaterial(L"os_default");
+			mat->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
+			mat->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Normal");
+			mat->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Spec");
+			go->GModel()->SetMaterial(mat);
 
-			//go->Model->SetMaterial(mat);
-			//mat->Release();
+			go->PRS.SScale() = Vector3(0.01f);
 
-			//go->PRS.SScale() = Vector3(0.01f);
-
-			//this->AddElement(go);
-			//go->Release();
+			this->AddElement(go);
 
 
 			// Light
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
-			light->GetLight()->SetRange(750.0f);
+			light->GetLight()->SetRange(75.0f);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			light->AddRef();
 
@@ -184,11 +188,18 @@ namespace TikiEngine
 				Rectangle(10, 390, 200, 180)
 			);
 
-			engine->sprites->Draw3D(
-				engine->content->LoadTexture(L"particle/mg"),
-				Matrix::CreateTranslation(sin(args.Time.TotalTime), 0, 0),
-				Matrix::CreateTranslation(0, sin(args.Time.TotalTime), 0)
-			);
+			////3D Interface
+			//engine->sprites->Draw3D(
+			//	engine->content->LoadTexture(L"particle/mg"),
+			//	Matrix::CreateTranslation(sin(args.Time.TotalTime / 10), 0, 0),
+			//	Matrix::CreateTranslation(0, sin(args.Time.TotalTime / 10), 0)
+			//);
+
+			//engine->sprites->Draw3D(
+			//	engine->content->LoadTexture(L"particle/mg"),
+			//	Matrix::CreateTranslation(sin(args.Time.TotalTime / 8), 0, 0),
+			//	Matrix::CreateTranslation(0, sin(args.Time.TotalTime / 8), 0)
+			//);
 
 			#if _DEBUG
 			//engine->physics->DrawDebug();
@@ -208,6 +219,12 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{
+			//elements[0]->PRS.SPosition() = Vector3(
+			//	sin(args.Time.TotalTime) * 3,
+			//	0,
+			//	cos(args.Time.TotalTime) * 3
+			//);
+
 			//// light settings test
 			//Vector3 move = Vector3(
 			//	(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),

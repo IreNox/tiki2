@@ -15,12 +15,11 @@ namespace TikiEngine
 			/*! @brief World Inverse Transposed Matrix */
 			Matrix WorldMIT;
 
-			bool UseDiffuse;
-			bool UseNormalMap;
-			bool UseSpecular;
+			Boolean UseDiffuse;
+			Boolean UseNormalMap;
+			Boolean UseSpecular;
 
-			bool FlipTexcoordV;
-			bool Unused[12];
+			Boolean FlipTexcoordV;
 			
 		};
 	}

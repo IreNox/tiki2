@@ -38,7 +38,7 @@ namespace TikiEngine
 			/*! @brief retrieves the current scene */
 			NxScene* GetScene();
 
-      Boolean RayCast(Ray ray, RaycastHit* hitInfo, float distance);
+      bool RayCast(Ray ray, RaycastHit* hitInfo, float distance);
 
 #if _DEBUG
 			void DrawDebug();

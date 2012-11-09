@@ -31,7 +31,7 @@ namespace TikiEngine
 	DrawLightArgs& Scene::GetLighting()
 	{
 		UInt32 i = 0;
-		Boolean dirty = false;
+		bool dirty = false;
 		while (i < lighting.SceneLights->Count())
 		{
 			if (lighting.SceneLights->Get(i)->GetGameObject()->PRS.IsDirty())

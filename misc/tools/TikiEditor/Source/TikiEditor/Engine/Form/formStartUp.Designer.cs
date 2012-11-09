@@ -30,6 +30,7 @@
         {
             this.buttonLevel = new System.Windows.Forms.Button();
             this.buttonGUI = new System.Windows.Forms.Button();
+            this.buttonTest = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonLevel
@@ -44,7 +45,7 @@
             // 
             // buttonGUI
             // 
-            this.buttonGUI.Location = new System.Drawing.Point(12, 82);
+            this.buttonGUI.Location = new System.Drawing.Point(12, 90);
             this.buttonGUI.Name = "buttonGUI";
             this.buttonGUI.Size = new System.Drawing.Size(248, 52);
             this.buttonGUI.TabIndex = 1;
@@ -52,11 +53,22 @@
             this.buttonGUI.UseVisualStyleBackColor = true;
             this.buttonGUI.Click += new System.EventHandler(this.buttonGUI_Click);
             // 
+            // buttonTest
+            // 
+            this.buttonTest.Location = new System.Drawing.Point(12, 168);
+            this.buttonTest.Name = "buttonTest";
+            this.buttonTest.Size = new System.Drawing.Size(248, 52);
+            this.buttonTest.TabIndex = 2;
+            this.buttonTest.Text = "Test Area";
+            this.buttonTest.UseVisualStyleBackColor = true;
+            this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
+            // 
             // formStartUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 146);
+            this.ClientSize = new System.Drawing.Size(272, 232);
+            this.Controls.Add(this.buttonTest);
             this.Controls.Add(this.buttonGUI);
             this.Controls.Add(this.buttonLevel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -72,5 +84,6 @@
 
         private System.Windows.Forms.Button buttonLevel;
         private System.Windows.Forms.Button buttonGUI;
+        private System.Windows.Forms.Button buttonTest;
     }
 }

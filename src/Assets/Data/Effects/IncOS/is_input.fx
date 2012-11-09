@@ -1,9 +1,9 @@
 /////////////
 // GLOBALS //
 /////////////
-matrix fuckYouAsshole;
+#include "Data/Effects/Inc/is_input_light.fx"
 
-cbuffer ObjectData //: register(b0)
+cbuffer ObjectData : register(b1)
 {
 	matrix WorldM;		// World Matrix
 	matrix WorldMIT;	// World Inverse Transpose Matrix
@@ -13,13 +13,9 @@ cbuffer ObjectData //: register(b0)
 	bool UseSpecular;
 
 	bool FlipTexcoordV;
-
-	bool UnusedObjectData[12];
 };
 
-#include "Data/Effects/Inc/is_input_light.fx"
-
-cbuffer MatrixBuffer //: register(b1)
+cbuffer MatrixBuffer : register(b2)
 {
     matrix ViewM;		// View Matrix;
     matrix ProjectionM;	// Projection Matrix;

@@ -221,9 +221,6 @@
     <ClInclude Include="inc\Game\BoxSide.h">
       <Filter>Headerdateien\AI\OcTree</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\ParticleTest.h">
-      <Filter>Headerdateien\Particle</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\Goal.h">
       <Filter>Headerdateien\AI\Goals\Atomic</Filter>
     </ClInclude>
@@ -289,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\GoalPatrol.h">
       <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEShootMG.h">
+      <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -391,9 +391,6 @@
     <ClCompile Include="src\Game\BoxSide.cpp">
       <Filter>Quelldateien\AI\OcTree</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\ParticleTest.cpp">
-      <Filter>Quelldateien\Particle</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\GoalThink.cpp">
       <Filter>Quelldateien\AI\Goals\Composite</Filter>
     </ClCompile>
@@ -444,6 +441,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\GoalPatrol.cpp">
       <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEShootMG.cpp">
+      <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

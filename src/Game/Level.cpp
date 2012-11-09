@@ -11,13 +11,14 @@ namespace TikiEngine
 	namespace Game
 	{
 		Level::Level(GameState* state)
-			: BasicDatabase(state), terrain(0), collider(0), colliderUpdate(0)
+			: BasicDatabase(state), terrain(0), collider(0), frameCount(0)
 		{
 		}
 
 		Level::~Level()
 		{
 			SafeRelease(&terrain);
+			SafeRelease(&collider);
 		}
 
 		string Level::GetName()
@@ -78,16 +79,31 @@ namespace TikiEngine
 
 		void Level::Update(const UpdateArgs& args)
 		{
-			List<GameObject*> poi;
-			poi.Add(this);
-
-			if (colliderUpdate++ > 5)
-			{
-				terrain->UpdateCollider(collider, &poi);
-				colliderUpdate = 0;
-			}
-
 			BasicDatabase::Update(args);
+
+			if (frameCount % 10 == 0 && frameCount < 100)
+			{
+				float hSize = (float)heightmapSize / 2;
+
+				List<Vector3> poi;
+				Vector3 pos = Vector3::Zero;
+
+				for (float x = -hSize; x <= hSize; x += 16)
+				{
+					pos.X = x;
+
+					for (float y = -hSize; y <= hSize; y += 16)
+					{
+						pos.Z = y;
+						pos.Y = terrain->SampleHeight(pos) + 5;
+
+						poi.Add(pos);
+					}
+				}
+
+				terrain->UpdateCollider(collider, &poi);
+			}
+			frameCount++;
 		}
 	}
 }

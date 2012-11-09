@@ -15,6 +15,7 @@ namespace TikiEditor
 
         private static GameMain _game;
         private static ModeGUI _modeGUI;
+        private static ModeTest _modeTest;
         private static ModeLevel _modeLevel;
 
         private static GraphicsDevice _device;
@@ -101,14 +102,20 @@ namespace TikiEditor
 
         public static ModeGUI ModeGUI
         {
-            get { return GI._modeGUI; }
-            set { GI._modeGUI = value; }
+            get { return _modeGUI; }
+            set { _modeGUI = value; }
+        }
+
+        public static ModeTest ModeTest
+        {
+            get { return _modeTest; }
+            set { _modeTest = value; }
         }
 
         public static ModeLevel ModeLevel
         {
-            get { return GI._modeLevel; }
-            set { GI._modeLevel = value; }
+            get { return _modeLevel; }
+            set { _modeLevel = value; }
         }
         #endregion
     }

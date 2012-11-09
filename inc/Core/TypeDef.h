@@ -15,6 +15,7 @@ typedef unsigned __int32 UPInt;
 #endif
 
 typedef unsigned char Byte;
+typedef unsigned __int32 Boolean;
 
 typedef __int16 Int16;
 typedef __int32 Int32;
@@ -26,8 +27,6 @@ typedef unsigned __int64 UInt64;
 
 typedef float  Single;
 typedef double Double;
-
-typedef bool Boolean;
 
 typedef const char* cstring;
 typedef const wchar_t* wcstring;

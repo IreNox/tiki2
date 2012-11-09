@@ -46,9 +46,9 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	float4 alColor = float4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);
 	float4 color = float4(0, 0, 0, 0);
 
-	if (LightsCount != 0.0f && true)
+	if (LightsCount != 0.0f)
 	{
-		float3 termLight = float3(1, 1, 1);
+		float3 termLight = float3(0, 0, 0);
 
 		float3 pixelNormal = rtNormal.Sample(sam, input.UV).xyz;
 
@@ -59,10 +59,10 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			float lighting = dot(pixelNormal, lightDir);	
 			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));
 
-			termLight += Lights[i].Color * lighting;
+			termLight += Lights[i].Color; // * lighting
 		}		
 
-		bbColor.rgb *= termLight;
+		bbColor.rgb = termLight;
 	}
 
 	color = ((bbColor * alColor) * (1 - dlColor.a)) + dlColor;
@@ -72,16 +72,10 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return color;
 }
 
-RasterizerState bla
-{
-	FillMode = Solid;
-};
-
 technique11 basic
 {
     pass p0
     {
-		SetRasterizerState(bla);
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );

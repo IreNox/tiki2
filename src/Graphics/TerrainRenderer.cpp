@@ -142,16 +142,16 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Collision
-		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider, List<GameObject*>* poi)
+		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi)
 		{
 			if (collisionIndexBuffer == 0)
 			{
-				collisionIndexBuffer = new TerrainIndexBuffer(225000);
+				collisionIndexBuffer = new TerrainIndexBuffer(poi->Count() * 1000);
 			}
 
 			if (collisionVertexBuffer == 0)
 			{
-				collisionVertexBuffer = new TerrainVertexBuffer(75000);
+				collisionVertexBuffer = new TerrainVertexBuffer(poi->Count() * 500);
 			}
 
 			while (collisionRegions < poi->Count())
@@ -163,8 +163,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < poi->Count())
 			{
-				Vector3 pos = poi->Get(i)->PRS.GPosition();
-				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(pos.arr)), 10.0f);
+				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(poi->Get(i).arr)), 10.0f);
 				i++;
 			}
 			
@@ -197,8 +196,6 @@ namespace TikiEngine
 			Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
 
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
-
-			//terrain->UpdateCollisionRegion(0, cloddy_Vec::To3D(cloddy_Vec3F(cameraPos.arr)), 1.5f);
 
 			manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));

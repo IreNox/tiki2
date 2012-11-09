@@ -95,7 +95,14 @@
     <Compile Include="Editor\Form\ucDesignGUI.Designer.cs">
       <DependentUpon>ucDesignGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editor\Form\ucDesignTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\Form\ucDesignTest.Designer.cs">
+      <DependentUpon>ucDesignTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\ModeGUI.cs" />
+    <Compile Include="Editor\ModeTest.cs" />
     <Compile Include="Editor\Objects\GUI\GUIRect.cs" />
     <Compile Include="Engine\EditorMode.cs" />
     <Compile Include="Editor\ModeLevel.cs" />
@@ -207,6 +214,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Editor\Form\ucDesignGUI.resx">
       <DependentUpon>ucDesignGUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Form\ucDesignTest.resx">
+      <DependentUpon>ucDesignTest.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Form\formMain.resx">
       <DependentUpon>formMain.cs</DependentUpon>

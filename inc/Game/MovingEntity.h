@@ -31,13 +31,13 @@ namespace TikiEngine
 			double MaxForce() const { return maxForce; }
 			void SetMaxForce(Double mf) { maxForce = mf; }
 
-			Boolean IsSpeedMaxedOut() const { return maxSpeed * maxSpeed >= velocity.LengthSquared(); }
+			bool IsSpeedMaxedOut() const { return maxSpeed * maxSpeed >= velocity.LengthSquared(); }
 			Double Speed() const { return velocity.Length(); }
 			Double SpeedSq() const { return velocity.LengthSquared(); }
   
 			Vector2 Heading() const { return heading; }
 			void SetHeading(Vector2 newHeading);
-			Boolean RotateHeadingToFacePosition(Vector2 target);
+			bool RotateHeadingToFacePosition(Vector2 target);
 
 			Double MaxTurnRate() const { return maxTurnRate; }
 			void SetMaxTurnRate(double val) { maxTurnRate = val; }

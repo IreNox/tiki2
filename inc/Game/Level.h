@@ -31,7 +31,7 @@ namespace TikiEngine
 			int heightmapScale;
 			int heightmapSize;
 
-			UInt32 colliderUpdate;
+			UInt32 frameCount;
 			ITerrainRenderer* terrain;
 			ITriangleMeshCollider* collider;
 

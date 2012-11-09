@@ -69,11 +69,6 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return tex.Sample(sam, input.UV) * input.Color;
 }
 
-RasterizerState NoCulling
-{
-	CullMode = NONE;
-};
-
 technique11 Particle
 {
     pass Particle_PointList
@@ -88,7 +83,6 @@ technique11 Particle
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( CompileShader( gs_5_0, GS_Main_LineList() ) );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-		SetRasterizerState(NoCulling);
     }
 
   //  pass Particle_LineStrip

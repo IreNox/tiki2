@@ -6,7 +6,7 @@ PS_INPUT VS_Main(VS_INPUT input)
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
-    output.Pos = mul(output.Pos, fuckYouAsshole);
+    output.Pos = mul(output.Pos, WorldM);
 	output.WorldPos = output.Pos.xyz;
 
     output.Pos = mul(output.Pos, ViewM);

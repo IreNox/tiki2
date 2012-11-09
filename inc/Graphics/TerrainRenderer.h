@@ -47,7 +47,7 @@ namespace TikiEngine
 
 			float SampleHeight(const Vector3& position);
 
-			void UpdateCollider(ITriangleMeshCollider* collider, List<GameObject*>* poi);
+			void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
 
 			bool GetReady();
 	

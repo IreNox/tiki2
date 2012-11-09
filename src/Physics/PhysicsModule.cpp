@@ -149,7 +149,7 @@ namespace TikiEngine
 			return scene; 
 		}
 
-		Boolean PhysicsModule::RayCast(Ray ray, RaycastHit* hitInfo, float distance)
+		bool PhysicsModule::RayCast(Ray ray, RaycastHit* hitInfo, float distance)
 		{
 		  NxRay worldRay(ray.Origin.arr, Vector3::Normalize(ray.Direction).arr);
 		  NxRaycastHit hit;

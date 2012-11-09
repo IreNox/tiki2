@@ -1,11 +1,11 @@
 
-#include "Game/ParticleTest.h"
+#include "Game/PEShootMG.h"
 
 namespace TikiEngine
 {
 	namespace Particles
 	{
-		ParticleTest::ParticleTest(Engine* engine)
+		PEShootMG::PEShootMG(Engine* engine)
 			: ParticleEffect(engine), birthTime(0)
 		{
 			this->SParticleBudget(1000000);
@@ -17,11 +17,11 @@ namespace TikiEngine
 			//this->Trigger(1);
 		}
 
-		ParticleTest::~ParticleTest()
+		PEShootMG::~PEShootMG()
 		{
 		}
 
-		void ParticleTest::Update(const UpdateArgs& args)
+		void PEShootMG::Update(const UpdateArgs& args)
 		{
 			totalTime = args.Time.TotalTime;
 
@@ -37,7 +37,7 @@ namespace TikiEngine
 			//}
 		}
 
-		void ParticleTest::CreateParticle(Particle* particle)
+		void PEShootMG::CreateParticle(Particle* particle)
 		{
 			particle->Position = offset;
 			particle->Color = Color::White;
@@ -60,7 +60,7 @@ namespace TikiEngine
 			}
 		}
 
-		void ParticleTest::UpdateParticle(Particle* particle)
+		void PEShootMG::UpdateParticle(Particle* particle)
 		{
 			//particle->Color.A = 1 - particle->Age;
 			//particle->Position.Y = sin(particle->Age * 20) * 0.2f;

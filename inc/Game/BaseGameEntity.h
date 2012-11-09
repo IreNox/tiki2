@@ -46,7 +46,7 @@ namespace TikiEngine
 
 			int ID() const { return id; }
 
-			Boolean isTagged() const { return tag; }
+			bool isTagged() const { return tag; }
 			void Tag() { tag = true; }
 			void UnTag() {tag = false; }
 
@@ -70,7 +70,7 @@ namespace TikiEngine
 		private:
 			int id;					  // each entity has a unique ID
 			int type;			      // every entity has a type associated with it (health, troll, ammo etc)
-			Boolean tag;		      // generic flag. 
+			bool tag;		      // generic flag. 
 
 			static int nextValidID;	  // this is the next valid ID. Each time a BaseGameEntity is instantiated this value is updated
 		};

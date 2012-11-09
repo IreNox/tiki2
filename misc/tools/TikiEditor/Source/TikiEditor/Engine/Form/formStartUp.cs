@@ -27,5 +27,11 @@ namespace TikiEditor
             GI.ModeGUI = new ModeGUI(GI.Game);
             this.Close();
         }
+
+        private void buttonTest_Click(object sender, EventArgs e)
+        {
+            GI.ModeTest = new ModeTest(GI.Game);
+            this.Close();
+        }
     }
 }

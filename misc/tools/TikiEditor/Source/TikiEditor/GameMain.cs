@@ -70,9 +70,13 @@ namespace TikiEditor
             {
                 _mode = GI.ModeLevel;
             }
-            else
+            else if (GI.ModeGUI != null)
             {
                 _mode = GI.ModeGUI;
+            }
+            else
+            {
+                _mode = GI.ModeTest;
             }
 
             this.Components.Add(GI.Camera);

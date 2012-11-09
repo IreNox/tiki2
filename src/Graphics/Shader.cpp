@@ -64,14 +64,10 @@ namespace TikiEngine
 			{
 				CBObjectData* objData = DllMain::ModuleGraphics->GetCBufferObject()->Map();
 
-				Matrix mat;
-				gameObject->PRS.FillWorldMatrix(&mat);
+				gameObject->PRS.FillWorldMatrix(&objData->WorldM);
 
-				this->SetMatrix("fuckYouAsshole", mat);
-
-				objData->WorldM = mat;
 				objData->WorldMIT = Matrix::Transpose(
-					Matrix::Invert(mat)
+					Matrix::Invert(objData->WorldM)
 				);
 
 				if (material)
@@ -151,7 +147,7 @@ namespace TikiEngine
 			return value;
 		}
 
-		bool Shader::GetBoolean(cstring key)
+		Boolean Shader::GetBoolean(cstring key)
 		{
 			int value = 0;
 			auto scalar = effect->GetVariableByName(key)->AsScalar();

@@ -15,7 +15,7 @@
 #include "Core/ITriangleMeshCollider.h"
 
 #include "Core/GUIButton.h"
-#include "Game/ParticleTest.h"
+#include "Game/PEShootMG.h"
 
 namespace TikiEngine
 {
@@ -45,8 +45,6 @@ namespace TikiEngine
 
 			LightObject* light;
 			CameraObject* camera;
-
-			ParticleTest* behavior;
 
 			//ITexture* tex;
 			//Vector3 tmp;
