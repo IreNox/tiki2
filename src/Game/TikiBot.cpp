@@ -91,6 +91,39 @@ namespace TikiEngine
             pathPlanner->Create(par);
 		}
 
+		bool TikiBot::RotateFacingTowardPosition(Vector2 target)
+		{
+			Vector2 toTarget = Vector2::Normalize(target - Pos());
+
+			float dot = Vector2::Dot(facing, toTarget);
+			
+			// clamp to rectify any rounding errors
+			ClampT(dot, -1, 1);
+
+			//determine the angle between the heading vector and the target
+			float angle = acosf(dot);
+
+			// return true if the bot's facing is within WeaponAimTolerance degs of facing the target
+			const float WeaponAimTolerance = 0.01f; // ~2 degrees
+			if (angle < WeaponAimTolerance)
+			{
+				facing = toTarget;
+				return true;
+			}
+
+			// clamp the amount to turn to the max turn rate
+			if (angle > (float)maxTurnRate)
+				angle = (float)maxTurnRate;
+
+			// use a rotation matrix to rotate the player's facing vector accordingly
+			// the direction of rotation has to be determined when creating the rotation matrix
+			Matrix3x3 rotMatrix = rotMatrix.Rotate(angle * facing.Sign(toTarget));
+			facing = rotMatrix.TransformVector(facing);
+
+			return false;
+		}
+
+
 		bool TikiBot::IsAtPosition(Vector2 pos)
 		{
 			return ( Vector2::DistanceSquared(Pos(), pos) < 0.5f);

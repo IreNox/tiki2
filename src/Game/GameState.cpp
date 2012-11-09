@@ -77,6 +77,16 @@ namespace TikiEngine
  					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
  					pos = pos + Vector3(0, 30, 0);
  					bot->GetController()->SetCenter(pos);
+
+					// if we have a patrol bot, set the wayPoints.
+					std::list<Vector2> wayPoints;
+					wayPoints.push_back(Vector2(0, -100));
+					wayPoints.push_back(Vector2(100, -100));
+					wayPoints.push_back(Vector2(100, 100));
+					wayPoints.push_back(Vector2(-100, 100));
+					wayPoints.push_back(Vector2(-100, -100));
+					bot->GetBrain()->AddGoalPatrol(wayPoints);
+
 				}
 
 				i++;

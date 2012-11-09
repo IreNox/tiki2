@@ -48,7 +48,7 @@ void Vector2::Truncate(float maximum)
 	}
 }
 
-#pragma region Dot, Cross, Negate, Reflect
+#pragma region Dot, Cross, Negate, Reflect, Sign
 float Vector2::Dot(const Vector2& vector1, const Vector2& vector2)
 {
 	return vector1.X * vector2.X + vector1.Y * vector2.Y;
@@ -85,6 +85,14 @@ Vector2 Vector2::Lerp(const Vector2& value1, const Vector2& value2, float amount
 {
 	return Vector2(value1.X + (value2.X - value1.X) * amount, value1.Y + (value2.Y - value1.Y) * amount);
 }
+int Vector2::Sign(const Vector2& v2) const
+{
+	if (Y * v2.X > X * v2.Y)
+		return -1;	// counterClockwise
+	else 
+		return 1;   // clockwise
+}
+
 #pragma endregion
 
 #pragma region Length, Distance, Normalize Angle, Cross, Normalize, Perp

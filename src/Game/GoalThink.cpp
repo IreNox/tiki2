@@ -10,6 +10,7 @@
 
 #include "Game/AttackTargetGoalEvaluator.h"
 #include "Game/ExploreGoalEvaluator.h"
+#include "Game/PatrolGoalEvaluator.h"
 
 #include <cassert>
 
@@ -22,14 +23,16 @@ namespace TikiEngine
 		GoalThink::GoalThink(TikiBot* bot)
 			: GoalComposite<TikiBot>(bot, Goal_Think)
 		{
+			hasWaypoints = false;
 
 			// load this from desc
 			float ExploreBias = 0.05f;
 			float AttackBias = 1.5f;
+			float PatrolBias = 2.0f;
 			
-
 			evaluators.push_back(new ExploreGoalEvaluator(ExploreBias));
 			evaluators.push_back(new AttackTargetGoalEvaluator(AttackBias));
+			evaluators.push_back(new PatrolGoalEvaluator(PatrolBias));
 		}
 
 		GoalThink::~GoalThink()
@@ -70,14 +73,7 @@ namespace TikiEngine
 		{
 			if (!owner->IsPossessed())
 			{
-				//Arbitrate();
-				std::list<Vector2> wayPoints;
-				wayPoints.push_back(Vector2(0, -100));
-				wayPoints.push_back(Vector2(100, -100));
-				wayPoints.push_back(Vector2(100, 100));
-				wayPoints.push_back(Vector2(-100, 100));
-				wayPoints.push_back(Vector2(-100, -100));
-				AddGoalPatrol(wayPoints);
+				Arbitrate();
 			}
 
 			status = Active;
@@ -125,12 +121,15 @@ namespace TikiEngine
 			}
 		}
 
-		void GoalThink::AddGoalPatrol(std::list<Vector2> wayPoints)
+		void GoalThink::AddGoalPatrol(std::list<Vector2> wps)
 		{
 			if (NotPresent(Goal_Patrol))
 			{
+				hasWaypoints = true;
+				wayPoints = wps;
+
 				RemoveAllSubgoals();
-				AddSubgoal(new GoalPatrol(owner, wayPoints));
+				AddSubgoal(new GoalPatrol(owner, wps));
 			}
 		}
 

@@ -10,14 +10,14 @@ namespace TikiEngine
 		{
 		}
 
-		void MovingEntity::Init(Double radius, Vector2 velocity, Double maxSpeed, Vector2 heading, Double turnRate, Double maxForce)
+		void MovingEntity::Init(Double radius, Vector2 velocity, Double maxSpeed, Vector2 heading, float turnRate, Double maxForce)
 		{
 			this->heading = heading;
 			this->velocity = velocity;
 			this->mass = 1;
 			this->side = heading.Cross();	
 			this->maxSpeed = 20.0;//10.0; //maxSpeed;
-			this->maxTurnRate = 20.0; //turnRate;
+			this->maxTurnRate = 20.0f; //turnRate;
 			this->maxForce = maxForce;
 
 			// BaseGameEntity

@@ -4,6 +4,7 @@
 #include <limits>
 #include "Core/Matrix3x3.h"
 #include "Core/TypeDef.h"
+#include <cassert>
 
 /* misc utility functions and constants */
 const float   Pi        = 3.14159f;
@@ -35,6 +36,19 @@ template <class T>
 inline T MinOf(const T& a, const T& b)
 {
   if (a<b) return a; return b;
+}
+
+//clamps the first argument between the second two
+template <class T, class U, class V>
+inline void ClampT(T& arg, const U& minVal, const V& maxVal)
+{
+	assert ( ((double)minVal < (double)maxVal) && "<Clamp>MaxVal < MinVal!");
+
+	if (arg < (T)minVal)
+		arg = (T)minVal;
+
+	if (arg > (T)maxVal)
+		arg = (T)maxVal;
 }
 
 inline float ABS(float x)

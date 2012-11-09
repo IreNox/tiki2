@@ -15,7 +15,7 @@ namespace TikiEngine
 			virtual ~MovingEntity(){}
 
 			void Init(Double radius = 2.0, Vector2 velocity = Vector2::Zero, Double maxSpeed = 1.0, 
-					  Vector2 heading = Vector2::Zero, Double turnRate = 0.2, Double maxForce = 1.0);
+					  Vector2 heading = Vector2::Zero, float turnRate = 0.2, Double maxForce = 1.0);
 
 			// accessors
 			Vector2 Velocity() const { return velocity; }
@@ -39,8 +39,8 @@ namespace TikiEngine
 			void SetHeading(Vector2 newHeading);
 			bool RotateHeadingToFacePosition(Vector2 target);
 
-			Double MaxTurnRate() const { return maxTurnRate; }
-			void SetMaxTurnRate(double val) { maxTurnRate = val; }
+			float MaxTurnRate() const { return maxTurnRate; }
+			void SetMaxTurnRate(float val) { maxTurnRate = val; }
 
 		protected:
 			Vector2 velocity;
@@ -60,7 +60,7 @@ namespace TikiEngine
 			Double maxForce;
   			
 			// the maximum rate (radians per second) this vehicle can rotate         
-			Double maxTurnRate;
+			float maxTurnRate;
 
 		};
 	}

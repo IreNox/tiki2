@@ -34,6 +34,8 @@ namespace TikiEngine
 			void Write(std::ostream&  os)const { }
 		    void Read(std::ifstream& is) { }
 
+
+
 			#pragma region Accessing attribute data
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
@@ -57,6 +59,10 @@ namespace TikiEngine
 			void SetAlive() {status = alive;}
 			#pragma endregion
 
+			// rotates the bot's heading until it is facing directly at the target
+			// position. Returns false if not facing at the target.
+			bool RotateFacingTowardPosition(Vector2 target);
+
 			// returns true if the bot is close to the given position
 			bool IsAtPosition(Vector2 pos);
 
@@ -68,7 +74,6 @@ namespace TikiEngine
 
 			// called when a human is exorcised from this bot and the AI takes control
 			void Exorcise();
-
 
 			PathPlanner* GetPathPlanner() { return pathPlanner; }
 			ICharacterController* GetController() { return controller; }

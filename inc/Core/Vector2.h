@@ -51,6 +51,10 @@ public:
 	static Vector2 Clamp(const Vector2& value1, const Vector2& min, const Vector2& max);
 	static Vector2 Lerp(const Vector2& value1, const Vector2& value2, float amount);
 
+	//returns positive if v2 is clockwise of this vector,
+	//negative if anticlockwise (assuming the Y axis is pointing down,
+	//X axis to right like a Window app)
+	int Sign(const Vector2& v2) const;
 
 	//boolean comparison
 	bool Vector2::operator== (const Vector2& rhs) const;
