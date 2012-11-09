@@ -48,7 +48,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	if (LightsCount != 0.0f)
 	{
-		float3 termLight = float3(0, 0, 0);
+		float3 termLight = float3(1, 1, 1);
 
 		float3 pixelNormal = rtNormal.Sample(sam, input.UV).xyz;
 
@@ -59,10 +59,10 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			float lighting = dot(pixelNormal, lightDir);	
 			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));
 
-			termLight += Lights[i].Color; // * lighting
+			termLight += Lights[i].Color * lighting;
 		}		
 
-		bbColor.rgb = termLight;
+		bbColor.rgb *= termLight;
 	}
 
 	color = ((bbColor * alColor) * (1 - dlColor.a)) + dlColor;
