@@ -225,6 +225,18 @@ namespace TikiEngine
 			//	cos(args.Time.TotalTime) * 3
 			//);
 
+			if (args.Input.GetKeyPressed(KEY_F5))
+			{
+				if (elements[0]->GModel()->GetMaterial()->TexNormalMap != 0)
+				{
+					elements[0]->GModel()->GetMaterial()->TexNormalMap = 0;
+				}
+				else
+				{
+					elements[0]->GModel()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Normal");
+				}
+			}
+
 			//// light settings test
 			//Vector3 move = Vector3(
 			//	(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
