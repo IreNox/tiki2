@@ -1,5 +1,6 @@
 #include "Game/Projectile.h"
 #include "Game/TikiBot.h"
+#include "Core/ITriangleMeshCollider.h"
 
 namespace TikiEngine
 {
@@ -37,7 +38,7 @@ namespace TikiEngine
 			sphere->SetRadius(desc.Scale);
 			sphere->SetDynamic(true);
 			sphere->SetTrigger(true);
-			sphere->SetGroup(CG_Collidable_Pushable);
+			sphere->SetGroup(CG_Collidable_Non_Pushable);
 
 			Vector2 vel = desc.Heading * desc.MaxSpeed;
 			vel.Truncate(desc.MaxSpeed);
@@ -50,17 +51,26 @@ namespace TikiEngine
 		{
 			// TODO: faction
   			TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
-			if (bot != 0 && bot->ID() != shooterID)
+       		if (bot != 0)
 			{
+				if (bot->ID() != shooterID)
+				{
+					impacted = true;
+					dead = true;
 
+					OutputDebugString(L"bot hit, health reduced. \n");
+					bot->ReduceHealth(damage);
+				}
+			}
+			else
+			{
 				impacted = true;
 				dead = true;
-
-				OutputDebugString(L"bot hit, health reduced. \n");
-				bot->ReduceHealth(damage);
 			}
 
-		}
+
+
+  		}
 
 		void Projectile::Update(const UpdateArgs& args)
 		{
