@@ -21,8 +21,6 @@ cbuffer MatrixBuffer : register(b2)
     matrix ProjectionM;	// Projection Matrix;
 };
 
-matrix FuckYouWorld;
-
 Texture2D TexDiffuse;
 Texture2D TexNormalMap;
 Texture2D TexSpecular;

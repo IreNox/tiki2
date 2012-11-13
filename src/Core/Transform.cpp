@@ -94,7 +94,7 @@ namespace TikiEngine
 		Matrix scale = Matrix::CreateScaleMatrix(this->scale);
 		Matrix trans = Matrix::CreateTranslation(this->position);
 
-		world = scale * rot * trans;
+		world = Matrix::Transpose(scale * rot * trans);
 		isDirty = false;
 	}
 	#pragma endregion

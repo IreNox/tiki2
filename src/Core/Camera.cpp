@@ -92,18 +92,22 @@ namespace TikiEngine
 
 		void Camera::Update(const UpdateArgs& args)
 		{
-			// cache non-transposed view
-			Matrix view = Matrix::CreateLookAt(
-				gameObject->PRS.GPosition(),
-				gameObject->PRS.GPosition() + gameObject->PRS.GetForward(),
-				Vector3::Up
-			);
-			matrices->ViewMatrix = Matrix::Transpose(view);
+			if (gameObject->PRS.IsDirty())
+			{
+				// cache non-transposed view
+				Matrix view = Matrix::CreateLookAt(
+					gameObject->PRS.GPosition(),
+					gameObject->PRS.GPosition() + gameObject->PRS.GetForward(),
+					Vector3::Up
+				);
 
-			// create frustum from view * re-transposed Proj
-			frustum->Set(
-				view * Matrix::Transpose(matrices->ProjectionMatrix)
-			);
+				matrices->ViewMatrix = Matrix::Transpose(view);
+
+				// create frustum from view * re-transposed Proj
+				frustum->Set(
+					view * Matrix::Transpose(matrices->ProjectionMatrix)
+				);
+			}
 		}
 		#pragma endregion
 
