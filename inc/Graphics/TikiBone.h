@@ -5,8 +5,8 @@
 #include <Core\List.h>
 #include "Core/TikiObject.h"
 #include "Core/TypeGlobals.h"
-#include "Graphics/TikiAnimationCurve.h"
 #include "Graphics/TikiAnimation.h"
+#include "Graphics/AnimationLayer.h"
 
 namespace TikiEngine
 {
@@ -20,17 +20,18 @@ namespace TikiEngine
 
 			void Initialize();
 
-			void Update(FbxTime& time);
+			void Update(const double& time = -1.0);
 		
+			void Clean();
+			void CreateMapping(List<TikiBone*>& list);
+
 			TikiBone* GetParent();
 			void SetParent(TikiBone* parent);
 
-			FbxAMatrix& BoneInitTransform();
-			FbxAMatrix& BoneCurrentTransform();
-			FbxAMatrix ShiftMatrix();
+			Matrix& BoneInitTransform();
+			Matrix& BoneCurrentTransform();
 
-			Vector3& InitGlobalTranslation();
-			Vector3& CurrGlobalTranslation();
+			Matrix ShiftMatrix();
 
 			TikiBone* GetBoneByName(const char* name);
 
@@ -42,22 +43,22 @@ namespace TikiEngine
 
 			const char* Name();
 
+			int GetConstantBufferIndex();
+			void SetConstantBufferIndex(int index);
+
 		private:
 			FbxNode* node;
 			const char* name;
+			int constantBufferIndex;
 
-			Vector3 initGlobalTranslation;
-			Vector3 currGlobalTranslation;
-
-			FbxAMatrix boneInitTransform;
-			FbxAMatrix boneInitTransformInverse;
-			FbxAMatrix boneCurrentTransform;
-
-			TikiAnimationCurve* curve;
+			Matrix boneInit;
+			Matrix boneInitInverse;
+			Matrix boneCurrent;
 
 			TikiBone* parent;
 			List<TikiBone*> childs;
 
+			AnimationLayer* layer;
 		};
 	}
 }

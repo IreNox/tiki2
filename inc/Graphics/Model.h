@@ -59,24 +59,19 @@ namespace TikiEngine
 			void InitializeAnimation();
 			void InitializeBoneMapping();
 
-			void BuildBoneHierachy(FbxNode* node);
+
+			void CreateBoneHierachy(FbxNode* node);
+			void InitializeMeshes();
+			void FlagBones();
+			void CleanBones();
+			void MapBones();
+			
 
 			void InitializeAnimationStack();
 			bool SetCurrentAnimStack(int pIndex);
 
-
-			void InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose);
-			void InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose);
-			void InitializeMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
-				FbxAMatrix& globalPosition, FbxPose* pose);
-			void InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition);
-
 			void CopyVertexData();
 			void CopyIndexData();
-
-			FbxAMatrix& GetGlobalPosition(FbxNode* node, FbxTime pTime=FBXSDK_TIME_INFINITE);
-			FbxAMatrix GetGeometry(FbxNode* node);
-			
 
 			FbxTime start;
 			FbxTime stop;
@@ -88,7 +83,7 @@ namespace TikiEngine
 			double stopTime;
 			double timer;
 
-
+			List<TikiBone*> constantBufferElements;
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 

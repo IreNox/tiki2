@@ -16,6 +16,9 @@ namespace TikiEngine
 
 			FbxAnimLayer* Layer();
 
+			double& StartTime();
+			double& StopTime();
+
 		private:
 			const char* name;
 

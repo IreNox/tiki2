@@ -343,10 +343,50 @@ Matrix Matrix::CreateFromQuaternion(const Quaternion& quaternion)
 #pragma endregion
 
 #pragma region YawPitchRoll
-Matrix Matrix::CreateFromYawPitchRoll(float yaw, float pitch, float roll)
+//angle in radians
+//yaw = y
+//pitch = x
+//roll = z
+
+Matrix Matrix::CreateFromYawPitchRollRadians(float yaw, float pitch, float roll)
 {
-	throw "nyi";
+	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+		yaw, 
+		pitch, 
+		roll));
 }
+Matrix Matrix::CreateFromYawPitchRollRadians(const Vector3& rot)
+{
+	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+		rot.Y, 
+		rot.X, 
+		rot.Z));
+}
+
+Matrix Matrix::CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll)
+{
+	float val = 0.0174532925f;
+	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+		yaw * val, 
+		pitch * val, 
+		roll * val));
+}
+Matrix Matrix::CreateFromYawPitchRollDegrees(const Vector3& rot)
+{
+	float val = 0.0174532925f;
+	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+		rot.Y * val, 
+		rot.X * val, 
+		rot.Z * val));
+}
+Matrix Matrix::CreateFromXYZDegrees(const Vector3& rot)
+{
+	float val = 0.0174532925f;
+	return CreateRotationX(rot.X * val) *
+		CreateRotationY(rot.Y * val) * 
+		CreateRotationZ(rot.Z * val);
+}
+
 #pragma endregion
 
 #pragma region Transforms
@@ -567,6 +607,10 @@ Matrix Matrix::Invert(const Matrix& matrix)
 	result.M44 = (m * num20 - m2 * num22 + m3 * num23) * num11;
 
 	return result;
+}
+Matrix Matrix::Invert()
+{
+	return Invert(*this);
 }
 #pragma endregion
 

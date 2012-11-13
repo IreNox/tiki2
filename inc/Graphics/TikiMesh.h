@@ -26,6 +26,7 @@ namespace TikiEngine
 			Vector4 Indices;
 		};
 
+
 		class TikiMesh : public TikiObject
 		{
 
@@ -37,8 +38,9 @@ namespace TikiEngine
 			bool Initialize();
 			void InitializeGPUSkinning();
 			void InitializeBones(TikiBone& rootBone);
+			void FlagBones(TikiBone& rootBone);
+			void MapBones(TikiBone& rootBone);
 
-			void Update(FbxTime& time, FbxAnimLayer* animLayer, FbxPose* pose);
 			void UpdateVertexBuffer();
 
 			bool GetReady();
@@ -49,13 +51,7 @@ namespace TikiEngine
 
 			List<TikiBone*> bones;
 
-			
 		private:
-
-			void ComputeClusterDeformation(FbxAMatrix& pGlobalPosition, FbxMesh* pMesh, FbxCluster* pCluster, 
-				FbxAMatrix& pVertexTransformMatrix, FbxTime pTime, FbxPose* pPose);
-			FbxAMatrix GetGeometry(FbxNode* pNode);
-
 			int MaxBonesPerVertex();
 
 			FbxNode* node;

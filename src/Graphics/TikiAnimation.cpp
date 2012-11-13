@@ -7,7 +7,7 @@ namespace TikiEngine
 		TikiAnimation::TikiAnimation(FbxAnimStack* stack)
 			:name(stack->GetName())
 		{
-			this->layer = stack->GetMember<FbxAnimLayer>(0);//<FbxAnimLayer>(0);
+			this->layer = stack->GetMember<FbxAnimLayer>(0);
 			int animationlayerCount = stack->GetSrcObjectCount<FbxAnimLayer>();
 
 			FbxTakeInfo* take = stack->GetScene()->GetTakeInfo(this->name);
@@ -23,6 +23,16 @@ namespace TikiEngine
 		FbxAnimLayer* TikiAnimation::Layer()
 		{
 			return this->layer;
+		}
+
+		double& TikiAnimation::StartTime()
+		{
+			return this->startTime;
+		}
+
+		double& TikiAnimation::StopTime()
+		{
+			return this->stopTime;
 		}
 	}
 }

@@ -310,6 +310,10 @@ Quaternion Quaternion::CreateFromYawPitchRoll( float yaw, float pitch, float rol
 	result.W = num9 * num6 * num3 + num8 * num5 * num2;
 	return result;
 }
+Quaternion Quaternion::CreateFromYawPitchRoll(const Vector3& rotation)
+{
+	return CreateFromYawPitchRoll(rotation.Y, rotation.X, rotation.Z);
+}
 
 
 #pragma endregion

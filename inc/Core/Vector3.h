@@ -56,6 +56,13 @@ public:
 	static Vector3 Clamp(const Vector3& value1, const Vector3& min, const Vector3& max);
 	static Vector3 Lerp(const Vector3& value1, const Vector3& value2,const float amount);
 
+	static inline bool Compare(const Vector3& lhs, const Vector3& rhs, float tolerance = 0.0f)
+	{		
+		return (abs(lhs.X - rhs.X) <= tolerance) ||
+			(abs(lhs.Y - rhs.Y) <= tolerance) ||
+			(abs(lhs.Z - rhs.Z) <= tolerance);
+	}
+
 	#pragma region Operators - Boolean
 	inline bool operator==(const Vector3& rhs) const
 	{

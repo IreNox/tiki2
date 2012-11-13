@@ -14,7 +14,6 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-		#pragma region Class
 		Model::Model(Engine* engine)
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1), rootBone(0)
 		{
@@ -44,34 +43,49 @@ namespace TikiEngine
 			SafeRelease(&indexBuffer);
 			SafeRelease(&vertexBuffer);
 			SafeDelete(&constantBufferMatrices);
+
 			if(rootBone != 0)
 				SafeRelease(&rootBone);
 		}
-		#pragma endregion
 
 		void Model::Initialize()
 		{
-			FbxAxisSystem directX(FbxAxisSystem::eDirectX);
-			FbxAxisSystem sceneAxis = scene->GetGlobalSettings().GetAxisSystem();
 
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
 
-			FbxNode* root = scene->GetRootNode();
-			this->InitializeNodeRecursive(root, currentTime, currentAnimLayer, this->GetGlobalPosition(root), NULL);
-			this->BuildBoneHierachy(root);
-			int boneCount = rootBone->Count();
+			this->CreateBoneHierachy(scene->GetRootNode());
+			this->InitializeMeshes();
 
-			int meshCount = scene->GetSrcObjectCount<FbxMesh>();
+			this->FlagBones();
+			this->CleanBones();
+			this->MapBones();
 
 			this->CopyIndexData();
 			this->CopyVertexData();
 
-			InitializeBoneMapping();
-			//InitializeAnimation();
+			this->InitializeAnimation();
 			
 
 		}
+
+		void Model::InitializeMeshes()
+		{
+			int meshCount = this->scene->GetSrcObjectCount<FbxMesh>();
+#if _DEBUG
+			if(!meshCount)
+				_CrtDbgBreak(); //no meshes -> not supported
+#endif
+			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
+			{
+				FbxMesh* mesh = this->scene->GetSrcObject<FbxMesh>(meshIndex);
+
+				TikiMesh* tm = new TikiMesh(engine, mesh->GetNode());
+				tm->Initialize();
+				meshes.Add(tm);
+			}
+		}
+
 		void Model::InitializeAnimation()
 		{
 			if(this->rootBone == 0)
@@ -79,6 +93,7 @@ namespace TikiEngine
 			for(int i = 0; i < this->animations.Count(); i++)
 				rootBone->InitializeAnimation(animations[i]);
 		}
+
 		void Model::InitializeBoneMapping()
 		{
 			if(rootBone == 0)
@@ -86,16 +101,37 @@ namespace TikiEngine
 			for(int i = 0; i < meshes.Count(); i++)
 				meshes[0]->InitializeBones(*rootBone);
 		}
-		void Model::BuildBoneHierachy(FbxNode* node)
+
+		void Model::FlagBones()
+		{
+			int meshCount = meshes.Count();
+			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
+				meshes[meshIndex]->FlagBones(*rootBone);
+		}
+
+		void Model::CleanBones()
+		{
+			rootBone->Clean();
+			rootBone->CreateMapping(this->constantBufferElements);
+		}
+
+		void Model::MapBones()
+		{
+			int meshCount = meshes.Count();
+			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
+				meshes[meshIndex]->MapBones(*rootBone);
+		}
+
+		void Model::CreateBoneHierachy(FbxNode* node)
 		{
 			if(rootBone != 0)
 				return;
 
 			rootBone = new TikiBone(node);
+			rootBone->AddRef();
 			rootBone->Initialize();
 		}
 
-		#pragma region Animation
 		void Model::InitializeAnimationStack()
 		{
 			this->scene->FillAnimStackNameArray(this->animStackNameArray);
@@ -158,18 +194,6 @@ namespace TikiEngine
 			return true;
 		}
 
-		float Model::GetAnimationSpeed()
-		{
-			return animationSpeed;
-		}
-
-		void Model::SetAnimationSpeed(float speed)
-		{
-			animationSpeed = speed;
-		}
-		#pragma endregion
-
-		#pragma region Member - Get/Set
 		void* Model::GetNativeResource()
 		{
 			return scene;
@@ -207,9 +231,7 @@ namespace TikiEngine
 				declaration = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
 		}
-		#pragma endregion
 
-		#pragma region Member - Draw/Update
 		void Model::Draw(GameObject* gameObject, const DrawArgs& args)
 		{
 			if (!this->GetReady()) return;
@@ -241,79 +263,17 @@ namespace TikiEngine
 			if(timer >= stopTime)
 				timer -= stopTime - startTime;
 			
-			currentTime.SetSecondDouble(timer);
-
 			if(this->rootBone != 0)
-				rootBone->Update(currentTime);
+				rootBone->Update(timer);
 
-			UInt32 i = 0;
-			while (i < meshes.Count())
-			{
-				meshes[i]->Update(currentTime, currentAnimLayer, NULL);
-				i++;
-			}
 
 			SkinMatrices* matrices = constantBufferMatrices->Map();
-			int matrixCount = meshes[0]->skinMatrices.Count();
+			int matrixCount = this->constantBufferElements.Count();
 			for(int i = 0; i < matrixCount; i++)
 			{
-				matrices->bones[i] = meshes[0]->skinMatrices[i].Transpose();
+				matrices->bones[i] = this->constantBufferElements[i]->ShiftMatrix();
 			}
 			constantBufferMatrices->Unmap();		
-		}
-		#pragma endregion
-
-		void Model::InitializeNodeRecursive(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxPose* pose)
-		{
-			FbxAMatrix lGlobalPosition = GetGlobalPosition(node, time);
-
-			//root has no NodeAttribute
-			if(node->GetNodeAttribute())
-			{
-				FbxAMatrix lGeometryOffset = GetGeometry(node);
-				FbxAMatrix lGlobalOffPosition = lGlobalPosition * lGeometryOffset;
-
-				InitializeNode(node, time, animLayer, parentGlobalPosition, lGlobalOffPosition, pose);
-			}
-			for(int i = 0; i < node->GetChildCount(); i++)
-			{
-				InitializeNodeRecursive(node->GetChild(i), time, animLayer, lGlobalPosition, pose);
-			}
-		}
-		void Model::InitializeNode(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition, FbxPose* pose)
-		{
-			if(node->GetNodeAttribute())
-			{
-				if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eMesh)
-				{
-					InitializeMesh(node, time, animLayer, globalPosition, pose);
-				}
-				else if(node->GetNodeAttribute()->GetAttributeType() == FbxNodeAttribute::eSkeleton)
-				{
-					InitializeSkeleton(node, parentGlobalPosition, globalPosition);
-				}
-			}
-		}
-		void Model::InitializeMesh(FbxNode* node, FbxTime& time, FbxAnimLayer* animLayer,
-			FbxAMatrix& globalPosition, FbxPose* pose)
-		{
-			if(node->GetMesh()->GetControlPointsCount() == 0)
-				return;
-
-			TikiMesh* tm = new TikiMesh(engine, node);
-			tm->Initialize();
-
-			meshes.Add(tm);
-		}
-		void Model::InitializeSkeleton(FbxNode* node, FbxAMatrix& parentGlobalPosition, FbxAMatrix& globalPosition)
-		{
-			//FbxSkeleton* lSkeleton = (FbxSkeleton*) node->GetNodeAttribute();
-
-			//if(rootBone != 0)
-			//	return;
-
-			//rootBone = new TikiBone(node);
-			//rootBone->Initialize();
 		}
 
 		void Model::CopyVertexData()
@@ -333,8 +293,6 @@ namespace TikiEngine
 			}
 
 			this->vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), verticesList.Count(), (void*)verticesList.GetInternalData());
-
-			//this->vertexBuffer->FillBuffer(verticesList.GetInternalData(), verticesList.Count());
 		}
 
 		void Model::CopyIndexData()
@@ -359,29 +317,9 @@ namespace TikiEngine
 				offset += meshes[i]->verticesList.Count();
 				i++;
 			}
-			//this->indexBuffer->FillBuffer(indicesList.GetInternalData(), indicesList.Count());
 			this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
-
 		}
 
-
-		#pragma region Math
-		FbxAMatrix& Model::GetGlobalPosition(FbxNode* node, FbxTime pTime)
-		{
-			return node->EvaluateGlobalTransform(pTime);
-		}
-
-		FbxAMatrix Model::GetGeometry(FbxNode* node)
-		{
-			const FbxVector4 lT = node->GetGeometricTranslation(FbxNode::eSourcePivot);
-			const FbxVector4 lR = node->GetGeometricRotation(FbxNode::eSourcePivot);
-			const FbxVector4 lS = node->GetGeometricScaling(FbxNode::eSourcePivot);
-
-			return FbxAMatrix(lT, lR, lS);
-		}
-		#pragma endregion
-
-		#pragma region Protected Member - Load/Save
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			if(!DllMain::FBXLoader->GetScene(fileName, &scene))
@@ -394,6 +332,15 @@ namespace TikiEngine
 		{
 
 		}
-		#pragma endregion
+
+		float Model::GetAnimationSpeed()
+		{
+			return this->animationSpeed;
+		}
+		void Model::SetAnimationSpeed(float speed)
+		{
+			this->animationSpeed = speed;
+		}
+
 	}
 }

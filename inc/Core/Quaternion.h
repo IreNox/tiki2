@@ -54,6 +54,7 @@ public:
 	 *
 	 * @return New Quaternion		
 	 */
+	static Quaternion CreateFromYawPitchRoll(const Vector3& rotation);
 	static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll);
 	
 	//static Quaternion CreateFromRotationMatrix(Matrix matrix)

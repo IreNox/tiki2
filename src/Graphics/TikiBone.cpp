@@ -7,18 +7,19 @@ namespace TikiEngine
 	{
 
 		TikiBone::TikiBone(FbxNode* node)
-			:node(node), curve(new TikiAnimationCurve(node)), parent(0), childs(),
-			boneInitTransform(), 
-			boneInitTransformInverse(),
-			boneCurrentTransform(),
-			initGlobalTranslation(),
-			currGlobalTranslation()
+			:node(node), parent(0), childs(),
+			boneInit(), 
+			boneInitInverse(),
+			boneCurrent(),
+			constantBufferIndex(-1),
+			layer(0)
 		{
 		}
 
 		TikiBone::~TikiBone()
 		{
-			SafeRelease(&curve);
+			//SafeRelease(&parent);
+			SafeRelease(&layer);
 
 			for(UInt32 i = 0; i < childs.Count(); i++)
 			{
@@ -27,8 +28,8 @@ namespace TikiEngine
 		}
 		void TikiBone::SetBind(FbxAMatrix& init)
 		{
-			this->boneInitTransform = init;
-			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
+			this->boneInit = FBXConverter::ConvertTranspose(init);
+			this->boneInitInverse = FBXConverter::ConvertTranspose(init.Inverse());
 		}
 
 		void TikiBone::Initialize()
@@ -37,61 +38,69 @@ namespace TikiEngine
 
 			if(this->parent != 0)
 			{
-				this->boneInitTransform =  parent->BoneInitTransform();
-				//this->initGlobalTranslation = parent->InitGlobalTranslation();
+				this->boneInit =  parent->BoneInitTransform();
 			}
-			this->boneInitTransform = this->boneCurrentTransform = this->boneInitTransform * this->node->EvaluateLocalTransform();
-			this->boneInitTransformInverse = this->boneInitTransform.Inverse();
-
-			//FbxAMatrix controlBoneInitTransform = this->node->EvaluateGlobalTransform();
-
-			//if(controlBoneInitTransform != boneInitTransform)
-			//	_CrtDbgBreak();
+			this->boneInit = this->boneCurrent = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform()) * this->boneInit;
+			this->boneInitInverse = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform().Inverse());
 
 			for(int i = 0; i < node->GetChildCount(); i++)
 			{
 				TikiBone* tmp = new TikiBone(node->GetChild(i));
+				tmp->AddRef();
 				tmp->SetParent(this);;
 				tmp->Initialize();
 				childs.Add(tmp);
 			}
 		}
-		Vector3& TikiBone::InitGlobalTranslation()
+
+		void TikiBone::Clean()
 		{
-			return initGlobalTranslation;
+			for(int i = 0; i < childs.Count(); i++)
+			{
+				childs[i]->Clean();
+
+				if(childs[i]->childs.Count() == 0 && childs[i]->constantBufferIndex == -1)
+				{
+					childs[i]->Release();
+					childs.RemoveAt(i);
+				}
+			}
 		}
-		Vector3& TikiBone::CurrGlobalTranslation()
+
+		void TikiBone::CreateMapping(List<TikiBone*>& list)
 		{
-			return currGlobalTranslation;
+			if(constantBufferIndex != -1)
+				list.Add(this);
+			constantBufferIndex = list.Count() - 1;
+			for(int i = 0; i < childs.Count(); i++)
+				childs[i]->CreateMapping(list);
 		}
 
 		void TikiBone::InitializeAnimation(TikiAnimation* animation)
 		{
-			curve->SetAnimation(animation->Layer());
+			if(this->layer != 0)
+				return;
 
-			for(int i = 0; i <  childs.Count(); i++)
+			this->layer = new AnimationLayer(animation->StartTime(), animation->StopTime());
+			layer->AddRef();
+			layer->Initialize(this->node, animation->Layer());
+
+			for(int i = 0; i < childs.Count(); i++)
 				childs[i]->InitializeAnimation(animation);
 		}
 
-		void TikiBone::Update(FbxTime& time)
+		void TikiBone::Update(const double& time)
 		{
-
 			if(this->parent == 0)
 			{
-				this->boneCurrentTransform = node->EvaluateLocalTransform(time);
+				//this->boneCurrentTransform = node->EvaluateLocalTransform(fbxTime);
+				this->boneCurrent = layer->LocalTransform(time);
 			}
 			else
 			{
-				this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(time);
+				//this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(fbxTime);
+				this->boneCurrent = layer->LocalTransform(time) * parent->BoneCurrentTransform();
 			}
-
-			//FbxAMatrix controlTransform = this->node->EvaluateGlobalTransform(time);
-
-			//if(controlTransform != boneCurrentTransform)
-			//{
-			//	_CrtDbgBreak();
-			//	this->name = name;
-			//}
 
 			for(UInt32 i = 0; i < childs.Count();i++)
 			{
@@ -107,23 +116,22 @@ namespace TikiEngine
 		void TikiBone::SetParent(TikiBone* parent)
 		{
 			this->parent = parent;
+			//SafeAddRef(parent, &this->parent);
 		}
 
-		FbxAMatrix& TikiBone::BoneInitTransform()
+		Matrix& TikiBone::BoneInitTransform()
 		{
-
-
-			return boneInitTransform;
+			return boneInit;
 		}
 
-		FbxAMatrix& TikiBone::BoneCurrentTransform()
+		Matrix& TikiBone::BoneCurrentTransform()
 		{
-			return boneCurrentTransform;
+			return boneCurrent;
 		}
 
-		FbxAMatrix TikiBone::ShiftMatrix()
+		Matrix TikiBone::ShiftMatrix()
 		{
-			return this->boneCurrentTransform * this->boneInitTransformInverse;
+			return (this->boneInitInverse * this->boneCurrent).Transpose();
 		}
 
 		int TikiBone::Count()
@@ -152,6 +160,16 @@ namespace TikiEngine
 		const char* TikiBone::Name()
 		{
 			return name;
+		}
+
+		int TikiBone::GetConstantBufferIndex()
+		{
+			return this->constantBufferIndex;
+		}
+
+		void TikiBone::SetConstantBufferIndex(int index)
+		{
+			this->constantBufferIndex = index;
 		}
 	}
 }

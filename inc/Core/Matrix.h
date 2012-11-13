@@ -69,6 +69,7 @@ public:
 	static Matrix Subtract(const Matrix& left, const Matrix& right);
 
 	static Matrix Invert(const Matrix& matrix);
+	Matrix Invert();
 	static Matrix Transpose(const Matrix& matrix);
 	Matrix Transpose();
 
@@ -94,7 +95,16 @@ public:
 	static Matrix CreateLookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector);
 	static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
 	static Matrix CreateFromQuaternion(const Quaternion& quaternion);
-	static Matrix CreateFromYawPitchRoll(float yaw, float pitch, float roll);
+
+	/// <summary>Creates a new rotation matrix from a specified yaw, pitch, and roll.</summary>
+	/// <param name="yaw">Angle of rotation, in radians, around the y-axis.</param>
+	/// <param name="pitch">Angle of rotation, in radians, around the x-axis.</param>
+	/// <param name="roll">Angle of rotation, in radians, around the z-axis.</param>
+	static Matrix CreateFromYawPitchRollRadians(float yaw, float pitch, float roll);
+	static Matrix CreateFromYawPitchRollRadians(const Vector3& rot);
+	static Matrix CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll);
+	static Matrix CreateFromYawPitchRollDegrees(const Vector3& rot);
+	static Matrix CreateFromXYZDegrees(const Vector3& rot);
 
 
 	bool operator== (const Matrix& matrix);
