@@ -21,11 +21,11 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 	if(weight != 0)
 	{
-		output.Pos = mul(pos, WorldM);
+		output.Pos = mul(pos, FuckYouWorld);
 	}
 	else
 	{
-		output.Pos = mul(float4(input.Pos, 1.0f), WorldM);
+		output.Pos = mul(float4(input.Pos, 1.0f), FuckYouWorld);
 	}
     
 	output.WorldPos = output.Pos.xyz;

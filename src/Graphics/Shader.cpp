@@ -66,6 +66,8 @@ namespace TikiEngine
 
 				gameObject->PRS.FillWorldMatrix(&objData->WorldM);
 
+				this->SetMatrix("FuckYouWorld", objData->WorldM);
+
 				objData->WorldMIT = Matrix::Transpose(
 					Matrix::Invert(objData->WorldM)
 				);

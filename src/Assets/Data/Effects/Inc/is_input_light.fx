@@ -1,7 +1,7 @@
 /////////////
 // GLOBALS //
 /////////////
-cbuffer LightBuffer //: register(b2)
+cbuffer LightBuffer : register(b0)
 {
     float LightsCount;
 	float DiffuseIntensity;
