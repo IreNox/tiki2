@@ -63,6 +63,8 @@ namespace TikiEngine
 			UnitSelection* unitSelection;
 			List<GameObject*> selectedUnits; // LevelUnity erbt von LevelChild = GameObject
 
+			List<GameObject*> projectiles;
+
 			//List<Unit*> levelUnits;
 			//List<Building*> levelBuildings;
 

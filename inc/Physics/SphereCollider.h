@@ -9,7 +9,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		class SphereCollider : public Collider, public ISphereCollider 
+		class SphereCollider : public ISphereCollider, public Collider
 		{
 		public:
 			/*! @brief Create BoxCollider */

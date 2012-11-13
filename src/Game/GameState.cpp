@@ -9,11 +9,13 @@
 #include "Core/ISpriteBatch.h"
 
 #include "Game/GoalThink.h"
+#include "Game/Projectile.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
+
 		#pragma region Class
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
@@ -24,10 +26,14 @@ namespace TikiEngine
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
+
+
 		}
 
 		GameState::~GameState()
 		{
+			projectiles.Clear();
+
 			SafeRelease(&hud);
 			SafeDelete(&navMesh);
 			SafeDelete(&unitSelection);
@@ -124,6 +130,26 @@ namespace TikiEngine
 			hud->Update(args);
 			unitSelection->Update(args);
 
+
+			for(UInt32 i = 0; i < projectiles.Count(); i++)
+			{
+				GameObject* go = 0;
+				go = projectiles.Get(i);
+
+				if (go != 0)
+				{
+					go->Update(args);
+
+					Projectile* p = 0;
+					p = go->GetComponent<Projectile>();
+					if (p != 0 && p->IsDead())
+					{
+						projectiles.Remove(go);
+						SafeRelease(&go);
+					}
+				}
+			}
+
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
@@ -170,6 +196,18 @@ namespace TikiEngine
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalAttackMove(info.Point);
 							}
+							else if(args.Input.GetKey(KEY_SPACE))
+							{
+								ProjectileDescription desc;
+								desc.Origin = bot->Pos3D();
+								desc.Heading = bot->Facing();
+								desc.ShooterID = bot->ID();
+								GameObject* go = new GameObject(engine);
+								Projectile* proj = new Projectile(this, go);
+								proj->Init(desc, args);
+								projectiles.Add(go);
+								//GetScene()->AddElement(go);
+							}
 							else
 							{
 								bot->GetBrain()->RemoveAllSubgoals();
@@ -178,6 +216,8 @@ namespace TikiEngine
 // 									OutputDebugString(L"HAS Raycast LOS. \n");
 // 								else
 // 									OutputDebugString(L"NO Raycast LOS. \n");
+
+
 							}
 
 						}

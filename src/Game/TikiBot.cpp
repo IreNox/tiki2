@@ -91,6 +91,27 @@ namespace TikiEngine
             pathPlanner->Create(par);
 		}
 
+		void TikiBot::ReduceHealth(unsigned int val)
+		{
+			health -= val;
+
+			if (health <= 0)
+				SetDead();
+
+			hit = true;
+
+			const int FrameRate = 60;
+			const float HitFlashTime = 0.2f;
+			numUpdatesHitPersistant = (int)(FrameRate * HitFlashTime);
+		}
+
+		void TikiBot::IncreaseHealth(unsigned int val)
+		{
+			health += val; 
+			ClampT(health, 0, maxHealth);
+		}
+
+
 		bool TikiBot::RotateFacingTowardPosition(Vector2 target)
 		{
 			Vector2 toTarget = Vector2::Normalize(target - Pos());
@@ -241,13 +262,13 @@ namespace TikiEngine
 								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
 
-
 			//if the vehicle has a non zero velocity the heading and side vectors must be updated
 			if (!velocity.IsZero())
 			{    
 				heading = Vector2::Normalize(velocity);
 				side = heading.Cross();
-				// TODO: RotateHeadingToFacePosition!
+
+				// TODO: 
 				facing = heading;
 
 

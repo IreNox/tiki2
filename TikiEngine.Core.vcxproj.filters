@@ -661,5 +661,8 @@
     <ClInclude Include="inc\Core\BufferedVariable.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\EventTriggers.h">
+      <Filter>Headerdateien\Core\Args/States\Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

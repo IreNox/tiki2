@@ -2,11 +2,14 @@
 
 #include "Core/Component.h"
 #include "Core/IRigidBody.h"
+#include "Core/EventTriggers.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
+		using namespace TikiEngine;
+
 		enum CollisionGroups
 		{
 			CG_Non_Collidable,
@@ -53,13 +56,15 @@ namespace TikiEngine
 
 			 /* !@brief OnTriggerEnter is called when the Collider other enters the trigger. */
 			 //virtual void OnTriggerEnter(ICollider* other) = 0;
+			TriggerEnterEvent TriggerEnter;
+
+			/* !@brief OnTriggerStay is called almost all the frames for every Collider other that is touching the trigger. */
+			//virtual void OnTriggerStay(ICollider* other) = 0;
+			TriggerStayEvent TriggerStay;
 
 			 /* !@brief OnTriggerExit is called when the Collider other has stopped touching the trigger. */
 			 //virtual void OnTriggerExit(ICollider* other) = 0;
-
-			 /* !@brief OnTriggerStay is called almost all the frames for every Collider other that is touching the trigger. */
-			 //virtual void OnTriggerStay(ICollider* other) = 0;
-
+			TriggerExitEvent TriggerExit;
 		};
 	}
 }

@@ -9,7 +9,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		class TriangleMeshCollider : public Collider, public ITriangleMeshCollider
+		class TriangleMeshCollider : public ITriangleMeshCollider, public Collider
 		{
 		public:
 

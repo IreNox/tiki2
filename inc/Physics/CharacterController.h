@@ -8,7 +8,7 @@ namespace TikiEngine
 {
 	namespace Physics
 	{
-		class CharacterController : public Collider, public ICharacterController
+		class CharacterController : public ICharacterController, public Collider
 		{
 
 		public:

@@ -314,6 +314,9 @@
     <ClInclude Include="inc\Game\Weapon.h">
       <Filter>Headerdateien\AI\WeaponSystem\Weapons</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\Projectile.h">
+      <Filter>Headerdateien\AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -474,6 +477,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\Weapon.cpp">
       <Filter>Quelldateien\AI\WeaponSystem\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Projectile.cpp">
+      <Filter>Quelldateien\AI\WeaponSystem\Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

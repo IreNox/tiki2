@@ -39,9 +39,9 @@ namespace TikiEngine
 			#pragma region Accessing attribute data
 			int Health() const {return health;}
 			int MaxHealth() const {return maxHealth;}
-			//void ReduceHealth(unsigned int val);
-			//void IncreaseHealth(unsigned int val);
-			//void RestoreHealthToMaximum();
+			void ReduceHealth(unsigned int val);
+			void IncreaseHealth(unsigned int val);
+			void RestoreHealthToMaximum() {health = maxHealth;}
 				 
 			int Score() const {return score;}
 			void IncrementScore() {++score;}

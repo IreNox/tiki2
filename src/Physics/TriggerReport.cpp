@@ -1,9 +1,11 @@
 #include "Physics/TriggerReport.h"
 
 #include "Core/ICollider.h"
-#include "Core/ICharacterController.h"
+//#include "Core/EventTriggers.h"
+
 #include "PhysX/Physics/NxActor.h"
-#include "PhysX/Physics/NxShape.h"
+
+
 namespace TikiEngine
 {
 	namespace Physics
@@ -12,30 +14,33 @@ namespace TikiEngine
 
 		void TriggerReport::onTrigger(NxShape& triggerShape, NxShape& otherShape, NxTriggerFlag status)
 		{
-			ICollider* triggerCollider = (ICollider*)triggerShape.getActor().userData;
-			
-			ICollider* otherCollider;
-			if (otherShape.getActor().userData != 0)
-				otherCollider = (ICollider*)otherShape.getActor().userData;
-			else
-				otherCollider = (ICollider*)otherShape.userData;
-			
+			ICollider* triggerCollider = 0;
+			triggerCollider = static_cast<ICollider*>(triggerShape.getActor().userData);
+			ICollider* otherCollider = 0;
+			otherCollider = static_cast<ICollider*>(otherShape.getActor().userData);
 
-
-			if (status & NX_TRIGGER_ON_ENTER)
+			if (triggerCollider != 0 && otherCollider != 0)
 			{
-				//OutputDebugString(L"Collider entered Trigger.\n");
+				if (!otherCollider->GetTrigger())
+				{
+					if (status & NX_TRIGGER_ON_ENTER)
+					{
+						TriggerEnterArgs args = TriggerEnterArgs(triggerCollider, otherCollider);
+						triggerCollider->TriggerEnter.RaiseEvent(triggerCollider, args);
+					}
+					if (status & NX_TRIGGER_ON_STAY)
+					{
+						TriggerStayArgs args = TriggerStayArgs(triggerCollider, otherCollider);
+						triggerCollider->TriggerStay.RaiseEvent(triggerCollider, args);
+					}
+					if (status & NX_TRIGGER_ON_LEAVE)
+					{
+						TriggerExitArgs args = TriggerExitArgs(triggerCollider, otherCollider);
+						triggerCollider->TriggerExit.RaiseEvent(triggerCollider, args);
+					}
+				} // if (!Trigger)
 			}
 
-			if (status & NX_TRIGGER_ON_STAY)
-			{
-				//OutputDebugString(L"Collider stays in Trigger.\n");
-			}
-
-			if (status & NX_TRIGGER_ON_LEAVE)
-			{
-				//OutputDebugString(L"Collider leaved Trigger.\n");
-			}
 
 		}
 
