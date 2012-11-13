@@ -16,12 +16,15 @@
 
 #include "Core/UpdateArgs.h"
 
+#include "Physics/TriggerReport.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using namespace TikiEngine::Vertices;
-    using namespace TikiEngine;
+		using namespace TikiEngine;
+		using namespace TikiEngine::Physics;
 
 		class PhysicsModule : public IPhysics
 		{
@@ -60,6 +63,7 @@ namespace TikiEngine
 			NxUserAllocator* userAllocator;
 			int frameCnt;
 			float timeSinceLastUpdate;
+			TriggerReport triggerRep;
 
 #if _DEBUG
 			Vector3 physxToTiki(const NxVec3& vector);

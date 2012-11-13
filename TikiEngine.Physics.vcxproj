@@ -31,6 +31,7 @@
     <ClInclude Include="inc\Physics\SphereCollider.h" />
     <ClInclude Include="inc\Physics\Stream.h" />
     <ClInclude Include="inc\Physics\TriangleMeshCollider.h" />
+    <ClInclude Include="inc\Physics\TriggerReport.h" />
     <ClInclude Include="inc\Physics\UserAllocator.h" />
     <ClInclude Include="inc\Physics\VRDSettings.h" />
   </ItemGroup>
@@ -46,6 +47,7 @@
     <ClCompile Include="src\Physics\SphereCollider.cpp" />
     <ClCompile Include="src\Physics\Stream.cpp" />
     <ClCompile Include="src\Physics\TriangleMeshCollider.cpp" />
+    <ClCompile Include="src\Physics\TriggerReport.cpp" />
     <ClCompile Include="src\Physics\UserAllocator.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -14,7 +14,7 @@
 #include "Core/LightObject.h"
 
 #include "Game/Utils.h"
-
+#include "Game/CameraFly.h"
 
 
 #include <ppl.h>
@@ -36,34 +36,28 @@ namespace TikiEngine
 			showNaviMesh = true;
 			drawCellSpace = false;
 
-			fly = 0;
+			//fly = 0;
 		}
 
 		SceneMark::~SceneMark()
 		{
-			SafeRelease(&kinematicBox);
-			SafeRelease(&staticBox);
-			SafeRelease(&dynamicBox);
-			SafeRelease(&triggerSphere);
-			SafeRelease(&controller);
-			SafeRelease(&material);
-		
-
-
-
-			SafeRelease(&bot);
-
+			//SafeRelease(&kinematicBox);
+			//SafeRelease(&staticBox);
+			//SafeRelease(&dynamicBox);
+			//SafeRelease(&triggerSphere);
+			//SafeRelease(&controller);
+			//SafeRelease(&material);
 			
-			SafeRelease(&font);
+			//SafeRelease(&font);
 			
 
 			
-			SafeDelete(&naviMesh);
+			//SafeDelete(&naviMesh);
 
-			SafeRelease(&fly);
+			//SafeRelease(&fly);
 
 
-			SafeRelease(&state);
+			//SafeRelease(&state);
 		}
 
 		void SceneMark::Initialize(const InitializationArgs& args)
@@ -77,29 +71,11 @@ namespace TikiEngine
 
 			// Create TikiBot, set steering, add to cellspace and entitymgr
 			GameObject* go = new GameObject(engine);
-			bot = new TikiBot(state, go);
-			bot->CreateNav(naviMesh, 0);
-			//cellSpace->AddEntity(bot);
+			//bot = new TikiBot(state, go);
+			//bot->CreateNav(naviMesh, 0);
 			// TODO: state->GetEntityMgr()->RegisterEntity(bot);
-			this->AddElement(go);
-			go->Release();
+			//this->AddElement(go);
 
-			// Create static Octree for NavMesh triangles
-			//tree = new OcTree(engine);
-			//int totalCells = naviMesh->TotalCells();
-			//
-			//for (int i = 0; i < totalCells; i++)
-			//{
-			//	NavigationCell* cell = naviMesh->Cell(i);
-			//	tris[i].UserData = (void*) cell;
-
-			//	for(int j = 0; j < 3; j++)
-			//	{
-			//		tris[i].Pt[j] = cell->Vertex(j);
-			//	}
-
-			//}
-			//tree->Create(&tris[0], totalCells, 32);
 
 			//IPhysicsMaterial* material; 
 			material = engine->librarys->CreateResource<IPhysicsMaterial>();
@@ -115,11 +91,12 @@ namespace TikiEngine
 			go = new GameObject(engine);
 			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
 			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			dynamicBox->SetCenter(Vector3(10, 10, 20));
+			dynamicBox->SetCenter(Vector3(40, 10, 20));
 			dynamicBox->SetSize(Vector3(1, 1, 1));
 			dynamicBox->SetDynamic(true);
 			// assign collision groups after object is created, else it won't work!
 			dynamicBox->SetGroup(CG_Collidable_Pushable);
+			dynamicBox->AddRef();
 			this->AddElement(go);
 			go->Release();
 
@@ -131,8 +108,8 @@ namespace TikiEngine
 			staticBox->SetSize(Vector3(128, 1, 128));
 			staticBox->SetDynamic(false);
 			staticBox->SetGroup(CG_Collidable_Non_Pushable);
+			staticBox->AddRef();
 			this->AddElement(go);
-			go->Release();
 
 			// Init kinematic actor
 			go = new GameObject(engine);
@@ -142,64 +119,65 @@ namespace TikiEngine
 			kinematicBox->SetSize(Vector3(1, 1.5, 1));
 			kinematicBox->SetDynamic(true);
 			kinematicBox->GetRigidBody()->SetKinematic(true);
+			kinematicBox->AddRef();
 			this->AddElement(go);
-			go->Release();
 
 			// init static sphere trigger 
 			go = new GameObject(engine);
 			triggerSphere = engine->librarys->CreateComponent<ISphereCollider>(go);
 			triggerSphere->SetMaterial(material->GetIndex()); // 0 = default material	
-			triggerSphere->SetCenter(Vector3(3, 20, 10));
-			triggerSphere->SetRadius(1.0f);
+			triggerSphere->SetCenter(Vector3(10, 10, 10));
+			triggerSphere->SetRadius(10.0f);
 			triggerSphere->SetDynamic(false);
 			triggerSphere->SetTrigger(true);
-			triggerSphere->SetGroup(CG_Collidable_Non_Pushable);
+			triggerSphere->SetGroup(CG_Collidable_Pushable);
+			triggerSphere->AddRef();
 			this->AddElement(go);
-			go->Release();
 
 			// init CharacterController
 			go = new GameObject(engine);
 			controller = engine->librarys->CreateComponent<ICharacterController>(go);
-			controller->SetCenter(Vector3(10, 10, 10));
+			controller->SetCenter(Vector3(30, 10, 10));
 			controller->SetRadius(0.25f);
 			controller->SetHeight(1.0f);
 			controller->SetSlopeLimit(45.0f);
 			controller->SetStepOffset(0.5f);
 			controller->SetGroup(CG_Collidable_Pushable);
+			controller->AddRef();
 			this->AddElement(go);
-			go->Release();
 
 
 
 
-			go = new CameraObject(engine);
-			go->PRS.SPosition() = Vector3(0, 20, 50);
+			//go = new CameraObject(engine);
+			//go->PRS.SPosition() = Vector3(0, 20, 50);
 			//go->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(3.14159f, 0, 0);
 			
-			fly = new CameraFly(engine, go);
-			
-			this->AddElement(go);
-			go->Release();
+			camera = new CameraObject(engine);			
+			camera->PRS.SPosition() = Vector3(0, 18, 52);
+			camera->AddRef();
 
+			(new CameraFly(engine, camera));
+			this->AddElement(camera);
 
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 10);
-
+			font->AddRef();
 
 
 			// Test if the box is dynamic to move it around
-			if (dynamicBox->GetDynamic())
-			{
-				// set some mass, this won't affect kinematic actors.
-				dynamicBox->GetRigidBody()->SetMass(0.5f);
-				//assert(box->GetRigidBody()->GetMass() == 5);
-
-				// give this tiny box a force pointing upwards
-				dynamicBox->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
-
-				// and set an angular velocity on the Y-Axis
-				dynamicBox->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
-			}
+ 			if (dynamicBox->GetDynamic())
+ 			{
+ 				// set some mass, this won't affect kinematic actors.
+ 				dynamicBox->GetRigidBody()->SetMass(0.5f);
+ 				//assert(box->GetRigidBody()->GetMass() == 5);
+ 
+ 				// give this tiny box a force pointing upwards
+ 				dynamicBox->GetRigidBody()->SetVelocity(Vector3(0, 11, 0));
+ 
+ 				// and set an angular velocity on the Y-Axis
+ 				dynamicBox->GetRigidBody()->SetAngularVelocity(Vector3(0, 5, 0));
+ 			}
 
 			Scene::Initialize(args);
 		}
@@ -208,24 +186,24 @@ namespace TikiEngine
 		{
 			#if _DEBUG
 			// Draw Mouse Ray
-		    Vector3 forwardCam = fly->GetGameObject()->PRS.GPosition() + fly->GetGameObject()->PRS.GetForward();
+		    Vector3 forwardCam = camera->PRS.GPosition() + camera->PRS.GetForward();
 		    engine->graphics->DrawLine(forwardCam, forwardCam + dir * 100.0f, Color::Red);
 			engine->graphics->DrawLine(forwardCam, impact, Color::Green);
 
 			// Draw bot Velocity
-			Vector3 botPos = bot->GetGameObject()->PRS.GPosition();
-			Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
-			engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
+			//Vector3 botPos = bot->GetGameObject()->PRS.GPosition();
+			//Vector3 heading = Vector3(bot->Heading().X, 0, bot->Heading().Y);
+			//engine->graphics->DrawLine(botPos + heading, botPos, Color::Green);
 
 
 			// Draw some debug text
 			std::wostringstream s;
-			s << "ControllerPos (" << botPos.X << ", " << botPos.Y  << ", " << botPos.Z << ")";
+			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 80));
 
 			std::wostringstream s3;
-			Vector3 camPos = fly->GetGameObject()->PRS.GPosition();
+			Vector3 camPos = camera->PRS.GPosition();
 			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
 			str = s3.str();
 			engine->sprites->DrawString(font, str, Vector2(1, 120));
@@ -233,9 +211,6 @@ namespace TikiEngine
 
 			if (showNaviMesh)
 				naviMesh->Draw(args);
-
-			//List<TRI>* triangles = tree->GetTrianglesAt(bot->Pos3D());
-			//tree->DrawDebug();
 
 
 			engine->physics->DrawDebug();
@@ -254,18 +229,19 @@ namespace TikiEngine
 			//	[=](){ Vector2::Zero; }
 			//);
 
+			float moveSpeed = 10.0f;
 			// Update Controller movement
 			Vector3 displacement(0, -9.8f, 0);
 			if (args.Input.GetKey(KEY_I))
-				displacement -= Vector3(0, 0, 1);
+				displacement -= Vector3(0, 0, moveSpeed);
 			if (args.Input.GetKey(KEY_K))
-				displacement += Vector3(0, 0, 1);
+				displacement += Vector3(0, 0, moveSpeed);
 			if (args.Input.GetKey(KEY_J))
-				displacement -= Vector3(1, 0, 0);
+				displacement -= Vector3(moveSpeed, 0, 0);
 			if (args.Input.GetKey(KEY_L))
-				displacement += Vector3(1, 0, 0);
+				displacement += Vector3(moveSpeed, 0, 0);
 			if (args.Input.GetKey(KEY_SPACE))
-				controller->SetCenter(Vector3(0, 2, 0));
+				controller->SetCenter(Vector3(0, 20, 0));
 
 			// we can also determine which parts of the collider collided with another one.
 			CollisionFlags cf;
@@ -290,7 +266,7 @@ namespace TikiEngine
 				
 				Vector2 absMouse = engine->graphics->GetViewPort()->ToPixelCoord(args.Input.MousePosition);
 		    
-				Ray ray = fly->GetGameObject()->GetComponent<Camera>()->ScreenPointToRay(absMouse);
+				Ray ray = camera->GetCameraComponent()->ScreenPointToRay(absMouse);
 				orig = ray.Origin;
 				dir = ray.Direction;
 				RaycastHit info;
@@ -312,20 +288,20 @@ namespace TikiEngine
 					impact = info.Point;
 					//bot->GotoLocation(impact);
 
-                    for(int i = 0; i < 10; i++)
-                    {
-                        Vector3 center = impact + Vector3(0, (float)i, 0);
-                        GameObject* go = new GameObject(engine);
-                        dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-                        dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-                        dynamicBox->SetCenter(center);
-                        dynamicBox->SetSize(Vector3(1, 1, 1));
-                        dynamicBox->SetDynamic(true);
-                        // assign collision groups after object is created, else it won't work!
-                        dynamicBox->SetGroup(CG_Collidable_Pushable);
-                        this->AddElement(go);
-                        go->Release();
-                    }
+      //              for(int i = 0; i < 10; i++)
+      //              {
+      //                  Vector3 center = impact + Vector3(0, (float)i, 0);
+      //                  GameObject* go = new GameObject(engine);
+      //                  dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
+      //                  dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+      //                  dynamicBox->SetCenter(center);
+      //                  dynamicBox->SetSize(Vector3(1, 1, 1));
+      //                  dynamicBox->SetDynamic(true);
+      //                  // assign collision groups after object is created, else it won't work!
+      //                  dynamicBox->SetGroup(CG_Collidable_Pushable);
+						//dynamicBox->AddRef();
+      //                  this->AddElement(go);
+      //              }
 
 
 

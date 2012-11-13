@@ -2,10 +2,13 @@
 #include "Physics/DllMain.h"
 #include "Core/IGraphics.h"
 
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
+
+
 		#pragma region Class
 		PhysicsModule::PhysicsModule(Engine* engine)
 			: IPhysics(engine), cooking(0)
@@ -117,6 +120,9 @@ namespace TikiEngine
 			//physicsSDK->setParameter(NX_VISUALIZE_COLLISION_DYNAMIC, 1);
 			physicsSDK->setParameter(NX_VISUALIZE_COLLISION_VNORMALS, 1);
 #endif
+
+			// enable trigger callbacks
+			scene->setUserTriggerReport(&triggerRep);
 
 			// Also create the controller Manager.
 			controllerManager = NxCreateControllerManager(userAllocator);
