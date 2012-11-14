@@ -61,6 +61,11 @@ namespace TikiEngine
 		{
 			return resource1;
 		}
+
+		void GameState::AddProjectile(GameObject* go)
+		{
+			projectiles.Add(go);
+		}
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
@@ -72,6 +77,8 @@ namespace TikiEngine
 				Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
+			TikiBotDescription desc;
+
 			UInt32 i = 0;
 			while (i < scene->objects.Count())
 			{
@@ -79,6 +86,7 @@ namespace TikiEngine
 
 				if (bot != 0)
 				{
+					bot->Init(desc);
 					bot->CreateNav(navMesh);
  					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
  					pos = pos + Vector3(0, 30, 0);
@@ -199,25 +207,23 @@ namespace TikiEngine
 							else if(args.Input.GetKey(KEY_SPACE))
 							{
 								ProjectileDescription desc;
+								if (bot->GetTargetSys()->IsTargetPresent())
+									desc.Target = bot->GetTargetBot()->Pos3D();
+								else
+									desc.Target = Vector3::Zero;
+								
 								desc.Origin = bot->Pos3D();
 								desc.Heading = bot->Facing();
 								desc.ShooterID = bot->ID();
 								GameObject* go = new GameObject(engine);
 								Projectile* proj = new Projectile(this, go);
 								proj->Init(desc, args);
-								projectiles.Add(go);
-								//GetScene()->AddElement(go);
+								AddProjectile(go);
 							}
 							else
 							{
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalMoveToPosition(info.Point);
-// 								if (bot->HasLOSTo(info.Point))
-// 									OutputDebugString(L"HAS Raycast LOS. \n");
-// 								else
-// 									OutputDebugString(L"NO Raycast LOS. \n");
-
-
 							}
 
 						}

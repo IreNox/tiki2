@@ -24,15 +24,6 @@ namespace TikiEngine
 			: GoalComposite<TikiBot>(bot, Goal_Think)
 		{
 			hasWaypoints = false;
-
-			// load this from desc
-			float ExploreBias = 0.05f;
-			float AttackBias = 1.5f;
-			float PatrolBias = 2.0f;
-			
-			evaluators.push_back(new ExploreGoalEvaluator(ExploreBias));
-			evaluators.push_back(new AttackTargetGoalEvaluator(AttackBias));
-			evaluators.push_back(new PatrolGoalEvaluator(PatrolBias));
 		}
 
 		GoalThink::~GoalThink()
@@ -43,6 +34,14 @@ namespace TikiEngine
 				SafeDelete(&(*curDes));
 
 		}
+
+		void GoalThink::Init(float exploreBias, float attackBias, float patrolBias)
+		{
+			evaluators.push_back(new ExploreGoalEvaluator(exploreBias));
+			evaluators.push_back(new AttackTargetGoalEvaluator(attackBias));
+			evaluators.push_back(new PatrolGoalEvaluator(patrolBias));
+		}
+
 
 		void GoalThink::Arbitrate()
 		{

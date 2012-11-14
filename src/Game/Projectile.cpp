@@ -40,10 +40,12 @@ namespace TikiEngine
 			sphere->SetTrigger(true);
 			sphere->SetGroup(CG_Collidable_Non_Pushable);
 
-			Vector2 vel = desc.Heading * desc.MaxSpeed;
-			vel.Truncate(desc.MaxSpeed);
+			//Vector2 vel = desc.Heading * desc.MaxSpeed;
+			//vel.Truncate(desc.MaxSpeed);
+			Vector3 vel = Vector3::Normalize(desc.Target - desc.Origin);
+			vel = vel* desc.MaxSpeed;
 			sphere->GetRigidBody()->SetMass(desc.Mass);
-			sphere->GetRigidBody()->SetVelocity(Vector3(vel.X, 0, vel.Y));
+			sphere->GetRigidBody()->SetVelocity(vel);
 
 		}
 

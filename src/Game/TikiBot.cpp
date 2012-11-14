@@ -18,12 +18,32 @@ namespace TikiEngine
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject) 
 			: MovingEntity(gameState, gameObject)
 		{
+		}
 
+		TikiBot::~TikiBot()
+		{
+			SafeRelease(&controller);
+			
+			SafeDelete(&brain);
+			SafeDelete(&steering);
+			SafeDelete(&pathPlanner);
+			SafeDelete(&sensorMem);
+			SafeDelete(&targSys);
+			SafeDelete(&visionUpdateRegulator);
+			SafeDelete(&targetSelectionRegulator);
+
+		}
+
+		void TikiBot::Init(TikiBotDescription desc)
+		{
 			// Init MovingEntity stats
-			Init();
-
+			MovingEntity::Init(desc.Radius, Vector2::Zero, desc.MaxSpeed, desc.Heading, desc.MaxTurnRate, desc.MaxForce);
+			
+			
 			// Init bot attributes
-			maxHealth = 100;
+			faction = desc.Faction;
+
+			maxHealth = desc.MaxHealth;
 			health = maxHealth;
 
 			numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
@@ -31,7 +51,7 @@ namespace TikiEngine
 			score = 0;
 			status = alive; //spawning;
 			possessed = false;
-			fieldOfView = DegsToRads(180.0f);
+			fieldOfView = DegsToRads(desc.FoV);
 
 			// TODO: game types
 			//SetEntityType(type_bot);
@@ -49,9 +69,9 @@ namespace TikiEngine
 			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
 			controller->SetCenter(Pos3D());
 			controller->SetRadius((float)boundingRadius);
-			controller->SetHeight(3.0f);
-			controller->SetSlopeLimit(45.0f);
-			controller->SetStepOffset(0.5f);
+			controller->SetHeight(desc.Height);
+			controller->SetSlopeLimit(desc.SlopeLimit);
+			controller->SetStepOffset(desc.StepOffset);
 			controller->SetGroup(CG_Collidable_Pushable);
 			controller->AddRef();
 
@@ -61,29 +81,13 @@ namespace TikiEngine
 
 			// Create the goal queue
 			brain = new GoalThink(this);
-
+			brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
 
 			// create Targeting System
 			targSys = new TargetingSystem(this);
 
 			// we can remember bots for 10 secs
-			sensorMem = new SensorMemory(this, 3);
-
-			
-		}
-
-		TikiBot::~TikiBot()
-		{
-			SafeRelease(&controller);
-			
-			SafeDelete(&brain);
-			SafeDelete(&steering);
-			SafeDelete(&pathPlanner);
-			SafeDelete(&sensorMem);
-			SafeDelete(&targSys);
-			SafeDelete(&visionUpdateRegulator);
-			SafeDelete(&targetSelectionRegulator);
-
+			sensorMem = new SensorMemory(this, desc.MemorySpan);
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)

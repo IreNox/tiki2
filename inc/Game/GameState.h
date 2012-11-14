@@ -45,6 +45,8 @@ namespace TikiEngine
 			UInt64 GetResource1();
 			UInt64 GetResource2();
 
+			void AddProjectile(GameObject* go);
+
 			void ExecuteUnitFunction(UnitFunctions func);
 
 			void Draw(const DrawArgs& args);

@@ -16,6 +16,8 @@ namespace TikiEngine
 			GoalThink(TikiBot* bot);
 			~GoalThink();
 
+			void Init(float exploreBias, float attackBias, float patrolBias);
+
 			// arbitrate between available strategies, choosing the most appropriate to be pursued.
 			void Arbitrate();
 

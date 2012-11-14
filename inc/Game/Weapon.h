@@ -6,6 +6,11 @@ namespace TikiEngine
 {
 	namespace AI
 	{
+		enum WeaponTypes
+		{
+			WT_MachineGun
+		};
+
 
 		class Weapon
 		{
@@ -28,7 +33,7 @@ namespace TikiEngine
 
 			// this discharges a projectile from the weapon at the given target position
 			// (provided the weapon is ready to be discharged. Every weapon has its own rate of fire)
-			virtual void ShootAt(const UpdateArgs& args, Vector2 pos) = 0;
+			virtual void ShootAt(const UpdateArgs& args, Vector3 pos) = 0;
 
 			// each weapon has its own shape and color
 			virtual void Draw(const DrawArgs& args) = 0;

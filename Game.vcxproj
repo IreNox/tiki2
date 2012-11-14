@@ -50,6 +50,7 @@
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />
     <ClInclude Include="inc\Game\LevelObject.h" />
+    <ClInclude Include="inc\Game\MachineGun.h" />
     <ClInclude Include="inc\Game\MessageDispatcher.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\NavigationCell.h" />
@@ -110,6 +111,7 @@
     <ClCompile Include="src\Game\LevelChild.cpp" />
     <ClCompile Include="src\Game\LevelEnemy.cpp" />
     <ClCompile Include="src\Game\LevelObject.cpp" />
+    <ClCompile Include="src\Game\MachineGun.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\MessageDispatcher.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />

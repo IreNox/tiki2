@@ -28,7 +28,7 @@ namespace TikiEngine
 // 			return owner->RotateFacingTowardPosition(target);
 // 		}
 
-		inline bool Weapon::IsReadyForNextShot(const UpdateArgs& args)
+		bool Weapon::IsReadyForNextShot(const UpdateArgs& args)
 		{
 			if (args.Time.TotalTime > timeNextAvailable)
 				return true;
@@ -36,12 +36,12 @@ namespace TikiEngine
 			return false;
 		}
 
-		inline void Weapon::UpdateTimeWeaponIsAvailable(const UpdateArgs& args)
+		void Weapon::UpdateTimeWeaponIsAvailable(const UpdateArgs& args)
 		{
 			timeNextAvailable = args.Time.TotalTime + 1.0 / rateOfFire;
 		}
 
-		inline void Weapon::IncrementRounds(int num)
+		void Weapon::IncrementRounds(int num)
 		{
 			numRoundsLeft += num;
 			ClampT(numRoundsLeft, 0, maxRoundsCarried);

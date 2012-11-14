@@ -18,12 +18,73 @@ namespace TikiEngine
 		class GoalThink;
 		class SensorMemory;
 
+		struct TikiBotDescription
+		{
+			int Faction;		  // 0 = Player, 1 = Enemy
+			int MaxHealth;		  // the maximum amount of health
+			
+			float FoV;            // the bot's field of view in degrees
+			float ReactionTime;	  // the bot's reaction time (in seconds)
+			float AimPresistance; // how long (in seconds) the bot will keep pointing its weapon at its target after the target goes out of view
+			float AimAccuracy;	  // how accurate the bots are at aiming. 0 is very accurate, (the value represents the max deviation in range (in radians))
+			float MemorySpan;	  // how long (in seconds) a bot's sensory memory persists
+
+			// Brain
+			float ExploreBias;
+			float AttackBias;
+			float PatrolBias;
+
+			// Controller
+			float Height;		  // Capsule height
+			float SlopeLimit;	  // Limits the collider to only climb slopes that are equal to or less than the indicated value in degrees
+			float StepOffset;	  // The bot will step up a stair only if it is closer to the ground than the indicated value
+
+			// MovingEntity
+			Vector2 Heading;
+			float MaxSpeed; 
+			float MaxTurnRate;
+			float MaxForce;
+			float Radius;
+
+			TikiBotDescription()
+			{
+				Faction = 0;
+				MaxHealth = 100;
+				
+				FoV = 180.0f;
+				ReactionTime = 0.2f;
+				AimPresistance = 1.0f;
+				AimAccuracy = 0.0f;
+				MemorySpan = 3.0f;
+
+				// brain
+				ExploreBias = 0.05f;
+				AttackBias = 2.0f;
+				PatrolBias = 1.5f;
+
+				// Controller
+				Height = 10.0f;
+				SlopeLimit = 45.0f;
+				StepOffset = 0.5f;
+
+				// MovingEntity
+				Heading = Vector2::Zero;
+				MaxSpeed = 30.0f;
+				MaxTurnRate = 30.0f;
+				MaxForce = 1.0f;
+				Radius = 2.0f;
+			}
+
+		};
+
 		class TikiBot : public MovingEntity
 		{
 		public:
 
 			TikiBot(GameState* gameState, GameObject* gameObject);
 			~TikiBot();
+
+			void Init(TikiBotDescription desc);
 
 			// Navigation
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
@@ -151,6 +212,8 @@ namespace TikiEngine
 
 			// set to true when a human player takes over control of the bot
 			bool possessed;
+
+			int faction;
 
 			Vector3 orig;
 			Vector3 dir;
