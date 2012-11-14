@@ -126,6 +126,27 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member - KeyCodeToChar
+		wchar_t InputModule::KeyCodeToChar(Key keyCode)
+		{
+			HKL hklKeyboardLayout = GetKeyboardLayout(0);
+			UINT virtualKey = MapVirtualKeyEx(keyCode, 3, hklKeyboardLayout);
+
+			WORD keyChar = 0;
+
+			int ascii = ToAsciiEx(
+				virtualKey,
+				keyCode,
+				keyboardStateCurrent,
+				&keyChar,
+				0,
+				hklKeyboardLayout
+			);
+
+			return keyChar;
+		}
+		#pragma endregion
+
 		#pragma region Private Member
 		void InputModule::initDevice(IDirectInputDevice8** device, GUID guid, LPCDIDATAFORMAT format)
 		{

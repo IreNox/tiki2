@@ -155,17 +155,17 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GUIControlRectangles::Draw(ISpriteBatch* batch, ITexture* tex, GUIControlRectangles* dst, GUIControlRectangles* src)
 		{
-			batch->Draw(tex, dst->rectLT, src->rectLT);
-			batch->Draw(tex, dst->rectLC, src->rectLC);
-			batch->Draw(tex, dst->rectLB, src->rectLB);
+			batch->Draw(tex, dst->rectLT, src->rectLT, Color::White);
+			batch->Draw(tex, dst->rectLC, src->rectLC, Color::White);
+			batch->Draw(tex, dst->rectLB, src->rectLB, Color::White);
 
-			batch->Draw(tex, dst->rectCT, src->rectCT);
-			batch->Draw(tex, dst->rectCC, src->rectCC);
-			batch->Draw(tex, dst->rectCB, src->rectCB);
+			batch->Draw(tex, dst->rectCT, src->rectCT, Color::White);
+			batch->Draw(tex, dst->rectCC, src->rectCC, Color::White);
+			batch->Draw(tex, dst->rectCB, src->rectCB, Color::White);
 
-			batch->Draw(tex, dst->rectRT, src->rectRT);
-			batch->Draw(tex, dst->rectRC, src->rectRC);
-			batch->Draw(tex, dst->rectRB, src->rectRB);
+			batch->Draw(tex, dst->rectRT, src->rectRT, Color::White);
+			batch->Draw(tex, dst->rectRC, src->rectRC, Color::White);
+			batch->Draw(tex, dst->rectRB, src->rectRB, Color::White);
 		}
 		#pragma endregion
 	}

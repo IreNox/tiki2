@@ -57,7 +57,7 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			engine->sprites->DrawString(font, text, position);
+			engine->sprites->DrawString(font, text, position, Color::White);
 		}
 		#pragma endregion
 

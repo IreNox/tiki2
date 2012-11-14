@@ -36,15 +36,15 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Rectangle& destinationRectangle);
 			void Draw(ITexture* texture,  const Rectangle& destinationRectangle, const Rectangle& sourceRectangle);
 
-			void Draw(ITexture* texture,  const RectangleF& destinationRectangle);
-			void Draw(ITexture* texture,  const RectangleF& destinationRectangle, const RectangleF& sourceRectangle);
+			void Draw(ITexture* texture,  const RectangleF& destinationRectangle, const Color& color);
+			void Draw(ITexture* texture,  const RectangleF& destinationRectangle, const RectangleF& sourceRectangle, const Color& color);
 
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth);
 			
 			void Draw3D(ITexture* texture, const Matrix& world, const Matrix& local);
 
-			void DrawString(IFont* font, wstring text, const Vector2& position);
+			void DrawString(IFont* font, wstring text, const Vector2& position, const Color& color);
 
 			void Handle(IGraphics* graphics, const ScreenSizeChangedArgs& args);
 

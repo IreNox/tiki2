@@ -664,5 +664,8 @@
     <ClInclude Include="inc\Core\EventTriggers.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\EventLog.h">
+      <Filter>Headerdateien\Core\Args/States\Events</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -32,6 +32,9 @@ namespace TikiEngine
 			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
 			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
 			cbufferLights(0), cbufferCamera(0), cbufferObject(0), blendStateAlphaBlend(0)
+#if _DEBUG
+			, debugConsole(0), debugLineRenderer(0)
+#endif
 		{
 			clearColor = Color::TikiBlue;
 		}
@@ -89,7 +92,8 @@ namespace TikiEngine
 			}
 
 #if _DEBUG
-			SafeRelease(&lineRenderer);
+			SafeRelease(&debugConsole);
+			SafeRelease(&debugLineRenderer);
 #endif
 
 			SafeDelete(&cbufferLights);
@@ -352,12 +356,18 @@ namespace TikiEngine
 #if _DEBUG
 		void GraphicsModule::DrawLine(const Vector3& start, const Vector3& end, const Color& color)
 		{
-			lineRenderer->DrawLine(start, end, color);
+			debugLineRenderer->DrawLine(start, end, color);
 		}
 
 		void GraphicsModule::DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst)
 		{
-			lineRenderer->DrawLine(points, color, lastToFirst);
+			debugLineRenderer->DrawLine(points, color, lastToFirst);
+		}
+
+		void GraphicsModule::DrawConsole(const DrawArgs& args)
+		{
+			debugConsole->Update(args.Update);
+			debugConsole->Draw(args);
 		}
 #endif
 		#pragma endregion
@@ -392,7 +402,7 @@ namespace TikiEngine
 			}
 
 #if _DEBUG
-			lineRenderer->Begin();
+			debugLineRenderer->Begin();
 #endif
 		}
 
@@ -401,7 +411,7 @@ namespace TikiEngine
 			deviceContext->OMSetDepthStencilState(depthStencilStateDisable, 1);
 
 #if _DEBUG
-			lineRenderer->End();
+			debugLineRenderer->End();
 #endif
 
 			this->SetStateAlphaBlend(false);
@@ -810,7 +820,8 @@ namespace TikiEngine
 			defaultPostProcess->AddRef();
 
 #if _DEBUG
-			lineRenderer = new DebugLineRenderer(engine);
+			debugConsole = new DebugConsole(engine);
+			debugLineRenderer = new DebugLineRenderer(engine);
 #endif
 
 			return true;

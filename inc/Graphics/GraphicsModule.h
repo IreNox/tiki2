@@ -18,6 +18,7 @@
 #include "Graphics/RenderTarget.h"
 
 #if _DEBUG
+#include "Graphics/DebugConsole.h"
 #include "Graphics/DebugLineRenderer.h"
 #endif
 
@@ -33,6 +34,12 @@ namespace TikiEngine
 		class GraphicsModule : public IGraphics
 		{
 		public:
+
+#if _DEBUG
+			DebugConsole* debugConsole;
+			DebugLineRenderer* debugLineRenderer;
+#endif
+
 			GraphicsModule(Engine* engine);
 			~GraphicsModule();
 
@@ -44,6 +51,8 @@ namespace TikiEngine
 #if _DEBUG
 			void DrawLine(const Vector3& start, const Vector3& end, const Color& color);
 			void DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst = false);
+
+			void DrawConsole(const DrawArgs& args);
 #endif
 			
 			void Dispose();
@@ -126,10 +135,6 @@ namespace TikiEngine
 			PostProcess* defaultPostProcess;
 			List<PostProcess*> postProcesses;
 			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
-
-#if _DEBUG
-			DebugLineRenderer* lineRenderer;
-#endif
 
 			bool initSelectAdapter(EngineDescription& desc);
 			bool initDirectX(EngineDescription& desc);

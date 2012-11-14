@@ -65,7 +65,8 @@ namespace TikiEngine
 			engine->sprites->DrawString(
 				GUIControl::GetDefaultFont(),
 				text,
-				posText
+				posText,
+				Color::White
 			);
 
 			GUIControl::Draw(args);

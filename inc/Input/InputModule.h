@@ -23,10 +23,10 @@ namespace TikiEngine
 			bool Initialize(EngineDescription& desc);
 
 			void Begin();
-
 			void FillInputState(InputState* state);
-
 			void End();
+
+			wchar_t KeyCodeToChar(Key keyCode);
 
 			void Dispose();
 

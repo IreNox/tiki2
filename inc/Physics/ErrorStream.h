@@ -3,80 +3,83 @@
 #include <stdio.h>
 #include "Core/HelperLog.h"
 
-class ErrorStream : public NxUserOutputStream
+namespace TikiEngine
 {
-public:
-	/*
-	 * this should be routed to the application specific error handling. If this gets hit then you are in most cases using the SDK
-     * wrong and you need to debug your code! however, code may just be a warning or information.
-	*/
-	void reportError(NxErrorCode e, const char* message, const char* file, int line)
+	class ErrorStream : public NxUserOutputStream
 	{
-		//printf("%s (%d) :", file, line);
+	public:
+		/*
+		 * this should be routed to the application specific error handling. If this gets hit then you are in most cases using the SDK
+		 * wrong and you need to debug your code! however, code may just be a warning or information.
+		*/
+		void reportError(NxErrorCode e, const char* message, const char* file, int line)
+		{
+			//printf("%s (%d) :", file, line);
 		
 
-		switch(e)
-		{
-		case NXE_INVALID_PARAMETER:
-			HelperLog::Write( "invalid parameter");
-			break;
-		case NXE_INVALID_OPERATION:
-			HelperLog::Write( "invalid operation");
-			break;
-		case NXE_OUT_OF_MEMORY:
-			HelperLog::Write( "out of memory");
-			break;
-		case NXE_DB_INFO:
-			HelperLog::Write( "info");
-			break;
-		case NXE_DB_WARNING:
-			HelperLog::Write( "warning");
-			break;
-		default:
-			HelperLog::Write("unknown error");
+			switch(e)
+			{
+			case NXE_INVALID_PARAMETER:
+				HelperLog::Write( "invalid parameter");
+				break;
+			case NXE_INVALID_OPERATION:
+				HelperLog::Write( "invalid operation");
+				break;
+			case NXE_OUT_OF_MEMORY:
+				HelperLog::Write( "out of memory");
+				break;
+			case NXE_DB_INFO:
+				HelperLog::Write( "info");
+				break;
+			case NXE_DB_WARNING:
+				HelperLog::Write( "warning");
+				break;
+			default:
+				HelperLog::Write("unknown error");
+			}
+
+			std::string error(message);
+			HelperLog::Write(error);
+			HelperLog::Write("\n");
+
 		}
 
-		std::string error(message);
-		HelperLog::Write(error);
-		HelperLog::Write("\n");
-
-	}
-
-	NxAssertResponse reportAssertViolation(const char* message, const char* file, int line)
-	{
-		printf("access violation : %s (%s line %d)\n", message, file, line);
-
-		switch (MessageBox(0, (LPCWSTR)message, L"AssertViolations.", MB_ABORTRETRYIGNORE))
+		NxAssertResponse reportAssertViolation(const char* message, const char* file, int line)
 		{
-		case IDRETRY:
-			return NX_AR_CONTINUE;
-		case IDIGNORE:
-			return NX_AR_IGNORE;
-		case IDABORT:
-		default:
-			return NX_AR_BREAKPOINT;
+			printf("access violation : %s (%s line %d)\n", message, file, line);
+
+			switch (MessageBox(0, (LPCWSTR)message, L"AssertViolations.", MB_ABORTRETRYIGNORE))
+			{
+			case IDRETRY:
+				return NX_AR_CONTINUE;
+			case IDIGNORE:
+				return NX_AR_IGNORE;
+			case IDABORT:
+			default:
+				return NX_AR_BREAKPOINT;
+			}
+
 		}
 
-	}
-
-	void print(const char* message)
-	{
-		HelperLog::Write(message);
-	}
-
-	string GetNxSDKCreateError(const NxSDKCreateError& errorCode) 
-	{
-		switch(errorCode) 
+		void print(const char* message)
 		{
-			case NXCE_NO_ERROR:				return "NXCE_NO_ERROR";
-			case NXCE_PHYSX_NOT_FOUND:		return "NXCE_PHYSX_NOT_FOUND";
-			case NXCE_WRONG_VERSION:		return "NXCE_WRONG_VERSION";
-			case NXCE_DESCRIPTOR_INVALID:	return "NXCE_DESCRIPTOR_INVALID";
-			case NXCE_CONNECTION_ERROR:		return "NXCE_CONNECTION_ERROR";
-			case NXCE_RESET_ERROR:			return "NXCE_RESET_ERROR";
-			case NXCE_IN_USE_ERROR:			return "NXCE_IN_USE_ERROR";
-			default:					    return "Unknown error";
+			HelperLog::Write(message);
 		}
-	}
 
-};
+		string GetNxSDKCreateError(const NxSDKCreateError& errorCode) 
+		{
+			switch(errorCode) 
+			{
+				case NXCE_NO_ERROR:				return "NXCE_NO_ERROR";
+				case NXCE_PHYSX_NOT_FOUND:		return "NXCE_PHYSX_NOT_FOUND";
+				case NXCE_WRONG_VERSION:		return "NXCE_WRONG_VERSION";
+				case NXCE_DESCRIPTOR_INVALID:	return "NXCE_DESCRIPTOR_INVALID";
+				case NXCE_CONNECTION_ERROR:		return "NXCE_CONNECTION_ERROR";
+				case NXCE_RESET_ERROR:			return "NXCE_RESET_ERROR";
+				case NXCE_IN_USE_ERROR:			return "NXCE_IN_USE_ERROR";
+				default:					    return "Unknown error";
+			}
+		}
+
+	};
+}

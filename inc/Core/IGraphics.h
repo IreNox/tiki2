@@ -38,6 +38,8 @@ namespace TikiEngine
 #if _DEBUG
 			virtual void DrawLine(const Vector3& start, const Vector3& end, const Color& color) = 0;
 			virtual void DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst = false) = 0;
+
+			virtual void DrawConsole(const DrawArgs& args) = 0;
 #endif
 
 			virtual void* GetDevice() = 0;

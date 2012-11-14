@@ -18,6 +18,9 @@ namespace TikiEngine
 			virtual ~IInput() {}
 
 			virtual void FillInputState(InputState* state) = 0;
+
+			virtual wchar_t KeyCodeToChar(Key keyCode) = 0;
+
 		};
 	}
 }

@@ -39,18 +39,17 @@ namespace TikiEngine
 
 			if (createShaderView)
 			{
-				DllMain::Device->CreateShaderResourceView(
+				HRESULT r = DllMain::Device->CreateShaderResourceView(
 					tex,
 					&srDesc,
 					&textureResource
 				);
+
+				if (FAILED(r))
+				{
+					HelperLog::WriteError("Can't create ShaderResourceView", 0);
+				}
 			}
-			
-			// TODO: Can't create ShaderResourceView
-			//if (FAILED(r))
-			//{
-			//	throw "Can't create ShaderResourceView";
-			//}
 		}
 
 		Texture::~Texture()
@@ -237,7 +236,26 @@ namespace TikiEngine
 
 		void Texture::SetData(Int32 format, void* data, UInt32 dataLength)
 		{
+			if (!dynamic)
+			{
+				HelperLog::WriteError("SetData can only used for dynamic textures. Create Texture with dynamic flag", 0);
+			}
 
+			if (desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM)
+			{
+				HelperLog::WriteError("SetData: Wrong Format", 0);
+			}
+			
+			D3D11_MAPPED_SUBRESOURCE mapped;
+			DllMain::Context->Map(texture, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+
+			memcpy(
+				mapped.pData,
+				data,
+				dataLength
+			);
+
+			DllMain::Context->Unmap(texture, 0);
 		}
 		#pragma endregion
 	}

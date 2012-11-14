@@ -27,6 +27,11 @@ public:
 		return value;
 	}
 
+	inline TValue& GetValueRef()
+	{
+		return value;
+	}
+
 	inline bool operator<(const TKey& rhs) const
 	{
 		return this->key < rhs;

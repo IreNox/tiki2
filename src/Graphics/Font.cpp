@@ -42,6 +42,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
+		bool Font::ContainsChar(wchar_t cChar)
+		{
+			return charRect.ContainsKey(cChar);
+		}
+
 		Vector2 Font::MeasureString(wstring text)
 		{
 			UInt32 i = 0;
@@ -90,7 +95,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Draw
-		float Font::DrawChar(wchar_t c, const Vector2& pos)
+		float Font::DrawChar(wchar_t c, const Vector2& pos, const ::Color& color)
 		{
 			RectangleF r;
 
@@ -104,7 +109,8 @@ namespace TikiEngine
 						r.Width,
 						r.Height
 					),
-					r
+					r,
+					color
 				);
 			}
 
@@ -231,19 +237,24 @@ namespace TikiEngine
 
 			texture = new Texture(engine);
 			texture->Create(512, 512, true);
+			texture->SetData(
+				0,
+				pixels,
+				sizeof(DWORD) * width * height
+			);
 
-			ID3D11ShaderResourceView* textureResource = (ID3D11ShaderResourceView*)texture->GetNativeResource();
+			//ID3D11ShaderResourceView* textureResource = (ID3D11ShaderResourceView*)texture->GetNativeResource();
 
-			ID3D11Resource* res;
-			textureResource->GetResource(&res);
+			//ID3D11Resource* res;
+			//textureResource->GetResource(&res);
 
-			D3D11_MAPPED_SUBRESOURCE mapped;
+			//D3D11_MAPPED_SUBRESOURCE mapped;
 
-			DllMain::Context->Map(res, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+			//DllMain::Context->Map(res, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
 
-			memcpy(mapped.pData, pixels, sizeof(DWORD) * width * height);
+			//memcpy(mapped.pData, pixels, sizeof(DWORD) * width * height);
 
-			DllMain::Context->Unmap(res, 0);
+			//DllMain::Context->Unmap(res, 0);
 
 			charRect.Optimize();
 		}

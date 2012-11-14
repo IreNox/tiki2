@@ -57,33 +57,49 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Get
-		bool GetKey(Key keyCode) const
+		#pragma region Member - Get - Key
+		inline bool GetKey(Key keyCode) const
 		{
 			return (keyboardStateCurrent[keyCode] & 0x80) != 0;
 		}
 
-		bool GetKeyPressed(Key keyCode) const
+		inline bool GetKeyPressed(Key keyCode) const
 		{
 			return !(keyboardStatePrev[keyCode] & 0x80) && (keyboardStateCurrent[keyCode] & 0x80);
 		}
 
-		bool GetKeyReleased(Key keyCode) const
+		inline bool GetKeyReleased(Key keyCode) const
 		{
 			return (keyboardStatePrev[keyCode] & 0x80) && !(keyboardStateCurrent[keyCode] & 0x80);
 		}
 
-		bool GetMouse(MouseButtons button) const
+		inline List<Key> GetKeys() const
+		{
+			List<Key> keys;
+
+			UInt32 i = 0;
+			while (i < 256)
+			{
+				if (keyboardStateCurrent[i] & 0x80) keys.Add((Key)i);
+				i++;
+			}
+
+			return keys;
+		}
+		#pragma endregion
+
+		#pragma region Member - Get - Mouse
+		inline bool GetMouse(MouseButtons button) const
 		{
 			return mouseButtonsCurrent[button];
 		}
 
-		bool GetMousePressed(MouseButtons button) const
+		inline bool GetMousePressed(MouseButtons button) const
 		{
 			return (mouseButtonsCurrent[button] && !mouseButtonsPrev[button]);
 		}
 
-		bool GetMouseRelease(MouseButtons button) const
+		inline bool GetMouseRelease(MouseButtons button) const
 		{
 			return (!mouseButtonsCurrent[button] && mouseButtonsPrev[button]);
 		}

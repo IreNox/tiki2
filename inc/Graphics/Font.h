@@ -18,9 +18,10 @@ namespace TikiEngine
 
 			void Create(wcstring fontName, float fontSize);
 
-			float DrawChar(wchar_t c, const Vector2& pos);
+			float DrawChar(wchar_t c, const Vector2& pos, const Color& color);
 
 			float GetHeight();
+			bool ContainsChar(wchar_t cChar);
 			Vector2 MeasureString(wstring text);
 
 			ITexture* GetTexture();

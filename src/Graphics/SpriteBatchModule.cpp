@@ -232,16 +232,17 @@ namespace TikiEngine
 			);
 		}
 
-		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect)
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const Color& color)
 		{
 			this->Draw(
 				texture,
 				destRect,
-				texture->GetRectangle()
+				texture->GetRectangle(),
+				color
 			);
 		}
 
-		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const RectangleF& srcRect)
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const RectangleF& srcRect, const Color& color)
 		{
 			Vector3 tl = transformPoint(
 				Vector3(destRect.X, destRect.Y, 0.0f)
@@ -269,7 +270,7 @@ namespace TikiEngine
 				Vector3(tl.X, br.Y, 0.0f),
 				br,
 				texCorrd,
-				Color::White
+				color
 			);
 		}
 
@@ -339,14 +340,14 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - DrawString
-		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position)
+		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position, const Color& color)
 		{
 			UInt32 i = 0;
 			float width = 0;
 			Vector2 pos = position;
 			while (i < text.length())
 			{
-				width = font->DrawChar(text[i], pos);
+				width = font->DrawChar(text[i], pos, color);
 
 				pos.X += width;
 				i++;

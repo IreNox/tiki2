@@ -200,13 +200,13 @@ namespace TikiEngine
 			std::wostringstream s;
 			s << "ControllerPos (" << controller->GetCenter().X << ", " << controller->GetCenter().Y  << ", " << controller->GetCenter().Z << ")";
 			wstring str = s.str();
-			engine->sprites->DrawString(font, str, Vector2(1, 80));
+			engine->sprites->DrawString(font, str, Vector2(1, 80), Color::White);
 
 			std::wostringstream s3;
 			Vector3 camPos = camera->PRS.GPosition();
 			s3 << "Cam Pos" << camPos.X << ", " << camPos.Y << ", " << camPos.Z;
 			str = s3.str();
-			engine->sprites->DrawString(font, str, Vector2(1, 120));
+			engine->sprites->DrawString(font, str, Vector2(1, 120), Color::White);
 
 
 			if (showNaviMesh)

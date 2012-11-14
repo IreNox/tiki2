@@ -156,9 +156,26 @@ public:
 		return list.Get(index).GetValue();
 	}
 
+	inline TValue& GetRef(TKey key)
+	{
+		int index = _keyToIndex(key);
+
+		if (index == -1)
+		{
+			throw "Key not found.";
+		}
+
+		return list.GetRef(index).GetValueRef();
+	}
+
 	inline TValue operator[](TKey key) const
 	{
 		return this->Get(key);
+	}
+
+	inline TValue& operator[](TKey key)
+	{
+		return this->GetRef(key);
 	}
 	#pragma endregion
 

@@ -15,6 +15,16 @@ public:
 	{
 	}
 
+	List(const List<T>& copy)
+		: IsReadOnly(copy.IsReadOnly), lengthArr(copy.lengthArr), lengthData(copy.lengthData), data(new T[copy.lengthArr])
+	{
+		memcpy(
+			data,
+			copy.data,
+			sizeof(T) * lengthArr
+		);
+	}
+
 	List(T* data, UInt32 count, bool readOnly)
 		: IsReadOnly(readOnly), lengthData(count - 1), lengthArr(2)
 	{
@@ -192,6 +202,11 @@ public:
 		return this->data[index];
 	}
 
+	inline T& GetRef(const UInt32& index)
+	{
+		return this->data[index];
+	}
+
 	inline void Set(const UInt32& index, T value)
 	{
 		this->data[index] = value;
@@ -206,6 +221,20 @@ public:
 	{
 		return this->data[index];
 	} 
+	#pragma endregion
+
+	#pragma region Operators
+	inline void operator=(const List<T>& copy)
+	{
+		delete[](data);
+
+		this->IsReadOnly = copy.IsReadOnly;
+		this->lengthArr = copy.lengthArr;
+		this->lengthData = copy.lengthData;
+		
+		this->data = new T[copy.lengthArr];
+		memcpy(this->data, copy.data, sizeof(T) * copy.lengthArr);
+	}
 	#pragma endregion
 		
 protected:

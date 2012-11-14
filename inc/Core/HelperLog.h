@@ -1,12 +1,17 @@
 #pragma once
 
-#include "Core/TypeInc.h"
+#include "Core/EventLog.h"
 
-class HelperLog
+namespace TikiEngine
 {
-public:
+	class HelperLog
+	{
+	public:
 
-	static void Write(string text);
-	static void WriteError(string message, void* exception);
+		static MessageReceivedEvent MessageReceived;
 
-};
+		static void Write(string text);
+		static void WriteError(string message, void* exception);
+
+	};
+}

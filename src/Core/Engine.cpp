@@ -295,6 +295,10 @@ namespace TikiEngine
 					scene->Draw(drawArgs);
 				}
 
+#if _DEBUG
+				graphics->DrawConsole(drawArgs);
+#endif
+
 				sprites->End();
 				graphics->End();
 

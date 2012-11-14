@@ -57,7 +57,8 @@ namespace TikiEngine
 					position.Y,
 					size.X,
 					size.Y
-				)
+				),
+				Color::White
 			);
 		}
 		#pragma endregion
