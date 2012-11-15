@@ -35,9 +35,17 @@ namespace TikiEngine
 		template <class T>
 		T* GetComponent()
 		{
-			return (T*)this->GetComponent(
-				typeid(T).hash_code()
-			);
+			UInt32 i = 0;
+			while(i < components.Count())
+			{
+				T* comp = dynamic_cast<T*>(components[i]);
+
+				if (comp != 0) return comp;
+
+				i++;
+			}
+
+			return 0;
 		}
 
 		template <class T>

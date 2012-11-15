@@ -141,15 +141,13 @@ namespace TikiEngine
 
 			for(UInt32 i = 0; i < projectiles.Count(); i++)
 			{
-                              				GameObject* go = 0;
-				go = projectiles.Get(i);
+				GameObject* go = projectiles[i];
 
 				if (go != 0)
 				{
 					go->Update(args);
 
-					Projectile* p = 0;
-					p = go->GetComponent<Projectile>();
+					Projectile* p = go->GetComponent<Projectile>();
 					if (p != 0 && p->IsDead())
 					{
 						projectiles.Remove(go);
@@ -171,7 +169,6 @@ namespace TikiEngine
 
 				if (engine->physics->RayCast(ray, &info))
 				{
-					// 
 					ICollider* coll = info.Collider;
 					if (coll)
 					{
@@ -182,8 +179,6 @@ namespace TikiEngine
 						}
 					}
 					
-					;
-
 					UInt32 i = 0;
 					while (i < unitSelection->GetSelectedUnits()->Count())
 					{
