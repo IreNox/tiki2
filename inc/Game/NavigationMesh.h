@@ -77,7 +77,7 @@ namespace TikiEngine
 			Engine* engine;
 
 			OcTree* tree;
-			TRI tris[191]; // = TotalCells
+			List<TRI> tris; // = TotalCells
 
 		};
 

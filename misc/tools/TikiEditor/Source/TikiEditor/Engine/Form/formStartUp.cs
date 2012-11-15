@@ -18,7 +18,11 @@ namespace TikiEditor
 
         private void buttonLevel_Click(object sender, EventArgs e)
         {
-            GI.ModeLevel = new ModeLevel(GI.Game);
+            GI.ModeLevel = new ModeLevel(
+                GI.Game,
+                Int32.Parse(textLevelId.Text)
+            );
+
             this.Close();
         }
 

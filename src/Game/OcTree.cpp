@@ -91,13 +91,13 @@ namespace TikiEngine
 
 
 
-		void OcTree::FindBox(TRI* tris, int triCount, IBoundingBox* BBox)
+		void OcTree::FindBox(const TRI* tris, int triCount, IBoundingBox* BBox)
 		{
 			float extend = 0;
 			
 			for (int i = 0; i < triCount; i++)
 			{
-				TRI* Tri = &tris[i];
+				const TRI* Tri = &tris[i];
 				for(int j = 0; j < 3; j++)
 				{
 					if (ABS(Tri->Pt[j].X) > extend)
@@ -114,7 +114,7 @@ namespace TikiEngine
 			BBox->Set(Vector3(-extend), Vector3(extend));
 		}
 		
-		int OcTree::BuildRootNode(TRI* tris, int triCount)
+		int OcTree::BuildRootNode(const TRI* tris, int triCount)
 		{
 			OctNode root;
 			int i;
@@ -173,7 +173,7 @@ namespace TikiEngine
 						newCenter + boxSize / 4);
 		}
 
-		void OcTree::BuildTree(OctNode* node, int trisPerNode, TRI* tris, int triCount)
+		void OcTree::BuildTree(OctNode* node, int trisPerNode, const TRI* tris, int triCount)
 		{
 			//	if the node has more than threshold number of triangles, create children
 			if (node->TriIdxCount > trisPerNode)
@@ -205,7 +205,7 @@ namespace TikiEngine
 					for (int j = 0; j < node->TriIdxCount; j++)
 					{
 						unsigned int* TriIdx = (unsigned int*)TriIdxList.GetCurrent();
-						TRI* Tri = &tris[*TriIdx];
+						const TRI* Tri = &tris[*TriIdx];
 
 						if (TriBoxIntersect(newNode.BBox, *Tri) == INSIDE)
 						{
@@ -226,7 +226,7 @@ namespace TikiEngine
 		}
 
 
-		int OcTree::Create(Engine* engine, TRI* tris, int triCount, int trisPerNode)
+		int OcTree::Create(Engine* engine, const TRI* tris, int triCount, int trisPerNode)
 		{
 			this->engine = engine;
 

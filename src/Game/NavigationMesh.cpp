@@ -136,16 +136,19 @@ namespace TikiEngine
 
 			for (int i = 0; i < totalCells; i++)
 			{
+				TRI t;
+
 				NavigationCell* cell = Cell(i);
-				tris[i].UserData = (void*) cell;
+				t.UserData = (void*) cell;
 
 				for(int j = 0; j < 3; j++)
 				{
-					tris[i].Pt[j] = cell->Vertex(j);
+					t.Pt[j] = cell->Vertex(j);
 				}
 
+				tris.Add(t);
 			}
-			tree->Create(engine, &tris[0], totalCells, 64);
+			tree->Create(engine, tris.GetInternalData(), totalCells, 64);
 
 			//if (minX < 0) maxX += abs(minX);
 			//if (minZ < 0) maxZ += abs(minZ);

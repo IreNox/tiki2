@@ -47,25 +47,28 @@ namespace TikiEngine
 
 		#pragma region Member - Draw
 		void DebugConsole::Draw(const DrawArgs& args)
-		{
+		{			
+			UInt32 c = 0;
+			UInt32 i = (UInt32)max(0, (Int32)lines.Count() - 10);
+
 			if (enabled)
 			{
-				bgRect.Height = 14.0f * (lines.Count() + 1);
+				bgRect.Height = 14.0f * (lines.Count() - i + 1);
 				DllMain::ModuleSpriteBatch->Draw(bgTexture, bgRect, Color::White);
 
-				UInt32 i = 0;
 				while (i < lines.Count())
 				{
 					DllMain::ModuleSpriteBatch->DrawString(
 						font,
 						lines.GetKVP(i).GetKey(),
-						Vector2(5, 14.0f * i),
+						Vector2(5, 14.0f * c),
 						Color::White
 					);
 
 					lines[lines.GetKVP(i).GetKey()] -= args.Time.ElapsedTime;
 
 					i++;
+					c++;
 				}
 
 				wostringstream s;
@@ -74,14 +77,12 @@ namespace TikiEngine
 				DllMain::ModuleSpriteBatch->DrawString(
 					font,
 					s.str(),
-					Vector2(5, 14.0f * i),
+					Vector2(5, 14.0f * c),
 					Color::White
 				);
 			}
 			else
 			{
-				UInt32 i = 0;
-				UInt32 c = 0;
 				while (i < lines.Count())
 				{
 					KeyValuePair<wstring, double> kvp = lines.GetKVP(i);
@@ -92,7 +93,7 @@ namespace TikiEngine
 							font,
 							kvp.GetKey(),
 							Vector2(5, 14.0f * c),
-							Color(1.0f, 1.0f, 1.0f, min(kvp.GetValue(), 1.0))
+							Color(1.0f, 1.0f, 1.0f, (float)min(kvp.GetValue(), 1.0))
 						);
 
 						lines[kvp.GetKey()] -= args.Time.ElapsedTime;

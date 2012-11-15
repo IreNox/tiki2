@@ -7,59 +7,46 @@ namespace TikiEngine
 	namespace Graphics
 	{
 		TerrainIndexBuffer::TerrainIndexBuffer(int32 size)
-			: sizeStrip(size), sizeList(size * 3), indexCount(0)
+			: size(size), indexCount(0)
 		{
-			dataList = new UInt32[sizeList];
-			dataStrip = new UInt32[sizeStrip];
+			data = new UInt32[size];
 			indexBuffer = new DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>(DllMain::Engine);
 		}
 
 		TerrainIndexBuffer::~TerrainIndexBuffer()
 		{
-			delete[](dataList);
-			delete[](dataStrip);
+			delete[](data);
 			SafeRelease(&indexBuffer);
 		}
 
 		UInt32 TerrainIndexBuffer::GetSizeList() const
 		{
-			return sizeStrip;
+			return size;
 		}
 
 		const UInt32* TerrainIndexBuffer::GetDataList() const
 		{
-			return dataStrip;
+			return data;
 		}
 
 		int32 TerrainIndexBuffer::GetCapacity()
 		{
-			return sizeStrip;
+			return size;
 		}
 
 		void TerrainIndexBuffer::SetIndices(int32 bufferIndex, Array<int32> indices, int32 indicesOffset, int32 indicesCount)
 		{
 			memcpy(
-				dataStrip + bufferIndex,
+				data + bufferIndex,
 				((int32*)indices) + indicesOffset,
 				sizeof(int32) * indicesCount
 			);
 						
-			//UInt32 i = 2;
-			//UInt32 iList = 0;
-			//while (i < sizeStrip)
-			//{
-			//	dataList[iList++] = dataStrip[i - 2];  
-			//	dataList[iList++] = dataStrip[i - 1];
-			//	dataList[iList++] = dataStrip[i];
-
-			//	i++;
-			//}
-
-			UInt32* bdata = indexBuffer->Map(sizeStrip);
+			UInt32* bdata = indexBuffer->Map(size);
 			memcpy(
 				bdata,
-				dataStrip,
-				sizeof(int32) * sizeStrip
+				data,
+				sizeof(int32) * size
 			);	
 			indexBuffer->Unmap();
 		}

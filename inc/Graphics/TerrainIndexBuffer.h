@@ -71,11 +71,8 @@ namespace TikiEngine
 
 		private:
 
-			int32 sizeList;
-			int32 sizeStrip;
-
-			UInt32* dataList;
-			UInt32* dataStrip;
+			int32 size;
+			UInt32* data;
 
 		};
 	}

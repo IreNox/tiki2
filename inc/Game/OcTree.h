@@ -42,15 +42,15 @@ namespace TikiEngine
 							  int idx, int* found, float* foundSize);
 
 			// Given a list of triangles, finds a cube centered at the origin which fully encloses all points
-			void FindBox(TRI* tris, int triCount, IBoundingBox* BBox);
+			void FindBox(const TRI* tris, int triCount, IBoundingBox* BBox);
 
 			// Build the first node in the tree which encloses all the triangles
-			int BuildRootNode(TRI* tris, int triCount);
+			int BuildRootNode(const TRI* tris, int triCount);
 
 			// After building the root node, this function recursively subdivides the tree into octants.  
 			// Each octants gets a new bounding box and all the polygons in the parent are tested to see
 			// which lie within the new box.  Stops once each node contains no more than trisPerNode
-			void BuildTree(OctNode* node, int trisPerNode, TRI* tris, int triCount);
+			void BuildTree(OctNode* node, int trisPerNode, const TRI* tris, int triCount);
 
 			// Given a parent box, finds a partitioned child box based on the index i.
 			// i refers to the octant of the new box 0-7
@@ -66,7 +66,7 @@ namespace TikiEngine
 			// Tris - Array of triangles to construct Octree with
 			// TriCount - Number of Triangles in the Tris array
 			// TrisPerNode - Max number of triangles in each octree node
-			int Create(Engine* engine, TRI* tris, int triCount, int trisPerNode);
+			int Create(Engine* engine, const TRI* tris, int triCount, int trisPerNode);
 
 			// OctTable - Gets a pointer to a linear block of oct node data
 			// OctCount - Number of node's in OctTable
@@ -95,7 +95,7 @@ namespace TikiEngine
 			int triangleIdxCount;
 			int drawIdx;
 			bool showTree;
-			TRI* triangles; // = TotalCells
+			const TRI* triangles; // = TotalCells
 
 			List<TRI> foundTriangles;
 

@@ -88,11 +88,11 @@ namespace TikiEngine
 				List<Vector3> poi;
 				Vector3 pos = Vector3::Zero;
 
-				for (float x = -hSize; x <= hSize; x += 16)
+				for (float x = -hSize; x <= hSize; x += 64)
 				{
 					pos.X = x;
 
-					for (float y = -hSize; y <= hSize; y += 16)
+					for (float y = -hSize; y <= hSize; y += 64)
 					{
 						pos.Z = y;
 						pos.Y = terrain->SampleHeight(pos) + 5;
