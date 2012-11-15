@@ -17,6 +17,7 @@ namespace TikiEngine
 		class TikiSteering;
 		class GoalThink;
 		class SensorMemory;
+        class WeaponSystem;
 
 		struct TikiBotDescription
 		{
@@ -55,12 +56,12 @@ namespace TikiEngine
 				ReactionTime = 0.2f;
 				AimPresistance = 1.0f;
 				AimAccuracy = 0.0f;
-				MemorySpan = 3.0f;
+				MemorySpan = 0.5f;
 
 				// brain
 				ExploreBias = 0.05f;
-				AttackBias = 2.0f;
-				PatrolBias = 1.5f;
+				AttackBias = 1.0f;
+				PatrolBias = 0.9f;
 
 				// Controller
 				Height = 10.0f;
@@ -107,7 +108,7 @@ namespace TikiEngine
 			int Score() const {return score;}
 			void IncrementScore() {++score;}
 
-			Vector2 Facing() const {return facing;}
+			//Vector2 Facing() const {return facing;}
 			float FieldOfView() const {return fieldOfView;}
 
 			bool IsPossessed() const {return possessed;}
@@ -143,6 +144,7 @@ namespace TikiEngine
 			TargetingSystem* const GetTargetSys(){ return targSys; }
 			TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
 			SensorMemory* const GetSensorMem() const {return sensorMem; }
+            WeaponSystem* const GetWeaponSys() const {return weaponSys; }
 
 		private:
 			// bots shouldn't be copied, only created or respawned
@@ -176,6 +178,9 @@ namespace TikiEngine
 			// this is responsible for choosing the bot's current target
 			TargetingSystem* targSys;
 
+            // Handles all the weapons and aims
+            WeaponSystem* weaponSys;
+
 			// A regulator object limits the update frequency of a specific AI component
 			// In combination with a distance check, this can be used to create LOD for AI
 			Regulator* visionUpdateRegulator;
@@ -191,11 +196,6 @@ namespace TikiEngine
 
 			// each time this bot kills another this value is incremented
 			int score;
-  
-			// the direction the bot is facing (and therefore the direction of aim). 
-			// Note that this may not be the same as the bot's heading, which always
-			// points in the direction of the bot's movement
-			Vector2 facing;
 
 			// a bot only perceives other bots within this field of view
 			float fieldOfView;

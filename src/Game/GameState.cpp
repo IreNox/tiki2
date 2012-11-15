@@ -208,7 +208,7 @@ namespace TikiEngine
 									desc.Target = Vector3::Zero;
 								
 								desc.Origin = bot->Pos3D();
-								desc.Heading = bot->Facing();
+								desc.Heading = bot->Heading();
 								desc.ShooterID = bot->ID();
 								GameObject* go = new GameObject(engine);
 								Bullet* proj = new Bullet(this, go);

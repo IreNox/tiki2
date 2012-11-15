@@ -1,6 +1,6 @@
 #include "Game/MachineGun.h"
 
-#include "Game/Projectile.h"
+#include "Game/Bullet.h"
 #include "Game/TikiBot.h"
 
 namespace TikiEngine
@@ -22,10 +22,10 @@ namespace TikiEngine
 				ProjectileDescription desc;
 				desc.Target = pos; //owner->GetTargetBot()->Pos3D();
 				desc.Origin = owner->Pos3D();
-				desc.Heading = owner->Facing();
+				desc.Heading = owner->Heading();
 				desc.ShooterID = owner->ID();
 				GameObject* go = new GameObject(owner->GetGameState()->GetEngine());
-				Projectile* proj = new Projectile(owner->GetGameState(), go);
+				Bullet* proj = new Bullet(owner->GetGameState(), go);
 				proj->Init(desc, args);
 				owner->GetGameState()->AddProjectile(go);
 

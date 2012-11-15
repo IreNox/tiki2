@@ -8,6 +8,8 @@
 
 #include "Game/GoalThink.h"
 #include "Game/SensorMemory.h"
+#include "Game/WeaponSystem.h"
+#include "Game/Weapon.h"
 
 namespace TikiEngine
 {
@@ -56,9 +58,6 @@ namespace TikiEngine
 			// TODO: game types
 			//SetEntityType(type_bot);
 
-			// a bot starts off facing in the direction it is heading
-			facing = heading;
-
 			// create the navigation module
 			pathPlanner = new PathPlanner(this);
 
@@ -88,6 +87,9 @@ namespace TikiEngine
 
 			// we can remember bots for 10 secs
 			sensorMem = new SensorMemory(this, desc.MemorySpan);
+
+            weaponSys = new WeaponSystem(this);
+            weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
@@ -120,7 +122,7 @@ namespace TikiEngine
 		{
 			Vector2 toTarget = Vector2::Normalize(target - Pos());
 
-			float dot = Vector2::Dot(facing, toTarget);
+			float dot = Vector2::Dot(heading, toTarget);
 			
 			// clamp to rectify any rounding errors
 			ClampT(dot, -1, 1);
@@ -129,12 +131,8 @@ namespace TikiEngine
 			float angle = acosf(dot);
 
 			// return true if the bot's facing is within WeaponAimTolerance degs of facing the target
-			const float WeaponAimTolerance = 0.01f; // ~2 degrees
-			if (angle < WeaponAimTolerance)
-			{
-				facing = toTarget;
-				return true;
-			}
+			const float WeaponAimTolerance = 0.001f; // ~2 degrees
+			if (angle < WeaponAimTolerance) return true;
 
 			// clamp the amount to turn to the max turn rate
 			if (angle > (float)maxTurnRate)
@@ -142,9 +140,11 @@ namespace TikiEngine
 
 			// use a rotation matrix to rotate the player's facing vector accordingly
 			// the direction of rotation has to be determined when creating the rotation matrix
-			Matrix3x3 rotMatrix = rotMatrix.Rotate(angle * facing.Sign(toTarget));
-			facing = rotMatrix.TransformVector(facing);
+			Matrix3x3 rotMatrix = rotMatrix.Rotate(angle * heading.Sign(toTarget));
+            heading = rotMatrix.TransformVector(heading);
+            //velocity = rotMatrix.TransformVector(velocity);
 
+            side = heading.Cross();
 			return false;
 		}
 
@@ -161,9 +161,10 @@ namespace TikiEngine
 			Ray ray(Vector3::Zero, Vector3::Zero);
 
 			// Move y Up, else we raycast against the bot's own collider.
-			float heightEps = 1.0f;
-			ray.Origin = Pos3D();
-			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+			float eps = 0.1f;
+			//ray.Origin = Pos3D();
+			//ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+            ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + eps));
 			ray.Direction = pos - ray.Origin;
 
 			orig = ray.Origin;
@@ -171,7 +172,7 @@ namespace TikiEngine
 
 			RaycastHit info;
 
-			if (engine->physics->RayCast(ray, &info))
+			if (engine->physics->RayCast(ray, &info, weaponSys->GetCurrentWeapon()->GetIdealRange()))
 			{				
 				float eps = 5.0f;
 				// check the intersection points for nearly equal
@@ -235,7 +236,8 @@ namespace TikiEngine
 				sensorMem->UpdateVision(args);
 		
 			
-
+            // aim the current weapon at the current target and takes a shot if possible
+            weaponSys->TakeAimAndShoot(args);
 		}
 
 
@@ -273,7 +275,7 @@ namespace TikiEngine
 				side = heading.Cross();
 
 				// TODO: 
-				facing = heading;
+				//facing = heading;
 
 
 				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(

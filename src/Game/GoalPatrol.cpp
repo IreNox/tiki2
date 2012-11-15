@@ -4,6 +4,8 @@
 #include "Game/GoalMoveToPosition.h"
 #include "Game/GoalAttackTarget.h"
 
+#include "Game/WeaponSystem.h"
+#include "Game/Weapon.h"
 namespace TikiEngine
 {
 	namespace AI
@@ -13,6 +15,7 @@ namespace TikiEngine
 			path(wayPoints)
 		{
 			currWp = Vector2::Zero;
+            timeWpLeft = 0;
 		}
 
 
@@ -20,11 +23,8 @@ namespace TikiEngine
 		{
 			status = Active;
 
-			// if this goal is reactivated then there may be some existing subgoals that must be removed
-			RemoveAllSubgoals();
-
 			// if we have no target present, patrol to the next point
-			if (!owner->GetTargetSys()->IsTargetPresent())
+			if (!owner->GetTargetSys()->IsTargetShootable())
 			{
 				currWp = path.front();
 				path.pop_front();
@@ -32,8 +32,34 @@ namespace TikiEngine
 			}
 			else
 			{
-				OutputDebugString(L"TargetShootable while patroling. Attacking. \n");
-				AddSubgoal(new GoalAttackTarget(owner));
+                if (timeWpLeft == 0)
+                    timeWpLeft = args.Time.TotalTime;
+
+                if (args.Time.TotalTime - timeWpLeft > 5.0f)
+                {
+                    timeWpLeft = 0;
+                    status = Completed;
+                    return;
+                }
+
+
+                //float dist = Vector2::Distance(owner->Pos(), owner->GetTargetBot()->Pos());
+                //float weaponRange = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange();
+                //if (dist < weaponRange)
+               // {
+                    RemoveAllSubgoals();
+                    OutputDebugString(L"Target in range while patrolling. Attacking. \n");
+                    AddSubgoal(new GoalAttackTarget(owner));
+//                 }
+//                 else
+//                 {
+//                     //RemoveAllSubgoals();
+//                     //float lerpFac = dist / weaponRange;
+//                     //Vector3 weaponRangePos = Vector3::Lerp(owner->Pos3D(), owner->GetTargetBot()->Pos3D(), lerpFac);
+//                     OutputDebugString(L"dist > weaponRange. walking to target. \n");
+//                     //AddSubgoal(new GoalMoveToPosition(owner, owner->GetTargetBot()->Pos3D()));
+//                     //AddSubgoal(new GoalMoveToPosition(owner, weaponRangePos));
+//                 }
 			}
 		}
 
@@ -47,7 +73,7 @@ namespace TikiEngine
 
 			// if we have a target, activate to attack. Otherwise if we have 
 			// completed attacking and we still have a path continue patroling
- 			if (owner->GetTargetSys()->IsTargetPresent())
+ 			if (owner->GetTargetSys()->IsTargetShootable())
 				Activate(args);
 			else if (status == Completed && !path.empty())
 				Activate(args);

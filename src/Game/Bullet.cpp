@@ -21,10 +21,13 @@ namespace TikiEngine
         {
             Projectile::Init(desc, args);
 
-            Vector3 vel = Vector3::Normalize(desc.Target - desc.Origin);
-            vel = vel* desc.MaxSpeed;
+            Vector3 toTarget = Vector3::Normalize(desc.Target - desc.Origin);
+            toTarget = toTarget * desc.MaxSpeed;
+            Vector2 vel = desc.Heading * desc.MaxSpeed;
+            vel.Truncate(desc.MaxSpeed);
+
             sphere->GetRigidBody()->SetMass(desc.Mass);
-            sphere->GetRigidBody()->SetVelocity(vel);
+            sphere->GetRigidBody()->SetVelocity(Vector3(vel.X, toTarget.Y, vel.Y));
         }
 
 

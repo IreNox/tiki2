@@ -21,6 +21,7 @@ namespace TikiEngine
 			float MaxSpeed;
 			float Mass;
 			float MaxForce;
+            float LifeTime;
 
 			ProjectileDescription()
 			{
@@ -28,7 +29,8 @@ namespace TikiEngine
 				Mass = 1;
 				MaxForce = 150;
 				Scale = 0.7f;
-				Damage = 10;
+				Damage = 1;
+                LifeTime = 3.0f;
 			}
 		};
 

@@ -1,9 +1,10 @@
 #include "Game/GoalAttackTarget.h"
 
 #include "Game/GoalHuntTarget.h"
+#include "Game/GoalMoveToPosition.h"
 #include "Game/GoalTypes.h"
 
-#include "Game/GoalThink.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -32,9 +33,11 @@ namespace TikiEngine
 
 			// if the bot is able to shoot the target (there is LOS between bot and
 			// target), then select a tactic to follow while shooting
-			if (owner->GetTargetSys()->IsTargetShootable())
+			if (owner->GetTargetSys()->IsTargetShootable()) //&&  dist > weaponRange)
 			{
 				// TODO: ShootAt() owner->GetTargetBot()->Pos();
+
+
 				OutputDebugString(L"Target Shootable:  PEW PEW ! \n");
 				//owner->GetTargetBot()->GetBrain()->AddGoalAttackTarget();
 			}

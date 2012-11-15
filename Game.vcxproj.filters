@@ -323,6 +323,9 @@
     <ClInclude Include="inc\Game\Bullet.h">
       <Filter>Headerdateien\AI\WeaponSystem\Projectiles</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\WeaponSystem.h">
+      <Filter>Headerdateien\AI\WeaponSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -492,6 +495,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\Bullet.cpp">
       <Filter>Quelldateien\AI\WeaponSystem\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\WeaponSystem.cpp">
+      <Filter>Quelldateien\AI\WeaponSystem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

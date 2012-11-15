@@ -4,6 +4,7 @@
 #include "Game/TikiBot.h"
 #include "Game/SceneLevel.h"
 #include "Core/IGraphics.h"
+#include "Game/WeaponSystem.h"
 
 namespace TikiEngine
 {
@@ -42,7 +43,7 @@ namespace TikiEngine
 						info.Shootable = true;
 
 						// test if the bot is within FOV
-						if (IsSecondInFOVOfFirst(owner->Pos(), owner->Facing(), curBot->Pos(), owner->FieldOfView()))
+						if (IsSecondInFOVOfFirst(owner->Pos(), owner->Heading(), curBot->Pos(), owner->FieldOfView()))
 						{
 							info.TimeLastSensed = args.Time.TotalTime;
 							info.lastSensedPosition = curBot->Pos3D();
