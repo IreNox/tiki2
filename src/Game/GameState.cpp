@@ -9,7 +9,7 @@
 #include "Core/ISpriteBatch.h"
 
 #include "Game/GoalThink.h"
-#include "Game/Projectile.h"
+#include "Game/Bullet.h"
 
 namespace TikiEngine
 {
@@ -141,7 +141,7 @@ namespace TikiEngine
 
 			for(UInt32 i = 0; i < projectiles.Count(); i++)
 			{
-				GameObject* go = 0;
+                              				GameObject* go = 0;
 				go = projectiles.Get(i);
 
 				if (go != 0)
@@ -216,7 +216,7 @@ namespace TikiEngine
 								desc.Heading = bot->Facing();
 								desc.ShooterID = bot->ID();
 								GameObject* go = new GameObject(engine);
-								Projectile* proj = new Projectile(this, go);
+								Bullet* proj = new Bullet(this, go);
 								proj->Init(desc, args);
 								AddProjectile(go);
 							}

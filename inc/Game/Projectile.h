@@ -8,7 +8,7 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		class TikiBot;
+		//class TikiBot;
 
 		struct ProjectileDescription
 		{
@@ -38,17 +38,16 @@ namespace TikiEngine
 
 		public:
 			Projectile(GameState* gameState, GameObject* gameObject);
-			~Projectile();
+			virtual ~Projectile();
 
 			void Init(ProjectileDescription desc, const UpdateArgs& args);
 
-			void Draw(const DrawArgs& args){ }
-			void Update(const UpdateArgs& args);
-			//bool HandleMessage(const Telegram& msg); // TODO
+			virtual void Draw(const DrawArgs& args) { }
+			virtual void Update(const UpdateArgs& args);
 			void Write(std::ostream&  os)const { }
 			void Read(std::ifstream& is) { }
 
-			void Handle(ICollider* sender, const TriggerEnterArgs& args);
+			virtual void Handle(ICollider* sender, const TriggerEnterArgs& args);
 
 			// set to true if the projectile has impacted and has finished any explosion 
 			// sequence. When true the projectile will be removed from the game

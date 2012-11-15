@@ -24,6 +24,7 @@
     <ClInclude Include="inc\Game\BasicDatabase.h" />
     <ClInclude Include="inc\Game\BasicTransform.h" />
     <ClInclude Include="inc\Game\BoxSide.h" />
+    <ClInclude Include="inc\Game\Bullet.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\CellSpacePartition.h" />
@@ -90,6 +91,7 @@
     <ClCompile Include="src\Game\BasicDatabase.cpp" />
     <ClCompile Include="src\Game\BasicTransform.cpp" />
     <ClCompile Include="src\Game\BoxSide.cpp" />
+    <ClCompile Include="src\Game\Bullet.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\CameraRTS.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />

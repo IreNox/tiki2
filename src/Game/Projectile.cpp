@@ -1,6 +1,6 @@
 #include "Game/Projectile.h"
 #include "Game/TikiBot.h"
-#include "Core/ITriangleMeshCollider.h"
+#include "Core/ICollider.h"
 
 namespace TikiEngine
 {
@@ -42,36 +42,38 @@ namespace TikiEngine
 
 			//Vector2 vel = desc.Heading * desc.MaxSpeed;
 			//vel.Truncate(desc.MaxSpeed);
-			Vector3 vel = Vector3::Normalize(desc.Target - desc.Origin);
-			vel = vel* desc.MaxSpeed;
-			sphere->GetRigidBody()->SetMass(desc.Mass);
-			sphere->GetRigidBody()->SetVelocity(vel);
+			//Vector3 vel = Vector3::Normalize(desc.Target - desc.Origin);
+			//vel = vel* desc.MaxSpeed;
+			//sphere->GetRigidBody()->SetMass(desc.Mass);
+			//sphere->GetRigidBody()->SetVelocity(vel);
 
 		}
 
 		void Projectile::Handle(ICollider* sender, const TriggerEnterArgs& args)
 		{
-			// TODO: faction
-  			TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
-       		if (bot != 0)
-			{
-				if (bot->ID() != shooterID)
-				{
-					impacted = true;
-					dead = true;
-
-					OutputDebugString(L"bot hit, health reduced. \n");
-					bot->ReduceHealth(damage);
-				}
-			}
-			else
-			{
-				impacted = true;
-				dead = true;
-			}
-
-
-
+// 			// TODO: faction
+//   			TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
+//             if (bot != 0)
+// 			{
+// 				if (bot->ID() != shooterID)
+// 				{
+// 					impacted = true;
+// 					dead = true;
+// 
+// 					OutputDebugString(L"bot hit, health reduced. \n");
+// 					bot->ReduceHealth(damage);
+// 				}
+// 			}
+// 			else
+// 			{
+//                 // ITriangleMeshCollider* coll = args.otherCollider->GetGameObject()->GetComponent<ITriangleMeshCollider>();
+//                 ITriangleMeshCollider* coll = dynamic_cast<ITriangleMeshCollider*>(args.otherCollider);
+//                 if (coll != 0)
+//                 {
+//                     impacted = true;
+//                     dead = true;
+//                 }
+// 			}
   		}
 
 		void Projectile::Update(const UpdateArgs& args)
