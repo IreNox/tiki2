@@ -60,6 +60,7 @@ namespace TikiEngine
 			//forward the request to the subgoals
 			GoalComposite<TikiBot>::Draw(args);
 
+#if _DEBUG
 			// Draw target pos to move to
 			Vector3 start = destination - Vector3(1.0f, 0, 0) + Vector3(0, 0, 1.0f);
 			Vector3 end =	destination + Vector3(1.0f, 0, 0) - Vector3(0, 0, 1.0f);
@@ -68,6 +69,7 @@ namespace TikiEngine
 			start = destination - Vector3(1.0f, 0, 0) - Vector3(0, 0, 1.0f);
 			end =	destination + Vector3(1.0f, 0, 0) + Vector3(0, 0, 1.0f);
 			args.Graphics->DrawLine(start, end, Color::Red);
+#endif
 		}
 
 	}

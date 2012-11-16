@@ -17,6 +17,7 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 
+#include "Core/HelperLog.h"
 #include "Core/HelperThreading.h"
 
 #include <math.h>
@@ -270,10 +271,11 @@ namespace TikiEngine
 		//{
 			//csEngine->Wait();
 
-			//wostringstream s;
-			//s << L"Draw: " << HelperThreading::GIndex() << L"\n";
+			ostringstream s;
+			s << "Camera Count: " << scene->GetCameras()->Count();
 
 			//OutputDebugString(s.str().c_str());
+			HelperLog::Write(s.str());
 
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())

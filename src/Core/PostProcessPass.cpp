@@ -2,6 +2,8 @@
 #include "Core/PostProcessPass.h"
 #include "Core/TypeGlobals.h"
 
+#include "Core/HelperLog.h"
+
 namespace TikiEngine
 {
 	namespace Graphics
@@ -20,7 +22,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < inputTargets.Count())
 			{
-				IRenderTarget* target = inputTargets.GetKVP(i).GetKey();
+				IRenderTarget* target = inputTargets.GetKVP(i).GetValue();
 				SafeRelease(&target);
 
 				i++;
@@ -29,7 +31,7 @@ namespace TikiEngine
 			i = 0;
 			while (i < outputTargets.Count())
 			{
-				IRenderTarget* target = outputTargets.GetKVP(i).GetKey();
+				IRenderTarget* target = outputTargets.GetKVP(i).GetValue();
 				SafeRelease(&target);
 
 				i++;
@@ -49,12 +51,12 @@ namespace TikiEngine
 			return shader;
 		}
 
-		const Dictionary<IRenderTarget*, cstring>* PostProcessPass::GetInput()
+		const Dictionary<cstring, IRenderTarget*>* PostProcessPass::GetInput()
 		{
 			return &inputTargets;
 		}
 
-		const Dictionary<IRenderTarget*, UInt32>* PostProcessPass::GetOutput()
+		const Dictionary<UInt32, IRenderTarget*>* PostProcessPass::GetOutput()
 		{
 			return &outputTargets;
 		}
@@ -63,27 +65,41 @@ namespace TikiEngine
 		#pragma region Member - Add/Remove
 		void PostProcessPass::AddInput(cstring varName, IRenderTarget* target)
 		{
-			inputTargets.Add(target, varName);
+			inputTargets.Add(varName, target);
 			SafeAddRef(&target);
 		}
 
-		void PostProcessPass::RemoveInput(IRenderTarget* target)
+		void PostProcessPass::SetInput(cstring varName, IRenderTarget* target)
 		{
-			inputTargets.Remove(target);
-			SafeRelease(&target);
+			inputTargets[varName]->Release();
+			inputTargets[varName] = target;
+			inputTargets[varName]->AddRef();
 		}
+
+		//void PostProcessPass::RemoveInput(IRenderTarget* target)
+		//{
+		//	inputTargets.Remove(target);
+		//	SafeRelease(&target);
+		//}
 
 		void PostProcessPass::AddOutput(UInt32 slot, IRenderTarget* target)
 		{
-			outputTargets.Add(target, slot);
+			outputTargets.Add(slot, target);
 			SafeAddRef(&target);
 		}
 
-		void PostProcessPass::RemoveOutput(IRenderTarget* target)
+		void PostProcessPass::SetOutput(UInt32 slot, IRenderTarget* target)
 		{
-			outputTargets.Remove(target);
-			SafeRelease(&target);
+			outputTargets[slot]->Release();
+			outputTargets[slot] = target;
+			outputTargets[slot]->AddRef();
 		}
+
+		//void PostProcessPass::RemoveOutput(IRenderTarget* target)
+		//{
+		//	outputTargets.Remove(target);
+		//	SafeRelease(&target);
+		//}
 		#pragma endregion
 	}
 }

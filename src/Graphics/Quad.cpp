@@ -69,25 +69,25 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - RenderTargets
-		void Quad::SetInput(const Dictionary<IRenderTarget*, cstring>* input)
+		void Quad::SetInput(const Dictionary<cstring, IRenderTarget*>* input)
 		{
 			UInt32 i = 0;
 			while (i < input->Count())
 			{
 				auto kvp  = input->GetKVP(i);
-				shader->SetTexture(kvp.GetValue(), kvp.GetKey());
+				shader->SetTexture(kvp.GetKey(), kvp.GetValue());
 
 				i++;
 			}
 		}
 
-		void Quad::SetOutput(const Dictionary<IRenderTarget*, UInt32>* output)
+		void Quad::SetOutput(const Dictionary<UInt32, IRenderTarget*>* output)
 		{
 			UInt32 i = 0;
 			while (i < output->Count())
 			{
 				auto kvp  = output->GetKVP(i);
-				kvp.GetKey()->Apply(kvp.GetValue());
+				kvp.GetValue()->Apply(kvp.GetKey());
 
 				i++;
 			}

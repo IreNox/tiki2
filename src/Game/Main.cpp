@@ -40,9 +40,9 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			if ((name == L"tim.boden" || name == L"Tim") && true)
 			{
-				//scene = new SceneTim(engine);
-				scene = new SceneLevel(engine);
-				((SceneLevel*)scene)->LoadLevel(1);
+				scene = new SceneTim(engine);
+				//scene = new SceneLevel(engine);
+				//((SceneLevel*)scene)->LoadLevel(1);
 			}
 			//else if((name == L"adrian.lück" || name == L"Adrian"))
 			//{

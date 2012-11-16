@@ -44,7 +44,11 @@ namespace TikiEngine
 			IFont* font;
 
 			LightObject* light;
+
 			CameraObject* camera;
+
+			CameraObject* cameraLight;
+			IRenderTarget* targetLight;
 
 			//ITexture* tex;
 			//Vector3 tmp;

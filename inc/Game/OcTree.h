@@ -82,7 +82,9 @@ namespace TikiEngine
 			// get all intersecting triangles from the box positioned within pos
 			List<TRI>* GetTrianglesAt(const Vector3& pos);
 
+#if _DEBUG
 			void DrawDebug();
+#endif
 
 		protected:
 			VoidList OctNodeList;
@@ -94,11 +96,13 @@ namespace TikiEngine
 			unsigned int* triangleIdxTable;
 			int triangleIdxCount;
 			int drawIdx;
-			bool showTree;
 			const TRI* triangles; // = TotalCells
 
 			List<TRI> foundTriangles;
 
+#if _DEBUG
+			bool showTree;
+#endif
 			
 		};
 

@@ -49,6 +49,7 @@ namespace TikiEngine
 
 		void GoalFollowPath::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			std::list<PathEdge>::iterator it;
 			for (it = path.begin(); it != path.end(); ++it)
 			{
@@ -56,6 +57,7 @@ namespace TikiEngine
 				Vector3 dest = Vector3(it->Destination().X, owner->Pos3D().Y, it->Destination().Y);
 				args.Graphics->DrawLine(src, dest, Color::White);
 			}
+#endif
 
 			GoalComposite<TikiBot>::Draw(args);
 		}

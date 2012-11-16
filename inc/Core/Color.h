@@ -48,5 +48,6 @@ struct Color
 	static Color Red;
 	static Color Green;
 	static Color Blue;
+	static Color Yellow;
 	static Color TikiBlue;
 };

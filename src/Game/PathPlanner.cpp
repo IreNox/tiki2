@@ -251,6 +251,7 @@ namespace TikiEngine
 
         void PathPlanner::Draw(const DrawArgs& args)
         {
+#if _DEBUG
             NavigationPath::WAYPOINT_LIST::const_iterator iter = path.WaypointList().begin();
             if (iter != path.WaypointList().end())
             {
@@ -272,6 +273,7 @@ namespace TikiEngine
                     LastWaypoint = waypoint;
                 }
             }
+#endif
 
 //             // draw current heading
 //             if (pathActive)

@@ -57,8 +57,10 @@ namespace TikiEngine
 
 		void GoalSeekToPosition::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			Vector3 seekPos = Vector3(position.X, owner->Pos3D().Y, position.Y);
 			args.Graphics->DrawLine(owner->Pos3D(), seekPos, Color::Red);	
+#endif
 		}
 
 		bool GoalSeekToPosition::IsStuck() const

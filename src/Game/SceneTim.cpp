@@ -82,23 +82,34 @@ namespace TikiEngine
 
 			this->AddElement(go);
 
+			//RenderTarget
+			targetLight = engine->librarys->CreateResource<IRenderTarget>();
+			targetLight->CreateScreenSize();
+			targetLight->AddRef();
 
 			// Light
 			light = new LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(75.0f);
+			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			light->AddRef();
 
 			this->AddElement(light);
 			
 			// Camera
+			cameraLight = new CameraObject(engine);			
+			cameraLight->PRS.SPosition() = light->PRS.GPosition();
+			cameraLight->PRS.SRotation() = light->PRS.GRotation();
+			cameraLight->GetCameraComponent()->SetRenderTarget(targetLight);
+			cameraLight->AddRef();
+
+			this->AddElement(cameraLight);
+
 			camera = new CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
 			camera->AddRef();
-
 			(new CameraFly(engine, camera));
-
 			this->AddElement(camera);
 
 			#pragma region Old Stuff
@@ -184,7 +195,7 @@ namespace TikiEngine
 			);
 
 			engine->sprites->Draw(
-				engine->graphics->GetScreenTarget(),
+				targetLight,
 				Rectangle(10, 390, 200, 180)
 			);
 

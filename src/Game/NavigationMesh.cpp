@@ -422,6 +422,7 @@ namespace TikiEngine
 
 		void NavigationMesh::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			// render each cell triangle
 			List<Vector3> triangles;
 			CELL_ARRAY::const_iterator iter = cellArray.begin();
@@ -429,15 +430,14 @@ namespace TikiEngine
 			{
 				const NavigationCell* cell = *iter;
 
-#if _DEBUG
 				args.Graphics->DrawLine(cell->Vertex(0),cell->Vertex(1), Color::Red);
 				args.Graphics->DrawLine(cell->Vertex(1),cell->Vertex(2), Color::Red);
 				args.Graphics->DrawLine(cell->Vertex(2),cell->Vertex(0), Color::Red);
-#endif
 			}
 
 			// Draw Octree
 			tree->DrawDebug();
+#endif
 		}
 
 		int NavigationMesh::TotalCells() const

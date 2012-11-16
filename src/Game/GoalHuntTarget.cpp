@@ -71,6 +71,7 @@ namespace TikiEngine
 
 		void GoalHuntTarget::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			// show last recorded position if present
 			if (owner->GetTargetSys()->IsTargetPresent())
 			{
@@ -84,6 +85,7 @@ namespace TikiEngine
 				end =	lrp + Vector3(1.0f, 0, 0) + Vector3(0, 0, 1.0f);
 				args.Graphics->DrawLine(start, end, Color(1, 1, 1, 1));
 			}
+#endif
 
 			GoalComposite<TikiBot>::Draw(args);
 		}

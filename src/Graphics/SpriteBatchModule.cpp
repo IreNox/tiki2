@@ -77,11 +77,14 @@ namespace TikiEngine
 		void SpriteBatchModule::End()
 		{
 			UInt32 count = vertices.Count();
+
+			renderTarget->Clear(Color::TransparentBlack);
+
 			if (count == 0) return;
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
-			DllMain::ModuleGraphics->GetScreenTarget()->ApplyFirstAndOnly();
+			renderTarget->ApplyFirstAndOnly();
 
 			SpriteBatchVertex* bufferData = this->buffer->Map(count);
 			
@@ -107,9 +110,6 @@ namespace TikiEngine
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 			declaration->Apply();
-
-			renderTarget->Clear(Color::TransparentBlack);
-			renderTarget->Apply(0);
 
 			bool mSet = true;
 

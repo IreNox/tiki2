@@ -1,5 +1,8 @@
 
 #include "Core/Light.h"
+#include "Core/GameObject.h"
+
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -19,6 +22,44 @@ namespace TikiEngine
 		#pragma region Member
 		void Light::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
+			Vector3 pos = gameObject->PRS.GPosition();
+
+			// Axis align
+			engine->graphics->DrawLine(
+				pos - Vector3(-0.25f, 0, 0), pos + Vector3(-0.25f, 0, 0), Color::Yellow
+			);
+
+			engine->graphics->DrawLine(
+				pos - Vector3(0, -0.25f, 0), pos + Vector3(0, -0.25f, 0), Color::Yellow
+			);
+
+			engine->graphics->DrawLine(
+				pos - Vector3(0, 0, -0.25f), pos + Vector3(0, 0, -0.25f), Color::Yellow
+			);
+
+			// Diagonal
+			engine->graphics->DrawLine(
+				pos - Vector3(-0.125f, -0.125f, 0), pos + Vector3(-0.125f, -0.125f, 0), Color::Yellow
+			);
+
+			engine->graphics->DrawLine(
+				pos - Vector3(0, -0.125f, -0.125f), pos + Vector3(0, -0.125f, -0.125f), Color::Yellow
+			);
+
+			engine->graphics->DrawLine(
+				pos - Vector3(-0.125f, 0, -0.125f), pos + Vector3(-0.125f, 0, -0.125f), Color::Yellow
+			);
+
+			engine->graphics->DrawLine(
+				pos - Vector3(-0.125f, -0.125f, -0.125f), pos + Vector3(-0.125f, -0.125f, -0.125f), Color::Yellow
+			);
+
+			// Direction
+			engine->graphics->DrawLine(
+				pos, pos + gameObject->PRS.GetForward(), Color::Red
+			);
+#endif
 		}
 
 		void Light::Update(const UpdateArgs& args)

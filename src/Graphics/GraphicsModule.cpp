@@ -384,6 +384,11 @@ namespace TikiEngine
 				//args.Lights.Properties.IsDirty = false;
 			}
 
+			defaultPostProcess->GetPasses()->Get(0)->SetOutput(
+				0,
+				(args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
+			);
+
 			rtScreen->Apply(0);
 			rtScreen->Clear(clearColor);
 			this->SetStateDepthEnabled(true);

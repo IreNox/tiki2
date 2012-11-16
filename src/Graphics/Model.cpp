@@ -258,11 +258,13 @@ namespace TikiEngine
 
 			DllMain::Context->DrawIndexed(indicesList.Count(), 0, 0);
 
+#if _DEBUG
 			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
 			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
 			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
 
 			rootBone->Draw(args);
+#endif
 		}
 
 		void Model::Update(const UpdateArgs& args)

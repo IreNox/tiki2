@@ -61,8 +61,10 @@ namespace TikiEngine
 
 		void GoalTraverseEdge::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			Vector3 seekPos = Vector3(edge.Destination().X, owner->Pos3D().Y, edge.Destination().Y);
 			args.Graphics->DrawLine(owner->Pos3D(), seekPos, Color::Red);	
+#endif
 		}
 
 

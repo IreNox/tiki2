@@ -13,7 +13,10 @@ namespace TikiEngine
 			//this->octreeTable = 0;
 			//this->triangleIdxTable = 0;
 			this->drawIdx = 0;
+
+#if _DEBUG
 			this->showTree = false;
+#endif
 		}
 
 		OcTree::~OcTree()
@@ -310,6 +313,7 @@ namespace TikiEngine
 		}
 
 
+#if _DEBUG
 		void OcTree::DrawDebug()
 		{
 			// draw the whole tree
@@ -347,6 +351,6 @@ namespace TikiEngine
 			}
 
 		}
-
+#endif
 	}
 }

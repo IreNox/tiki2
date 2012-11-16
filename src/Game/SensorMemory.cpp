@@ -151,6 +151,7 @@ namespace TikiEngine
 
 		void SensorMemory::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			std::list<TikiBot*> opponents = GetListOfRecentlySensedOpponents(args.Time);
 			std::list<TikiBot*>::const_iterator it;
 			
@@ -164,6 +165,7 @@ namespace TikiEngine
 				args.Graphics->DrawLine(Vector3(p.X + b, p.Y, p.Z + b), Vector3(p.X - b, p.Y, p.Z + b), Color::Red);
 				args.Graphics->DrawLine(Vector3(p.X - b, p.Y, p.Z + b), Vector3(p.X - b, p.Y, p.Z - b), Color::Red);
 			}
+#endif
 		}
 
 		void SensorMemory::MakeNewRecordIfNotAlreadyPresent(TikiBot* opponent)
