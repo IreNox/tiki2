@@ -55,6 +55,15 @@ inline void SafeRelease(T** ptr)
 	}
 }
 
+template <typename T>
+inline float Clamp(T& val, T min, T max)
+{
+	if (val < min) val = min;
+	if (val > max) val = max;
+
+	return val;
+}
+
 float Random(float min, float max);
 
 string StringWtoA(wstring str);

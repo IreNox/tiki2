@@ -4,6 +4,8 @@
 #include "Core/UpdateArgs.h"
 #include "Core/GameObject.h"
 
+#include <math.h>
+
 namespace TikiEngine
 {
 	namespace Scripts
@@ -35,9 +37,18 @@ namespace TikiEngine
 			gameObject->PRS.SPosition() += (Vector3(1 * move.X, 0, 1 * move.Y) * (float)args.Time.ElapsedTime) +
 				Vector3(
 				(args.Input.MousePosition.X == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.X == 1.0f ? speed : 0.0f),
-				0.0f, 
+				0, 
 				(args.Input.MousePosition.Y == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.Y == 1.0f ? speed : 0.0f)
 			);
+
+			if (args.Input.MouseWheel != 0)
+			{
+				float y = gameObject->PRS.GPosition().Y;
+				y -= args.Input.MouseWheel / 10;
+				y = Clamp(y, 100.0f, 450.0f);
+				
+				gameObject->PRS.SPosition().Y = y;
+			}
 		}
 	}
 }
