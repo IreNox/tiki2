@@ -85,3 +85,9 @@ Matrix FBXConverter::ConvertTranspose(const FbxAMatrix& mat)
 		(float)mat[3][2],
 		(float)mat[3][3]);
 }
+
+Quaternion FBXConverter::Convert(const FbxQuaternion& quat)
+{
+	
+	return Quaternion(quat[0], quat[1], quat[2], quat[3]);
+}

@@ -3,11 +3,17 @@
 #include "Core/TypeGlobals.h"
 #include "Core/IGraphics.h"
 #include "Core/IContentManager.h"
+#include "Core/LibraryManager.h"
+#include "Core/ISpriteBatch.h"
 
 #include "Graphics/DllMain.h"
 #include "Graphics/FbxLoader.h"
 #include "Graphics/Deformer.h"
 #include "Graphics/TikiMesh.h"
+#include <Core/IFont.h>
+#include <Core/Engine.h>
+
+#include <sstream>
 
 
 namespace TikiEngine
@@ -20,7 +26,6 @@ namespace TikiEngine
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
 			Material* material = engine->content->LoadMaterial(L"os_skinning");
-			((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
 			this->SetMaterial(material);
 		}
 
@@ -66,7 +71,11 @@ namespace TikiEngine
 
 			this->InitializeAnimation();
 			
+			font = engine->librarys->CreateResource<IFont>();
+			font->Create(L"Arial", 10);
+			font->AddRef();
 
+			this->bone = rootBone->GetBoneByIndex(5);
 		}
 
 		void Model::InitializeMeshes()
@@ -230,6 +239,8 @@ namespace TikiEngine
 			{
 				declaration = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
+					
+			((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
 		}
 
 		void Model::Draw(GameObject* gameObject, const DrawArgs& args)
@@ -250,6 +261,8 @@ namespace TikiEngine
 			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
 			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
 			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
+
+			rootBone->Draw(args);
 		}
 
 		void Model::Update(const UpdateArgs& args)
@@ -273,7 +286,8 @@ namespace TikiEngine
 			{
 				matrices->bones[i] = this->constantBufferElements[i]->ShiftMatrix();
 			}
-			constantBufferMatrices->Unmap();		
+			constantBufferMatrices->Unmap();	
+
 		}
 
 		void Model::CopyVertexData()
@@ -337,6 +351,7 @@ namespace TikiEngine
 		{
 			return this->animationSpeed;
 		}
+
 		void Model::SetAnimationSpeed(float speed)
 		{
 			this->animationSpeed = speed;

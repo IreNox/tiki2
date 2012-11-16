@@ -2,6 +2,8 @@
 
 #include "Core/Scene.h"
 #include "Core/LightObject.h"
+#include <Core/IFont.h>
+#include <Graphics/TikiBone.h>
 
 namespace TikiEngine
 {
@@ -26,6 +28,7 @@ namespace TikiEngine
 			LightObject* light;
 
 			ITexture* tex;
+
 		};
 	}
 }

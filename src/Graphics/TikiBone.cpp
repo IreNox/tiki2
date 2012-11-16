@@ -28,6 +28,7 @@ namespace TikiEngine
 		}
 		void TikiBone::SetBind(FbxAMatrix& init)
 		{
+			this->initInverse = init.Inverse();
 			this->boneInit = FBXConverter::ConvertTranspose(init);
 			this->boneInitInverse = FBXConverter::ConvertTranspose(init.Inverse());
 		}
@@ -81,7 +82,7 @@ namespace TikiEngine
 			if(this->layer != 0)
 				return;
 
-			this->layer = new AnimationLayer(animation->StartTime(), animation->StopTime());
+			this->layer = new AnimationLayer();
 			layer->AddRef();
 			layer->Initialize(this->node, animation->Layer());
 
@@ -89,16 +90,44 @@ namespace TikiEngine
 				childs[i]->InitializeAnimation(animation);
 		}
 
+		void TikiBone::Draw(const DrawArgs& args)
+		{
+			//if(parent != 0)
+			//{
+			//	Matrix s = Matrix::CreateScaleMatrix(0.01f,0.01f,0.01f);
+
+			//	Vector3 p1 = Vector3::TransformCoordinate(Vector3(), BoneCurrentTransform() * s );
+			//	Vector3 p2 = Vector3::TransformCoordinate(Vector3(), parent->BoneCurrentTransform() * s);
+
+			//	FbxNodeAttribute::EType nodeType = node->GetNodeAttribute()->GetAttributeType();
+			//	FbxNodeAttribute::EType parent;
+
+			//	if(this->parent->node->GetNodeAttribute() == 0)
+			//		parent = FbxNodeAttribute::eMesh;
+			//	else
+			//		parent = this->parent->node->GetNodeAttribute()->GetAttributeType();
+			//	
+
+			//	if(nodeType == FbxNodeAttribute::eSkeleton && parent == FbxNodeAttribute::eSkeleton)
+			//	{
+			//		args.Graphics->DrawLine(p1, p2, Color::Red);
+			//	}
+			//}
+
+			for(int i = 0; i < childs.Count(); i++)
+				childs[i]->Draw(args);
+		}
+
 		void TikiBone::Update(const double& time)
 		{
+			this->layer->Update(time);
+
 			if(this->parent == 0)
 			{
-				//this->boneCurrentTransform = node->EvaluateLocalTransform(fbxTime);
 				this->boneCurrent = layer->LocalTransform(time);
 			}
 			else
 			{
-				//this->boneCurrentTransform = parent->BoneCurrentTransform() * node->EvaluateLocalTransform(fbxTime);
 				this->boneCurrent = layer->LocalTransform(time) * parent->BoneCurrentTransform();
 			}
 
@@ -131,6 +160,7 @@ namespace TikiEngine
 
 		Matrix TikiBone::ShiftMatrix()
 		{
+			//return FBXConverter::Convert(this->shiftMatrix);
 			return (this->boneInitInverse * this->boneCurrent).Transpose();
 		}
 
@@ -156,10 +186,26 @@ namespace TikiEngine
 			}
 			return 0;
 		}
+		TikiBone* TikiBone::GetBoneByIndex(int index)
+		{
+			if(this->constantBufferIndex == index)
+				return this;
+			for(int i = 0;  i< childs.Count(); i++)
+			{
+				TikiBone* tmp = childs[i]->GetBoneByIndex(index);
+				if(tmp != 0)
+					return tmp;
+			}
+		}
 
 		const char* TikiBone::Name()
 		{
 			return name;
+		}
+
+		AnimationLayer* TikiBone::Layer()
+		{
+			return this->layer;
 		}
 
 		int TikiBone::GetConstantBufferIndex()

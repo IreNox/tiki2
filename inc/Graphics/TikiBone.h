@@ -7,11 +7,15 @@
 #include "Core/TypeGlobals.h"
 #include "Graphics/TikiAnimation.h"
 #include "Graphics/AnimationLayer.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
+
+		using namespace TikiEngine::Graphics;
+
 		class TikiBone : public TikiObject
 		{
 		public:
@@ -20,6 +24,8 @@ namespace TikiEngine
 
 			void Initialize();
 
+
+			void Draw(const DrawArgs& args);
 			void Update(const double& time = -1.0);
 		
 			void Clean();
@@ -33,7 +39,10 @@ namespace TikiEngine
 
 			Matrix ShiftMatrix();
 
+			AnimationLayer* Layer();
+
 			TikiBone* GetBoneByName(const char* name);
+			TikiBone* GetBoneByIndex(int index);
 
 			void InitializeAnimation(TikiAnimation* animation);
 
@@ -54,6 +63,9 @@ namespace TikiEngine
 			Matrix boneInit;
 			Matrix boneInitInverse;
 			Matrix boneCurrent;
+
+			FbxAMatrix initInverse;
+			FbxAMatrix shiftMatrix;
 
 			TikiBone* parent;
 			List<TikiBone*> childs;

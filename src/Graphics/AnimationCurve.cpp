@@ -4,6 +4,12 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		AnimationCurve::AnimationCurve()
+			:InitValue(0), start(0), end(0)
+		{
+
+		}
+
 		AnimationCurve::AnimationCurve(float InitValue, double& start, double& end)
 			:InitValue(InitValue), start(start), end(end)
 		{
@@ -21,9 +27,9 @@ namespace TikiEngine
 		{
 			int keyCount = Keys.Count();
 
-			if(keyCount == 0 || time == -1.0)
-				return InitValue;
-			
+			if(keyCount == 1)
+				return Keys[0]->Value;
+
 			if(Keys[0]->Time >= time)
 				return Keys[0]->Value;
 
@@ -44,7 +50,7 @@ namespace TikiEngine
 
 			if(Keys[index]->Time == time)
 				return Keys[index]->Value;
-			
+
 			double left = Keys[index]->Time;
 			double right = Keys[(index + 1) % keyCount]->Time;
 
@@ -52,12 +58,22 @@ namespace TikiEngine
 
 			if(left < right)
 				deltaTime = right - left;
-			else
-				deltaTime = end - left + right - start;
 
-			double koeff = (time - left) / deltaTime;
+			double koeff = (time - left) / (right - left);
 
 			return Keys[index]->Value * (1 - koeff) + Keys[(index + 1) % keyCount]->Value * koeff;
+		}
+
+		float AnimationCurve::Evaluate(int left, int right, float koeff)
+		{
+			if(left == right)
+				return Keys[left]->Value;
+			if(right == -1.0)
+				return Keys[left]->Value;
+			if(left == -1.0)
+				return Keys[right]->Value;
+
+			return Keys[left]->Value * (1 - koeff) + Keys[right]->Value * koeff;
 		}
 	}
 }

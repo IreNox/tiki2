@@ -10,29 +10,40 @@
 #include "Core/TypeGlobals.h"
 #include "Core/Matrix.h"
 #include "Core/Vector3.h"
+#include "Core/Quaternion.h"
 
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
+
+
 		class AnimationLayer : public TikiObject
 		{
 		public:
-			AnimationLayer(double& start, double& end);
+			AnimationLayer();
 			~AnimationLayer();
 
 			void Initialize(FbxNode* node, FbxAnimLayer* layer);
 
-			Vector3 LocalTranslation(const double& time = -1.0);
-			Vector3 LocalRotation(const double& time = -1.0);
-			Matrix LocalTransform(const double& time = -1.0);
+			void Update(const double& time = -1.0);
 
+			Vector3 LocalTranslation(const double& time = -1.0);
+			Quaternion LocalQuaternion(const double& time = -1.0);
+			Matrix LocalTransform(const double& time = -1.0);
+ 
 		private:
 			double start;
 			double end;
 
-			AnimationCurve* AnimationLayer::Fill(FbxAnimCurve* curve, float init);
+			//all curves got the same timestamps = 1 binary search - 1 koeff evaluation
+
+			void GetTimeStamps(List<double>* timeStamps, FbxNode* node, FbxAnimLayer* layer);
+			void Fill(List<double>* keyTimes, FbxAnimCurve* curve);
+			void AddKey(AnimationCurve* curve, float value, double& time);
+			void CreateKeys(List<double>* keyTimes, FbxNode* node);
+			void CreateDefaultValues(FbxNode* node);
 
 			AnimationCurve* translationX;
 			AnimationCurve* translationY;
@@ -42,8 +53,15 @@ namespace TikiEngine
 			AnimationCurve* rotationY;
 			AnimationCurve* rotationZ;
 
-			Matrix preRotation;
-			Matrix postRotationInverse;
+			List<Quaternion> quaternionen;
+
+			int bsv;
+			int left;
+			int right;
+			float koeff;
+			double lastUpdateTime;
+
+			List<double> * timeStamps;
 		};
 	}
 }

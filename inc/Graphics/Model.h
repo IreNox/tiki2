@@ -17,6 +17,7 @@
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
+#include <Core/IFont.h>
 
 namespace TikiEngine
 {
@@ -109,6 +110,10 @@ namespace TikiEngine
 
 			TikiBone* rootBone;
 
+			IFont* font;
+			TikiBone* bone;
+
+			Vector3 rotation;
 		};
 	}
 }

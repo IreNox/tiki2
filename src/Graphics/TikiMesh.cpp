@@ -32,7 +32,9 @@ namespace TikiEngine
 					MultNormalize(vertexArray[i]));
 			}
 
-			this->hasDeformation = mesh->GetDeformerCount(FbxDeformer::eSkin) > 0;
+
+			int skinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
+			this->hasDeformation = skinCount > 0;
 
 			int maxBonesPerVertex = MaxBonesPerVertex();
 #if _DEBUG
@@ -238,6 +240,8 @@ namespace TikiEngine
 
 			if(mesh->GetDeformerCount(FbxDeformer::eSkin) != 1) // zu viele skins - nicht supported
 				_CrtDbgBreak();
+
+			List<FbxCluster*> clusterz;
 
 			FbxSkin *  skinDeformer = (FbxSkin*) mesh->GetDeformer(0, FbxDeformer::eSkin);
 
