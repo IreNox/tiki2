@@ -131,7 +131,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't set ConstantBuffer: " + string(key), 0);
+				HelperLog::Write("Error: Can't set ConstantBuffer: " + string(key));
 			}
 		}
 		#pragma endregion

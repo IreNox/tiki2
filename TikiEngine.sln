@@ -45,6 +45,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binary64", "src\Binary64\Binary64.csproj", "{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.ContentManager", "TikiEngine.ContentManager.vcxproj", "{60826F76-797B-476A-A4A0-237278730964}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution

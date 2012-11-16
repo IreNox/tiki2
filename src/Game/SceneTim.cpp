@@ -83,9 +83,9 @@ namespace TikiEngine
 			this->AddElement(go);
 
 			//RenderTarget
-			targetLight = engine->librarys->CreateResource<IRenderTarget>();
-			targetLight->CreateScreenSize();
-			targetLight->AddRef();
+			//targetLight = engine->librarys->CreateResource<IRenderTarget>();
+			//targetLight->CreateScreenSize();
+			//targetLight->AddRef();
 
 			// Light
 			light = new LightObject(engine);
@@ -98,13 +98,13 @@ namespace TikiEngine
 			this->AddElement(light);
 			
 			// Camera
-			cameraLight = new CameraObject(engine);			
-			cameraLight->PRS.SPosition() = light->PRS.GPosition();
-			cameraLight->PRS.SRotation() = light->PRS.GRotation();
-			cameraLight->GetCameraComponent()->SetRenderTarget(targetLight);
-			cameraLight->AddRef();
+			//cameraLight = new CameraObject(engine);			
+			//cameraLight->PRS.SPosition() = light->PRS.GPosition();
+			//cameraLight->PRS.SRotation() = light->PRS.GRotation();
+			//cameraLight->GetCameraComponent()->SetRenderTarget(targetLight);
+			//cameraLight->AddRef();
 
-			this->AddElement(cameraLight);
+			//this->AddElement(cameraLight);
 
 			camera = new CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
@@ -194,10 +194,10 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
-			engine->sprites->Draw(
-				targetLight,
-				Rectangle(10, 390, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	targetLight,
+			//	Rectangle(10, 390, 200, 180)
+			//);
 
 			////3D Interface
 			//engine->sprites->Draw3D(

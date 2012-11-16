@@ -31,7 +31,7 @@ namespace TikiEngine
 			{
 				type = sqlite3_column_int(state, fieldId);
 
-				Material* material = engine->content->LoadMaterial(L"os_skinning");
+				Material* material = engine->content->LoadMaterial(L"os_default");
 				material->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_diff");
 				material->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_normal");
 				material->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_spec");

@@ -74,7 +74,7 @@ namespace TikiEngine
 			navMesh->Clear();
 			navMesh->Load(
 				L"navmesh_" + StringAtoW(scene->GetLevel()->GetName()),
-				Matrix::CreateTranslation(Vector3(0, 6, 0))
+				Matrix::CreateScaleMatrix(2, 1, 2) * Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
 			TikiBotDescription desc;
