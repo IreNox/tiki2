@@ -1,5 +1,4 @@
 #include "Graphics/TikiMesh.h"
-#include "Graphics/Deformer.h"
 #include "Graphics/FBXConverter.h"
 
 namespace TikiEngine

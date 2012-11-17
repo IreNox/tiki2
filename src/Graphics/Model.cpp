@@ -8,7 +8,6 @@
 
 #include "Graphics/DllMain.h"
 #include "Graphics/FbxLoader.h"
-#include "Graphics/Deformer.h"
 #include "Graphics/TikiMesh.h"
 #include <Core/IFont.h>
 #include <Core/Engine.h>

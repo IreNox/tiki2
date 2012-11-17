@@ -125,9 +125,6 @@
     <ClCompile Include="src\Graphics\FBXConverter.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Deformer.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\TikiMesh.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
@@ -233,9 +230,6 @@
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\FBXConverter.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\Deformer.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\TikiMesh.h">
