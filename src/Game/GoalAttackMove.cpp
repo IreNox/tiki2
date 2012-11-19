@@ -12,6 +12,7 @@ namespace TikiEngine
 			:GoalComposite<TikiBot>(owner, Goal_Attack_Move)
 		{
 			this->destination = dest;
+			attacking = false;
 		}
 
 		void GoalAttackMove::Activate(const UpdateArgs& args)
@@ -22,14 +23,26 @@ namespace TikiEngine
 			RemoveAllSubgoals();
 
 			// move to the random location
-			if (!owner->GetTargetSys()->IsTargetShootable())
-				AddSubgoal(new GoalMoveToPosition(owner, destination));
+			if (owner->GetTargetSys()->IsTargetPresent())
+			{
+				if (attacking == false)
+				{
+					attacking = true;
+					OutputDebugString(L"AttackMove - Attacking. \n");
+					//RemoveAllSubgoals();
+					AddSubgoal(new GoalAttackTarget(owner));
+				}
+
+			}
 			else
 			{
-				OutputDebugString(L"AttackMove: Target found, attacking. \n");
-				AddSubgoal(new GoalAttackTarget(owner));
+				attacking = false;
+				//RemoveAllSubgoals();
+				OutputDebugString(L"AttackMove - Moving. \n");
+				AddSubgoal(new GoalMoveToPosition(owner, destination));
 			}
 		}
+
 
 		int GoalAttackMove::Process(const UpdateArgs& args)
 		{
@@ -40,11 +53,10 @@ namespace TikiEngine
 			status = ProcessSubgoals(args);
 
 			// just set the state to inactive, so it always gets reactivated if there's some target to shoot to
-			if (owner->GetTargetSys()->IsTargetShootable())
-			{
-				//Activate(args);
-				status = Inactive;
-			}
+ 			if (owner->GetTargetSys()->IsTargetPresent())
+ 			{
+ 				status = Inactive;
+ 			}
 
 			return status;
 		}

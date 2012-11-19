@@ -53,10 +53,10 @@ namespace TikiEngine
 				MaxHealth = 100;
 				
 				FoV = 180.0f;
-				ReactionTime = 0.2f;
+				ReactionTime = 0.001f;
 				AimPresistance = 1.0f;
 				AimAccuracy = 0.0f;
-				MemorySpan = 0.5f;
+				MemorySpan = 3.0f; //0.5f;
 
 				// brain
 				ExploreBias = 0.05f;
@@ -71,7 +71,7 @@ namespace TikiEngine
 				// MovingEntity
 				Heading = Vector2::Zero;
 				MaxSpeed = 30.0f;
-				MaxTurnRate = 30.0f;
+				MaxTurnRate = 0.5f;
 				MaxForce = 1.0f;
 				Radius = 2.0f;
 			}

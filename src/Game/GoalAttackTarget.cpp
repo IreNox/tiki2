@@ -38,14 +38,14 @@ namespace TikiEngine
 				// TODO: ShootAt() owner->GetTargetBot()->Pos();
 
 
-				OutputDebugString(L"Target Shootable:  PEW PEW ! \n");
+				//OutputDebugString(L"Target Shootable:  PEW PEW ! \n");
 				//owner->GetTargetBot()->GetBrain()->AddGoalAttackTarget();
 			}
 			else
 			{
 				// if the target is not visible, go hunt it.
-				OutputDebugString(L"Target not shootable. Hunting it. \n");
-				AddSubgoal(new GoalHuntTarget(owner));
+				//OutputDebugString(L"Target not shootable. Hunting it. \n");
+				//AddSubgoal(new GoalHuntTarget(owner));
 			}
 
 		}

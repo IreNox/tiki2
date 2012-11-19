@@ -18,6 +18,7 @@ namespace TikiEngine
 			void Terminate() { }
 
 		private:
+			bool attacking;
 			Vector3 destination;
 		};
 	}

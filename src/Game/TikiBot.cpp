@@ -85,7 +85,7 @@ namespace TikiEngine
 			// create Targeting System
 			targSys = new TargetingSystem(this);
 
-			// we can remember bots for 10 secs
+			// we can remember bots
 			sensorMem = new SensorMemory(this, desc.MemorySpan);
 
             weaponSys = new WeaponSystem(this);
@@ -131,9 +131,11 @@ namespace TikiEngine
 			float angle = acosf(dot);
 
 			// return true if the bot's facing is within WeaponAimTolerance degs of facing the target
-			const float WeaponAimTolerance = 0.001f; // ~2 degrees
-			if (angle < WeaponAimTolerance) return true;
-
+			if (angle < 0.01f) 
+			{
+				heading = toTarget;
+				return true;
+			}
 			// clamp the amount to turn to the max turn rate
 			if (angle > (float)maxTurnRate)
 				angle = (float)maxTurnRate;
@@ -142,7 +144,7 @@ namespace TikiEngine
 			// the direction of rotation has to be determined when creating the rotation matrix
 			Matrix3x3 rotMatrix = rotMatrix.Rotate(angle * heading.Sign(toTarget));
             heading = rotMatrix.TransformVector(heading);
-            //velocity = rotMatrix.TransformVector(velocity);
+            velocity = rotMatrix.TransformVector(velocity);
 
             side = heading.Cross();
 			return false;
@@ -161,10 +163,10 @@ namespace TikiEngine
 			Ray ray(Vector3::Zero, Vector3::Zero);
 
 			// Move y Up, else we raycast against the bot's own collider.
-			float eps = 0.1f;
+			float headingEps = 0.5f;
 			//ray.Origin = Pos3D();
 			//ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
-            ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + eps));
+            ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
 			ray.Direction = pos - ray.Origin;
 
 			orig = ray.Origin;
@@ -268,28 +270,31 @@ namespace TikiEngine
 								 velocity.Y); 
 			controller->Move(displacement * (float)args.Time.ElapsedTime);
 
+
+
 			//if the vehicle has a non zero velocity the heading and side vectors must be updated
 			if (!velocity.IsZero())
 			{    
 				heading = Vector2::Normalize(velocity);
 				side = heading.Cross();
 
-				// TODO: 
-				//facing = heading;
 
-
-				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
-					(3.14159f - atan2(velocity.Y, velocity.X)) - (3.14159f / 2), 0, 0
-				);
 
 				if (gameObject->GModel()) 
 					gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
 			}
 			else
 			{
+
+
 				if (gameObject->GModel()) 
 					gameObject->GModel()->SetAnimationSpeed(0);
 			}
+
+			// always update rotation
+			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
+				(3.14159f - atan2(heading.Y, heading.X)) - (3.14159f / 2), 0, 0
+				);
 
 			//velocity[bufferState.UpdateIndex] = new value;
 		}

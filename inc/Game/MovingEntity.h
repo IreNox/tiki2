@@ -14,8 +14,8 @@ namespace TikiEngine
 
 			virtual ~MovingEntity(){}
 
-			void Init(Double radius = 2.0, Vector2 velocity = Vector2::Zero, Double maxSpeed = 1.0, 
-					  Vector2 heading = Vector2::Zero, float turnRate = 0.2, Double maxForce = 1.0);
+			void Init(Double radius, Vector2 velocity, Double maxSpeed, 
+					  Vector2 heading, float turnRate, Double maxForce);
 
 			// accessors
 			Vector2 Velocity() const { return velocity; }

@@ -143,11 +143,11 @@ namespace TikiEngine
 
 		void GoalThink::AddGoalAttackMove(Vector3 pos)
 		{
- 			if (NotPresent(Goal_Attack_Move))
- 			{
- 				RemoveAllSubgoals();
+ 			//if (NotPresent(Goal_Attack_Move))
+ 			//{
+ 				//RemoveAllSubgoals();
  				AddSubgoal(new GoalAttackMove(owner, pos));
- 			}
+ 			//}
 		}
 
 		void GoalThink::AddGoalMoveToPosition(Vector3 pos)

@@ -3,6 +3,9 @@
 #include "Game/TikiBot.h"
 #include "Game/MachineGun.h"
 
+#include "Game/GoalTypes.h"
+#include "Game/GoalThink.h"
+
 namespace TikiEngine
 {
     namespace AI
@@ -49,20 +52,19 @@ namespace TikiEngine
         void WeaponSystem::TakeAimAndShoot(const UpdateArgs& args)
         {
             // only aim if target is shootable or if it has very recently gone out of view.
-            if (owner->GetTargetSys()->IsTargetShootable() ||
-                (owner->GetTargetSys()->GetTimeTargetHasBeenOutOfView(args) < aimPersistance))
+            if (owner->GetTargetSys()->IsTargetPresent())// ||
+                //(owner->GetTargetSys()->GetTimeTargetHasBeenOutOfView(args) < aimPersistance))
             {
                 Vector3 aimingPos = owner->GetTargetBot()->Pos3D();
 
                 // if the weapon is aimed correctly, there is line of sight between the
-                // bot and the aiming position and it has been in view for a period longer
-                // than the bot reaction time, shoot the weapon
-                
-                if (owner->RotateFacingTowardPosition(Vector2(aimingPos.X, aimingPos.Z)) &&
-                    (owner->GetTargetSys()->GetTimeTargetHasBeenVisible(args) > reactionTime))
-                {
-                    currentWeapon->ShootAt(args, aimingPos);
-                }
+                // bot and the aiming position
+				if (owner->GetBrain()->NotPresent(Goal_Move_To_Position))
+				//if (!owner->GetBrain()->NotPresent(Goal_Attack_Target))
+					if (owner->RotateFacingTowardPosition(Vector2(aimingPos.X, aimingPos.Z)))
+					{
+						currentWeapon->ShootAt(args, aimingPos);
+					}
 
             }
            // else

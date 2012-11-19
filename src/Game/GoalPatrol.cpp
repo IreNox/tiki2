@@ -16,6 +16,8 @@ namespace TikiEngine
 		{
 			currWp = Vector2::Zero;
             timeWpLeft = 0;
+			attacking = false;
+
 		}
 
 
@@ -24,8 +26,9 @@ namespace TikiEngine
 			status = Active;
 
 			// if we have no target present, patrol to the next point
-			if (!owner->GetTargetSys()->IsTargetShootable())
+			if (!owner->GetTargetSys()->IsTargetPresent())
 			{
+				attacking = false;
 				currWp = path.front();
 				path.pop_front();
 				AddSubgoal(new GoalMoveToPosition(owner, Vector3(currWp.X, 0, currWp.Y)));
@@ -47,9 +50,15 @@ namespace TikiEngine
                 //float weaponRange = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange();
                 //if (dist < weaponRange)
                // {
+
+				if (attacking == false)
+				{
+					attacking = true;
+				
                     RemoveAllSubgoals();
                     OutputDebugString(L"Target in range while patrolling. Attacking. \n");
                     AddSubgoal(new GoalAttackTarget(owner));
+				}
 //                 }
 //                 else
 //                 {
@@ -73,7 +82,7 @@ namespace TikiEngine
 
 			// if we have a target, activate to attack. Otherwise if we have 
 			// completed attacking and we still have a path continue patroling
- 			if (owner->GetTargetSys()->IsTargetShootable())
+ 			if (owner->GetTargetSys()->IsTargetPresent())
 				Activate(args);
 			else if (status == Completed && !path.empty())
 				Activate(args);
