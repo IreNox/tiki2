@@ -169,9 +169,13 @@ namespace TikiEngine
 
 				if (engine->physics->RayCast(ray, &info))
 				{
+					TikiBot* target = 0;
+
 					ICollider* coll = info.Collider;
 					if (coll)
 					{
+						target = coll->GetGameObject()->GetComponent<TikiBot>();
+
 						if(coll->GetDynamic())
 						{
 							coll->GetRigidBody()->SetVelocity(Vector3(0, 10, 0));
@@ -199,26 +203,19 @@ namespace TikiEngine
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalAttackMove(info.Point);
 							}
-							else if(args.Input.GetKey(KEY_SPACE))
-							{
-								ProjectileDescription desc;
-								if (bot->GetTargetSys()->IsTargetPresent())
-									desc.Target = bot->GetTargetBot()->Pos3D();
-								else
-									desc.Target = Vector3::Zero;
-								
-								desc.Origin = bot->Pos3D();
-								desc.Heading = bot->Heading();
-								desc.ShooterID = bot->ID();
-								GameObject* go = new GameObject(engine);
-								Bullet* proj = new Bullet(this, go);
-								proj->Init(desc, args);
-								AddProjectile(go);
-							}
 							else
 							{
-								bot->GetBrain()->RemoveAllSubgoals();
-								bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+								if (target != 0)
+								{
+									OutputDebugString(L"Target found. \n");
+									bot->GetBrain()->AddGoalAttackGlobalTarget(target);
+								}
+								else
+								{
+									bot->GetBrain()->RemoveAllSubgoals();
+									bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+								}
+
 							}
 
 						}

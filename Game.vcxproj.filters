@@ -326,6 +326,9 @@
     <ClInclude Include="inc\Game\WeaponSystem.h">
       <Filter>Headerdateien\AI\WeaponSystem</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h">
+      <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -498,6 +501,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\WeaponSystem.cpp">
       <Filter>Quelldateien\AI\WeaponSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp">
+      <Filter>Quelldateien\AI\Goals\Composite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

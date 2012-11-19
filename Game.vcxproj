@@ -33,6 +33,7 @@
     <ClInclude Include="inc\Game\GameHud.h" />
     <ClInclude Include="inc\Game\GameState.h" />
     <ClInclude Include="inc\Game\Goal.h" />
+    <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h" />
     <ClInclude Include="inc\Game\GoalAttackMove.h" />
     <ClInclude Include="inc\Game\GoalAttackTarget.h" />
     <ClInclude Include="inc\Game\GoalComposite.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="misc\res\resource.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\BasicDatabase.cpp" />

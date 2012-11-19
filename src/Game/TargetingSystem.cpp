@@ -39,6 +39,8 @@ namespace TikiEngine
 					} // if
 				} // if
 			} // for
+
+
 		}
 		
 		bool TargetingSystem::IsTargetWithinFOV() const

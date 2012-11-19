@@ -43,12 +43,14 @@ namespace TikiEngine
 			// sets the target pointer to null
 			void ClearTarget() { currentTarget = 0; }
 
+
 		private:
 			// The owner of this system
 			TikiBot* owner;
 
 			// The current target (this will be null if there is no target assigned)
 			TikiBot* currentTarget;
+
 		};
 
 	}

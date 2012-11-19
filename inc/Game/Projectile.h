@@ -29,7 +29,7 @@ namespace TikiEngine
 				Mass = 1;
 				MaxForce = 150;
 				Scale = 0.7f;
-				Damage = 1;
+				Damage = 10;
                 LifeTime = 3.0f;
 			}
 		};

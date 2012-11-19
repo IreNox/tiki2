@@ -34,6 +34,7 @@ namespace TikiEngine
 			// top level goal types
 			void AddGoalExplore();
 			void AddGoalPatrol(std::list<Vector2> wps);
+			void AddGoalAttackGlobalTarget(TikiBot* target);
 			void AddGoalAttackTarget();
 			void AddGoalAttackMove(Vector3 pos);
 			void AddGoalMoveToPosition(Vector3 pos);

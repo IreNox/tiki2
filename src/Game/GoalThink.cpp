@@ -6,6 +6,7 @@
 #include "Game/GoalAttackTarget.h"
 #include "Game/GoalAttackMove.h"
 #include "Game/GoalPatrol.h"
+#include "Game/GoalAttackGlobalTarget.h"
 
 
 #include "Game/AttackTargetGoalEvaluator.h"
@@ -130,6 +131,12 @@ namespace TikiEngine
 				RemoveAllSubgoals();
 				AddSubgoal(new GoalPatrol(owner, wps));
 			}
+		}
+
+		void GoalThink::AddGoalAttackGlobalTarget(TikiBot* target)
+		{
+			RemoveAllSubgoals();
+			AddSubgoal(new GoalAttackGlobalTarget(owner, target));
 		}
 
 		void GoalThink::AddGoalAttackTarget()
