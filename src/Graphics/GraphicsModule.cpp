@@ -17,6 +17,9 @@
 #include "Core/Camera.h"
 #include "Core/GameObject.h"
 
+#include "Core/FileStream.h"
+using namespace TikiEngine::IO;
+
 #include <ctime>
 #include <sstream>
 using namespace std;
@@ -142,7 +145,26 @@ namespace TikiEngine
 
 			wstring path = engine->HPath.CombineWorkingPath(wstring(L"Screenshots/") + fileName);
 
-			rtBackBuffer->SaveToFile(path.c_str());
+			rtBackBuffer->SaveToFile(
+				path.c_str()
+			);
+
+			//IRenderTarget* oldTarget = defaultPostProcess->GetPasses()->Get(0)->GetOutput()->Get(0);
+			//
+			//IRenderTarget* target = new RenderTarget(engine);
+			//target->CreateScreenSize(true);
+			//defaultPostProcess->GetPasses()->Get(0)->SetOutput(0, target);
+
+			//drawPostProcess(defaultPostProcess);
+
+			//defaultPostProcess->GetPasses()->Get(0)->SetOutput(0, oldTarget);
+
+			//UInt32 len = 0;
+			//void* data = 0;
+			//target->GetData(PF_A8R8G8B8, &data, &len);
+
+			//FileStream stream(fileName, FileMode::FM_Write);
+			//stream.Write(data, 0, len);
 
 			if (newName)
 			{

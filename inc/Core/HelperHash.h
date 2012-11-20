@@ -2,23 +2,42 @@
 
 #include "Core/TypeDef.h"
 
+#include <stdio.h>
+
 namespace TikiEngine
 {
 	class HelperHash
 	{
 	public:
-		static UInt32 Hash(Byte* str, UInt32 len)
+		
+		#define UPDC32(octet,crc) ()
+
+		inline static UInt32 Hash(Byte* buf, UInt32 len)
 		{
-			Int32 c = 0;
-			UInt32 hash = 0;
-    
-			for (UInt32 i = 0; i < len; i++)
+			register UInt32 oldcrc32;
+
+			oldcrc32 = 0xFFFFFFFF;
+
+			for ( ; len; --len, ++buf)
 			{
-				c = *str++;
-				hash = c + (hash << 6) + (hash << 16) - hash;
+				oldcrc32 = crc_32_tab[(oldcrc32 ^ *buf) & 0xff] ^ (oldcrc32 >> 8);
 			}
-    
-			return hash;
+
+			return ~oldcrc32;
 		}
+
+		template <typename T>
+		inline static UInt32 Hash(const T& val)
+		{
+			return HelperHash::Hash(
+				(Byte*)&val,
+				sizeof(T)
+				);
+		}
+
+	private:
+
+		static UInt32 crc_32_tab[];
+
 	};
 }

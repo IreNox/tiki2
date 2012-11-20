@@ -52,29 +52,29 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region Member
-			ID3D11Buffer* GetBuffer()
+			inline ID3D11Buffer* GetBuffer()
 			{
 				return buffer;
 			}
 
-			UInt32 GetElementSize()
+			inline UInt32 GetElementSize()
 			{
 				return elementSize;
 			}
 
-			UInt32 GetElementCount()
+			inline UInt32 GetElementCount()
 			{
 				return elementCount;
 			}
 
-			UInt32 GetSize()
+			inline UInt32 GetSize()
 			{
 				return elementSize * elementCount;
 			}
 			#pragma endregion
 			
 			#pragma region Member - Apply
-			void Apply()
+			inline void Apply()
 			{
 				if (TBinding == D3D11_BIND_VERTEX_BUFFER)
 				{

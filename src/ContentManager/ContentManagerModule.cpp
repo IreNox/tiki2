@@ -137,7 +137,7 @@ namespace TikiEngine
 				}
 				else if (hash == typeid(Mesh).hash_code())
 				{
-					throw "Not supported";
+					value = new Mesh(engine);
 				}
 				else if (hash == typeid(IModel).hash_code())
 				{

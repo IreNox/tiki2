@@ -47,7 +47,7 @@ namespace TikiEngine
 			buffer = new DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 
 			viewMatrix = Matrix::CreateLookAt(
-				-Vector3::Forward,
+				Vector3(0, 0, 10),
 				Vector3::Zero,
 				Vector3::Up
 			);

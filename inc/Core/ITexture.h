@@ -7,6 +7,12 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		enum PixelFormat
+		{
+			PF_A8R8G8B8,
+			PF_R32G32B32A32
+		};
+
 		class ITexture : public IResource
 		{
 		public:
@@ -29,8 +35,8 @@ namespace TikiEngine
 
 			virtual bool GetDynamic() = 0;
 
-			virtual void GetData(Int32 format, void** data) = 0;
-			virtual void SetData(Int32 format, void* data, UInt32 dataLength) = 0;
+			virtual void GetData(PixelFormat format, void** data, UInt32* dataLength) = 0;
+			virtual void SetData(PixelFormat format, void* data, UInt32 dataLength) = 0;
 
 		};
 	}

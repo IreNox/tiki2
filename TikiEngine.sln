@@ -49,6 +49,14 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.ContentManager",
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Fileprojects", "Fileprojects", "{2BD9FA24-8D3E-446C-8C39-D4BF79B32C87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{586B6389-7027-4E84-9EE8-56C347BFF8F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Game and Core", "Game and Core", "{091669E1-03B7-4FCB-841F-8F5F6F3B02B6}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 12
@@ -56,30 +64,41 @@ Global
 		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
 		SccLocalPath0 = .
 		SccProjectUniqueName1 = TikiEngine.Core.vcxproj
+		SccProjectTopLevelParentUniqueName1 = TikiEngine.sln
 		SccLocalPath1 = .
 		SccProjectUniqueName2 = Game.vcxproj
+		SccProjectTopLevelParentUniqueName2 = TikiEngine.sln
 		SccLocalPath2 = .
 		SccProjectUniqueName3 = TikiEngine.Physics.vcxproj
+		SccProjectTopLevelParentUniqueName3 = TikiEngine.sln
 		SccLocalPath3 = .
 		SccProjectUniqueName4 = src\\Assets\\Assets.csproj
+		SccProjectTopLevelParentUniqueName4 = TikiEngine.sln
 		SccProjectName4 = src/Assets
 		SccLocalPath4 = src\\Assets
 		SccProjectUniqueName5 = src\\Effects11\\Effects11.vcxproj
+		SccProjectTopLevelParentUniqueName5 = TikiEngine.sln
 		SccProjectName5 = src/Effects11
 		SccLocalPath5 = src\\Effects11
 		SccProjectUniqueName6 = TikiEngine.Input.vcxproj
+		SccProjectTopLevelParentUniqueName6 = TikiEngine.sln
 		SccLocalPath6 = .
 		SccProjectUniqueName7 = TikiEngine.Sound.vcxproj
+		SccProjectTopLevelParentUniqueName7 = TikiEngine.sln
 		SccLocalPath7 = .
 		SccProjectUniqueName8 = TikiEngine.GraphicsDX11.vcxproj
+		SccProjectTopLevelParentUniqueName8 = TikiEngine.sln
 		SccLocalPath8 = .
 		SccProjectUniqueName9 = src\\Binary32\\Binary32.csproj
+		SccProjectTopLevelParentUniqueName9 = TikiEngine.sln
 		SccProjectName9 = src/Binary32
 		SccLocalPath9 = src\\Binary32
 		SccProjectUniqueName10 = src\\Binary64\\Binary64.csproj
+		SccProjectTopLevelParentUniqueName10 = TikiEngine.sln
 		SccProjectName10 = src/Binary64
 		SccLocalPath10 = src\\Binary64
 		SccProjectUniqueName11 = TikiEngine.ContentManager.vcxproj
+		SccProjectTopLevelParentUniqueName11 = TikiEngine.sln
 		SccLocalPath11 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -176,5 +195,18 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7F239751-2D21-4503-BBA2-F480DB6EBFE6} = {2BD9FA24-8D3E-446C-8C39-D4BF79B32C87}
+		{B02782B6-CFD8-401D-8A73-105106961E5C} = {2BD9FA24-8D3E-446C-8C39-D4BF79B32C87}
+		{85BE8A9F-01B6-4E45-8A3E-30E09DE998D4} = {2BD9FA24-8D3E-446C-8C39-D4BF79B32C87}
+		{60826F76-797B-476A-A4A0-237278730964} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{B5833648-23F3-48E5-8359-3D4923658E59} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{59897D41-2ADE-4851-8D7A-E3CF1C80F120} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{E29CCD5B-949C-477F-BBC2-2B694ACA8346} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{DF460EAB-570D-4B50-9089-2E2FC801BF38} = {586B6389-7027-4E84-9EE8-56C347BFF8F2}
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {091669E1-03B7-4FCB-841F-8F5F6F3B02B6}
+		{2B5BC09C-F375-4729-92FE-EDF77ABD35DE} = {091669E1-03B7-4FCB-841F-8F5F6F3B02B6}
 	EndGlobalSection
 EndGlobal

@@ -3,7 +3,7 @@
 #include "Core/IMeshRenderer.h"
 
 #include "Graphics/Shader.h"
-#include "Graphics/VertexData.h"
+#include "Graphics/StaticBuffer.h"
 #include "Graphics/VertexDeclaration.h"
 
 #include <d3d11.h>
@@ -13,6 +13,7 @@ namespace TikiEngine
 {
 	namespace Components
 	{
+		using namespace TikiEngine::Graphics;
 		using namespace TikiEngine::Vertices;
 
 		class MeshRenderer : public IMeshRenderer
@@ -30,9 +31,6 @@ namespace TikiEngine
 			void SetMesh(Mesh* mesh);
 			void SetMaterial(Material* material);
 
-			bool GetDynamic();
-			void SetDynamic(bool dynamic);
-
 			bool GetReady();
 
 		private:
@@ -40,9 +38,12 @@ namespace TikiEngine
 			Mesh* mesh;
 			Material* material;
 
-			VertexData* data;
+			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
-			void updateData();
+			VertexDeclaration* decl;
+
+			void updateData(bool udMesh, bool udMaterial);
 			
 		};
 	}

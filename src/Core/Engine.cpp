@@ -342,7 +342,15 @@ namespace TikiEngine
 			content->End();
 			input->End();
 
-			if (state.UpdateState.Input.GetKey(KEY_ESCAPE)) this->Exit();
+			if (state.UpdateState.Input.GetKeyPressed(KEY_F12))
+			{
+				graphics->MakeScreenshot();
+			}
+
+			if (state.UpdateState.Input.GetKeyPressed(KEY_ESCAPE)) 
+			{
+				this->Exit();
+			}
 
 			//state.UpdateState = args;
 

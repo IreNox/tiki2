@@ -22,7 +22,7 @@ namespace TikiEngine
 
 			bgTexture = new Texture(engine);
 			bgTexture->Create(1, 1, true);
-			bgTexture->SetData(0, &color, 4);
+			bgTexture->SetData(PF_A8R8G8B8, &color, 4);
 			bgTexture->AddRef();
 
 			font = new Font(engine);

@@ -26,8 +26,8 @@ namespace TikiEngine
 			Vector2 GetSize();
 			Rectangle GetRectangle();
 
-			void GetData(Int32 format, void** data);
-			void SetData(Int32 format, void* data, UInt32 dataLength);
+			void GetData(PixelFormat format, void** data, UInt32* dataLength);
+			void SetData(PixelFormat format, void* data, UInt32 dataLength);
 
 			bool GetDynamic();
 			void* GetNativeResource();

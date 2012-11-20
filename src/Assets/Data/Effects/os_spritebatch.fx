@@ -46,6 +46,8 @@ PS_INPUT VS_Main(VS_INPUT input)
 	output.Pos = float4(input.Pos, 1.0f);
 	output.Pos = mul(output.Pos, spLocalM);
 	output.Pos = mul(output.Pos, spWorldM);
+	output.Pos = mul(output.Pos, spViewM);
+	output.Pos = mul(output.Pos, spProjM);
 	output.UV = input.UV;
 	output.Color = input.Color;
 	    

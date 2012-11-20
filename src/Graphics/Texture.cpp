@@ -170,27 +170,37 @@ namespace TikiEngine
 
 		void Texture::saveToStream(wcstring fileName, Stream* stream)
 		{
-			//ID3D10Blob* blob = 0;
+			D3D11_TEXTURE2D_DESC desc;
+			texture->GetDesc(&desc);
 
-			HRESULT r = D3DX11SaveTextureToFile(
-				DllMain::Context,
-				texture,
-				D3DX11_IFF_JPG,
-				fileName
-			);
+			desc.BindFlags = 0;
+			desc.MiscFlags &= D3D11_RESOURCE_MISC_TEXTURECUBE;
+			desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ;
+			desc.Usage = D3D11_USAGE_STAGING;
+
+			ID3D11Texture2D* tex;
+			HRESULT r = DllMain::Device->CreateTexture2D(&desc, 0, &tex);
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't save Texture", 0);
+				HelperLog::Write("Can't save Texture to File. Can't create Temp-Texture.");
+				return;
+			}
+			DllMain::Context->CopyResource(tex, texture);
+
+			D3D11_MAPPED_SUBRESOURCE mapped;
+			if (DllMain::Context->Map(tex, 0, D3D11_MAP_READ, 0, &mapped))
+			{
+				HelperLog::Write("Texture successful written to File. NOT!");
+
+				DllMain::Context->Unmap(tex, 0);
+			}
+			else
+			{
+				HelperLog::Write("Can't save Texture to File.");
 			}
 
-			//stream->Write(
-			//	blob->GetBufferPointer(),
-			//	0,
-			//	blob->GetBufferSize()
-			//);
-
-			//SafeRelease(&blob);
+			tex->Release();
 		}
 		#pragma endregion
 
@@ -218,32 +228,77 @@ namespace TikiEngine
 			return Rectangle(0, 0, desc.Width, desc.Height);
 		}
 
-		void Texture::GetData(Int32 format, void** data)
-		{
-			D3D11_MAPPED_SUBRESOURCE mapped;
-			DllMain::Context->Map(texture, 0, D3D11_MAP_READ, 0, &mapped);
-
-			for (UINT i = 0; i < desc.Width; i++)
-			{
-				for (UINT j = 0; j < desc.Height; j++)
-				{
-					//What code goes here to set the color value for each pixel?    
-				}
-			}
-
-			DllMain::Context->Unmap(texture, 0);
-		}
-
-		void Texture::SetData(Int32 format, void* data, UInt32 dataLength)
+		void Texture::GetData(PixelFormat format, void** data, UInt32* dataLength)
 		{
 			if (!dynamic)
 			{
-				HelperLog::WriteError("SetData can only used for dynamic textures. Create Texture with dynamic flag", 0);
+				HelperLog::Write("GetData can only used for dynamic textures. Create Texture with dynamic flag.");
+				return;
 			}
 
-			if (desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM)
+			if (format != PF_A8R8G8B8)
 			{
-				HelperLog::WriteError("SetData: Wrong Format", 0);
+				HelperLog::Write("GetData: Wrong Format");
+				return;
+			}
+
+			D3D11_MAPPED_SUBRESOURCE mapped;
+			HRESULT r = DllMain::Context->Map(texture, 0, D3D11_MAP_READ, 0, &mapped);
+			
+			if (FAILED(r))
+			{
+				HelperLog::Write("Can't map Texture. Unknown Error.");
+				return;
+			}
+
+			Byte* srcB = (Byte*)mapped.pData;
+			Single* srcF = (Single*)mapped.pData;
+
+			UInt32 i = 0;
+			UInt32 c = desc.Width * desc.Height;
+			Byte* pixels = new Byte[c * 4];
+			
+			while (i < c)
+			{
+				Byte* color = &pixels[i * 4];
+
+				switch (desc.Format)
+				{
+				case DXGI_FORMAT_R8G8B8A8_UNORM:
+					color[0] = (srcB + (i * 4))[0];
+					color[1] = (srcB + (i * 4))[1];
+					color[2] = (srcB + (i * 4))[2];
+					color[3] = (srcB + (i * 4))[3];
+					break;
+				case DXGI_FORMAT_R32G32B32A32_FLOAT:
+					color[0] = (Byte)((srcF + (i * 4))[0] * 255.0f);
+					color[1] = (Byte)((srcF + (i * 4))[1] * 255.0f);
+					color[2] = (Byte)((srcF + (i * 4))[2] * 255.0f);
+					color[3] = (Byte)((srcF + (i * 4))[3] * 255.0f);
+					break;
+				}
+
+				i++;
+			}
+
+			DllMain::Context->Unmap(texture, 0);
+
+			*data = pixels;
+			*dataLength = sizeof(Color) * desc.Width * desc.Height;
+		}
+
+		void Texture::SetData(PixelFormat format, void* data, UInt32 dataLength)
+		{
+			if (!dynamic)
+			{
+				HelperLog::Write("SetData can only used for dynamic textures. Create Texture with dynamic flag");
+				return;
+			}
+
+			if (format != PF_A8R8G8B8 || desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM)
+			{
+				HelperLog::Write("SetData: Wrong Format");
+				return;
 			}
 			
 			D3D11_MAPPED_SUBRESOURCE mapped;

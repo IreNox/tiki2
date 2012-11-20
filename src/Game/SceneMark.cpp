@@ -10,7 +10,6 @@
 #include <sstream>
 
 #include "Core/IGraphics.h"
-#include "Core/MeshIndexed.h"
 #include "Core/LightObject.h"
 
 #include "Game/Utils.h"

@@ -83,6 +83,7 @@ public:
 
 	static Matrix CreateTranslation(const Vector3& vector);
 	static Matrix CreateTranslation(float x, float y, float z);
+	static Matrix CreateScaleMatrix(float a);
 	static Matrix CreateScaleMatrix(const Vector3& vector);
 	static Matrix CreateScaleMatrix(float x, float y, float z);
 	static Matrix CreateRotationX(float radians);

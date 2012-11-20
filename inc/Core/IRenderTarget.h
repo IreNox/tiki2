@@ -20,7 +20,7 @@ namespace TikiEngine
 			{
 			}
 
-			virtual void CreateScreenSize() = 0;
+			virtual void CreateScreenSize(bool dynamic = false) = 0;
 
 			virtual void Apply(UInt32 slot) = 0;
 			virtual void ApplyFirstAndOnly() = 0;

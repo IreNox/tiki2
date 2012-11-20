@@ -20,7 +20,7 @@ namespace TikiEngine
 			createInputLayout(elements->GetInternalData(), elements->Count());
 		}
 
-		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, InputElement* elements, UInt32 elementsCount)
+		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, const InputElement* elements, UInt32 elementsCount)
 			: EngineObject(engine)
 		{
 			SafeAddRef((Shader*)shader, &this->shader);

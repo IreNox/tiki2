@@ -3,9 +3,10 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "Core/MeshIndexed.h"
 #include "Core/Matrix.h"
 #include "Core/DefaultVertex.h"
+
+#include "Core/EngineObject.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -16,7 +17,6 @@
 #endif
 
 using namespace TikiEngine::Vertices;
-using namespace TikiEngine::Resources;
 
 namespace TikiEngine
 {

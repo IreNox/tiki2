@@ -18,7 +18,7 @@ namespace TikiEngine
 			~RenderTarget();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic);
-			void CreateScreenSize();
+			void CreateScreenSize(bool dynamic = false);
 
 			void SaveToFile(wcstring fileName);
 
@@ -38,8 +38,8 @@ namespace TikiEngine
 
 			bool GetDynamic();
 
-			void GetData(Int32 format, void** data);
-			void SetData(Int32 format, void* data, UInt32 dataLength);
+			void GetData(PixelFormat format, void** data, UInt32* dataLength);
+			void SetData(PixelFormat format, void* data, UInt32 dataLength);
 
 			void* GetNativeResource();
 

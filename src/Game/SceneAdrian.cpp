@@ -4,8 +4,6 @@
 #include "Core/IMeshRenderer.h"
 #include "Core/LibraryManager.h"
 
-#include "Core/MeshIndexed.h"
-
 #include "Core/DefaultVertex.h"
 
 #include "Core/CameraObject.h"

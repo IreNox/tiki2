@@ -87,9 +87,6 @@
     <Filter Include="Quelldateien\Core\I/O">
       <UniqueIdentifier>{52568701-fac1-47d5-82bf-9060f7a5e09e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Core\Resources">
-      <UniqueIdentifier>{c39f976e-b6f1-48d2-b284-2b8809b90e9f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Engine\GameObjects\Basic">
       <UniqueIdentifier>{200d2000-146e-40b6-8320-449acaa72980}</UniqueIdentifier>
     </Filter>
@@ -107,12 +104,6 @@
     </Filter>
     <Filter Include="Headerdateien\Core\UserInterface">
       <UniqueIdentifier>{2cbc1a70-a40e-47b6-af4f-af2c1f68d097}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Core\SQLite">
-      <UniqueIdentifier>{9dbbac4f-b18e-476f-a285-f4cdee7466b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Core\SQlite">
-      <UniqueIdentifier>{efcdd597-8a57-48ad-aceb-9d038858560f}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Core\Graphics\Enums/Structs">
       <UniqueIdentifier>{5b4d1b20-348c-4344-9be1-d652162d9f65}</UniqueIdentifier>
@@ -137,6 +128,9 @@
     </Filter>
     <Filter Include="Quelldateien\Core\System">
       <UniqueIdentifier>{1ca36b5b-57b9-4baf-88df-a18466a4a583}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Extern">
+      <UniqueIdentifier>{8f2cbc43-077d-4d14-9df5-61430ca269f1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -163,9 +157,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Engine.cpp">
       <Filter>Quelldateien\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Material.cpp">
-      <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Quaternion.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
@@ -196,15 +187,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\TypeGlobals.cpp">
       <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\IResource.cpp">
-      <Filter>Quelldateien\Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Mesh.cpp">
-      <Filter>Quelldateien\Core\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\MeshIndexed.cpp">
-      <Filter>Quelldateien\Core\Resources</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\HelperPath.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
@@ -272,12 +254,6 @@
     <ClCompile Include="src\Core\GUIWindow.cpp">
       <Filter>Quelldateien\Core\UserInterface</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\sqlite3.c">
-      <Filter>Quelldateien\Core\SQlite</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\shell.c">
-      <Filter>Quelldateien\Core\SQlite</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\MemoryStream.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
@@ -306,6 +282,24 @@
       <Filter>Quelldateien\Core\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\HelperThreading.cpp">
+      <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\IResource.cpp">
+      <Filter>Quelldateien\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Material.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Mesh.cpp">
+      <Filter>Quelldateien\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\shell.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\sqlite3.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\HelperHash.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
   </ItemGroup>
@@ -413,9 +407,6 @@
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\Mesh.h">
-      <Filter>Headerdateien\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\MeshIndexed.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\FileStream.h">
@@ -550,12 +541,6 @@
     <ClInclude Include="inc\Core\RectangleF.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\sqlite3ext.h">
-      <Filter>Headerdateien\Core\SQLite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\sqlite3.h">
-      <Filter>Headerdateien\Core\SQLite</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\MemoryStream.h">
       <Filter>Headerdateien\Core\I/O</Filter>
     </ClInclude>
@@ -666,6 +651,18 @@
     </ClInclude>
     <ClInclude Include="inc\Core\EventLog.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Timer.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Timer.h">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\sqlite3.h">
+      <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\sqlite3ext.h">
+      <Filter>Extern</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,6 +3,7 @@
 
 #include <Windows.h>
 
+#include "Core/Mesh.h"
 #include "Core/IModel.h"
 #include "Core/ISound.h"
 #include "Core/IShader.h"
@@ -97,7 +98,12 @@ namespace TikiEngine
 		wstring typeExt = L"";
 		wstring typeName = L"";
 
-		if (typeid(IModel).hash_code() == typeHash)
+		if (typeid(Mesh).hash_code() == typeHash)
+		{
+			typeExt = L"obj";
+			typeName = L"Meshes";
+		}
+		else if (typeid(IModel).hash_code() == typeHash)
 		{
 			typeExt = L"fbx";
 			typeName = L"Models";

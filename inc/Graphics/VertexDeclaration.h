@@ -15,7 +15,7 @@ namespace TikiEngine
 		{
 		public:
 			VertexDeclaration(Engine* engine, IShader* shader, List<InputElement>* elements);
-			VertexDeclaration(Engine* engine, IShader* shader, InputElement* elements, UInt32 elementsCount);
+			VertexDeclaration(Engine* engine, IShader* shader, const InputElement* elements, UInt32 elementsCount);
 			~VertexDeclaration();
 
 			void Apply();

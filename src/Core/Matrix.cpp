@@ -81,6 +81,15 @@ Matrix Matrix::CreateTranslation(float x, float y, float z)
 #pragma endregion
 
 #pragma region Scale
+Matrix Matrix::CreateScaleMatrix(float a)
+{
+	return Matrix(
+		a, 0, 0, 0,
+		0, a, 0, 0,
+		0, 0, a, 0,
+		0, 0, 0, 1
+	);
+}
 
 Matrix Matrix::CreateScaleMatrix(const Vector3& vector)
 {

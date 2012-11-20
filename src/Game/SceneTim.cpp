@@ -14,7 +14,7 @@
 #include "Core/IPhysicsMaterial.h"
 #include "Core/ISound.h"
 
-#include "Core/MeshIndexed.h"
+#include "Core/Mesh.h"
 #include "Core/DefaultVertex.h"
 
 #include "Game/CameraFly.h"
@@ -37,10 +37,10 @@ namespace TikiEngine
 		SceneTim::~SceneTim()
 		{
 			//SafeRelease(&tex);
-			//SafeRelease(&light);
-			//SafeRelease(&camera);
+			SafeRelease(&light);
+			SafeRelease(&camera);
 
-			//SafeRelease(&font);
+			SafeRelease(&font);
 		}
 
 		void SceneTim::Initialize(const InitializationArgs& args)
@@ -70,15 +70,17 @@ namespace TikiEngine
 			////////
 			// Model
 			GameObject* go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"Soldier_S"));
+
+			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
 			Material* mat = engine->content->LoadMaterial(L"os_default");
-			mat->TexDiffuse = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
-			mat->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Normal");
-			mat->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Spec");
-			go->GModel()->SetMaterial(mat);
+			mat->TexDiffuse   = engine->content->LoadTexture(L"building_03/building_03_Diff");
+			mat->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
+			//mat->TexSpecular = engine->content->LoadTexture(L"building_03/building_03_Spec");
+			render->SetMaterial(mat);
+			render->SetMesh(engine->content->LoadMesh(L"building_03"));
 
-			go->PRS.SScale() = Vector3(0.01f);
+			//go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
 
@@ -199,18 +201,18 @@ namespace TikiEngine
 			//	Rectangle(10, 390, 200, 180)
 			//);
 
-			////3D Interface
-			//engine->sprites->Draw3D(
-			//	engine->content->LoadTexture(L"particle/mg"),
-			//	Matrix::CreateTranslation(sin(args.Time.TotalTime / 10), 0, 0),
-			//	Matrix::CreateTranslation(0, sin(args.Time.TotalTime / 10), 0)
-			//);
+			//3D Interface
+			engine->sprites->Draw3D(
+				engine->content->LoadTexture(L"hud/circle_main_0"),
+				Matrix::CreateTranslation(0.0f, -0.0f, 0),
+				Matrix::CreateScaleMatrix(3) * Matrix::CreateRotationZ(args.Time.TotalTime / 8)
+			);
 
-			//engine->sprites->Draw3D(
-			//	engine->content->LoadTexture(L"particle/mg"),
-			//	Matrix::CreateTranslation(sin(args.Time.TotalTime / 8), 0, 0),
-			//	Matrix::CreateTranslation(0, sin(args.Time.TotalTime / 8), 0)
-			//);
+			engine->sprites->Draw3D(
+				engine->content->LoadTexture(L"hud/circle_main_1"),
+				Matrix::CreateTranslation(0.5f, -0.5f, 0),
+				Matrix::CreateScaleMatrix(3) * Matrix::CreateRotationZ(args.Time.TotalTime / 5)
+			);
 
 			#if _DEBUG
 			//engine->physics->DrawDebug();
@@ -238,13 +240,13 @@ namespace TikiEngine
 
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
-				if (elements[0]->GModel()->GetMaterial()->TexNormalMap != 0)
+				if (elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap != 0)
 				{
-					elements[0]->GModel()->GetMaterial()->TexNormalMap = 0;
+					elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = 0;
 				}
 				else
 				{
-					elements[0]->GModel()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Normal");
+					elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
 				}
 			}
 

@@ -238,7 +238,7 @@ namespace TikiEngine
 			texture = new Texture(engine);
 			texture->Create(512, 512, true);
 			texture->SetData(
-				0,
+				PF_A8R8G8B8,
 				pixels,
 				sizeof(DWORD) * width * height
 			);

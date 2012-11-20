@@ -95,18 +95,17 @@ namespace TikiEngine
 			return texture->GetRectangle();
 		}
 
-
 		bool RenderTarget::GetDynamic()
 		{
 			return texture->GetDynamic();
 		}
 
-		void RenderTarget::GetData(Int32 format, void** data)
+		void RenderTarget::GetData(PixelFormat format, void** data, UInt32* dataLength)
 		{
-			texture->GetData(format, data);
+			texture->GetData(format, data, dataLength);
 		}
 
-		void RenderTarget::SetData(Int32 format, void* data, UInt32 dataLength)
+		void RenderTarget::SetData(PixelFormat format, void* data, UInt32 dataLength)
 		{
 			texture->SetData(format, data, dataLength);
 		}
@@ -142,8 +141,8 @@ namespace TikiEngine
 
 			if (dynamic)
 			{
-				desc.Usage = D3D11_USAGE_DYNAMIC;
-				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				desc.Usage = D3D11_USAGE_STAGING;
+				desc.CPUAccessFlags = D3D11_CPU_ACCESS_READ | D3D11_CPU_ACCESS_WRITE;
 			}
 			else
 			{
@@ -171,12 +170,12 @@ namespace TikiEngine
 			);
 		}
 
-		void RenderTarget::CreateScreenSize()
+		void RenderTarget::CreateScreenSize(bool dynamic)
 		{
 			this->Create(
 				DllMain::ModuleGraphics->GetViewPort()->Width,
 				DllMain::ModuleGraphics->GetViewPort()->Height,
-				false
+				dynamic
 			);
 
 			DllMain::ModuleGraphics->AddScreenSizeRenderTarget(this);
