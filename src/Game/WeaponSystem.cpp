@@ -52,7 +52,7 @@ namespace TikiEngine
         void WeaponSystem::TakeAimAndShoot(const UpdateArgs& args)
         {
             // only aim if target is shootable or if it has very recently gone out of view.
-            if (owner->GetTargetSys()->IsTargetPresent())// ||
+            if (owner->GetTargetSys()->IsTargetShootable())//->IsTargetPresent())// ||
                 //(owner->GetTargetSys()->GetTimeTargetHasBeenOutOfView(args) < aimPersistance))
             {
                 Vector3 aimingPos = owner->GetTargetBot()->Pos3D();

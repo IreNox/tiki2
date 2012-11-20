@@ -1,6 +1,5 @@
 #include "Game/GoalAttackGlobalTarget.h"
 
-#include "Game/SensorMemory.h"
 #include "Game/GoalAttackTarget.h"
 #include "Game/GoalMoveToPosition.h"
 #include "Game/GoalTypes.h"
@@ -10,18 +9,16 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		GoalAttackGlobalTarget::GoalAttackGlobalTarget(TikiBot* bot, TikiBot* target)
+		GoalAttackGlobalTarget::GoalAttackGlobalTarget(TikiBot* bot, TikiBot* target, Regulator* reg)
 			:GoalComposite<TikiBot>(bot, Goal_Attack_GlobalTarget)
 		{
 			this->target = target;
 			this->attacking = false;
-			attackTargetRegulator = new Regulator(1);
+			owner->GetTargetSys()->SetGlobalTarget(target);
+
+			attackTargetRegulator = reg;
 		}
 
-		GoalAttackGlobalTarget::~GoalAttackGlobalTarget()
-		{
-			SafeDelete(&attackTargetRegulator);
-		}
 
 		void GoalAttackGlobalTarget::Activate(const UpdateArgs& args)
 		{
@@ -35,16 +32,22 @@ namespace TikiEngine
 			{
 				// it is possible for a bot's target to die whilst this goal is active 
 				// so we must test to make sure the bot always has an active target
-				if (owner->GetSensorMem()->IsOpponentShootable(target))
+				if (owner->GetTargetSys()->IsTargetShootable())
 				{
-					RemoveAllSubgoals();
-					owner->GetSteering()->SeekOff();
-					owner->GetSteering()->ArriveOff();
-					//OutputDebugString(L"GoalAttackGlobalTarget - Attacking \n");
+					if (attacking == false)
+					{
+						RemoveAllSubgoals();
+						owner->GetSteering()->SeekOff();
+						owner->GetSteering()->ArriveOff();
+						OutputDebugString(L"GoalAttackGlobalTarget - Attacking. \n");
+						attacking = true;
+					}
+
 				}
 				else
 				{
-					//OutputDebugString(L"GoalAttackGlobalTarget - Moving to target \n");
+					attacking = false;
+					OutputDebugString(L"GoalAttackGlobalTarget - Moving to target \n");
 					AddSubgoal(new GoalMoveToPosition(owner, target->Pos3D()));
 				}
 			}
@@ -65,6 +68,7 @@ namespace TikiEngine
 				status = Inactive;
 			else
 			{
+				owner->GetTargetSys()->ClearGlobalTarget();
 				OutputDebugString(L"GoalAttackGlobalTarget - Target dead or NUll. \n");
 				status = Completed;
 			}
@@ -74,7 +78,8 @@ namespace TikiEngine
 
 		void GoalAttackGlobalTarget::Terminate()
 		{
-			//status = Completed;
+			OutputDebugString(L"GoalAttackGlobalTarget - Terminate. \n");
+			status = Completed;
 		}
 
 

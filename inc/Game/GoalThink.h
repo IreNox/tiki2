@@ -48,6 +48,7 @@ namespace TikiEngine
 			GoalEvaluators evaluators;
 			bool hasWaypoints;
 			std::list<Vector2> wayPoints;
+			Regulator* attackTargetRegulator;
 		};
 	}
 }

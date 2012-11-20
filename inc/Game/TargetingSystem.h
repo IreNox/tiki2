@@ -43,6 +43,11 @@ namespace TikiEngine
 			// sets the target pointer to null
 			void ClearTarget() { currentTarget = 0; }
 
+			// sets the global target pointer to null
+			void ClearGlobalTarget() { globalTarget = 0; }
+
+			// sets a user defined global target
+			void SetGlobalTarget(TikiBot* target) { globalTarget = target; }
 
 		private:
 			// The owner of this system
@@ -50,6 +55,9 @@ namespace TikiEngine
 
 			// The current target (this will be null if there is no target assigned)
 			TikiBot* currentTarget;
+
+			// The global target set by some user.
+			TikiBot* globalTarget;
 
 		};
 

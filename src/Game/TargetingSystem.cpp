@@ -13,6 +13,7 @@ namespace TikiEngine
 		{
 			this->owner = owner;
 			this->currentTarget = 0;
+			this->globalTarget = 0;
 		}
 
 		void TargetingSystem::Update(const UpdateArgs& args)
@@ -40,6 +41,8 @@ namespace TikiEngine
 				} // if
 			} // for
 
+			if (globalTarget != 0)
+				currentTarget = globalTarget;
 
 		}
 		

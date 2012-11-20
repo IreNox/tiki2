@@ -25,6 +25,7 @@ namespace TikiEngine
 			: GoalComposite<TikiBot>(bot, Goal_Think)
 		{
 			hasWaypoints = false;
+			attackTargetRegulator = new Regulator(1);
 		}
 
 		GoalThink::~GoalThink()
@@ -33,6 +34,9 @@ namespace TikiEngine
 			GoalEvaluators::iterator curDes = evaluators.begin();
 			for (curDes; curDes != evaluators.end(); ++curDes)
 				SafeDelete(&(*curDes));
+
+			// remove regulator
+			SafeDelete(&attackTargetRegulator);
 
 		}
 
@@ -136,7 +140,7 @@ namespace TikiEngine
 		void GoalThink::AddGoalAttackGlobalTarget(TikiBot* target)
 		{
 			RemoveAllSubgoals();
-			AddSubgoal(new GoalAttackGlobalTarget(owner, target));
+			AddSubgoal(new GoalAttackGlobalTarget(owner, target, attackTargetRegulator));
 		}
 
 		void GoalThink::AddGoalAttackTarget()

@@ -13,8 +13,7 @@ namespace TikiEngine
 		{
 
 		public:
-			GoalAttackGlobalTarget(TikiBot* bot, TikiBot* target);
-			~GoalAttackGlobalTarget();
+			GoalAttackGlobalTarget(TikiBot* bot, TikiBot* target, Regulator* reg);
 			void Activate(const UpdateArgs& args);
 			int  Process(const UpdateArgs& args);
 			void Terminate();
