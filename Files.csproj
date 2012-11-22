@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{07E6BAA5-4F4C-4F0F-A331-BF09FFB08A2E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Files</RootNamespace>
+    <AssemblyName>Files</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="bin\Data\Textures\Controls\" />
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Data\Cloddy\Datasets\pitch.E16C24.rect.dat" />
+    <None Include="bin\Data\Cloddy\Datasets\terrain.E16C24.rect.dat" />
+    <None Include="bin\Data\Cloddy\Licence\licence.dat" />
+    <None Include="bin\Data\Meshes\building_03.obj" />
+    <None Include="bin\Data\Meshes\Laptop.obj" />
+    <None Include="bin\Data\Meshes\test.obj" />
+    <None Include="bin\Data\Models\buildings\building_03.fbx" />
+    <None Include="bin\Data\Models\links.fbx" />
+    <None Include="bin\Data\Models\mark.fbx" />
+    <None Include="bin\Data\Models\mark_rig_example.fbx" />
+    <None Include="bin\Data\Models\meme.FBX" />
+    <None Include="bin\Data\Models\navmesh\navmesh_terrain.FBX" />
+    <None Include="bin\Data\Models\NavMesh_Pitch.FBX" />
+    <None Include="bin\Data\Models\replaceme_cube.fbx" />
+    <None Include="bin\Data\Models\soldier.fbx" />
+    <None Include="bin\Data\Models\soldier_l_testForAgga3.fbx" />
+    <None Include="bin\Data\Models\soldier_l_testForAgga4.fbx" />
+    <None Include="bin\Data\Models\soldier_l_testForAgga6.fbx" />
+    <None Include="bin\Data\Models\soldier_l_testForAgga8.fbx" />
+    <None Include="bin\Data\Models\Soldier_S.fbx" />
+    <None Include="bin\Data\Textures\building_03\building_03_diff.dds" />
+    <None Include="bin\Data\Textures\building_03\building_03_normal.dds" />
+    <None Include="bin\Data\Textures\checker.dds" />
+    <None Include="bin\Data\Textures\controls.dds" />
+    <None Include="bin\Data\Textures\gui.dds" />
+    <None Include="bin\Data\Textures\Hud\button_uf.dds" />
+    <None Include="bin\Data\Textures\Hud\circle_main_0.dds" />
+    <None Include="bin\Data\Textures\Hud\circle_main_1.dds" />
+    <None Include="bin\Data\Textures\Hud\energy.dds" />
+    <None Include="bin\Data\Textures\Hud\mass.dds" />
+    <None Include="bin\Data\Textures\logo.dds" />
+    <None Include="bin\Data\Textures\meme\meme_diff.dds" />
+    <None Include="bin\Data\Textures\meme\meme_normal.dds" />
+    <None Include="bin\Data\Textures\meme\meme_spec.dds" />
+    <None Include="bin\Data\Textures\particle\laser.dds" />
+    <None Include="bin\Data\Textures\particle\mg.dds" />
+    <None Include="bin\Data\Textures\particle\plasma.dds" />
+    <None Include="bin\Data\Textures\random.dds" />
+    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Diff.dds" />
+    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Normal.dds" />
+    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Spec.dds" />
+    <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Diff.dds" />
+    <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Normal.dds" />
+    <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Spec.dds" />
+    <None Include="bin\Data\TikiData.sqlite" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="bin\Bin32\cudart32_30_9.dll" />
+    <Content Include="bin\Bin32\fbxsdk-2013.3.dll" />
+    <Content Include="bin\Bin32\fbxsdk-2013.3d.dll" />
+    <Content Include="bin\Bin32\fmodex.dll" />
+    <Content Include="bin\Bin32\NxCharacter.dll" />
+    <Content Include="bin\Bin32\PhysXCooking.dll" />
+    <Content Include="bin\Bin32\PhysXCore.dll" />
+    <Content Include="bin\Bin32\PhysXDevice.dll" />
+    <Content Include="bin\Bin32\PhysXLoader.dll" />
+    <Content Include="bin\Bin64\cudart64_30_9.dll" />
+    <Content Include="bin\Bin64\fbxsdk-2013.3.dll" />
+    <Content Include="bin\Bin64\fbxsdk-2013.3d.dll" />
+    <Content Include="bin\Bin64\fmodex64.dll" />
+    <Content Include="bin\Bin64\NxCharacter64.dll" />
+    <Content Include="bin\Bin64\PhysXCooking64.dll" />
+    <Content Include="bin\Bin64\PhysXCore64.dll" />
+    <Content Include="bin\Bin64\PhysXDevice64.dll" />
+    <Content Include="bin\Bin64\PhysXLoader64.dll" />
+    <Content Include="bin\Data\Effects\IncOS\is_defaultshader_pixel.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_defaultshader_vertex.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_input.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_particle_gs_linelist.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_particle_gs_linestrip.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_particle_gs_point.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_skinning_input.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_skinning_vertex.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_structs.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_technique.fx" />
+    <Content Include="bin\Data\Effects\IncPP\is_input.fx" />
+    <Content Include="bin\Data\Effects\IncPP\is_structs.fx" />
+    <Content Include="bin\Data\Effects\Inc\is_input_light.fx" />
+    <Content Include="bin\Data\Effects\Inc\is_struct_light.fx" />
+    <Content Include="bin\Data\Effects\os_cloddy.fx" />
+    <Content Include="bin\Data\Effects\os_color.fx" />
+    <Content Include="bin\Data\Effects\os_default.fx" />
+    <Content Include="bin\Data\Effects\os_particle.fx" />
+    <Content Include="bin\Data\Effects\os_skinning.fx" />
+    <Content Include="bin\Data\Effects\os_spritebatch.fx" />
+    <Content Include="bin\Data\Effects\pp_blur.fx" />
+    <Content Include="bin\Data\Effects\pp_default.fx" />
+    <Content Include="bin\Data\Effects\pp_ssao.fx" />
+    <Content Include="bin\Data\Sounds\beep.wav" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>del "$(TargetPath)"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

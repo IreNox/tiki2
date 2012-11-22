@@ -21,7 +21,9 @@ namespace TikiEngine
 		WCHAR cd[MAX_PATH];
 		GetModuleFileName(0, cd, MAX_PATH);
 
-		workingPath = HelperPath::GetDirectoryName(cd);
+		workingPath = HelperPath::GetDirectoryName(
+			HelperPath::GetDirectoryName(cd)
+		);
 		checkSlashes(workingPath);	
 	}
 
