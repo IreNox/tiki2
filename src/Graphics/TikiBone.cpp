@@ -118,22 +118,22 @@ namespace TikiEngine
 				childs[i]->Draw(args);
 		}
 
-		void TikiBone::Update(const double& time)
+		void TikiBone::Update(const UpdateArgs& args)
 		{
-			this->layer->Update(time);
+			this->layer->Update(args.Time.ElapsedTime * 2.0f);
 
 			if(this->parent == 0)
 			{
-				this->boneCurrent = layer->LocalTransform(time);
+				this->boneCurrent = layer->LocalTransform();
 			}
 			else
 			{
-				this->boneCurrent = layer->LocalTransform(time) * parent->BoneCurrentTransform();
+				this->boneCurrent = layer->LocalTransform() * parent->BoneCurrentTransform();
 			}
 
 			for(UInt32 i = 0; i < childs.Count();i++)
 			{
-				childs[i]->Update(time);
+				childs[i]->Update(args);
 			}
 		}
 

@@ -9,7 +9,8 @@ namespace TikiEngine
 				rotationX(0), rotationY(0), rotationZ(0),
 				start(-1),
 				end(-1),
-				lastUpdateTime(-1.0)
+				lastUpdateTime(-1.0),
+				currentTime(0)
 		{	 
 			 
 		}
@@ -22,6 +23,13 @@ namespace TikiEngine
 			SafeRelease(&rotationX);
 			SafeRelease(&rotationY);
 			SafeRelease(&rotationZ);
+
+			if(timeStamps != 0)
+			{
+				delete timeStamps;
+				timeStamps = 0;
+			}
+		
 		}
 
 		void AnimationLayer::Initialize(FbxNode* node, FbxAnimLayer* layer)
@@ -98,12 +106,34 @@ namespace TikiEngine
 			rotationZ->BSV = bsv;
 		}
 
-		void AnimationLayer::Update(const double& time)
+		double& AnimationLayer::GetCurrentTime()
 		{
-			if(lastUpdateTime == time)
+			return this->currentTime;
+		}
+
+		void AnimationLayer::SetCurrentTime(double& time)
+		{
+			this->currentTime = time;
+		}
+
+		void AnimationLayer::Reset()
+		{
+			this->currentTime = this->start;
+		}
+
+		void AnimationLayer::Update(const double& deltaTime)
+		{
+
+			this->currentTime += deltaTime;
+
+			if(currentTime >= end)
+				currentTime -= end - start;
+
+
+			if(lastUpdateTime == currentTime)
 				return;
 			else
-				lastUpdateTime = time;
+				lastUpdateTime = currentTime;
 
 			int count = quaternionen.Count();
 			//one element - always the defaultvalue
@@ -113,14 +143,14 @@ namespace TikiEngine
 				return;
 			}
 			//before first element -> return first element
-			if(timeStamps->Get(0) >= time) 
+			if(timeStamps->Get(0) >= currentTime) 
 			{
 				left = 0;
 				right = -1;
 				return;
 			}
 			//after last element -> return last element
-			if(timeStamps->Get(count - 1) <= time)
+			if(timeStamps->Get(count - 1) <= currentTime)
 			{
 				left = -1;
 				right = count -1;
@@ -133,12 +163,12 @@ namespace TikiEngine
 			//find index of highest value below time
 			while(shift != 0)
 			{
-				if(index + shift < count && timeStamps->Get(index + shift) <= time)
+				if(index + shift < count && timeStamps->Get(index + shift) <= currentTime)
 					index += shift;
 				shift /= 2;
 			}
 			
-			if(timeStamps->Get(index) == time)
+			if(timeStamps->Get(index) == currentTime)
 			{
 				left = right = index;
 				return;
@@ -147,7 +177,7 @@ namespace TikiEngine
 			left = index;
 			right = index + 1;
 
-			koeff = (time - timeStamps->Get(left)) / (timeStamps->Get(right) - timeStamps->Get(left));
+			koeff = (currentTime - timeStamps->Get(left)) / (timeStamps->Get(right) - timeStamps->Get(left));
 		}
 
 		void AnimationLayer::CreateKeys(List<double>* keyTimes, FbxNode* node)
@@ -220,6 +250,9 @@ namespace TikiEngine
 
 			timeStamps->Sort();
 
+			this->start = timeStamps->Get(0);
+			this->end = timeStamps->Get(timeStamps->Count() - 1);
+
 			int bs = 1;
 			while(bs*2 < timeStamps->Count())
 				bs *= 2;
@@ -241,38 +274,72 @@ namespace TikiEngine
 
 		Vector3 AnimationLayer::LocalTranslation(const double& time)
 		{
-			if(time != lastUpdateTime)
-				Update(time);
+			if(time == -1.0)
+			{
+				return Vector3(
+					translationX->Evaluate(left, right, koeff),
+					translationY->Evaluate(left, right, koeff),
+					translationZ->Evaluate(left, right, koeff)
+					);
+			}
+			else
+			{
 
-			return Vector3(
-				translationX->Evaluate(left, right, koeff),
-				translationY->Evaluate(left, right, koeff),
-				translationZ->Evaluate(left, right, koeff)
-				);
+				if(time != lastUpdateTime)
+					Update(time);
+
+				return Vector3(
+					translationX->Evaluate(left, right, koeff),
+					translationY->Evaluate(left, right, koeff),
+					translationZ->Evaluate(left, right, koeff)
+					);
+			}
 		}
+
 		Quaternion AnimationLayer::LocalQuaternion(const double& time)
 		{
-			if(time != lastUpdateTime)
-				Update(time);
+			if(time == -1.0)
+			{
+				if(left == right)
+					return this->quaternionen.Get(left);
+				if(right == -1)
+					return this->quaternionen.Get(left);
+				if(left == -1)
+					return this->quaternionen.Get(right);
 
-			if(left == right)
-				return this->quaternionen.Get(left);
-			if(right == -1)
-				return this->quaternionen.Get(left);
-			if(left == -1)
-				return this->quaternionen.Get(right);
+				return Quaternion::Slerp(quaternionen.Get(left), quaternionen.Get(right), koeff);
+			}
+			else
+			{
+				if(time != lastUpdateTime)
+					Update(time);
 
-			return Quaternion::Slerp(quaternionen.Get(left), quaternionen.Get(right), koeff);
+				if(left == right)
+					return this->quaternionen.Get(left);
+				if(right == -1)
+					return this->quaternionen.Get(left);
+				if(left == -1)
+					return this->quaternionen.Get(right);
 
+				return Quaternion::Slerp(quaternionen.Get(left), quaternionen.Get(right), koeff);
+			}
 		}
 
 		Matrix AnimationLayer::LocalTransform(const double& time)
 		{
-			if(time != lastUpdateTime)
-				Update(time);
+			if(time == -1.0)
+			{
+				return Matrix::CreateFromQuaternion(LocalQuaternion())
+					 * Matrix::CreateTranslation(LocalTranslation());
+			}
+			else
+			{
+				if(time != lastUpdateTime)
+					Update(time);
 
-			return Matrix::CreateFromQuaternion(LocalQuaternion(time)) *
-				Matrix::CreateTranslation(LocalTranslation(time));
+				return Matrix::CreateFromQuaternion(LocalQuaternion(time)) *
+					Matrix::CreateTranslation(LocalTranslation(time));
+			}
 		}
 	}
 }

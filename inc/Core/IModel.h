@@ -30,6 +30,8 @@ namespace TikiEngine
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* material) = 0;
 
+			virtual int AnimationCount() = 0;
+
 			virtual List<SkinningVertex>* GetVertices() = 0;
 			virtual List<UInt32>* GetIndices() = 0;
 

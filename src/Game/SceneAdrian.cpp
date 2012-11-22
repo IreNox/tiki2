@@ -42,10 +42,11 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(engine->content->LoadModel(L"soldier_l_testForAgga6"));//soldier_l_testForAgga6
+			go->SModel(engine->content->LoadModel(L"soldier_l_testForAgga8"));
 			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->TexDiffuse = tex;
+			int animationCount = go->GModel()->AnimationCount();
 
 			go->PRS.SScale() = Vector3(0.01f);
 

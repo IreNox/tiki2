@@ -11,6 +11,7 @@
 #include "Graphics/TikiMesh.h"
 #include <Core/IFont.h>
 #include <Core/Engine.h>
+#include "Graphics/FbxLoader.h"
 
 #include <sstream>
 
@@ -56,7 +57,7 @@ namespace TikiEngine
 		{
 
 			this->InitializeAnimationStack();
-			this->SetCurrentAnimStack(0);
+			this->SetCurrentAnimStack(1);
 
 			this->CreateBoneHierachy(scene->GetRootNode());
 			this->InitializeMeshes();
@@ -69,12 +70,6 @@ namespace TikiEngine
 			this->CopyVertexData();
 
 			this->InitializeAnimation();
-			
-			font = engine->librarys->CreateResource<IFont>();
-			font->Create(L"Arial", 10);
-			font->AddRef();
-
-			this->bone = rootBone->GetBoneByIndex(5);
 		}
 
 		void Model::InitializeMeshes()
@@ -147,59 +142,33 @@ namespace TikiEngine
 			int animationStackcount = this->scene->GetSrcObjectCount<FbxAnimStack>();
 			for(int i = 0; i < animationStackcount; i++)
 			{
-				TikiAnimation* animation = new TikiAnimation(this->scene->GetSrcObject<FbxAnimStack>(i));
-				this->animations.Add(animation);
+				FbxAnimStack* stack = this->scene->GetSrcObject<FbxAnimStack>(i);
+				int animLayerCount = stack->GetSrcObjectCount<FbxAnimLayer>();
+				for(int k = 0; k < animLayerCount; k++)
+				{
+					TikiAnimation* animation = new TikiAnimation(stack->GetSrcObject<FbxAnimLayer>(k));
+					this->animations.Add(animation);
+				}
 			}
 		}
 
-		bool Model::SetCurrentAnimStack(int pIndex)
+		void Model::SetCurrentAnimStack(int pIndex)
 		{
-			const int lAnimStackCount = animStackNameArray.GetCount();
-			if (!lAnimStackCount || pIndex >= lAnimStackCount)
-			{
-				return false;
-			}
-			
+			//int animationCount = animations.Count();
 
-			FbxAnimStack* lCurrentAnimationStack = this->scene->FindMember<FbxAnimStack>(animStackNameArray[pIndex]->Buffer());
-			//// select the base layer from the animation stack
-			if (lCurrentAnimationStack == NULL)
-			{
-				// this is a problem. The anim stack should be found in the scene!
-				return false;
-			}
+			//if(pIndex < 0 || pIndex >= animationCount)
+			//	return;
 
-			currentAnimLayer = lCurrentAnimationStack->GetMember<FbxAnimLayer>();
-			scene->GetEvaluator()->SetContext(lCurrentAnimationStack);
+			//TikiAnimation* animation = animations.Get(pIndex);
 
-			FbxTakeInfo* lCurrentTakeInfo = scene->GetTakeInfo(*(animStackNameArray[pIndex]));
-			if (lCurrentTakeInfo)
-			{
-				start = lCurrentTakeInfo->mLocalTimeSpan.GetStart();
-				stop = lCurrentTakeInfo->mLocalTimeSpan.GetStop();
-			}
-			else
-			{
-				// Take the time line value
-				FbxTimeSpan lTimeLineTimeSpan;
-				scene->GetGlobalSettings().GetTimelineDefaultTimeSpan(lTimeLineTimeSpan);
+			//FbxAnimStack* stack = FbxAnimStack::Create(this->scene, animation->Name());
+			//animation->Layer()->Weight = 100;
+			//stack->AddMember(animation->Layer());
 
-				start = lTimeLineTimeSpan.GetStart();
-				stop  = lTimeLineTimeSpan.GetStop();
-			}
+			//this->scene->GetEvaluator()->SetContext(stack);
 
-			frameTime.SetTime(0, 0, 0, 1, 0, scene->GetGlobalSettings().GetTimeMode());
-
-			startTime = start.GetSecondDouble();
-			stopTime = stop.GetSecondDouble();
-			timer = startTime;
-
-
-			// move to beginning
-			currentTime = start;
-
-
-			return true;
+			FbxAnimStack* stack = scene->GetSrcObject<FbxAnimStack>(0);
+			scene->GetEvaluator()->SetContext(stack);
 		}
 
 		void* Model::GetNativeResource()
@@ -270,15 +239,8 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			FbxNode* root = this->scene->GetRootNode();
-
-			timer += args.Time.ElapsedTime;
-
-			if(timer >= stopTime)
-				timer -= stopTime - startTime;
-			
 			if(this->rootBone != 0)
-				rootBone->Update(timer);
+				rootBone->Update(args);
 
 
 			SkinMatrices* matrices = constantBufferMatrices->Map();
@@ -356,6 +318,11 @@ namespace TikiEngine
 		void Model::SetAnimationSpeed(float speed)
 		{
 			this->animationSpeed = speed;
+		}
+
+		int Model::AnimationCount()
+		{
+			return this->animations.Count();
 		}
 
 	}

@@ -26,7 +26,7 @@ namespace TikiEngine
 
 
 			void Draw(const DrawArgs& args);
-			void Update(const double& time = -1.0);
+			void Update(const UpdateArgs& args);
 		
 			void Clean();
 			void CreateMapping(List<TikiBone*>& list);

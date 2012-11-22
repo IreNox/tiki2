@@ -4,16 +4,11 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-		TikiAnimation::TikiAnimation(FbxAnimStack* stack)
-			:name(stack->GetName())
+		TikiAnimation::TikiAnimation(FbxAnimLayer* layer)
+			:name(layer->GetName())
 		{
-			this->layer = stack->GetMember<FbxAnimLayer>(0);
-			int animationlayerCount = stack->GetSrcObjectCount<FbxAnimLayer>();
-
-			FbxTakeInfo* take = stack->GetScene()->GetTakeInfo(this->name);
-
-			this->startTime = take->mLocalTimeSpan.GetStart().GetSecondDouble();
-			this->stopTime = take->mLocalTimeSpan.GetStop().GetSecondDouble();
+			
+			this->layer = layer;
 		}
 		TikiAnimation::~TikiAnimation()
 		{
@@ -23,6 +18,10 @@ namespace TikiEngine
 		FbxAnimLayer* TikiAnimation::Layer()
 		{
 			return this->layer;
+		}
+		const char* TikiAnimation::Name()
+		{
+			return this->name;
 		}
 
 		double& TikiAnimation::StartTime()

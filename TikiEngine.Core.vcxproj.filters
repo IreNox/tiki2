@@ -664,5 +664,8 @@
     <ClInclude Include="inc\Core\sqlite3ext.h">
       <Filter>Extern</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IBone.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

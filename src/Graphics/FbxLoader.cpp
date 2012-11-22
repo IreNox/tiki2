@@ -28,6 +28,10 @@ namespace TikiEngine
 			pManager->SetIOSettings(ios);
 
 		}
+		FbxManager& FbxLoader::Manager()
+		{
+			return *this->fbxManager;
+		}
 
 		void FbxLoader::CreateNewScene(FbxScene** scene)
 		{

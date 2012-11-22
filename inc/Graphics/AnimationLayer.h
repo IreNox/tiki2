@@ -27,11 +27,16 @@ namespace TikiEngine
 
 			void Initialize(FbxNode* node, FbxAnimLayer* layer);
 
-			void Update(const double& time = -1.0);
+			void Update(const double& deltaTime = -1.0);
 
 			Vector3 LocalTranslation(const double& time = -1.0);
 			Quaternion LocalQuaternion(const double& time = -1.0);
 			Matrix LocalTransform(const double& time = -1.0);
+
+			double& GetCurrentTime();
+			void SetCurrentTime(double& time);
+
+			void Reset();
  
 		private:
 			double start;
@@ -60,6 +65,7 @@ namespace TikiEngine
 			int right;
 			float koeff;
 			double lastUpdateTime;
+			double currentTime;
 
 			List<double> * timeStamps;
 		};

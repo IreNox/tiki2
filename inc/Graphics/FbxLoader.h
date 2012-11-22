@@ -28,6 +28,8 @@ namespace TikiEngine
 			FbxLoader(Engine* engine);
 			~FbxLoader();
 
+			FbxManager& Manager();
+
 			bool GetScene(wstring filename, FbxScene** scene);
 		private:
 

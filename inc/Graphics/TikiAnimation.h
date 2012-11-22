@@ -11,10 +11,11 @@ namespace TikiEngine
 		class TikiAnimation : public TikiObject
 		{
 		public:
-			TikiAnimation(FbxAnimStack* stack);
+			TikiAnimation(FbxAnimLayer* layer);
 			~TikiAnimation();
 
 			FbxAnimLayer* Layer();
+			const char* Name();
 
 			double& StartTime();
 			double& StopTime();

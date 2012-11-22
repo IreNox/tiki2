@@ -54,6 +54,8 @@ namespace TikiEngine
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);
 
+			int AnimationCount();
+
 		private:
 
 			void Initialize();
@@ -69,7 +71,7 @@ namespace TikiEngine
 			
 
 			void InitializeAnimationStack();
-			bool SetCurrentAnimStack(int pIndex);
+			void SetCurrentAnimStack(int pIndex);
 
 			void CopyVertexData();
 			void CopyIndexData();
@@ -110,10 +112,6 @@ namespace TikiEngine
 
 			TikiBone* rootBone;
 
-			IFont* font;
-			TikiBone* bone;
-
-			Vector3 rotation;
 		};
 	}
 }
