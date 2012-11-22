@@ -1,6 +1,5 @@
 
 #include "Core/LibraryManager.h"
-#include <direct.h>
 
 namespace TikiEngine
 {
@@ -19,10 +18,7 @@ namespace TikiEngine
 
 		bool LibraryManager::Initialize(EngineDescription& desc)
 		{
-			WCHAR cd[MAX_PATH];
-
-			_wgetcwd(cd, MAX_PATH);
-			wstring path = wstring(cd) + L"\\*.dll";
+			wstring path = engine->HPath.GetBinaryPath() + L"\\*.dll";
 
 			WIN32_FIND_DATA file;
 			HANDLE handle = FindFirstFile(path.c_str(), &file);
@@ -35,7 +31,7 @@ namespace TikiEngine
 
 					loadLibrary(
 						engine,
-						wstring(cd) + L"\\" + wstring(file.cFileName)
+						engine->HPath.GetBinaryPath() + L"\\" + wstring(file.cFileName)
 					);
 				}
 				while (FindNextFile(handle, &file));

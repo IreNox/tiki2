@@ -13,6 +13,7 @@ namespace TikiEngine
 		HelperPath();
 		~HelperPath();
 
+		wstring GetBinaryPath() const;
 		wstring GetWorkingPath() const;
 
 		wstring Combine(wstring path1, wstring path2) const;
@@ -30,6 +31,7 @@ namespace TikiEngine
 
 	private:
 
+		wstring binaryPath;
 		wstring workingPath;
 
 		void checkPath(wstring path) const;

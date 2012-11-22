@@ -21,19 +21,27 @@ namespace TikiEngine
 		WCHAR cd[MAX_PATH];
 		GetModuleFileName(0, cd, MAX_PATH);
 
-		workingPath = HelperPath::GetDirectoryName(
-			HelperPath::GetDirectoryName(cd)
+		binaryPath = HelperPath::GetDirectoryName(cd);
+		workingPath = HelperPath::GetDirectoryName(binaryPath);
+
+		SetCurrentDirectory(
+			workingPath.c_str()
 		);
-		checkSlashes(workingPath);	
 	}
 
 	HelperPath::~HelperPath()
 	{
+		binaryPath.erase();
 		workingPath.erase();
 	}
 	#pragma endregion
 
 	#pragma region Member - WorkingPath
+	wstring HelperPath::GetBinaryPath() const
+	{
+		return binaryPath;
+	}
+
 	wstring HelperPath::GetWorkingPath() const
 	{
 		return workingPath;
