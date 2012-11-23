@@ -19,11 +19,26 @@ namespace TikiEngine
 	{
 		struct UpdateStructure
 		{
+			UpdateStructure(){}
+
+			UpdateStructure(int vertexIndex, int uvIndex, int normalIndex)
+			{
+				VertexIndex = vertexIndex;
+				UVIndex = uvIndex;
+				NormalIndex = normalIndex;
+
+				for(int i = 0; i < MAXBONESPERVERTEX; i++)
+				{
+					Weights[i] = -1;
+					Indices[i] = 0;
+				}
+			}
+
 			int VertexIndex;
 			int UVIndex;
 			int NormalIndex;
-			Vector4 Weights;
-			Vector4 Indices;
+			float Weights[MAXBONESPERVERTEX];
+			float Indices[MAXBONESPERVERTEX];
 		};
 
 

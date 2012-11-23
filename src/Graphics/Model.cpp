@@ -57,7 +57,7 @@ namespace TikiEngine
 		{
 
 			this->InitializeAnimationStack();
-			this->SetCurrentAnimStack(1);
+			this->SetCurrentAnimStack(0);
 
 			this->CreateBoneHierachy(scene->GetRootNode());
 			this->InitializeMeshes();
@@ -147,6 +147,7 @@ namespace TikiEngine
 				for(int k = 0; k < animLayerCount; k++)
 				{
 					TikiAnimation* animation = new TikiAnimation(stack->GetSrcObject<FbxAnimLayer>(k));
+					animation->AddRef();
 					this->animations.Add(animation);
 				}
 			}
@@ -154,21 +155,21 @@ namespace TikiEngine
 
 		void Model::SetCurrentAnimStack(int pIndex)
 		{
-			//int animationCount = animations.Count();
+			int animationCount = animations.Count();
 
-			//if(pIndex < 0 || pIndex >= animationCount)
-			//	return;
+			if(pIndex < 0 || pIndex >= animationCount)
+				return;
 
-			//TikiAnimation* animation = animations.Get(pIndex);
+			TikiAnimation* animation = animations.Get(pIndex);
 
-			//FbxAnimStack* stack = FbxAnimStack::Create(this->scene, animation->Name());
-			//animation->Layer()->Weight = 100;
-			//stack->AddMember(animation->Layer());
+			FbxAnimStack* stack = FbxAnimStack::Create(this->scene, animation->Name());
+			animation->Layer()->Weight = 100;
+			stack->AddMember(animation->Layer());
 
-			//this->scene->GetEvaluator()->SetContext(stack);
+			this->scene->GetEvaluator()->SetContext(stack);
 
-			FbxAnimStack* stack = scene->GetSrcObject<FbxAnimStack>(0);
-			scene->GetEvaluator()->SetContext(stack);
+			/*	FbxAnimStack* stack = scene->GetSrcObject<FbxAnimStack>(0);
+			scene->GetEvaluator()->SetContext(stack);*/
 		}
 
 		void* Model::GetNativeResource()

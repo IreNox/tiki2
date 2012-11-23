@@ -37,7 +37,7 @@ namespace TikiEngine
 
 			int maxBonesPerVertex = MaxBonesPerVertex();
 #if _DEBUG
-			if(hasDeformation && maxBonesPerVertex > 4)
+			if(hasDeformation && maxBonesPerVertex > MAXBONESPERVERTEX)
 				_CrtDbgBreak();
 #endif
 
@@ -68,18 +68,15 @@ namespace TikiEngine
 
 					FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter);
 
-					SkinningVertex skin = {
+					SkinningVertex skin(
 						(float)position[0],(float)position[1],(float)position[2],
 						(float)uv[0],(float)uv[1],
-						(float)normals[0],(float)normals[1],(float)normals[2],
-						0.0f, 0.0f, 0.0f, 0.0f,
-						0.0f, 0.0f, 0.0f, 0.0f
-					};
+						(float)normals[0],(float)normals[1],(float)normals[2]);
 
 					indicesArray[k] = verticesList.IndexOf(skin);
 					if(indicesArray[k] == -1)
 					{
-						UpdateStructure us = {index, uvIndex, counter, Vector4(-1), Vector4(0.0f)};
+						UpdateStructure us(index, uvIndex, counter);
 						this->updateStructure.Add(us);
 						indicesArray[k] = verticesList.Count();
 						verticesList.Add(skin);
@@ -142,11 +139,14 @@ namespace TikiEngine
 								UpdateStructure us = updateStructure[updateIndex];
 
 								int vsIndex = 0;
-								while(us.Weights.arr[vsIndex] != -1)
+								while(us.Weights[vsIndex] != -1)
 									vsIndex++;
 
-								us.Indices.arr[vsIndex] = (float)clusterIndex;
-								us.Weights.arr[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
+								if(vsIndex == 5)
+									_CrtDbgBreak();
+
+								us.Indices[vsIndex] = (float)clusterIndex;
+								us.Weights[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
 								updateStructure.Set(updateIndex,us);
 							}
 						}
@@ -158,10 +158,10 @@ namespace TikiEngine
 			for(int updateIndex = 0; updateIndex < updateCount; updateIndex++)
 			{
 				UpdateStructure us = updateStructure[updateIndex];
-				for(int i = 0; i < 4; i++)
+				for(int i = 0; i < MAXBONESPERVERTEX; i++)
 				{
-					if(us.Weights.arr[i] == -1)
-						us.Weights.arr[i] = 0;
+					if(us.Weights[i] == -1)
+						us.Weights[i] = 0;
 				}
 				updateStructure.Set(updateIndex, us);
 			}
@@ -275,11 +275,11 @@ namespace TikiEngine
 							UpdateStructure us = updateStructure[updateIndex];
 
 							int vsIndex = 0;
-							while(us.Weights.arr[vsIndex] != -1)
+							while(us.Weights[vsIndex] != -1)
 								vsIndex++;
 
-							us.Indices.arr[vsIndex] = (float)bone->GetConstantBufferIndex();
-							us.Weights.arr[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
+							us.Indices[vsIndex] = (float)bone->GetConstantBufferIndex();
+							us.Weights[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
 							updateStructure.Set(updateIndex,us);
 						}
 					}
@@ -289,10 +289,10 @@ namespace TikiEngine
 			for(int updateIndex = 0; updateIndex < updateCount; updateIndex++)
 			{
 				UpdateStructure us = updateStructure[updateIndex];
-				for(int i = 0; i < 4; i++)
+				for(int i = 0; i < MAXBONESPERVERTEX; i++)
 				{
-					if(us.Weights.arr[i] == -1)
-						us.Weights.arr[i] = 0;
+					if(us.Weights[i] == -1)
+						us.Weights[i] = 0;
 				}
 				updateStructure.Set(updateIndex, us);
 			}
@@ -322,17 +322,17 @@ namespace TikiEngine
 				if(us.UVIndex != -1)
 					uv = mesh->GetElementUV(0)->GetDirectArray().GetAt(us.UVIndex);
 				FbxVector4 normals = mesh->GetElementNormal(0)->GetDirectArray().GetAt(us.NormalIndex);
-				FbxVector4 binormal = FbxVector4();
-				FbxVector4 tangent = FbxVector4();
 
 
-				SkinningVertex skin = {
+				SkinningVertex skin(
 					(float)position[0],(float)position[1],(float)position[2],
 					(float)uv[0],(float)uv[1],
-					(float)normals[0],(float)normals[1],(float)normals[2],
-					us.Weights.X, us.Weights.Y, us.Weights.Z, us.Weights.W,
-					us.Indices.X, us.Indices.Y, us.Indices.Z, us.Indices.W
-				};
+					(float)normals[0],(float)normals[1],(float)normals[2]);
+				for(int i = 0;  i < MAXBONESPERVERTEX; i++)
+				{
+					skin.BlendWeights[i] = us.Weights[i];
+					skin.BlendIndices[i] = us.Indices[i];				
+				}
 				verticesList.Set(i, skin);
 			}
 			delete[]vertexArray;

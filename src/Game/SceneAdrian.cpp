@@ -42,7 +42,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(engine->content->LoadModel(L"soldier_l_testForAgga8"));
+			go->SModel(engine->content->LoadModel(L"soldier_l_testForAgga6"));
 			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->TexDiffuse = tex;
@@ -82,10 +82,10 @@ namespace TikiEngine
 				Rectangle(10, 10, 200, 180)
 			);
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetNormalTarget(),
-			//	Rectangle(10, 200, 200, 180)
-			//	);
+			engine->sprites->Draw(
+				engine->graphics->GetNormalTarget(),
+				Rectangle(10, 200, 200, 180)
+				);
 
 
 		}

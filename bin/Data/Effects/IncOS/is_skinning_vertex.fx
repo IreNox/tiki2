@@ -41,7 +41,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 	float3 c1 = cross(input.Normal, float3(0.0, 0.0, 1.0)); 
 	float3 c2 = cross(input.Normal, float3(0.0, 1.0, 0.0)); 
 
-	output.Normal = normalize(mul(input.Normal, (float3x3)WorldMIT));
+	output.Normal = normalize(mul(mul(input.Normal,(float3x3)transform), (float3x3)WorldMIT));
 	output.Tangent = normalize(length(c1) > length(c2) ? c1 : c2);
     output.Binormal = normalize(cross(output.Normal, output.Tangent));
     

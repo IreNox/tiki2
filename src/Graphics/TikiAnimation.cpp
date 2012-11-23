@@ -7,7 +7,6 @@ namespace TikiEngine
 		TikiAnimation::TikiAnimation(FbxAnimLayer* layer)
 			:name(layer->GetName())
 		{
-			
 			this->layer = layer;
 		}
 		TikiAnimation::~TikiAnimation()
