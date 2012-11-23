@@ -167,43 +167,6 @@ namespace TikiEngine
 			}
 		}
 
-		void TikiMesh::InitializeBones(TikiBone& rootBone)
-		{
-			this->bones.Clear();
-
-			FbxMesh* mesh = node->GetMesh();
-
-			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
-			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
-			{
-				FbxSkin *  skin = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
-
-				int clusterCount = skin->GetClusterCount();
-				for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
-				{
-					FbxCluster* cluster = skin->GetCluster(clusterIndex);
-
-					if(!cluster->GetLink())
-						continue;
-
-					TikiBone* bone = rootBone.GetBoneByName(cluster->GetLink()->GetName());
-					FbxAMatrix bindPose;
-					cluster->GetTransformLinkMatrix(bindPose);
-					bone->SetBind(bindPose);
-
-					if(bone != 0)
-						bones.Add(bone);
-#if _DEBUG
-					else
-					{
-						const char* name = cluster->GetLink()->GetName();
-						_CrtDbgBreak();
-					}
-#endif
-				}
-			}
-		}
-
 		void TikiMesh::FlagBones(TikiBone& rootBone)
 		{
 			if(!hasDeformation)

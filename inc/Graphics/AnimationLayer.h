@@ -3,7 +3,6 @@
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
 
-#include "Graphics/AnimationCurve.h"
 #include "Graphics/FBXConverter.h"
 
 #include "Core/TikiObject.h"
@@ -44,21 +43,20 @@ namespace TikiEngine
 
 			//all curves got the same timestamps = 1 binary search - 1 koeff evaluation
 
-			void GetTimeStamps(List<double>* timeStamps, FbxNode* node, FbxAnimLayer* layer);
-			void Fill(List<double>* keyTimes, FbxAnimCurve* curve);
-			void AddKey(AnimationCurve* curve, float value, double& time);
-			void CreateKeys(List<double>* keyTimes, FbxNode* node);
+			void GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer);
+			void Fill(List<double>& keyTimes, FbxAnimCurve* curve);
+			void AddKey(List<float>& valueData,float value, double& time);
+			void CreateKeys(List<double>& keyTimes, FbxNode* node);
 			void CreateDefaultValues(FbxNode* node);
+			float Evaluate(List<float>& list);
 
-			AnimationCurve* translationX;
-			AnimationCurve* translationY;
-			AnimationCurve* translationZ;
-
-			AnimationCurve* rotationX;
-			AnimationCurve* rotationY;
-			AnimationCurve* rotationZ;
+			List<float> translationX;
+			List<float> translationY;
+			List<float> translationZ;
 
 			List<Quaternion> quaternionen;
+
+			List<double> timeStamps;
 
 			int bsv;
 			int left;
@@ -67,7 +65,7 @@ namespace TikiEngine
 			double lastUpdateTime;
 			double currentTime;
 
-			List<double> * timeStamps;
+
 		};
 	}
 }

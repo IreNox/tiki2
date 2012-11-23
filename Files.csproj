@@ -37,6 +37,11 @@
     <None Include="bin\Data\Meshes\Laptop.obj" />
     <None Include="bin\Data\Meshes\test.obj" />
     <None Include="bin\Data\Models\buildings\building_03.fbx" />
+    <None Include="bin\Data\Models\cone.FBX" />
+    <None Include="bin\Data\Models\Cylinder_attack.fbx" />
+    <None Include="bin\Data\Models\Cylinder_Char.fbx" />
+    <None Include="bin\Data\Models\Cylinder_Idle.fbx" />
+    <None Include="bin\Data\Models\Cylinder_Walk.fbx" />
     <None Include="bin\Data\Models\links.fbx" />
     <None Include="bin\Data\Models\mark.fbx" />
     <None Include="bin\Data\Models\mark_rig_example.fbx" />
@@ -44,7 +49,6 @@
     <None Include="bin\Data\Models\navmesh\navmesh_terrain.FBX" />
     <None Include="bin\Data\Models\NavMesh_Pitch.FBX" />
     <None Include="bin\Data\Models\replaceme_cube.fbx" />
-    <None Include="bin\Data\Models\Shanna.fbx" />
     <None Include="bin\Data\Models\soldier.fbx" />
     <None Include="bin\Data\Models\soldier_l_testForAgga11.fbx" />
     <None Include="bin\Data\Models\soldier_l_testForAgga3.fbx" />

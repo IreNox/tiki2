@@ -3,7 +3,7 @@
 //////////////
 
 #ifndef VS_INPUT_EXT
-#define VS_INPUT_EXT 	float4  SkinningWeights    : BLENDWEIGHT; float4  SkinningIndices    : BLENDINDICES;
+#define VS_INPUT_EXT float4  SkinningWeights    : BLENDWEIGHT; float4  SkinningIndices    : BLENDINDICES;
 #endif
 
 //////////////

@@ -5,16 +5,13 @@ PS_INPUT VS_Main(VS_INPUT input)
 {
     PS_INPUT output = (PS_INPUT)0;    
 
-	float weights[4] = (float[4])input.SkinningWeights;
-	float indices[4] = (float[4])input.SkinningIndices;
-
 	matrix transform = 0;
 	float weight = 0;
 
 	for(int i = 0; i < 4;i++)
 	{
-		transform += bones[indices[i]] * weights[i];
-		weight += weights[i];
+		transform += bones[input.SkinningIndices[i]] * input.SkinningWeights[i];
+		weight += input.SkinningWeights[i];
 	}
 
 	float4 pos = mul(float4(input.Pos,1.0f), transform);

@@ -19,8 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\AnimationCurve.cpp" />
-    <ClCompile Include="src\Graphics\AnimationKey.cpp" />
     <ClCompile Include="src\Graphics\AnimationLayer.cpp" />
     <ClCompile Include="src\Graphics\Buffer.cpp" />
     <ClCompile Include="src\Graphics\DebugConsole.cpp" />
@@ -51,8 +49,6 @@
     <ClCompile Include="src\Graphics\VertexDeclaration.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Graphics\AnimationCurve.h" />
-    <ClInclude Include="inc\Graphics\AnimationKey.h" />
     <ClInclude Include="inc\Graphics\AnimationLayer.h" />
     <ClInclude Include="inc\Graphics\Buffer.h" />
     <ClInclude Include="inc\Graphics\CBLights.h" />

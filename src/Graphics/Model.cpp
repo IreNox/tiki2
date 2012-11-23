@@ -97,13 +97,13 @@ namespace TikiEngine
 				rootBone->InitializeAnimation(animations[i]);
 		}
 
-		void Model::InitializeBoneMapping()
-		{
-			if(rootBone == 0)
-				return;
-			for(int i = 0; i < meshes.Count(); i++)
-				meshes[0]->InitializeBones(*rootBone);
-		}
+		//void Model::InitializeBoneMapping()
+		//{
+		//	if(rootBone == 0)
+		//		return;
+		//	for(int i = 0; i < meshes.Count(); i++)
+		//		meshes[0]->InitializeBones(*rootBone);
+		//}
 
 		void Model::FlagBones()
 		{

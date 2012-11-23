@@ -95,10 +95,10 @@ namespace TikiEngine
 				case IST_SV_RenderTargetArrayIndex:
 					element.SemanticName = "SV_RenderTargetArrayIndex";
 					break;
-				case IST_SkinningWeight:
+				case IST_BlendWeight:
 					element.SemanticName = "BLENDWEIGHT";
 					break;
-				case IST_SkinningIndices:
+				case IST_BlendIndices:
 					element.SemanticName = "BLENDINDICES";
 					break;
 				}

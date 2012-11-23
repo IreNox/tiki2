@@ -52,7 +52,6 @@ namespace TikiEngine
 
 			bool Initialize();
 			void InitializeGPUSkinning();
-			void InitializeBones(TikiBone& rootBone);
 			void FlagBones(TikiBone& rootBone);
 			void MapBones(TikiBone& rootBone);
 
@@ -63,8 +62,6 @@ namespace TikiEngine
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
-
-			List<TikiBone*> bones;
 
 		private:
 			int MaxBonesPerVertex();

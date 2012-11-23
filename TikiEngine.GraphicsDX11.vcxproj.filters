@@ -146,12 +146,6 @@
     <ClCompile Include="src\Graphics\AnimationLayer.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\AnimationCurve.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\AnimationKey.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\DebugConsole.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
     </ClCompile>
@@ -263,12 +257,6 @@
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\AnimationLayer.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\AnimationCurve.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\AnimationKey.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugConsole.h">

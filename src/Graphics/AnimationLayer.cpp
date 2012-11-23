@@ -5,8 +5,7 @@ namespace TikiEngine
 	namespace Resources
 	{
 		AnimationLayer::AnimationLayer()
-			:	translationX(0), translationY(0), translationZ(0),
-				rotationX(0), rotationY(0), rotationZ(0),
+			:	/*translationX(0), translationY(0), translationZ(0),*/
 				start(-1),
 				end(-1),
 				lastUpdateTime(-1.0),
@@ -17,24 +16,10 @@ namespace TikiEngine
 
 		AnimationLayer::~AnimationLayer()
 		{	 
-			SafeRelease(&translationX);
-			SafeRelease(&translationY);
-			SafeRelease(&translationZ);
-			SafeRelease(&rotationX);
-			SafeRelease(&rotationY);
-			SafeRelease(&rotationZ);
-
-			if(timeStamps != 0)
-			{
-				delete timeStamps;
-				timeStamps = 0;
-			}
-		
 		}
 
 		void AnimationLayer::Initialize(FbxNode* node, FbxAnimLayer* layer)
 		{
-			timeStamps = new List<double>();
 			GetTimeStamps(timeStamps, node, layer);
 			CreateKeys(timeStamps, node);
 			CreateDefaultValues(node);
@@ -48,62 +33,18 @@ namespace TikiEngine
 			Vector3 rot = FBXConverter::ConvertDrop(defaultPosition.GetR());
 			Quaternion quat = FBXConverter::Convert(defaultPosition.GetQ());
 
-			if(translationX->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, trans.arr[0]);
-				k->AddRef();
-				translationX->Keys.Add(k);
-				translationX->InitValue = trans.arr[0];
-			}
-			if(translationY->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, trans.arr[1]);
-				k->AddRef();
-				translationY->Keys.Add(k);
-				translationY->InitValue = trans.arr[1];
-			}
-			if(translationZ->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, trans.arr[2]);
-				k->AddRef();
-				translationZ->Keys.Add(k);
-				translationZ->InitValue = trans.arr[2];
-			}
+			if(translationX.Count() == 0)
+				translationX.Add(trans.arr[0]);
+
+			if(translationY.Count() == 0)
+				translationY.Add(trans.arr[1]);
+
+			if(translationZ.Count() == 0)
+				translationZ.Add(trans.arr[2]);
 
 
-			if(rotationX->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, rot.arr[0]);
-				k->AddRef();
-				rotationX->Keys.Add(k);
-				rotationX->InitValue = rot.arr[0];
-			}
-			if(rotationY->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, rot.arr[1]);
-				k->AddRef();
-				rotationY->Keys.Add(k);
-				rotationY->InitValue = rot.arr[1];
-			}
-			if(rotationZ->Keys.Count() == 0)
-			{
-				AnimationKey* k = new AnimationKey(0.0, rot.arr[2]);
-				k->AddRef();
-				rotationZ->Keys.Add(k);
-				rotationZ->InitValue = rot.arr[2];
-			}
 			if(quaternionen.Count() == 0)
-			{
 				quaternionen.Add(quat);
-			}
-
-			translationX->BSV = bsv;
-			translationY->BSV = bsv;
-			translationZ->BSV = bsv;
-
-			rotationX->BSV = bsv;
-			rotationY->BSV = bsv;
-			rotationZ->BSV = bsv;
 		}
 
 		double& AnimationLayer::GetCurrentTime()
@@ -143,14 +84,14 @@ namespace TikiEngine
 				return;
 			}
 			//before first element -> return first element
-			if(timeStamps->Get(0) >= currentTime) 
+			if(timeStamps[0] >= currentTime) 
 			{
 				left = 0;
 				right = -1;
 				return;
 			}
 			//after last element -> return last element
-			if(timeStamps->Get(count - 1) <= currentTime)
+			if(timeStamps[count - 1] <= currentTime)
 			{
 				left = -1;
 				right = count -1;
@@ -163,12 +104,12 @@ namespace TikiEngine
 			//find index of highest value below time
 			while(shift != 0)
 			{
-				if(index + shift < count && timeStamps->Get(index + shift) <= currentTime)
+				if(index + shift < count && timeStamps[index + shift] <= currentTime)
 					index += shift;
 				shift /= 2;
 			}
 			
-			if(timeStamps->Get(index) == currentTime)
+			if(timeStamps[index] == currentTime)
 			{
 				left = right = index;
 				return;
@@ -177,31 +118,17 @@ namespace TikiEngine
 			left = index;
 			right = index + 1;
 
-			koeff = (currentTime - timeStamps->Get(left)) / (timeStamps->Get(right) - timeStamps->Get(left));
+			koeff = (currentTime - timeStamps[left]) / (timeStamps[right] - timeStamps[left]);
 		}
 
-		void AnimationLayer::CreateKeys(List<double>* keyTimes, FbxNode* node)
+		void AnimationLayer::CreateKeys(List<double>& keyTimes, FbxNode* node)
 		{
-			translationX = new AnimationCurve();
-			translationX->AddRef();
-			translationY = new AnimationCurve();
-			translationY->AddRef();
-			translationZ = new AnimationCurve();
-			translationZ->AddRef();
-
-			rotationX = new AnimationCurve();
-			rotationX->AddRef();
-			rotationY = new AnimationCurve();
-			rotationY->AddRef();
-			rotationZ = new AnimationCurve();
-			rotationZ->AddRef();
-
-			for(int i = 0; i < keyTimes->Count(); i++)
+			for(int i = 0; i < keyTimes.Count(); i++)
 			{
-				double time = keyTimes->Get(i);
+				double time = keyTimes[i];
 
 				FbxTime fbxTime;
-				fbxTime.SetSecondDouble(keyTimes->Get(i));
+				fbxTime.SetSecondDouble(keyTimes[i]);
 
 				FbxAMatrix localTransform = node->EvaluateLocalTransform(fbxTime);
 
@@ -209,30 +136,18 @@ namespace TikiEngine
 				FbxVector4 rot = localTransform.GetR();
 				Quaternion quat = FBXConverter::Convert(localTransform.GetQ());
 
-
 				Vector3 translation = FBXConverter::ConvertDrop(trans);
 				Vector3 rotation = FBXConverter::ConvertDrop(rot);
 
-				AddKey(translationX, translation.X, time);
-				AddKey(translationY, translation.Y, time);
-				AddKey(translationZ, translation.Z, time);
-
-				AddKey(rotationX, rotation.X, time);
-				AddKey(rotationY, rotation.Y, time);
-				AddKey(rotationZ, rotation.Z, time);
+				translationX.Add(translation.arr[0]);
+				translationY.Add(translation.arr[1]);
+				translationZ.Add(translation.arr[2]);
 
 				this->quaternionen.Add(quat);
 			}
 		}
 
-		void AnimationLayer::AddKey(AnimationCurve* curve, float value, double& time)
-		{
-			AnimationKey* key = new AnimationKey(time, value);
-			key->AddRef();
-			curve->Keys.Add(key);
-		}
-
-		void AnimationLayer::GetTimeStamps(List<double>* timeStamps, FbxNode* node, FbxAnimLayer* layer)
+		void AnimationLayer::GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer)
 		{
 			FbxAnimCurve* curve = node->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_X);
 			Fill(timeStamps, curve);
@@ -248,18 +163,18 @@ namespace TikiEngine
 			curve = node->LclRotation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Z);
 			Fill(timeStamps, curve);
 
-			timeStamps->Sort();
+			timeStamps.Sort();
 
-			this->start = timeStamps->Get(0);
-			this->end = timeStamps->Get(timeStamps->Count() - 1);
+			this->start = timeStamps[0];
+			this->end = timeStamps[timeStamps.Count() - 1];
 
 			int bs = 1;
-			while(bs*2 < timeStamps->Count())
+			while(bs*2 < timeStamps.Count())
 				bs *= 2;
 			bsv = bs;
 		}
 
-		void AnimationLayer::Fill(List<double>* keyTimes, FbxAnimCurve* curve)
+		void AnimationLayer::Fill(List<double>& keyTimes, FbxAnimCurve* curve)
 		{
 			if(curve == 0)
 				return;
@@ -267,8 +182,8 @@ namespace TikiEngine
 			for(int i = 0; i < curve->KeyGetCount(); i++)
 			{
 				double time = curve->KeyGetTime(i).GetSecondDouble();
-				if(!keyTimes->Contains(time))
-					keyTimes->Add(time);
+				if(!keyTimes.Contains(time))
+					keyTimes.Add(time);
 			}
 		}
 
@@ -277,9 +192,9 @@ namespace TikiEngine
 			if(time == -1.0)
 			{
 				return Vector3(
-					translationX->Evaluate(left, right, koeff),
-					translationY->Evaluate(left, right, koeff),
-					translationZ->Evaluate(left, right, koeff)
+					this->Evaluate(translationX),
+					this->Evaluate(translationY),
+					this->Evaluate(translationZ)
 					);
 			}
 			else
@@ -289,11 +204,22 @@ namespace TikiEngine
 					Update(time);
 
 				return Vector3(
-					translationX->Evaluate(left, right, koeff),
-					translationY->Evaluate(left, right, koeff),
-					translationZ->Evaluate(left, right, koeff)
+					this->Evaluate(translationX),
+					this->Evaluate(translationY),
+					this->Evaluate(translationZ)
 					);
 			}
+		}
+		float AnimationLayer::Evaluate(List<float>& list)
+		{
+			if(left == right)
+				return list[left];
+			if(right == -1)
+				return list[left];
+			if(left == -1)
+				return list[right];
+
+			return list[left] * (1 - koeff) + list[right] * koeff;
 		}
 
 		Quaternion AnimationLayer::LocalQuaternion(const double& time)

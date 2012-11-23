@@ -76,10 +76,10 @@ namespace TikiEngine
 			void CopyVertexData();
 			void CopyIndexData();
 
-			FbxTime start;
-			FbxTime stop;
-			FbxTime frameTime;
-			FbxTime currentTime;
+			//FbxTime start;
+			//FbxTime stop;
+			//FbxTime frameTime;
+			//FbxTime currentTime;
 			float animationSpeed;
 
 			double startTime;
@@ -99,7 +99,7 @@ namespace TikiEngine
 			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
 			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
-			UInt32 updateCounter;
+			//UInt32 updateCounter;
 			//List<UpdateStructure> updateStructure;
 
 			FbxArray<FbxString*> animStackNameArray;
