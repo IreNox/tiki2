@@ -50,13 +50,10 @@
     <None Include="bin\Data\Models\NavMesh_Pitch.FBX" />
     <None Include="bin\Data\Models\replaceme_cube.fbx" />
     <None Include="bin\Data\Models\soldier.fbx" />
-    <None Include="bin\Data\Models\soldier_l_testForAgga11.fbx" />
-    <None Include="bin\Data\Models\soldier_l_testForAgga3.fbx" />
-    <None Include="bin\Data\Models\soldier_l_testForAgga4.fbx" />
+    <None Include="bin\Data\Models\soldier_l_testForAgga10.fbx" />
     <None Include="bin\Data\Models\soldier_l_testForAgga6.fbx" />
     <None Include="bin\Data\Models\soldier_l_testForAgga8.fbx" />
     <None Include="bin\Data\Models\Soldier_S.fbx" />
-    <None Include="bin\Data\Models\testChar.fbx" />
     <None Include="bin\Data\Textures\building_03\building_03_diff.dds" />
     <None Include="bin\Data\Textures\building_03\building_03_normal.dds" />
     <None Include="bin\Data\Textures\checker.dds" />

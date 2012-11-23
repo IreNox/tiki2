@@ -33,15 +33,8 @@ namespace TikiEngine
 			Vector3 rot = FBXConverter::ConvertDrop(defaultPosition.GetR());
 			Quaternion quat = FBXConverter::Convert(defaultPosition.GetQ());
 
-			if(translationX.Count() == 0)
-				translationX.Add(trans.arr[0]);
-
-			if(translationY.Count() == 0)
-				translationY.Add(trans.arr[1]);
-
-			if(translationZ.Count() == 0)
-				translationZ.Add(trans.arr[2]);
-
+			if(translation.Count() == 0)
+				translation.Add(trans);
 
 			if(quaternionen.Count() == 0)
 				quaternionen.Add(quat);
@@ -139,9 +132,7 @@ namespace TikiEngine
 				Vector3 translation = FBXConverter::ConvertDrop(trans);
 				Vector3 rotation = FBXConverter::ConvertDrop(rot);
 
-				translationX.Add(translation.arr[0]);
-				translationY.Add(translation.arr[1]);
-				translationZ.Add(translation.arr[2]);
+				this->translation.Add(translation);
 
 				this->quaternionen.Add(quat);
 			}
@@ -191,35 +182,26 @@ namespace TikiEngine
 		{
 			if(time == -1.0)
 			{
-				return Vector3(
-					this->Evaluate(translationX),
-					this->Evaluate(translationY),
-					this->Evaluate(translationZ)
-					);
+				if(left == right)
+					return translation[left];
+				if(right == -1)
+					return translation[left];
+				if(left == -1)
+					return translation[right];
+				
+				return Vector3::Lerp(translation[left], translation[right], koeff);
 			}
 			else
 			{
+				if(left == right)
+					return translation[left];
+				if(right == -1)
+					return translation[left];
+				if(left == -1)
+					return translation[right];
 
-				if(time != lastUpdateTime)
-					Update(time);
-
-				return Vector3(
-					this->Evaluate(translationX),
-					this->Evaluate(translationY),
-					this->Evaluate(translationZ)
-					);
+				return Vector3::Lerp(translation[left], translation[right], koeff);
 			}
-		}
-		float AnimationLayer::Evaluate(List<float>& list)
-		{
-			if(left == right)
-				return list[left];
-			if(right == -1)
-				return list[left];
-			if(left == -1)
-				return list[right];
-
-			return list[left] * (1 - koeff) + list[right] * koeff;
 		}
 
 		Quaternion AnimationLayer::LocalQuaternion(const double& time)

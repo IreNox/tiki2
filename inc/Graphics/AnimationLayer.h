@@ -48,11 +48,8 @@ namespace TikiEngine
 			void AddKey(List<float>& valueData,float value, double& time);
 			void CreateKeys(List<double>& keyTimes, FbxNode* node);
 			void CreateDefaultValues(FbxNode* node);
-			float Evaluate(List<float>& list);
 
-			List<float> translationX;
-			List<float> translationY;
-			List<float> translationZ;
+			List<Vector3> translation;
 
 			List<Quaternion> quaternionen;
 
