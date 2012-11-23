@@ -7,6 +7,7 @@
 #include "Core/DefaultVertex.h"
 
 #include "Core/EngineObject.h"
+#include "Graphics/FbxHelper.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -30,6 +31,7 @@ namespace TikiEngine
 
 			FbxManager& Manager();
 
+			bool GetScene(wstring filename, FbxHelper* helper);
 			bool GetScene(wstring filename, FbxScene** scene);
 		private:
 

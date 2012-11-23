@@ -15,6 +15,8 @@
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiAnimation.h"
 
+#include "Graphics/FbxHelper.h"
+
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
 #include <Core/IFont.h>
@@ -47,6 +49,10 @@ namespace TikiEngine
 			float GetAnimationSpeed();
 			void SetAnimationSpeed(float speed);
 
+			TikiBone* GetRootBone();
+			void SetRootBone(TikiBone* bone);
+
+
 			bool GetReady();
 
 		protected:
@@ -76,15 +82,8 @@ namespace TikiEngine
 			void CopyVertexData();
 			void CopyIndexData();
 
-			//FbxTime start;
-			//FbxTime stop;
-			//FbxTime frameTime;
-			//FbxTime currentTime;
 			float animationSpeed;
 
-			double startTime;
-			double stopTime;
-			double timer;
 
 			List<TikiBone*> constantBufferElements;
 			List<SkinningVertex> verticesList;
@@ -98,9 +97,6 @@ namespace TikiEngine
 
 			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
 			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
-
-			//UInt32 updateCounter;
-			//List<UpdateStructure> updateStructure;
 
 			FbxArray<FbxString*> animStackNameArray;
 			FbxAnimLayer* currentAnimLayer;

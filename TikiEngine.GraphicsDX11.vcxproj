@@ -25,6 +25,7 @@
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\FBXConverter.cpp" />
+    <ClCompile Include="src\Graphics\FbxHelper.cpp" />
     <ClCompile Include="src\Graphics\FbxLoader.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\GraphicsModule.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="inc\Graphics\DebugLineRenderer.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
     <ClInclude Include="inc\Graphics\FBXConverter.h" />
+    <ClInclude Include="inc\Graphics\FbxHelper.h" />
     <ClInclude Include="inc\Graphics\FbxLoader.h" />
     <ClInclude Include="inc\Graphics\Font.h" />
     <ClInclude Include="inc\Graphics\DynamicBuffer.h" />

@@ -149,6 +149,9 @@
     <ClCompile Include="src\Graphics\DebugConsole.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\FbxHelper.cpp">
+      <Filter>Quelldateien\Internal\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\Buffer.h">
@@ -261,6 +264,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugConsole.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\FbxHelper.h">
+      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

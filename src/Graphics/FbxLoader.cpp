@@ -38,6 +38,19 @@ namespace TikiEngine
 			*scene = FbxScene::Create(this->fbxManager, "");
 		}
 
+		bool FbxLoader::GetScene(wstring filename, FbxHelper* helper)
+		{
+			FbxScene* scene = FbxScene::Create(this->fbxManager, "");
+
+			if(LoadScene(fbxManager, scene, filename))
+			{
+				helper->SetScene(scene);
+				return true;
+			}
+			else
+				return false;
+		}
+
 		bool FbxLoader::GetScene(wstring filename, FbxScene** scene)
 		{
 			CreateNewScene(scene);

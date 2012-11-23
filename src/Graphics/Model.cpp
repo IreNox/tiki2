@@ -49,8 +49,7 @@ namespace TikiEngine
 			SafeRelease(&vertexBuffer);
 			SafeDelete(&constantBufferMatrices);
 
-			if(rootBone != 0)
-				SafeRelease(&rootBone);
+			SafeRelease(&rootBone);
 		}
 
 		void Model::Initialize()
@@ -59,7 +58,7 @@ namespace TikiEngine
 			this->InitializeAnimationStack();
 			this->SetCurrentAnimStack(0);
 
-			this->CreateBoneHierachy(scene->GetRootNode());
+			//this->CreateBoneHierachy(scene->GetRootNode());
 			this->InitializeMeshes();
 
 			this->FlagBones();
@@ -96,14 +95,6 @@ namespace TikiEngine
 			for(int i = 0; i < this->animations.Count(); i++)
 				rootBone->InitializeAnimation(animations[i]);
 		}
-
-		//void Model::InitializeBoneMapping()
-		//{
-		//	if(rootBone == 0)
-		//		return;
-		//	for(int i = 0; i < meshes.Count(); i++)
-		//		meshes[0]->InitializeBones(*rootBone);
-		//}
 
 		void Model::FlagBones()
 		{
@@ -168,8 +159,6 @@ namespace TikiEngine
 
 			this->scene->GetEvaluator()->SetContext(stack);
 
-			/*	FbxAnimStack* stack = scene->GetSrcObject<FbxAnimStack>(0);
-			scene->GetEvaluator()->SetContext(stack);*/
 		}
 
 		void* Model::GetNativeResource()
@@ -298,10 +287,30 @@ namespace TikiEngine
 			this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
 		}
 
+		TikiBone* Model::GetRootBone()
+		{
+			return this->rootBone;
+		}
+		void Model::SetRootBone(TikiBone* bone)
+		{
+			if(this->rootBone != 0)
+				SafeRelease(&rootBone);
+			rootBone = bone;
+			rootBone->AddRef();
+		}
+
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			if(!DllMain::FBXLoader->GetScene(fileName, &scene))
-				throw L"FBXfile not found";
+			FbxHelper* helper = new FbxHelper();
+
+			if(!DllMain::FBXLoader->GetScene(fileName, helper))
+				_CrtDbgBreak();//FBXfile not found
+
+			this->scene = helper->GetScene();
+			this->SetRootBone(helper->GetRootBone());
+
+			//if(!DllMain::FBXLoader->GetScene(fileName, &scene))
+			//	_CrtDbgBreak(); //FBXfile not found
 
 			Initialize();
 		}

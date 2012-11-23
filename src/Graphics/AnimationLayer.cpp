@@ -140,6 +140,11 @@ namespace TikiEngine
 
 		void AnimationLayer::GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer)
 		{
+#if _DEBUG
+			if(node == 0)
+				_CrtDbgBreak();
+#endif
+
 			FbxAnimCurve* curve = node->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_X);
 			Fill(timeStamps, curve);
 			curve = node->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_Y);

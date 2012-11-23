@@ -5,6 +5,16 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		TikiBone::TikiBone()
+			:node(0), parent(0), childs(),
+			boneInit(),
+			boneInitInverse(),
+			boneCurrent(),
+			constantBufferIndex(-1),
+			layer(0)
+		{
+
+		}
 
 		TikiBone::TikiBone(FbxNode* node)
 			:node(node), parent(0), childs(),
@@ -26,12 +36,6 @@ namespace TikiEngine
 				SafeRelease(&childs[i]);
 			}
 		}
-		void TikiBone::SetBind(FbxAMatrix& init)
-		{
-			this->initInverse = init.Inverse();
-			this->boneInit = FBXConverter::ConvertTranspose(init);
-			this->boneInitInverse = FBXConverter::ConvertTranspose(init.Inverse());
-		}
 
 		void TikiBone::Initialize()
 		{
@@ -41,6 +45,7 @@ namespace TikiEngine
 			{
 				this->boneInit =  parent->BoneInitTransform();
 			}
+
 			this->boneInit = this->boneCurrent = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform()) * this->boneInit;
 			this->boneInitInverse = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform().Inverse());
 
@@ -52,6 +57,11 @@ namespace TikiEngine
 				tmp->Initialize();
 				childs.Add(tmp);
 			}
+		}
+		void TikiBone::AddChild(TikiBone* bone)
+		{
+			bone->AddRef();
+			this->childs.Add(bone);
 		}
 
 		void TikiBone::Clean()
@@ -145,7 +155,6 @@ namespace TikiEngine
 		void TikiBone::SetParent(TikiBone* parent)
 		{
 			this->parent = parent;
-			//SafeAddRef(parent, &this->parent);
 		}
 
 		Matrix& TikiBone::BoneInitTransform()
@@ -158,9 +167,29 @@ namespace TikiEngine
 			return boneCurrent;
 		}
 
+		void TikiBone::SetBoneInitTransform(Matrix& mat)
+		{
+			this->boneInit = mat;
+			this->boneInitInverse = mat.Invert();
+		}
+
+		void TikiBone::SetFbxNode(FbxNode* node)
+		{
+			this->node = node;
+		}
+
+		FbxNode* TikiBone::GetFbxNode()
+		{
+			return node;
+		}
+
+		void TikiBone::SetBoneCurrentTransform(Matrix& mat)
+		{
+			this->boneCurrent = mat;
+		}
+
 		Matrix TikiBone::ShiftMatrix()
 		{
-			//return FBXConverter::Convert(this->shiftMatrix);
 			return (this->boneInitInverse * this->boneCurrent).Transpose();
 		}
 
@@ -198,9 +227,13 @@ namespace TikiEngine
 			}
 		}
 
-		const char* TikiBone::Name()
+		const char* TikiBone::GetName()
 		{
 			return name;
+		}
+		void TikiBone::SetName(const char* name)
+		{
+			this->name = name;
 		}
 
 		AnimationLayer* TikiBone::Layer()

@@ -220,7 +220,7 @@ namespace TikiEngine
 
 				FbxAMatrix bindPose;
 				cluster->GetTransformLinkMatrix(bindPose);
-				bone->SetBind(bindPose);
+				bone->SetBoneInitTransform(FBXConverter::ConvertTranspose(bindPose));
 
 				int vertexCount = cluster->GetControlPointIndicesCount();
 				for(int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)

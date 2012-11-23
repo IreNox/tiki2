@@ -19,11 +19,11 @@ namespace TikiEngine
 		class TikiBone : public TikiObject
 		{
 		public:
+			TikiBone();
 			TikiBone(FbxNode* node);
 			~TikiBone();
 
 			void Initialize();
-
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -33,9 +33,13 @@ namespace TikiEngine
 
 			TikiBone* GetParent();
 			void SetParent(TikiBone* parent);
+			void AddChild(TikiBone* bone);
 
 			Matrix& BoneInitTransform();
 			Matrix& BoneCurrentTransform();
+
+			void SetBoneInitTransform(Matrix& mat);
+			void SetBoneCurrentTransform(Matrix& mat);
 
 			Matrix ShiftMatrix();
 
@@ -44,13 +48,16 @@ namespace TikiEngine
 			TikiBone* GetBoneByName(const char* name);
 			TikiBone* GetBoneByIndex(int index);
 
-			void InitializeAnimation(TikiAnimation* animation);
+			void SetFbxNode(FbxNode* node);
+			FbxNode* GetFbxNode();
 
-			void SetBind(FbxAMatrix& init);
+			void InitializeAnimation(TikiAnimation* animation);
 
 			int Count();
 
-			const char* Name();
+			const char* GetName();
+			void SetName(const char* name);
+
 
 			int GetConstantBufferIndex();
 			void SetConstantBufferIndex(int index);
