@@ -44,7 +44,8 @@ namespace TikiEngine
                  NxF32 coeff = 10.0f; //actor->getMass() * 1000.0f;
                  NxVec3 dir = hit.other->getPosition() - hit.controller->getPosition();
                  dir.y = 0;
-                 dir.normalize();
+                 dir.setMagnitude(0.05);
+                 //dir.normalize();
 
                  NxCCTInteractionFlag c, o;
                  c = hit.controller->getInteraction(); //save interaction states
@@ -52,11 +53,11 @@ namespace TikiEngine
                  hit.controller->setInteraction(NXIF_INTERACTION_EXCLUDE); //disable collision to stop recursive loop
                  hit.other->setInteraction(NXIF_INTERACTION_EXCLUDE);
 
-                // NxU32 activeGroups = (1<<CG_Collidable_Non_Pushable) | 
-                 //                     (1<<CG_Collidable_Pushable);
+                 NxU32 activeGroups = (1<<CG_Collidable_Non_Pushable) | 
+                                      (1<<CG_Collidable_Pushable);
                  NxU32 cf;
 
-                 hit.other->move(dir, -1, 0.001f, cf);
+                 hit.other->move(dir, activeGroups, 0.001f, cf);
                  hit.controller->setInteraction(c);
                  hit.other->setInteraction(o);
 
