@@ -37,7 +37,7 @@ namespace TikiEngine
             TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
             if (bot != 0)
             {
-                if (bot->ID() != shooterID)
+                if (bot->ID() != shooterID && bot->GetFaction() != shooter->GetFaction())
                 {
                     impacted = true;
                     dead = true;

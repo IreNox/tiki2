@@ -3,6 +3,7 @@
 #include "Physics/Collider.h"
 #include "Core/ICharacterController.h"
 #include "PhysX/NxCharacter/NxCapsuleController.h"
+#include "Physics/ControllerHitReport.h"
 
 namespace TikiEngine 
 {
@@ -60,6 +61,7 @@ namespace TikiEngine
 		private:
 			NxCapsuleControllerDesc desc;
 			NxController* controller;
+            ControllerHitReport hitReport;
 			Single radius;
 			Single height;
 			Single slopeLimit;

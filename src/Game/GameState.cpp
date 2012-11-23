@@ -77,7 +77,7 @@ namespace TikiEngine
 				Matrix::CreateScaleMatrix(2, 1, 2) * Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
-			TikiBotDescription desc;
+			//TikiBotDescription desc;
 
 			UInt32 i = 0;
 			while (i < scene->objects.Count())
@@ -86,20 +86,26 @@ namespace TikiEngine
 
 				if (bot != 0)
 				{
-					bot->Init(desc);
+					//bot->Init(desc);
 					bot->CreateNav(navMesh);
  					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
  					pos = pos + Vector3(0, 30, 0);
  					bot->GetController()->SetCenter(pos);
 
 					// if we have a patrol bot, set the wayPoints.
-					std::list<Vector2> wayPoints;
-					wayPoints.push_back(Vector2(0, -100));
-					wayPoints.push_back(Vector2(100, -100));
-					wayPoints.push_back(Vector2(100, 100));
-					wayPoints.push_back(Vector2(-100, 100));
-					wayPoints.push_back(Vector2(-100, -100));
-					bot->GetBrain()->AddGoalPatrol(wayPoints);
+                    if (bot->GetFaction() == 1)
+                    {
+                        std::list<Vector2> wayPoints;
+                        wayPoints.push_back(Vector2(0, -100));
+                        wayPoints.push_back(Vector2(100, -100));
+                        wayPoints.push_back(Vector2(100, 100));
+                        wayPoints.push_back(Vector2(-100, 100));
+                        wayPoints.push_back(Vector2(-100, -100));
+                        bot->GetBrain()->AddGoalPatrol(wayPoints);
+                    }
+                   // if (bot->GetFaction() == 0)
+                    //    bot->TakePossession();
+
 
 				}
 
@@ -190,7 +196,7 @@ namespace TikiEngine
 
 						if (bot != 0)
 						{
-							bot->TakePossession();
+							//bot->TakePossession();
 
 							// if the shift key is pressed down at the same time as clicking then the
 							// movement command will be queued

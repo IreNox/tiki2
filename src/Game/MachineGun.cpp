@@ -21,6 +21,7 @@ namespace TikiEngine
 			{
 				ProjectileDescription desc;
 				desc.Target = pos; //owner->GetTargetBot()->Pos3D();
+                desc.Shooter = owner;
 				desc.Origin = owner->Pos3D();
 				desc.Heading = owner->Heading();
 				desc.ShooterID = owner->ID();

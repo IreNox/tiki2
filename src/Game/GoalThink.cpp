@@ -75,10 +75,8 @@ namespace TikiEngine
 
 		void GoalThink::Activate(const UpdateArgs& args)
 		{
-			if (!owner->IsPossessed())
-			{
+			if (owner->GetFaction() == 1)//(!owner->IsPossessed())
 				Arbitrate();
-			}
 
 			status = Active;
 		}
@@ -91,7 +89,7 @@ namespace TikiEngine
 
 			if (subgoalStatus == Completed || subgoalStatus == Failed)
 			{
-				if (!owner->IsPossessed())
+				if (owner->GetFaction() == 1) //(!owner->IsPossessed())
 					status = Inactive;
 			}
 

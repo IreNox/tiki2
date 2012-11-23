@@ -44,7 +44,7 @@ namespace TikiEngine
 			void ClearTarget() { currentTarget = 0; }
 
 			// sets the global target pointer to null
-			void ClearGlobalTarget() { globalTarget = 0; }
+			void ClearGlobalTarget() { globalTarget = 0; /*currentTarget = 0;*/ }
 
 			// sets a user defined global target
 			void SetGlobalTarget(TikiBot* target) { globalTarget = target; }

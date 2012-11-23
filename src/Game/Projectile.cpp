@@ -28,6 +28,7 @@ namespace TikiEngine
 			origin = desc.Origin;
 			damage = desc.Damage;
 			shooterID = desc.ShooterID;
+            shooter = desc.Shooter;
 			dead = false;
 			impacted = false;	
 			timeOfCreation = args.Time.TotalTime;
@@ -46,34 +47,11 @@ namespace TikiEngine
 			//vel = vel* desc.MaxSpeed;
 			//sphere->GetRigidBody()->SetMass(desc.Mass);
 			//sphere->GetRigidBody()->SetVelocity(vel);
-
 		}
 
 		void Projectile::Handle(ICollider* sender, const TriggerEnterArgs& args)
 		{
-// 			// TODO: faction
-//   			TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
-//             if (bot != 0)
-// 			{
-// 				if (bot->ID() != shooterID)
-// 				{
-// 					impacted = true;
-// 					dead = true;
-// 
-// 					OutputDebugString(L"bot hit, health reduced. \n");
-// 					bot->ReduceHealth(damage);
-// 				}
-// 			}
-// 			else
-// 			{
-//                 // ITriangleMeshCollider* coll = args.otherCollider->GetGameObject()->GetComponent<ITriangleMeshCollider>();
-//                 ITriangleMeshCollider* coll = dynamic_cast<ITriangleMeshCollider*>(args.otherCollider);
-//                 if (coll != 0)
-//                 {
-//                     impacted = true;
-//                     dead = true;
-//                 }
-// 			}
+
   		}
 
 		void Projectile::Update(const UpdateArgs& args)

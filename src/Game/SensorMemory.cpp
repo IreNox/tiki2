@@ -31,7 +31,7 @@ namespace TikiEngine
 			{
 				GameObject* go = owner->GetGameState()->GetScene()->GetObjects()->Get(i);
 				TikiBot* curBot = go->GetComponent<TikiBot>();
-				if(curBot != 0 && curBot != owner)
+				if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
 				{
 					MakeNewRecordIfNotAlreadyPresent(curBot);
 
@@ -41,22 +41,25 @@ namespace TikiEngine
 					if (owner->HasLOSTo(curBot->Pos3D()))
 					{
 						info.Shootable = true;
+                        info.TimeLastSensed = args.Time.TotalTime;
+                        info.lastSensedPosition = curBot->Pos3D();
+                        info.TimeLastVisible = args.Time.TotalTime;
 
-						// test if the bot is within FOV
-						if (IsSecondInFOVOfFirst(owner->Pos(), owner->Heading(), curBot->Pos(), owner->FieldOfView()))
-						{
-							info.TimeLastSensed = args.Time.TotalTime;
-							info.lastSensedPosition = curBot->Pos3D();
-							info.TimeLastVisible = args.Time.TotalTime;
+						//// test if the bot is within FOV
+						//if (IsSecondInFOVOfFirst(owner->Pos(), owner->Heading(), curBot->Pos(), owner->FieldOfView()))
+						//{
+						//	info.TimeLastSensed = args.Time.TotalTime;
+						//	info.lastSensedPosition = curBot->Pos3D();
+						//	info.TimeLastVisible = args.Time.TotalTime;
 
-							if (info.WithinFOV == false)
-							{
-								info.WithinFOV = true;
-								info.TimeBecameVisible = info.TimeLastSensed;
-							}
-						}
-						else
-							info.WithinFOV = false;
+						//	if (info.WithinFOV == false)
+						//	{
+						//		info.WithinFOV = true;
+						//		info.TimeBecameVisible = info.TimeLastSensed;
+						//	}
+						//}
+						//else
+						info.WithinFOV = true;
 
 					}
 					else

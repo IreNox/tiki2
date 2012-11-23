@@ -63,7 +63,6 @@ namespace TikiEngine
 			NavigationMesh* navMesh;
 			
 			UnitSelection* unitSelection;
-			List<GameObject*> selectedUnits; // LevelUnity erbt von LevelChild = GameObject
 
 			List<GameObject*> projectiles;
 

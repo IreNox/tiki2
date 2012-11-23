@@ -82,10 +82,10 @@ namespace TikiEngine
 		{
 		public:
 
-			TikiBot(GameState* gameState, GameObject* gameObject);
+			TikiBot(GameState* gameState, GameObject* gameObject, TikiBotDescription desc);
 			~TikiBot();
 
-			void Init(TikiBotDescription desc);
+			//void Init();
 
 			// Navigation
 			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
@@ -111,7 +111,9 @@ namespace TikiEngine
 			//Vector2 Facing() const {return facing;}
 			float FieldOfView() const {return fieldOfView;}
 
-			bool IsPossessed() const {return possessed;}
+            // 0 = Player, 1 = Enemy
+            int GetFaction() const { return faction; }
+			//bool IsPossessed() const {return possessed;}
 			bool IsDead() const {return status == dead;}
 			bool IsAlive() const {return status == alive;}
 			bool IsSpawning() const {return status == spawning;}

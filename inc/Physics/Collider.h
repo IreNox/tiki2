@@ -37,7 +37,7 @@ namespace TikiEngine
 			bool GetTriggerFlag();
 			void SetTriggerFlag(bool triggerFlag);
 
-			void SetCollisionGroup(UInt32 group);
+			void SetCollisionGroup(unsigned short group);
 
 
 			bool GetReady();

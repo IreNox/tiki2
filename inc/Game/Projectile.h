@@ -8,7 +8,7 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		//class TikiBot;
+		class TikiBot;
 
 		struct ProjectileDescription
 		{
@@ -22,6 +22,7 @@ namespace TikiEngine
 			float Mass;
 			float MaxForce;
             float LifeTime;
+            TikiBot* Shooter;
 
 			ProjectileDescription()
 			{
@@ -31,6 +32,7 @@ namespace TikiEngine
 				Scale = 0.7f;
 				Damage = 10;
                 LifeTime = 3.0f;
+                Shooter = 0;
 			}
 		};
 
@@ -67,11 +69,14 @@ namespace TikiEngine
 			int shooterID;
 			bool dead;
 			bool impacted;
+            TikiBot* shooter;
 
 			double timeOfCreation;
 			double lifeTime;
 			
 			ISphereCollider* sphere;
+
+
 		};
 		
 

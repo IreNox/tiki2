@@ -36,6 +36,8 @@ namespace TikiEngine
 				material->TexNormalMap = engine->content->LoadTexture(L"Soldier_S/Soldier_S_normal");
 				material->TexSpecular = engine->content->LoadTexture(L"Soldier_S/Soldier_S_spec");
 				
+                TikiBotDescription botDesc;
+
 				switch (type)
 				{
 				case 0:
@@ -43,14 +45,26 @@ namespace TikiEngine
 					this->GModel()->SetMaterial(material);
 
 					break;
-				case 1:
+				case 1: // player
 					this->SModel(engine->content->LoadModel(L"mark"));
 					this->GModel()->SetMaterial(material);
 					
 					material->FlipTexcorrdV = false;
 
-					(new TikiBot(gameState, this))->SetScale(0.06f);
+                    botDesc.Faction = 0;
+					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
 					break;
+                case 2: // enemy
+                    this->SModel(engine->content->LoadModel(L"soldier_l_testForAgga6"));
+                    this->GModel()->SetMaterial(material);
+
+                    material->FlipTexcorrdV = false;
+
+                    botDesc.Faction = 1;
+                    (new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
+                    break;
+
+
 				default:
 					material->Release();
 					break;

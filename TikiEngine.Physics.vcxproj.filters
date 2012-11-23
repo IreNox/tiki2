@@ -74,6 +74,9 @@
     <ClInclude Include="inc\Physics\TriggerReport.h">
       <Filter>Headerdateien\Reports</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\ControllerHitReport.h">
+      <Filter>Headerdateien\Reports</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -113,6 +116,9 @@
       <Filter>Quelldateien\NxFail</Filter>
     </ClCompile>
     <ClCompile Include="src\Physics\TriggerReport.cpp">
+      <Filter>Quelldateien\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\ControllerHitReport.cpp">
       <Filter>Quelldateien\Reports</Filter>
     </ClCompile>
   </ItemGroup>

@@ -17,9 +17,64 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject) 
+		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, TikiBotDescription desc) 
 			: MovingEntity(gameState, gameObject)
 		{
+            // Init MovingEntity stats
+            MovingEntity::Init(desc.Radius, Vector2::Zero, desc.MaxSpeed, desc.Heading, desc.MaxTurnRate, desc.MaxForce);
+
+
+            // Init bot attributes
+            faction = desc.Faction;
+
+            maxHealth = desc.MaxHealth;
+            health = maxHealth;
+
+            numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
+            hit = false;
+            score = 0;
+            status = alive; //spawning;
+            //possessed = true;
+            fieldOfView = DegsToRads(desc.FoV);
+
+            // TODO: game types
+            //SetEntityType(type_bot);
+
+            // create the navigation module
+            pathPlanner = new PathPlanner(this);
+
+            // Create steering behavior
+            steering = new TikiSteering(this);
+
+            // init CharacterController
+            controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
+            controller->SetCenter(Pos3D());
+            controller->SetRadius((float)boundingRadius);
+            controller->SetHeight(desc.Height);
+            controller->SetSlopeLimit(desc.SlopeLimit);
+            controller->SetStepOffset(desc.StepOffset);
+            controller->SetGroup(CG_Collidable_Pushable);
+            controller->AddRef();
+
+            // create regulators
+            visionUpdateRegulator = new Regulator(4.0);
+            targetSelectionRegulator = new Regulator(2.0);
+
+
+
+            // create Targeting System
+            targSys = new TargetingSystem(this);
+
+            // we can remember bots
+            sensorMem = new SensorMemory(this, desc.MemorySpan);
+
+            weaponSys = new WeaponSystem(this);
+            weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
+
+            // Create the goal queue
+            brain = new GoalThink(this);
+            brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
+
 		}
 
 		TikiBot::~TikiBot()
@@ -36,61 +91,11 @@ namespace TikiEngine
 
 		}
 
-		void TikiBot::Init(TikiBotDescription desc)
-		{
-			// Init MovingEntity stats
-			MovingEntity::Init(desc.Radius, Vector2::Zero, desc.MaxSpeed, desc.Heading, desc.MaxTurnRate, desc.MaxForce);
-			
-			
-			// Init bot attributes
-			faction = desc.Faction;
-
-			maxHealth = desc.MaxHealth;
-			health = maxHealth;
-
-			numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
-			hit = false;
-			score = 0;
-			status = alive; //spawning;
-			possessed = false;
-			fieldOfView = DegsToRads(desc.FoV);
-
-			// TODO: game types
-			//SetEntityType(type_bot);
-
-			// create the navigation module
-			pathPlanner = new PathPlanner(this);
-
-			// Create steering behavior
-			steering = new TikiSteering(this);
-
-			// init CharacterController
-			controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
-			controller->SetCenter(Pos3D());
-			controller->SetRadius((float)boundingRadius);
-			controller->SetHeight(desc.Height);
-			controller->SetSlopeLimit(desc.SlopeLimit);
-			controller->SetStepOffset(desc.StepOffset);
-			controller->SetGroup(CG_Collidable_Pushable);
-			controller->AddRef();
-
-			// create regulators
-			visionUpdateRegulator = new Regulator(4.0);
-			targetSelectionRegulator = new Regulator(2.0);
-
-			// Create the goal queue
-			brain = new GoalThink(this);
-			brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
-
-			// create Targeting System
-			targSys = new TargetingSystem(this);
-
-			// we can remember bots
-			sensorMem = new SensorMemory(this, desc.MemorySpan);
-
-            weaponSys = new WeaponSystem(this);
-            weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
-		}
+// 		void TikiBot::Init(TikiBotDescription desc)
+// 		{
+// 
+// 
+// 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
 		{
@@ -164,9 +169,10 @@ namespace TikiEngine
 
 			// Move y Up, else we raycast against the bot's own collider.
 			float headingEps = 0.5f;
-			//ray.Origin = Pos3D();
-			//ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
-            ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
+			ray.Origin = Pos3D();
+			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+            
+            //ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
 			ray.Direction = pos - ray.Origin;
 
 			orig = ray.Origin;
@@ -189,14 +195,14 @@ namespace TikiEngine
 
 		void TikiBot::TakePossession()
 		{
-			// TODO: Player + enemy bots check
-			if ( !(IsSpawning() || IsDead()) )
-				possessed = true;
+// 			// TODO: Player + enemy bots check
+// 			if ( !(IsSpawning() || IsDead()) )
+// 				possessed = true;
 		}
 
 		void TikiBot::Exorcise()
 		{
-			possessed = false;
+			//possessed = false;
 			//brain->AddGoalExplore();
 		}
 
@@ -230,11 +236,11 @@ namespace TikiEngine
 
 
 			//examine all the opponents in the bots sensory memory and select one to be the current target
-			if (targetSelectionRegulator->IsReady())
+			//if (targetSelectionRegulator->IsReady())
 				targSys->Update(args);
 
 			// update the sensory memory with any visual stimulus
-			if (visionUpdateRegulator->IsReady())
+			//if (visionUpdateRegulator->IsReady())
 				sensorMem->UpdateVision(args);
 		
 			

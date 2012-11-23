@@ -79,7 +79,7 @@ namespace TikiEngine
 				actor->getShapes()[i]->setFlag(NX_TRIGGER_ENABLE, isTrigger);
 		}
 
-		void Collider::SetCollisionGroup(UInt32 group)
+		void Collider::SetCollisionGroup(unsigned short group)
 		{
 			if (actor == 0)
 				return;

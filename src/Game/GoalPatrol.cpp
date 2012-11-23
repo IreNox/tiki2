@@ -15,6 +15,7 @@ namespace TikiEngine
 			path(wayPoints)
 		{
 			currWp = Vector2::Zero;
+            lastWp = currWp;
             timeWpLeft = 0;
 			attacking = false;
 
@@ -28,9 +29,21 @@ namespace TikiEngine
 			// if we have no target present, patrol to the next point
 			if (!owner->GetTargetSys()->IsTargetPresent())
 			{
-				attacking = false;
-				currWp = path.front();
-				path.pop_front();
+                if  (attacking == true)
+                {
+                    attacking = false;
+                    currWp = lastWp;
+                    OutputDebugString(L"set currWp to last. \n");
+                }
+                else
+                {
+                    lastWp = currWp;
+                    currWp = path.front();
+                    path.pop_front();
+                    OutputDebugString(L"set currWp and popped front. \n");
+                }
+				
+
 				AddSubgoal(new GoalMoveToPosition(owner, Vector3(currWp.X, 0, currWp.Y)));
 			}
 			else
@@ -46,29 +59,13 @@ namespace TikiEngine
                 }
 
 
-                //float dist = Vector2::Distance(owner->Pos(), owner->GetTargetBot()->Pos());
-                //float weaponRange = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange();
-                //if (dist < weaponRange)
-               // {
-
 				if (attacking == false)
 				{
 					attacking = true;
-				
                     RemoveAllSubgoals();
                     OutputDebugString(L"Target in range while patrolling. Attacking. \n");
                     AddSubgoal(new GoalAttackTarget(owner));
 				}
-//                 }
-//                 else
-//                 {
-//                     //RemoveAllSubgoals();
-//                     //float lerpFac = dist / weaponRange;
-//                     //Vector3 weaponRangePos = Vector3::Lerp(owner->Pos3D(), owner->GetTargetBot()->Pos3D(), lerpFac);
-//                     OutputDebugString(L"dist > weaponRange. walking to target. \n");
-//                     //AddSubgoal(new GoalMoveToPosition(owner, owner->GetTargetBot()->Pos3D()));
-//                     //AddSubgoal(new GoalMoveToPosition(owner, weaponRangePos));
-//                 }
 			}
 		}
 

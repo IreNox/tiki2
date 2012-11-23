@@ -175,7 +175,7 @@ namespace TikiEngine
 			desc.slopeLimit	 = cosf(NxMath::degToRad(slopeLimit));
 			desc.skinWidth	 = radius * 0.10f; // make it 10% of radius, gives best results (unity doc)
 			desc.stepOffset	 = stepOffset;
-			desc.callback	 = 0; //TODO : &controllerHitReport;
+			desc.callback	 = &hitReport;
 			//desc.userData	 = dynamic_cast<ICollider*>(this);	// don't set this here, else shape has the userdata, not the actor itself
 			controller = DllMain::ControllerManager->createController(DllMain::Scene, desc);
 
