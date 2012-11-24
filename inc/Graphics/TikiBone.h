@@ -1,8 +1,9 @@
 #pragma once
 
-#define FBXSDK_NEW_API
-#include "fbxsdk.h"
-#include <Core\List.h>
+//#define FBXSDK_NEW_API
+//#include "fbxsdk.h"
+#include <Core/Dictionary.h>
+#include <Core/List.h>
 #include "Core/TikiObject.h"
 #include "Core/TypeGlobals.h"
 #include "Graphics/TikiAnimation.h"
@@ -20,13 +21,13 @@ namespace TikiEngine
 		{
 		public:
 			TikiBone();
-			TikiBone(FbxNode* node);
+			/*TikiBone(FbxNode* node);*/
 			~TikiBone();
 
 			void Initialize();
 
 			void Draw(const DrawArgs& args);
-			void Update(const UpdateArgs& args);
+			void Update(List<TikiAnimation*>& animations);
 		
 			void Clean();
 			void CreateMapping(List<TikiBone*>& list);
@@ -48,10 +49,15 @@ namespace TikiEngine
 			TikiBone* GetBoneByName(const char* name);
 			TikiBone* GetBoneByIndex(int index);
 
-			void SetFbxNode(FbxNode* node);
-			FbxNode* GetFbxNode();
+		/*	void SetFbxNode(FbxNode* node);
+			FbxNode* GetFbxNode();*/
 
 			void InitializeAnimation(TikiAnimation* animation);
+
+			AnimationLayer* GetAnimationLayer();
+			void SetAnimationLayer(AnimationLayer* layer);
+
+			void AddAnimation(TikiAnimation* animation, AnimationLayer& layer);
 
 			int Count();
 
@@ -63,7 +69,7 @@ namespace TikiEngine
 			void SetConstantBufferIndex(int index);
 
 		private:
-			FbxNode* node;
+			//FbxNode* node;
 			const char* name;
 			int constantBufferIndex;
 
@@ -71,13 +77,12 @@ namespace TikiEngine
 			Matrix boneInitInverse;
 			Matrix boneCurrent;
 
-			FbxAMatrix initInverse;
-			FbxAMatrix shiftMatrix;
-
 			TikiBone* parent;
 			List<TikiBone*> childs;
 
 			AnimationLayer* layer;
+
+			Dictionary<TikiAnimation*, AnimationLayer> animationData;
 		};
 	}
 }

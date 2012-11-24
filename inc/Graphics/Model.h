@@ -19,7 +19,7 @@
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
-#include <Core/IFont.h>
+
 
 namespace TikiEngine
 {
@@ -52,6 +52,7 @@ namespace TikiEngine
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
 
+			void AddAnimation(TikiAnimation* animation);
 
 			bool GetReady();
 
@@ -91,6 +92,8 @@ namespace TikiEngine
 
 			List<TikiMesh*> meshes;
 			List<TikiAnimation*> animations;
+
+			List<TikiAnimation*> animationStack;
 
 			Material* material;
 			VertexDeclaration* declaration;
