@@ -8,6 +8,8 @@
 
 #include "Game/NavigationMesh.h"
 
+#include "Game/EventUnitSelectionChanged.h"
+
 namespace TikiEngine
 {
 	typedef void (*FuncExecuteUnitFunction)(GameObject* gameObject);
@@ -24,6 +26,8 @@ namespace TikiEngine
 		class GameState : public EngineObject
 		{
 		public:
+
+			UnitSelectionChangedEvent UnitSelectionChanged;
 
 			#if _DEBUG
 			bool DrawNavMesh;

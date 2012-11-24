@@ -65,6 +65,11 @@ namespace TikiEngine
 			this->childs.Add(bone);
 		}
 
+		List<TikiBone*>* TikiBone::GetChilds()
+		{
+			return &childs;
+		}
+
 		void TikiBone::Clean()
 		{
 			for(int i = 0; i < childs.Count(); i++)

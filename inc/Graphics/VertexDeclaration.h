@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Core/IShader.h"
 #include "Core/EngineObject.h"
 #include "Core/InputElement.h"
 
@@ -22,11 +23,11 @@ namespace TikiEngine
 			
 			UINT GetElementSize();
 			ULONG GetDeclarationHash();
-			Shader* GetShader();
+			IShader* GetShader();
 			
 		private:
 
-			Shader* shader;
+			IShader* shader;
 
 			UInt32 hash;
 			UInt32 elementSize;

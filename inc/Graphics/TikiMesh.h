@@ -63,11 +63,23 @@ namespace TikiEngine
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
 
+			bool UseDeformation()
+			{
+				return hasDeformation;
+			}
+
+			Material* GetMaterial()
+			{
+				return material;
+			}
+
 		private:
 			int MaxBonesPerVertex();
 
 			FbxNode* node;
 			Engine* engine;
+
+			Material* material;
 
 			List<UpdateStructure> updateStructure;
 

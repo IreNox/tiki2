@@ -34,7 +34,9 @@ namespace TikiEngine
 
 			TikiBone* GetParent();
 			void SetParent(TikiBone* parent);
+
 			void AddChild(TikiBone* bone);
+			List<TikiBone*>* GetChilds();
 
 			Matrix& BoneInitTransform();
 			Matrix& BoneCurrentTransform();

@@ -29,6 +29,7 @@
     <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\CellSpacePartition.h" />
     <ClInclude Include="inc\Game\EntityManager.h" />
+    <ClInclude Include="inc\Game\EventUnitSelectionChanged.h" />
     <ClInclude Include="inc\Game\ExploreGoalEvaluator.h" />
     <ClInclude Include="inc\Game\GameHud.h" />
     <ClInclude Include="inc\Game\GameState.h" />
@@ -48,6 +49,11 @@
     <ClInclude Include="inc\Game\GoalTraverseEdge.h" />
     <ClInclude Include="inc\Game\GoalTypes.h" />
     <ClInclude Include="inc\Game\GoalWander.h" />
+    <ClInclude Include="inc\Game\HUDBase.h" />
+    <ClInclude Include="inc\Game\HUDFunctionList.h" />
+    <ClInclude Include="inc\Game\HUDMenuButton.h" />
+    <ClInclude Include="inc\Game\HUDResourcen.h" />
+    <ClInclude Include="inc\Game\HUDSelectedUnits.h" />
     <ClInclude Include="inc\Game\Level.h" />
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />

@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TikiEditorContent", "Source
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEditor.Cloddy", "Source\TikiEditor.Cloddy\TikiEditor.Cloddy.vcxproj", "{4F25939D-C9FA-452A-805C-96E4EDFE3137}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEditor.Model", "Source\TikiEditor.Model\TikiEditor.Model.vcxproj", "{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -22,6 +24,9 @@ Global
 		SccProjectUniqueName3 = Source\\TikiEditor.Cloddy\\TikiEditor.Cloddy.vcxproj
 		SccProjectName3 = Source/TikiEditor.Cloddy
 		SccLocalPath3 = Source\\TikiEditor.Cloddy
+		SccProjectUniqueName4 = Source\\TikiEditor.Model\\TikiEditor.Model.vcxproj
+		SccProjectName4 = Source/TikiEditor.Model
+		SccLocalPath4 = Source\\TikiEditor.Model
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -38,6 +43,10 @@ Global
 		{4F25939D-C9FA-452A-805C-96E4EDFE3137}.Debug|x86.Build.0 = Debug|Win32
 		{4F25939D-C9FA-452A-805C-96E4EDFE3137}.Release|x86.ActiveCfg = Release|Win32
 		{4F25939D-C9FA-452A-805C-96E4EDFE3137}.Release|x86.Build.0 = Release|Win32
+		{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}.Debug|x86.ActiveCfg = Debug|Win32
+		{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}.Debug|x86.Build.0 = Debug|Win32
+		{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}.Release|x86.ActiveCfg = Release|Win32
+		{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -27,6 +27,7 @@ namespace TikiEngine
 			try
 			{
 				loadFromStream(fileName, stream);
+				this->fileName = fileName;
 			}
 			catch (const char* e)
 			{
@@ -45,6 +46,12 @@ namespace TikiEngine
 
 			delete(stream);
 
+			this->fileName = fileName;
+		}
+
+		wstring IResource::GetFileName()
+		{
+			return fileName;
 		}
 	}
 }

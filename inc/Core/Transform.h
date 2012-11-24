@@ -13,7 +13,7 @@ namespace TikiEngine
 		friend class GameObject;
 
 	public:
-
+		
 		~Transform();
 
 		Vector3 GetForward();
@@ -37,6 +37,9 @@ namespace TikiEngine
 
 		GameObject* gameObject;
 
+		//GameObject* parent;
+		//List<GameObject*> childs;
+
 		bool isDirty;
 		Matrix world;
 
@@ -44,6 +47,7 @@ namespace TikiEngine
 		Quaternion rotation;
 		Vector3 scale;
 
+		Transform();
 		Transform(GameObject* gameObject);
 
 		void checkWorldMatrix();

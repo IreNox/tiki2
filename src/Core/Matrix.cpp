@@ -372,29 +372,29 @@ Matrix Matrix::CreateFromYawPitchRollRadians(const Vector3& rot)
 		rot.Z));
 }
 
-Matrix Matrix::CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll)
-{
-	float val = 0.0174532925f;
-	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
-		yaw * val, 
-		pitch * val, 
-		roll * val));
-}
-Matrix Matrix::CreateFromYawPitchRollDegrees(const Vector3& rot)
-{
-	float val = 0.0174532925f;
-	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
-		rot.Y * val, 
-		rot.X * val, 
-		rot.Z * val));
-}
-Matrix Matrix::CreateFromXYZDegrees(const Vector3& rot)
-{
-	float val = 0.0174532925f;
-	return CreateRotationX(rot.X * val) *
-		CreateRotationY(rot.Y * val) * 
-		CreateRotationZ(rot.Z * val);
-}
+//Matrix Matrix::CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll)
+//{
+//	float val = 0.0174532925f;
+//	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+//		yaw * val, 
+//		pitch * val, 
+//		roll * val));
+//}
+//Matrix Matrix::CreateFromYawPitchRollDegrees(const Vector3& rot)
+//{
+//	float val = 0.0174532925f;
+//	return CreateFromQuaternion(Quaternion::CreateFromYawPitchRoll(
+//		rot.Y * val, 
+//		rot.X * val, 
+//		rot.Z * val));
+//}
+//Matrix Matrix::CreateFromXYZDegrees(const Vector3& rot)
+//{
+//	float val = 0.0174532925f;
+//	return CreateRotationX(rot.X * val) *
+//		CreateRotationY(rot.Y * val) * 
+//		CreateRotationZ(rot.Z * val);
+//}
 
 #pragma endregion
 

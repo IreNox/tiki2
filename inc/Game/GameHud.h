@@ -7,6 +7,8 @@
 #include "Core/GUIButton.h"
 #include "Core/GUICustomButton.h"
 
+#include "Game/HUDFunctionList.h"
+
 #include "Game/UnitFunctions.h"
 
 #include "Core/EventScreenSizeChanged.h"

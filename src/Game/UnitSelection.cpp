@@ -6,25 +6,18 @@
 #include "Game/TikiBot.h"
 #include "Game/SceneLevel.h"
 
-
 #include "Core/IGraphics.h"
-#include <sstream>
-using namespace std;
+#include "Core/HelperLog.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-
-
-
+		#pragma region Class
 		UnitSelection::UnitSelection(GameState* gameState)
+			: gameState(gameState)
 		{
-			this->gameState = gameState;
-			selectionRect.X = 0;
-			selectionRect.Y = 0;
-			selectionRect.Width = 0;
-			selectionRect.Height = 0;
+			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
 			selectButton = new GUIButton(gameState->GetEngine());
 			selectButton->AddRef();
@@ -35,19 +28,31 @@ namespace TikiEngine
 			selectedUnits.Clear();
 			SafeRelease(&selectButton);
 		}
+		#pragma endregion
 
+		#pragma region Member - Get/Draw
 		List<GameObject*>* UnitSelection::GetSelectedUnits()
 		{
 			return &selectedUnits;
 		}
 
+		void UnitSelection::Draw(const DrawArgs& args)
+		{
+			if (selectionRect.Width != 0 && selectionRect.Height != 0)
+				selectButton->Draw(args);
+		}
+		#pragma endregion
 
+		#pragma region Member - Update
 		void UnitSelection::Update(const UpdateArgs& args)
 		{
+			bool changed = false;
+
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
 			{
+				if (selectedUnits.Count() != 0) changed = true;
 				// clear list from last selection
 				selectedUnits.Clear();
 
@@ -58,7 +63,6 @@ namespace TikiEngine
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
 				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
 			}
-
 
 			if(args.Input.GetMouse(MB_Left))
 			{
@@ -83,10 +87,7 @@ namespace TikiEngine
 
 			if (args.Input.GetMouseRelease(MB_Left))
 			{
-				selectionRect.X = 0;
-				selectionRect.Y = 0;
-				selectionRect.Width = 0;
-				selectionRect.Height = 0;
+				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
 			
 			// Check entity intersection
@@ -94,6 +95,7 @@ namespace TikiEngine
 			while (i < gameState->GetScene()->GetObjects()->Count())
 			{
 				GameObject* go = gameState->GetScene()->GetObjects()->Get(i);
+
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
 				{
@@ -105,14 +107,12 @@ namespace TikiEngine
 								Matrix::Transpose(*cam->GetProjectionMatrix());
 
 					Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-
-
-					
-					if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y))&&
-                       !selectedUnits.Contains(go))
+										
+					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
 					{
-						OutputDebugString(L"Rect-Select unit.\n");
+						HelperLog::Write("Rect-Select unit.");
 						selectedUnits.Add(go);
+						changed = true;
 					}
 
 					float eps = 15.0f;
@@ -123,7 +123,7 @@ namespace TikiEngine
 							screenPos.Y <= selectionRect.Y + eps && 
 							screenPos.Y >= selectionRect.Y - eps)
 						{
-							OutputDebugString(L"click-Select unit.\n");
+							HelperLog::Write("click-Select unit.\n");
 							selectedUnits.Add(go);
 						}
 
@@ -136,13 +136,6 @@ namespace TikiEngine
 
 			selectButton->Update(args);
 		}
-
-		void UnitSelection::Draw(const DrawArgs& args)
-		{
-			if (selectionRect.Width != 0 && selectionRect.Height != 0)
-				selectButton->Draw(args);
-		}
-
-
+		#pragma endregion
 	}
 }

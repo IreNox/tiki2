@@ -52,6 +52,7 @@ namespace TikiEngine
 				Vector3::Up
 			);
 
+			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));
 
 			return true;
@@ -367,8 +368,8 @@ namespace TikiEngine
 			projMatrix = Matrix::CreateOrthographic(
 				screenSize.X,
 				screenSize.Y,
-				0.01f,
-				1000.0f
+				1.0f,
+				10000.0f
 			);
 		}
 		#pragma endregion

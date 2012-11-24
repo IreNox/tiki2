@@ -103,9 +103,9 @@ public:
 	/// <param name="roll">Angle of rotation, in radians, around the z-axis.</param>
 	static Matrix CreateFromYawPitchRollRadians(float yaw, float pitch, float roll);
 	static Matrix CreateFromYawPitchRollRadians(const Vector3& rot);
-	static Matrix CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll);
-	static Matrix CreateFromYawPitchRollDegrees(const Vector3& rot);
-	static Matrix CreateFromXYZDegrees(const Vector3& rot);
+	//static Matrix CreateFromYawPitchRollDegrees(float yaw, float pitch, float roll);
+	//static Matrix CreateFromYawPitchRollDegrees(const Vector3& rot);
+	//static Matrix CreateFromXYZDegrees(const Vector3& rot);
 
 
 	bool operator== (const Matrix& matrix);

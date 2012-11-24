@@ -2,9 +2,9 @@
 #include "Core/Engine.h"
 #include "Core/InputElement.h"
 
-#include "Graphics/VertexDeclaration.h"
-
 #include "Graphics/DllMain.h"
+#include "Graphics/Shader.h"
+#include "Graphics/VertexDeclaration.h"
 
 #include "Core/TypeGlobals.h"
 
@@ -16,14 +16,14 @@ namespace TikiEngine
 		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, List<InputElement>* elements)
 			: EngineObject(engine)
 		{
-			SafeAddRef((Shader*)shader, &this->shader);
+			SafeAddRef(shader, &this->shader);
 			createInputLayout(elements->GetInternalData(), elements->Count());
 		}
 
 		VertexDeclaration::VertexDeclaration(Engine* engine, IShader* shader, const InputElement* elements, UInt32 elementsCount)
 			: EngineObject(engine)
 		{
-			SafeAddRef((Shader*)shader, &this->shader);
+			SafeAddRef(shader, &this->shader);
 			createInputLayout(elements, elementsCount);
 		}
 
@@ -45,7 +45,7 @@ namespace TikiEngine
 			return this->hash;
 		}
 
-		Shader* VertexDeclaration::GetShader()
+		IShader* VertexDeclaration::GetShader()
 		{
 			return shader;
 		}
@@ -160,7 +160,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			shader->CreateLayout(
+			((Shader*)shader)->CreateLayout(
 				elements,
 				count,
 				&inputLayout,

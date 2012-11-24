@@ -15,7 +15,7 @@ namespace TikiEngine
 
 	namespace Resources
 	{
-    using namespace TikiEngine::Vertices;
+		using namespace TikiEngine::Vertices;
 
 		class IModel : public IResource
 		{

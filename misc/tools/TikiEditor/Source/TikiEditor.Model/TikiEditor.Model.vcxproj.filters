@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Base">
+      <UniqueIdentifier>{7c32b85a-9bf7-432d-be9c-a76cf8913e83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model">
+      <UniqueIdentifier>{78033e71-6f25-45cb-9d58-a3517034767b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Save">
+      <UniqueIdentifier>{ae829553-4f5a-4d16-ba9e-83d13d9f9291}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Load">
+      <UniqueIdentifier>{b750016d-5c1a-457e-a423-520f8a0a5eb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Data">
+      <UniqueIdentifier>{b6ddafb1-fc6e-4cb6-9b36-842b290f1b9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Model\Convert">
+      <UniqueIdentifier>{5af1f86e-c5df-4ca0-a60a-1193133b6bf1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource.h">
+      <Filter>Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="IOContext.h">
+      <Filter>Model\Convert</Filter>
+    </ClInclude>
+    <ClInclude Include="MemoryPart.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Enums.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryFileHeader.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryPart.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTikiBone.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTikiLayer.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="FBXImport.h">
+      <Filter>Model\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="TikiConvert.h">
+      <Filter>Model\Convert</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTikiMesh.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTikiAnimation.h">
+      <Filter>Model\Data</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Base</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileHeader.cpp">
+      <Filter>Model</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.ico">
+      <Filter>Base</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>Base</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

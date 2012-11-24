@@ -4,8 +4,12 @@
 namespace TikiEngine
 {
 	#pragma region Class
+	Transform::Transform()
+	{
+	}
+
 	Transform::Transform(GameObject* gameObject)
-		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f), isDirty(true)
+		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f), isDirty(true), gameObject(gameObject)
 	{
 	}
 

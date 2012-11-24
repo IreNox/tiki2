@@ -126,6 +126,12 @@
     <Filter Include="Quelldateien\AI\WeaponSystem\Weapons">
       <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Events">
+      <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Gameplay\HUD">
+      <UniqueIdentifier>{a9ee065d-4c19-4f52-a22d-8130cb9668b2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -328,6 +334,24 @@
     </ClInclude>
     <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h">
       <Filter>Headerdateien\AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\HUDFunctionList.h">
+      <Filter>Headerdateien\Gameplay\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\HUDSelectedUnits.h">
+      <Filter>Headerdateien\Gameplay\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\HUDResourcen.h">
+      <Filter>Headerdateien\Gameplay\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\HUDMenuButton.h">
+      <Filter>Headerdateien\Gameplay\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\HUDBase.h">
+      <Filter>Headerdateien\Gameplay\HUD</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EventUnitSelectionChanged.h">
+      <Filter>Headerdateien\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

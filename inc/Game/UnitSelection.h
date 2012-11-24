@@ -2,8 +2,9 @@
 
 #include "Core/RectangleF.h"
 #include "Core/UpdateArgs.h"
-#include "Game/GameState.h"
 #include "Core/GUIButton.h"
+
+#include "Game/GameState.h"
 
 namespace TikiEngine
 {
@@ -13,8 +14,8 @@ namespace TikiEngine
 
 		class UnitSelection
 		{
-
 		public:
+
 			UnitSelection(GameState* gameState);
 			~UnitSelection();
 

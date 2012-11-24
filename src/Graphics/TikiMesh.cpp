@@ -291,10 +291,10 @@ namespace TikiEngine
 					(float)position[0],(float)position[1],(float)position[2],
 					(float)uv[0],(float)uv[1],
 					(float)normals[0],(float)normals[1],(float)normals[2]);
-				for(int i = 0;  i < MAXBONESPERVERTEX; i++)
+				for(int a = 0;  a < MAXBONESPERVERTEX; a++)
 				{
-					skin.BlendWeights[i] = us.Weights[i];
-					skin.BlendIndices[i] = us.Indices[i];				
+					skin.BlendWeights[a] = us.Weights[a];
+					skin.BlendIndices[a] = us.Indices[a];				
 				}
 				verticesList.Set(i, skin);
 			}
