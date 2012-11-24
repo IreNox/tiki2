@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Graphics/TikiMesh.h"
 #include "Graphics/TikiBone.h"
 #include "Graphics/FbxConverter.h"
 #include "Graphics/TikiAnimation.h"
@@ -37,6 +38,9 @@ namespace TikiEngine
 			void InitializeAnimation();
 			void InitializeAnimationLayer(FbxNode* node);
 			void FillTimeStamp(FbxAnimCurve* curve);
+			void FindMeshes();
+
+			void InitializeMesh(FbxMesh* mesh);
 
 			Matrix LocalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
 			Matrix GlobalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
@@ -45,6 +49,7 @@ namespace TikiEngine
 			List<FbxNode*> fbxNodes;
 			List<TikiBone*> tikiBones;
 			TikiAnimation* animation;
+			List<TikiMesh*> meshes;
 
 			TikiBone* rootBone;
 

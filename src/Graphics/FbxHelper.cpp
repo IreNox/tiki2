@@ -47,6 +47,7 @@ namespace TikiEngine
 				InitializeAnimationLayer(fbxNodes[i]);
 
 		}
+
 		void FbxHelper::RecursiveBone(FbxNode* node)
 		{
 			fbxNodes.Add(node);
@@ -74,6 +75,22 @@ namespace TikiEngine
 			{
 				this->BuildBoneHierachy(node->GetChild(i), bone);
 			}
+		}
+
+		void FbxHelper::FindMeshes()
+		{
+			int meshCount = scene->GetSrcObjectCount<FbxMesh>();
+			for(int i = 0; i < meshCount; i++)
+			{
+				FbxMesh* mesh = scene->GetSrcObject<FbxMesh>(i);
+
+				this->InitializeMesh(mesh);
+			}
+		}
+
+		void FbxHelper::InitializeMesh(FbxMesh* mesh)
+		{
+
 		}
 
 		void FbxHelper::InitializeAnimation()

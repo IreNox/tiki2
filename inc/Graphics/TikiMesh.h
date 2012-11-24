@@ -47,6 +47,7 @@ namespace TikiEngine
 
 		public:
 
+			TikiMesh();
 			TikiMesh(Engine* engine, FbxNode* node);
 			~TikiMesh();
 
@@ -63,6 +64,8 @@ namespace TikiEngine
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
 
+			const char* GetName();
+
 			bool UseDeformation()
 			{
 				return hasDeformation;
@@ -75,6 +78,8 @@ namespace TikiEngine
 
 		private:
 			int MaxBonesPerVertex();
+
+			const char* name;
 
 			FbxNode* node;
 			Engine* engine;

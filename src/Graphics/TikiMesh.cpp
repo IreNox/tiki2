@@ -5,6 +5,12 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+
+		TikiMesh::TikiMesh()
+		{
+
+		}
+
 		TikiMesh::TikiMesh(Engine* engine, FbxNode* node)
 			:engine(engine),
 			node(node)
@@ -16,9 +22,15 @@ namespace TikiEngine
 			//node->Destroy();
 		}
 
+		const char* TikiMesh::GetName()
+		{
+			return this->name;
+		}
+
 		bool TikiMesh::Initialize()
 		{
 			FbxMesh* mesh = node->GetMesh();
+			this->name = node->GetName();
 
 			int vertexCount = mesh->GetControlPointsCount();
 
@@ -264,6 +276,7 @@ namespace TikiEngine
 
 		void TikiMesh::UpdateVertexBuffer()
 		{
+
 			FbxMesh* mesh = node->GetMesh();
 
 			int vertexCount = mesh->GetControlPointsCount();

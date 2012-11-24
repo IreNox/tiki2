@@ -46,7 +46,6 @@ namespace TikiEngine
 
 			Matrix ShiftMatrix();
 
-			AnimationLayer* Layer();
 
 			TikiBone* GetBoneByName(const char* name);
 			TikiBone* GetBoneByIndex(int index);
@@ -55,9 +54,6 @@ namespace TikiEngine
 			FbxNode* GetFbxNode();*/
 
 			void InitializeAnimation(TikiAnimation* animation);
-
-			AnimationLayer* GetAnimationLayer();
-			void SetAnimationLayer(AnimationLayer* layer);
 
 			void AddAnimation(TikiAnimation* animation, AnimationLayer& layer);
 
@@ -81,8 +77,6 @@ namespace TikiEngine
 
 			TikiBone* parent;
 			List<TikiBone*> childs;
-
-			AnimationLayer* layer;
 
 			Dictionary<TikiAnimation*, AnimationLayer> animationData;
 		};

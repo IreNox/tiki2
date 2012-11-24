@@ -10,8 +10,7 @@ namespace TikiEngine
 			boneInit(),
 			boneInitInverse(),
 			boneCurrent(),
-			constantBufferIndex(-1),
-			layer(0)
+			constantBufferIndex(-1)
 		{
 
 		}
@@ -28,9 +27,6 @@ namespace TikiEngine
 
 		TikiBone::~TikiBone()
 		{
-			//SafeRelease(&parent);
-			SafeRelease(&layer);
-
 			for(UInt32 i = 0; i < childs.Count(); i++)
 			{
 				SafeRelease(&childs[i]);
@@ -204,18 +200,6 @@ namespace TikiEngine
 			this->boneCurrent = mat;
 		}
 
-		AnimationLayer* TikiBone::GetAnimationLayer()
-		{
-			return this->layer;
-		}
-
-		void TikiBone::SetAnimationLayer(AnimationLayer* layer)
-		{
-			SafeRelease(&this->layer);
-			this->layer = layer;
-			this->layer->AddRef();
-		}
-
 		Matrix TikiBone::ShiftMatrix()
 		{
 			return (this->boneInitInverse * this->boneCurrent).Transpose();
@@ -266,10 +250,6 @@ namespace TikiEngine
 			this->name = name;
 		}
 
-		AnimationLayer* TikiBone::Layer()
-		{
-			return this->layer;
-		}
 
 		int TikiBone::GetConstantBufferIndex()
 		{
