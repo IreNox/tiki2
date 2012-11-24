@@ -329,6 +329,12 @@ namespace TikiEngine
 			Initialize();
 		}
 
+		void Model::AddAnimation(TikiAnimation* animation, TikiBone* rootBone)
+		{
+			this->animations.Add(animation);
+			FbxHelper::MergeAnimation(animation, this->rootBone, rootBone);
+		}
+
 		void Model::saveToStream(wcstring fileName, Stream* stream)
 		{
 

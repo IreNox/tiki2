@@ -240,6 +240,11 @@ namespace TikiEngine
 			}
 		}
 
+		AnimationLayer& TikiBone::GetAnimationLayer(TikiAnimation* animation)
+		{
+			return this->animationData.GetRef(animation);
+		}
+
 		const char* TikiBone::GetName()
 		{
 			return name;
@@ -249,7 +254,6 @@ namespace TikiEngine
 		{
 			this->name = name;
 		}
-
 
 		int TikiBone::GetConstantBufferIndex()
 		{

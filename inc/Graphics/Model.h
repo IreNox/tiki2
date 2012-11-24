@@ -53,6 +53,7 @@ namespace TikiEngine
 			void SetRootBone(TikiBone* bone);
 
 			void AddAnimation(TikiAnimation* animation);
+			void AddAnimation(TikiAnimation* animation, TikiBone* rootBone);
 
 			bool GetReady();
 

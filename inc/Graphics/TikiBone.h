@@ -49,6 +49,7 @@ namespace TikiEngine
 
 			TikiBone* GetBoneByName(const char* name);
 			TikiBone* GetBoneByIndex(int index);
+			AnimationLayer& GetAnimationLayer(TikiAnimation* animation);
 
 		/*	void SetFbxNode(FbxNode* node);
 			FbxNode* GetFbxNode();*/

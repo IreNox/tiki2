@@ -28,7 +28,7 @@ namespace TikiEngine
 
 			TikiBone* GetRootBone();
 
-
+			static void MergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source);
 
 		private:
 
@@ -39,6 +39,8 @@ namespace TikiEngine
 			void InitializeAnimationLayer(FbxNode* node);
 			void FillTimeStamp(FbxAnimCurve* curve);
 			void FindMeshes();
+			
+			static void RecursiveMergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source);
 
 			void InitializeMesh(FbxMesh* mesh);
 

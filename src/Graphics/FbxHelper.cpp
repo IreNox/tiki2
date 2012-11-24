@@ -174,6 +174,23 @@ namespace TikiEngine
 			bone->AddAnimation(this->animation, layer);
 		}
 
+		void FbxHelper::MergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source)
+		{
+			TikiBone* bone = source->GetBoneByName(destination->GetName());
+			if(bone == 0)
+				_CrtDbgBreak();
+
+			destination->AddAnimation(animation, bone->GetAnimationLayer(animation));
+
+			for(int i = 0; i < destination->GetChilds()->Count(); i++)
+				RecursiveMergeAnimation(animation, destination->GetChilds()->Get(i), source);
+		}
+
+		void FbxHelper::RecursiveMergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source)
+		{
+
+		}
+
 #pragma region NodeHelper
 		Matrix FbxHelper::LocalTransform(FbxNode* node, FbxTime& time )
 		{
