@@ -326,6 +326,8 @@ namespace TikiEngine
 			this->animation = new TikiAnimation();
 
 			FbxAnimStack* stack = scene->GetSrcObject<FbxAnimStack>(0);
+			if(stack == 0)
+				return;
 			animation->SetName(stack->GetName());
 
 			for(int layerIndex = 0; layerIndex < stack->GetSrcObjectCount(); layerIndex++)
