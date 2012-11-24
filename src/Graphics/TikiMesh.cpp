@@ -1,5 +1,6 @@
 #include "Graphics/TikiMesh.h"
 #include "Graphics/FBXConverter.h"
+#include "Graphics/FbxHelper.h"
 
 namespace TikiEngine
 {
@@ -25,6 +26,11 @@ namespace TikiEngine
 		const char* TikiMesh::GetName()
 		{
 			return this->name;
+		}
+
+		void TikiMesh::SetName(const char* name)
+		{
+			this->name = name;
 		}
 
 		bool TikiMesh::Initialize()
@@ -115,6 +121,7 @@ namespace TikiEngine
 
 			return true;
 		}
+
 	
 		void TikiMesh::InitializeGPUSkinning()
 		{
@@ -368,6 +375,22 @@ namespace TikiEngine
 			delete[] testData;
 			return max;
 		}
+
+		void TikiMesh::SetIndices(List<UInt32>& indices)
+		{
+			this->indicesList = indices;
+		}
+
+		void TikiMesh::SetSkinningVertexData(List<SkinningVertex>& skinning)
+		{
+			this->verticesList = skinning;
+		}
+
+		void TikiMesh::SetDefaultVertexData(List<DefaultVertex>& default)
+		{
+			this->defaultList = default;
+		}
+
 		#pragma endregion
 	}
 }

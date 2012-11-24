@@ -46,11 +46,16 @@ namespace TikiEngine
 			List<SkinningVertex>* GetVertices();
 			List<UInt32>* GetIndices();
 
+			void SetConstantBufferIndices(List<TikiBone*>& list);
+
 			float GetAnimationSpeed();
 			void SetAnimationSpeed(float speed);
 
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
+
+			List<TikiMesh*> GetMeshes();
+			void SetMeshes(List<TikiMesh*>& meshes);
 
 			void AddAnimation(TikiAnimation* animation);
 			void AddAnimation(TikiAnimation* animation, TikiBone* rootBone);

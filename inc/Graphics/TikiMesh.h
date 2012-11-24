@@ -56,15 +56,27 @@ namespace TikiEngine
 			void FlagBones(TikiBone& rootBone);
 			void MapBones(TikiBone& rootBone);
 
+			void SetIndices(List<UInt32>& indices);
+			void SetSkinningVertexData(List<SkinningVertex>& skinning);
+			void SetDefaultVertexData(List<DefaultVertex>& default);
+
 			void UpdateVertexBuffer();
 
 			bool GetReady();
 
+			List<DefaultVertex> defaultList;
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
 
 			const char* GetName();
+			void SetName(const char* name);
+
+
+			void SetDeformation(bool b)
+			{
+				hasDeformation = b;
+			}
 
 			bool UseDeformation()
 			{

@@ -57,8 +57,8 @@ namespace TikiEngine
 			//this->CreateBoneHierachy(scene->GetRootNode());
 			this->InitializeMeshes();
 
-			this->FlagBones();
-			this->CleanBones();
+			//this->FlagBones();
+			//this->CleanBones();
 			this->MapBones();
 
 			this->CopyIndexData();
@@ -312,6 +312,11 @@ namespace TikiEngine
 			rootBone->AddRef();
 		}
 
+		void Model::SetConstantBufferIndices(List<TikiBone*>& list)
+		{
+			this->constantBufferElements = list;
+		}
+
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			FbxHelper* helper = new FbxHelper();
@@ -322,7 +327,8 @@ namespace TikiEngine
 			this->scene = helper->GetScene();
 			this->SetRootBone(helper->GetRootBone());
 			this->AddAnimation(helper->GetAnimation());
-
+			this->SetConstantBufferIndices(helper->GetConstantBufferIndices());
+			//this->SetMeshes(helper->GetMeshes());
 			//if(!DllMain::FBXLoader->GetScene(fileName, &scene))
 			//	_CrtDbgBreak(); //FBXfile not found
 
@@ -353,6 +359,16 @@ namespace TikiEngine
 		int Model::AnimationCount()
 		{
 			return this->animations.Count();
+		}
+
+		List<TikiMesh*> Model::GetMeshes()
+		{
+			return this->meshes;
+		}
+
+		void Model::SetMeshes(List<TikiMesh*>& meshes)
+		{
+			this->meshes = meshes;
 		}
 
 	}
