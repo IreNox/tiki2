@@ -59,7 +59,7 @@ namespace TikiEditor
 
 		InitializeAnimation();
 
-		for(int i = 0; i < fbxNodes.Count(); i++)
+		for(UInt32 i = 0; i < fbxNodes.Count(); i++)
 			InitializeAnimationLayer(fbxNodes[i]);
 
 		FindMeshes();
@@ -234,7 +234,7 @@ namespace TikiEditor
 		List<FbxCluster*> clusterList;
 		GetSkinningCluster(mesh, clusterList);
 
-		for(int i = 0; i < clusterList.Count(); i++)
+		for(UInt32 i = 0; i < clusterList.Count(); i++)
 		{
 			FbxCluster* cluster = clusterList[i];
 
@@ -253,7 +253,7 @@ namespace TikiEditor
 
 				Vector3 position = vertices[index];
 
-				for(int bufferIndex = 0; bufferIndex < buffer.Count(); bufferIndex++)
+				for(UInt32 bufferIndex = 0; bufferIndex < buffer.Count(); bufferIndex++)
 				{
 					SkinningVertex& skin = buffer[bufferIndex];
 					if(skin.Position[0] == position[0] && skin.Position[1] == position[1] && skin.Position[2] == position[2])
@@ -352,9 +352,10 @@ namespace TikiEditor
 		}
 
 		animation->GetTimeStamps().Sort();
+		if (animation->GetTimeStamps().Count() == 0) animation->AddTimeStampKey(-1);
 
 		int bsv = 1;
-		while(bsv*2 < animation->GetTimeStamps().Count())
+		while(bsv * 2 < animation->GetTimeStamps().Count())
 			bsv *= 2;
 		animation->SetBSV(bsv);
 	}
@@ -386,7 +387,7 @@ namespace TikiEditor
 
 		AnimationLayer layer;
 
-		if(animation->GetTimeStamps().Count() == 0) // defaultValues
+		if(animation->GetTimeStamps().Count() == 1 && animation->GetTimeStamps()[0] == -1) // defaultValues
 		{
 			FbxAMatrix transform = node->EvaluateLocalTransform();
 

@@ -94,12 +94,8 @@ namespace TikiEngine
 
 		void ModelIOContext::readParts()
 		{
-			UInt32 pos = sizeof(BinaryFileHeader);
-			UInt32 size = sizeof(BinaryPart) * binaryHeader.PartCount;
-
 			BinaryPart* parts = new BinaryPart[binaryHeader.PartCount];
-			memcpy(parts, data + pos, size);
-			pos += size;
+			memcpy(parts, data + sizeof(BinaryFileHeader), sizeof(BinaryPart) * binaryHeader.PartCount);
 
 			UInt32 i = 0;
 			while (i < binaryHeader.PartCount)

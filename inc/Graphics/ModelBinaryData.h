@@ -50,13 +50,12 @@ namespace TikiEngine
 		struct BinaryTikiAnimation
 		{
 			UInt32 NameId;
+			UInt32 TimeStampsArrayId;
+			UInt32 BSV;
+			UInt32 Temp;
 
 			double StartTime;
 			double EndTime;
-
-			UInt32 TimeStampsArrayId;
-
-			UInt32 BSV;
 		};
 
 		struct BinaryTikiBone
@@ -87,7 +86,7 @@ namespace TikiEngine
 			UInt32 VertexDataId;
 			UInt32 IndexDataId;
 
-			bool UseDeformation;
+			Boolean UseDeformation;
 
 			UInt32 DiffuseTexId;
 			UInt32 NormalTexId;

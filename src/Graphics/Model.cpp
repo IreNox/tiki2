@@ -250,6 +250,9 @@ namespace TikiEngine
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
 
+			animationStack.Clear();
+			animationStack.Add(animations[1]);
+
 			Initialize();
 		}
 

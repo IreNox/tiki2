@@ -127,7 +127,7 @@ namespace TikiEngine
 			//	}
 			//}
 
-			for(int i = 0; i < childs.Count(); i++)
+			for(UInt32 i = 0; i < childs.Count(); i++)
 				childs[i]->Draw(args);
 		}
 
@@ -135,7 +135,7 @@ namespace TikiEngine
 		{
 			Matrix shift;
 
-			for(int i = 0; i < animations.Count(); i++)
+			for(UInt32 i = 0; i < animations.Count(); i++)
 			{
 				TikiAnimation* anim = animations[i];
 				AnimationLayer& layer = animationData.GetRef(anim);
@@ -233,7 +233,7 @@ namespace TikiEngine
 		{
 			if(this->constantBufferIndex == index)
 				return this;
-			for(int i = 0;  i< childs.Count(); i++)
+			for(UInt32 i = 0;  i< childs.Count(); i++)
 			{
 				TikiBone* tmp = childs[i]->GetBoneByIndex(index);
 				if(tmp != 0)

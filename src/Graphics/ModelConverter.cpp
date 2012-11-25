@@ -57,7 +57,7 @@ namespace TikiEngine
 			UInt32 id = 0;
 			while (i < meshIds.Count())
 			{
-				id = animationIds[i];
+				id = meshIds[i];
 
 				model->GetMeshes()->Add(
 					readTikiMesh(context->ReadPart(id), (BinaryTikiMesh*)context->ReadPartPointer(id))
@@ -70,7 +70,7 @@ namespace TikiEngine
 			{
 				id = animationIds[i];
 
-				model->GetAnimations()->Add(
+				model->AddAnimation(
 					readTikiAnimation(context->ReadPart(id), (BinaryTikiAnimation*)context->ReadPartPointer(id))
 				);
 				i++;
@@ -160,8 +160,11 @@ namespace TikiEngine
 			bone->SetBoneInitTransform(binBone->Init);
 			bone->SetConstantBufferIndex(binBone->ConstanBufferIndex);
 
-			while (constantBufferIndices.Count() < binBone->ConstanBufferIndex)	{ }
-			constantBufferIndices[binBone->ConstanBufferIndex] = bone;
+			if (binBone->ConstanBufferIndex >= 0)
+			{
+				while (constantBufferIndices.Count() <= binBone->ConstanBufferIndex) { constantBufferIndices.Add(0); }
+				constantBufferIndices[binBone->ConstanBufferIndex] = bone;
+			}
 
 			BinaryPart& layerArr = context->ReadPart(binBone->LayerArrayId);
 			UInt32* layerIds = (UInt32*)context->ReadPartPointer(binBone->LayerArrayId);
@@ -176,7 +179,7 @@ namespace TikiEngine
 
 				layer.GetQuaternion() = List<Quaternion>(
 					(Quaternion*)context->ReadPartPointer(arr.Id), arr.ArrayCount, false
-					);
+				);
 
 				arr = context->ReadPart(binLayer->TranslationArrayId);
 

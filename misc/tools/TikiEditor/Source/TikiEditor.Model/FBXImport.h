@@ -31,28 +31,31 @@ namespace TikiEditor
 			for each (System::String^ file in inputFiles)
 			{
 				wcstring str = (wcstring)System::Runtime::InteropServices::Marshal::StringToHGlobalUni(file).ToPointer();
-
+				
 				FbxScene* scene; 
 				FbxHelper* helper = new FbxHelper();
 
 				loader->GetScene(str, &scene);
 				helper->SetScene(scene);
 
+				TikiAnimation* ani = helper->GetAnimation();
+				
 				if (i == 0)
 				{
 					model->SetRootBone(helper->GetRootBone());
-					model->AddAnimation(helper->GetAnimation());
 					model->SetConstantBufferIndices(helper->GetConstantBufferIndices());
 					model->SetMeshes(helper->GetMeshes());
 				}
 				else
 				{
-					//helper->MergeAnimation(
-					//	helper->GetAnimation(),
-					//	model->GetRootBone(),
-					//	helper->GetRootBone()
-					//);
+					helper->MergeAnimation(
+						ani,
+						model->GetRootBone(),
+						helper->GetRootBone()
+					);
 				}
+
+				model->AddAnimation(ani);
 
 				//delete(helper);
 
