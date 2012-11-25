@@ -251,13 +251,18 @@ namespace TikiEditor
 
 			btm->UseDeformation = mesh->UseDeformation();
 
-			btm->DiffuseTexId = addPartsTexture(mesh->GetMaterial()->TexDiffuse);
-			btm->NormalTexId  = addPartsTexture(mesh->GetMaterial()->TexNormalMap);
-			btm->SpecTexId    = addPartsTexture(mesh->GetMaterial()->TexSpecular);
-			btm->LightTexId   = addPartsTexture(mesh->GetMaterial()->TexDiffuse);
+			Material* mat = mesh->GetMaterial();
+
+			if (mat != 0)
+			{
+				btm->DiffuseTexId = addPartsTexture(mat->TexDiffuse);
+				btm->NormalTexId  = addPartsTexture(mat->TexNormalMap);
+				btm->SpecTexId    = addPartsTexture(mat->TexSpecular);
+				btm->LightTexId   = addPartsTexture(mat->TexDiffuse);
+			}
 
 			meshIds->Add(
-				context->AddPart(btm, PT_Mesh, PT_NoArray)
+				context->AddPart(btm, sizeof(BinaryTikiMesh), PT_Mesh)
 			);
 		}
 

@@ -19,5 +19,3 @@
 #include "..\src\Graphics\TikiMesh.cpp"
 #include "..\src\Graphics\TikiAnimation.cpp"
 #include "..\src\Graphics\AnimationLayer.cpp"
-
-#include "..\src\Graphics\FBXConverter.cpp"

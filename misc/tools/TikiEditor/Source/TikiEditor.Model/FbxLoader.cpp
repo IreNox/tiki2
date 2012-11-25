@@ -1,12 +1,12 @@
 
-#include "Graphics/FbxLoader.h"
+#include "FbxLoader.h"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-		FbxLoader::FbxLoader(Engine* engine)
-			: EngineObject(engine), fbxManager(0)
+		FbxLoader::FbxLoader()
+			: fbxManager(0)
 		{
 			this->InitializeSdkObjects(this->fbxManager);
 		}

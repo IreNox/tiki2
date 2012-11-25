@@ -10,6 +10,7 @@ namespace TikiEngine
 	{
 
 		TikiMesh::TikiMesh()
+			: material(0)
 		{
 
 		}

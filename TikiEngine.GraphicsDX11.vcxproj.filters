@@ -116,12 +116,6 @@
     <ClCompile Include="src\Graphics\Model.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\FbxLoader.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\FBXConverter.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\TikiMesh.cpp">
       <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
@@ -148,9 +142,6 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\DebugConsole.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\FbxHelper.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,12 +208,6 @@
     <ClInclude Include="inc\Graphics\Model.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\FbxLoader.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\FBXConverter.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\TikiMesh.h">
       <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
@@ -264,9 +249,6 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugConsole.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\FbxHelper.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

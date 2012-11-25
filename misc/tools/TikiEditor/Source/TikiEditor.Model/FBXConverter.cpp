@@ -1,4 +1,5 @@
-#include "Graphics/FBXConverter.h"
+
+#include "FBXConverter.h"
 
 Vector2 FBXConverter::Convert(const FbxVector2 &vector)
 {

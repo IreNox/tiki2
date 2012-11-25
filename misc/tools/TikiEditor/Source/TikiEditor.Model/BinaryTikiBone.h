@@ -14,6 +14,6 @@ namespace TikiEditor
 		
 		Matrix Init;
 
-		UInt32 ConstanBufferIndex;
+		Int32 ConstanBufferIndex;
 	};
 }

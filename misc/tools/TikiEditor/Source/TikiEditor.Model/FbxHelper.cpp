@@ -1,6 +1,8 @@
-#include "Graphics/FbxHelper.h"
+
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
+
+#include "FbxHelper.h"
 
 namespace TikiEngine
 {

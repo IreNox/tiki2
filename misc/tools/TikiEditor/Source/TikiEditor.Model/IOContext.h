@@ -8,8 +8,12 @@
 
 #include <string.h>
 
+#include "Core/FileStream.h"
+
 namespace TikiEditor
 {
+	using namespace TikiEngine::IO;
+
 	public ref class IOContext
 	{
 	public:
@@ -86,7 +90,7 @@ namespace TikiEditor
 		{
 			if (type == PT_String)
 			{
-				length = strlen((char*)pointer);
+				length = strlen((char*)pointer) + 1;
 			}
 
 			BinaryPart bp;
@@ -108,16 +112,12 @@ namespace TikiEditor
 			writeInitData();
 			writeToData();
 
-			array<System::Byte>^ bytes = gcnew array<System::Byte>(binaryHeader->FileLength);
+			wcstring str = (wcstring)System::Runtime::InteropServices::Marshal::StringToHGlobalUni(fileName).ToPointer();
+			FileStream* stream = new FileStream(str, FM_Write);
 
-			System::Runtime::InteropServices::Marshal::Copy(
-				System::IntPtr(data),
-				bytes,
-				0,
-				binaryHeader->FileLength
-				);
+			stream->Write(data, 0, binaryHeader->FileLength);
 
-			System::IO::File::WriteAllBytes(fileName, bytes);
+			delete(stream);
 		}
 		#pragma endregion
 		
@@ -175,7 +175,7 @@ namespace TikiEditor
 				BinaryPart& bp = binaryParts->GetRef(i);				
 				bp.Start = pos;
 
-				pos += bp.Length + bp.ArrayCount;
+				pos += bp.Length * bp.ArrayCount;
 				i++;
 			}
 
@@ -185,24 +185,28 @@ namespace TikiEditor
 		void writeToData()
 		{
 			data = new Byte[binaryHeader->FileLength];
+			Byte* writeTo = data;
 
 			UInt32 i = sizeof(BinaryFileHeader);
-			memcpy(data, binaryHeader, i);
-			data += i;
+			memcpy(writeTo, binaryHeader, i);
+			writeTo += i;
 
 			i = sizeof(BinaryPart) * binaryHeader->PartCount;
-			memcpy(data, binaryParts->GetInternalData(), i);
-			data += i;
+			memcpy(writeTo, binaryParts->GetInternalData(), i);
+			writeTo += i;
 
 			i = 0;
 			while (i < binaryParts->Count())
 			{				
 				BinaryPart& bp = binaryParts->GetRef(i);
-				UInt32 len = bp.Length + bp.ArrayCount;
+				UInt32 len = bp.Length * bp.ArrayCount;
 
-				memcpy(data, binaryPartPointer->Get(i), len);
+				if (len > 0)
+				{
+					memcpy(writeTo, binaryPartPointer->Get(i), len);
+				}
 
-				data += len;
+				writeTo += len;
 				i++;
 			}		
 		}

@@ -6,8 +6,7 @@
 #include "Core/Matrix.h"
 #include "Core/DefaultVertex.h"
 
-#include "Core/EngineObject.h"
-#include "Graphics/FbxHelper.h"
+#include "FbxHelper.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
@@ -23,10 +22,10 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-		class FbxLoader : public EngineObject
+		class FbxLoader
 		{
 		public:
-			FbxLoader(Engine* engine);
+			FbxLoader();
 			~FbxLoader();
 
 			FbxManager& Manager();

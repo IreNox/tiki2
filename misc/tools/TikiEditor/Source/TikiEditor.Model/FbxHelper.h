@@ -2,8 +2,9 @@
 
 #include "Graphics/TikiMesh.h"
 #include "Graphics/TikiBone.h"
-#include "Graphics/FbxConverter.h"
 #include "Graphics/TikiAnimation.h"
+
+#include "FbxConverter.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
