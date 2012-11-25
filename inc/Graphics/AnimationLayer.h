@@ -1,9 +1,5 @@
 #pragma once
 
-//#define FBXSDK_NEW_API
-//#include "fbxsdk.h"
-
-//#include "Graphics/FBXConverter.h"
 #include "Graphics/TikiAnimation.h"
 
 #include "Core/TikiObject.h"

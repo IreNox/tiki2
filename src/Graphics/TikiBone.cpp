@@ -68,7 +68,7 @@ namespace TikiEngine
 
 		void TikiBone::Clean()
 		{
-			for(int i = 0; i < childs.Count(); i++)
+			for(UINT i = 0; i < childs.Count(); i++)
 			{
 				childs[i]->Clean();
 
@@ -217,8 +217,9 @@ namespace TikiEngine
 
 		TikiBone* TikiBone::GetBoneByName(const char* name)
 		{
-			if(this->name == name)
+			if(this->name == string(name))
 				return this;
+
 			for(UInt32 i = 0; i < childs.Count();i++)
 			{
 				TikiBone* tmp = childs[i]->GetBoneByName(name);

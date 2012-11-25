@@ -174,7 +174,7 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			for(int i = 0; i < animationStack.Count(); i++)
+			for(UINT i = 0; i < animationStack.Count(); i++)
 			{
 				animationStack[i]->Update(args.Time.ElapsedTime);
 			}
