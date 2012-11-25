@@ -27,7 +27,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="bin\Data\Models\buildings\" />
-    <Folder Include="bin\Data\Models\navmesh\" />
     <Folder Include="bin\Data\Textures\Controls\" />
     <Folder Include="Properties\" />
   </ItemGroup>
@@ -39,7 +38,9 @@
     <None Include="bin\Data\Meshes\Laptop.obj" />
     <None Include="bin\Data\Meshes\test.obj" />
     <None Include="bin\Data\Models\cylinder.tiki" />
-    <None Include="bin\Data\Models\soldier.tiki" />
+    <None Include="bin\Data\Models\mark.tiki" />
+    <None Include="bin\Data\Models\navmesh\navmesh_pitch.tiki" />
+    <None Include="bin\Data\Models\replaceme_cube.tiki" />
     <None Include="bin\Data\Textures\building_03\building_03_diff.dds" />
     <None Include="bin\Data\Textures\building_03\building_03_normal.dds" />
     <None Include="bin\Data\Textures\checker.dds" />

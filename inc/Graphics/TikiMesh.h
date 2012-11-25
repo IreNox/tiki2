@@ -23,7 +23,6 @@ namespace TikiEngine
 			TikiMesh();
 			~TikiMesh();
 
-
 			void SetIndices(List<UInt32>& indices);
 			void SetSkinningVertexData(List<SkinningVertex>& skinning);
 
@@ -33,8 +32,8 @@ namespace TikiEngine
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
 
-			const char* GetName();
-			void SetName(const char* name);
+			string GetName();
+			void SetName(string name);
 
 			void SetDeformation(bool b);
 			bool UseDeformation();
@@ -44,13 +43,11 @@ namespace TikiEngine
 
 		private:
 
-			const char* name;
-
-			Engine* engine;
+			string name;
 
 			Material* material;
-
 			bool hasDeformation;
+
 		};
 	}
 }

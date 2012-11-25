@@ -51,8 +51,8 @@ namespace TikiEngine
 
 			int Count();
 
-			const char* GetName();
-			void SetName(const char* name);
+			string GetName();
+			void SetName(string name);
 
 
 			int GetConstantBufferIndex();
@@ -60,7 +60,7 @@ namespace TikiEngine
 
 		private:
 			
-			const char* name;
+			string name;
 			int constantBufferIndex;
 
 			Matrix boneInit;

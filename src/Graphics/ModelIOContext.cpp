@@ -105,6 +105,7 @@ namespace TikiEngine
 			}
 
 			binaryParts = List<BinaryPart>(parts, binaryHeader.PartCount, false);
+			delete[](parts);
 		}
 		#pragma endregion
 

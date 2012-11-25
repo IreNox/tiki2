@@ -99,6 +99,7 @@
     <ClCompile Include="CompileHeader.cpp" />
     <ClCompile Include="FBXConverter.cpp" />
     <ClCompile Include="FbxHelper.cpp" />
+    <ClCompile Include="FBXImport.cpp" />
     <ClCompile Include="FbxLoader.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>

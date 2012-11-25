@@ -50,5 +50,8 @@
     <ClCompile Include="FbxLoader.cpp">
       <Filter>Model\FBX</Filter>
     </ClCompile>
+    <ClCompile Include="FBXImport.cpp">
+      <Filter>Model\Load</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

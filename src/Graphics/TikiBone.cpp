@@ -174,12 +174,12 @@ namespace TikiEngine
 			return this->animationData.GetRef(animation);
 		}
 
-		const char* TikiBone::GetName()
+		string TikiBone::GetName()
 		{
 			return name;
 		}
 
-		void TikiBone::SetName(const char* name)
+		void TikiBone::SetName(string name)
 		{
 			this->name = name;
 		}

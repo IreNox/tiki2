@@ -11,12 +11,12 @@ namespace TikiEngine
 
 		}
 
-		const char* TikiAnimation::GetName()
+		string TikiAnimation::GetName()
 		{
 			return this->name;
 		}
 		
-		void TikiAnimation::SetName(const char* name)
+		void TikiAnimation::SetName(string name)
 		{
 			this->name = name;
 		}

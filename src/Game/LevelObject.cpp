@@ -55,7 +55,7 @@ namespace TikiEngine
 					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
 					break;
                 case 2: // enemy
-                    this->SModel(engine->content->LoadModel(L"soldier_l_testForAgga6"));
+                    this->SModel(engine->content->LoadModel(L"soldier"));
                     this->GModel()->SetMaterial(material);
 
                     material->FlipTexcorrdV = false;

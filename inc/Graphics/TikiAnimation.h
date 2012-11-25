@@ -12,8 +12,8 @@ namespace TikiEngine
 			TikiAnimation();
 			~TikiAnimation();
 
-			const char* GetName();
-			void SetName(const char* name);
+			string GetName();
+			void SetName(string name);
 
 			float GetWeight();
 			void SetWeight(float weight);
@@ -37,7 +37,8 @@ namespace TikiEngine
 			double GCurrentTime();
 
 		private:
-			const char* name;
+
+			string name;
 
 			List<double> timeStamps;
 

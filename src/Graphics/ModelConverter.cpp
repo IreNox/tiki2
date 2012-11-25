@@ -210,12 +210,15 @@ namespace TikiEngine
 			return bone;
 		}
 
-		const char* ModelConverter::readString(UInt32 id)
+		string ModelConverter::readString(UInt32 id)
 		{
 			BinaryPart& part = context->ReadPart(id);
 
-			char* str = new char[part.Length];
-			memcpy(str, context->ReadPartPointer(id), part.Length);
+			char* cstr = new char[part.Length];
+			memcpy(cstr, context->ReadPartPointer(id), part.Length);
+
+			string str = cstr;
+			delete[](cstr);
 
 			return str;
 		}
@@ -250,7 +253,7 @@ namespace TikiEngine
 		void ModelConverter::addPartsMesh(TikiMesh* mesh)
 		{
 			BinaryTikiMesh* btm = new BinaryTikiMesh();
-			btm->NameId = context->AddPart((void*)mesh->GetName(), 0, PT_String);
+			btm->NameId = context->AddPart((void*)mesh->GetName().c_str(), 0, PT_String);
 			btm->VertexDataId = context->AddPart((void*)mesh->verticesList.GetInternalData(), sizeof(SkinningVertex), PT_Array, PT_Byte, mesh->verticesList.Count());
 			btm->IndexDataId = context->AddPart((void*)mesh->indicesList.GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, mesh->indicesList.Count());
 
@@ -286,7 +289,7 @@ namespace TikiEngine
 		UInt32 ModelConverter::addPartsBone(TikiBone* bone, UInt32 parentId)
 		{
 			BinaryTikiBone* btb = new BinaryTikiBone();
-			btb->NameId = context->AddPart((void*)bone->GetName(), 0, PT_String);
+			btb->NameId = context->AddPart((void*)bone->GetName().c_str(), 0, PT_String);
 			btb->ParentId = parentId;
 			btb->Init = bone->BoneInitTransform();
 			btb->ConstanBufferIndex = bone->GetConstantBufferIndex();			
@@ -335,7 +338,7 @@ namespace TikiEngine
 		void ModelConverter::addPartsAnimation(TikiAnimation* animation)
 		{
 			BinaryTikiAnimation* bta = new BinaryTikiAnimation();
-			bta->NameId = context->AddPart((void*)animation->GetName(), 0, PT_String);
+			bta->NameId = context->AddPart((void*)animation->GetName().c_str(), 0, PT_String);
 
 			bta->StartTime = animation->GetStartTime();
 			bta->EndTime = animation->GetStopTime();

@@ -6,29 +6,26 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-
 		TikiMesh::TikiMesh()
-			: material(0)
+			: material(0), hasDeformation(false)
 		{
-
 		}
 
 		TikiMesh::~TikiMesh()
 		{
-			//node->Destroy();
+			SafeRelease(&material);
 		}
 
-		const char* TikiMesh::GetName()
+		string TikiMesh::GetName()
 		{
 			return this->name;
 		}
 
-		void TikiMesh::SetName(const char* name)
+		void TikiMesh::SetName(string name)
 		{
 			this->name = name;
 		}
-
-
+		
 		void TikiMesh::SetDeformation(bool b)
 		{
 			hasDeformation = b;
@@ -54,9 +51,7 @@ namespace TikiEngine
 		{
 			return this->verticesList.Count() != 0 && this->indicesList.Count() != 0;
 		}
-
 		
-
 		void TikiMesh::SetIndices(List<UInt32>& indices)
 		{
 			this->indicesList = indices;
@@ -66,9 +61,6 @@ namespace TikiEngine
 		{
 			this->verticesList = skinning;
 		}
-
-
-
 		#pragma endregion
 	}
 }
