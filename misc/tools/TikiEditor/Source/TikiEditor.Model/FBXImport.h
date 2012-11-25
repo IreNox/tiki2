@@ -47,11 +47,11 @@ namespace TikiEditor
 				}
 				else
 				{
-					helper->MergeAnimation(
-						helper->GetAnimation(),
-						model->GetRootBone(),
-						helper->GetRootBone()
-					);
+					//helper->MergeAnimation(
+					//	helper->GetAnimation(),
+					//	model->GetRootBone(),
+					//	helper->GetRootBone()
+					//);
 				}
 
 				//delete(helper);

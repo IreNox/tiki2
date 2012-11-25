@@ -1,10 +1,12 @@
 #pragma once
 
-#ifdef TIKI_ENGINE
+#include "Core/TypeDef.h"
+
+#if defined TIKI_ENGINE
 #include "Graphics/Model.h"
-#else
+#elif defined TIKI_EDITOR
 #include "ModelEditor.h"
-#endif
+#endif 
 
 #include "Graphics/ModelIOContext.h"
 #include "Graphics/ModelBinaryData.h"

@@ -1,6 +1,8 @@
 
 #include "Graphics/ModelIOContext.h"
 
+#include "Core/TypeGlobals.h"
+
 namespace TikiEngine
 {
 	namespace Resources
