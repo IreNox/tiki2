@@ -21,51 +21,25 @@ namespace TikiEngine
 			AnimationLayer();
 			~AnimationLayer();
 
-			//void Initialize(FbxNode* node, FbxAnimLayer* layer);
-
 			void Update(TikiAnimation* animation);
 
 			List<Vector3>& GetTranslation();
 			List<Quaternion>& GetQuaternion();
 
+			Vector3 LocalTranslation(int left, int right, float koeff);
+			Quaternion LocalQuaternion(int left, int right, float koeff);
 
 			Vector3 LocalTranslation(TikiAnimation* animation);
 			Quaternion LocalQuaternion(TikiAnimation* animation);
 
-			Vector3 LocalTranslation(const double& time = -1.0);
-			Quaternion LocalQuaternion(const double& time = -1.0);
 			Matrix LocalTransform(const double& time = -1.0);
 
-			double& GCurrentTime();
-			void SCurrentTime(double& time);
-
-			void Reset();
- 
 		private:
-			double start;
-			double end;
-
-			//all curves got the same timestamps = 1 binary search - 1 koeff evaluation
-
-			//void GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer);
-			//void Fill(List<double>& keyTimes, FbxAnimCurve* curve);
-			void AddKey(List<float>& valueData,float value, double& time);
-			//void CreateKeys(List<double>& keyTimes, FbxNode* node);
-			//void CreateDefaultValues(FbxNode* node);
 
 			List<Vector3> translation;
 			List<Quaternion> quaternionen;
-			List<double> timeStamps;
 
 			Matrix transformMatrix;
-
-			int bsv;
-			int left;
-			int right;
-			float koeff;
-			double lastUpdateTime;
-			double currentTime;
-
 
 		};
 	}

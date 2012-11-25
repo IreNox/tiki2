@@ -251,6 +251,7 @@ Quaternion& Quaternion::operator*=(const Quaternion& rhs)
 	return *this = *this * rhs;
 }
 
+
 Quaternion Quaternion::operator/(const Quaternion& rhs) const
 {
 	float x = X;
@@ -274,10 +275,14 @@ Quaternion Quaternion::operator/(const Quaternion& rhs) const
 	result.W = w * num6 - num10;
 	return result;
 }
+
+
 Quaternion& Quaternion::operator/=(const Quaternion& rhs)
 {
 	return *this = *this / rhs;
 }
+
+
 
 Quaternion Quaternion::CreateFromAxisAngle( const Vector3& axis, float angle )
 {

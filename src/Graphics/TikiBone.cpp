@@ -15,16 +15,6 @@ namespace TikiEngine
 
 		}
 
-		//TikiBone::TikiBone(FbxNode* node)
-		//	:node(node), parent(0), childs(),
-		//	boneInit(), 
-		//	boneInitInverse(),
-		//	boneCurrent(),
-		//	constantBufferIndex(-1),
-		//	layer(0)
-		//{
-		//}
-
 		TikiBone::~TikiBone()
 		{
 			for(UInt32 i = 0; i < childs.Count(); i++)
@@ -33,28 +23,7 @@ namespace TikiEngine
 			}
 		}
 
-		void TikiBone::Initialize()
-		{
-			_CrtDbgBreak();
-			//name = node->GetName();
 
-			//if(this->parent != 0)
-			//{
-			//	this->boneInit =  parent->BoneInitTransform();
-			//}
-
-			//this->boneInit = this->boneCurrent = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform()) * this->boneInit;
-			//this->boneInitInverse = FBXConverter::ConvertTranspose(node->EvaluateLocalTransform().Inverse());
-
-			//for(int i = 0; i < node->GetChildCount(); i++)
-			//{
-			//	TikiBone* tmp = new TikiBone(node->GetChild(i));
-			//	tmp->AddRef();
-			//	tmp->SetParent(this);;
-			//	tmp->Initialize();
-			//	childs.Add(tmp);
-			//}
-		}
 		void TikiBone::AddChild(TikiBone* bone)
 		{
 			bone->AddRef();
@@ -89,19 +58,7 @@ namespace TikiEngine
 				childs[i]->CreateMapping(list);
 		}
 
-		void TikiBone::InitializeAnimation(TikiAnimation* animation)
-		{
-			_CrtDbgBreak();
-			//if(this->layer != 0)
-			//	return;
 
-			//this->layer = new AnimationLayer();
-			//layer->AddRef();
-			//layer->Initialize(this->node, animation->Layer());
-
-			//for(int i = 0; i < childs.Count(); i++)
-			//	childs[i]->InitializeAnimation(animation);
-		}
 
 		void TikiBone::Draw(const DrawArgs& args)
 		{
@@ -184,16 +141,6 @@ namespace TikiEngine
 			this->boneInit = mat;
 			this->boneInitInverse = mat.Invert();
 		}
-
-		//void TikiBone::SetFbxNode(FbxNode* node)
-		//{
-		//	this->node = node;
-		//}
-
-		//FbxNode* TikiBone::GetFbxNode()
-		//{
-		//	return node;
-		//}
 
 		void TikiBone::SetBoneCurrentTransform(Matrix& mat)
 		{

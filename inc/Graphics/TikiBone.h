@@ -21,10 +21,7 @@ namespace TikiEngine
 		{
 		public:
 			TikiBone();
-			/*TikiBone(FbxNode* node);*/
 			~TikiBone();
-
-			void Initialize();
 
 			void Draw(const DrawArgs& args);
 			void Update(List<TikiAnimation*>& animations);
@@ -51,10 +48,6 @@ namespace TikiEngine
 			TikiBone* GetBoneByIndex(int index);
 			AnimationLayer& GetAnimationLayer(TikiAnimation* animation);
 
-		/*	void SetFbxNode(FbxNode* node);
-			FbxNode* GetFbxNode();*/
-
-			void InitializeAnimation(TikiAnimation* animation);
 
 			void AddAnimation(TikiAnimation* animation, AnimationLayer& layer);
 

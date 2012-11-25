@@ -247,6 +247,9 @@ namespace TikiEngine
 
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
+
+
+
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
 

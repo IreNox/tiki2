@@ -42,7 +42,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(engine->content->LoadModel(L"cylinder_walk")); //soldier_l_testForAgga10
+			go->SModel(engine->content->LoadModel(L"cylinder")); //soldier_l_testForAgga10
 			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->TexDiffuse = tex;

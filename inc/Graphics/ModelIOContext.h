@@ -3,6 +3,7 @@
 #include "Graphics/ModelBinaryData.h"
 
 #include "Core/TypeDef.h"
+#include "Core/TypeGlobals.h"
 #include "Core/Stream.h"
 
 namespace TikiEngine

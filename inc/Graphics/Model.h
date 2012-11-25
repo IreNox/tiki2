@@ -66,17 +66,11 @@ namespace TikiEngine
 		private:
 
 			void Initialize();
-			void InitializeAnimation();
-			void InitializeBoneMapping();
-
-			void InitializeAnimationStack();
-			void SetCurrentAnimStack(int pIndex);
 
 			void CopyVertexData();
 			void CopyIndexData();
 
 			float animationSpeed;
-
 
 			List<TikiBone*> constantBufferElements;
 			List<SkinningVertex> verticesList;
