@@ -14,8 +14,6 @@
 #include "Graphics/GraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
 
-#include "Graphics/FbxLoader.h"
-
 #include <typeinfo.h>
 
 namespace TikiEngine
@@ -36,7 +34,6 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::FBXLoader = new FbxLoader(engine);
 		DllMain::ModuleGraphics = new GraphicsModule(engine);
 		DllMain::ModuleSpriteBatch = new SpriteBatchModule(engine);
 
@@ -61,7 +58,7 @@ namespace TikiEngine
 
 	void DllMain::DisposeDll()
 	{
-		SafeRelease(&DllMain::FBXLoader);
+		//SafeRelease(&DllMain::FBXLoader);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

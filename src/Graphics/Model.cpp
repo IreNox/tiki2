@@ -7,11 +7,10 @@
 #include "Core/ISpriteBatch.h"
 
 #include "Graphics/DllMain.h"
-#include "Graphics/FbxLoader.h"
 #include "Graphics/TikiMesh.h"
 #include <Core/IFont.h>
 #include <Core/Engine.h>
-#include "Graphics/FbxLoader.h"
+
 
 #include <sstream>
 
@@ -36,8 +35,6 @@ namespace TikiEngine
 
 			for(UInt32 i = 0; i < meshes.Count(); i++)
 				SafeRelease(&meshes[i]);
-			FbxArrayDelete(animStackNameArray);
-			this->scene->Destroy();
 
 			SafeRelease(&declaration);
 			SafeRelease(&material);
@@ -51,46 +48,11 @@ namespace TikiEngine
 		void Model::Initialize()
 		{
 
-			/*this->InitializeAnimationStack();
-			this->SetCurrentAnimStack(0);*/
-
-			//this->CreateBoneHierachy(scene->GetRootNode());
-			//this->InitializeMeshes();
-
-			//this->FlagBones();
-			//this->CleanBones();
-			//this->MapBones();
-
 			this->CopyIndexData();
 			this->CopyVertexData();
 
-			//this->InitializeAnimation();
 		}
 
-		void Model::InitializeMeshes()
-		{
-			int meshCount = this->scene->GetSrcObjectCount<FbxMesh>();
-#if _DEBUG
-			if(!meshCount)
-				_CrtDbgBreak(); //no meshes -> not supported
-#endif
-			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
-			{
-				FbxMesh* mesh = this->scene->GetSrcObject<FbxMesh>(meshIndex);
-
-				TikiMesh* tm = new TikiMesh(engine, mesh->GetNode());
-				tm->Initialize();
-				meshes.Add(tm);
-			}
-		}
-
-		void Model::InitializeAnimation()
-		{
-			if(this->rootBone == 0)
-				return;
-			for(int i = 0; i < this->animations.Count(); i++)
-				rootBone->InitializeAnimation(animations[i]);
-		}
 
 		void Model::AddAnimation(TikiAnimation* animation) //TODO ADD CURVES BLA
 		{
@@ -102,82 +64,14 @@ namespace TikiEngine
 				animationStack.Add(animation);
 		}
 
-		void Model::FlagBones()
-		{
-			int meshCount = meshes.Count();
-			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
-				meshes[meshIndex]->FlagBones(*rootBone);
-		}
-
-		void Model::CleanBones()
-		{
-			rootBone->Clean();
-			rootBone->CreateMapping(this->constantBufferElements);
-		}
-
-		void Model::MapBones()
-		{
-			int meshCount = meshes.Count();
-			for(int meshIndex = 0; meshIndex < meshCount; meshIndex ++)
-				meshes[meshIndex]->MapBones(*rootBone);
-		}
-
-		void Model::CreateBoneHierachy(FbxNode* node)
-		{
-			_CrtDbgBreak();
-			//if(rootBone != 0)
-			//	return;
-
-			//rootBone = new TikiBone(node);
-			//rootBone->AddRef();
-			//rootBone->Initialize();
-		}
-
-		void Model::InitializeAnimationStack()
-		{
-			_CrtDbgBreak();
-			//this->scene->FillAnimStackNameArray(this->animStackNameArray);
-
-			//int animationStackcount = this->scene->GetSrcObjectCount<FbxAnimStack>();
-			//for(int i = 0; i < animationStackcount; i++)
-			//{
-			//	FbxAnimStack* stack = this->scene->GetSrcObject<FbxAnimStack>(i);
-			//	int animLayerCount = stack->GetSrcObjectCount<FbxAnimLayer>();
-			//	for(int k = 0; k < animLayerCount; k++)
-			//	{
-			//		TikiAnimation* animation = new TikiAnimation(stack->GetSrcObject<FbxAnimLayer>(k));
-			//		animation->AddRef();
-			//		this->animations.Add(animation);
-			//	}
-			//}
-		}
-
-		void Model::SetCurrentAnimStack(int pIndex)
-		{
-			_CrtDbgBreak();
-			//int animationCount = animations.Count();
-
-			//if(pIndex < 0 || pIndex >= animationCount)
-			//	return;
-
-			//TikiAnimation* animation = animations.Get(pIndex);
-
-			//FbxAnimStack* stack = FbxAnimStack::Create(this->scene, animation->GetName());
-			//animation->Layer()->Weight = 100;
-			//stack->AddMember(animation->Layer());
-
-			//this->scene->GetEvaluator()->SetContext(stack);
-
-		}
-
 		void* Model::GetNativeResource()
 		{
-			return scene;
+			return 0;
 		}
 
 		bool Model::GetReady()
 		{
-			return (scene != 0 && material != 0);
+			return (verticesList.Count() != 0 && indicesList.Count() != 0 && material != 0);
 		}
 
 		Material* Model::GetMaterial()
@@ -319,26 +213,21 @@ namespace TikiEngine
 
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			FbxHelper* helper = new FbxHelper();
+			_CrtDbgBreak(); // nyi
+			//FbxHelper* helper = new FbxHelper();
 
-			if(!DllMain::FBXLoader->GetScene(fileName, helper))
-				_CrtDbgBreak();//FBXfile not found
+			//if(!DllMain::FBXLoader->GetScene(fileName, helper))
+			//	_CrtDbgBreak();//FBXfile not found
 
-			this->scene = helper->GetScene();
-			this->SetRootBone(helper->GetRootBone());
-			this->AddAnimation(helper->GetAnimation());
-			this->SetConstantBufferIndices(helper->GetConstantBufferIndices());
-			this->SetMeshes(helper->GetMeshes());
+			//this->scene = helper->GetScene();
+			//this->SetRootBone(helper->GetRootBone());
+			//this->AddAnimation(helper->GetAnimation());
+			//this->SetConstantBufferIndices(helper->GetConstantBufferIndices());
+			//this->SetMeshes(helper->GetMeshes());
 			//if(!DllMain::FBXLoader->GetScene(fileName, &scene))
 			//	_CrtDbgBreak(); //FBXfile not found
 
 			Initialize();
-		}
-
-		void Model::AddAnimation(TikiAnimation* animation, TikiBone* rootBone)
-		{
-			this->animations.Add(animation);
-			FbxHelper::MergeAnimation(animation, this->rootBone, rootBone);
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)

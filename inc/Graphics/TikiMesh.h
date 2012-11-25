@@ -8,39 +8,12 @@
 #include "Core/IModel.h"
 #include "Graphics/TikiBone.h"
 
-#define FBXSDK_NEW_API
-#include "fbxsdk.h"
-
 using namespace TikiEngine::Vertices;
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-		struct UpdateStructure
-		{
-			UpdateStructure(){}
-
-			UpdateStructure(int vertexIndex, int uvIndex, int normalIndex)
-			{
-				VertexIndex = vertexIndex;
-				UVIndex = uvIndex;
-				NormalIndex = normalIndex;
-
-				for(int i = 0; i < MAXBONESPERVERTEX; i++)
-				{
-					Weights[i] = -1;
-					Indices[i] = 0;
-				}
-			}
-
-			int VertexIndex;
-			int UVIndex;
-			int NormalIndex;
-			float Weights[MAXBONESPERVERTEX];
-			float Indices[MAXBONESPERVERTEX];
-		};
-
 
 		class TikiMesh : public TikiObject
 		{
@@ -48,23 +21,14 @@ namespace TikiEngine
 		public:
 
 			TikiMesh();
-			TikiMesh(Engine* engine, FbxNode* node);
 			~TikiMesh();
 
-			bool Initialize();
-			void InitializeGPUSkinning();
-			void FlagBones(TikiBone& rootBone);
-			void MapBones(TikiBone& rootBone);
 
 			void SetIndices(List<UInt32>& indices);
 			void SetSkinningVertexData(List<SkinningVertex>& skinning);
-			void SetDefaultVertexData(List<DefaultVertex>& default);
-
-			void UpdateVertexBuffer();
 
 			bool GetReady();
 
-			List<DefaultVertex> defaultList;
 			List<SkinningVertex> verticesList;
 			List<UInt32> indicesList;
 			List<Matrix> skinMatrices;
@@ -72,33 +36,19 @@ namespace TikiEngine
 			const char* GetName();
 			void SetName(const char* name);
 
+			void SetDeformation(bool b);
+			bool UseDeformation();
 
-			void SetDeformation(bool b)
-			{
-				hasDeformation = b;
-			}
+			Material* GetMaterial();
 
-			bool UseDeformation()
-			{
-				return hasDeformation;
-			}
-
-			Material* GetMaterial()
-			{
-				return material;
-			}
 
 		private:
-			int MaxBonesPerVertex();
 
 			const char* name;
 
-			FbxNode* node;
 			Engine* engine;
 
 			Material* material;
-
-			List<UpdateStructure> updateStructure;
 
 			bool hasDeformation;
 		};

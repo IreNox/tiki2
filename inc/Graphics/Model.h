@@ -15,12 +15,6 @@
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiAnimation.h"
 
-#include "Graphics/FbxHelper.h"
-
-#define FBXSDK_NEW_API
-#include "fbxsdk.h"
-
-
 namespace TikiEngine
 {
 	namespace Resources
@@ -58,7 +52,6 @@ namespace TikiEngine
 			void SetMeshes(List<TikiMesh*>& meshes);
 
 			void AddAnimation(TikiAnimation* animation);
-			void AddAnimation(TikiAnimation* animation, TikiBone* rootBone);
 
 			bool GetReady();
 
@@ -74,14 +67,6 @@ namespace TikiEngine
 			void Initialize();
 			void InitializeAnimation();
 			void InitializeBoneMapping();
-
-
-			void CreateBoneHierachy(FbxNode* node);
-			void InitializeMeshes();
-			void FlagBones();
-			void CleanBones();
-			void MapBones();
-			
 
 			void InitializeAnimationStack();
 			void SetCurrentAnimStack(int pIndex);
@@ -107,10 +92,6 @@ namespace TikiEngine
 			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
 			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
-			FbxArray<FbxString*> animStackNameArray;
-			FbxAnimLayer* currentAnimLayer;
-			
-			FbxScene* scene;
 
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
