@@ -29,7 +29,7 @@ namespace TikiEngine
 
 				for(int i = 0;  i < MAXBONESPERVERTEX; i++)
 				{
-					BlendWeights[i] = 0;
+					BlendWeights[i] = -1;
 					BlendIndices[i] = 0;
 				}
 			}

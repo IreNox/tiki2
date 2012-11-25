@@ -5,6 +5,8 @@
 
 #include <Math.h>
 
+//TODO INLINE
+
 class Vector3
 {
 public:
@@ -72,6 +74,11 @@ public:
 	inline bool operator!=(const Vector3& rhs) const
 	{
 		return !(this->X == rhs.X && this->Y == rhs.Y && this->Z == rhs.Z);
+	}
+
+	inline float operator[](const int& index)
+	{
+		return arr[index];
 	}
 	#pragma endregion
 

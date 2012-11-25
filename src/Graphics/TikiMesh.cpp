@@ -116,6 +116,9 @@ namespace TikiEngine
 			delete[]vertexArray;
 			vertexArray = 0;
 
+			int count1 = indicesList.Count();
+			int count2 = verticesList.Count();
+
 			//this->InitializeGPUSkinning();
 			//this->UpdateVertexBuffer();
 

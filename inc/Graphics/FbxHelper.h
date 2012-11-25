@@ -86,6 +86,9 @@ namespace TikiEngine
 			int MaxBonesPerVertex(FbxMesh* mesh);
 
 			void GetGlobalVertices(List<Vector3>& list, FbxMesh* mesh);
+			void InitializeBufferData(List<Vector3>& vertices, List<SkinningVertex>& buffer, List<UInt32>& indices, FbxMesh* mesh);
+			void GetSkinningCluster(FbxMesh* mesh, List<FbxCluster*>& clusterList);
+			void InitializeSkinning(FbxMesh* mesh, List<Vector3>& vertices, List<SkinningVertex>& buffer);
 
 			FbxScene* scene;
 			List<FbxNode*> fbxNodes;

@@ -1,5 +1,7 @@
 #pragma once
 
+//TODO INLINE
+
 class Vector4
 {
 public:

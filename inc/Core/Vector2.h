@@ -1,5 +1,7 @@
 #pragma once
 
+//TODO INLINE
+
 class Vector2
 {
 public:
@@ -70,6 +72,11 @@ public:
 	//arithmetic updates
 	Vector2& operator+= (const Vector2& rhs);
 	Vector2& operator-= (const Vector2& rhs);
+
+	inline float operator[](const int& index)
+	{
+		return arr[index];
+	}
 
 
 	static int Dimensions;

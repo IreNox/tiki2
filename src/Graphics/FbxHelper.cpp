@@ -62,7 +62,7 @@ namespace TikiEngine
 			for(int i = 0; i < fbxNodes.Count(); i++)
 				InitializeAnimationLayer(fbxNodes[i]);
 
-			//FindMeshes();
+			FindMeshes();
 		}
 
 		void FbxHelper::FindMeshes()
@@ -149,8 +149,7 @@ namespace TikiEngine
 
 			List<Vector3> vertexList;
 			GetGlobalVertices(vertexList, mesh);
-			List<VertexBufferInput> vertexBufferInput;
-			List<SkinningInput> skinningInput;
+			List<SkinningVertex> vertices;
 			List<UInt32> indices;
 
 			int skinCount = mesh->GetDeformerCount(FbxDeformer::eSkin);
@@ -161,8 +160,23 @@ namespace TikiEngine
 			if(tiki->UseDeformation() && maxBonesPerVertex > 4)
 				_CrtDbgBreak();
 #endif
+			
+			this->InitializeBufferData(vertexList, vertices, indices, mesh);
+
+			this->InitializeSkinning(mesh, vertexList, vertices);
+
+			tiki->SetSkinningVertexData(vertices);
+
+			tiki->SetIndices(indices);
+
+			meshes.Add(tiki);
+		}
+
+		void FbxHelper::InitializeBufferData(List<Vector3>& vertices, List<SkinningVertex>& buffer, List<UInt32>& indices, FbxMesh* mesh)
+		{
 			UInt32 counter = 0;
 			Int32 polygonCount = mesh->GetPolygonCount();
+
 			for(Int32 i = 0; i < polygonCount; i++)
 			{
 				Int32 verticesInPolygon = mesh->GetPolygonSize(i);
@@ -175,9 +189,9 @@ namespace TikiEngine
 				{
 					int index = mesh->GetPolygonVertex(i,k);
 
-					Vector3 position = vertexList[index];
+					Vector3 position = vertices[index];
 
-					Vector2 uv = Vector2(0,0);
+					Vector2 uv;// = FbxVector2(0,0);
 					int uvIndex = -1;
 
 					if(mesh->GetElementUVCount() != 0)
@@ -188,15 +202,16 @@ namespace TikiEngine
 
 					Vector3 normals = FBXConverter::ConvertDrop(mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter));
 
-					VertexBufferInput vbi( position, uv, normals);
+					SkinningVertex skin(
+						position[0],position[1],position[2],
+						uv[0],uv[1],
+						normals[0],normals[1],normals[2]);
 
-					
-					indicesArray[k] = vertexBufferInput.IndexOf(vbi);
+					indicesArray[k] = buffer.IndexOf(skin);
 					if(indicesArray[k] == -1)
 					{
-						indicesArray[k] = vertexBufferInput.Count();
-						vertexBufferInput.Add(vbi);
-						skinningInput.Add(SkinningInput());
+						indicesArray[k] = buffer.Count();
+						buffer.Add(skin);
 					}
 					counter++;
 				}
@@ -212,95 +227,80 @@ namespace TikiEngine
 					indices.Add(indicesArray[3]);
 				}
 			}
+		}
 
-			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
+		void FbxHelper::InitializeSkinning(FbxMesh* mesh, List<Vector3>& vertices, List<SkinningVertex>& buffer)
+		{
+			List<FbxCluster*> clusterList;
+			GetSkinningCluster(mesh, clusterList);
+
+			for(int i = 0; i < clusterList.Count(); i++)
 			{
-				FbxSkin* skin = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
+				FbxCluster* cluster = clusterList[i];
 
-				int clustCount = skin->GetClusterCount();
-				for(int clustIndex = 0; clustIndex < clustCount; clustIndex++)
+				TikiBone* bone = rootBone->GetBoneByName(cluster->GetLink()->GetName());
+				if(bone == 0)
+					_CrtDbgBreak(); // should find something
+
+				FbxAMatrix bindTransform;
+				cluster->GetTransformLinkMatrix(bindTransform);
+				bone->SetBoneInitTransform(FBXConverter::ConvertTranspose(bindTransform));
+
+				int vertexCount = cluster->GetControlPointIndicesCount();
+				for(int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
 				{
-					FbxCluster* cluster = skin->GetCluster(clustIndex);
-					if(!cluster->GetLink())
-						continue;
+					int index = cluster->GetControlPointIndices()[vertexIndex];
 
-					int vertexCount = cluster->GetControlPointIndicesCount();
-					for(int vertexIndex = 0; vertexIndex < vertexCount; vertexIndex++)
+					Vector3 position = vertices[index];
+
+					for(int bufferIndex = 0; bufferIndex < buffer.Count(); bufferIndex++)
 					{
-		/*				if(vertexIndex == 1270)
-							_CrtDbgBreak();*/
-						int index = cluster->GetControlPointIndices()[vertexIndex];
-
-						if (index >= mesh->GetControlPointsCount())
-							continue;
-
-						Vector3 position = vertexList[index];
-
-						int updatestructureCount = vertexBufferInput.Count();
-						for(int i = 0; i < updatestructureCount; i++)
+						SkinningVertex& skin = buffer[bufferIndex];
+						if(skin.Position[0] == position[0] && skin.Position[1] == position[1] && skin.Position[2] == position[2])
 						{
-							if(vertexBufferInput[i].Position == position)
+							int vsIndex = 0;
+							for(int k = 0; k < MAXBONESPERVERTEX; k++)
 							{
-								SkinningInput s = skinningInput[i];
-								int vsIndex = 0;
-								while(s.Weights[vsIndex] != -1)
-								{
-									if(vsIndex > 4)
-										_CrtDbgBreak();
+								if(skin.BlendWeights[vsIndex] != -1)
 									vsIndex++;
-								}
-
-								if(vsIndex == 5)
-									_CrtDbgBreak();
-
-								s.Indices[vsIndex] = (float)clustIndex;
-								s.Weights[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
-								skinningInput.Set(i,s);
 							}
+
+							skin.BlendIndices[vsIndex] = (float)bone->GetConstantBufferIndex();
+							skin.BlendWeights[vsIndex] = cluster->GetControlPointWeights()[vertexIndex];
 						}
 					}
 				}
 			}
-
-			int vertexBufferCount = vertexBufferInput.Count();
-			for(int index = 0; index < vertexBufferCount; index++)
+			for(int i = 0; i <buffer.Count(); i++)
 			{
-				for(int i = 0; i < 4; i++)
-				{
-					if(skinningInput[index].Weights[i] == -1)
-						skinningInput[index].Weights[i] = 0;
-				}
-			}
-
-			List<SkinningVertex> skinning;
-			List<DefaultVertex> default;
-
-			for(int i = 0; i < vertexBufferCount; i++)
-			{
-				VertexBufferInput vbi = vertexBufferInput[i];
-				SkinningInput skin = skinningInput[i];
-
-				SkinningVertex s(vbi.Position.arr[0], vbi.Position.arr[1], vbi.Position.arr[2],
-					vbi.UV.arr[0], vbi.UV.arr[1], 
-					vbi.Normal.arr[0], vbi.Normal.arr[1], vbi.Normal.arr[2]);
-
+				SkinningVertex& skin = buffer[i];
 				for(int k = 0; k < MAXBONESPERVERTEX; k++)
 				{
-					s.BlendIndices[k] = skin.Indices[k];
-					s.BlendWeights[k] = skin.Weights[k];
+					if(skin.BlendWeights[k] == -1)
+						skin.BlendWeights[k] = 0;
 				}
-				skinning.Add(s);
-
-				DefaultVertex d = {vbi.Position.arr[0], vbi.Position.arr[1], vbi.Position.arr[2],
-					vbi.UV.arr[0], vbi.UV.arr[1], 
-					vbi.Normal.arr[0], vbi.Normal.arr[1], vbi.Normal.arr[2]};
-				default.Add(d);
 			}
-			tiki->SetIndices(indices);
-			tiki->SetDefaultVertexData(default);
-			tiki->SetSkinningVertexData(skinning);
 
-			meshes.Add(tiki);
+		}
+
+		void FbxHelper::GetSkinningCluster(FbxMesh* mesh, List<FbxCluster*>& clusterList)
+		{
+			int skinCount =  mesh->GetDeformerCount(FbxDeformer::eSkin);
+			for(int skinIndex = 0; skinIndex < skinCount; skinIndex++)
+			{
+				FbxSkin *  skinDeformer = (FbxSkin*) mesh->GetDeformer(skinIndex, FbxDeformer::eSkin);
+
+				int clusterCount = skinDeformer->GetClusterCount();
+				for(int clusterIndex = 0; clusterIndex < clusterCount; clusterIndex++)
+				{
+					FbxCluster* cluster = skinDeformer->GetCluster(clusterIndex);
+					if (!cluster->GetLink())
+						continue;
+
+					if(!clusterList.Contains(cluster))
+						clusterList.Add(cluster);
+				}
+			}
 		}
 
 		void FbxHelper::GetGlobalVertices(List<Vector3>& list, FbxMesh* mesh)
@@ -350,6 +350,8 @@ namespace TikiEngine
 					FillTimeStamp(curve);
 				}
 			}
+
+			animation->GetTimeStamps().Sort();
 
 			int bsv = 1;
 			while(bsv*2 < animation->GetTimeStamps().Count())

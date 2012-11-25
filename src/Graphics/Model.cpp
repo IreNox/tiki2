@@ -51,15 +51,15 @@ namespace TikiEngine
 		void Model::Initialize()
 		{
 
-			//this->InitializeAnimationStack();
-			//this->SetCurrentAnimStack(0);
+			/*this->InitializeAnimationStack();
+			this->SetCurrentAnimStack(0);*/
 
 			//this->CreateBoneHierachy(scene->GetRootNode());
-			this->InitializeMeshes();
+			//this->InitializeMeshes();
 
 			//this->FlagBones();
 			//this->CleanBones();
-			this->MapBones();
+			//this->MapBones();
 
 			this->CopyIndexData();
 			this->CopyVertexData();
@@ -328,7 +328,7 @@ namespace TikiEngine
 			this->SetRootBone(helper->GetRootBone());
 			this->AddAnimation(helper->GetAnimation());
 			this->SetConstantBufferIndices(helper->GetConstantBufferIndices());
-			//this->SetMeshes(helper->GetMeshes());
+			this->SetMeshes(helper->GetMeshes());
 			//if(!DllMain::FBXLoader->GetScene(fileName, &scene))
 			//	_CrtDbgBreak(); //FBXfile not found
 
