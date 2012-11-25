@@ -66,6 +66,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <CLRThreadAttribute>STAThreadingAttribute</CLRThreadAttribute>
+      <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -84,8 +86,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryFileHeader.h" />
@@ -95,24 +95,22 @@
     <ClInclude Include="BinaryTikiLayer.h" />
     <ClInclude Include="BinaryTikiMesh.h" />
     <ClInclude Include="Enums.h" />
+    <ClInclude Include="FBXConverter.h" />
+    <ClInclude Include="FbxHelper.h" />
     <ClInclude Include="FBXImport.h" />
+    <ClInclude Include="FbxLoader.h" />
     <ClInclude Include="IOContext.h" />
     <ClInclude Include="MemoryPart.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="TikiConvert.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="CompileHeader.cpp" />
+    <ClCompile Include="FBXConverter.cpp" />
+    <ClCompile Include="FbxHelper.cpp" />
+    <ClCompile Include="FbxLoader.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Model.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

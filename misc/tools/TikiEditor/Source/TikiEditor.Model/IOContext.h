@@ -1,18 +1,12 @@
 #pragma once
 
-#define FBXSDK_NEW_API
-#include "fbxsdk.h"
-
-#ifdef IOS_REF
-#undef  IOS_REF
-#define IOS_REF (*(pSdkManager->GetIOSettings()))
-#endif
-
 #include "BinaryFileHeader.h"
 #include "BinaryPart.h"
 #include "MemoryPart.h"
 
 #include "Core/Dictionary.h"
+
+#include <string.h>
 
 namespace TikiEditor
 {
@@ -20,31 +14,69 @@ namespace TikiEditor
 	{
 	public:
 
+		#pragma region Class
 		IOContext()			
 		{
 			data = 0;
 
 			binaryHeader = new BinaryFileHeader();
 
-			partPointer = new List<void*>();
+			binaryPartPointer = new List<void*>();
 			binaryParts = new List<BinaryPart>();
 			memoryParts = new Dictionary<UInt32, MemoryPart>();
 		}
 
 		IOContext(System::String^ fileName)
 		{
-			// Not implemented
+			binaryHeader = new BinaryFileHeader();
+
+			binaryPartPointer = new List<void*>();
+			memoryParts = new Dictionary<UInt32, MemoryPart>();
+
+			array<System::Byte>^ bytes = System::IO::File::ReadAllBytes(fileName);
+			data = new Byte[bytes->Length];
+
+			System::Runtime::InteropServices::Marshal::Copy(
+				bytes,
+				0,
+				System::IntPtr(data),
+				bytes->Length
+			);
+
+			readHeader();
+			readParts();
 		}
 
 		~IOContext()
 		{
 			delete(binaryHeader);
 
-			delete(partPointer);
+			delete(binaryPartPointer);
 			delete(binaryParts);
 			delete(memoryParts);
 		}
+		#pragma endregion
 
+		#pragma region Member
+		BinaryFileHeader* GetHeader()
+		{
+			return binaryHeader;
+		}
+		#pragma endregion
+
+		#pragma region Member - Read
+		void* ReadPartPointer(UInt32 id)
+		{
+			return binaryPartPointer->Get(id);
+		}
+
+		BinaryPart& ReadPart(UInt32 id)
+		{
+			return binaryParts->GetRef(id);
+		}
+		#pragma endregion
+
+		#pragma region Member - Write
 		UInt32 AddPart(void* pointer, UInt32 length, PartType type)
 		{
 			return this->AddPart(pointer, length, type, PT_NoArray, 1);
@@ -65,15 +97,10 @@ namespace TikiEditor
 			bp.ArrayOf = arrayOf;
 			bp.ArrayCount = arrayCount;
 
-			partPointer->Add(pointer);
+			binaryPartPointer->Add(pointer);
 			binaryParts->Add(bp);
 
 			return bp.Id;
-		}
-
-		BinaryFileHeader* GetHeader()
-		{
-			return binaryHeader;
 		}
 
 		void WriteToFile(System::String^ fileName)
@@ -88,22 +115,46 @@ namespace TikiEditor
 				bytes,
 				0,
 				binaryHeader->FileLength
-			);
+				);
 
 			System::IO::File::WriteAllBytes(fileName, bytes);
 		}
-
+		#pragma endregion
+		
 	protected:
 
 		Byte* data;
 
 		BinaryFileHeader* binaryHeader;
 		
-		List<void*>* partPointer;
+		List<void*>* binaryPartPointer;
 		List<BinaryPart>* binaryParts;
 		Dictionary<UInt32, MemoryPart>* memoryParts;
 
 		#pragma region Protected Member - Read
+		void readHeader()
+		{
+			memcpy(binaryHeader, data, sizeof(BinaryFileHeader));
+		}
+
+		void readParts()
+		{
+			UInt32 pos = sizeof(BinaryFileHeader);
+			UInt32 size = sizeof(BinaryPart) * binaryHeader->PartCount;
+
+			BinaryPart* parts = new BinaryPart[binaryHeader->PartCount];
+			memcpy(parts, data + pos, size);
+			pos += size;
+
+			UInt32 i = 0;
+			while (i < binaryHeader->PartCount)
+			{
+				binaryPartPointer->Add(data + parts[i].Start);
+				i++;
+			}
+
+			binaryParts = new List<BinaryPart>(parts, binaryHeader->PartCount, false);
+		}
 		#pragma endregion
 
 		#pragma region Protected Member - Write
@@ -149,7 +200,7 @@ namespace TikiEditor
 				BinaryPart& bp = binaryParts->GetRef(i);
 				UInt32 len = bp.Length + bp.ArrayCount;
 
-				memcpy(data, partPointer->Get(i), len);
+				memcpy(data, binaryPartPointer->Get(i), len);
 
 				data += len;
 				i++;

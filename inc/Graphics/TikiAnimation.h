@@ -32,13 +32,14 @@ namespace TikiEngine
 
 			void Update(const double& deltaTime = -1.0);
 
+			int GetBSV() { return bsv; }
 			void SetBSV(int bsv);
 
 			int Left;
 			int Right;
 			float Koeff;
 
-			double GetCurrentTime();
+			double GCurrentTime();
 
 		private:
 			const char* name;

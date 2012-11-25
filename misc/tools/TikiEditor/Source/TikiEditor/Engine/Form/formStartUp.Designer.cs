@@ -33,8 +33,9 @@
             this.buttonTest = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.textLevelId = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.textLevelId = new System.Windows.Forms.TextBox();
+            this.buttonModel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -71,11 +72,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.buttonModel);
             this.groupBox1.Controls.Add(this.buttonGUI);
             this.groupBox1.Controls.Add(this.buttonTest);
             this.groupBox1.Location = new System.Drawing.Point(12, 111);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(249, 105);
+            this.groupBox1.Size = new System.Drawing.Size(249, 146);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Other Editors";
@@ -92,14 +94,6 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Level Editor";
             // 
-            // textLevelId
-            // 
-            this.textLevelId.Location = new System.Drawing.Point(62, 24);
-            this.textLevelId.Name = "textLevelId";
-            this.textLevelId.Size = new System.Drawing.Size(181, 20);
-            this.textLevelId.TabIndex = 1;
-            this.textLevelId.Text = "1";
-            // 
             // label1
             // 
             this.label1.AutoSize = true;
@@ -109,11 +103,29 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Level ID:";
             // 
+            // textLevelId
+            // 
+            this.textLevelId.Location = new System.Drawing.Point(62, 24);
+            this.textLevelId.Name = "textLevelId";
+            this.textLevelId.Size = new System.Drawing.Size(181, 20);
+            this.textLevelId.TabIndex = 1;
+            this.textLevelId.Text = "1";
+            // 
+            // buttonModel
+            // 
+            this.buttonModel.Location = new System.Drawing.Point(6, 103);
+            this.buttonModel.Name = "buttonModel";
+            this.buttonModel.Size = new System.Drawing.Size(237, 36);
+            this.buttonModel.TabIndex = 3;
+            this.buttonModel.Text = "Model Converter";
+            this.buttonModel.UseVisualStyleBackColor = true;
+            this.buttonModel.Click += new System.EventHandler(this.buttonModel_Click);
+            // 
             // formStartUp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(273, 228);
+            this.ClientSize = new System.Drawing.Size(273, 270);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -121,6 +133,7 @@
             this.Name = "formStartUp";
             this.ShowIcon = false;
             this.Text = "TikiEditor 2.0";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formStartUp_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
@@ -137,5 +150,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textLevelId;
+        private System.Windows.Forms.Button buttonModel;
     }
 }

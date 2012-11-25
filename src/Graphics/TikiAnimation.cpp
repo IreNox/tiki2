@@ -81,7 +81,7 @@ namespace TikiEngine
 			this->bsv = bsv;
 		}
 
-		double TikiAnimation::GetCurrentTime()
+		double TikiAnimation::GCurrentTime()
 		{
 			return this->currentTime;
 		}

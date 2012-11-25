@@ -2,6 +2,7 @@
 
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiMesh.h"
+#include "Graphics/TikiAnimation.h"
 #include "Graphics/AnimationLayer.h"
 
 namespace TikiEditor
@@ -16,12 +17,14 @@ namespace TikiEditor
 		Model() {}
 		~Model() {}
 
-		void Draw(GameObject* gameObject, const DrawArgs& args) {}
-		void Update(const UpdateArgs& args) {}
-
 		TikiBone* GetRootBone()
 		{
 			return rootBone;
+		}
+
+		void SetRootBone(TikiBone* bone)
+		{
+			rootBone = bone;
 		}
 
 		List<TikiMesh*>* GetMeshes()

@@ -10,7 +10,8 @@
     <RootNamespace>TikiEditor</RootNamespace>
     <AssemblyName>TikiEditor</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
     <XnaPlatform>Windows</XnaPlatform>
     <XnaProfile>HiDef</XnaProfile>
@@ -95,6 +96,12 @@
     <Compile Include="Editor\Form\ucDesignGUI.Designer.cs">
       <DependentUpon>ucDesignGUI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Editor\Form\ucDesignModel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Editor\Form\ucDesignModel.Designer.cs">
+      <DependentUpon>ucDesignModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Editor\Form\ucDesignTest.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -102,6 +109,7 @@
       <DependentUpon>ucDesignTest.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\ModeGUI.cs" />
+    <Compile Include="Editor\ModeModel.cs" />
     <Compile Include="Editor\ModeTest.cs" />
     <Compile Include="Editor\Objects\GUI\GUIRect.cs" />
     <Compile Include="Engine\EditorMode.cs" />
@@ -175,6 +183,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TikiEditor.Model\TikiEditor.Model.vcxproj">
+      <Project>{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}</Project>
+      <Name>TikiEditor.Model</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TikiEditorContent\TikiEditorContent.contentproj">
       <Name>TikiEditorContent</Name>
       <XnaReferenceType>Content</XnaReferenceType>
@@ -211,6 +223,9 @@
     <EmbeddedResource Include="Editor\Form\ucDesignGUI.resx">
       <DependentUpon>ucDesignGUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Editor\Form\ucDesignModel.resx">
+      <DependentUpon>ucDesignModel.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Editor\Form\ucDesignTest.resx">
       <DependentUpon>ucDesignTest.cs</DependentUpon>
     </EmbeddedResource>
@@ -231,6 +246,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Data\TikiData.sqlite">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -34,11 +34,7 @@ public:
 		}
 
 		this->data = new T[lengthArr];
-
-		for (UInt32 i = 0; i < count; i++)
-		{
-			this->data[i] = data[i];
-		}
+		memcpy(this->data, data, count * sizeof(T));
 	}
 
 	~List()

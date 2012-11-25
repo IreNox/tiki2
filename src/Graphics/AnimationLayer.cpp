@@ -26,9 +26,9 @@ namespace TikiEngine
 
 		//}
 
-		void AnimationLayer::CreateDefaultValues(FbxNode* node)
-		{
-			_CrtDbgBreak();
+		//void AnimationLayer::CreateDefaultValues(FbxNode* node)
+		//{
+			//_CrtDbgBreak();
 			//FbxAMatrix defaultPosition = node->EvaluateLocalTransform();
 			//Vector3 trans = FBXConverter::ConvertDrop(defaultPosition.GetT());
 			//Vector3 rot = FBXConverter::ConvertDrop(defaultPosition.GetR());
@@ -39,14 +39,14 @@ namespace TikiEngine
 
 			//if(quaternionen.Count() == 0)
 			//	quaternionen.Add(quat);
-		}
+		//}
 
-		double& AnimationLayer::GetCurrentTime()
+		double& AnimationLayer::GCurrentTime()
 		{
 			return this->currentTime;
 		}
 
-		void AnimationLayer::SetCurrentTime(double& time)
+		void AnimationLayer::SCurrentTime(double& time)
 		{
 			this->currentTime = time;
 		}
@@ -62,9 +62,9 @@ namespace TikiEngine
 				* Matrix::CreateTranslation(LocalTranslation(animation));
 		}
 
-		void AnimationLayer::CreateKeys(List<double>& keyTimes, FbxNode* node)
-		{
-			_CrtDbgBreak();
+		//void AnimationLayer::CreateKeys(List<double>& keyTimes, FbxNode* node)
+		//{
+			//_CrtDbgBreak();
 			//for(int i = 0; i < keyTimes.Count(); i++)
 			//{
 			//	double time = keyTimes[i];
@@ -85,11 +85,11 @@ namespace TikiEngine
 
 			//	this->quaternionen.Add(quat);
 			//}
-		}
+		//}
 
-		void AnimationLayer::GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer)
-		{
-			_CrtDbgBreak();
+		//void AnimationLayer::GetTimeStamps(List<double>& timeStamps, FbxNode* node, FbxAnimLayer* layer)
+		//{
+			//_CrtDbgBreak();
 //#if _DEBUG
 //			if(node == 0)
 //				_CrtDbgBreak();
@@ -118,7 +118,7 @@ namespace TikiEngine
 //			while(bs*2 < timeStamps.Count())
 //				bs *= 2;
 //			bsv = bs;
-		}
+		//}
 
 		//void AnimationLayer::Fill(List<double>& keyTimes, FbxAnimCurve* curve)
 		//{

@@ -64,20 +64,8 @@ namespace TikiEditor
 
             formStartUp startForm = new formStartUp();
             startForm.ShowDialog();
-            //GI.ModeGUI = new ModeGUI(this);
 
-            if (GI.ModeLevel != null)
-            {
-                _mode = GI.ModeLevel;
-            }
-            else if (GI.ModeGUI != null)
-            {
-                _mode = GI.ModeGUI;
-            }
-            else
-            {
-                _mode = GI.ModeTest;
-            }
+            _mode = GI.CurrentMode;
 
             this.Components.Add(GI.Camera);
             this.Components.Add(GI.Control);

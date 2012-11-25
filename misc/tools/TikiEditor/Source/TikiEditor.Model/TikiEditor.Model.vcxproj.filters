@@ -7,9 +7,6 @@
     <Filter Include="Model">
       <UniqueIdentifier>{78033e71-6f25-45cb-9d58-a3517034767b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Model\Save">
-      <UniqueIdentifier>{ae829553-4f5a-4d16-ba9e-83d13d9f9291}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Model\Load">
       <UniqueIdentifier>{b750016d-5c1a-457e-a423-520f8a0a5eb9}</UniqueIdentifier>
     </Filter>
@@ -19,11 +16,11 @@
     <Filter Include="Model\Convert">
       <UniqueIdentifier>{5af1f86e-c5df-4ca0-a60a-1193133b6bf1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\FBX">
+      <UniqueIdentifier>{ae829553-4f5a-4d16-ba9e-83d13d9f9291}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource.h">
-      <Filter>Base</Filter>
-    </ClInclude>
     <ClInclude Include="Model.h">
       <Filter>Model</Filter>
     </ClInclude>
@@ -60,13 +57,19 @@
     <ClInclude Include="BinaryTikiAnimation.h">
       <Filter>Model\Data</Filter>
     </ClInclude>
+    <ClInclude Include="FBXConverter.h">
+      <Filter>Model\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxHelper.h">
+      <Filter>Model\FBX</Filter>
+    </ClInclude>
+    <ClInclude Include="FbxLoader.h">
+      <Filter>Model\FBX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
       <Filter>Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Model</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Base</Filter>
@@ -74,15 +77,14 @@
     <ClCompile Include="CompileHeader.cpp">
       <Filter>Model</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.ico">
-      <Filter>Base</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="app.rc">
-      <Filter>Base</Filter>
-    </ResourceCompile>
+    <ClCompile Include="FBXConverter.cpp">
+      <Filter>Model\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxHelper.cpp">
+      <Filter>Model\FBX</Filter>
+    </ClCompile>
+    <ClCompile Include="FbxLoader.cpp">
+      <Filter>Model\FBX</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

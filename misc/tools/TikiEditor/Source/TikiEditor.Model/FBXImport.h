@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Model.h"
+#include "TikiConvert.h"
 
 namespace TikiEditor
 {
@@ -8,7 +9,10 @@ namespace TikiEditor
 	{
 	public:
 
-		FBXImport() {}
+		FBXImport()
+		{
+			inputFiles = gcnew System::Collections::Generic::List<System::String^>();
+		}
 		~FBXImport() {}
 
 		void Execute()
@@ -17,10 +21,11 @@ namespace TikiEditor
 
 			for each (System::String^ file in inputFiles)
 			{
-			//	//fbxloader.load(file, model);
+				//fbxloader.load(file, model);
 			}
 
-
+			TikiConvert^ convert = gcnew TikiConvert(model);
+			convert->WriteToFile(outputFile);
 		}
 
 		property System::String^ OutputFilename

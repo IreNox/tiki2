@@ -1,6 +1,8 @@
+
 #include "Graphics/TikiMesh.h"
-#include "Graphics/FBXConverter.h"
-#include "Graphics/FbxHelper.h"
+
+#include "FBXConverter.h"
+#include "FbxHelper.h"
 
 namespace TikiEngine
 {

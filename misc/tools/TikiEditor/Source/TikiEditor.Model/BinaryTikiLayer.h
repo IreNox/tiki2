@@ -6,7 +6,7 @@ namespace TikiEditor
 {
 	struct BinaryTikiLayer
 	{
-		UInt32 NameId;
+		UInt32 AnimationId;
 
 		UInt32 TranslationArrayId;
 		UInt32 RotationArrayId;
