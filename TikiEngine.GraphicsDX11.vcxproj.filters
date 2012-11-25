@@ -63,6 +63,12 @@
     <Filter Include="Headerdateien\Internal\Data">
       <UniqueIdentifier>{bbcc8707-8f12-4c91-885f-e62f0dfb08c7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Internal\Model">
+      <UniqueIdentifier>{5af9a731-242e-4593-985e-22e6886ab616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Internal\Model">
+      <UniqueIdentifier>{e8bfa32a-5d6a-4500-97d8-bcbca723ed41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Buffer.cpp">
@@ -142,6 +148,12 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\DebugConsole.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ModelConverter.cpp">
+      <Filter>Quelldateien\Internal\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ModelIOContext.cpp">
+      <Filter>Quelldateien\Internal\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +261,15 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugConsole.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelConverter.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelIOContext.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelBinaryData.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

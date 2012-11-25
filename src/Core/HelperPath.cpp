@@ -115,7 +115,7 @@ namespace TikiEngine
 		}
 		else if (typeid(IModel).hash_code() == typeHash)
 		{
-			typeExt = L"fbx";
+			typeExt = L"tiki";
 			typeName = L"Models";
 		}
 		else if (typeid(ISound).hash_code() == typeHash)

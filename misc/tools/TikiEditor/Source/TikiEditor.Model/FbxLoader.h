@@ -18,30 +18,27 @@
 
 using namespace TikiEngine::Vertices;
 
-namespace TikiEngine
+namespace TikiEditor
 {
-	namespace Resources
+	class FbxLoader
 	{
-		class FbxLoader
-		{
-		public:
-			FbxLoader();
-			~FbxLoader();
+	public:
+		FbxLoader();
+		~FbxLoader();
 
-			FbxManager& Manager();
+		FbxManager& Manager();
 
-			bool GetScene(wstring filename, FbxHelper* helper);
-			bool GetScene(wstring filename, FbxScene** scene);
-		private:
+		bool GetScene(wstring filename, FbxHelper* helper);
+		bool GetScene(wstring filename, FbxScene** scene);
+	private:
 
-			void CreateNewScene(FbxScene** scene);
+		void CreateNewScene(FbxScene** scene);
 
-			void InitializeSdkObjects(FbxManager*& pManager);
+		void InitializeSdkObjects(FbxManager*& pManager);
 
-			bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
+		bool LoadScene(FbxManager* pManager, FbxDocument* pScene, wstring filename);
 
-			FbxManager* fbxManager;
+		FbxManager* fbxManager;
 
-		};
-	}
+	};
 }

@@ -88,21 +88,11 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinaryFileHeader.h" />
-    <ClInclude Include="BinaryPart.h" />
-    <ClInclude Include="BinaryTikiAnimation.h" />
-    <ClInclude Include="BinaryTikiBone.h" />
-    <ClInclude Include="BinaryTikiLayer.h" />
-    <ClInclude Include="BinaryTikiMesh.h" />
-    <ClInclude Include="Enums.h" />
     <ClInclude Include="FBXConverter.h" />
     <ClInclude Include="FbxHelper.h" />
     <ClInclude Include="FBXImport.h" />
     <ClInclude Include="FbxLoader.h" />
-    <ClInclude Include="IOContext.h" />
-    <ClInclude Include="MemoryPart.h" />
-    <ClInclude Include="Model.h" />
-    <ClInclude Include="TikiConvert.h" />
+    <ClInclude Include="ModelEditor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />

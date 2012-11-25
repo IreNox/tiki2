@@ -36,4 +36,7 @@ typedef const wchar_t* wcstring;
 #define MATH_PI 3.1415926535f
 
 //#define TIKI_MULTITHREADING
+#ifndef TIKI_EDITOR
+#define TIKI_ENGINE
+#endif
 #pragma endregion

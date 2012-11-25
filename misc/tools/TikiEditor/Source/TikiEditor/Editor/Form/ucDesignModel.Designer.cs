@@ -61,7 +61,6 @@
             this.textOutputFilename.Name = "textOutputFilename";
             this.textOutputFilename.Size = new System.Drawing.Size(141, 20);
             this.textOutputFilename.TabIndex = 1;
-            this.textOutputFilename.Text = "C:\\Test.tiki";
             // 
             // buttonSearch
             // 
@@ -111,7 +110,6 @@
             this.textInputPrefix.Name = "textInputPrefix";
             this.textInputPrefix.Size = new System.Drawing.Size(216, 20);
             this.textInputPrefix.TabIndex = 8;
-            this.textInputPrefix.Text = "cylinder";
             this.textInputPrefix.TextChanged += new System.EventHandler(this.textInputPrefix_TextChanged);
             // 
             // textInputPath
@@ -122,7 +120,6 @@
             this.textInputPath.Name = "textInputPath";
             this.textInputPath.Size = new System.Drawing.Size(135, 20);
             this.textInputPath.TabIndex = 9;
-            this.textInputPath.Text = "D:\\Eigene Dateien\\Development\\TikiEngine 2.0\\bin\\Data\\Models";
             this.textInputPath.TextChanged += new System.EventHandler(this.textInputPrefix_TextChanged);
             // 
             // groupBox1
@@ -158,7 +155,8 @@
             // 
             // FileDialog
             // 
-            this.FileDialog.RestoreDirectory = true;
+            this.FileDialog.DefaultExt = "tiki";
+            this.FileDialog.Filter = "TikiModel (*.tiki)|*.tiki|All Files (*.*)|*.*";
             this.FileDialog.SupportMultiDottedExtensions = true;
             // 
             // listInputs

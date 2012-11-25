@@ -40,7 +40,7 @@ namespace TikiEngine
 			bool UseDeformation();
 
 			Material* GetMaterial();
-
+			void SetMaterial(Material* material);
 
 		private:
 

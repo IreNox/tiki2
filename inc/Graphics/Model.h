@@ -48,10 +48,11 @@ namespace TikiEngine
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
 
-			List<TikiMesh*> GetMeshes();
+			List<TikiMesh*>* GetMeshes();
 			void SetMeshes(List<TikiMesh*>& meshes);
 
 			void AddAnimation(TikiAnimation* animation);
+			List<TikiAnimation*>* GetAnimations();
 
 			bool GetReady();
 

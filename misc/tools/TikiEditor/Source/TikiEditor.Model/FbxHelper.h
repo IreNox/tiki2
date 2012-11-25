@@ -4,102 +4,102 @@
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiAnimation.h"
 
-#include "FbxConverter.h"
+#include "FBXConverter.h"
 
 #define FBXSDK_NEW_API
 #include "fbxsdk.h"
 
-namespace TikiEngine
+namespace TikiEditor
 {
-	namespace Resources
+	using namespace TikiEngine::Resources;
+
+	struct VertexBufferInput 
 	{
-		struct VertexBufferInput 
+		VertexBufferInput(){}
+		VertexBufferInput(Vector3 position, Vector2 uv, Vector3 normal)
 		{
-			VertexBufferInput(){}
-			VertexBufferInput(Vector3 position, Vector2 uv, Vector3 normal)
-			{
-				this->Position = position;
-				this->UV = uv;
-				this->Normal = normal;
-			}
+			this->Position = position;
+			this->UV = uv;
+			this->Normal = normal;
+		}
 
-			inline bool operator==(const VertexBufferInput& rhs)
-			{
-				if(Position != rhs.Position || UV != rhs.UV || Normal != rhs.Normal)
-					return false;
-				return true;
-			}
-
-			Vector3 Position;
-			Vector2 UV;
-			Vector3 Normal;
-		};
-		struct SkinningInput
+		inline bool operator==(const VertexBufferInput& rhs)
 		{
-			SkinningInput()
-			{
-				for(int i = 0; i < 4; i++)
-				{
-					Weights[i] = -1;
-					Indices[i] = 0;
-				}
-			}
-			float Weights[4];
-			float Indices[4];
-		};
+			if(Position != rhs.Position || UV != rhs.UV || Normal != rhs.Normal)
+				return false;
+			return true;
+		}
 
-		class FbxHelper
+		Vector3 Position;
+		Vector2 UV;
+		Vector3 Normal;
+	};
+
+	struct SkinningInput
+	{
+		SkinningInput()
 		{
+			for(int i = 0; i < 4; i++)
+			{
+				Weights[i] = -1;
+				Indices[i] = 0;
+			}
+		}
+		float Weights[4];
+		float Indices[4];
+	};
 
-		public:
-			FbxHelper();
-			~FbxHelper();
+	class FbxHelper
+	{
 
-			void Initialize();
+	public:
+		FbxHelper();
+		~FbxHelper();
 
-			FbxScene* GetScene();
-			void SetScene(FbxScene* scene);
+		void Initialize();
 
-			TikiAnimation* GetAnimation();
-			TikiBone* GetRootBone();
-			List<TikiBone*>& GetConstantBufferIndices();
-			List<TikiMesh*>& GetMeshes();
+		FbxScene* GetScene();
+		void SetScene(FbxScene* scene);
 
-			static void MergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source);
+		TikiAnimation* GetAnimation();
+		TikiBone* GetRootBone();
+		List<TikiBone*>& GetConstantBufferIndices();
+		List<TikiMesh*>& GetMeshes();
 
-		private:
+		static void MergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source);
 
-			void RecursiveBone(FbxNode* node);
-			void BuildBoneHierachy(FbxNode* node, TikiBone* parent = 0);
+	private:
 
-			void InitializeAnimation();
-			void InitializeAnimationLayer(FbxNode* node);
-			void FillTimeStamp(FbxAnimCurve* curve);
-			void FlagBones();
-			void CleanBones();
-			void FindMeshes();
+		void RecursiveBone(FbxNode* node);
+		void BuildBoneHierachy(FbxNode* node, TikiBone* parent = 0);
+
+		void InitializeAnimation();
+		void InitializeAnimationLayer(FbxNode* node);
+		void FillTimeStamp(FbxAnimCurve* curve);
+		void FlagBones();
+		void CleanBones();
+		void FindMeshes();
 
 
-			void InitializeMesh(FbxMesh* mesh);
+		void InitializeMesh(FbxMesh* mesh);
 
-			Matrix LocalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
-			Matrix GlobalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
-			int MaxBonesPerVertex(FbxMesh* mesh);
+		Matrix LocalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
+		Matrix GlobalTransform(FbxNode* node, FbxTime& time = FBXSDK_TIME_INFINITE);
+		int MaxBonesPerVertex(FbxMesh* mesh);
 
-			void GetGlobalVertices(List<Vector3>& list, FbxMesh* mesh);
-			void InitializeBufferData(List<Vector3>& vertices, List<SkinningVertex>& buffer, List<UInt32>& indices, FbxMesh* mesh);
-			void GetSkinningCluster(FbxMesh* mesh, List<FbxCluster*>& clusterList);
-			void InitializeSkinning(FbxMesh* mesh, List<Vector3>& vertices, List<SkinningVertex>& buffer);
+		void GetGlobalVertices(List<Vector3>& list, FbxMesh* mesh);
+		void InitializeBufferData(List<Vector3>& vertices, List<SkinningVertex>& buffer, List<UInt32>& indices, FbxMesh* mesh);
+		void GetSkinningCluster(FbxMesh* mesh, List<FbxCluster*>& clusterList);
+		void InitializeSkinning(FbxMesh* mesh, List<Vector3>& vertices, List<SkinningVertex>& buffer);
 
-			FbxScene* scene;
-			List<FbxNode*> fbxNodes;
-			List<TikiBone*> tikiBones;
-			TikiAnimation* animation;
-			List<TikiMesh*> meshes;
-			List<TikiBone*> constantBufferIndices;
+		FbxScene* scene;
+		List<FbxNode*> fbxNodes;
+		List<TikiBone*> tikiBones;
+		TikiAnimation* animation;
+		List<TikiMesh*> meshes;
+		List<TikiBone*> constantBufferIndices;
 
-			TikiBone* rootBone;
+		TikiBone* rootBone;
 
-		};
-	}
+	};
 }

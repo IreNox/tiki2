@@ -1,83 +1,63 @@
-#pragma once
 
-#include "Model.h"
+#include "Graphics/ModelConverter.h"
 
-#include "IOContext.h"
+#ifdef TIKI_ENGINE
+#include "Core/IContentManager.h"
+#endif
 
-#include "BinaryTikiMesh.h"
-#include "BinaryTikiBone.h"
-#include "BinaryTikiLayer.h"
-#include "BinaryTikiAnimation.h"
-
-#include "Core/List.h"
-
-namespace TikiEditor
+namespace TikiEngine
 {
-	public ref class TikiConvert
+	namespace Resources
 	{
-	public:
-
 		#pragma region Class
-		TikiConvert(Model* model)
+		ModelConverter::ModelConverter(Model* model)
+			: meshIds(), animationIds(), constantBufferIndices()
 		{
-			this->model = model;
-			context = gcnew IOContext();
-
-			meshIds = new List<UInt32>();
-			animationIds = new List<UInt32>();
+			SafeAddRef(model, &this->model);
+			context = new ModelIOContext();
 
 			addPartsModel();
 		}
 
-		TikiConvert(System::String^ fileName)
+		ModelConverter::ModelConverter(Model* model, Stream* stream)
+			: meshIds(), animationIds(), constantBufferIndices()
 		{
-			this->model = new Model();
-			this->context = gcnew IOContext(fileName);
-
-			meshIds = new List<UInt32>();
-			animationIds = new List<UInt32>();
+			SafeAddRef(model, &this->model);
+			this->context = new ModelIOContext(stream);
 
 			readPartsModel();
 		}
 
-		~TikiConvert()
+		ModelConverter::~ModelConverter()
 		{
-			delete(meshIds);
-			delete(animationIds);
+			SafeDelete(&context);
+			SafeRelease(&model);
 		}
 		#pragma endregion
 
 		#pragma region Member
-		Model* GetModel()
+		Model* ModelConverter::GetModel()
 		{
 			return model;
 		}
 
-		void WriteToFile(System::String^ fileName)
+		void ModelConverter::WriteToStream(Stream* stream)
 		{
-			context->WriteToFile(fileName);
+			context->WriteToStream(stream);
 		}
 		#pragma endregion
-		
-	private:
-
-		Model* model;
-		IOContext^ context;
-
-		List<UInt32>* meshIds;
-		List<UInt32>* animationIds;
 
 		#pragma region Protected Member - Read
-		void readPartsModel()
+		void ModelConverter::readPartsModel()
 		{
-			meshIds = new List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->MeshArrayId), context->ReadPart(context->GetHeader()->MeshArrayId).ArrayCount, false);
-			animationIds = new List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->AnimationArrayId), context->ReadPart(context->GetHeader()->AnimationArrayId).ArrayCount, false);
-			
+			meshIds = List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->MeshArrayId), context->ReadPart(context->GetHeader()->MeshArrayId).ArrayCount, false);
+			animationIds = List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->AnimationArrayId), context->ReadPart(context->GetHeader()->AnimationArrayId).ArrayCount, false);
+
 			UInt32 i = 0;
 			UInt32 id = 0;
-			while (i < meshIds->Count())
+			while (i < meshIds.Count())
 			{
-				id = animationIds->Get(i);
+				id = animationIds[i];
 
 				model->GetMeshes()->Add(
 					readTikiMesh(context->ReadPart(id), (BinaryTikiMesh*)context->ReadPartPointer(id))
@@ -86,9 +66,9 @@ namespace TikiEditor
 			}
 
 			i = 0;
-			while (i < animationIds->Count())
+			while (i < animationIds.Count())
 			{
-				id = animationIds->Get(i);
+				id = animationIds[i];
 
 				model->GetAnimations()->Add(
 					readTikiAnimation(context->ReadPart(id), (BinaryTikiAnimation*)context->ReadPartPointer(id))
@@ -100,39 +80,58 @@ namespace TikiEditor
 			model->SetRootBone(
 				readTikiBone(context->ReadPart(id), (BinaryTikiBone*)context->ReadPartPointer(id), 0)
 			);
+
+			model->SetConstantBufferIndices(
+				constantBufferIndices
+			);
 		}
 
-		TikiMesh* readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
+		TikiMesh* ModelConverter::readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
 		{
 			TikiMesh* mesh = new TikiMesh();
 
-			//mesh->SetName(readString(binMesh->NameId));
+			mesh->SetName(readString(binMesh->NameId));
+			mesh->SetDeformation(binMesh->UseDeformation);
+
+#ifdef TIKI_ENGINE
+			if (binMesh->UseDeformation)
+			{
+				mesh->SetMaterial(model->GetEngine()->content->LoadMaterial(L"os_skinning"));
+			}
+			else
+			{
+				mesh->SetMaterial(model->GetEngine()->content->LoadMaterial(L"os_default"));
+			}
 
 			mesh->GetMaterial()->TexDiffuse = 0; //load from content manager
 			mesh->GetMaterial()->TexNormalMap = 0; //load from content manager
 			mesh->GetMaterial()->TexSpecular = 0; //load from content manager
 			mesh->GetMaterial()->TexDiffuse = 0; //load from content manager
+#endif
 
-			//BinaryPart& dataPart = context->ReadPart(binMesh->VertexDataId);
-			//
-			//mesh->SetVertexData(
-			//	context->ReadPartPointer(dataPart.Id),
-			//	dataPart.Length * dataPart.ArrayCount
-			//);
+			BinaryPart& dataPart = context->ReadPart(binMesh->VertexDataId);
+			
+			List<SkinningVertex> vertices = List<SkinningVertex>(
+				(SkinningVertex*)context->ReadPartPointer(dataPart.Id),
+				dataPart.ArrayCount,
+				false
+			);
+			mesh->SetSkinningVertexData(vertices);
 
-			//dataPart = context->ReadPart(binMesh->IndexDataId);
 
-			//mesh->SetIndexData(
-			//	context->ReadPartPointer(dataPart.Id),
-			//	dataPart.Length * dataPart.ArrayCount
-			//);
+			dataPart = context->ReadPart(binMesh->IndexDataId);
 
-			//mesh->UseDeformation() = binMesh->UseDeformation;
+			List<UInt32> indices = List<UInt32>(
+				(UInt32*)context->ReadPartPointer(dataPart.Id),
+				dataPart.ArrayCount,
+				false
+			);
+			mesh->SetIndices(indices);
 
 			return mesh;
 		}
 
-		TikiAnimation* readTikiAnimation(BinaryPart& part, BinaryTikiAnimation* binAni)
+		TikiAnimation* ModelConverter::readTikiAnimation(BinaryPart& part, BinaryTikiAnimation* binAni)
 		{
 			TikiAnimation* ani = new TikiAnimation();
 
@@ -152,7 +151,7 @@ namespace TikiEditor
 			return ani;
 		}
 
-		TikiBone* readTikiBone(BinaryPart& part, BinaryTikiBone* binBone, TikiBone* parent)
+		TikiBone* ModelConverter::readTikiBone(BinaryPart& part, BinaryTikiBone* binBone, TikiBone* parent)
 		{
 			TikiBone* bone = new TikiBone();
 
@@ -160,6 +159,9 @@ namespace TikiEditor
 			bone->SetName(readString(binBone->NameId));
 			bone->SetBoneInitTransform(binBone->Init);
 			bone->SetConstantBufferIndex(binBone->ConstanBufferIndex);
+
+			while (constantBufferIndices.Count() < binBone->ConstanBufferIndex)	{ }
+			constantBufferIndices[binBone->ConstanBufferIndex] = bone;
 
 			BinaryPart& layerArr = context->ReadPart(binBone->LayerArrayId);
 			UInt32* layerIds = (UInt32*)context->ReadPartPointer(binBone->LayerArrayId);
@@ -174,7 +176,7 @@ namespace TikiEditor
 
 				layer.GetQuaternion() = List<Quaternion>(
 					(Quaternion*)context->ReadPartPointer(arr.Id), arr.ArrayCount, false
-				);
+					);
 
 				arr = context->ReadPart(binLayer->TranslationArrayId);
 
@@ -183,7 +185,7 @@ namespace TikiEditor
 				);
 
 				bone->AddAnimation(
-					model->GetAnimations()->Get(animationIds->IndexOf(binLayer->AnimationId)),
+					model->GetAnimations()->Get(animationIds.IndexOf(binLayer->AnimationId)),
 					layer
 				);
 
@@ -198,14 +200,14 @@ namespace TikiEditor
 			{
 				bone->AddChild(
 					readTikiBone(context->ReadPart(childIds[i]), (BinaryTikiBone*)context->ReadPartPointer(childIds[i]), bone)
-				);
+					);
 				i++;
 			}
 
 			return bone;
 		}
 
-		const char* readString(UInt32 id)
+		const char* ModelConverter::readString(UInt32 id)
 		{
 			BinaryPart& part = context->ReadPart(id);
 
@@ -217,14 +219,14 @@ namespace TikiEditor
 		#pragma endregion
 
 		#pragma region Protected Memer - Write
-		void addPartsModel()
+		void ModelConverter::addPartsModel()
 		{
 			UInt32 i = 0;
 			while (i < model->GetMeshes()->Count())
 			{
 				addPartsMesh(
 					model->GetMeshes()->Get(i)
-				);
+					);
 				i++;
 			}
 
@@ -233,16 +235,16 @@ namespace TikiEditor
 			{
 				addPartsAnimation(
 					model->GetAnimations()->Get(i)
-				);
+					);
 				i++;
 			}
 
 			context->GetHeader()->RootBoneId = addPartsBone(model->GetRootBone(), 0);
-			context->GetHeader()->MeshArrayId = context->AddPart((void*)meshIds->GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, meshIds->Count());
-			context->GetHeader()->AnimationArrayId = context->AddPart((void*)animationIds->GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, animationIds->Count());
+			context->GetHeader()->MeshArrayId = context->AddPart((void*)meshIds.GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, meshIds.Count());
+			context->GetHeader()->AnimationArrayId = context->AddPart((void*)animationIds.GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, animationIds.Count());
 		}
 
-		void addPartsMesh(TikiMesh* mesh)
+		void ModelConverter::addPartsMesh(TikiMesh* mesh)
 		{
 			BinaryTikiMesh* btm = new BinaryTikiMesh();
 			btm->NameId = context->AddPart((void*)mesh->GetName(), 0, PT_String);
@@ -261,12 +263,12 @@ namespace TikiEditor
 				btm->LightTexId   = addPartsTexture(mat->TexDiffuse);
 			}
 
-			meshIds->Add(
+			meshIds.Add(
 				context->AddPart(btm, sizeof(BinaryTikiMesh), PT_Mesh)
 			);
 		}
 
-		UInt32 addPartsTexture(ITexture* tex)
+		UInt32 ModelConverter::addPartsTexture(ITexture* tex)
 		{
 			if (tex != 0)
 			{
@@ -278,7 +280,7 @@ namespace TikiEditor
 			return 0;
 		}
 
-		UInt32 addPartsBone(TikiBone* bone, UInt32 parentId)
+		UInt32 ModelConverter::addPartsBone(TikiBone* bone, UInt32 parentId)
 		{
 			BinaryTikiBone* btb = new BinaryTikiBone();
 			btb->NameId = context->AddPart((void*)bone->GetName(), 0, PT_String);
@@ -294,21 +296,21 @@ namespace TikiEditor
 			{
 				childs.Add(
 					addPartsBone(bone->GetChilds()->Get(i), id)
-				);
+					);
 				i++;
 			}
 			btb->ChildsArrayId = context->AddPart(childs.ToArray(), sizeof(UInt32), PT_Array, PT_UInt, childs.Count());
 
 			i = 0;
 			List<UInt32> layer;
-			while (i < animationIds->Count())
+			while (i < animationIds.Count())
 			{
 				layer.Add(
 					addPartsLayer(
-						animationIds->Get(i),
-						&bone->GetAnimationLayer(model->GetAnimations()->Get(i))
+					animationIds[i],
+					&bone->GetAnimationLayer(model->GetAnimations()->Get(i))
 					)
-				);
+					);
 				i++;
 			}
 			btb->LayerArrayId = context->AddPart(layer.ToArray(), sizeof(UInt32), PT_Array, PT_UInt, layer.Count());
@@ -316,7 +318,7 @@ namespace TikiEditor
 			return id;
 		}
 
-		UInt32 addPartsLayer(UInt32 animationId, AnimationLayer* layer)
+		UInt32 ModelConverter::addPartsLayer(UInt32 animationId, AnimationLayer* layer)
 		{
 			BinaryTikiLayer* btl = new BinaryTikiLayer();
 
@@ -327,7 +329,7 @@ namespace TikiEditor
 			return context->AddPart(btl, sizeof(BinaryTikiLayer), PT_Layer);
 		}
 
-		void addPartsAnimation(TikiAnimation* animation)
+		void ModelConverter::addPartsAnimation(TikiAnimation* animation)
 		{
 			BinaryTikiAnimation* bta = new BinaryTikiAnimation();
 			bta->NameId = context->AddPart((void*)animation->GetName(), 0, PT_String);
@@ -339,11 +341,11 @@ namespace TikiEditor
 
 			bta->TimeStampsArrayId = context->AddPart((void*)animation->GetTimeStamps().GetInternalData(), sizeof(double), PT_Array, PT_Double, animation->GetTimeStamps().Count());
 
-			animationIds->Add(
+			animationIds.Add(
 				context->AddPart(bta, sizeof(BinaryTikiAnimation), PT_Animation)
 			);
 		}
 		#pragma endregion
 
-	};
+	}
 }

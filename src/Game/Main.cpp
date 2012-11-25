@@ -40,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			if ((name == L"tim.boden" || name == L"Tim") && true)
 			{
-				scene = new SceneAdrian(engine);
+				scene = new SceneTim(engine);
 				//scene = new SceneLevel(engine);
 				//((SceneLevel*)scene)->LoadLevel(1);
 			}

@@ -44,15 +44,11 @@ namespace TikiEngine
 			return material;
 		}
 
-
-	
-		
-
-	
-
-	
-
-	
+		void TikiMesh::SetMaterial(Material* material)
+		{
+			SafeRelease(&this->material);
+			SafeAddRef(material, &this->material);
+		}
 
 		bool TikiMesh::GetReady()
 		{

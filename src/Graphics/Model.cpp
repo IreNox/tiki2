@@ -11,14 +11,13 @@
 #include <Core/IFont.h>
 #include <Core/Engine.h>
 
-
-#include <sstream>
-
+#include "Graphics/ModelConverter.h"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
+		#pragma region Class
 		Model::Model(Engine* engine)
 			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1), rootBone(0)
 		{
@@ -44,16 +43,9 @@ namespace TikiEngine
 
 			SafeRelease(&rootBone);
 		}
+		#pragma endregion
 
-		void Model::Initialize()
-		{
-
-			this->CopyIndexData();
-			this->CopyVertexData();
-
-		}
-
-
+		#pragma region Member - Get/Set
 		void Model::AddAnimation(TikiAnimation* animation) //TODO ADD CURVES BLA
 		{
 			if(!this->animations.Contains(animation))
@@ -62,6 +54,11 @@ namespace TikiEngine
 			}
 			if(animations.Count() == 1)
 				animationStack.Add(animation);
+		}
+
+		List<TikiAnimation*>* Model::GetAnimations()
+		{
+			return &animations;
 		}
 
 		void* Model::GetNativeResource()
@@ -88,7 +85,7 @@ namespace TikiEngine
 		{
 			return &indicesList;
 		}
-		
+
 		void Model::SetMaterial(Material* material)
 		{
 			SafeRelease(&this->material);
@@ -100,10 +97,55 @@ namespace TikiEngine
 			{
 				declaration = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
-					
+
 			((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
 		}
 
+		TikiBone* Model::GetRootBone()
+		{
+			return this->rootBone;
+		}
+
+		void Model::SetRootBone(TikiBone* bone)
+		{
+			if(this->rootBone != 0)
+				SafeRelease(&rootBone);
+			rootBone = bone;
+			rootBone->AddRef();
+		}
+
+		void Model::SetConstantBufferIndices(List<TikiBone*>& list)
+		{
+			this->constantBufferElements = list;
+		}
+
+		float Model::GetAnimationSpeed()
+		{
+			return this->animationSpeed;
+		}
+
+		void Model::SetAnimationSpeed(float speed)
+		{
+			this->animationSpeed = speed;
+		}
+
+		int Model::AnimationCount()
+		{
+			return this->animations.Count();
+		}
+
+		List<TikiMesh*>* Model::GetMeshes()
+		{
+			return &meshes;
+		}
+
+		void Model::SetMeshes(List<TikiMesh*>& meshes)
+		{
+			this->meshes = meshes;
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw/Update
 		void Model::Draw(GameObject* gameObject, const DrawArgs& args)
 		{
 			if (!this->GetReady()) return;
@@ -149,6 +191,14 @@ namespace TikiEngine
 			constantBufferMatrices->Unmap();	
 
 		}
+		#pragma endregion
+
+		#pragma region Private Member - Init
+		void Model::Initialize()
+		{
+			this->CopyIndexData();
+			this->CopyVertexData();
+		}
 
 		void Model::CopyVertexData()
 		{
@@ -193,72 +243,24 @@ namespace TikiEngine
 			}
 			this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
 		}
-
-		TikiBone* Model::GetRootBone()
-		{
-			return this->rootBone;
-		}
-		void Model::SetRootBone(TikiBone* bone)
-		{
-			if(this->rootBone != 0)
-				SafeRelease(&rootBone);
-			rootBone = bone;
-			rootBone->AddRef();
-		}
-
-		void Model::SetConstantBufferIndices(List<TikiBone*>& list)
-		{
-			this->constantBufferElements = list;
-		}
+		#pragma endregion
 
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			_CrtDbgBreak(); // nyi
-			//FbxHelper* helper = new FbxHelper();
-
-			//if(!DllMain::FBXLoader->GetScene(fileName, helper))
-			//	_CrtDbgBreak();//FBXfile not found
-
-			//this->scene = helper->GetScene();
-			//this->SetRootBone(helper->GetRootBone());
-			//this->AddAnimation(helper->GetAnimation());
-			//this->SetConstantBufferIndices(helper->GetConstantBufferIndices());
-			//this->SetMeshes(helper->GetMeshes());
-			//if(!DllMain::FBXLoader->GetScene(fileName, &scene))
-			//	_CrtDbgBreak(); //FBXfile not found
+			ModelConverter* convert = new ModelConverter(this, stream);
+			delete(convert);
 
 			Initialize();
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)
 		{
-
+			ModelConverter* convert = new ModelConverter(this);
+			convert->WriteToStream(stream);
+			delete(stream);
 		}
 
-		float Model::GetAnimationSpeed()
-		{
-			return this->animationSpeed;
-		}
 
-		void Model::SetAnimationSpeed(float speed)
-		{
-			this->animationSpeed = speed;
-		}
-
-		int Model::AnimationCount()
-		{
-			return this->animations.Count();
-		}
-
-		List<TikiMesh*> Model::GetMeshes()
-		{
-			return this->meshes;
-		}
-
-		void Model::SetMeshes(List<TikiMesh*>& meshes)
-		{
-			this->meshes = meshes;
-		}
 
 	}
 }

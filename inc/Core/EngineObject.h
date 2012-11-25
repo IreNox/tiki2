@@ -9,13 +9,12 @@ namespace TikiEngine
 	{
 	public:
 
-		EngineObject(Engine* engine)
-			: engine(engine)
-		{
-		}
+		EngineObject(Engine* engine) : engine(engine) { }
+		virtual ~EngineObject() { }
 
-		virtual ~EngineObject()
+		inline Engine* GetEngine()
 		{
+			return engine;
 		}
 
 	protected:

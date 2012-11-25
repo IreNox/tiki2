@@ -29,6 +29,8 @@
     <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
     <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
+    <ClCompile Include="src\Graphics\ModelConverter.cpp" />
+    <ClCompile Include="src\Graphics\ModelIOContext.cpp" />
     <ClCompile Include="src\Graphics\ParticleRenderer.cpp" />
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
@@ -63,6 +65,9 @@
     <ClInclude Include="inc\Graphics\LightData.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Model.h" />
+    <ClInclude Include="inc\Graphics\ModelBinaryData.h" />
+    <ClInclude Include="inc\Graphics\ModelConverter.h" />
+    <ClInclude Include="inc\Graphics\ModelIOContext.h" />
     <ClInclude Include="inc\Graphics\ParticleRenderer.h" />
     <ClInclude Include="inc\Graphics\ParticleVertex.h" />
     <ClInclude Include="inc\Graphics\Quad.h" />

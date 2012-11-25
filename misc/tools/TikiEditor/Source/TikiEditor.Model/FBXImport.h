@@ -1,13 +1,17 @@
 #pragma once
 
-#include "Model.h"
-#include "TikiConvert.h"
+#include "Core/FileStream.h"
 
 #include "FbxHelper.h"
 #include "FbxLoader.h"
 
+#include "Graphics/ModelConverter.h"
+
 namespace TikiEditor
 {
+	using namespace TikiEngine::IO;
+	using namespace TikiEngine::Resources;
+
 	public ref class FBXImport
 	{
 	public:
@@ -55,10 +59,17 @@ namespace TikiEditor
 				i++;
 			}
 
-			//delete(loader);
 
-			TikiConvert^ convert = gcnew TikiConvert(model);
-			convert->WriteToFile(outputFile);
+			wcstring outFile = (wcstring)System::Runtime::InteropServices::Marshal::StringToHGlobalUni(outputFile).ToPointer();
+
+			FileStream* stream = new FileStream(outFile, FM_Write);
+			ModelConverter* convert = new ModelConverter(model);
+			convert->WriteToStream(stream);
+
+			delete(convert);
+			delete(stream);
+
+			delete(loader);
 		}
 
 		property System::String^ OutputFilename

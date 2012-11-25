@@ -1,7 +1,7 @@
 
-#include "IOContext.h"
+#define TIKI_EDITOR
+
 #include "FBXImport.h"
-#include "TikiConvert.h"
 
 #include "..\src\Core\TypeGlobals.cpp"
 
@@ -19,3 +19,6 @@
 #include "..\src\Graphics\TikiMesh.cpp"
 #include "..\src\Graphics\TikiAnimation.cpp"
 #include "..\src\Graphics\AnimationLayer.cpp"
+
+#include "..\src\Graphics\ModelIOContext.cpp"
+#include "..\src\Graphics\ModelConverter.cpp"
