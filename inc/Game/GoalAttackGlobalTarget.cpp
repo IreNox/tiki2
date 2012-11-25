@@ -79,6 +79,7 @@ namespace TikiEngine
 		void GoalAttackGlobalTarget::Terminate()
 		{
 			OutputDebugString(L"GoalAttackGlobalTarget - Terminate. \n");
+			owner->GetTargetSys()->ClearGlobalTarget();
 			status = Completed;
 		}
 

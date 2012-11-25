@@ -213,8 +213,13 @@ namespace TikiEngine
 							{
 								if (target != 0)
 								{
-									OutputDebugString(L"Target found. \n");
-									bot->GetBrain()->AddGoalAttackGlobalTarget(target);
+									// don't attack yourself dude
+									if (target->ID() != bot->ID())
+									{
+										OutputDebugString(L"Target found. \n");
+										bot->GetBrain()->AddGoalAttackGlobalTarget(target);
+
+									}
 								}
 								else
 								{
