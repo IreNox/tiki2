@@ -1,8 +1,6 @@
 #pragma once
-//#define FBXSDK_NEW_API
-//#include "fbxsdk.h"
-#include "Core/TikiObject.h"
 
+#include "Core/TikiObject.h"
 
 namespace TikiEngine
 {
@@ -12,10 +10,7 @@ namespace TikiEngine
 		{
 		public:
 			TikiAnimation();
-//			TikiAnimation(FbxAnimLayer* layer);
 			~TikiAnimation();
-
-			/*FbxAnimLayer* Layer();*/
 
 			const char* GetName();
 			void SetName(const char* name);
@@ -43,8 +38,6 @@ namespace TikiEngine
 
 		private:
 			const char* name;
-
-			//FbxAnimLayer* layer;
 
 			List<double> timeStamps;
 

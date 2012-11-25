@@ -1,7 +1,5 @@
 #pragma once
 
-//#define FBXSDK_NEW_API
-//#include "fbxsdk.h"
 #include <Core/Dictionary.h>
 #include <Core/List.h>
 #include "Core/TikiObject.h"
@@ -61,7 +59,7 @@ namespace TikiEngine
 			void SetConstantBufferIndex(int index);
 
 		private:
-			//FbxNode* node;
+			
 			const char* name;
 			int constantBufferIndex;
 

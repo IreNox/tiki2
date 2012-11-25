@@ -266,12 +266,12 @@ namespace TikiEditor
 						}
 
 						skin.BlendIndices[vsIndex] = (float)bone->GetConstantBufferIndex();
-						skin.BlendWeights[vsIndex] = cluster->GetControlPointWeights()[vertexIndex];
+						skin.BlendWeights[vsIndex] = (float)cluster->GetControlPointWeights()[vertexIndex];
 					}
 				}
 			}
 		}
-		for(int i = 0; i <buffer.Count(); i++)
+		for(UInt32 i = 0; i < buffer.Count(); i++)
 		{
 			SkinningVertex& skin = buffer[i];
 			for(int k = 0; k < MAXBONESPERVERTEX; k++)
@@ -333,7 +333,7 @@ namespace TikiEditor
 		for(int layerIndex = 0; layerIndex < stack->GetSrcObjectCount(); layerIndex++)
 		{
 			FbxAnimLayer* layer = stack->GetSrcObject<FbxAnimLayer>(layerIndex);
-			for(int i = 0; i < fbxNodes.Count(); i++)
+			for(UInt32 i = 0; i < fbxNodes.Count(); i++)
 			{
 				FbxAnimCurve* curve = fbxNodes[i]->LclTranslation.GetCurve(layer, FBXSDK_CURVENODE_COMPONENT_X);
 				FillTimeStamp(curve);
@@ -354,7 +354,7 @@ namespace TikiEditor
 		animation->GetTimeStamps().Sort();
 		if (animation->GetTimeStamps().Count() == 0) animation->AddTimeStampKey(-1);
 
-		int bsv = 1;
+		UInt32 bsv = 1;
 		while(bsv * 2 < animation->GetTimeStamps().Count())
 			bsv *= 2;
 		animation->SetBSV(bsv);
@@ -374,7 +374,7 @@ namespace TikiEditor
 	void FbxHelper::InitializeAnimationLayer(FbxNode* node)
 	{
 		TikiBone* bone = 0;
-		for(int i = 0; i < tikiBones.Count(); i++)
+		for(UInt32 i = 0; i < tikiBones.Count(); i++)
 		{
 			if(node->GetName() == tikiBones[i]->GetName())
 			{
@@ -396,7 +396,7 @@ namespace TikiEditor
 		}
 		else
 		{
-			for(int i = 0; i < animation->GetTimeStamps().Count(); i++)
+			for(UInt32 i = 0; i < animation->GetTimeStamps().Count(); i++)
 			{
 				FbxTime time;
 				time.SetSecondDouble(animation->GetTimeStamps()[i]);
@@ -418,7 +418,7 @@ namespace TikiEditor
 
 		destination->AddAnimation(animation, bone->GetAnimationLayer(animation));
 
-		for(int i = 0; i < destination->GetChilds()->Count(); i++)
+		for(UInt32 i = 0; i < destination->GetChilds()->Count(); i++)
 			MergeAnimation(animation, destination->GetChilds()->Get(i), source);
 	}
 

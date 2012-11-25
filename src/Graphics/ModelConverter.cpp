@@ -91,7 +91,7 @@ namespace TikiEngine
 			TikiMesh* mesh = new TikiMesh();
 
 			mesh->SetName(readString(binMesh->NameId));
-			mesh->SetDeformation(binMesh->UseDeformation);
+			mesh->SetDeformation(binMesh->UseDeformation != 0);
 
 #ifdef TIKI_ENGINE
 			if (binMesh->UseDeformation)
@@ -162,7 +162,7 @@ namespace TikiEngine
 
 			if (binBone->ConstanBufferIndex >= 0)
 			{
-				while (constantBufferIndices.Count() <= binBone->ConstanBufferIndex) { constantBufferIndices.Add(0); }
+				while (constantBufferIndices.Count() <= (UInt32)binBone->ConstanBufferIndex) { constantBufferIndices.Add(0); }
 				constantBufferIndices[binBone->ConstanBufferIndex] = bone;
 			}
 

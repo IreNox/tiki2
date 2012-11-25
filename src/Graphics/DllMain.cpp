@@ -23,7 +23,6 @@ namespace TikiEngine
 	TikiInfo DllMain::DllInfo = TikiInfo();
 	
 	Engine* DllMain::Engine = 0;
-	FbxLoader* DllMain::FBXLoader = 0;
 
 	GraphicsModule* DllMain::ModuleGraphics = 0;
 	SpriteBatchModule* DllMain::ModuleSpriteBatch = 0;
@@ -58,7 +57,6 @@ namespace TikiEngine
 
 	void DllMain::DisposeDll()
 	{
-		//SafeRelease(&DllMain::FBXLoader);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

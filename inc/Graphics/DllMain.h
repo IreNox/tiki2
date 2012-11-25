@@ -11,11 +11,6 @@ using TikiEngine::TikiInfo;
 
 namespace TikiEngine
 {
-	namespace Resources
-	{
-		class FbxLoader;
-	}
-	
 	namespace Modules
 	{
 		class GraphicsModule;
@@ -37,8 +32,6 @@ namespace TikiEngine
 		static TikiInfo DllInfo;
 
 		static Engine* Engine;
-
-		static FbxLoader* FBXLoader;
 
 		static GraphicsModule* ModuleGraphics;
 		static SpriteBatchModule* ModuleSpriteBatch;

@@ -54,7 +54,7 @@ namespace TikiEngine
 			if(constantBufferIndex != -1)
 				list.Add(this);
 			constantBufferIndex = list.Count() - 1;
-			for(int i = 0; i < childs.Count(); i++)
+			for(UInt32 i = 0; i < childs.Count(); i++)
 				childs[i]->CreateMapping(list);
 		}
 
@@ -62,28 +62,6 @@ namespace TikiEngine
 
 		void TikiBone::Draw(const DrawArgs& args)
 		{
-			//if(parent != 0)
-			//{
-			//	Matrix s = Matrix::CreateScaleMatrix(0.01f,0.01f,0.01f);
-
-			//	Vector3 p1 = Vector3::TransformCoordinate(Vector3(), BoneCurrentTransform() * s );
-			//	Vector3 p2 = Vector3::TransformCoordinate(Vector3(), parent->BoneCurrentTransform() * s);
-
-			//	FbxNodeAttribute::EType nodeType = node->GetNodeAttribute()->GetAttributeType();
-			//	FbxNodeAttribute::EType parent;
-
-			//	if(this->parent->node->GetNodeAttribute() == 0)
-			//		parent = FbxNodeAttribute::eMesh;
-			//	else
-			//		parent = this->parent->node->GetNodeAttribute()->GetAttributeType();
-			//	
-
-			//	if(nodeType == FbxNodeAttribute::eSkeleton && parent == FbxNodeAttribute::eSkeleton)
-			//	{
-			//		args.Graphics->DrawLine(p1, p2, Color::Red);
-			//	}
-			//}
-
 			for(UInt32 i = 0; i < childs.Count(); i++)
 				childs[i]->Draw(args);
 		}
@@ -180,12 +158,15 @@ namespace TikiEngine
 		{
 			if(this->constantBufferIndex == index)
 				return this;
+
 			for(UInt32 i = 0;  i< childs.Count(); i++)
 			{
 				TikiBone* tmp = childs[i]->GetBoneByIndex(index);
 				if(tmp != 0)
 					return tmp;
 			}
+
+			return 0;
 		}
 
 		AnimationLayer& TikiBone::GetAnimationLayer(TikiAnimation* animation)

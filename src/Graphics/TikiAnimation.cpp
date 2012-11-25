@@ -6,20 +6,11 @@ namespace TikiEngine
 	{
 		TikiAnimation::TikiAnimation(): Left(0), Right(0), weight(1.0f), currentTime(0.0){}
 
-		//TikiAnimation::TikiAnimation(FbxAnimLayer* layer)
-		//	:name(layer->GetName()), Left(0), Right(0), weight(1.0f), currentTime(0.0)
-		//{
-		//	this->layer = layer;
-		//}
 		TikiAnimation::~TikiAnimation()
 		{
 
 		}
 
-		//FbxAnimLayer* TikiAnimation::Layer()
-		//{
-		//	return this->layer;
-		//}
 		const char* TikiAnimation::GetName()
 		{
 			return this->name;
@@ -142,7 +133,7 @@ namespace TikiEngine
 			Left = index;
 			Right = index + 1;
 
-			Koeff = (currentTime - timeStamps[Left]) / (timeStamps[Right] - timeStamps[Left]);
+			Koeff = (float)((currentTime - timeStamps[Left]) / (timeStamps[Right] - timeStamps[Left]));
 		}
 	}
 }
