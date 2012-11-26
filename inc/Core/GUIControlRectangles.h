@@ -37,7 +37,7 @@ namespace TikiEngine
 			GUIControlRectangles();
 			
 			/*! @brief Create new GUIControlRectangles from Database */
-			GUIControlRectangles(string control);
+			GUIControlRectangles(Engine* engine, string control);
 
 			/*! @brief Create new GUIControlRectangles from Database-data */
 			GUIControlRectangles(const RectangleF& destRect, GUIControlRectangles* srcRects);

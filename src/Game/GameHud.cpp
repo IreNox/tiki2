@@ -16,11 +16,6 @@ namespace TikiEngine
 		GameHud::GameHud(GameState* state)
 			: EngineObject(state->GetEngine()), state(state)
 		{
-			//buttonMenu
-			IFont* font = engine->librarys->CreateResource<IFont>();
-			font->Create(L"Arial", 12);
-			GUIControl::SetDefaultFont(font);
-
 			texRes1 = engine->content->LoadTexture(L"hud/mass");
 			texRes1->AddRef();
 			imageRes1 = new GUIImage(state->GetEngine());
@@ -58,8 +53,6 @@ namespace TikiEngine
 			SafeRelease(&texRes2);
 			SafeRelease(&imageRes2);
 			SafeRelease(&labelRes2);
-
-			GUIControl::GetDefaultFont()->Release();
 		}
 		#pragma endregion
 

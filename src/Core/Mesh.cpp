@@ -116,7 +116,7 @@ namespace TikiEngine
 			char buffer[256];
 			ZeroMemory(buffer, 256);
 		
-			UInt32 size = stream->GetLength();	
+			UPInt size = stream->GetLength();	
 			char* file = new char[size + 1];
 			stream->Read(file, 0, size);
 			file[size] = 10;

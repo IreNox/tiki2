@@ -5,7 +5,7 @@
 #include "NxRemoteDebugger.h"
 
 //Set this to 0 to stop the app from trying to connect to the VRD
-#define USE_VRD 1
+#define USE_VRD 0
 
 //Change this setting to the IP number or DNS name of the computer that is running the VRD
 #define VRD_HOST "localhost"

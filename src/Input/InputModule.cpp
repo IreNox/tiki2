@@ -173,10 +173,10 @@ namespace TikiEngine
 
 			r = (*device)->Acquire();
 
-			if (FAILED(r))
-			{
-				engine->HLog.Write("Can't acquire.\n");
-			}
+			//if (FAILED(r))
+			//{
+			//	engine->HLog.Write("Can't acquire.");
+			//}
 		}
 
 		bool InputModule::readData(IDirectInputDevice8* device, UINT size, void* destination)

@@ -25,10 +25,8 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
-			: Scene(engine), db(0), enemies(), objects()
+			: Scene(engine), enemies(), objects()
 		{
-			sqlite3_open("Data/TikiData.sqlite", &db);
-
 			gameState = new GameState(engine, this);
 			gameState->AddRef();
 
@@ -41,12 +39,6 @@ namespace TikiEngine
 
 			SafeRelease(&level);
 			SafeRelease(&gameState);
-
-			if (db != 0)
-			{
-				sqlite3_close(db);
-				db = 0;
-			}
 		}
 		#pragma endregion
 
@@ -102,7 +94,7 @@ namespace TikiEngine
 			ostringstream sql;
 			sql << "SELECT * FROM \"tiki_level\" WHERE \"ID\" = '" << id << "';";
 
-			int r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
+			int r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
 
 			if (r != SQLITE_OK || sqlite3_step(state) != SQLITE_ROW)
 			{
@@ -117,7 +109,7 @@ namespace TikiEngine
 			sql = ostringstream();
 			sql << "SELECT * FROM \"tiki_level_enemies\" WHERE \"LevelID\" = '" << id << "';";
 
-			r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
+			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{
@@ -136,7 +128,7 @@ namespace TikiEngine
 			sql = ostringstream();
 			sql << "SELECT * FROM \"tiki_level_objects\" WHERE \"LevelID\" = '" << id << "';";
 
-			r = sqlite3_prepare(db, sql.str().c_str(), sql.str().size(), &state, &tmp);
+			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{

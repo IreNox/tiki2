@@ -74,19 +74,12 @@ public:
 		return list.Contains(kvp);
 	}
 
-	inline bool ContainsKey(TKey key) const
+	inline bool ContainsKey(const TKey& key) const
 	{
-		UInt32 i = 0;
-		while (i < list.Count())
-		{
-			if (list[i].GetKey() == key) return true;
-			i++;
-		}
-
-		return false;
+		return _keyToIndex(key) != -1;
 	}
 
-	inline bool TryGetValue(TKey key, TValue* value) const
+	inline bool TryGetValue(const TKey& key, TValue* value) const
 	{
 		int index = _keyToIndex(key);
 
@@ -198,7 +191,7 @@ private:
 			{
 				step /= 2;
 				
-				if (step == 0 && list[mid-1] < key && list[mid].GetKey() != key && list[mid+1] > key)
+				if (step == 0 && (mid == 0 || list[mid-1] < key) && list[mid+1] > key && list[mid].GetKey() != key)
 				{
 					break;
 				}

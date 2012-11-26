@@ -9,6 +9,7 @@
 
 #include "Core/sqlite3.h"
 #include "Core/ISpriteBatch.h"
+#include "Core/LibraryManager.h"
 #include "Core/IContentManager.h"
 
 #include "Core/TypeGlobals.h"
@@ -22,6 +23,13 @@ namespace TikiEngine
 		GUIControl::GUIControl(Engine* engine)
 			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0), UserData(0)
 		{
+			if (defaultFont == 0)
+			{
+				defaultFont = engine->librarys->CreateResource<IFont>();
+				defaultFont->Create(L"Arial", 12);
+			}
+
+			defaultFont->AddRef();
 		}
 
 		GUIControl::~GUIControl()
@@ -33,6 +41,8 @@ namespace TikiEngine
 				i++;
 			}
 			childs.Clear();
+
+			if (!defaultFont->Release()) defaultFont = 0;
 		}
 		#pragma endregion
 
@@ -177,9 +187,9 @@ namespace TikiEngine
 
 			if (rdNormal == 0)
 			{
-				rdNormal = new GUIControlRectangles("button_normal");
-				rdHover = new GUIControlRectangles("button_hover");
-				rdClick = new GUIControlRectangles("button_click");
+				rdNormal = new GUIControlRectangles(engine, "button_normal");
+				rdHover = new GUIControlRectangles(engine, "button_hover");
+				rdClick = new GUIControlRectangles(engine, "button_click");
 			}
 
 			rdNormal->AddRef();
@@ -191,9 +201,9 @@ namespace TikiEngine
 		{
 			SafeRelease(&tex);
 
-			rdNormal->Release();
-			rdHover->Release();
-			rdClick->Release();
+			if (!rdNormal->Release()) rdNormal = 0;
+			if (!rdHover->Release()) rdHover = 0;
+			if (!rdClick->Release()) rdClick = 0;
 		}
 		#pragma endregion
 
@@ -266,18 +276,15 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Class - Database
-		GUIControlRectangles::GUIControlRectangles(string control)
+		GUIControlRectangles::GUIControlRectangles(Engine* engine, string control)
 		{
-			sqlite3* db;
-			sqlite3_open("Data/TikiData.sqlite", &db);
-
 			const char* tmp = 0;
 			sqlite3_stmt* state = 0;
 
 			ostringstream sql;
 			sql << "SELECT * FROM \"tiki_gui\" WHERE \"Control\" = '" << control << "';";
 
-			int r = sqlite3_prepare(db, sql.str().c_str(), (int)sql.str().size(), &state, &tmp);
+			int r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (int)sql.str().size(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{
@@ -324,8 +331,6 @@ namespace TikiEngine
 				}
 				sqlite3_finalize(state);
 			}
-
-			sqlite3_close(db);
 		}
 		#pragma endregion
 
@@ -624,17 +629,19 @@ namespace TikiEngine
 
 			if (rd == 0)
 			{
-				rd = new GUIControlRectangles("window");
+				rd = new GUIControlRectangles(engine, "window");
 			}
-			else
-			{
-				rd->AddRef();
-			}
+
+			rd->AddRef();
 		}
 
 		GUIWindow::~GUIWindow()
 		{
-			rd->Release();
+			if (rd->Release() == 0)
+			{
+				rd = 0;
+			}
+
 			SafeRelease(&tex);
 		}
 		#pragma endregion

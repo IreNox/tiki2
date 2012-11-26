@@ -22,6 +22,7 @@ namespace TikiEngine
 
 			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
 			texture = new Texture(engine, tex, shaderView, false);
+			texture->AddRef();
 		}
 
 		RenderTarget::~RenderTarget()
@@ -157,6 +158,7 @@ namespace TikiEngine
 			);
 						
 			this->texture = new Texture(engine, texture, true, dynamic);
+			this->texture->AddRef();
 
 			D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
 			rtDesc.Format = desc.Format;

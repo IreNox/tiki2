@@ -13,15 +13,12 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SceneMenuMain::SceneMenuMain(Engine* engine)
-			: Scene(engine), sceneLevel(new SceneLevel(engine))
+			: Scene(engine)
 		{
-			sceneLevel->AddRef();
 		}
 
 		SceneMenuMain::~SceneMenuMain()
 		{
-			SafeRelease(&sceneLevel);
-
 			SafeRelease(&image);
 			SafeRelease(&window);
 		}
@@ -44,6 +41,7 @@ namespace TikiEngine
 
 			window = new GUIWindow(engine);
 			window->SSize() = Vector2(350, 400);
+			window->AddRef();
 
 			wcstring text[] = {
 				L"Start Game",
@@ -119,12 +117,14 @@ namespace TikiEngine
 		void SceneMenuMain::Handle(GUIControl* sender, const ClickEventArgs& args)
 		{
 			Scene* s = 0;
+			SceneLevel* sLevel = 0;
 
 			switch ((Int32)sender->UserData)
 			{
 			case 0:
-				engine->SetScene(sceneLevel);
-				sceneLevel->LoadLevel(1);
+				sLevel = new SceneLevel(engine);
+				engine->SetScene(sLevel);
+				sLevel->LoadLevel(1);
 				break;
 			case 1:
 				s = new SceneTim(engine);

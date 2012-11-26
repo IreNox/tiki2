@@ -36,8 +36,6 @@ namespace TikiEngine
 
 		private:
 
-			SceneLevel* sceneLevel;
-
 			GUIImage* image;
 			GUIWindow* window;
 

@@ -44,8 +44,6 @@ namespace TikiEngine
 
 			GameState* gameState;
 
-			sqlite3* db;
-
 		};	
 	}
 }

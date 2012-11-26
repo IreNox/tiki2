@@ -25,7 +25,7 @@ namespace TikiEngine
 		}
 
 		Texture::Texture(Engine* engine, ID3D11Texture2D* tex, bool createShaderView, bool dynamic)
-			: ITexture(engine), texture(tex), dynamic(dynamic)
+			: ITexture(engine), texture(tex), dynamic(dynamic), textureResource(0)
 		{
 			tex->GetDesc(&desc);
 

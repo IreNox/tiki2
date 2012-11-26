@@ -20,6 +20,8 @@
 #include "Core/HelperLog.h"
 #include "Core/HelperThreading.h"
 
+#include "Core/sqlite3.h"
+
 #include <math.h>
 #include <time.h>
 #include <ppl.h>
@@ -47,6 +49,13 @@ namespace TikiEngine
 	bool Engine::Initialize(EngineDescription& desc)
 	{
 		this->desc = desc;
+
+		#pragma region Database
+		sqlite3_open(
+			StringWtoA(this->HPath.CombineWorkingPath(L"Data/TikiData.sqlite")).c_str(),
+			&dataBase
+		);
+		#pragma endregion
 
 		#pragma region Modules
 		window = new WindowModule(this);
@@ -146,6 +155,12 @@ namespace TikiEngine
 
 		librarys->Dispose();
 		SafeRelease(&librarys);
+
+		if (dataBase != 0)
+		{
+			sqlite3_close(dataBase);
+			dataBase = 0;
+		}
 	}
 	#pragma endregion
 
@@ -361,19 +376,31 @@ namespace TikiEngine
 	#pragma region Private Member
 	bool Engine::initModule(IModule* module)
 	{
-#if _DEBUG
-		ostringstream s;
-		s << "Loading Module: " << typeid(*module).name(); 
-
-		this->HLog.Write(s.str());
-#endif
-
 		if (module != 0)
 		{
+#if _DEBUG
+			LARGE_INTEGER freq;
+			LARGE_INTEGER start;
+			LARGE_INTEGER end;
+
+			QueryPerformanceFrequency(&freq);
+			QueryPerformanceCounter(&start);
+#endif
+
 			module->AddRef();
 			if (!module->Initialize(desc)) return false;
 
 			loadedModules.Add(module);
+
+#if _DEBUG
+			QueryPerformanceCounter(&end);
+			
+			ostringstream s;
+			s << "Loading Module: " << typeid(*module).name() << " - Elapsed Time: " << ((double)(end.QuadPart - start.QuadPart) / freq.QuadPart); 
+
+			this->HLog.Write(s.str());
+#endif
+
 			return true;
 		}
 

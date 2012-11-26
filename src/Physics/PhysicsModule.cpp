@@ -64,8 +64,6 @@ namespace TikiEngine
 		#pragma region Init
 		bool PhysicsModule::Initialize(EngineDescription& desc)
 		{
-			engine->HLog.Write("Initializing PhysicsModule");
-
 			if (!userAllocator)
 				userAllocator = new ControllerManagerAllocator();
 

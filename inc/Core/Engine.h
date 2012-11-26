@@ -9,6 +9,8 @@
 #include "Core/BufferState.h"
 #include "Core/EngineDescription.h"
 
+struct sqlite3;
+
 namespace TikiEngine
 {
 	class Scene;
@@ -52,8 +54,8 @@ namespace TikiEngine
 		WindowModule* window;
 		LibraryManager* librarys;
 
-		HelperLog HLog;
 		HelperPath HPath;
+		HelperLog HLog;
 	
 		/*!
 		 * @brief Create new instance of Engine.
@@ -92,6 +94,12 @@ namespace TikiEngine
 			return desc;
 		}
 
+		/* @brief Get Database-Connection object. */
+		inline sqlite3* GetDB()
+		{
+			return dataBase;
+		}
+
 	protected:
 
 		void Draw(void*);
@@ -100,6 +108,8 @@ namespace TikiEngine
 	private:
 
 		Scene* scene;
+
+		sqlite3* dataBase;
 
 		//Thread<Engine>* threadDraw;
 		//Thread<Engine>* threadUpdate;

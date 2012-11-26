@@ -51,13 +51,15 @@ namespace TikiEngine
 		{
 			UInt32 i = 0;
 			float width = 0.0f;
+			RectangleF rect;
+
 			while (i < text.length())
 			{
 				wchar_t c = text[i];
 
-				if (charRect.ContainsKey(c))
+				if (charRect.TryGetValue(c, &rect))
 				{
-					width += charRect[c].Width;
+					width += rect.Width;
 				}
 				else
 				{
