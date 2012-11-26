@@ -19,5 +19,8 @@
 #include "Core/Dictionary.h"
 
 #include <string>
+#include <sstream>
 using std::string;
 using std::wstring;
+using std::ostringstream;
+using std::wostringstream;

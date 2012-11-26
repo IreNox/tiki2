@@ -7,11 +7,14 @@ namespace TikiEngine
 	class HelperLog
 	{
 	public:
+		
+		MessageReceivedEvent MessageReceived;
 
-		static MessageReceivedEvent MessageReceived;
+		HelperLog();
+		~HelperLog();
 
-		static void Write(string text);
-		static void WriteError(string message, void* exception);
+		void Write(string text) const;
+		void WriteError(string message, void* exception) const;
 
 	};
 }

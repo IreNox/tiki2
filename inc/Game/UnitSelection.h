@@ -12,7 +12,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::UserInterface;
 
-		class UnitSelection
+		class UnitSelection : public EngineObject
 		{
 		public:
 

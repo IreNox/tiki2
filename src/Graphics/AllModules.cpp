@@ -191,7 +191,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::Write("Warning: Can't resize BackTarget.");
+				engine->HLog.Write("Warning: Can't resize BackTarget.");
 				return;
 			}
 
@@ -218,12 +218,12 @@ namespace TikiEngine
 
 			//if (FAILED(r))
 			//{
-			//	HelperLog::Write("Warning: Can't change Fullscreen mode.");
+			//	engine->HLog.Write("Warning: Can't change Fullscreen mode.");
 			//}
 
 			if (FAILED(r))
 			{
-				HelperLog::Write("Warning: Can't resize BackBuffer.");
+				engine->HLog.Write("Warning: Can't resize BackBuffer.");
 			}
 
 			if (initDirectXBackBuffer(desc) &&
@@ -608,7 +608,7 @@ namespace TikiEngine
 
 			if(FAILED(r))
 			{
-				HelperLog::WriteError("Can't create RasterizerState", 0);
+				engine->HLog.WriteError("Can't create RasterizerState", 0);
 			}
 
 			deviceContext->RSSetState(rasterStateBackfaces); // No Culling

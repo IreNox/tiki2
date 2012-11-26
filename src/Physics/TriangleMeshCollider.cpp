@@ -168,7 +168,7 @@ namespace TikiEngine
 
 			if (!DllMain::Cooking->NxCookTriangleMesh(meshDesc, buf))
 			{
-				HelperLog::WriteError("Can't cook TriangleMesh.", 0);
+				engine->HLog.WriteError("Can't cook TriangleMesh.", 0);
 			}
 
 			if (actor != 0)

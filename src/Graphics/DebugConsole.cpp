@@ -34,7 +34,7 @@ namespace TikiEngine
 				ScreenSizeChangedArgs(DllMain::ModuleGraphics, DllMain::ModuleGraphics->GetViewPort())
 			);
 
-			HelperLog::MessageReceived.AddHandler(this);
+			engine->HLog.MessageReceived.AddHandler(this);
 			DllMain::ModuleGraphics->ScreenSizeChanged.AddHandler(this);
 		}
 
@@ -129,7 +129,7 @@ namespace TikiEngine
 					case KEY_RETURN:
 						if (executeCommand())
 						{
-							HelperLog::Write(
+							engine->HLog.Write(
 								StringWtoA(cmdEnter)
 							);
 							cmdEnter.erase();

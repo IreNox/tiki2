@@ -1,13 +1,22 @@
 #pragma once
 
-#include <stdio.h>
-#include "Core/HelperLog.h"
+#include "Core/EngineObject.h"
 
 namespace TikiEngine
 {
-	class ErrorStream : public NxUserOutputStream
+	class ErrorStream : public NxUserOutputStream, public EngineObject
 	{
 	public:
+
+		ErrorStream(Engine* engine)
+			: EngineObject(engine)
+		{
+		}
+
+		~ErrorStream()
+		{
+		}
+
 		/*
 		 * this should be routed to the application specific error handling. If this gets hit then you are in most cases using the SDK
 		 * wrong and you need to debug your code! however, code may just be a warning or information.
@@ -20,28 +29,25 @@ namespace TikiEngine
 			switch(e)
 			{
 			case NXE_INVALID_PARAMETER:
-				HelperLog::Write( "invalid parameter");
+				engine->HLog.Write("invalid parameter");
 				break;
 			case NXE_INVALID_OPERATION:
-				HelperLog::Write( "invalid operation");
+				engine->HLog.Write( "invalid operation");
 				break;
 			case NXE_OUT_OF_MEMORY:
-				HelperLog::Write( "out of memory");
+				engine->HLog.Write( "out of memory");
 				break;
 			case NXE_DB_INFO:
-				HelperLog::Write( "info");
+				engine->HLog.Write( "info");
 				break;
 			case NXE_DB_WARNING:
-				HelperLog::Write( "warning");
+				engine->HLog.Write( "warning");
 				break;
 			default:
-				HelperLog::Write("unknown error");
+				engine->HLog.Write("unknown error");
 			}
 
-			std::string error(message);
-			HelperLog::Write(error);
-			HelperLog::Write("\n");
-
+			engine->HLog.Write(message);
 		}
 
 		NxAssertResponse reportAssertViolation(const char* message, const char* file, int line)
@@ -63,7 +69,7 @@ namespace TikiEngine
 
 		void print(const char* message)
 		{
-			HelperLog::Write(message);
+			engine->HLog.Write(message);
 		}
 
 		string GetNxSDKCreateError(const NxSDKCreateError& errorCode) 

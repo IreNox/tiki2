@@ -69,19 +69,19 @@ namespace TikiEngine
 						}
 						catch (const char*)
 						{
-							HelperLog::Write("Can't reload Resource");
+							engine->HLog.Write("Can't reload Resource");
 						}
 						catch (const wchar_t*)
 						{
-							HelperLog::Write("Can't reload Resource");
+							engine->HLog.Write("Can't reload Resource");
 						}
 						catch (wstring)
 						{
-							HelperLog::Write("Can't reload Resource");
+							engine->HLog.Write("Can't reload Resource");
 						}
 						catch (string)
 						{
-							HelperLog::Write("Can't reload Resource");
+							engine->HLog.Write("Can't reload Resource");
 						}
 					}
 

@@ -72,7 +72,7 @@ inline bool IsEqual(double a, double b)
 
 inline float LERP(float a, float b, float c)
 {
-	return b + a * (c-b);
+	return b + a * (c - b);
 }
 
 inline float Min3(float a, float b, float c)

@@ -44,7 +44,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't init DirectInput", 0);
+				engine->HLog.WriteError("Can't init DirectInput", 0);
 			}
 
 			this->initDevice(&keyboard, GUID_SysKeyboard, &c_dfDIKeyboard);
@@ -154,28 +154,28 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't inited DirectInput", 0);
+				engine->HLog.WriteError("Can't inited DirectInput", 0);
 			}
 
 			r = (*device)->SetDataFormat(format);
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't set Format", 0);
+				engine->HLog.WriteError("Can't set Format", 0);
 			}
 
 			r = (*device)->SetCooperativeLevel(hWnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
 
 			if (FAILED(r))
 			{
-				HelperLog::WriteError("Can't set cooperative level", 0);
+				engine->HLog.WriteError("Can't set cooperative level", 0);
 			}
 
 			r = (*device)->Acquire();
 
 			if (FAILED(r))
 			{
-				HelperLog::Write("Can't acquire.\n");
+				engine->HLog.Write("Can't acquire.\n");
 			}
 		}
 

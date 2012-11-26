@@ -25,17 +25,21 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
-			: Scene(engine), db(0), level(0), enemies(), objects()
+			: Scene(engine), db(0), enemies(), objects()
 		{
 			sqlite3_open("Data/TikiData.sqlite", &db);
 
 			gameState = new GameState(engine, this);
 			gameState->AddRef();
+
+			level = new Level(gameState);
 		}
 
 		SceneLevel::~SceneLevel()
 		{
 			this->DisposeLevel();
+
+			SafeRelease(&level);
 			SafeRelease(&gameState);
 
 			if (db != 0)
@@ -58,8 +62,7 @@ namespace TikiEngine
 
 			// Camera
 			CameraObject* go = new CameraObject(engine);
-			go->PRS.SPosition().Y = 35.0f;
-			(new CameraRTS(engine, go));
+			(new CameraRTS(go, level->GetTerrain()));
 
 			mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
@@ -88,7 +91,7 @@ namespace TikiEngine
 		#pragma region Member - Level
 		bool SceneLevel::LoadLevel(Int64 id)
 		{
-			if (level != 0)
+			if (level->GetId() != 0)
 			{
 				this->DisposeLevel();
 			}
@@ -106,7 +109,6 @@ namespace TikiEngine
 				return false;
 			}
 
-			level = new Level(gameState);
 			level->LoadFromDatabase(state);
 			level->AddRef();
 			sqlite3_finalize(state);
@@ -154,8 +156,6 @@ namespace TikiEngine
 
 		void SceneLevel::DisposeLevel()
 		{
-			if (level == 0) return;
-
 			UInt32 i = 0;
 			while (i < enemies.Count())
 			{
@@ -171,8 +171,6 @@ namespace TikiEngine
 				i++;
 			}
 			objects.Clear();
-
-			SafeRelease(&level);
 		}
 		#pragma endregion
 

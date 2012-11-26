@@ -7,9 +7,18 @@ using namespace std;
 
 namespace TikiEngine
 {
-	MessageReceivedEvent HelperLog::MessageReceived = MessageReceivedEvent();
+	//MessageReceivedEvent HelperLog::MessageReceived = MessageReceivedEvent();
 
-	void HelperLog::Write(string text)
+	HelperLog::HelperLog()
+		: MessageReceived()
+	{
+	}
+
+	HelperLog::~HelperLog()
+	{
+	}
+
+	void HelperLog::Write(string text) const
 	{
 		FILE* h;
 		fopen_s(&h, "engine.log", "a");
@@ -29,7 +38,7 @@ namespace TikiEngine
 		);
 	}
 
-	void HelperLog::WriteError(string message, void* exception)
+	void HelperLog::WriteError(string message, void* exception) const
 	{
 		ostringstream s;
 		s << "Error: " << message << ". Exception: " << exception << endl;

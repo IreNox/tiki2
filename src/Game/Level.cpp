@@ -13,6 +13,8 @@ namespace TikiEngine
 		Level::Level(GameState* state)
 			: BasicDatabase(state), terrain(0), collider(0), frameCount(0)
 		{
+			terrain = engine->librarys->CreateComponent<ITerrainRenderer>(this);
+			terrain->AddRef();
 		}
 
 		Level::~Level()
@@ -38,10 +40,8 @@ namespace TikiEngine
 			if (heightmapFilename != "" && heightmapScale != 0 && heightmapSize != 0)
 			{
 				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
-				terrain = engine->librarys->CreateComponent<ITerrainRenderer>(this);
 				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize);
 				terrain->SetMaterial(mat);
-				terrain->AddRef();
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
 				material->SetRestitution(0.2f);

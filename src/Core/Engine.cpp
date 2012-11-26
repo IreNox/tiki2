@@ -21,8 +21,6 @@
 #include "Core/HelperThreading.h"
 
 #include <math.h>
-#include <string>
-#include <sstream>
 #include <time.h>
 #include <ppl.h>
 
@@ -271,11 +269,11 @@ namespace TikiEngine
 		//{
 			//csEngine->Wait();
 
-			ostringstream s;
-			s << "Camera Count: " << scene->GetCameras()->Count();
+			//ostringstream s;
+			//s << "Camera Count: " << scene->GetCameras()->Count();
 
 			//OutputDebugString(s.str().c_str());
-			HelperLog::Write(s.str());
+			//HelperLog::Write(s.str());
 
 			UInt32 i = 0;
 			while (i < scene->GetCameras()->Count())
@@ -363,6 +361,11 @@ namespace TikiEngine
 	#pragma region Private Member
 	bool Engine::initModule(IModule* module)
 	{
+#if _DEBUG
+		ostringstream s;
+		//s < 
+#endif
+
 		if (module != 0)
 		{
 			module->AddRef();

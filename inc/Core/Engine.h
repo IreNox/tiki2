@@ -3,7 +3,9 @@
 #include "Core/TypeDef.h"
 #include "Core/List.h"
 
+#include "Core/HelperLog.h"
 #include "Core/HelperPath.h"
+
 #include "Core/BufferState.h"
 #include "Core/EngineDescription.h"
 
@@ -50,7 +52,8 @@ namespace TikiEngine
 		WindowModule* window;
 		LibraryManager* librarys;
 
-		const HelperPath HPath;
+		HelperLog HLog;
+		HelperPath HPath;
 	
 		/*!
 		 * @brief Create new instance of Engine.

@@ -63,9 +63,6 @@
     <Filter Include="Quelldateien\Core\Graphics">
       <UniqueIdentifier>{d5e4ab7f-87e8-4eaf-8c0e-72521b77253f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Core\Vertex">
-      <UniqueIdentifier>{e4c0eb3b-439a-4255-b8ef-a51ce6d823f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Engine\Components">
       <UniqueIdentifier>{6c6f3071-0261-42e8-b8dd-6fb190c67203}</UniqueIdentifier>
     </Filter>
@@ -98,9 +95,6 @@
     </Filter>
     <Filter Include="Quelldateien\Core\Args/States">
       <UniqueIdentifier>{dc351ce7-aa5b-483c-8ef2-0b4d59701935}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Core\UserInterface">
-      <UniqueIdentifier>{de2f1810-f8a0-4b06-8b57-484d8b1cb88d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Core\UserInterface">
       <UniqueIdentifier>{2cbc1a70-a40e-47b6-af4f-af2c1f68d097}</UniqueIdentifier>
@@ -161,15 +155,6 @@
     <ClCompile Include="src\Core\Quaternion.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\DefaultVertex.cpp">
-      <Filter>Quelldateien\Core\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\PostProcessVertex.cpp">
-      <Filter>Quelldateien\Core\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\SimpleVertex.cpp">
-      <Filter>Quelldateien\Core\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Camera.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
     </ClCompile>
@@ -203,9 +188,6 @@
     <ClCompile Include="src\Core\LightObject.cpp">
       <Filter>Quelldateien\Engine\GameObjects\Basic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ColorVertex.cpp">
-      <Filter>Quelldateien\Core\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\PostProcess.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
@@ -233,38 +215,11 @@
     <ClCompile Include="src\Core\Frustum.cpp">
       <Filter>Quelldateien\Core\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\GUIButton.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUIControl.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUICustomButton.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUIDialog.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUIImage.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUILabel.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUIWindow.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\MemoryStream.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\File.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\SkinningVertex.cpp">
-      <Filter>Quelldateien\Core\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\GUIControlRectangles.cpp">
-      <Filter>Quelldateien\Core\UserInterface</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\ParticleEffect.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
@@ -301,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\HelperHash.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\UserInterface.cpp">
+      <Filter>Quelldateien\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\VertexFormats.cpp">
+      <Filter>Quelldateien\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

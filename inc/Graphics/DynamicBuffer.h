@@ -50,7 +50,7 @@ namespace TikiEngine
 
 				if (FAILED(r))
 				{
-					HelperLog::WriteError("Can't map ConstantBuffer", 0);
+					engine->HLog.WriteError("Can't map ConstantBuffer", 0);
 				}
 
 				return (T*)mapped.pData;
@@ -96,7 +96,7 @@ namespace TikiEngine
 
 				if (FAILED(r)) 
 				{
-					HelperLog::WriteError("Can't create FullSizeBuffer", 0);
+					engine->HLog.WriteError("Can't create FullSizeBuffer", 0);
 				}
 			}
 			#pragma endregion

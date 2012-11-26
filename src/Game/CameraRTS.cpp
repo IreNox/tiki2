@@ -1,24 +1,27 @@
 
 #include "Game/CameraRTS.h"
 
-#include "Core/UpdateArgs.h"
 #include "Core/GameObject.h"
 
+#include "Core/HelperLog.h"
 #include <math.h>
 
 namespace TikiEngine
 {
 	namespace Scripts
 	{
-		CameraRTS::CameraRTS(Engine* engine, GameObject* gameObject)
-			: IScript(engine, gameObject)
+		CameraRTS::CameraRTS(GameObject* gameObject, ITerrainRenderer* terrain)
+			: IScript(gameObject->GetEngine(), gameObject), zoom(0.0f), targetZoom(0.0f)
 		{
+			SafeAddRef(terrain, &this->terrain);
+
 			gameObject->PRS.SPosition() = Vector3(0, 192.0f, 0);
-			gameObject->PRS.SRotation() += Quaternion::CreateFromYawPitchRoll(0, -1, 0);
+			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -1, 0);
 		}
 
 		CameraRTS::~CameraRTS()
 		{
+			SafeRelease(&terrain);
 		}
 
 		void CameraRTS::Draw(const DrawArgs& args)
@@ -27,27 +30,41 @@ namespace TikiEngine
 
 		void CameraRTS::Update(const UpdateArgs& args)
 		{
+			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 150.0f : 75.0f);
+
 			Vector2 move = Vector2(
 				(args.Input.GetKey(KEY_LEFT) || args.Input.GetKey(KEY_A) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) || args.Input.GetKey(KEY_D) ? 1.0f : 0.0f),
 				(args.Input.GetKey(KEY_UP)  || args.Input.GetKey(KEY_W) ?  -1.0f : 0.0f) + (args.Input.GetKey(KEY_DOWN)  || args.Input.GetKey(KEY_S) ? 1.0f : 0.0f)
-			) * (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 150.0f : 75.0f);
+			) * speed;
 
-			float speed = 200.0f * (float)args.Time.ElapsedTime;
+			move += Vector2(
+				(args.Input.MousePosition.X < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.X > 0.99f ? 1.0f : 0.0f),
+				(args.Input.MousePosition.Y < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.Y > 0.99f ? 1.0f : 0.0f)
+			) * speed;		
 
-			gameObject->PRS.SPosition() += (Vector3(1 * move.X, 0, 1 * move.Y) * (float)args.Time.ElapsedTime) +
-				Vector3(
-				(args.Input.MousePosition.X == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.X == 1.0f ? speed : 0.0f),
-				0, 
-				(args.Input.MousePosition.Y == 0.0f ? -speed : 0.0f) + (args.Input.MousePosition.Y == 1.0f ? speed : 0.0f)
-			);
+			gameObject->PRS.SPosition() += Vector3(move.X, 0, move.Y) * (float)args.Time.ElapsedTime;
 
 			if (args.Input.MouseWheel != 0)
 			{
-				float y = gameObject->PRS.GPosition().Y;
-				y -= args.Input.MouseWheel / 10;
-				y = Clamp(y, 100.0f, 450.0f);
-				
-				gameObject->PRS.SPosition().Y = y;
+				targetZoom += args.Input.MouseWheel / 10;
+				targetZoom = Clamp(zoom, -260.0f, 100.0f);
+			}
+
+			zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime);
+			
+			float rot = (-zoom / 120) + 1;
+			rot = Clamp(rot, 0.2f, 1.57f);
+			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
+
+			float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
+			gameObject->PRS.SPosition().Y = sample + (192.0f - zoom);
+
+			if (args.Input.MouseWheel != 0)
+			{
+				ostringstream s;
+				s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+
+				engine->HLog.Write(s.str());
 			}
 		}
 	}

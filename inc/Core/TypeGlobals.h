@@ -56,12 +56,20 @@ inline void SafeRelease(T** ptr)
 }
 
 template <typename T>
-inline float Clamp(T& val, T min, T max)
+inline float Lerp(const T& from, const T& to, const T& val)
 {
-	if (val < min) val = min;
-	if (val > max) val = max;
+	return from + ((to - from) * val);
+}
 
-	return val;
+template <typename T>
+inline float Clamp(const T& val, const T& min, const T& max)
+{
+	T ret = val;
+
+	if (val < min) ret = min;
+	if (val > max) ret = max;
+
+	return ret;
 }
 
 float Random(float min, float max);

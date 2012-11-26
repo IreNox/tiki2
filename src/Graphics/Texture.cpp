@@ -47,7 +47,7 @@ namespace TikiEngine
 
 				if (FAILED(r))
 				{
-					HelperLog::WriteError("Can't create ShaderResourceView", 0);
+					engine->HLog.WriteError("Can't create ShaderResourceView", 0);
 				}
 			}
 		}
@@ -155,7 +155,7 @@ namespace TikiEngine
 				texture = oldTexture;
 				textureResource = oldResource;
 
-				HelperLog::WriteError("Can't load Texture", 0);
+				engine->HLog.WriteError("Can't load Texture", 0);
 			}
 
 			SafeRelease(&oldTexture);
@@ -183,7 +183,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::Write("Can't save Texture to File. Can't create Temp-Texture.");
+				engine->HLog.Write("Can't save Texture to File. Can't create Temp-Texture.");
 				return;
 			}
 			DllMain::Context->CopyResource(tex, texture);
@@ -191,13 +191,13 @@ namespace TikiEngine
 			D3D11_MAPPED_SUBRESOURCE mapped;
 			if (DllMain::Context->Map(tex, 0, D3D11_MAP_READ, 0, &mapped))
 			{
-				HelperLog::Write("Texture successful written to File. NOT!");
+				engine->HLog.Write("Texture successful written to File. NOT!");
 
 				DllMain::Context->Unmap(tex, 0);
 			}
 			else
 			{
-				HelperLog::Write("Can't save Texture to File.");
+				engine->HLog.Write("Can't save Texture to File.");
 			}
 
 			tex->Release();
@@ -232,13 +232,13 @@ namespace TikiEngine
 		{
 			if (!dynamic)
 			{
-				HelperLog::Write("GetData can only used for dynamic textures. Create Texture with dynamic flag.");
+				engine->HLog.Write("GetData can only used for dynamic textures. Create Texture with dynamic flag.");
 				return;
 			}
 
 			if (format != PF_A8R8G8B8)
 			{
-				HelperLog::Write("GetData: Wrong Format");
+				engine->HLog.Write("GetData: Wrong Format");
 				return;
 			}
 
@@ -247,7 +247,7 @@ namespace TikiEngine
 			
 			if (FAILED(r))
 			{
-				HelperLog::Write("Can't map Texture. Unknown Error.");
+				engine->HLog.Write("Can't map Texture. Unknown Error.");
 				return;
 			}
 
@@ -291,13 +291,13 @@ namespace TikiEngine
 		{
 			if (!dynamic)
 			{
-				HelperLog::Write("SetData can only used for dynamic textures. Create Texture with dynamic flag");
+				engine->HLog.Write("SetData can only used for dynamic textures. Create Texture with dynamic flag");
 				return;
 			}
 
 			if (format != PF_A8R8G8B8 || desc.Format != DXGI_FORMAT_R8G8B8A8_UNORM)
 			{
-				HelperLog::Write("SetData: Wrong Format");
+				engine->HLog.Write("SetData: Wrong Format");
 				return;
 			}
 			

@@ -9,7 +9,7 @@ namespace TikiEngine
 	{
 	public:
 
-		void RaiseEvent(T* sender, const TArgs& args)
+		void RaiseEvent(T* sender, const TArgs& args) const
 		{
 			UInt32 i = 0;
 			while (i < eventHandler.Count())

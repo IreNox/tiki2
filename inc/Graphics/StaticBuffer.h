@@ -41,7 +41,7 @@ namespace TikiEngine
 				if (FAILED(r)) 
 				{
 					_CrtDbgBreak();
-					HelperLog::WriteError("Can't create StaticBuffer", 0);
+					engine->HLog.WriteError("Can't create StaticBuffer", 0);
 				}
 			}
 

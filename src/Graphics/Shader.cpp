@@ -131,7 +131,7 @@ namespace TikiEngine
 
 			if (FAILED(r))
 			{
-				HelperLog::Write("Error: Can't set ConstantBuffer: " + string(key));
+				engine->HLog.Write("Error: Can't set ConstantBuffer: " + string(key));
 			}
 		}
 		#pragma endregion
@@ -318,18 +318,18 @@ namespace TikiEngine
 			{
 				if (r == D3D11_ERROR_FILE_NOT_FOUND)
 				{
-					HelperLog::WriteError("Failed to compile effect. File not found", 0);
+					engine->HLog.WriteError("Failed to compile effect. File not found", 0);
 				}
 				else
 				{
 					if (errorBlob)
 					{
 						char* error = (char*)errorBlob->GetBufferPointer();
-						HelperLog::WriteError("Failed to compile effect. %s\n" + (string)error, 0);
+						engine->HLog.WriteError("Failed to compile effect. %s\n" + (string)error, 0);
 					}
 					else
 					{
-						HelperLog::WriteError("Failed to compile effect", 0);
+						engine->HLog.WriteError("Failed to compile effect", 0);
 					}
 				}
 
@@ -354,7 +354,7 @@ namespace TikiEngine
 			{
 				effect = oldEffect;
 
-				HelperLog::WriteError("Failed to create effect.", 0);
+				engine->HLog.WriteError("Failed to create effect.", 0);
 			}
 			SafeRelease(&oldEffect);
 

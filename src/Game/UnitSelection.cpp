@@ -7,7 +7,6 @@
 #include "Game/SceneLevel.h"
 
 #include "Core/IGraphics.h"
-#include "Core/HelperLog.h"
 
 namespace TikiEngine
 {
@@ -15,7 +14,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		UnitSelection::UnitSelection(GameState* gameState)
-			: gameState(gameState)
+			: EngineObject(gameState->GetEngine()), gameState(gameState)
 		{
 			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
@@ -110,7 +109,7 @@ namespace TikiEngine
 										
 					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
 					{
-						HelperLog::Write("Rect-Select unit.");
+						engine->HLog.Write("Rect-Select unit.");
 						selectedUnits.Add(go);
 						changed = true;
 					}
@@ -123,7 +122,7 @@ namespace TikiEngine
 							screenPos.Y <= selectionRect.Y + eps && 
 							screenPos.Y >= selectionRect.Y - eps)
 						{
-							HelperLog::Write("click-Select unit.\n");
+							engine->HLog.Write("click-Select unit.\n");
 							selectedUnits.Add(go);
 						}
 
