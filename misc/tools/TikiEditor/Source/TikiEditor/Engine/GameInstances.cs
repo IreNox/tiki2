@@ -5,6 +5,8 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using TikiEditor.Objects;
 using Database.GDB;
+using System.IO;
+using System.Windows.Forms;
 
 namespace TikiEditor
 {
@@ -45,7 +47,7 @@ namespace TikiEditor
             _camera = new CameraComponent();
             _control = new ControlComponent();
 
-            _db = new DB("Data/TikiData.sqlite");
+            _db = new DB(Path.Combine(DataPath, "TikiData.sqlite"));
             _db.Open();
         }
         #endregion
@@ -63,6 +65,14 @@ namespace TikiEditor
         #endregion
 
         #region Properties
+        public static string DataPath
+        {
+            get
+            {
+                return Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)), "Data");
+            }
+        }
+
         public static DB DB
         {
             get { return _db; }

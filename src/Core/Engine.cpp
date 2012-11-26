@@ -363,7 +363,7 @@ namespace TikiEngine
 	{
 #if _DEBUG
 		ostringstream s;
-		s << "Loading Module: " << typeid(module).name(); 
+		s << "Loading Module: " << typeid(*module).name(); 
 
 		this->HLog.Write(s.str());
 #endif

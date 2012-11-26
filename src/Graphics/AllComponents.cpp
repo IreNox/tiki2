@@ -290,7 +290,8 @@ namespace TikiEngine
 
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
-			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0), collisionRegions(0)
+			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0),
+			  collisionRegions(0), layout(0)
 		{
 		}
 
@@ -303,8 +304,11 @@ namespace TikiEngine
 
 			terrain = 0;
 
-			manager->Shutdown();
-			manager = 0;
+			if (manager != 0)
+			{
+				manager->Shutdown();
+				manager = 0;
+			}
 
 			vertexFormat = 0;
 

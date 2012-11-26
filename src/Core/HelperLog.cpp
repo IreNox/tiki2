@@ -12,6 +12,9 @@ namespace TikiEngine
 	HelperLog::HelperLog()
 		: MessageReceived()
 	{
+		FILE* h;
+		fopen_s(&h, "engine.log", "w");
+		fclose(h);
 	}
 
 	HelperLog::~HelperLog()
@@ -20,8 +23,15 @@ namespace TikiEngine
 
 	void HelperLog::Write(string text) const
 	{
+		MessageReceived.RaiseEvent(
+			0,
+			MessageReceivedArgs(text.c_str())
+		);
+
 		FILE* h;
 		fopen_s(&h, "engine.log", "a");
+		
+		text += "\n";
 
 		fwrite(
 			text.c_str(),
@@ -31,11 +41,6 @@ namespace TikiEngine
 		);
 
 		fclose(h);
-
-		MessageReceived.RaiseEvent(
-			0,
-			MessageReceivedArgs(text.c_str())
-		);
 	}
 
 	void HelperLog::WriteError(string message, void* exception) const
