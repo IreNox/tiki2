@@ -527,16 +527,16 @@ namespace TikiEditor
 	}
 #pragma endregion
 
-	List<string> FbxHelper::GetMeshNames(FbxScene* scene)
+	List<const char*> FbxHelper::GetMeshNames(FbxScene* scene)
 	{
-		List<string> names;
+		List<const char*> names;
 		Int32 c = scene->GetSrcObjectCount<FbxMesh>();
 
 		Int32 i = 0;
 		while (i < c)
 		{
 			names.Add(
-				scene->GetSrcObject<FbxMesh>(i)->GetName()
+				scene->GetSrcObject<FbxMesh>(i)->GetNode()->GetName()
 			);
 			i++;
 		}

@@ -61,7 +61,7 @@ namespace TikiEditor
 		FbxScene* GetScene();
 		void SetScene(FbxScene* scene);
 
-		List<string> GetMeshNames(FbxScene* scene);
+		List<const char *> GetMeshNames(FbxScene* scene);
 
 		TikiAnimation* GetAnimation();
 		TikiBone* GetRootBone();

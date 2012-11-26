@@ -3,14 +3,17 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Collections.Generic;
+using TikiEditor.Designer;
 
 namespace TikiEditor
 {
     public partial class ucDesignModel : UserControl
     {
         #region Vars
-        private List<InputModel> _inputs = new List<InputModel>();
-        private List<InputModel> _inputsSelected = new List<InputModel>();
+        private List<INAnimation> _inputs = new List<INAnimation>();
+        private List<INAnimation> _inputsSelected = new List<INAnimation>();
+
+        private List<INMesh> _inputMeshes = new List<INMesh>();
         #endregion
 
         #region Init
@@ -31,11 +34,11 @@ namespace TikiEditor
         #endregion
 
         #region Private Member
-        private List<InputModel> getFiles()
+        private List<INAnimation> getFiles()
         {
             if (!Directory.Exists(textInputPath.Text))
             {
-                return new List<InputModel>();
+                return new List<INAnimation>();
             }
 
             _inputsSelected = _inputs.Where(
@@ -44,9 +47,69 @@ namespace TikiEditor
 
             return _inputsSelected;
         }
+
+        private void checkMeshTab()
+        {
+            if (listAnimations.SelectedItems.Count != 0)
+            {
+                if (!tabControl1.TabPages.Contains(tabMeshes)) tabControl1.TabPages.Add(tabMeshes);
+            }
+            else
+            {
+                tabControl1.TabPages.Remove(tabMeshes);
+            }
+        }
         #endregion
 
         #region Member - EventHandler
+        private void textInputPath_TextChanged(object sender, EventArgs e)
+        {
+            _inputs.Clear();
+
+            foreach (string file in Directory.GetFiles(textInputPath.Text))
+            {
+                _inputs.Add(
+                    new INAnimation("", file)
+                );
+            }
+
+            textInputPrefix_TextChanged(null, null);
+        }
+
+        private void textInputPrefix_TextChanged(object sender, EventArgs e)
+        {
+            foreach (var i in getFiles())
+            {
+                if (!i.NameChanged)
+                {
+                    i.Name = Path.GetFileNameWithoutExtension(i.FileName).ToLower().Substring(textInputPrefix.Text.Length);
+                    i.NameChanged = false;
+                }
+            }
+
+            listAnimations.DataSource = getFiles();
+            listAnimations.DisplayMember = "Name";
+
+            Properties.Settings.Default.ModelPrefix = textInputPrefix.Text;
+            Properties.Settings.Default.Save();
+
+            checkMeshTab();
+        }
+
+        private void listInputs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            checkMeshTab();
+
+            ucProperties1.CurrentObject = listAnimations.SelectedValue;
+        }
+
+        private void listMeshes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ucProperties1.CurrentObject = listMeshes.SelectedItem;
+        }
+        #endregion
+
+        #region Member - EventHandler - Click
         private void buttonSearchOutput_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(textInputPrefix.Text))
@@ -55,7 +118,7 @@ namespace TikiEditor
             }
             else if (listAnimations.SelectedItems.Count != 0)
             {
-                FileDialog.FileName = ((InputModel)listAnimations.SelectedItem).Name.Trim('-', ' ', '_');
+                FileDialog.FileName = ((INAnimation)listAnimations.SelectedItem).Name.Trim('-', ' ', '_');
             }
 
             if (FileDialog.ShowDialog() != DialogResult.Cancel)
@@ -79,46 +142,17 @@ namespace TikiEditor
             }
         }
 
-        private void textInputPath_TextChanged(object sender, EventArgs e)
-        {
-            _inputs.Clear();
-
-            foreach (string file in Directory.GetFiles(textInputPath.Text))
-            {
-                _inputs.Add(
-                    new InputModel("", file)
-                );
-            }
-
-            textInputPrefix_TextChanged(null, null);
-        }
-
-        private void textInputPrefix_TextChanged(object sender, EventArgs e)
-        {
-            foreach (var i in getFiles())
-            {
-                if (!i.NameChanged)
-                {
-                    i.Name = Path.GetFileNameWithoutExtension(i.FileName).ToLower().Substring(textInputPrefix.Text.Length);
-                    i.NameChanged = false;
-                }
-            }
-
-            listAnimations.DataSource = getFiles();
-            listAnimations.DisplayMember = "Name";
-
-            Properties.Settings.Default.ModelPrefix = textInputPrefix.Text;
-            Properties.Settings.Default.Save();
-        }
-
-        private void listInputs_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ucProperties1.CurrentObject = listAnimations.SelectedValue;
-        }
-
         private void buttonLoadMeshes_Click(object sender, EventArgs e)
         {
+            FBXImport import = new FBXImport();
+            var meshes = import.GetNames(_inputsSelected.First().FileName);
 
+            string name = Path.GetFileNameWithoutExtension(textOutputFilename.Text);
+
+            _inputMeshes = meshes.Select(m => new INMesh(name, m)).ToList();
+
+            listMeshes.DataSource = _inputMeshes;
+            listMeshes.DisplayMember = "Name";
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -131,7 +165,7 @@ namespace TikiEditor
         {
             FBXImport import = new FBXImport();
 
-            foreach (InputModel i in listAnimations.SelectedItems)
+            foreach (INAnimation i in listAnimations.SelectedItems)
             {
                 import.InputFilenames.Add(i.Name, i.FileName);
             }
@@ -141,8 +175,8 @@ namespace TikiEditor
         }
         #endregion
 
-        #region Class - InputModel
-        public class InputModel
+        #region Class - INAnimation
+        public class INAnimation
         {
             #region Vars
             private string _name;
@@ -152,7 +186,7 @@ namespace TikiEditor
             #endregion
 
             #region Init
-            public InputModel(string name, string fileName)
+            public INAnimation(string name, string fileName)
             {
                 _name = name;
                 _fileName = fileName;
@@ -180,6 +214,68 @@ namespace TikiEditor
             {
                 get { return _nameChanged; }
                 set { _nameChanged = value; }
+            }
+            #endregion
+        }
+        #endregion
+
+        #region Class - INMesh
+        public class INMesh
+        { 
+            #region Vars
+            private string _name;
+
+            private string _matDiffuse;
+            private string _matNormal;
+            private string _matSpec;
+            private string _matLight;
+            #endregion
+
+            #region Init
+            public INMesh(string model, string name)
+            {
+                _name = name;
+
+                _matDiffuse = String.Format("data/textures/{0}/{1}_diff.dds",   model, name);
+                _matNormal  = String.Format("data/textures/{0}/{1}_normal.dds", model, name);
+                _matSpec    = String.Format("data/textures/{0}/{1}_spec.dds",   model, name);
+                _matLight   = String.Format("data/textures/{0}/{1}_light.dds",  model, name);
+            }
+            #endregion
+
+            #region Properties
+            public string Name
+            {
+                get { return _name; }
+                set { _name = value; }
+            }
+
+            [SearchFile("Texture2D", "*.dds")]
+            public string MatDiffuse
+            {
+                get { return _matDiffuse; }
+                set { _matDiffuse = value; }
+            }
+
+            [SearchFile("Texture2D", "*.dds")]
+            public string MatNormal
+            {
+                get { return _matNormal; }
+                set { _matNormal = value; }
+            }
+
+            [SearchFile("Texture2D", "*.dds")]
+            public string MatSpec
+            {
+                get { return _matSpec; }
+                set { _matSpec = value; }
+            }
+
+            [SearchFile("Texture2D", "*.dds")]
+            public string MatLight
+            {
+                get { return _matLight; }
+                set { _matLight = value; }
             }
             #endregion
         }

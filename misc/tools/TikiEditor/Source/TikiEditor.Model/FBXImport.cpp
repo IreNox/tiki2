@@ -90,14 +90,14 @@ namespace TikiEditor
 		FbxHelper* helper = new FbxHelper();
 
 		loader->GetScene(file, &scene);
-		List<string> names = helper->GetMeshNames(scene);
+		List<const char*> names = helper->GetMeshNames(scene);
 
 		System::Collections::Generic::List<String^>^ list = gcnew System::Collections::Generic::List<String^>();
 
 		UInt32 i = 0;
 		while (i < names.Count())
 		{
-			String^ str = gcnew String(names[i].c_str());
+			String^ str = gcnew String(names[i]);
 
 			list->Add(str);
 

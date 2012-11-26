@@ -45,8 +45,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAnimations = new System.Windows.Forms.TabPage();
             this.tabMeshes = new System.Windows.Forms.TabPage();
-            this.listMeshes = new System.Windows.Forms.ListBox();
             this.buttonLoadMeshes = new System.Windows.Forms.Button();
+            this.listMeshes = new System.Windows.Forms.ListBox();
             this.ucProperties1 = new TikiEditor.Designer.ucProperties();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -228,6 +228,17 @@
             this.tabMeshes.Text = "Meshes";
             this.tabMeshes.UseVisualStyleBackColor = true;
             // 
+            // buttonLoadMeshes
+            // 
+            this.buttonLoadMeshes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonLoadMeshes.Location = new System.Drawing.Point(181, 73);
+            this.buttonLoadMeshes.Name = "buttonLoadMeshes";
+            this.buttonLoadMeshes.Size = new System.Drawing.Size(86, 23);
+            this.buttonLoadMeshes.TabIndex = 16;
+            this.buttonLoadMeshes.Text = "Load Meshes";
+            this.buttonLoadMeshes.UseVisualStyleBackColor = true;
+            this.buttonLoadMeshes.Click += new System.EventHandler(this.buttonLoadMeshes_Click);
+            // 
             // listMeshes
             // 
             this.listMeshes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -240,17 +251,7 @@
             this.listMeshes.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this.listMeshes.Size = new System.Drawing.Size(264, 64);
             this.listMeshes.TabIndex = 15;
-            // 
-            // buttonLoadMeshes
-            // 
-            this.buttonLoadMeshes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonLoadMeshes.Location = new System.Drawing.Point(181, 73);
-            this.buttonLoadMeshes.Name = "buttonLoadMeshes";
-            this.buttonLoadMeshes.Size = new System.Drawing.Size(86, 23);
-            this.buttonLoadMeshes.TabIndex = 16;
-            this.buttonLoadMeshes.Text = "Load Meshes";
-            this.buttonLoadMeshes.UseVisualStyleBackColor = true;
-            this.buttonLoadMeshes.Click += new System.EventHandler(this.buttonLoadMeshes_Click);
+            this.listMeshes.SelectedIndexChanged += new System.EventHandler(this.listMeshes_SelectedIndexChanged);
             // 
             // ucProperties1
             // 
