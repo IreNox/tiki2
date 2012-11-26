@@ -325,7 +325,7 @@ namespace TikiEngine
 					if (errorBlob)
 					{
 						char* error = (char*)errorBlob->GetBufferPointer();
-						engine->HLog.WriteError("Failed to compile effect. %s\n" + (string)error, 0);
+						engine->HLog.WriteError("Failed to compile effect. Error Message: " + (string)error, 0);
 					}
 					else
 					{

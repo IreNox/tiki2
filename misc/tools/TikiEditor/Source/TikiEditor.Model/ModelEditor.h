@@ -2,8 +2,8 @@
 
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiMesh.h"
+#include "Graphics/TikiLayer.h"
 #include "Graphics/TikiAnimation.h"
-#include "Graphics/AnimationLayer.h"
 
 namespace TikiEngine
 {

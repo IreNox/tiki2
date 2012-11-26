@@ -700,9 +700,9 @@ namespace TikiEngine
 			return count;
 		}
 
-		TikiBone* TikiBone::GetBoneByName(const char* name)
+		TikiBone* TikiBone::GetBoneByName(const string& name)
 		{
-			if(this->name == string(name))
+			if(this->name == name)
 				return this;
 
 			for(UInt32 i = 0; i < childs.Count();i++)

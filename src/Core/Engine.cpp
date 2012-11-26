@@ -182,7 +182,7 @@ namespace TikiEngine
 			window->Begin();
 
 			//Mutex::WaitForMultiple(csDraw, 2);
-			//OutputDebugString(L"Engine\n");
+			//OutputDebugString(L"Engine");
 
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
@@ -320,7 +320,7 @@ namespace TikiEngine
 			//csEngine->Wait();
 
 			//wostringstream s;
-			//s << L"Update: " << HelperThreading::GIndex() << L"\n";
+			//s << L"Update: " << HelperThreading::GIndex();
 
 			//OutputDebugString(s.str().c_str());
 
@@ -363,7 +363,9 @@ namespace TikiEngine
 	{
 #if _DEBUG
 		ostringstream s;
-		//s < 
+		s << "Loading Module: " << typeid(module).name(); 
+
+		this->HLog.Write(s.str());
 #endif
 
 		if (module != 0)

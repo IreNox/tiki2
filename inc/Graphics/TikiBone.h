@@ -43,7 +43,7 @@ namespace TikiEngine
 			Matrix ShiftMatrix();
 
 
-			TikiBone* GetBoneByName(const char* name);
+			TikiBone* GetBoneByName(const string& name);
 			TikiBone* GetBoneByIndex(int index);
 			TikiLayer& GetAnimationLayer(TikiAnimation* animation);
 			

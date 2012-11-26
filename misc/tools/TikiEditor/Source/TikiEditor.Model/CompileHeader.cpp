@@ -15,10 +15,4 @@
 #include "..\src\Core\FileStream.cpp"
 #include "..\src\Core\IResource.cpp"
 
-#include "..\src\Graphics\TikiBone.cpp"
-#include "..\src\Graphics\TikiMesh.cpp"
-#include "..\src\Graphics\TikiAnimation.cpp"
-#include "..\src\Graphics\AnimationLayer.cpp"
-
-#include "..\src\Graphics\ModelIOContext.cpp"
-#include "..\src\Graphics\ModelConverter.cpp"
+#include "..\src\Graphics\ModelInternal.cpp"

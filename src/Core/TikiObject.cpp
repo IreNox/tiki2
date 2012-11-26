@@ -46,12 +46,12 @@ Int32 TikiObject::AddRef()
 		return -1;
 	}
 
-	if (TikiObject::WatchPointer.Contains(this))
-	{
-		std::ostringstream s;
-		s << "AddRef: " << this << " to " << refCount << "\n";
-		TIKIOUT(s.str().c_str());
-	}
+	//if (TikiObject::WatchPointer.Contains(this))
+	//{
+	//	std::ostringstream s;
+	//	s << "AddRef: " << this << " to " << refCount;
+	//	TIKIOUT(s.str().c_str());
+	//}
 
 	return refCount;
 #else
@@ -76,12 +76,12 @@ Int32 TikiObject::Release()
 		return -1;
 	}
 
-	if (TikiObject::WatchPointer.Contains(this))
-	{
-		std::ostringstream s;
-		s << "Release: " << this << " to " << refCount << "\n";
-		TIKIOUT(s.str().c_str());
-	}
+	//if (TikiObject::WatchPointer.Contains(this))
+	//{
+	//	std::ostringstream s;
+	//	s << "Release: " << this << " to " << refCount;
+	//	TIKIOUT(s.str().c_str());
+	//}
 #endif
 
 	if (refCount < 1)

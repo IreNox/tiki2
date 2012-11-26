@@ -385,7 +385,7 @@ namespace TikiEditor
 		if(bone == 0)
 			return;
 
-		AnimationLayer layer;
+		TikiLayer layer;
 
 		if(animation->GetTimeStamps().Count() == 1 && animation->GetTimeStamps()[0] == -1) // defaultValues
 		{

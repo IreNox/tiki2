@@ -23,7 +23,6 @@
     <ClCompile Include="src\Core\HelperThreading.cpp" />
     <ClCompile Include="src\Core\Mutex.cpp" />
     <ClCompile Include="src\Core\ParticleEffect.cpp" />
-    <ClCompile Include="src\Core\shell.c" />
     <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
@@ -83,7 +82,6 @@
     <ClInclude Include="inc\Core\ParticleEffect.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
-    <ClInclude Include="inc\Core\sqlite3ext.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />

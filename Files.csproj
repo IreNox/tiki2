@@ -78,8 +78,6 @@
     <Content Include="bin\Bin32\PhysXDevice.dll" />
     <Content Include="bin\Bin32\PhysXLoader.dll" />
     <Content Include="bin\Bin64\cudart64_30_9.dll" />
-    <Content Include="bin\Bin64\fbxsdk-2013.3.dll" />
-    <Content Include="bin\Bin64\fbxsdk-2013.3d.dll" />
     <Content Include="bin\Bin64\fmodex64.dll" />
     <Content Include="bin\Bin64\NxCharacter64.dll" />
     <Content Include="bin\Bin64\PhysXCooking64.dll" />

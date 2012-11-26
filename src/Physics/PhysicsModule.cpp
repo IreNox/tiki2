@@ -97,7 +97,7 @@ namespace TikiEngine
 			scene = physicsSDK->createScene(sceneDesc);
 			if (scene == 0)
 			{
-				engine->HLog.Write("Error: Unable to create a PhysX scene, exiting. \n");
+				engine->HLog.Write("Error: Unable to create a PhysX scene, exiting.");
 				return false;
 			}
 

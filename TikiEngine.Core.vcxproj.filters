@@ -248,9 +248,6 @@
     <ClCompile Include="src\Core\Mesh.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\shell.c">
-      <Filter>Extern</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\sqlite3.c">
       <Filter>Extern</Filter>
     </ClCompile>
@@ -620,9 +617,6 @@
       <Filter>Quelldateien\Core\System</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\sqlite3.h">
-      <Filter>Extern</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\sqlite3ext.h">
       <Filter>Extern</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\IBone.h">
