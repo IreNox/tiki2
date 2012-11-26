@@ -40,10 +40,18 @@
             this.buttonSearchPath = new System.Windows.Forms.Button();
             this.FolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.FileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.listInputs = new System.Windows.Forms.ListBox();
+            this.listAnimations = new System.Windows.Forms.ListBox();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabAnimations = new System.Windows.Forms.TabPage();
+            this.tabMeshes = new System.Windows.Forms.TabPage();
+            this.listMeshes = new System.Windows.Forms.ListBox();
+            this.buttonLoadMeshes = new System.Windows.Forms.Button();
             this.ucProperties1 = new TikiEditor.Designer.ucProperties();
             this.groupBox1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabAnimations.SuspendLayout();
+            this.tabMeshes.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -161,19 +169,17 @@
             this.FileDialog.Filter = "TikiModel (*.tiki)|*.tiki|All Files (*.*)|*.*";
             this.FileDialog.SupportMultiDottedExtensions = true;
             // 
-            // listInputs
+            // listAnimations
             // 
-            this.listInputs.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listInputs.FormattingEnabled = true;
-            this.listInputs.IntegralHeight = false;
-            this.listInputs.Location = new System.Drawing.Point(3, 112);
-            this.listInputs.Name = "listInputs";
-            this.listInputs.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
-            this.listInputs.Size = new System.Drawing.Size(278, 128);
-            this.listInputs.TabIndex = 14;
-            this.listInputs.SelectedIndexChanged += new System.EventHandler(this.listInputs_SelectedIndexChanged);
+            this.listAnimations.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listAnimations.FormattingEnabled = true;
+            this.listAnimations.IntegralHeight = false;
+            this.listAnimations.Location = new System.Drawing.Point(3, 3);
+            this.listAnimations.Name = "listAnimations";
+            this.listAnimations.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listAnimations.Size = new System.Drawing.Size(264, 96);
+            this.listAnimations.TabIndex = 14;
+            this.listAnimations.SelectedIndexChanged += new System.EventHandler(this.listInputs_SelectedIndexChanged);
             // 
             // buttonSave
             // 
@@ -185,6 +191,66 @@
             this.buttonSave.Text = "Save Props";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabControl1.Controls.Add(this.tabAnimations);
+            this.tabControl1.Controls.Add(this.tabMeshes);
+            this.tabControl1.Location = new System.Drawing.Point(3, 112);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(278, 128);
+            this.tabControl1.TabIndex = 16;
+            // 
+            // tabAnimations
+            // 
+            this.tabAnimations.Controls.Add(this.listAnimations);
+            this.tabAnimations.Location = new System.Drawing.Point(4, 22);
+            this.tabAnimations.Name = "tabAnimations";
+            this.tabAnimations.Padding = new System.Windows.Forms.Padding(3);
+            this.tabAnimations.Size = new System.Drawing.Size(270, 102);
+            this.tabAnimations.TabIndex = 0;
+            this.tabAnimations.Text = "Animations";
+            this.tabAnimations.UseVisualStyleBackColor = true;
+            // 
+            // tabMeshes
+            // 
+            this.tabMeshes.Controls.Add(this.buttonLoadMeshes);
+            this.tabMeshes.Controls.Add(this.listMeshes);
+            this.tabMeshes.Location = new System.Drawing.Point(4, 22);
+            this.tabMeshes.Name = "tabMeshes";
+            this.tabMeshes.Padding = new System.Windows.Forms.Padding(3);
+            this.tabMeshes.Size = new System.Drawing.Size(270, 102);
+            this.tabMeshes.TabIndex = 1;
+            this.tabMeshes.Text = "Meshes";
+            this.tabMeshes.UseVisualStyleBackColor = true;
+            // 
+            // listMeshes
+            // 
+            this.listMeshes.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listMeshes.FormattingEnabled = true;
+            this.listMeshes.IntegralHeight = false;
+            this.listMeshes.Location = new System.Drawing.Point(3, 3);
+            this.listMeshes.Name = "listMeshes";
+            this.listMeshes.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
+            this.listMeshes.Size = new System.Drawing.Size(264, 64);
+            this.listMeshes.TabIndex = 15;
+            // 
+            // buttonLoadMeshes
+            // 
+            this.buttonLoadMeshes.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonLoadMeshes.Location = new System.Drawing.Point(181, 73);
+            this.buttonLoadMeshes.Name = "buttonLoadMeshes";
+            this.buttonLoadMeshes.Size = new System.Drawing.Size(86, 23);
+            this.buttonLoadMeshes.TabIndex = 16;
+            this.buttonLoadMeshes.Text = "Load Meshes";
+            this.buttonLoadMeshes.UseVisualStyleBackColor = true;
+            this.buttonLoadMeshes.Click += new System.EventHandler(this.buttonLoadMeshes_Click);
             // 
             // ucProperties1
             // 
@@ -203,8 +269,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.buttonSave);
-            this.Controls.Add(this.listInputs);
             this.Controls.Add(this.ucProperties1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonExecute);
@@ -215,6 +281,9 @@
             this.Size = new System.Drawing.Size(284, 448);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabAnimations.ResumeLayout(false);
+            this.tabMeshes.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,7 +304,12 @@
         private System.Windows.Forms.FolderBrowserDialog FolderDialog;
         private System.Windows.Forms.SaveFileDialog FileDialog;
         private Designer.ucProperties ucProperties1;
-        private System.Windows.Forms.ListBox listInputs;
+        private System.Windows.Forms.ListBox listAnimations;
         private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabAnimations;
+        private System.Windows.Forms.TabPage tabMeshes;
+        private System.Windows.Forms.ListBox listMeshes;
+        private System.Windows.Forms.Button buttonLoadMeshes;
     }
 }

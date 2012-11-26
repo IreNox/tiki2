@@ -53,9 +53,9 @@ namespace TikiEditor
             {
                 FileDialog.FileName = textInputPrefix.Text.Trim('-', ' ', '_');
             }
-            else if (listInputs.SelectedItems.Count != 0)
+            else if (listAnimations.SelectedItems.Count != 0)
             {
-                FileDialog.FileName = ((InputModel)listInputs.SelectedItem).Name.Trim('-', ' ', '_');
+                FileDialog.FileName = ((InputModel)listAnimations.SelectedItem).Name.Trim('-', ' ', '_');
             }
 
             if (FileDialog.ShowDialog() != DialogResult.Cancel)
@@ -104,8 +104,8 @@ namespace TikiEditor
                 }
             }
 
-            listInputs.DataSource = getFiles();
-            listInputs.DisplayMember = "Name";
+            listAnimations.DataSource = getFiles();
+            listAnimations.DisplayMember = "Name";
 
             Properties.Settings.Default.ModelPrefix = textInputPrefix.Text;
             Properties.Settings.Default.Save();
@@ -113,7 +113,12 @@ namespace TikiEditor
 
         private void listInputs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ucProperties1.CurrentObject = listInputs.SelectedValue;
+            ucProperties1.CurrentObject = listAnimations.SelectedValue;
+        }
+
+        private void buttonLoadMeshes_Click(object sender, EventArgs e)
+        {
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
@@ -126,7 +131,7 @@ namespace TikiEditor
         {
             FBXImport import = new FBXImport();
 
-            foreach (InputModel i in listInputs.SelectedItems)
+            foreach (InputModel i in listAnimations.SelectedItems)
             {
                 import.InputFilenames.Add(i.Name, i.FileName);
             }

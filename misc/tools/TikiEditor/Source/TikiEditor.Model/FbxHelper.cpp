@@ -55,7 +55,7 @@ namespace TikiEditor
 		//int tmp = rootBone->Count();
 
 		FlagBones();
-		CleanBones();
+		CleanBones(rootBone);
 
 		InitializeAnimation();
 
@@ -102,13 +102,58 @@ namespace TikiEditor
 		}
 	}
 
-	void FbxHelper::CleanBones()
+	void FbxHelper::CleanBones(TikiBone* bone)
 	{
-		if(rootBone == 0)
+		//void TikiBone::Clean()
+		//{
+		//	for(UINT i = 0; i < childs.Count(); i++)
+		//	{
+		//		childs[i]->Clean();
+
+		//		if(childs[i]->childs.Count() == 0 && childs[i]->constantBufferIndex == -1)
+		//		{
+		//			childs[i]->Release();
+		//			childs.RemoveAt(i);
+		//		}
+		//	}
+		//}
+
+		//void TikiBone::CreateMapping(List<TikiBone*>& list)
+		//{
+		//	if(constantBufferIndex != -1)
+		//		list.Add(this);
+		//	constantBufferIndex = list.Count() - 1;
+		//	for(UInt32 i = 0; i < childs.Count(); i++)
+		//		childs[i]->CreateMapping(list);
+		//}
+
+		if(bone == 0)
 			return;
 
-		rootBone->Clean();
-		rootBone->CreateMapping(constantBufferIndices);
+		if (bone->GetConstantBufferIndex() != -1)
+		{
+			constantBufferIndices.Add(bone);
+			bone->SetConstantBufferIndex(constantBufferIndices.Count() - 1);
+		}
+
+		UInt32 i = 0;
+		while (i < bone->GetChilds()->Count())
+		{
+			TikiBone* child = bone->GetChilds()->Get(i);
+
+			this->CleanBones(child);
+
+			if(child->GetChilds()->Count() == 0 && child->GetConstantBufferIndex() == -1)
+			{
+				child->Release();
+				tikiBones.Remove(child);
+				bone->GetChilds()->RemoveAt(i);
+			}
+			else
+			{
+				i++;
+			}
+		}
 	}
 
 	void FbxHelper::RecursiveBone(FbxNode* node)
@@ -481,4 +526,22 @@ namespace TikiEditor
 		return max;
 	}
 #pragma endregion
+
+	List<string> FbxHelper::GetMeshNames(FbxScene* scene)
+	{
+		List<string> names;
+		Int32 c = scene->GetSrcObjectCount<FbxMesh>();
+
+		Int32 i = 0;
+		while (i < c)
+		{
+			names.Add(
+				scene->GetSrcObject<FbxMesh>(i)->GetName()
+			);
+			i++;
+		}
+
+		return names;	
+	}
+
 }

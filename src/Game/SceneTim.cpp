@@ -71,7 +71,7 @@ namespace TikiEngine
 			// Model
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"cylinder"));
+			go->SModel(args.Content->LoadModel(L"soldier"));
 
 			//IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
@@ -82,7 +82,7 @@ namespace TikiEngine
 			//render->SetMaterial(mat);
 			//render->SetMesh(engine->content->LoadMesh(L"building_03"));
 
-			//go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
 

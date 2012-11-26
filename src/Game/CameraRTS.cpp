@@ -15,8 +15,7 @@ namespace TikiEngine
 		{
 			SafeAddRef(terrain, &this->terrain);
 
-			gameObject->PRS.SPosition() = Vector3(0, 192.0f, 0);
-			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -1, 0);
+			targetZoom = -150.0f;
 		}
 
 		CameraRTS::~CameraRTS()
@@ -47,24 +46,27 @@ namespace TikiEngine
 			if (args.Input.MouseWheel != 0)
 			{
 				targetZoom += args.Input.MouseWheel / 10;
-				targetZoom = Clamp(zoom, -260.0f, 100.0f);
+				targetZoom = Clamp(targetZoom, -300.0f, 100.0f);
 			}
 
-			zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime);
-			
-			float rot = (-zoom / 120) + 1;
-			rot = Clamp(rot, 0.2f, 1.57f);
-			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
-
-			float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
-			gameObject->PRS.SPosition().Y = sample + (192.0f - zoom);
-
-			if (args.Input.MouseWheel != 0)
+			if (abs(zoom - targetZoom) > 0.01f)
 			{
-				ostringstream s;
-				s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+				zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime * 2);
 
-				engine->HLog.Write(s.str());
+				float rot = ((-zoom / 300) + 0.34f) / 1.34f;
+				rot = Lerp(0.2f, 1.57f, rot);
+				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
+
+				float sample = 32.0f; //terrain->SampleHeight(gameObject->PRS.GPosition());
+				gameObject->PRS.SPosition().Y = sample + (164.0f - zoom);
+
+				if (args.Input.MouseWheel != 0)
+				{
+					ostringstream s;
+					s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+					engine->HLog.Write(s.str());
+				}
+
 			}
 		}
 	}

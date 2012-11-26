@@ -13,6 +13,8 @@ namespace TikiEditor
 
 		void Execute();
 
+		System::Collections::Generic::List<String^>^ GetNames(String^ fileName);
+
 		property String^ OutputFilename
 		{
 			String^ get() { return outputFile; }

@@ -61,6 +61,8 @@ namespace TikiEditor
 		FbxScene* GetScene();
 		void SetScene(FbxScene* scene);
 
+		List<string> GetMeshNames(FbxScene* scene);
+
 		TikiAnimation* GetAnimation();
 		TikiBone* GetRootBone();
 		List<TikiBone*>& GetConstantBufferIndices();
@@ -77,7 +79,7 @@ namespace TikiEditor
 		void InitializeAnimationLayer(FbxNode* node);
 		void FillTimeStamp(FbxAnimCurve* curve);
 		void FlagBones();
-		void CleanBones();
+		void CleanBones(TikiBone* bone);
 		void FindMeshes();
 
 

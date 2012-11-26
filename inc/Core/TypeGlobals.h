@@ -56,7 +56,7 @@ inline void SafeRelease(T** ptr)
 }
 
 template <typename T>
-inline float Lerp(const T& from, const T& to, const T& val)
+inline T Lerp(const T& from, const T& to, const T& val)
 {
 	return from + ((to - from) * val);
 }

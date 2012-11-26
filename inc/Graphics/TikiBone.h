@@ -25,9 +25,6 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(List<TikiAnimation*>& animations);
 		
-			void Clean();
-			void CreateMapping(List<TikiBone*>& list);
-
 			TikiBone* GetParent();
 			void SetParent(TikiBone* parent);
 

@@ -8,7 +8,8 @@
   <ItemDefinitionGroup>
     <Link>
       <AdditionalDependencies>ws2_32.lib;Cloddy.CodeX.lib;Cloddy.Core.lib;Cloddy.Kernel.lib;Cloddy.API.lib;Cloddy.Extensions.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalOptions>/VERBOSE:LIB %(AdditionalOptions)</AdditionalOptions>
+      <IgnoreSpecificDefaultLibraries>libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/FORCE:MULTIPLE %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup />

@@ -47,7 +47,7 @@ namespace TikiEngine
 
 					break;
 				case 1: // player
-					this->SModel(engine->content->LoadModel(L"mark"));
+					this->SModel(engine->content->LoadModel(L"soldier"));
 					this->GModel()->SetMaterial(material);
 					
 					material->FlipTexcorrdV = false;
@@ -56,7 +56,7 @@ namespace TikiEngine
 					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
 					break;
                 case 2: // enemy
-                    this->SModel(engine->content->LoadModel(L"soldier"));
+                    this->SModel(engine->content->LoadModel(L"mark"));
                     this->GModel()->SetMaterial(material);
 
                     material->FlipTexcorrdV = false;
