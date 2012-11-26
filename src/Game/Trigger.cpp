@@ -8,8 +8,6 @@ namespace TikiEngine
 		Trigger::Trigger(GameState* gameState, GameObject* gameObject)
 			: BaseGameEntity(gameState, gameObject)
 		{
-			pos = Vector3::Zero;
-
 			boxCollider = engine->librarys->CreateComponent<IBoxCollider>(gameObject);
 			boxCollider->AddRef();
 			boxCollider->TriggerEnter.AddHandler(this);
@@ -18,13 +16,12 @@ namespace TikiEngine
 			// set default porps
 			boxCollider->SetMaterial(0);
 			boxCollider->SetDynamic(false);
-			boxCollider->SetCenter(pos);
+			boxCollider->SetCenter(Vector3(0, 0, 0));
 			boxCollider->SetSize(Vector3(1, 1, 1));
 			boxCollider->SetTrigger(true);
 			boxCollider->SetGroup(CG_Collidable_Non_Pushable);
 
-
-			needUpdate = false;
+			needUpdate = true;
 		}
 
 		Trigger::~Trigger()
@@ -34,12 +31,6 @@ namespace TikiEngine
 			SafeRelease(&boxCollider);
 		}
 
-		void Trigger::Init(const Vector3& size)
-		{
-			// set porps
-			boxCollider->SetSize(size);
-			needUpdate = true;
-		}
 
 		void Trigger::Handle(ICollider* sender, const TriggerEnterArgs& args)
 		{
@@ -53,10 +44,12 @@ namespace TikiEngine
 
 		void Trigger::Update(const UpdateArgs& args)
 		{
+			// only do this once
 			if (needUpdate)
 			{
 				needUpdate = false;
 				boxCollider->SetCenter(gameObject->PRS.GPosition());
+				boxCollider->SetSize(gameObject->PRS.GScale());
 				boxCollider->SetGroup(CG_Collidable_Non_Pushable);
 			}
 

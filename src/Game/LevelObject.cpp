@@ -66,7 +66,7 @@ namespace TikiEngine
                     break;
 
 				case 3: // Trigger
-					(new Trigger(gameState, this))->Init(Vector3(50, 10, 50)); // Vector3(150, 30, -150)
+					(new Trigger(gameState, this));
 					break;
 				default:
 					material->Release();

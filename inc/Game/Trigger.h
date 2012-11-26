@@ -16,7 +16,6 @@ namespace TikiEngine
 			Trigger(GameState* gameState, GameObject* gameObject);
 			~Trigger();
 
-			void Init(const Vector3& size);
 
 			virtual bool HandleMessage(const Telegram& msg){ return false; }
 
@@ -33,7 +32,6 @@ namespace TikiEngine
 
 			IBoxCollider* boxCollider;
 			bool needUpdate;
-			Vector3 pos;
 		};
 
 
