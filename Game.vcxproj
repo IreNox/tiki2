@@ -85,6 +85,7 @@
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\TriBox.h" />
+    <ClInclude Include="inc\Game\Trigger.h" />
     <ClInclude Include="inc\Game\UnitFunctions.h" />
     <ClInclude Include="inc\Game\UnitSelection.h" />
     <ClInclude Include="inc\Game\Utils.h" />
@@ -148,6 +149,7 @@
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
     <ClCompile Include="src\Game\TriBox.cpp" />
+    <ClCompile Include="src\Game\Trigger.cpp" />
     <ClCompile Include="src\Game\UnitSelection.cpp" />
     <ClCompile Include="src\Game\VoidList.cpp" />
     <ClCompile Include="src\Game\Weapon.cpp" />

@@ -40,8 +40,13 @@ namespace TikiEngine
 
 		void BoxCollider::SetCenter(const Vector3& center)
 		{
-			SetCenterPos(center);
-			UpdateData();
+			if (actor != 0 && actor->isDynamic())
+				SetCenterPos(center);
+			else
+			{
+				this->center = center.arr;
+				UpdateData();
+			}
 		}
 
 		bool BoxCollider::GetDynamic()

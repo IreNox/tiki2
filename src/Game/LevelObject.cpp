@@ -4,6 +4,7 @@
 #include "Core/IContentManager.h"
 
 #include "Game/TikiBot.h"
+#include "Game/Trigger.h"
 
 namespace TikiEngine
 {
@@ -64,7 +65,9 @@ namespace TikiEngine
                     (new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
                     break;
 
-
+				case 3: // Trigger
+					(new Trigger(gameState, this))->Init(Vector3(50, 10, 50)); // Vector3(150, 30, -150)
+					break;
 				default:
 					material->Release();
 					break;

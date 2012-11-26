@@ -50,6 +50,7 @@ namespace TikiEngine
 			UInt64 GetResource2();
 
 			void AddProjectile(GameObject* go);
+			void AddTrigger(GameObject* go);
 
 			void ExecuteUnitFunction(UnitFunctions func);
 

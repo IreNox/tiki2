@@ -11,6 +11,7 @@
 #include "Game/GoalThink.h"
 #include "Game/Bullet.h"
 
+
 namespace TikiEngine
 {
 	namespace Game
@@ -26,7 +27,6 @@ namespace TikiEngine
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
-
 
 		}
 
@@ -66,6 +66,7 @@ namespace TikiEngine
 		{
 			projectiles.Add(go);
 		}
+
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
@@ -216,6 +217,7 @@ namespace TikiEngine
 									// don't attack yourself dude
 									if (target->ID() != bot->ID())
 									{
+										bot->GetBrain()->RemoveAllSubgoals();
 										OutputDebugString(L"Target found. \n");
 										bot->GetBrain()->AddGoalAttackGlobalTarget(target);
 

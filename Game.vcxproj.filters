@@ -132,6 +132,12 @@
     <Filter Include="Headerdateien\Gameplay\HUD">
       <UniqueIdentifier>{a9ee065d-4c19-4f52-a22d-8130cb9668b2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Triggers">
+      <UniqueIdentifier>{4a62173d-18e2-4ebd-b1ad-ed654939ffb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Triggers">
+      <UniqueIdentifier>{dd83813e-5c29-49e1-8f21-1cc93bebf10d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -353,6 +359,9 @@
     <ClInclude Include="inc\Game\EventUnitSelectionChanged.h">
       <Filter>Headerdateien\Events</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\Trigger.h">
+      <Filter>Headerdateien\AI\Triggers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -528,6 +537,9 @@
     </ClCompile>
     <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp">
       <Filter>Quelldateien\AI\Goals\Composite</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Trigger.cpp">
+      <Filter>Quelldateien\AI\Triggers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
