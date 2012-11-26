@@ -30,15 +30,6 @@
     <Filter Include="Quelldateien\Internal">
       <UniqueIdentifier>{873bba07-b6d0-4c1d-b74a-373788301624}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Internal\Vertex">
-      <UniqueIdentifier>{ddb29329-60c6-421e-9f2e-9b5983ab000f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Internal\Buffer">
-      <UniqueIdentifier>{96f9157a-4c5c-453c-a8bb-0a08acba9170}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Components">
-      <UniqueIdentifier>{694c8d5b-cfc6-4977-9fe4-714521dafeef}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Modules">
       <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
     </Filter>
@@ -48,41 +39,17 @@
     <Filter Include="Quelldateien\Internal\Rendering">
       <UniqueIdentifier>{0b570a00-d9c5-4fdf-ab6c-6de06647b201}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Internal\Cloddy">
-      <UniqueIdentifier>{6266a1d4-4603-4f21-9959-624683e43532}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Internal\Cloddy">
       <UniqueIdentifier>{e6432fc2-ca46-4cba-86a8-d3521817312d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\FBX">
-      <UniqueIdentifier>{f3eb8ca4-0305-4788-8b4f-100dd3a78dae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Internal\FBX">
-      <UniqueIdentifier>{39e88201-8a24-43fb-8fc4-29b0feeb7e7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Internal\Data">
       <UniqueIdentifier>{bbcc8707-8f12-4c91-885f-e62f0dfb08c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Internal\Model">
-      <UniqueIdentifier>{5af9a731-242e-4593-985e-22e6886ab616}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Internal\Model">
       <UniqueIdentifier>{e8bfa32a-5d6a-4500-97d8-bcbca723ed41}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\Buffer.cpp">
-      <Filter>Quelldateien\Internal\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\IndexBuffer.cpp">
-      <Filter>Quelldateien\Internal\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\VertexBuffer.cpp">
-      <Filter>Quelldateien\Internal\Buffer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\VertexDeclaration.cpp">
-      <Filter>Quelldateien\Internal\Vertex</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Texture.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
@@ -92,23 +59,11 @@
     <ClCompile Include="src\Graphics\DllMain.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsModule.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\MeshRenderer.cpp">
-      <Filter>Quelldateien\Components</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\RenderTarget.cpp">
       <Filter>Quelldateien\Resources</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\SpriteBatchModule.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Font.cpp">
       <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TerrainRenderer.cpp">
-      <Filter>Quelldateien\Components</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\Quad.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
@@ -116,57 +71,30 @@
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\TikiHeightmap.cpp">
-      <Filter>Quelldateien\Internal\Cloddy</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\Model.cpp">
       <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TikiMesh.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TerrainIndexBuffer.cpp">
-      <Filter>Quelldateien\Internal\Cloddy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp">
-      <Filter>Quelldateien\Internal\Cloddy</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsVertexFormats.cpp">
-      <Filter>Quelldateien\Internal\Vertex</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\ParticleRenderer.cpp">
-      <Filter>Quelldateien\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TikiBone.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\TikiAnimation.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\AnimationLayer.cpp">
-      <Filter>Quelldateien\Internal\FBX</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\DebugConsole.cpp">
       <Filter>Quelldateien\Internal\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\ModelConverter.cpp">
-      <Filter>Quelldateien\Internal\Model</Filter>
+    <ClCompile Include="src\Graphics\ModelInternal.cpp">
+      <Filter>Quelldateien\Internal</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\ModelIOContext.cpp">
-      <Filter>Quelldateien\Internal\Model</Filter>
+    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
+      <Filter>Quelldateien\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexInternal.cpp">
+      <Filter>Quelldateien\Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\AllComponents.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\AllModules.cpp">
+      <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Graphics\Buffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\ConstantBuffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\IndexBuffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\VertexBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Shader.h">
@@ -220,9 +148,6 @@
     <ClInclude Include="inc\Graphics\Model.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiMesh.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h">
       <Filter>Headerdateien\Internal\Cloddy</Filter>
     </ClInclude>
@@ -241,23 +166,11 @@
     <ClInclude Include="inc\Graphics\ParticleVertex.h">
       <Filter>Headerdateien\Internal\Vertex</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\SkinMatrices.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\ParticleRenderer.h">
       <Filter>Headerdateien\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\StaticBuffer.h">
       <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiBone.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiAnimation.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\AnimationLayer.h">
-      <Filter>Headerdateien\Internal\FBX</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugConsole.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
@@ -269,6 +182,21 @@
       <Filter>Headerdateien\Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ModelBinaryData.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiLayer.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiMesh.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SkinMatrices.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimation.h">
+      <Filter>Headerdateien\Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiBone.h">
       <Filter>Headerdateien\Internal\Model</Filter>
     </ClInclude>
   </ItemGroup>

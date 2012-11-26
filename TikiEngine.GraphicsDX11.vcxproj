@@ -19,38 +19,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\AnimationLayer.cpp" />
-    <ClCompile Include="src\Graphics\Buffer.cpp" />
     <ClCompile Include="src\Graphics\DebugConsole.cpp" />
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
-    <ClCompile Include="src\Graphics\GraphicsModule.cpp" />
-    <ClCompile Include="src\Graphics\IndexBuffer.cpp" />
-    <ClCompile Include="src\Graphics\MeshRenderer.cpp" />
+    <ClCompile Include="src\Graphics\AllModules.cpp" />
+    <ClCompile Include="src\Graphics\AllComponents.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
-    <ClCompile Include="src\Graphics\ModelConverter.cpp" />
-    <ClCompile Include="src\Graphics\ModelIOContext.cpp" />
-    <ClCompile Include="src\Graphics\ParticleRenderer.cpp" />
+    <ClCompile Include="src\Graphics\ModelInternal.cpp" />
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
-    <ClCompile Include="src\Graphics\SpriteBatchModule.cpp" />
-    <ClCompile Include="src\Graphics\GraphicsVertexFormats.cpp" />
-    <ClCompile Include="src\Graphics\TerrainIndexBuffer.cpp" />
-    <ClCompile Include="src\Graphics\TerrainRenderer.cpp" />
-    <ClCompile Include="src\Graphics\TerrainVertexBuffer.cpp" />
+    <ClCompile Include="src\Graphics\VertexInternal.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
-    <ClCompile Include="src\Graphics\TikiAnimation.cpp" />
-    <ClCompile Include="src\Graphics\TikiBone.cpp" />
-    <ClCompile Include="src\Graphics\TikiHeightmap.cpp" />
-    <ClCompile Include="src\Graphics\TikiMesh.cpp" />
-    <ClCompile Include="src\Graphics\VertexBuffer.cpp" />
-    <ClCompile Include="src\Graphics\VertexDeclaration.cpp" />
+    <ClCompile Include="src\Graphics\CloddyInternal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Graphics\AnimationLayer.h" />
-    <ClInclude Include="inc\Graphics\Buffer.h" />
+    <ClInclude Include="inc\Graphics\TikiLayer.h" />
     <ClInclude Include="inc\Graphics\CBLights.h" />
     <ClInclude Include="inc\Graphics\CBObjectData.h" />
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
@@ -61,7 +46,6 @@
     <ClInclude Include="inc\Graphics\Font.h" />
     <ClInclude Include="inc\Graphics\DynamicBuffer.h" />
     <ClInclude Include="inc\Graphics\GraphicsModule.h" />
-    <ClInclude Include="inc\Graphics\IndexBuffer.h" />
     <ClInclude Include="inc\Graphics\LightData.h" />
     <ClInclude Include="inc\Graphics\MeshRenderer.h" />
     <ClInclude Include="inc\Graphics\Model.h" />
@@ -85,7 +69,6 @@
     <ClInclude Include="inc\Graphics\TikiBone.h" />
     <ClInclude Include="inc\Graphics\TikiHeightmap.h" />
     <ClInclude Include="inc\Graphics\TikiMesh.h" />
-    <ClInclude Include="inc\Graphics\VertexBuffer.h" />
     <ClInclude Include="inc\Graphics\VertexDeclaration.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

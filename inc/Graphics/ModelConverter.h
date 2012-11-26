@@ -50,7 +50,7 @@ namespace TikiEngine
 			void addPartsMesh(TikiMesh* mesh);
 			UInt32 addPartsTexture(ITexture* tex);
 			UInt32 addPartsBone(TikiBone* bone, UInt32 parentId);
-			UInt32 addPartsLayer(UInt32 animationId, AnimationLayer* layer);
+			UInt32 addPartsLayer(UInt32 animationId, TikiLayer* layer);
 			void addPartsAnimation(TikiAnimation* animation);
 
 		};

@@ -4,9 +4,10 @@
 #include <Core/List.h>
 #include "Core/TikiObject.h"
 #include "Core/TypeGlobals.h"
-#include "Graphics/TikiAnimation.h"
-#include "Graphics/AnimationLayer.h"
 #include "Core/IGraphics.h"
+
+#include "Graphics/TikiAnimation.h"
+#include "Graphics/TikiLayer.h"
 
 namespace TikiEngine
 {
@@ -44,10 +45,9 @@ namespace TikiEngine
 
 			TikiBone* GetBoneByName(const char* name);
 			TikiBone* GetBoneByIndex(int index);
-			AnimationLayer& GetAnimationLayer(TikiAnimation* animation);
-
-
-			void AddAnimation(TikiAnimation* animation, AnimationLayer& layer);
+			TikiLayer& GetAnimationLayer(TikiAnimation* animation);
+			
+			void AddAnimation(TikiAnimation* animation, TikiLayer& layer);
 
 			int Count();
 
@@ -70,7 +70,7 @@ namespace TikiEngine
 			TikiBone* parent;
 			List<TikiBone*> childs;
 
-			Dictionary<TikiAnimation*, AnimationLayer> animationData;
+			Dictionary<TikiAnimation*, TikiLayer> animationData;
 		};
 	}
 }

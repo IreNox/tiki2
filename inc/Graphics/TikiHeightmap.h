@@ -16,49 +16,52 @@
 
 namespace TikiEngine
 {
-	using namespace Cloddy::API::Heightmaps;
-
-	class TikiHeightmap : public Heightmap
+	namespace Graphics
 	{
-	public:
+		using namespace Cloddy::API::Heightmaps;
 
-		TikiHeightmap(int size);
-		~TikiHeightmap();
-
-		void SetColor(IHeightmap* color);
-		void SetDetail(IHeightmap* detail);
-		void SetElevation(IHeightmap* elevation);
-
-		virtual HeightmapLayer GetLayerMask();
-
-		void Get(Int32 x, Int32 y, HeightmapSample* sample);
-		void Get(Int32 x, Int32 y, Int32 z, HeightmapSample* sample);
-
-		static const codex_int32 TypeId = 0xF2C4BDE6;
-
-	protected:
-
-		void DisposeUnmanaged();
-		void DisposeManaged();
-
-		void* TryCast(int id)
+		class TikiHeightmap : public Heightmap
 		{
-			void* ptr;
+		public:
 
-			if (id == TypeId) return (void*) this;
-			if ((ptr = cloddy_Heightmap::TryCast(id)) != 0) return ptr;
-			if ((ptr = TikiHeightmap::TryCast(TypeId)) != 0) return ptr;
+			TikiHeightmap(int size);
+			~TikiHeightmap();
 
-			return Object::TryCast(id);
-		}
+			void SetColor(IHeightmap* color);
+			void SetDetail(IHeightmap* detail);
+			void SetElevation(IHeightmap* elevation);
 
-	private:
+			virtual HeightmapLayer GetLayerMask();
 
-		int size;
+			void Get(Int32 x, Int32 y, HeightmapSample* sample);
+			void Get(Int32 x, Int32 y, Int32 z, HeightmapSample* sample);
 
-		codex_Ptr<IHeightmap> color;
-		codex_Ptr<IHeightmap> detail;
-		codex_Ptr<IHeightmap> elevation;
+			static const codex_int32 TypeId = 0xF2C4BDE6;
 
-	};
+		protected:
+
+			void DisposeUnmanaged();
+			void DisposeManaged();
+
+			void* TryCast(int id)
+			{
+				void* ptr;
+
+				if (id == TypeId) return (void*) this;
+				if ((ptr = cloddy_Heightmap::TryCast(id)) != 0) return ptr;
+				if ((ptr = TikiHeightmap::TryCast(TypeId)) != 0) return ptr;
+
+				return Object::TryCast(id);
+			}
+
+		private:
+
+			int size;
+
+			codex_Ptr<IHeightmap> color;
+			codex_Ptr<IHeightmap> detail;
+			codex_Ptr<IHeightmap> elevation;
+
+		};
+	}
 }

@@ -10,12 +10,8 @@
 #include "Core/IGraphics.h"
 
 #include "Graphics/Quad.h"
-
-#include "Graphics/IndexBuffer.h"
-#include "Graphics/VertexBuffer.h"
-#include "Graphics/ConstantBuffer.h"
-
 #include "Graphics/RenderTarget.h"
+#include "Graphics/ConstantBuffer.h"
 
 #if _DEBUG
 #include "Graphics/DebugConsole.h"
@@ -75,9 +71,6 @@ namespace TikiEngine
 			ConstantBuffer<CBMatrices>* GetCBufferCamera();
 			ConstantBuffer<CBObjectData>* GetCBufferObject();
 
-			IndexBuffer* GetIndexBuffer();
-			VertexBuffer* GetVertexBuffer(VertexDeclaration* decl, bool dynamic);
-
 			void AddPostProcess(PostProcess* postProcess);
 			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
 			void AddScreenSizeRenderTarget(RenderTarget* target);
@@ -121,16 +114,12 @@ namespace TikiEngine
 			ConstantBuffer<CBMatrices>* cbufferCamera;
 			ConstantBuffer<CBObjectData>* cbufferObject;
 
-			IndexBuffer* indexBuffer;
-			Dictionary<ULONG, VertexBuffer*> vertexBuffers;
-
-			List<ID3D11RenderTargetView*> renderTargets;
-
 			RenderTarget* rtDepth;
 			RenderTarget* rtNormal;
 			RenderTarget* rtScreen;
 			RenderTarget* rtBackBuffer;
 			List<RenderTarget*> screenSizeRenderTargets;
+			List<ID3D11RenderTargetView*> renderTargets;
 
 			PostProcess* defaultPostProcess;
 			List<PostProcess*> postProcesses;

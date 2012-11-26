@@ -13,13 +13,11 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-
-
-		class AnimationLayer : public TikiObject
+		class TikiLayer : public TikiObject
 		{
 		public:
-			AnimationLayer();
-			~AnimationLayer();
+			TikiLayer();
+			~TikiLayer();
 
 			void Update(TikiAnimation* animation);
 

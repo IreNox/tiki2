@@ -1,19 +1,289 @@
 
+#include "Graphics/MeshRenderer.h"
+#include "Graphics/ParticleRenderer.h"
 #include "Graphics/TerrainRenderer.h"
-
-#include "Core/TypeGlobals.h"
-
-#include "Core/IGraphics.h"
-#include "Core/GameObject.h"
-#include "Core/Camera.h"
 
 #include "Graphics/DllMain.h"
 #include "Graphics/GraphicsModule.h"
+
+#include "Core/GameObject.h"
+#include "Core/Camera.h"
+#include "Core/IContentManager.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
+		#pragma region  MeshRenderer
+		#pragma region Class
+		MeshRenderer::MeshRenderer(Engine* engine, GameObject* gameObject)
+			: IMeshRenderer(engine, gameObject), mesh(0), material(0), decl(0), indexBuffer(0), vertexBuffer(0)
+		{
+		}
+
+		MeshRenderer::~MeshRenderer()
+		{
+			SafeRelease(&mesh);
+			SafeRelease(&material);
+
+			SafeRelease(&decl);
+			SafeRelease(&indexBuffer);
+			SafeRelease(&vertexBuffer);
+		}
+		#pragma endregion
+
+		#pragma region Member
+		bool MeshRenderer::GetReady()
+		{
+			return (mesh != 0 && mesh->GetReady()) && (material != 0 && material->GetReady());
+		}
+		#pragma endregion
+
+		#pragma region Member - Get/Set
+		Mesh* MeshRenderer::GetMesh()
+		{
+			return mesh;
+		}
+
+		Material* MeshRenderer::GetMaterial()
+		{
+			return material;
+		}
+
+		void MeshRenderer::SetMesh(Mesh* mesh)
+		{
+			SafeRelease(&this->mesh);
+			SafeAddRef(mesh, &this->mesh);
+
+			updateData(true, false);
+		}
+
+		void MeshRenderer::SetMaterial(Material* material)
+		{
+			SafeRelease(&this->material);
+			SafeAddRef(material, &this->material);
+
+			updateData(false, true);
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw/Update
+		void MeshRenderer::Draw(const DrawArgs& args)
+		{			
+			if (!this->GetReady()) return;
+
+			material->UpdateDrawArgs(args, gameObject);
+
+			vertexBuffer->Apply();
+
+			if (indexBuffer != 0)
+			{
+				indexBuffer->Apply();
+			}
+
+			DllMain::Context->IASetPrimitiveTopology(
+				(D3D11_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology()
+			);
+
+			decl->Apply();
+			material->Apply();
+
+			if (indexBuffer != 0)
+			{
+				DllMain::Context->DrawIndexed(
+					indexBuffer->GetElementCount(),
+					0,
+					0
+				);
+			}
+			else
+			{
+				DllMain::Context->Draw(
+					vertexBuffer->GetElementCount(),
+					0
+				);
+			}
+		}
+
+		void MeshRenderer::Update(const UpdateArgs& args)
+		{			
+			//if (!this->GetReady()) return;
+		}
+		#pragma endregion
+
+		#pragma region Private Member
+		void MeshRenderer::updateData(bool udMesh, bool udMaterial)
+		{
+			if (!this->GetReady()) return;
+
+			SafeRelease(&decl);
+
+			decl = new VertexDeclaration(
+				engine,
+				material->GetShader(),
+				mesh->GetVertexDeclaration()->GetInternalData(),
+				mesh->GetVertexDeclaration()->Count()
+			);
+
+			if (udMesh)
+			{
+				SafeRelease(&indexBuffer);
+				SafeRelease(&vertexBuffer);
+
+				UInt32 lenCount;
+				void* vertexData = 0;
+				mesh->GetVertexData(&vertexData, &lenCount);
+
+				vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(
+					engine,
+					decl->GetElementSize(),
+					lenCount / decl->GetElementSize(),
+					vertexData
+				);
+
+				UInt32* indexData;
+				mesh->GetIndexData(&indexData, &lenCount);
+
+				if (lenCount != 0)
+				{
+					indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(
+						engine,
+						sizeof(UInt32),
+						lenCount,
+						indexData
+					);
+				}
+			}
+		}
+		#pragma endregion		
+		#pragma endregion
+
+		#pragma region ParticleRenderer
+		#pragma region Class
+		ParticleRenderer::ParticleRenderer(Engine* engine, GameObject* gameObject)
+			: IParticleRenderer(engine, gameObject), shader(0), texture(0), behavior(0)
+		{
+			shader = engine->content->LoadShader(L"os_particle");
+			shader->AddRef();
+
+			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
+			vertexBuffer = BPoint<DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>>(
+				[=](){ return new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine); }
+			);
+		}
+
+		ParticleRenderer::~ParticleRenderer()
+		{
+			SafeRelease(&decl);
+			SafeRelease(&shader);
+			SafeRelease(&texture);
+			SafeRelease(&behavior);
+		}
+		#pragma endregion
+
+		#pragma region Member - Get/Set
+		bool ParticleRenderer::GetReady()
+		{
+			return (texture != 0) && (behavior != 0);
+		}
+
+		ITexture* ParticleRenderer::GetTexture()
+		{
+			return texture;
+		}
+
+		void ParticleRenderer::SetTexture(ITexture* texture)
+		{
+			SafeRelease(&this->texture);
+			SafeAddRef(texture, &this->texture);
+
+			if (texture)
+			{
+				shader->SetTexture("tex", texture);
+			}
+		}
+
+		ParticleEffect* ParticleRenderer::GetParticleEffect()
+		{
+			return behavior;
+		}
+
+		void ParticleRenderer::SetParticleEffect(ParticleEffect* behavior)
+		{
+			SafeRelease(&this->behavior);
+			SafeAddRef(behavior, &this->behavior);
+
+			if (behavior != 0)
+			{
+				shader->SelectSubByIndex(
+					behavior->GRenderType()
+					);
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw
+		void ParticleRenderer::Draw(const DrawArgs& args)
+		{
+			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
+			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
+
+			decl->Apply();
+
+			UInt32 stride = sizeof(ParticleVertex);
+			UInt32 offset = 0;
+			ID3D11Buffer* buffer = vertexBuffer->GetBuffer();
+
+			switch (behavior->GRenderType())
+			{
+			case PRT_PointList:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+				break;
+			case PRT_LineList:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+				break;
+			case PRT_LineStrip:
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+				break;
+			}
+
+			DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+
+			shader->Apply();
+			shader->ApplyVars(gameObject, 0);
+
+			DllMain::Context->Draw(behavior->GParticleUsed(), 0);
+
+			DllMain::ModuleGraphics->SetStateDepthEnabled(true);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(false);
+		}
+		#pragma endregion
+
+		#pragma region Member - Update
+		void ParticleRenderer::Update(const UpdateArgs& args)
+		{
+			if (!this->GetReady()) return;
+
+			behavior->Update(args);
+
+			int count = behavior->GParticleUsed();
+			const Particle* particles = behavior->GParticles();
+			ParticleVertex* vertices = vertexBuffer->Map(count);
+
+			int i = 0;
+			while (i < count)
+			{
+				memcpy(&vertices[i], &particles[i], sizeof(ParticleVertex));
+
+				i++;
+			}
+
+			vertexBuffer->Unmap();
+		}
+		#pragma endregion
+		#pragma endregion
+
+		#pragma region TerrainRenderer
 		using namespace Cloddy::API;
 		using namespace Cloddy::API::MeshVisitors;
 		using namespace Cloddy::Core::Math::Vectors;
@@ -44,11 +314,11 @@ namespace TikiEngine
 			callback = 0;
 
 			terrainDescription = 0;
-			
+
 			datasetElevation = 0;
 		}
 		#pragma endregion
-		
+
 		#pragma region Member - Load
 		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size)
 		{
@@ -59,7 +329,7 @@ namespace TikiEngine
 				->Append(cloddy_VertexFormat::N3F())
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());
-			
+
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
 			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 2);
 
@@ -159,14 +429,14 @@ namespace TikiEngine
 				terrain->AddCollisionRegion(cloddy_Vec::To3D(Vec3F::Zero), 0.5f);
 				collisionRegions++;
 			}
-			
+
 			UInt32 i = 0;
 			while (i < poi->Count())
 			{
 				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(poi->Get(i).arr)), 10.0f);
 				i++;
 			}
-			
+
 			CloddyCollisionMeshInfo info = terrain->GenerateCollisionMesh(collisionVertexBuffer, collisionIndexBuffer, false, 0.5f);
 
 			collisionIndexBuffer->indexCount = (info.GetIndexCount() * 3) - 6;
@@ -176,7 +446,7 @@ namespace TikiEngine
 				(info.GetIndexCount() * 3) - 6,
 				collisionVertexBuffer->GetData(),
 				info.GetVertexCount()
-			);
+				);
 		}
 		#pragma endregion
 
@@ -245,6 +515,7 @@ namespace TikiEngine
 
 			return Cloddy::API::Util::Colors::Color::FromRGB(a, r, g ,b);
 		}
+		#pragma endregion
 		#pragma endregion
 	}
 }
