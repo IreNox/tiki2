@@ -40,6 +40,9 @@ namespace TikiEngine
 			// returns a pointer to the target. null if no target current.
 			TikiBot* GetTarget() const { return currentTarget; }
 
+			// returns a pointer to the global target. null if no global target current.
+			TikiBot* GetGlobalTarget() const { return globalTarget; }
+
 			// sets the target pointer to null
 			void ClearTarget() { currentTarget = 0; }
 

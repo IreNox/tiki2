@@ -8,28 +8,28 @@ namespace TikiEngine
     {
         NxControllerAction ControllerHitReport::onShapeHit(const NxControllerShapeHit& hit)
         {
-            if(1 && hit.shape)
-            {
-                NxCollisionGroup group = hit.shape->getGroup();
-                if(group != CG_Collidable_Non_Pushable)
-                {
-                    NxActor& actor = hit.shape->getActor();
-                    if(actor.isDynamic())
-                    {
+            //if(1 && hit.shape)
+            //{
+            //    NxCollisionGroup group = hit.shape->getGroup();
+            //    if(group != CG_Collidable_Non_Pushable)
+            //    {
+            //        NxActor& actor = hit.shape->getActor();
+            //        if(actor.isDynamic())
+            //        {
 
-                        // We only allow horizontal pushes. Vertical pushes when we stand on dynamic objects creates
-                        // useless stress on the solver. It would be possible to enable/disable vertical pushes on
-                        // particular objects, if the gameplay requires it.
-                        if(hit.dir.y == 0.0f)
-                        {
-                            NxF32 coeff = actor.getMass() * hit.length * 10.0f;
-                            actor.addForceAtLocalPos(hit.dir*coeff, NxVec3(0,0,0), NX_IMPULSE);
-                            //actor.addForceAtPos(hit.dir*coeff, hit.controller->getPosition(), NX_IMPULSE);
-                            //						actor.addForceAtPos(hit.dir*coeff, hit.worldPos, NX_IMPULSE);
-                        }
-                    }
-                }
-            }
+            //            // We only allow horizontal pushes. Vertical pushes when we stand on dynamic objects creates
+            //            // useless stress on the solver. It would be possible to enable/disable vertical pushes on
+            //            // particular objects, if the gameplay requires it.
+            //            if(hit.dir.y == 0.0f)
+            //            {
+            //                NxF32 coeff = actor.getMass() * hit.length * 10.0f;
+            //                actor.addForceAtLocalPos(hit.dir*coeff, NxVec3(0,0,0), NX_IMPULSE);
+            //                //actor.addForceAtPos(hit.dir*coeff, hit.controller->getPosition(), NX_IMPULSE);
+            //                //						actor.addForceAtPos(hit.dir*coeff, hit.worldPos, NX_IMPULSE);
+            //            }
+            //        }
+            //    }
+            //}
 
             return NX_ACTION_NONE;
         }

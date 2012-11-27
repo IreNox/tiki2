@@ -6,6 +6,8 @@
 
 #include "Game/GameState.h"
 
+#include "Game/TikiBot.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -25,6 +27,8 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			
 		private:
+			void RemoveBot(TikiBot* bot, UInt32 index);
+
 
 			Vector2 selectionStartPoint;
 			RectangleF selectionRect;

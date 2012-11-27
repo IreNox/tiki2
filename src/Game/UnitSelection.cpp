@@ -3,10 +3,12 @@
 #include "Game/UnitSelection.h"
 #include "Game/GameState.h"
 
-#include "Game/TikiBot.h"
+#include "Game/SensorMemory.h"
 #include "Game/SceneLevel.h"
 
 #include "Core/IGraphics.h"
+
+
 
 namespace TikiEngine
 {
@@ -53,7 +55,8 @@ namespace TikiEngine
 			{
 				if (selectedUnits.Count() != 0) changed = true;
 				// clear list from last selection
-				selectedUnits.Clear();
+				if (!args.Input.GetKey(KEY_LSHIFT))
+					selectedUnits.Clear();
 
 				selectionStartPoint = args.Input.MousePositionDisplay;
 
@@ -98,42 +101,90 @@ namespace TikiEngine
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
 				{
-					Camera* cam = gameState->GetScene()->GetCamera();
-					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
-
-					Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
-								Matrix::Transpose(*cam->GetViewMatrix()) * 
-								Matrix::Transpose(*cam->GetProjectionMatrix());
-
-					Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-										
-					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
+					// select player units only
+					if (ent->GetFaction() == 0)
 					{
-						engine->HLog.Write("Rect-Select unit.");
-						selectedUnits.Add(go);
-						changed = true;
-					}
+						Camera* cam = gameState->GetScene()->GetCamera();
+						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
-					float eps = 15.0f;
-					if (args.Input.GetMousePressed(MB_Left))
-					{
-						if(screenPos.X <= selectionRect.X + eps && 
-							screenPos.X >= selectionRect.X - eps &&
-							screenPos.Y <= selectionRect.Y + eps && 
-							screenPos.Y >= selectionRect.Y - eps)
+						Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
+							Matrix::Transpose(*cam->GetViewMatrix()) * 
+							Matrix::Transpose(*cam->GetProjectionMatrix());
+
+						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+
+						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
 						{
-							engine->HLog.Write("click-Select unit.\n");
+							engine->HLog.Write("Rect-Select unit.");
 							selectedUnits.Add(go);
+							changed = true;
 						}
 
+						float eps = 15.0f;
+						if (args.Input.GetMousePressed(MB_Left))
+						{
+							if(screenPos.X <= selectionRect.X + eps && 
+								screenPos.X >= selectionRect.X - eps &&
+								screenPos.Y <= selectionRect.Y + eps && 
+								screenPos.Y >= selectionRect.Y - eps)
+							{
+								engine->HLog.Write("click-Select unit.\n");
+								selectedUnits.Add(go);
+							}
+
+						}
 					}
 
+
+					// check if dead and clear from list
+					if (ent->IsDead())
+						RemoveBot(ent, i);
 
 				}
  				i++;
 			}
 
 			selectButton->Update(args);
+		}
+
+		#pragma endregion
+
+		#pragma region Member - RemoveBot
+		void UnitSelection::RemoveBot(TikiBot* bot, UInt32 index)
+		{
+			// loop all bots, check sensor and targeting
+			UInt32 i = 0;
+			while (i < gameState->GetScene()->GetObjects()->Count())
+			{
+				GameObject* go = gameState->GetScene()->GetObjects()->Get(i);
+
+				TikiBot* ent = go->GetComponent<TikiBot>();
+				if(ent != 0)
+				{
+					ent->GetSensorMem()->RemoveBotFromMemory(bot);
+
+					// if the removed bot is the target, clear targets
+					if (ent->GetTargetSys()->GetTarget() == bot)
+						ent->GetTargetSys()->ClearTarget();
+
+					if (ent->GetTargetSys()->GetGlobalTarget() == bot)
+						ent->GetTargetSys()->ClearGlobalTarget();
+				}
+
+				i++;
+			}
+
+			// remove bot from lists
+			engine->HLog.Write("Removed dead bot.");
+
+			if (selectedUnits.Contains(bot->GetGameObject()))
+			{
+				engine->HLog.Write("Removed dead bot from selction.");
+				selectedUnits.Remove(bot->GetGameObject());
+			}
+
+			bot->GetGameObject()->Release();
+			gameState->GetScene()->GetObjects()->RemoveAt(index);
 		}
 		#pragma endregion
 	}

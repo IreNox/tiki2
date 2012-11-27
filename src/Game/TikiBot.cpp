@@ -236,11 +236,11 @@ namespace TikiEngine
 
 
 			//examine all the opponents in the bots sensory memory and select one to be the current target
-			//if (targetSelectionRegulator->IsReady())
+			if (targetSelectionRegulator->IsReady())
 				targSys->Update(args);
 
 			// update the sensory memory with any visual stimulus
-			//if (visionUpdateRegulator->IsReady())
+			if (visionUpdateRegulator->IsReady())
 				sensorMem->UpdateVision(args);
 		
 			
