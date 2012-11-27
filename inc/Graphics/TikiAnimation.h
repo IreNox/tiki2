@@ -30,6 +30,9 @@ namespace TikiEngine
 			int GetBSV() { return bsv; }
 			void SetBSV(int bsv);
 
+			int GetIndex();
+			void SetIndex(int index);
+
 			int Left;
 			int Right;
 			float Koeff;
@@ -43,6 +46,8 @@ namespace TikiEngine
 			List<double> timeStamps;
 
 			float weight;
+
+			int index;
 
 			double startTime;
 			double stopTime;

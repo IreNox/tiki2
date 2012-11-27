@@ -13,42 +13,6 @@ namespace TikiEditor
 {
 	using namespace TikiEngine::Resources;
 
-	struct VertexBufferInput 
-	{
-		VertexBufferInput(){}
-		VertexBufferInput(Vector3 position, Vector2 uv, Vector3 normal)
-		{
-			this->Position = position;
-			this->UV = uv;
-			this->Normal = normal;
-		}
-
-		inline bool operator==(const VertexBufferInput& rhs)
-		{
-			if(Position != rhs.Position || UV != rhs.UV || Normal != rhs.Normal)
-				return false;
-			return true;
-		}
-
-		Vector3 Position;
-		Vector2 UV;
-		Vector3 Normal;
-	};
-
-	struct SkinningInput
-	{
-		SkinningInput()
-		{
-			for(int i = 0; i < 4; i++)
-			{
-				Weights[i] = -1;
-				Indices[i] = 0;
-			}
-		}
-		float Weights[4];
-		float Indices[4];
-	};
-
 	class FbxHelper
 	{
 

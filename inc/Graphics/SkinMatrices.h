@@ -4,5 +4,5 @@
 
 struct SkinMatrices
 {
-	Matrix bones[128];
+	Matrix bones[40];
 };

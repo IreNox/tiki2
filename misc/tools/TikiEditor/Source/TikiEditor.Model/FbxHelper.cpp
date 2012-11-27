@@ -104,29 +104,6 @@ namespace TikiEditor
 
 	void FbxHelper::CleanBones(TikiBone* bone)
 	{
-		//void TikiBone::Clean()
-		//{
-		//	for(UINT i = 0; i < childs.Count(); i++)
-		//	{
-		//		childs[i]->Clean();
-
-		//		if(childs[i]->childs.Count() == 0 && childs[i]->constantBufferIndex == -1)
-		//		{
-		//			childs[i]->Release();
-		//			childs.RemoveAt(i);
-		//		}
-		//	}
-		//}
-
-		//void TikiBone::CreateMapping(List<TikiBone*>& list)
-		//{
-		//	if(constantBufferIndex != -1)
-		//		list.Add(this);
-		//	constantBufferIndex = list.Count() - 1;
-		//	for(UInt32 i = 0; i < childs.Count(); i++)
-		//		childs[i]->CreateMapping(list);
-		//}
-
 		if(bone == 0)
 			return;
 

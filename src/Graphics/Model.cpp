@@ -50,6 +50,7 @@ namespace TikiEngine
 		{
 			if(!this->animations.Contains(animation))
 			{
+				animation->SetIndex(animations.Count());
 				this->animations.Add(animation);
 			}
 			if(animations.Count() == 1)
@@ -251,7 +252,11 @@ namespace TikiEngine
 			delete(convert);
 
 			animationStack.Clear();
+			animations[0]->SetWeight(0.5f);
+			animations[1]->SetWeight(0.5f);
+
 			animationStack.Add(animations[0]);
+			//animationStack.Add(animations[1]);
 
 			Initialize();
 		}

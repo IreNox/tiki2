@@ -610,10 +610,10 @@ namespace TikiEngine
 			for(UInt32 i = 0; i < animations.Count(); i++)
 			{
 				TikiAnimation* anim = animations[i];
-				TikiLayer& layer = animationData.GetRef(anim);
-
+				TikiLayer& layer = animationData[anim->GetIndex()];
 				layer.Update(anim);
-				shift = layer.LocalTransform();
+
+				shift += layer.LocalTransform() * anim->GetWeight();
 			}
 
 			if(this->parent == 0)
@@ -708,7 +708,8 @@ namespace TikiEngine
 
 		TikiLayer& TikiBone::GetAnimationLayer(TikiAnimation* animation)
 		{
-			return this->animationData.GetRef(animation);
+			return this->animationData[animation->GetIndex()];
+			//return this->animationData.GetRef(animation);
 		}
 
 		string TikiBone::GetName()
@@ -733,7 +734,7 @@ namespace TikiEngine
 
 		void TikiBone::AddAnimation(TikiAnimation* animation, TikiLayer& layer)
 		{
-			this->animationData.Add(animation, layer);
+			this->animationData.Add(/*animation, */layer);
 		}
 		#pragma endregion
 
@@ -891,6 +892,16 @@ namespace TikiEngine
 		double TikiAnimation::GCurrentTime()
 		{
 			return this->currentTime;
+		}
+
+		int TikiAnimation::GetIndex()
+		{
+			return this->index;
+		}
+
+		void TikiAnimation::SetIndex(int index)
+		{
+			this->index = index;
 		}
 
 

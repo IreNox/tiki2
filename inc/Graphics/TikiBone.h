@@ -67,7 +67,9 @@ namespace TikiEngine
 			TikiBone* parent;
 			List<TikiBone*> childs;
 
-			Dictionary<TikiAnimation*, TikiLayer> animationData;
+			List<TikiLayer> animationData;
+
+			//Dictionary<TikiAnimation*, TikiLayer> animationData;
 		};
 	}
 }
