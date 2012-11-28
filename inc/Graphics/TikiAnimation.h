@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Core/IAnimation.h"
 #include "Core/TikiObject.h"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-		class TikiAnimation : public TikiObject
+		class TikiAnimation : public IAnimation
 		{
 		public:
 			TikiAnimation();
@@ -38,6 +39,8 @@ namespace TikiEngine
 			float Koeff;
 
 			double GCurrentTime();
+
+
 
 		private:
 

@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), animationSpeed(1), rootBone(0)
+			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), rootBone(0)
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
@@ -55,6 +55,34 @@ namespace TikiEngine
 			}
 			if(animations.Count() == 1)
 				animationStack.Add(animation);
+		}
+		IAnimation* Model::GetAnimation(string name)
+		{
+			for(int i = 0; i < animations.Count(); i++)
+			{
+				if(animations[i]->GetName() == name)
+					return (IAnimation*)animations[i];
+			}
+			return 0;
+		}
+		IAnimation* Model::GetAnimation(int index)
+		{
+			if(index >= 0 && index <= animations.Count())
+				return (IAnimation*)animations[index];
+			return 0;
+		}
+
+		void Model::SetAnimation(IAnimation* animation)
+		{
+			this->animationStack.Clear();
+			animationStack.Add((TikiAnimation*)animation);
+		}
+
+		IBone* Model::GetBone(string name)
+		{
+			if(rootBone != 0)
+				return (IBone*)rootBone->GetBoneByName(name);
+			return 0;
 		}
 
 		List<TikiAnimation*>* Model::GetAnimations()
@@ -120,15 +148,15 @@ namespace TikiEngine
 			this->constantBufferElements = list;
 		}
 
-		float Model::GetAnimationSpeed()
-		{
-			return this->animationSpeed;
-		}
+		//float Model::GetAnimationSpeed()
+		//{
+		//	return this->animationSpeed;
+		//}
 
-		void Model::SetAnimationSpeed(float speed)
-		{
-			this->animationSpeed = speed;
-		}
+		//void Model::SetAnimationSpeed(float speed)
+		//{
+		//	this->animationSpeed = speed;
+		//}
 
 		int Model::AnimationCount()
 		{
@@ -250,13 +278,6 @@ namespace TikiEngine
 		{
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
-
-			animationStack.Clear();
-			animations[0]->SetWeight(0.5f);
-			animations[1]->SetWeight(0.5f);
-
-			animationStack.Add(animations[0]);
-			//animationStack.Add(animations[1]);
 
 			Initialize();
 		}

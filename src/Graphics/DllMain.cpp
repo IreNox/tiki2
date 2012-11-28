@@ -6,6 +6,7 @@
 #include "Graphics/Texture.h"
 #include "Graphics/RenderTarget.h"
 #include "Graphics/Model.h"
+#include "Graphics/TikiAnimation.h"
 
 #include "Graphics/MeshRenderer.h"
 #include "Graphics/TerrainRenderer.h"
@@ -49,6 +50,7 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
 		DllInfo.Resources.Add(typeid(IModel).hash_code());
+
 
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());

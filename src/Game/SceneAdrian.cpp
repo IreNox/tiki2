@@ -46,7 +46,12 @@ namespace TikiEngine
 			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->TexDiffuse = tex;
-			int animationCount = go->GModel()->AnimationCount();
+			IAnimation* walk = go->GModel()->GetAnimation(2);
+
+			go->GModel()->SetAnimation(walk);
+
+		    string test = "test";
+
 
 			go->PRS.SScale() = Vector3(0.01f);
 

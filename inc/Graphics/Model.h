@@ -42,8 +42,6 @@ namespace TikiEngine
 
 			void SetConstantBufferIndices(List<TikiBone*>& list);
 
-			float GetAnimationSpeed();
-			void SetAnimationSpeed(float speed);
 
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
@@ -55,6 +53,13 @@ namespace TikiEngine
 			List<TikiAnimation*>* GetAnimations();
 
 			bool GetReady();
+
+			IAnimation* GetAnimation(string name);
+			IAnimation* GetAnimation(int index);
+
+			void SetAnimation(IAnimation* animation);
+
+			IBone* GetBone(string name);
 
 		protected:
 
@@ -70,7 +75,6 @@ namespace TikiEngine
 			void CopyVertexData();
 			void CopyIndexData();
 
-			float animationSpeed;
 
 			List<TikiBone*> constantBufferElements;
 			List<SkinningVertex> verticesList;

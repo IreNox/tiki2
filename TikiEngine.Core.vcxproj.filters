@@ -622,5 +622,8 @@
     <ClInclude Include="inc\Core\IBone.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IAnimation.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

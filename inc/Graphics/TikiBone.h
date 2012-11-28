@@ -9,6 +9,8 @@
 #include "Graphics/TikiAnimation.h"
 #include "Graphics/TikiLayer.h"
 
+#include "Core/IBone.h"
+
 namespace TikiEngine
 {
 	namespace Resources
@@ -16,7 +18,7 @@ namespace TikiEngine
 
 		using namespace TikiEngine::Graphics;
 
-		class TikiBone : public TikiObject
+		class TikiBone : public IBone
 		{
 		public:
 			TikiBone();
@@ -69,7 +71,6 @@ namespace TikiEngine
 
 			List<TikiLayer> animationData;
 
-			//Dictionary<TikiAnimation*, TikiLayer> animationData;
 		};
 	}
 }

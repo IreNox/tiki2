@@ -8,6 +8,7 @@
 
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
+#include "Core/IAnimation.h"
 
 namespace TikiEngine
 {
@@ -35,9 +36,10 @@ namespace TikiEngine
 			virtual List<SkinningVertex>* GetVertices() = 0;
 			virtual List<UInt32>* GetIndices() = 0;
 
-			virtual float GetAnimationSpeed() = 0;
-			virtual void SetAnimationSpeed(float speed) = 0;
+			virtual IAnimation* GetAnimation(string name) = 0;
+			virtual IAnimation* GetAnimation(int index) = 0;
 
+			virtual void SetAnimation(IAnimation* animation) = 0;
 		};
 	}
 }

@@ -165,7 +165,7 @@ namespace TikiEditor
 	void FbxHelper::InitializeMesh(FbxMesh* mesh)
 	{
 		TikiMesh* tiki = new TikiMesh();
-		tiki->SetName(mesh->GetName());
+		tiki->SetName(mesh->GetNode()->GetName());
 
 		int vertexCount = mesh->GetControlPointsCount();
 

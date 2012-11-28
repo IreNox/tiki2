@@ -6,11 +6,12 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
-		class IBone : public IResource
+		class IAnimation : public IResource
 		{
-		public:
-			IBone() : IResource(0){}
-			virtual ~IBone(){}
+		public :
+			IAnimation() : IResource(0){}
+			virtual ~IAnimation(){}
+
 
 			virtual void* GetNativeResource() 
 			{
@@ -20,6 +21,14 @@ namespace TikiEngine
 			{
 				return true;
 			}
+
+			virtual string GetName() = 0;
+			virtual void SetName(string name) = 0;
+
+			virtual float GetWeight() = 0;
+			virtual void SetWeight(float weight) = 0;
+
+
 
 		protected:
 

@@ -284,17 +284,17 @@ namespace TikiEngine
 				heading = Vector2::Normalize(velocity);
 				side = heading.Cross();
 
+				//TODO MATCH WALKING SPEED
 
-
-				if (gameObject->GModel()) 
-					gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
+				//if (gameObject->GModel()) 
+				//	gameObject->GModel()->SetAnimationSpeed(Vector2::Normalize(velocity).Length());
 			}
 			else
 			{
 
 
-				if (gameObject->GModel()) 
-					gameObject->GModel()->SetAnimationSpeed(0);
+				//if (gameObject->GModel()) 
+				//	gameObject->GModel()->SetAnimationSpeed(0);
 			}
 
 			// always update rotation
