@@ -1093,6 +1093,7 @@ namespace TikiEngine
 
 		#pragma region AnimationStack
 		AnimationStack::AnimationStack()
+			: blendTarget(0)
 		{
 
 		}

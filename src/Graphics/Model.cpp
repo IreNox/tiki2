@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), indexBuffer(0), vertexBuffer(0), rootBone(0)
+			: IModel(engine), rootBone(0)
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 		}
@@ -32,8 +32,6 @@ namespace TikiEngine
 			for(UInt32 i = 0; i < meshes.Count(); i++)
 				SafeRelease(&meshes[i]);
 
-			SafeRelease(&indexBuffer);
-			SafeRelease(&vertexBuffer);
 			SafeDelete(&constantBufferMatrices);
 
 			SafeRelease(&rootBone);

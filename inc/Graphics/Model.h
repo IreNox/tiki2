@@ -7,7 +7,6 @@
 
 #include "Graphics/TikiMesh.h"
 #include "Graphics/DynamicBuffer.h"
-#include "Graphics/StaticBuffer.h"
 #include "Graphics/VertexDeclaration.h"
 #include "Graphics/ConstantBuffer.h"
 #include "Graphics/SkinMatrices.h"
@@ -76,9 +75,6 @@ namespace TikiEngine
 
 			AnimationStack animationStack;
 			//List<TikiAnimation*> animationStack;
-
-			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
