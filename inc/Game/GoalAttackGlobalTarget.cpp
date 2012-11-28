@@ -78,7 +78,7 @@ namespace TikiEngine
 
 		void GoalAttackGlobalTarget::Terminate()
 		{
-			target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Terminate. \n");
+			//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Terminate. \n");
 			owner->GetTargetSys()->ClearGlobalTarget();
 			status = Completed;
 		}

@@ -25,7 +25,7 @@ namespace TikiEngine
 			: GoalComposite<TikiBot>(bot, Goal_Think)
 		{
 			hasWaypoints = false;
-			attackTargetRegulator = new Regulator(1);
+			attackTargetRegulator = new Regulator(3);
 		}
 
 		GoalThink::~GoalThink()
