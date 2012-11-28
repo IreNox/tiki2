@@ -46,14 +46,14 @@ namespace TikiEngine
 			if (args.Input.MouseWheel != 0)
 			{
 				targetZoom += args.Input.MouseWheel / 10;
-				targetZoom = Clamp(targetZoom, -300.0f, 100.0f);
+				targetZoom = Clamp(targetZoom, -600.0f, 100.0f);
 			}
 
 			if (abs(zoom - targetZoom) > 0.01f)
 			{
 				zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime * 2);
 
-				float rot = ((-zoom / 300) + 0.34f) / 1.34f;
+				float rot = ((-zoom / 600) + 0.34f) / 1.34f;
 				rot = Lerp(0.2f, 1.57f, rot);
 				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
 

@@ -89,16 +89,16 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"soldier"));
+			//go->SModel(args.Content->LoadModel(L"test"));
 
-			//IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
-			//Material* mat = engine->content->LoadMaterial(L"os_default");
+			Material* mat = engine->content->LoadMaterial(L"os_default");
 			//mat->TexDiffuse   = engine->content->LoadTexture(L"building_03/building_03_Diff");
 			//mat->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
 			////mat->TexSpecular = engine->content->LoadTexture(L"building_03/building_03_Spec");
-			//render->SetMaterial(mat);
-			//render->SetMesh(engine->content->LoadMesh(L"test"));
+			render->SetMaterial(mat);
+			render->SetMesh(engine->content->LoadMesh(L"test"));
 
 			go->PRS.SScale() = Vector3(0.01f);
 

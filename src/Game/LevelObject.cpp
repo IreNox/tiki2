@@ -55,6 +55,21 @@ namespace TikiEngine
 				case 3: // Trigger
 					(new Trigger(gameState, this));
 					break;
+				case 4:
+					{
+						IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(this);
+
+						Material* mat = engine->content->LoadMaterial(L"os_default");
+						mat->TexDiffuse   = engine->content->LoadTexture(L"building03_05/building03_05_Diff");
+						mat->TexNormalMap = engine->content->LoadTexture(L"building03_05/building03_05_Normal");
+						//mat->TexSpecular = engine->content->LoadTexture(L"building_03/building_03_Spec");
+						render->SetMaterial(mat);
+						render->SetMesh(engine->content->LoadMesh(L"building03_05"));
+					}
+					break;
+				case 5:
+					this->SModel(engine->content->LoadModel(L"env_pipe_01"));
+					break;
 				}
 			}
 
