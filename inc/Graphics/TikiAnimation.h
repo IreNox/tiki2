@@ -37,10 +37,16 @@ namespace TikiEngine
 			double GetDuration();
 			void SetDuration(double time);
 
+			double GetAnimationSpeed();
+			void SetAnimationSpeed(double speed);
+
 			bool GetLoop();
 			void SetLoop(bool isLoop);
 
 			bool IsFinished();
+
+			void SetNextAnimation(IAnimation* animation);
+			IAnimation* GetNextAnimation();
 
 			void Reset();
 
@@ -70,6 +76,8 @@ namespace TikiEngine
 
 			bool isLoop;
 			bool finished;
+
+			IAnimation* nextAnimation;
 		};
 	}
 }

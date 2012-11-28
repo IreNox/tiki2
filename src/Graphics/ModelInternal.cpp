@@ -674,7 +674,7 @@ namespace TikiEngine
 
 		#pragma region TikiBone
 		TikiBone::TikiBone()
-			:parent(0), childs(), boneInit(), boneInitInverse(), boneCurrent(), constantBufferIndex(-1)
+			:parent(0), childs(), boneInit(), boneInitInverse(), boneCurrent(), constantBufferIndex(-1), ignoreUpdate(false)
 		{
 		}
 
@@ -705,15 +705,45 @@ namespace TikiEngine
 
 		void TikiBone::Update(List<TikiAnimation*>& animations)
 		{
-			Matrix shift;
+			if(ignoreUpdate)
+				return;
 
-			for(UInt32 i = 0; i < animations.Count(); i++)
+			Matrix shift;
+			int animationCount = animations.Count();
+
+			if(animationCount == 1)
 			{
-				TikiAnimation* anim = animations[i];
+				TikiAnimation* anim = animations[0];
 				TikiLayer& layer = animationData[anim->GetIndex()];
 				layer.Update(anim);
 
-				shift += layer.LocalTransform() * anim->GetWeight();
+				shift = layer.LocalTransform();
+			}
+			else
+			{
+				TikiAnimation* anim1 = animations[0];
+				TikiLayer& layer1 = animationData[anim1->GetIndex()];
+				layer1.Update(anim1);
+
+				Quaternion quat = layer1.LocalQuaternion();
+				Vector3 trans = layer1.LocalTranslation();
+				float weight = anim1->GetWeight();
+
+				for(int i = 1; i < animationCount; i++)
+				{
+					TikiAnimation* anim2 = animations[i];
+					TikiLayer& layer2 = animationData[anim2->GetIndex()];
+					layer2.Update(anim2);
+
+					float koeff = 1 -(weight / (weight + anim2->GetWeight()));
+
+					quat = Quaternion::Slerp(quat, layer2.LocalQuaternion(), koeff);
+					trans = Vector3::Lerp(trans, layer2.LocalTranslation(), koeff);
+
+					weight += anim2->GetWeight();
+				}
+
+				shift = Matrix::CreateFromQuaternion(quat) * Matrix::CreateTranslation(trans);
 			}
 
 			if(this->parent == 0)
@@ -831,6 +861,11 @@ namespace TikiEngine
 			this->constantBufferIndex = index;
 		}
 
+		void TikiBone::IgnoreUpdate(bool b)
+		{
+			this->ignoreUpdate = b;
+		}
+
 		void TikiBone::AddAnimation(TikiAnimation* animation, TikiLayer& layer)
 		{
 			this->animationData.Add(/*animation, */layer);
@@ -839,6 +874,7 @@ namespace TikiEngine
 
 		#pragma region TikiLayer
 		TikiLayer::TikiLayer()
+			: currentTranslation(), currentQuaternion()
 		{
 		}
 
@@ -848,8 +884,11 @@ namespace TikiEngine
 
 		void TikiLayer::Update(TikiAnimation* animation)
 		{
-			this->transformMatrix = Matrix::CreateFromQuaternion(LocalQuaternion(animation))
-				* Matrix::CreateTranslation(LocalTranslation(animation));
+			this->currentTranslation = LocalTranslation(animation);
+			this->currentQuaternion = LocalQuaternion(animation);
+
+			this->transformMatrix = Matrix::CreateFromQuaternion(this->currentQuaternion)
+				 * Matrix::CreateTranslation(currentTranslation);
 		}
 
 		Vector3 TikiLayer::LocalTranslation(TikiAnimation* animation)
@@ -864,6 +903,11 @@ namespace TikiEngine
 			return Vector3::Lerp(translation[animation->Left], translation[animation->Right], animation->Koeff);
 		}
 
+		Vector3& TikiLayer::LocalTranslation()
+		{
+			return this->currentTranslation;
+		}
+
 		Quaternion TikiLayer::LocalQuaternion(TikiAnimation* animation)
 		{
 			if(animation->Left == animation->Right)
@@ -874,32 +918,14 @@ namespace TikiEngine
 				return quaternionen[animation->Right];
 
 			return Quaternion::Slerp(quaternionen.Get(animation->Left), quaternionen.Get(animation->Right), animation->Koeff);
-
 		}
 
-		Vector3 TikiLayer::LocalTranslation(int left, int right, float koeff)
+		
+		Quaternion& TikiLayer::LocalQuaternion()
 		{
-			if(left == right)
-				return translation[left];
-			if(right == -1)
-				return translation[left];
-			if(left == -1)
-				return translation[right];
-
-			return Vector3::Lerp(translation[left], translation[right], koeff);
+			return this->currentQuaternion;
 		}
 
-		Quaternion TikiLayer::LocalQuaternion(int left, int right, float koeff)
-		{
-			if(left == right)
-				return quaternionen[left];
-			if(right == -1)
-				return quaternionen[left];
-			if(left == -1)
-				return quaternionen[right];
-
-			return Quaternion::Slerp(quaternionen.Get(left), quaternionen.Get(right), koeff);
-		}
 
 		Matrix TikiLayer::LocalTransform(const double& time)
 		{
@@ -919,7 +945,7 @@ namespace TikiEngine
 
 		#pragma region TikiAnimation
 		TikiAnimation::TikiAnimation()
-			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false)
+			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false), nextAnimation(0)
 		{
 		}
 
@@ -1013,6 +1039,15 @@ namespace TikiEngine
 			this->animationSpeed = (this->stopTime - this->startTime) / time;
 		}
 
+		double TikiAnimation::GetAnimationSpeed()
+		{
+			return this->animationSpeed;
+		}
+		void TikiAnimation::SetAnimationSpeed(double speed)
+		{
+			this->animationSpeed = speed;
+		}
+
 		bool TikiAnimation::GetLoop()
 		{
 			return this->isLoop;
@@ -1022,14 +1057,26 @@ namespace TikiEngine
 		{
 			this->isLoop = isLoop;
 		}
+
 		bool TikiAnimation::IsFinished()
 		{
 			return this->finished;
 		}
 
+		void TikiAnimation::SetNextAnimation(IAnimation* animation)
+		{
+			this->nextAnimation = animation;
+		}
+
+		IAnimation* TikiAnimation::GetNextAnimation()
+		{
+			return this->nextAnimation;
+		}
+
 		void TikiAnimation::Reset()
 		{
 			this->currentTime = this->startTime;
+			this->finished = false;
 		}
 
 		void TikiAnimation::Update(const double& deltaTime)
@@ -1037,7 +1084,12 @@ namespace TikiEngine
 			this->currentTime += deltaTime * this->animationSpeed;
 
 			if(currentTime >= stopTime)
+			{
+				if(!isLoop)
+					finished = true;
+
 				currentTime -= stopTime - startTime;
+			}
 
 
 			if(lastUpdateTime == currentTime)
@@ -1109,12 +1161,20 @@ namespace TikiEngine
 
 			for(int i = 0; i < this->stack.Count(); i++)
 			{
-				stack[i]->Update(args.Time.ElapsedTime);
+				TikiAnimation* anim = stack[i];
+				if(anim == blendTarget)
+					continue;
+
+				anim->Update(args.Time.ElapsedTime);
 			}
 		}
 
 		void AnimationStack::SetAnimation(IAnimation* animation)
 		{
+#if _DEBUG
+			if(animation == 0)
+				_CrtDbgBreak();
+#endif
 			this->stack.Clear();
 			animation->Reset();
 			animation->SetWeight(1.0);
@@ -1123,11 +1183,15 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
+#if _DEBUG
+			if(animation == 0)
+				_CrtDbgBreak();
+#endif
 			this->blendTarget = (TikiAnimation*)animation;
 			this->blendTarget->Reset();
 			this->blendTarget->SetWeight(0.0);
-			this->blendTimer = 0;
-			this->blendTime = time;
+			this->blendTimer = time;
+			this->blendTime = 0;
 
 			this->stack.Insert(0, blendTarget);
 		}
@@ -1150,20 +1214,25 @@ namespace TikiEngine
 			{
 				stack.Clear();
 				blendTarget->SetWeight(1.0);
-
+				stack.Add(blendTarget);
+				blendTarget = 0;
 			}
+			else
+			{
+				float currWeight = blendTime / blendTimer;
+				blendTarget->SetWeight(currWeight);
+
+				lastWeight = 1 - lastWeight;
+				currWeight = 1 - currWeight;
 
 
-			//if(weight >= 1.0)
-			//{
-			//	weight = 1.0;
-			//	stack.Clear();
-			//	stack.Add(blendTarget);
-
-			//}
-
-			//blendTarget->SetWeight(weight);
-
+				for(int i = 1; i < stack.Count(); i++)
+				{
+					TikiAnimation* anim = stack[i];
+					float koeff = anim->GetWeight() / lastWeight;
+					anim->SetWeight(currWeight * koeff);
+				}
+			}
 		}
 
 		#pragma endregion

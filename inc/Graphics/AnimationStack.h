@@ -30,6 +30,8 @@ namespace TikiEngine
 			TikiAnimation* blendTarget;
 			double blendTime;
 			double blendTimer;
+
+			TikiAnimation* currentAnimation;
 		};
 	}
 }

@@ -58,6 +58,8 @@ namespace TikiEngine
 			int GetConstantBufferIndex();
 			void SetConstantBufferIndex(int index);
 
+			void IgnoreUpdate(bool b);
+
 		private:
 			
 			string name;
@@ -71,6 +73,8 @@ namespace TikiEngine
 			List<TikiBone*> childs;
 
 			List<TikiLayer> animationData;
+
+			bool ignoreUpdate;
 
 		};
 	}

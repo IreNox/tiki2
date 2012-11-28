@@ -24,18 +24,22 @@ namespace TikiEngine
 			List<Vector3>& GetTranslation();
 			List<Quaternion>& GetQuaternion();
 
-			Vector3 LocalTranslation(int left, int right, float koeff);
-			Quaternion LocalQuaternion(int left, int right, float koeff);
+			Vector3& LocalTranslation();
+			Quaternion& LocalQuaternion();
+
+			Matrix LocalTransform(const double& time = -1.0);
+ 
+
+		private:
 
 			Vector3 LocalTranslation(TikiAnimation* animation);
 			Quaternion LocalQuaternion(TikiAnimation* animation);
 
-			Matrix LocalTransform(const double& time = -1.0);
-
-		private:
-
 			List<Vector3> translation;
 			List<Quaternion> quaternionen;
+
+			Vector3 currentTranslation;
+			Quaternion currentQuaternion;
 
 			Matrix transformMatrix;
 

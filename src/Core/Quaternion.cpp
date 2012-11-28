@@ -100,6 +100,7 @@ Quaternion Quaternion::Concatenate(const Quaternion& quaternion1, const Quaterni
 	return Quaternion(x * w2 + x2 * w + num, y * w2 + y2 * w + num2, z * w2 + z2 * w + num3, w * w2 - num4);
 }
 
+
 Quaternion Quaternion::Slerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount)
 {
 	float num = quaternion1.X * quaternion2.X + quaternion1.Y * quaternion2.Y + quaternion1.Z * quaternion2.Z + quaternion1.W * quaternion2.W;

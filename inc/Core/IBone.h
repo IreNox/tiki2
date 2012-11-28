@@ -21,6 +21,8 @@ namespace TikiEngine
 				return true;
 			}
 
+			virtual void IgnoreUpdate(bool b) = 0;
+
 		protected:
 
 			void loadFromStream(wcstring fileName, Stream* stream)

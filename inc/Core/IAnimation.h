@@ -6,6 +6,11 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		enum BLENDMODE
+		{
+			
+		};
+
 		class IAnimation : public IResource
 		{
 		public :
@@ -31,8 +36,14 @@ namespace TikiEngine
 			virtual double GetDuration() = 0;
 			virtual void SetDuration(double time) = 0;
 
+			virtual double GetAnimationSpeed() = 0;
+			virtual void SetAnimationSpeed(double speed) = 0;
+
 			virtual bool GetLoop() = 0;
 			virtual void SetLoop(bool isLoop) = 0;
+
+			virtual void SetNextAnimation(IAnimation* animation) = 0;
+			virtual IAnimation* GetNextAnimation() = 0;
 
 			virtual void Reset() = 0;
 

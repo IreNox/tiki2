@@ -47,13 +47,32 @@ namespace TikiEngine
 
 			IAnimation* walk = go->GModel()->GetAnimation("walk");
 			IAnimation* attack = go->GModel()->GetAnimation("attack");
-			IAnimation* death02 = go->GModel()->GetAnimation("death02");
+			IAnimation* death = go->GModel()->GetAnimation("death");
+			IAnimation* run = go->GModel()->GetAnimation("run");
+			IAnimation* breakdance = go->GModel()->GetAnimation("breakdance");
 
-			this->animations.Add(walk);
+			//bone = model->GetBone("R_hand_bn");
+			//if(bone == 0)
+			//	_CrtDbgBreak();
+
+
+			//walk->SetNextAnimation(attack);
+			//attack->SetNextAnimation(death02);
+			//death02->SetNextAnimation(walk);
+
+			//walk->SetLoop(false);
+			//attack->SetLoop(false);
+			//death02->SetLoop(false);
+
+			//this->animations.Add(walk);
 			this->animations.Add(attack);
-			this->animations.Add(death02);
+			this->animations.Add(death);
+			this->animations.Add(run);
+			//this->animations.Add(breakdance);
 
 			this->animationId = 0;
+
+			this->model->BlendToAnimation(walk);
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -103,9 +122,18 @@ namespace TikiEngine
 			
 			if(args.Input.GetKeyPressed(TikiEngine::KEY_SPACE))
 			{
-				this->animationId = (animationId + 1) % this->animations.Count();
-				this->model->SetAnimation(this->animations[animationId]);
-				this->model->BlendToAnimation(this->animations[0]);
+  				this->animationId = (animationId + 1) % this->animations.Count();
+				//this->model->SetAnimation(this->animations[animationId]);
+				this->model->BlendToAnimation(this->animations[animationId]);
+			}
+
+			if(args.Input.GetKeyPressed(KEY_NUMPAD0))
+			{
+				bone->IgnoreUpdate(true);
+			}
+			if(args.Input.GetKeyPressed(KEY_NUMPAD1))
+			{
+				bone->IgnoreUpdate(false);
 			}
 		}
 	}

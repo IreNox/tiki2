@@ -33,6 +33,8 @@ namespace TikiEngine
 			int animationId;
 
 			IModel* model;
+
+			IBone* bone;
 		};
 	}
 }

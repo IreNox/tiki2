@@ -353,7 +353,7 @@ namespace TikiEditor
 			return;
 		animation->SetName(stack->GetName());
 
-		for(int layerIndex = 0; layerIndex < stack->GetSrcObjectCount(); layerIndex++)
+		for(int layerIndex = 0; layerIndex < stack->GetSrcObjectCount<FbxAnimLayer>(); layerIndex++)
 		{
 			FbxAnimLayer* layer = stack->GetSrcObject<FbxAnimLayer>(layerIndex);
 			for(UInt32 i = 0; i < fbxNodes.Count(); i++)
