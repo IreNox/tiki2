@@ -29,15 +29,13 @@ namespace TikiEngine
 				{
 					attacking = true;
 					owner->GetEngine()->HLog.Write("AttackMove - Attacking. \n");
-					//RemoveAllSubgoals();
-					AddSubgoal(new GoalAttackTarget(owner));
 				}
 
+				AddSubgoal(new GoalAttackTarget(owner));
 			}
 			else
 			{
 				attacking = false;
-				//RemoveAllSubgoals();
 				owner->GetEngine()->HLog.Write("AttackMove - Moving. \n");
 				AddSubgoal(new GoalMoveToPosition(owner, destination));
 			}

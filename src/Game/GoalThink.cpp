@@ -159,6 +159,11 @@ namespace TikiEngine
  			//}
 		}
 
+		void GoalThink::QueueGoalAttackMove(Vector3 pos)
+		{
+			subGoals.push_back(new GoalAttackMove(owner, pos));
+		}
+
 		void GoalThink::AddGoalMoveToPosition(Vector3 pos)
 		{
 			AddSubgoal( new GoalMoveToPosition(owner, pos));

@@ -38,7 +38,6 @@ namespace TikiEngine
 				{
 					if (attacking == false)
 					{
-						//RemoveAllSubgoals();
 						owner->GetSteering()->SeekOff();
 						owner->GetSteering()->ArriveOff();
 						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. \n");

@@ -56,7 +56,7 @@ namespace TikiEngine
 				ReactionTime = 0.001f;
 				AimPresistance = 1.0f;
 				AimAccuracy = 0.0f;
-				MemorySpan = 3.0f; //0.5f;
+				MemorySpan = 1.0f; //0.5f;
 
 				// brain
 				ExploreBias = 0.05f;

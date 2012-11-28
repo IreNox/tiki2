@@ -37,6 +37,7 @@ namespace TikiEngine
 			void AddGoalAttackGlobalTarget(TikiBot* target);
 			void AddGoalAttackTarget();
 			void AddGoalAttackMove(Vector3 pos);
+			void QueueGoalAttackMove(Vector3 pos);
 			void AddGoalMoveToPosition(Vector3 pos);
 			void QueueGoalMoveToPosition(Vector3 pos);
 

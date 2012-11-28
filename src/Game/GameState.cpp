@@ -203,9 +203,12 @@ namespace TikiEngine
 							// movement command will be queued
 							if (args.Input.GetKey(KEY_LSHIFT))
 							{
-								bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
+								if (args.Input.GetKey(KEY_T))
+									bot->GetBrain()->QueueGoalAttackMove(info.Point);
+								else
+									bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
 							}
-							else if (args.Input.GetKey(KEY_RSHIFT))
+							else if (args.Input.GetKey(KEY_T))
 							{
 								bot->GetBrain()->RemoveAllSubgoals();
 								bot->GetBrain()->AddGoalAttackMove(info.Point);

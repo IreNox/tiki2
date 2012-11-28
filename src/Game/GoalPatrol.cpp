@@ -24,22 +24,22 @@ namespace TikiEngine
 		{
 			status = Active;
 
+			RemoveAllSubgoals();
+
 			// if we have no target present, patrol to the next point
 			if (!owner->GetTargetSys()->IsTargetPresent())
 			{
                 if  (attacking == true)
                 {
                     attacking = false;
-                    owner->GetEngine()->HLog.Write("set currWp to last. \n");
                 }
                 else
                 {
                     currWp = path.front();
                     path.pop_front();
-                    owner->GetEngine()->HLog.Write("set currWp and popped front. \n");
+                    owner->GetEngine()->HLog.Write("GoalPatrol - set currWp and popped front. \n");
                 }
 				
-
 				AddSubgoal(new GoalMoveToPosition(owner, Vector3(currWp.X, 0, currWp.Y)));
 			}
 			else
@@ -54,13 +54,12 @@ namespace TikiEngine
                     return;
                 }
 
+				AddSubgoal(new GoalAttackTarget(owner));
 
 				if (attacking == false)
 				{
 					attacking = true;
-                    RemoveAllSubgoals();
-                    owner->GetEngine()->HLog.Write("Target in range while patrolling. Attacking. \n");
-                    //AddSubgoal(new GoalAttackTarget(owner));
+                    owner->GetEngine()->HLog.Write("GoalPatrol - Target in range while patrolling. Attacking. \n");
 				}
 			}
 		}
