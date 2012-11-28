@@ -28,7 +28,13 @@ namespace TikiEngine
 			virtual float GetWeight() = 0;
 			virtual void SetWeight(float weight) = 0;
 
+			virtual double GetDuration() = 0;
+			virtual void SetDuration(double time) = 0;
 
+			virtual bool GetLoop() = 0;
+			virtual void SetLoop(bool isLoop) = 0;
+
+			virtual void Reset() = 0;
 
 		protected:
 

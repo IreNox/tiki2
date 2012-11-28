@@ -9,6 +9,7 @@
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
 #include "Core/IAnimation.h"
+#include "Core/IBone.h"
 
 namespace TikiEngine
 {
@@ -40,6 +41,9 @@ namespace TikiEngine
 			virtual IAnimation* GetAnimation(int index) = 0;
 
 			virtual void SetAnimation(IAnimation* animation) = 0;
+			virtual void BlendToAnimation(IAnimation* animation, double time = 0.5) = 0;
+
+			virtual IBone* GetBone(string name) = 0;
 		};
 	}
 }

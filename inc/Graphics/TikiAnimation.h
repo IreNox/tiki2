@@ -34,13 +34,21 @@ namespace TikiEngine
 			int GetIndex();
 			void SetIndex(int index);
 
+			double GetDuration();
+			void SetDuration(double time);
+
+			bool GetLoop();
+			void SetLoop(bool isLoop);
+
+			bool IsFinished();
+
+			void Reset();
+
 			int Left;
 			int Right;
 			float Koeff;
 
 			double GCurrentTime();
-
-
 
 		private:
 
@@ -48,17 +56,20 @@ namespace TikiEngine
 
 			List<double> timeStamps;
 
-			float weight;
-
 			int index;
+			int bsv;
 
 			double startTime;
 			double stopTime;
 
-			int bsv;
-
 			double lastUpdateTime;
 			double currentTime;
+
+			float weight;
+			float animationSpeed;
+
+			bool isLoop;
+			bool finished;
 		};
 	}
 }

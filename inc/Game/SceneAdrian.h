@@ -26,9 +26,13 @@ namespace TikiEngine
 		private:
 
 			LightObject* light;
-
 			ITexture* tex;
 
+			List<IAnimation*> animations;
+
+			int animationId;
+
+			IModel* model;
 		};
 	}
 }

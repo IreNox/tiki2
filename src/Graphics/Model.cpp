@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), rootBone(0)
+			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), rootBone(0), animationStack()
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 
@@ -54,7 +54,7 @@ namespace TikiEngine
 				this->animations.Add(animation);
 			}
 			if(animations.Count() == 1)
-				animationStack.Add(animation);
+				animationStack.SetAnimation((IAnimation*)animation);
 		}
 		IAnimation* Model::GetAnimation(string name)
 		{
@@ -74,8 +74,11 @@ namespace TikiEngine
 
 		void Model::SetAnimation(IAnimation* animation)
 		{
-			this->animationStack.Clear();
-			animationStack.Add((TikiAnimation*)animation);
+			this->animationStack.SetAnimation(animation);
+		}
+		void Model::BlendToAnimation(IAnimation* animation, double time)
+		{
+			this->animationStack.BlendAnimation(animation, time);
 		}
 
 		IBone* Model::GetBone(string name)
@@ -203,13 +206,10 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			for(UINT i = 0; i < animationStack.Count(); i++)
-			{
-				animationStack[i]->Update(args.Time.ElapsedTime);
-			}
+			this->animationStack.Update(args);
 
 			if(this->rootBone != 0)
-				rootBone->Update(this->animationStack);
+				rootBone->Update(this->animationStack.GetStack());
 
 			SkinMatrices* matrices = constantBufferMatrices->Map();
 			int matrixCount = this->constantBufferElements.Count();

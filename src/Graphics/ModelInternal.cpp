@@ -1,4 +1,4 @@
-
+#include "Graphics/AnimationStack.h"
 #include "Graphics/ModelConverter.h"
 
 #ifdef TIKI_ENGINE
@@ -823,7 +823,7 @@ namespace TikiEngine
 
 		#pragma region TikiAnimation
 		TikiAnimation::TikiAnimation()
-			: Left(0), Right(0), weight(1.0f), currentTime(0.0)
+			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false)
 		{
 		}
 
@@ -907,10 +907,38 @@ namespace TikiEngine
 			this->index = index;
 		}
 
+		double TikiAnimation::GetDuration()
+		{
+			return (this->stopTime - this->startTime) * this->animationSpeed;
+		}
+
+		void TikiAnimation::SetDuration(double time)
+		{
+			this->animationSpeed = (this->stopTime - this->startTime) / time;
+		}
+
+		bool TikiAnimation::GetLoop()
+		{
+			return this->isLoop;
+		}
+		
+		void TikiAnimation::SetLoop(bool isLoop)
+		{
+			this->isLoop = isLoop;
+		}
+		bool TikiAnimation::IsFinished()
+		{
+			return this->finished;
+		}
+
+		void TikiAnimation::Reset()
+		{
+			this->currentTime = this->startTime;
+		}
 
 		void TikiAnimation::Update(const double& deltaTime)
 		{
-			this->currentTime += deltaTime;
+			this->currentTime += deltaTime * this->animationSpeed;
 
 			if(currentTime >= stopTime)
 				currentTime -= stopTime - startTime;
@@ -965,6 +993,82 @@ namespace TikiEngine
 
 			Koeff = (float)((currentTime - timeStamps[Left]) / (timeStamps[Right] - timeStamps[Left]));
 		}
+		#pragma endregion
+
+		#pragma region AnimationStack
+		AnimationStack::AnimationStack()
+		{
+
+		}
+
+		AnimationStack::~AnimationStack()
+		{
+			
+		}
+
+		void AnimationStack::Update(const UpdateArgs& args)
+		{
+			this->blend(args);
+
+			for(int i = 0; i < this->stack.Count(); i++)
+			{
+				stack[i]->Update(args.Time.ElapsedTime);
+			}
+		}
+
+		void AnimationStack::SetAnimation(IAnimation* animation)
+		{
+			this->stack.Clear();
+			animation->Reset();
+			animation->SetWeight(1.0);
+			this->stack.Add((TikiAnimation*)animation);
+		}
+
+		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
+		{
+			this->blendTarget = (TikiAnimation*)animation;
+			this->blendTarget->Reset();
+			this->blendTarget->SetWeight(0.0);
+			this->blendTimer = 0;
+			this->blendTime = time;
+
+			this->stack.Insert(0, blendTarget);
+		}
+
+		List<TikiAnimation*>& AnimationStack::GetStack()
+		{
+			return this->stack;
+		}
+
+		void AnimationStack::blend(const UpdateArgs& args)
+		{
+			if(blendTarget == 0)
+				return;
+
+			float lastWeight = blendTarget->GetWeight();
+
+			this->blendTime += args.Time.ElapsedTime;
+			
+			if(blendTime >= blendTimer)
+			{
+				stack.Clear();
+				blendTarget->SetWeight(1.0);
+
+			}
+
+
+			//if(weight >= 1.0)
+			//{
+			//	weight = 1.0;
+			//	stack.Clear();
+			//	stack.Add(blendTarget);
+
+			//}
+
+			//blendTarget->SetWeight(weight);
+
+		}
+
 		#pragma endregion
 	}
 }

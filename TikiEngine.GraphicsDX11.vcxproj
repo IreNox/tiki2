@@ -35,6 +35,7 @@
     <ClCompile Include="src\Graphics\CloddyInternal.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Graphics\AnimationStack.h" />
     <ClInclude Include="inc\Graphics\TikiLayer.h" />
     <ClInclude Include="inc\Graphics\CBLights.h" />
     <ClInclude Include="inc\Graphics\CBObjectData.h" />

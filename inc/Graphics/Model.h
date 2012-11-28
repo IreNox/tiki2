@@ -15,6 +15,8 @@
 #include "Graphics/TikiBone.h"
 #include "Graphics/TikiAnimation.h"
 
+#include "Graphics/AnimationStack.h"
+
 namespace TikiEngine
 {
 	namespace Resources
@@ -58,6 +60,7 @@ namespace TikiEngine
 			IAnimation* GetAnimation(int index);
 
 			void SetAnimation(IAnimation* animation);
+			void BlendToAnimation(IAnimation* animation, double time = 0.5);
 
 			IBone* GetBone(string name);
 
@@ -83,7 +86,8 @@ namespace TikiEngine
 			List<TikiMesh*> meshes;
 			List<TikiAnimation*> animations;
 
-			List<TikiAnimation*> animationStack;
+			AnimationStack animationStack;
+			//List<TikiAnimation*> animationStack;
 
 			Material* material;
 			VertexDeclaration* declaration;

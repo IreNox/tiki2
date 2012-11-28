@@ -42,16 +42,22 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
+			go->SModel(args.Content->LoadModel(L"soldier"));
 			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
 			tex->AddRef();
 			go->GModel()->GetMaterial()->TexDiffuse = tex;
-			IAnimation* walk = go->GModel()->GetAnimation(2);
 
-			go->GModel()->SetAnimation(walk);
+			this->model = go->GModel();
 
-		    string test = "test";
+			IAnimation* walk = go->GModel()->GetAnimation("walk");
+			IAnimation* attack = go->GModel()->GetAnimation("attack");
+			IAnimation* death02 = go->GModel()->GetAnimation("death02");
 
+			this->animations.Add(walk);
+			this->animations.Add(attack);
+			this->animations.Add(death02);
+
+			this->animationId = 0;
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -99,6 +105,12 @@ namespace TikiEngine
 		{
 			Scene::Update(args);
 			
+			if(args.Input.GetKeyPressed(TikiEngine::KEY_SPACE))
+			{
+				this->animationId = (animationId + 1) % this->animations.Count();
+				this->model->SetAnimation(this->animations[animationId]);
+				this->model->BlendToAnimation(this->animations[0]);
+			}
 		}
 	}
 }
