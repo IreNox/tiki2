@@ -61,11 +61,6 @@ namespace TikiEngine
 
 		UInt32 ModelIOContext::AddPart(void* pointer, UInt32 length, PartType type, PartType arrayOf, UInt32 arrayCount)
 		{
-			if (type == PT_String)
-			{
-				length = (UInt32)strlen((char*)pointer) + 1;
-			}
-
 			BinaryPart bp;
 			bp.Id = binaryParts.Count();
 			bp.Length = length;
@@ -413,7 +408,7 @@ namespace TikiEngine
 		void ModelConverter::addPartsMesh(TikiMesh* mesh)
 		{
 			BinaryTikiMesh* btm = new BinaryTikiMesh();
-			btm->NameId = context->AddPart((void*)mesh->GetName().c_str(), 0, PT_String);
+			btm->NameId = addPartsString(mesh->GetName());
 			btm->VertexDataId = context->AddPart((void*)mesh->verticesList.GetInternalData(), sizeof(SkinningVertex), PT_Array, PT_Byte, mesh->verticesList.Count());
 			btm->IndexDataId = context->AddPart((void*)mesh->indicesList.GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, mesh->indicesList.Count());
 
@@ -440,7 +435,7 @@ namespace TikiEngine
 			{
 				string name = StringWtoA(tex->GetFileName());
 
-				return context->AddPart((void*)name.c_str(), 0, PT_String);
+				return addPartsString(name);
 			}
 
 			return 0;
@@ -449,7 +444,7 @@ namespace TikiEngine
 		UInt32 ModelConverter::addPartsBone(TikiBone* bone, UInt32 parentId)
 		{
 			BinaryTikiBone* btb = new BinaryTikiBone();
-			btb->NameId = context->AddPart((void*)bone->GetName().c_str(), 0, PT_String);
+			btb->NameId = addPartsString(bone->GetName());
 			btb->ParentId = parentId;
 			btb->Init = bone->BoneInitTransform();
 			btb->ConstanBufferIndex = bone->GetConstantBufferIndex();			
@@ -474,7 +469,7 @@ namespace TikiEngine
 				layer.Add(
 					addPartsLayer(
 						animationIds[i],
-						&bone->GetAnimationLayer(model->GetAnimations()->Get(i))
+						&bone->GetAnimationLayer(i)
 					)
 				);
 				i++;
@@ -498,7 +493,7 @@ namespace TikiEngine
 		void ModelConverter::addPartsAnimation(TikiAnimation* animation)
 		{
 			BinaryTikiAnimation* bta = new BinaryTikiAnimation();
-			bta->NameId = context->AddPart((void*)animation->GetName().c_str(), 0, PT_String);
+			bta->NameId = addPartsString(animation->GetName());
 
 			bta->StartTime = animation->GetStartTime();
 			bta->EndTime = animation->GetStopTime();
@@ -510,6 +505,15 @@ namespace TikiEngine
 			animationIds.Add(
 				context->AddPart(bta, sizeof(BinaryTikiAnimation), PT_Animation)
 			);
+		}
+
+		UInt32 ModelConverter::addPartsString(string str)
+		{
+			UInt32 len = str.size() + 1;
+			char* str2 = new char[len];
+			memcpy(str2, str.c_str(), len);
+
+			return context->AddPart(str2, len, PT_String);
 		}
 		#pragma endregion
 		#pragma endregion
@@ -706,10 +710,9 @@ namespace TikiEngine
 			return 0;
 		}
 
-		TikiLayer& TikiBone::GetAnimationLayer(TikiAnimation* animation)
+		TikiLayer& TikiBone::GetAnimationLayer(UInt32 index)
 		{
-			return this->animationData[animation->GetIndex()];
-			//return this->animationData.GetRef(animation);
+			return this->animationData[index];
 		}
 
 		string TikiBone::GetName()

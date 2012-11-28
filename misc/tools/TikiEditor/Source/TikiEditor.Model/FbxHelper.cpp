@@ -432,13 +432,14 @@ namespace TikiEditor
 		bone->AddAnimation(this->animation, layer);
 	}
 
+	/* destination = model, source = helper */
 	void FbxHelper::MergeAnimation(TikiAnimation* animation, TikiBone* destination, TikiBone* source)
 	{
 		TikiBone* bone = source->GetBoneByName(destination->GetName());
 		if(bone == 0)
 			_CrtDbgBreak();
 
-		destination->AddAnimation(animation, bone->GetAnimationLayer(animation));
+		destination->AddAnimation(animation, bone->GetAnimationLayer(0));
 
 		for(UInt32 i = 0; i < destination->GetChilds()->Count(); i++)
 			MergeAnimation(animation, destination->GetChilds()->Get(i), source);

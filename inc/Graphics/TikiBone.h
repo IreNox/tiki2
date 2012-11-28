@@ -44,7 +44,8 @@ namespace TikiEngine
 
 			TikiBone* GetBoneByName(const string& name);
 			TikiBone* GetBoneByIndex(int index);
-			TikiLayer& GetAnimationLayer(TikiAnimation* animation);
+
+			TikiLayer& GetAnimationLayer(UInt32 index);
 			
 			void AddAnimation(TikiAnimation* animation, TikiLayer& layer);
 
