@@ -24,19 +24,21 @@ namespace TikiEngine
 		{
 			status = Active;
 
-			// if this goal is reactivated then there may be some existing subgoals that must be removed
-			//RemoveAllSubgoals();
+
 
 			// only update once per second
 			if (attackTargetRegulator->IsReady())
 			{
+				// if this goal is reactivated then there may be some existing subgoals that must be removed
+				RemoveAllSubgoals();
+
 				// it is possible for a bot's target to die whilst this goal is active 
 				// so we must test to make sure the bot always has an active target
 				if (owner->GetTargetSys()->IsTargetShootable())
 				{
 					if (attacking == false)
 					{
-						RemoveAllSubgoals();
+						//RemoveAllSubgoals();
 						owner->GetSteering()->SeekOff();
 						owner->GetSteering()->ArriveOff();
 						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. \n");

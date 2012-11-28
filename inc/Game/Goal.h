@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/DrawArgs.h"
+#include "Game/GoalTypes.h"
 
 namespace TikiEngine
 {
@@ -56,6 +57,9 @@ namespace TikiEngine
             //used to render any goal specific information
             virtual void Draw(const DrawArgs& args) { }
 
+			//this is used to draw the name of the goal at the specific position used for debugging
+			virtual void DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const;
+
             // Goal status Getters
             bool IsComplete() const { return status == Completed; }
             bool IsActive()   const { return status == Active;    }
@@ -95,6 +99,21 @@ namespace TikiEngine
             if (IsInactive())
                 Activate(args);
         }
+
+		template <class entity_type>
+		void  Goal<entity_type>::DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const
+		{
+			pos.Y += 15;
+			Color col; //(0, 0, 255, 255);
+			if (IsComplete()) col = Color(0, 255, 0, 255);
+			if (IsInactive()) col = Color(0, 0, 0, 255);
+			if (HasFailed()) col = Color(255, 0, 0, 255);
+			if (IsActive()) col = Color(0, 0, 255, 255);
+
+			args.SpriteBatch->DrawString(GUIControl::GetDefaultFont(), tts->Convert(GetType()), pos, col);
+		}
+
+
 
     }
 }

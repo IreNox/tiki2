@@ -14,11 +14,9 @@ namespace TikiEngine
 			: GoalComposite<TikiBot>(bot, Goal_Patrol),
 			path(wayPoints)
 		{
-			currWp = Vector2::Zero;
-            lastWp = currWp;
+			currWp = path.front();
             timeWpLeft = 0;
 			attacking = false;
-
 		}
 
 
@@ -32,12 +30,10 @@ namespace TikiEngine
                 if  (attacking == true)
                 {
                     attacking = false;
-                    currWp = lastWp;
                     owner->GetEngine()->HLog.Write("set currWp to last. \n");
                 }
                 else
                 {
-                    lastWp = currWp;
                     currWp = path.front();
                     path.pop_front();
                     owner->GetEngine()->HLog.Write("set currWp and popped front. \n");
@@ -54,7 +50,7 @@ namespace TikiEngine
                 if (args.Time.TotalTime - timeWpLeft > 5.0f)
                 {
                     timeWpLeft = 0;
-                    status = Completed;
+					attacking = false;
                     return;
                 }
 
@@ -64,7 +60,7 @@ namespace TikiEngine
 					attacking = true;
                     RemoveAllSubgoals();
                     owner->GetEngine()->HLog.Write("Target in range while patrolling. Attacking. \n");
-                    AddSubgoal(new GoalAttackTarget(owner));
+                    //AddSubgoal(new GoalAttackTarget(owner));
 				}
 			}
 		}

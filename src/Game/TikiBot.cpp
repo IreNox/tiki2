@@ -11,11 +11,15 @@
 #include "Game/WeaponSystem.h"
 #include "Game/Weapon.h"
 
+#include "Game/SceneLevel.h"
+
 namespace TikiEngine
 {
 	namespace AI
 	{
 		using namespace TikiEngine::Components;
+
+		static GoalTypeToString* ttsInstance = new GoalTypeToString();
 
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, TikiBotDescription desc) 
 			: MovingEntity(gameState, gameObject)
@@ -221,6 +225,18 @@ namespace TikiEngine
 
 			// draw recently sensed opponents
 			sensorMem->Draw(args);
+
+			// Draw Goals
+			Camera* cam = gameState->GetScene()->GetCamera();
+			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
+
+			Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
+				Matrix::Transpose(*cam->GetViewMatrix()) * 
+				Matrix::Transpose(*cam->GetProjectionMatrix());
+
+			Vector3 screenPos = Vector3::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+
+			brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y), ttsInstance);
 			#endif
 		}
 
