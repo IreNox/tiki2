@@ -27,16 +27,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="bin\Data\Models\buildings\" />
-    <Folder Include="bin\Data\Textures\Controls\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\Data\Cloddy\Datasets\pitch.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Datasets\terrain.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Licence\licence.dat" />
-    <None Include="bin\Data\Meshes\building_03.obj" />
-    <None Include="bin\Data\Meshes\Laptop.obj" />
-    <None Include="bin\Data\Meshes\test.obj" />
+    <None Include="bin\Data\Meshes\navmesh\navmesh_pitch.obj" />
+    <None Include="bin\Data\Meshes\navmesh\navmesh_terrain.obj" />
     <None Include="bin\Data\Models\cylinder.tiki" />
     <None Include="bin\Data\Models\mark.tiki" />
     <None Include="bin\Data\Models\navmesh\navmesh_pitch.tiki" />
@@ -46,23 +44,22 @@
     <None Include="bin\Data\Textures\building_03\building_03_normal.dds" />
     <None Include="bin\Data\Textures\checker.dds" />
     <None Include="bin\Data\Textures\controls.dds" />
-    <None Include="bin\Data\Textures\gui.dds" />
     <None Include="bin\Data\Textures\Hud\button_uf.dds" />
     <None Include="bin\Data\Textures\Hud\circle_main_0.dds" />
     <None Include="bin\Data\Textures\Hud\circle_main_1.dds" />
     <None Include="bin\Data\Textures\Hud\energy.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
     <None Include="bin\Data\Textures\logo.dds" />
-    <None Include="bin\Data\Textures\meme\meme_diff.dds" />
-    <None Include="bin\Data\Textures\meme\meme_normal.dds" />
-    <None Include="bin\Data\Textures\meme\meme_spec.dds" />
     <None Include="bin\Data\Textures\particle\laser.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
     <None Include="bin\Data\Textures\random.dds" />
-    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Diff.dds" />
-    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Normal.dds" />
-    <None Include="bin\Data\Textures\Soldier_Enemy\Soldier_Enemy_Spec.dds" />
+    <None Include="bin\Data\Textures\soldier\LP_Gun_Diff.dds" />
+    <None Include="bin\Data\Textures\soldier\LP_Gun_Normal.dds" />
+    <None Include="bin\Data\Textures\soldier\LP_Gun_Spec.dds" />
+    <None Include="bin\Data\Textures\soldier\Soldier_L_diff.dds" />
+    <None Include="bin\Data\Textures\soldier\Soldier_L_normal.dds" />
+    <None Include="bin\Data\Textures\soldier\Soldier_L_Spec.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Diff.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Normal.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Spec.dds" />

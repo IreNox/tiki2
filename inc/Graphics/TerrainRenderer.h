@@ -37,7 +37,7 @@ namespace TikiEngine
 			TerrainRenderer(Engine* engine, GameObject* gameObject);
 			~TerrainRenderer();
 
-			void LoadTerrain(string fileName, int scale, int size);
+			void LoadTerrain(string fileName, int scale, int size, float elevation);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);

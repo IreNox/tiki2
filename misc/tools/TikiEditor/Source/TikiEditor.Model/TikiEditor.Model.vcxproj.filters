@@ -13,6 +13,9 @@
     <Filter Include="Model\FBX">
       <UniqueIdentifier>{ae829553-4f5a-4d16-ba9e-83d13d9f9291}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Model\MeshMaterial">
+      <UniqueIdentifier>{78908c81-a691-4920-ac4d-e128d15a1376}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FBXImport.h">
@@ -29,6 +32,12 @@
     </ClInclude>
     <ClInclude Include="ModelEditor.h">
       <Filter>Model</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshMaterial.h">
+      <Filter>Model\MeshMaterial</Filter>
+    </ClInclude>
+    <ClInclude Include="FakeTexture.h">
+      <Filter>Model\MeshMaterial</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

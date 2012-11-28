@@ -69,6 +69,24 @@ namespace TikiEngine
 
 			////////
 			// Model
+			//for (int i = -1000; i < 1000; i++)
+			//{
+			//	GameObject* go = new GameObject(engine);
+
+			//	if (i == 0)
+			//	{
+			//		go->SModel(args.Content->LoadModel(L"mark"));
+			//	}
+			//	else
+			//	{
+			//		go->SModel(args.Content->LoadModel(L"soldier"));
+			//	}
+			//	go->PRS.SScale() = Vector3(0.01f);
+			//	go->PRS.SPosition().X = i * 2;
+
+			//	this->AddElement(go);
+			//}
+
 			GameObject* go = new GameObject(engine);
 
 			go->SModel(args.Content->LoadModel(L"soldier"));
@@ -80,7 +98,7 @@ namespace TikiEngine
 			//mat->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
 			////mat->TexSpecular = engine->content->LoadTexture(L"building_03/building_03_Spec");
 			//render->SetMaterial(mat);
-			//render->SetMesh(engine->content->LoadMesh(L"building_03"));
+			//render->SetMesh(engine->content->LoadMesh(L"test"));
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -243,17 +261,17 @@ namespace TikiEngine
 			//	cos(args.Time.TotalTime) * 3
 			//);
 
-			if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				if (elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap != 0)
-				{
-					elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = 0;
-				}
-				else
-				{
-					elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
-				}
-			}
+			//if (args.Input.GetKeyPressed(KEY_F5))
+			//{
+			//	if (elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap != 0)
+			//	{
+			//		elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = 0;
+			//	}
+			//	else
+			//	{
+			//		elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
+			//	}
+			//}
 
 			//// light settings test
 			//Vector3 move = Vector3(

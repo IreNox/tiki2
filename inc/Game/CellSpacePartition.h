@@ -88,7 +88,7 @@ namespace TikiEngine
 
 				if (idx < 0)
 				{
-					OutputDebugString(L"Error: CellSpace Index < 0, make sure the Cells/Bots/Entities are within positive XZ Dimension. \n");
+					engine->HLog.Write("Error: CellSpace Index < 0, make sure the Cells/Bots/Entities are within positive XZ Dimension. \n");
 					return;
 				}
 				cells[idx].Members.push_back(ent);

@@ -17,6 +17,7 @@ namespace TikiEditor.Objects
         private string _heightmapFilename;
         private int _heightmapScale;
         private int _heightmapSize;
+        private float _heightmapElevation;
 
         private DbList<LevelEnemy> _enemies;
         private DbList<LevelObject> _objects;
@@ -77,6 +78,13 @@ namespace TikiEditor.Objects
         {
             get { return _heightmapSize; }
             set { SetProperty(ref _heightmapSize, value, "HeightmapSize"); }
+        }
+
+        [DataField("HeightmapElevation")]
+        public float HeightmapElevation
+        {
+            get { return _heightmapElevation; }
+            set { SetProperty(ref _heightmapElevation, value, "HeightmapElevation"); }
         }
 
         [Browsable(false)]

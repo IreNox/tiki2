@@ -197,7 +197,6 @@ namespace TikiEngine
 			window->Begin();
 
 			//Mutex::WaitForMultiple(csDraw, 2);
-			//OutputDebugString(L"Engine");
 
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
@@ -220,6 +219,10 @@ namespace TikiEngine
 
 			wstring str = s.str();
 			SetWindowText(window->GetHWND(), str.c_str());
+#else
+			std::wostringstream s;
+			s << "TikiEngine 2.0 - FPS: " << (1.0 / elapsedTime);
+			SetWindowText(window->GetHWND(), s.str().c_str());
 #endif
 
 			state.Swap(time);
@@ -287,7 +290,6 @@ namespace TikiEngine
 			//ostringstream s;
 			//s << "Camera Count: " << scene->GetCameras()->Count();
 
-			//OutputDebugString(s.str().c_str());
 			//HelperLog::Write(s.str());
 
 			UInt32 i = 0;
@@ -337,7 +339,7 @@ namespace TikiEngine
 			//wostringstream s;
 			//s << L"Update: " << HelperThreading::GIndex();
 
-			//OutputDebugString(s.str().c_str());
+			//HLog(s.str().c_str());
 
 			state.UpdateState = UpdateArgs(state.CurrentTime);
 

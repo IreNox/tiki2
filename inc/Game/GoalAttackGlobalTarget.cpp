@@ -39,7 +39,7 @@ namespace TikiEngine
 						RemoveAllSubgoals();
 						owner->GetSteering()->SeekOff();
 						owner->GetSteering()->ArriveOff();
-						OutputDebugString(L"GoalAttackGlobalTarget - Attacking. \n");
+						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. \n");
 						attacking = true;
 					}
 
@@ -47,7 +47,7 @@ namespace TikiEngine
 				else
 				{
 					attacking = false;
-					OutputDebugString(L"GoalAttackGlobalTarget - Moving to target \n");
+					target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Moving to target \n");
 					AddSubgoal(new GoalMoveToPosition(owner, target->Pos3D()));
 				}
 			}
@@ -69,7 +69,7 @@ namespace TikiEngine
 			else
 			{
 				owner->GetTargetSys()->ClearGlobalTarget();
-				OutputDebugString(L"GoalAttackGlobalTarget - Target dead or NUll. \n");
+				target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. \n");
 				status = Completed;
 			}
 
@@ -78,7 +78,7 @@ namespace TikiEngine
 
 		void GoalAttackGlobalTarget::Terminate()
 		{
-			OutputDebugString(L"GoalAttackGlobalTarget - Terminate. \n");
+			target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Terminate. \n");
 			owner->GetTargetSys()->ClearGlobalTarget();
 			status = Completed;
 		}

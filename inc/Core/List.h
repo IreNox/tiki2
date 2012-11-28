@@ -28,10 +28,7 @@ public:
 	List(T* data, UInt32 count, bool readOnly)
 		: IsReadOnly(readOnly), lengthData(count - 1), lengthArr(2)
 	{
-		while (lengthArr < count)
-		{
-			lengthArr = getNextSize();
-		}
+		lengthArr = getNextSize(count);
 
 		this->data = new T[lengthArr];
 		memcpy(this->data, data, count * sizeof(T));
@@ -111,15 +108,14 @@ public:
 	inline void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
 		Int32 badFix = lengthData;
-		int index = getNewIndex(this->lengthData + (length - 2), true);
+		getNewIndex(this->lengthData + (length - 1), true);
 		lengthData = badFix;
 
 		UInt32 i = 0;
 		while (i < length)
 		{
-			index = getNewIndex(this->lengthData, true);
-
-			data[index] = src[i + offset];
+			data[lengthData + 1] = src[i];
+			lengthData++;
 			i++;
 		}
 	}
@@ -203,6 +199,11 @@ public:
 		return this->data[index];
 	}
 
+	inline const T& GetCRef(const UInt32& index) const
+	{
+		return this->data[index];
+	}
+
 	inline void Set(const UInt32& index, T value)
 	{
 		this->data[index] = value;
@@ -242,9 +243,14 @@ protected:
 private:
 
 	#pragma region Private Member
-	inline int getNextSize()
+	inline UInt32 getNextSize(UInt32 targetSize)
 	{
-		return this->lengthArr * 2;
+		while (lengthArr <= targetSize)
+		{
+			lengthArr *= 2;
+		}
+
+		return lengthArr;
 	}
 
 	inline int getNewIndex(const UInt32& in, bool used)
@@ -253,7 +259,7 @@ private:
 
 		if (index > this->lengthArr - 1)
 		{
-			int size = getNextSize();
+			UInt32 size = getNextSize(index);
 			T* newData = new T[size];
 
 			for (int i = 0; i <= this->lengthData; i++)
@@ -264,7 +270,6 @@ private:
 			delete[](this->data);
 
 			this->data = newData;
-			this->lengthArr = size;
 		}
 
 		if ((Int32)index > this->lengthData && used) this->lengthData = index;

@@ -17,13 +17,32 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine) , loadedResources()
+			: IContentManager(engine) , loadedResources(), disposing(false)
 		{
 		}
 
 		ContentManagerModule::~ContentManagerModule()
 		{
 			//there is always this fucking dispose method u overlook
+		}
+		#pragma endregion
+
+		#pragma region Member
+		void ContentManagerModule::ReleaseResource(IResource* res)
+		{
+			if (disposing) return;
+
+			UInt32 i = 0;
+			while (i < loadedResources.Count())
+			{
+				if (loadedResources[i].resource == res)
+				{
+					loadedResources.RemoveAt(i);
+					return;
+				}
+
+				i++;
+			}
 		}
 		#pragma endregion
 
@@ -106,6 +125,8 @@ namespace TikiEngine
 			#if _DEBUG
 			TerminateThread(threadHandle, 0);
 			#endif
+
+			disposing = true;
 
 			UInt32 i = 0;
 			while (i < loadedResources.Count())

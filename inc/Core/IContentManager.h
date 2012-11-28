@@ -39,6 +39,8 @@ namespace TikiEngine
 			virtual IBoundingBox* LoadBoundingBox(const wstring& name) = 0;
 			virtual IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name) = 0;
 
+			virtual void ReleaseResource(IResource* res) = 0;
+
 		};
 	}
 }

@@ -40,7 +40,7 @@ namespace TikiEngine
 			if (heightmapFilename != "" && heightmapScale != 0 && heightmapSize != 0)
 			{
 				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
-				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize);
+				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation);
 				terrain->SetMaterial(mat);
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
@@ -74,6 +74,10 @@ namespace TikiEngine
 			else if (fieldName == "HeightmapSize")
 			{			
 				heightmapSize = sqlite3_column_int(state, fieldId);
+			}
+			else if (fieldName == "HeightmapElevation")
+			{			
+				heightmapElevation = (float)sqlite3_column_double(state, fieldId);
 			}
 		}
 

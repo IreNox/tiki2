@@ -1,4 +1,6 @@
 
+#define TIKI_EDITOR
+
 #include "FbxLoader.h"
 
 namespace TikiEditor

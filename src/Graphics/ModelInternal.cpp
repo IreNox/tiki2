@@ -3,6 +3,8 @@
 
 #ifdef TIKI_ENGINE
 #include "Core/IContentManager.h"
+
+#include "Graphics/Model.h"
 #endif
 
 namespace TikiEngine
@@ -243,7 +245,7 @@ namespace TikiEngine
 
 		TikiMesh* ModelConverter::readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
 		{
-			TikiMesh* mesh = new TikiMesh();
+			TikiMesh* mesh = new TikiMesh(model);
 
 			mesh->SetName(readString(binMesh->NameId));
 			mesh->SetDeformation(binMesh->UseDeformation != 0);
@@ -258,30 +260,23 @@ namespace TikiEngine
 				mesh->SetMaterial(model->GetEngine()->content->LoadMaterial(L"os_default"));
 			}
 
-			mesh->GetMaterial()->TexDiffuse = 0; //load from content manager
-			mesh->GetMaterial()->TexNormalMap = 0; //load from content manager
-			mesh->GetMaterial()->TexSpecular = 0; //load from content manager
-			mesh->GetMaterial()->TexDiffuse = 0; //load from content manager
+			mesh->GetMaterial()->TexDiffuse   = readTexture(binMesh->DiffuseTexId);
+			mesh->GetMaterial()->TexNormalMap = readTexture(binMesh->NormalTexId);
+			mesh->GetMaterial()->TexSpecular  = readTexture(binMesh->SpecTexId);
+			//mesh->GetMaterial()->TexDiffuse   = readTexture(binMesh->SpecTexId);
 #endif
 
-			BinaryPart& dataPart = context->ReadPart(binMesh->VertexDataId);
-			
-			List<SkinningVertex> vertices = List<SkinningVertex>(
+			BinaryPart& dataPart = context->ReadPart(binMesh->VertexDataId);			
+			mesh->SetVertexData(
 				(SkinningVertex*)context->ReadPartPointer(dataPart.Id),
-				dataPart.ArrayCount,
-				false
+				dataPart.ArrayCount * dataPart.Length
 			);
-			mesh->SetSkinningVertexData(vertices);
-
-
+			
 			dataPart = context->ReadPart(binMesh->IndexDataId);
-
-			List<UInt32> indices = List<UInt32>(
+			mesh->SetIndexData(
 				(UInt32*)context->ReadPartPointer(dataPart.Id),
-				dataPart.ArrayCount,
-				false
+				dataPart.ArrayCount
 			);
-			mesh->SetIndices(indices);
 
 			return mesh;
 		}
@@ -377,6 +372,19 @@ namespace TikiEngine
 
 			return str;
 		}
+
+		ITexture* ModelConverter::readTexture(UInt32 id)
+		{
+#ifdef TIKI_ENGINE
+			if (id == 0) return 0;
+
+			wstring fileName = StringAtoW(readString(id));
+
+			return model->GetEngine()->content->LoadTexture(fileName);
+#else
+			return 0;
+#endif
+		}
 		#pragma endregion
 
 		#pragma region Protected Memer - Write
@@ -409,8 +417,17 @@ namespace TikiEngine
 		{
 			BinaryTikiMesh* btm = new BinaryTikiMesh();
 			btm->NameId = addPartsString(mesh->GetName());
-			btm->VertexDataId = context->AddPart((void*)mesh->verticesList.GetInternalData(), sizeof(SkinningVertex), PT_Array, PT_Byte, mesh->verticesList.Count());
-			btm->IndexDataId = context->AddPart((void*)mesh->indicesList.GetInternalData(), sizeof(UInt32), PT_Array, PT_UInt, mesh->indicesList.Count());
+
+			UInt32 indexCount;
+			UInt32* indexData;
+			mesh->GetIndexData(&indexData, &indexCount);
+
+			UInt32 vertexLength;
+			void* vertexData;
+			mesh->GetVertexData(&vertexData, &vertexLength);
+
+			btm->VertexDataId = context->AddPart(vertexData, sizeof(SkinningVertex), PT_Array, PT_Byte, vertexLength / sizeof(SkinningVertex));
+			btm->IndexDataId = context->AddPart(indexData, sizeof(UInt32), PT_Array, PT_UInt, indexCount);
 
 			btm->UseDeformation = mesh->UseDeformation();
 
@@ -509,7 +526,7 @@ namespace TikiEngine
 
 		UInt32 ModelConverter::addPartsString(string str)
 		{
-			UInt32 len = str.size() + 1;
+			UInt32 len = (UInt32)str.size() + 1;
 			char* str2 = new char[len];
 			memcpy(str2, str.c_str(), len);
 
@@ -519,16 +536,56 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region TikiMesh
-		TikiMesh::TikiMesh()
-			: material(0), hasDeformation(false)
+		#pragma region Class
+		TikiMesh::TikiMesh(Model* model)
+			: model(model), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0), vertexLength(0)
+#ifdef TIKI_ENGINE
+			, indexBuffer(0), vertexBuffer(0), decl(0)
+#endif
 		{
 		}
 
 		TikiMesh::~TikiMesh()
 		{
+			SafeDeleteArray(&indexData);
+			SafeDeleteArray(&vertexData);
+
+#ifdef TIKI_ENGINE
+			SafeRelease(&decl);
+			SafeRelease(&indexBuffer);
+			SafeRelease(&vertexBuffer);
+#endif
+
 			SafeRelease(&material);
 		}
+		#pragma endregion
+		
+		#pragma region Member - Draw
+		void TikiMesh::Draw(const DrawArgs& args, GameObject* gameObject)
+		{
+#ifdef TIKI_ENGINE
+			if (!this->GetReady()) return;
 
+			if (hasDeformation)
+			{
+				((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer()->GetBuffer());
+			}
+
+			material->UpdateDrawArgs(args, gameObject);
+			material->Apply();
+
+			indexBuffer->Apply();
+			vertexBuffer->Apply();
+
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+			decl->Apply();
+
+			DllMain::Context->DrawIndexed(indexCount, 0, 0);
+#endif
+		}
+		#pragma endregion
+
+		#pragma region Member - Get/Set
 		string TikiMesh::GetName()
 		{
 			return this->name;
@@ -558,22 +615,61 @@ namespace TikiEngine
 		{
 			SafeRelease(&this->material);
 			SafeAddRef(material, &this->material);
+
+#ifdef TIKI_ENGINE
+			if (material)
+			{
+				SafeRelease(&decl);
+				decl = new VertexDeclaration(model->GetEngine(), material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
+			}
+#endif
 		}
 
 		bool TikiMesh::GetReady()
 		{
-			return this->verticesList.Count() != 0 && this->indicesList.Count() != 0;
+			return indexData != 0 && vertexData != 0 && material != 0;
+		}
+		#pragma endregion
+
+		#pragma region Member - Get/Set - Indices/Vertices
+		void TikiMesh::GetIndexData(UInt32** data, UInt32* count)
+		{
+			*data = indexData;
+			*count = indexCount;
 		}
 
-		void TikiMesh::SetIndices(List<UInt32>& indices)
+		void TikiMesh::SetIndexData(const UInt32* data, UInt32 count)
 		{
-			this->indicesList = indices;
+			SafeDeleteArray(&indexData);
+			indexData = new UInt32[count];
+			indexCount = count;
+
+			memcpy(indexData, data, sizeof(UInt32) * count);
+
+#ifdef TIKI_ENGINE
+			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(model->GetEngine(), sizeof(UInt32), count, indexData);
+#endif
 		}
 
-		void TikiMesh::SetSkinningVertexData(List<SkinningVertex>& skinning)
+		void TikiMesh::GetVertexData(void** data, UInt32* length)
 		{
-			this->verticesList = skinning;
+			*data = vertexData;
+			*length = vertexLength;
 		}
+
+		void TikiMesh::SetVertexData(const void* data, UInt32 length)
+		{
+			SafeDeleteArray(&vertexData);
+			vertexData = new Byte[length];
+			vertexLength = length;
+
+			memcpy(vertexData, data, length);
+
+#ifdef TIKI_ENGINE
+			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(model->GetEngine(), sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
+#endif
+		}
+		#pragma endregion
 		#pragma endregion
 
 		#pragma region TikiBone

@@ -1,4 +1,6 @@
 
+#define TIKI_EDITOR
+
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
 
@@ -164,7 +166,7 @@ namespace TikiEditor
 
 	void FbxHelper::InitializeMesh(FbxMesh* mesh)
 	{
-		TikiMesh* tiki = new TikiMesh();
+		TikiMesh* tiki = new TikiMesh(0);
 		tiki->SetName(mesh->GetNode()->GetName());
 
 		int vertexCount = mesh->GetControlPointsCount();
@@ -187,9 +189,8 @@ namespace TikiEditor
 
 		this->InitializeSkinning(mesh, vertexList, vertices);
 
-		tiki->SetSkinningVertexData(vertices);
-
-		tiki->SetIndices(indices);
+		tiki->SetIndexData(indices.GetInternalData(), indices.Count());
+		tiki->SetVertexData(vertices.GetInternalData(), sizeof(SkinningVertex) * vertices.Count());
 
 		meshes.Add(tiki);
 	}

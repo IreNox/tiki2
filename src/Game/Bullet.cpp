@@ -9,12 +9,10 @@ namespace TikiEngine
         Bullet::Bullet(GameState* gameState, GameObject* gameObject)
             : Projectile(gameState, gameObject)
         {
-
         }
 
         Bullet::~Bullet()
         {
-
         }
 
         void Bullet::Init(ProjectileDescription desc, const UpdateArgs& args)
@@ -42,7 +40,7 @@ namespace TikiEngine
                     impacted = true;
                     dead = true;
 
-                    OutputDebugString(L"bot hit, health reduced. \n");
+					gameState->GetEngine()->HLog.Write("bot hit, health reduced.");
                     bot->ReduceHealth(damage);
                 }
             }

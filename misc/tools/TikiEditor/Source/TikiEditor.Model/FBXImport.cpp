@@ -6,6 +6,7 @@
 #include "FbxHelper.h"
 #include "FbxLoader.h"
 
+#include "Core/Material.h"
 #include "Core/FileStream.h"
 #include "Graphics/ModelConverter.h"
 
@@ -18,6 +19,7 @@ namespace TikiEditor
 	FBXImport::FBXImport()
 	{
 		inputFiles = gcnew System::Collections::Generic::Dictionary<String^, String^>();
+		inputMaterials = gcnew System::Collections::Generic::List<MeshMaterial^>();
 	}
 
 	FBXImport::~FBXImport()
@@ -68,6 +70,34 @@ namespace TikiEditor
 			i++;
 		}
 
+		for each (MeshMaterial^ meshMat in inputMaterials)
+		{
+			string str = (cstring)Marshal::StringToHGlobalAnsi(meshMat->Name).ToPointer();
+
+			UInt32 i = 0;
+			while (i < model->GetMeshes()->Count())
+			{				
+				TikiMesh* mesh = model->GetMeshes()->Get(i);
+
+				if (mesh->GetName() == str)
+				{
+					Material* mat = mesh->GetMaterial();
+
+					if (mat == 0)
+					{
+						mat = new Material(0);
+
+						mesh->SetMaterial(mat);
+					}
+
+					mat->TexDiffuse = createFakeTexture(meshMat->TextureDiffuse);
+					mat->TexNormalMap = createFakeTexture(meshMat->TextureNormal);
+					mat->TexSpecular = createFakeTexture(meshMat->TextureSpec);
+				}
+
+				i++;
+			}
+		}
 
 		wcstring outFile = (wcstring)System::Runtime::InteropServices::Marshal::StringToHGlobalUni(outputFile).ToPointer();
 
@@ -105,6 +135,16 @@ namespace TikiEditor
 		}
 
 		return list;
+	}
+
+	ITexture* FBXImport::createFakeTexture(String^ fileName)
+	{
+		wstring str = (wcstring)Marshal::StringToHGlobalUni(fileName).ToPointer();
+
+		ITexture* tex = new FakeTexture();
+		tex->LoadFromFile(str.c_str());
+
+		return tex;
 	}
 }
 

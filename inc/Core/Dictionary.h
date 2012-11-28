@@ -137,6 +137,16 @@ public:
 		return list.Get(index);
 	}
 
+	inline KeyValuePair<TKey, TValue>& GetKVPRef(UInt32 index)
+	{
+		return list.GetRef(index);
+	}
+
+	inline const KeyValuePair<TKey, TValue>& GetKVPCRef(UInt32 index) const
+	{
+		return list.GetCRef(index);
+	}
+
 	inline TValue Get(TKey key) const
 	{
 		int index = _keyToIndex(key);
@@ -219,7 +229,7 @@ private:
 			UInt32 i = 0;
 			while (i < list.Count())
 			{
-				if (list.Get(i).GetKey() == key) return i;
+				if (list.GetCRef(i).GetKey() == key) return i;
 				i++;
 			}
 		}

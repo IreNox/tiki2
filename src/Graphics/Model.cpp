@@ -19,12 +19,9 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), material(0), indexBuffer(0), vertexBuffer(0), declaration(0), rootBone(0), animationStack()
+			: IModel(engine), indexBuffer(0), vertexBuffer(0), rootBone(0)
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
-
-			Material* material = engine->content->LoadMaterial(L"os_skinning");
-			this->SetMaterial(material);
 		}
 
 		Model::~Model()
@@ -35,8 +32,6 @@ namespace TikiEngine
 			for(UInt32 i = 0; i < meshes.Count(); i++)
 				SafeRelease(&meshes[i]);
 
-			SafeRelease(&declaration);
-			SafeRelease(&material);
 			SafeRelease(&indexBuffer);
 			SafeRelease(&vertexBuffer);
 			SafeDelete(&constantBufferMatrices);
@@ -58,14 +53,14 @@ namespace TikiEngine
 		}
 		IAnimation* Model::GetAnimation(string name)
 		{
-			for(int i = 0; i < animations.Count(); i++)
+			for(UInt32 i = 0; i < animations.Count(); i++)
 			{
 				if(animations[i]->GetName() == name)
 					return (IAnimation*)animations[i];
 			}
 			return 0;
 		}
-		IAnimation* Model::GetAnimation(int index)
+		IAnimation* Model::GetAnimation(UInt32 index)
 		{
 			if(index >= 0 && index <= animations.Count())
 				return (IAnimation*)animations[index];
@@ -100,37 +95,7 @@ namespace TikiEngine
 
 		bool Model::GetReady()
 		{
-			return (verticesList.Count() != 0 && indicesList.Count() != 0 && material != 0);
-		}
-
-		Material* Model::GetMaterial()
-		{
-			return material;
-		}
-
-		List<SkinningVertex>* Model::GetVertices()
-		{
-			return &verticesList;
-		}
-
-		List<UInt32>* Model::GetIndices()
-		{
-			return &indicesList;
-		}
-
-		void Model::SetMaterial(Material* material)
-		{
-			SafeRelease(&this->material);
-			SafeAddRef(material, &this->material);
-
-			SafeRelease(&declaration);
-
-			if (material != 0 && material->GetReady())
-			{
-				declaration = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
-			}
-
-			((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", constantBufferMatrices->GetBuffer());
+			return (meshes.Count() != 0);
 		}
 
 		TikiBone* Model::GetRootBone()
@@ -150,16 +115,6 @@ namespace TikiEngine
 		{
 			this->constantBufferElements = list;
 		}
-
-		//float Model::GetAnimationSpeed()
-		//{
-		//	return this->animationSpeed;
-		//}
-
-		//void Model::SetAnimationSpeed(float speed)
-		//{
-		//	this->animationSpeed = speed;
-		//}
 
 		int Model::AnimationCount()
 		{
@@ -182,16 +137,12 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			material->UpdateDrawArgs(args, gameObject);
-			material->Apply();
-
-			indexBuffer->Apply();
-			vertexBuffer->Apply();
-
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-			declaration->Apply();
-
-			DllMain::Context->DrawIndexed(indicesList.Count(), 0, 0);
+			UInt32 i = 0;
+			while (i < meshes.Count())
+			{
+				meshes[i]->Draw(args, gameObject);
+				i++;
+			}
 
 #if _DEBUG
 			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
@@ -223,55 +174,55 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Private Member - Init
-		void Model::Initialize()
-		{
-			this->CopyIndexData();
-			this->CopyVertexData();
-		}
+		//void Model::Initialize()
+		//{
+		//	this->CopyIndexData();
+		//	this->CopyVertexData();
+		//}
 
-		void Model::CopyVertexData()
-		{
-			verticesList.Clear();
+		//void Model::CopyVertexData()
+		//{
+		//	verticesList.Clear();
 
-			UInt32 i = 0;
-			while (i < meshes.Count())
-			{
-				verticesList.AddRange(
-					meshes[i]->verticesList.GetInternalData(),
-					0,
-					meshes[i]->verticesList.Count()
-				);
+		//	UInt32 i = 0;
+		//	while (i < meshes.Count())
+		//	{
+		//		verticesList.AddRange(
+		//			meshes[i]->verticesList.GetInternalData(),
+		//			0,
+		//			meshes[i]->verticesList.Count()
+		//		);
 
-				i++;
-			}
+		//		i++;
+		//	}
 
-			this->vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), verticesList.Count(), (void*)verticesList.GetInternalData());
-		}
+		//	this->vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), verticesList.Count(), (void*)verticesList.GetInternalData());
+		//}
 
-		void Model::CopyIndexData()
-		{
-			indicesList.Clear();
+		//void Model::CopyIndexData()
+		//{
+		//	indicesList.Clear();
 
-			UInt32 i = 0;
-			UInt32 offset = 0;
-			while (i < meshes.Count())
-			{
-				UInt32 a = 0;
-				UInt32 c = meshes[i]->indicesList.Count();
-				while (a < c)
-				{
-					indicesList.Add(
-						meshes[i]->indicesList[a] + offset
-					);
+		//	UInt32 i = 0;
+		//	UInt32 offset = 0;
+		//	while (i < meshes.Count())
+		//	{
+		//		UInt32 a = 0;
+		//		UInt32 c = meshes[i]->indicesList.Count();
+		//		while (a < c)
+		//		{
+		//			indicesList.Add(
+		//				meshes[i]->indicesList[a] + offset
+		//			);
 
-					a++;
-				}
+		//			a++;
+		//		}
 
-				offset += meshes[i]->verticesList.Count();
-				i++;
-			}
-			this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
-		}
+		//		offset += meshes[i]->verticesList.Count();
+		//		i++;
+		//	}
+		//	this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
+		//}
 		#pragma endregion
 
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
@@ -279,7 +230,7 @@ namespace TikiEngine
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
 
-			Initialize();
+			//Initialize();
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)

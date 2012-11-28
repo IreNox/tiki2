@@ -33,14 +33,14 @@ namespace TikiEngine
                 {
                     attacking = false;
                     currWp = lastWp;
-                    OutputDebugString(L"set currWp to last. \n");
+                    owner->GetEngine()->HLog.Write("set currWp to last. \n");
                 }
                 else
                 {
                     lastWp = currWp;
                     currWp = path.front();
                     path.pop_front();
-                    OutputDebugString(L"set currWp and popped front. \n");
+                    owner->GetEngine()->HLog.Write("set currWp and popped front. \n");
                 }
 				
 
@@ -63,7 +63,7 @@ namespace TikiEngine
 				{
 					attacking = true;
                     RemoveAllSubgoals();
-                    OutputDebugString(L"Target in range while patrolling. Attacking. \n");
+                    owner->GetEngine()->HLog.Write("Target in range while patrolling. Attacking. \n");
                     AddSubgoal(new GoalAttackTarget(owner));
 				}
 			}

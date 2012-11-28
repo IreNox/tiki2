@@ -38,7 +38,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Tim") && true)
+			if ((name == L"tim.boden" || name == L"Tim") && false)
 			{
 				scene = new SceneTim(engine);
 				//scene = new SceneLevel(engine);
@@ -65,9 +65,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 	}
 
 #if _DEBUG
-	OutputDebugString(L"==Memory Leaks Begin==\n");
 	_CrtDumpMemoryLeaks();
-	OutputDebugString(L"==Memory Leaks End==\n");
 #endif
 
 	return 0;

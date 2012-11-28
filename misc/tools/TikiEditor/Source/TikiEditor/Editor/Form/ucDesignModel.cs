@@ -144,6 +144,8 @@ namespace TikiEditor
 
         private void buttonLoadMeshes_Click(object sender, EventArgs e)
         {
+            tabControl1.TabPages.Remove(tabAnimations);
+
             FBXImport import = new FBXImport();
             var meshes = import.GetNames(_inputsSelected.First().FileName);
 
@@ -164,6 +166,13 @@ namespace TikiEditor
         private void buttonExecute_Click(object sender, EventArgs e)
         {
             FBXImport import = new FBXImport();
+
+            foreach (INMesh m in _inputMeshes)
+            {
+                import.InputMaterials.Add(
+                    new MeshMaterial() { Name = m.Name, TextureDiffuse = m.MatDiffuse, TextureNormal = m.MatNormal, TextureSpec = m.MatSpec, TextureLight = m.MatLight }
+                );
+            }
 
             foreach (INAnimation i in listAnimations.SelectedItems)
             {
@@ -236,14 +245,15 @@ namespace TikiEditor
             {
                 _name = name;
 
-                _matDiffuse = String.Format("data/textures/{0}/{1}_diff.dds",   model, name);
-                _matNormal  = String.Format("data/textures/{0}/{1}_normal.dds", model, name);
-                _matSpec    = String.Format("data/textures/{0}/{1}_spec.dds",   model, name);
-                _matLight   = String.Format("data/textures/{0}/{1}_light.dds",  model, name);
+                _matDiffuse = String.Format("{0}/{1}_diff",   model, name);
+                _matNormal  = String.Format("{0}/{1}_normal", model, name);
+                _matSpec    = String.Format("{0}/{1}_spec",   model, name);
+                _matLight   = String.Format("{0}/{1}_light",  model, name);
             }
             #endregion
 
             #region Properties
+            [System.ComponentModel.Browsable(false)]
             public string Name
             {
                 get { return _name; }

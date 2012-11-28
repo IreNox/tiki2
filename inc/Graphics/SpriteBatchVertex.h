@@ -11,7 +11,7 @@ namespace TikiEngine
 		struct SpriteBatchVertex
 		{
 			Single Position[3];
-			Single UV[3];
+			Single UV[2];
 
 			Single Color[4];
 			

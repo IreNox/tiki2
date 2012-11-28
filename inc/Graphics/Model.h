@@ -31,20 +31,12 @@ namespace TikiEngine
 			Model(Engine* engine);
 			~Model();
 
-			void* GetNativeResource();
-
 			void Draw(GameObject* gameObject, const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
-			Material* GetMaterial();
-			void SetMaterial(Material* material);
-
-			List<SkinningVertex>* GetVertices();
-			List<UInt32>* GetIndices();
-
 			void SetConstantBufferIndices(List<TikiBone*>& list);
-
-
+			
+			IBone* GetBone(string name);
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
 
@@ -54,15 +46,18 @@ namespace TikiEngine
 			void AddAnimation(TikiAnimation* animation);
 			List<TikiAnimation*>* GetAnimations();
 
-			bool GetReady();
-
 			IAnimation* GetAnimation(string name);
-			IAnimation* GetAnimation(int index);
-
+			IAnimation* GetAnimation(UInt32 index);
 			void SetAnimation(IAnimation* animation);
+			
+			inline ConstantBuffer<SkinMatrices>* GetConstantBuffer()
+			{
+				return constantBufferMatrices;
+			}
 			void BlendToAnimation(IAnimation* animation, double time = 0.5);
 
-			IBone* GetBone(string name);
+			void* GetNativeResource();
+			bool GetReady();
 
 		protected:
 
@@ -73,33 +68,20 @@ namespace TikiEngine
 
 		private:
 
-			void Initialize();
-
-			void CopyVertexData();
-			void CopyIndexData();
-
-
-			List<TikiBone*> constantBufferElements;
-			List<SkinningVertex> verticesList;
-			List<UInt32> indicesList;
+			TikiBone* rootBone;
 
 			List<TikiMesh*> meshes;
 			List<TikiAnimation*> animations;
+			List<TikiBone*> constantBufferElements;
 
 			AnimationStack animationStack;
 			//List<TikiAnimation*> animationStack;
 
-			Material* material;
-			VertexDeclaration* declaration;
-
 			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
 			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
 
-
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
-
-			TikiBone* rootBone;
 
 		};
 	}

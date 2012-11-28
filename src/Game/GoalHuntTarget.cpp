@@ -34,18 +34,18 @@ namespace TikiEngine
 				// it starts to search by using the explore goal to move to random map locations
 				if (lrp2D.IsZero() || owner->IsAtPosition(lrp2D))
 				{
-					OutputDebugString(L"bot reached lrp and hasn't found target, hunting: GoalExplore.  \n");
+					owner->GetEngine()->HLog.Write("bot reached lrp and hasn't found target, hunting: GoalExplore.  \n");
 					AddSubgoal(new GoalExplore(owner));
 				}
 				else
 				{
-					OutputDebugString(L"Active target, hunting : GoalMoveToPosition.  \n");
+					owner->GetEngine()->HLog.Write("Active target, hunting : GoalMoveToPosition.  \n");
 					AddSubgoal(new GoalMoveToPosition(owner, lrp));
 				}
 			}
 			else
 			{
-				OutputDebugString(L"No active target, completed hunting.");
+				owner->GetEngine()->HLog.Write("No active target, completed hunting.");
 				// if there is no active target then this goal can be removed from queue
 				status = Completed;
 			}
@@ -61,7 +61,7 @@ namespace TikiEngine
 			// if target is in view, this goal is satisfied
 			if (owner->GetTargetSys()->IsTargetWithinFOV())
 			{
-				OutputDebugString(L"Target Within FOV, completed hunting.");
+				owner->GetEngine()->HLog.Write("Target Within FOV, completed hunting.");
 				status = Completed;
 			}
 

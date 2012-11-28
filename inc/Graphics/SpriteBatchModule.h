@@ -59,9 +59,8 @@ namespace TikiEngine
 			Shader* shader;
 			VertexDeclaration* declaration;
 			DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>* buffer;
-
-			List<ITexture*> textures;
-			List<SpriteBatchVertex> vertices;
+						
+			Dictionary<ITexture*, List<SpriteBatchVertex>> sprites;
 			Dictionary<UInt32, LocalWorldMatrices> matrices;
 
 			Vector2 pixelSize;

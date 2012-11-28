@@ -30,6 +30,7 @@ namespace TikiEngine
 			string heightmapFilename;
 			int heightmapScale;
 			int heightmapSize;
+			float heightmapElevation;
 
 			UInt32 frameCount;
 			ITerrainRenderer* terrain;

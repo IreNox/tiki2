@@ -34,8 +34,11 @@ namespace TikiEngine
 			IPhysicsMaterial* LoadPhysicsMaterial(const wstring& name);
 			IBoundingBox* LoadBoundingBox(const wstring& name);
 
+			void ReleaseResource(IResource* res);
+
 		private:
 			
+			bool disposing;
 			List<ResourceInfo> loadedResources;
 
 			#if _DEBUG

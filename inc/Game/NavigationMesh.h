@@ -5,7 +5,7 @@
 #include "Game/NavigationCell.h"
 #include "Game/NavigationHeap.h"
 #include "Core/DrawArgs.h"
-#include "Core/IModel.h"
+//#include "Core/IModel.h"
 #include "Core/LibraryManager.h"
 #include "Game/OcTree.h"
 
@@ -25,9 +25,7 @@ namespace TikiEngine
 		class NavigationMesh
 		{
 		public:
-
-
-
+			
 			typedef	std::vector<NavigationCell*> CELL_ARRAY;
 
 			NavigationMesh(Engine* engine);
@@ -73,7 +71,7 @@ namespace TikiEngine
 			int pathSession;
 			NavigationHeap navHeap;
 
-			IModel* navModel;
+			//IModel* navModel;
 			Engine* engine;
 
 			OcTree* tree;

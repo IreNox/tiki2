@@ -32,11 +32,11 @@ namespace TikiEngine
 				Vector2 t = Vector2(owner->GetPathPlanner()->GetTargetSnap().X,
 									owner->GetPathPlanner()->GetTargetSnap().Z);
 				AddSubgoal(new GoalSeekToPosition(owner, t));
-				OutputDebugString(L"has Path LOS - Seeking To position. \n");
+				owner->GetEngine()->HLog.Write("has Path LOS - Seeking To position. \n");
 			}
 			else
 			{
-				OutputDebugString(L"No Path LOS - pathfinding To position. \n");
+				owner->GetEngine()->HLog.Write("No Path LOS - path finding To position. \n");
 				AddSubgoal(new GoalFollowPath(owner, owner->GetPathPlanner()->GetPath(true)));
 			}
 		}

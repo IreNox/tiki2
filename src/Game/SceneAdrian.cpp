@@ -33,7 +33,6 @@ namespace TikiEngine
 
 		SceneAdrian::~SceneAdrian()
 		{
-			SafeRelease(&tex);
 			SafeRelease(&light);
 
 		}
@@ -42,10 +41,7 @@ namespace TikiEngine
 		{
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"soldier"));
-			tex = engine->content->LoadTexture(L"Soldier_S/Soldier_S_Diff");
-			tex->AddRef();
-			go->GModel()->GetMaterial()->TexDiffuse = tex;
+			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
 
 			this->model = go->GModel();
 

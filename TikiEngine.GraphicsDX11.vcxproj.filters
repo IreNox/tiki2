@@ -202,5 +202,8 @@
     <ClInclude Include="inc\Graphics\AnimationStack.h">
       <Filter>Headerdateien\Internal\Model</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelInstance.h">
+      <Filter>Headerdateien\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

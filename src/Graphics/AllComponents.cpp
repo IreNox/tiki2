@@ -324,7 +324,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Load
-		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size)
+		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size, float elevation)
 		{
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 
@@ -363,7 +363,7 @@ namespace TikiEngine
 
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
-			terrainDescription->SetElevation(32);
+			terrainDescription->SetElevation(elevation);
 			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);

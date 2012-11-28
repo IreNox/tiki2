@@ -26,7 +26,7 @@ namespace TikiEngine
 			// so we must test to make sure the bot always has an active target
 			if (!owner->GetTargetSys()->IsTargetPresent())
 			{
-				OutputDebugString(L"no target to attack (GoalAttackTarget). \n");
+				owner->GetEngine()->HLog.Write("no target to attack (GoalAttackTarget). \n");
 				status = Completed;
 				return;
 			}
@@ -38,13 +38,13 @@ namespace TikiEngine
 				// TODO: ShootAt() owner->GetTargetBot()->Pos();
 
 
-				//OutputDebugString(L"Target Shootable:  PEW PEW ! \n");
+				//target->GetEngine()->HLog.Write("Target Shootable:  PEW PEW ! \n");
 				//owner->GetTargetBot()->GetBrain()->AddGoalAttackTarget();
 			}
 			else
 			{
 				// if the target is not visible, go hunt it.
-				//OutputDebugString(L"Target not shootable. Hunting it. \n");
+				//target->GetEngine()->HLog.Write("Target not shootable. Hunting it. \n");
 				//AddSubgoal(new GoalHuntTarget(owner));
 			}
 

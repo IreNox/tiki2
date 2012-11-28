@@ -1,4 +1,6 @@
 
+#define TIKI_EDITOR
+
 #include "FBXConverter.h"
 
 namespace TikiEditor
@@ -91,7 +93,6 @@ namespace TikiEditor
 
 	Quaternion FBXConverter::Convert(const FbxQuaternion& quat)
 	{
-
-		return Quaternion(quat[0], quat[1], quat[2], quat[3]);
+		return Quaternion((float)quat[0], (float)quat[1], (float)quat[2], (float)quat[3]);
 	}
 }

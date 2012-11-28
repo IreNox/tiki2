@@ -5,6 +5,7 @@
 #include "Core/List.h"
 #include "Core/IGraphics.h"
 #include "Core/IcontentManager.h"
+#include "Core/Mesh.h"
 
 namespace TikiEngine
 {
@@ -12,7 +13,7 @@ namespace TikiEngine
 	{
 		// ctor / dtor
 		NavigationMesh::NavigationMesh(Engine* engine)
-			: pathSession(0), navModel(0)
+			: pathSession(0)
 		{
 			this->engine = engine;
 			cellArray.clear();
@@ -25,7 +26,7 @@ namespace TikiEngine
 			Clear();
 
 			
-			SafeRelease(&navModel);
+			//SafeRelease(&navModel);
 
 			SafeDelete(&tree);
 		}
@@ -88,8 +89,15 @@ namespace TikiEngine
 
 		void NavigationMesh::Load(const wstring& name, const Matrix& transform)
 		{
-			navModel = engine->content->LoadModel(name);
-			navModel->AddRef();
+			Mesh* mesh = engine->content->LoadMesh(name);
+
+			UInt32 indexCount;
+			UInt32* indexData;
+			mesh->GetIndexData(&indexData, &indexCount);
+
+			UInt32 vertexLength;
+			DefaultVertex* vertexData;
+			mesh->GetVertexData((void**)&vertexData, &vertexLength);
 
 			float minX = -3.4E+38f;
 			float minZ = -3.4E+38f;
@@ -97,11 +105,11 @@ namespace TikiEngine
 			float maxZ = -3.4E+38f;
 
 			Clear();
-			for(UInt32 i = 0; i < navModel->GetIndices()->Count(); i+=3)
+			for(UInt32 i = 0; i < indexCount; i+=3)
 			{
-				Vector3 vertC = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i)).Position;
-				Vector3 vertB = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+1)).Position;
-				Vector3 vertA = navModel->GetVertices()->Get(navModel->GetIndices()->Get(i+2)).Position;
+				Vector3 vertA = vertexData[indexData[i]].Position;
+				Vector3 vertB = vertexData[indexData[i+1]].Position;
+				Vector3 vertC = vertexData[indexData[i+2]].Position;
 				
 				vertA = Vector3::TransformCoordinate(vertA, transform);
 				vertB = Vector3::TransformCoordinate(vertB, transform);
@@ -152,6 +160,8 @@ namespace TikiEngine
 
 			//if (minX < 0) maxX += abs(minX);
 			//if (minZ < 0) maxZ += abs(minZ);
+
+			SafeRelease(&mesh);
 		}
 
 		Vector3 NavigationMesh::SnapPointToCell(NavigationCell* Cell, const Vector3& Point)  
@@ -250,7 +260,7 @@ namespace TikiEngine
 			}
 
 			if (!ClosestCell)
-				OutputDebugString(L"No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
+				engine->HLog.Write("No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
 			return ClosestCell;
 		}  
 
@@ -328,7 +338,7 @@ namespace TikiEngine
 					escapeCtr++;
 					if (escapeCtr > 512)
 					{
-						OutputDebugString(L"Escaped out of while loop in BuildNavigationPath() NavigationMesh.cpp \n");
+						engine->HLog.Write("Escaped out of while loop in BuildNavigationPath() NavigationMesh.cpp \n");
 						return false;
 					}
 

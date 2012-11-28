@@ -5,6 +5,8 @@
 #include "Core/Stream.h"
 #include "Core/FileStream.h"
 
+#include "Core/IContentManager.h"
+
 namespace TikiEngine
 {
 	namespace Resources
@@ -18,6 +20,7 @@ namespace TikiEngine
 
 		IResource::~IResource()
 		{
+			if (engine) engine->content->ReleaseResource(this);
 		}
 
 		void IResource::LoadFromFile(wcstring fileName)

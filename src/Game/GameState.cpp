@@ -75,7 +75,7 @@ namespace TikiEngine
 			navMesh->Clear();
 			navMesh->Load(
 				L"navmesh/navmesh_" + StringAtoW(scene->GetLevel()->GetName()),
-				Matrix::CreateScaleMatrix(2, 1, 2) * Matrix::CreateTranslation(Vector3(0, 6, 0))
+				Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
 			//TikiBotDescription desc;
@@ -218,7 +218,7 @@ namespace TikiEngine
 									if (target->ID() != bot->ID())
 									{
 										bot->GetBrain()->RemoveAllSubgoals();
-										OutputDebugString(L"Target found. \n");
+										engine->HLog.Write("Target found.");
 										bot->GetBrain()->AddGoalAttackGlobalTarget(target);
 
 									}

@@ -45,6 +45,7 @@ namespace TikiEngine
 			TikiBone* readTikiBone(BinaryPart& part, BinaryTikiBone* binBone, TikiBone* parent);
 			TikiAnimation* readTikiAnimation(BinaryPart& part, BinaryTikiAnimation* binAni);
 			string readString(UInt32 id);
+			ITexture* readTexture(UInt32 id);
 
 			void addPartsModel();
 			void addPartsMesh(TikiMesh* mesh);

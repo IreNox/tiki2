@@ -25,7 +25,6 @@ namespace TikiEngine
   				   (this->Position[2] == rhs.Position[2]) &&
 				   (this->UV[0] == rhs.UV[0]) &&
 				   (this->UV[1] == rhs.UV[1]) &&
-				   (this->UV[2] == rhs.UV[2]) &&
 				   (this->Color[0] == rhs.Color[0]) &&
 				   (this->Color[1] == rhs.Color[1]) &&
 				   (this->Color[2] == rhs.Color[2]) &&
@@ -34,7 +33,7 @@ namespace TikiEngine
 
 		InputElement SpriteBatchVertex::Declaration[3] = {
 			InputElement(IST_Position, 0, IEF_Float, 3),
-			InputElement(IST_TexCoord, 0, IEF_Float, 3),
+			InputElement(IST_TexCoord, 0, IEF_Float, 2),
 			InputElement(IST_Color,    0, IEF_Float, 4)
 		};
 

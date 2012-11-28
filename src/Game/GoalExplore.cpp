@@ -41,7 +41,7 @@ namespace TikiEngine
 
 			if (owner->GetTargetSys()->IsTargetWithinFOV() && owner->GetTargetSys()->IsTargetShootable())
 			{
-				OutputDebugString(L"Target Within FOV while exploring. Attacking it");
+				owner->GetEngine()->HLog.Write("Target Within FOV while exploring. Attacking it");
 				AddSubgoal(new GoalAttackTarget(owner));
 				
 				status = Completed;
