@@ -10,6 +10,7 @@
 
 #include "Game/GoalThink.h"
 #include "Game/Bullet.h"
+#include "Game/AnimationHandlerDefaultUnit.h"
 
 
 namespace TikiEngine
@@ -27,6 +28,8 @@ namespace TikiEngine
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
+
+			spawnRegulator = new Regulator(0.01);
 
 		}
 
@@ -65,6 +68,38 @@ namespace TikiEngine
 		void GameState::AddProjectile(GameObject* go)
 		{
 			projectiles.Add(go);
+		}
+
+		void GameState::AddBot(const Vector3& pos)
+		{
+			// Create go
+			GameObject* botGo = new GameObject(engine);
+			botGo->SModel(engine->content->LoadModel(L"soldier_enemy"));
+			botGo->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(botGo->GModel()));
+
+			botGo->PRS.SPosition() = pos;
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 1;
+			(new TikiBot(this, botGo, botDesc));
+
+			TikiBot* bot = botGo->GetComponent<TikiBot>();
+			bot->SetScale(0.06f);
+			bot->CreateNav(navMesh);
+			//bot->GetController()->SetCenter(pos);
+
+
+			// set list of waypoints
+			std::list<Vector2> wayPoints;
+			wayPoints.push_back(Vector2(0, -100));
+			wayPoints.push_back(Vector2(100, -100));
+			wayPoints.push_back(Vector2(100, 100));
+			wayPoints.push_back(Vector2(-100, 100));
+			wayPoints.push_back(Vector2(-100, -100));
+			bot->GetBrain()->AddGoalPatrol(wayPoints);
+
+			scene->AddElement(botGo);
 		}
 
 		#pragma endregion
@@ -142,6 +177,14 @@ namespace TikiEngine
 
 		void GameState::Update(const UpdateArgs& args)
 		{
+			// spawn bots if it's time
+			//if (spawnRegulator->IsReady())
+			if (args.Input.GetKeyPressed(KEY_F5))
+			{
+				AddBot(Vector3(150, 50, 150));
+			}
+
+
 			hud->Update(args);
 			unitSelection->Update(args);
 

@@ -31,11 +31,11 @@ namespace TikiEngine
 				status = Completed;
 				return;
 			}
-            else
-            {
-                owner->GetEngine()->HLog.Write("Raised Attack Animation. \n");
-                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
-            }
+//             else
+//             {
+//                 owner->GetEngine()->HLog.Write("Raised Attack Animation. \n");
+//                 owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+//             }
 		}
 
 		int GoalAttackTarget::Process(const UpdateArgs& args)

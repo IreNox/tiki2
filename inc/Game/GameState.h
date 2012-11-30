@@ -9,6 +9,8 @@
 #include "Game/NavigationMesh.h"
 
 #include "Game/EventUnitSelectionChanged.h"
+#include "Game/Regulator.h"
+
 
 namespace TikiEngine
 {
@@ -51,6 +53,7 @@ namespace TikiEngine
 
 			void AddProjectile(GameObject* go);
 			void AddTrigger(GameObject* go);
+			void AddBot(const Vector3& pos);
 
 			void ExecuteUnitFunction(UnitFunctions func);
 
@@ -70,6 +73,8 @@ namespace TikiEngine
 			UnitSelection* unitSelection;
 
 			List<GameObject*> projectiles;
+
+			Regulator* spawnRegulator;
 
 			//List<Unit*> levelUnits;
 			//List<Building*> levelBuildings;
