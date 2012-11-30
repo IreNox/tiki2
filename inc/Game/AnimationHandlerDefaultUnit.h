@@ -5,6 +5,14 @@
 
 namespace TikiEngine
 {
+
+    namespace Resources
+    {
+        class IModel;
+    }
+
+    using namespace TikiEngine::Resources;
+
 	class AnimationHandlerDefaultUnit : public AnimationHandler
 	{
 	public:

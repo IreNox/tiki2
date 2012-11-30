@@ -1,10 +1,14 @@
 #pragma once
 
 #include "Core/Event.h"
-#include "Core/IModel.h"
 
 namespace TikiEngine
 {
+
+    namespace Resources
+    {
+        class IModel;
+    }
 
 	using namespace Resources;
 

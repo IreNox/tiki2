@@ -26,6 +26,8 @@ namespace TikiEngine
 		{
 			hasWaypoints = false;
 			attackTargetRegulator = new Regulator(3);
+
+            bot->GetGameObject()->GModel()->animationEvent.RaiseEvent(bot->GetGameObject()->GModel(), AnimationType::Idle);
 		}
 
 		GoalThink::~GoalThink()

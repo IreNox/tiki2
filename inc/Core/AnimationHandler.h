@@ -4,7 +4,12 @@
 
 namespace TikiEngine
 {
-	using namespace Resources;
+    namespace Resources
+    {
+        class IModel;
+    }
+
+    using namespace Resources;
 
 	class AnimationHandler : public AnimationEventHandler
 	{

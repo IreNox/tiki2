@@ -8,7 +8,7 @@ namespace TikiEngine
 {
 	namespace Components
 	{
-		using namespace TikiEngine;
+		//using namespace TikiEngine;
 
 		enum CollisionGroups
 		{

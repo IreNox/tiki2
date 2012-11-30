@@ -11,6 +11,8 @@
 #include "Core/IAnimation.h"
 #include "Core/IBone.h"
 
+#include "Core/EventAnimation.h"
+
 namespace TikiEngine
 {
 	class GameObject;
@@ -38,6 +40,8 @@ namespace TikiEngine
 			virtual void BlendToAnimation(IAnimation* animation, double time = 0.5) = 0;
 
 			virtual IBone* GetBone(string name) = 0;
+
+            AnimationEvent animationEvent;
 		};
 	}
 }
