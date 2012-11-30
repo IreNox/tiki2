@@ -23,6 +23,9 @@ namespace TikiEngine
 
 			virtual void IgnoreUpdate(bool b) = 0;
 
+			virtual Matrix ShiftMatrix() = 0;
+			virtual Matrix& BoneCurrentTransform() = 0;
+
 		protected:
 
 			void loadFromStream(wcstring fileName, Stream* stream)

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h" />
     <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h" />
     <ClInclude Include="inc\Game\BaseGameEntity.h" />
     <ClInclude Include="inc\Game\BasicDatabase.h" />
@@ -96,6 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp" />
+    <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\BasicDatabase.cpp" />

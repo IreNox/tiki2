@@ -1077,6 +1077,7 @@ namespace TikiEngine
 		{
 			this->currentTime = this->startTime;
 			this->finished = false;
+			this->Update();
 		}
 
 		void TikiAnimation::Update(const double& deltaTime)
@@ -1183,6 +1184,8 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
+			if(stack.Contains((TikiAnimation*)animation) || blendTarget == animation)
+				return;
 #if _DEBUG
 			if(animation == 0)
 				_CrtDbgBreak();
@@ -1193,7 +1196,7 @@ namespace TikiEngine
 			this->blendTimer = time;
 			this->blendTime = 0;
 
-			this->stack.Insert(0, blendTarget);
+			this->stack.Add(blendTarget);
 		}
 
 		List<TikiAnimation*>& AnimationStack::GetStack()
@@ -1216,22 +1219,22 @@ namespace TikiEngine
 				blendTarget->SetWeight(1.0);
 				stack.Add(blendTarget);
 				blendTarget = 0;
+				return;
 			}
-			else
+
+			float currWeight = blendTime / blendTimer;
+			blendTarget->SetWeight(currWeight);
+
+			lastWeight = 1 - lastWeight;
+			currWeight = 1 - currWeight;
+
+			for(int i = 0; i < stack.Count(); i++)
 			{
-				float currWeight = blendTime / blendTimer;
-				blendTarget->SetWeight(currWeight);
+				TikiAnimation* anim = stack[i];
+				if(blendTarget == anim)
+					continue;
 
-				lastWeight = 1 - lastWeight;
-				currWeight = 1 - currWeight;
-
-
-				for(int i = 1; i < stack.Count(); i++)
-				{
-					TikiAnimation* anim = stack[i];
-					float koeff = anim->GetWeight() / lastWeight;
-					anim->SetWeight(currWeight * koeff);
-				}
+				anim->SetWeight(currWeight * anim->GetWeight() / lastWeight);
 			}
 		}
 

@@ -17,6 +17,9 @@
 
 #include "Core/LightObject.h"
 
+#include "Game/AnimationHandlerDefaultUnit.h"
+#include "Core/AnimationHandler.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -45,34 +48,8 @@ namespace TikiEngine
 
 			this->model = go->GModel();
 
-			IAnimation* walk = go->GModel()->GetAnimation("walk");
-			IAnimation* attack = go->GModel()->GetAnimation("attack");
-			IAnimation* death = go->GModel()->GetAnimation("death");
-			IAnimation* run = go->GModel()->GetAnimation("run");
-			IAnimation* breakdance = go->GModel()->GetAnimation("breakdance");
-
-			//bone = model->GetBone("R_hand_bn");
-			//if(bone == 0)
-			//	_CrtDbgBreak();
-
-
-			//walk->SetNextAnimation(attack);
-			//attack->SetNextAnimation(death02);
-			//death02->SetNextAnimation(walk);
-
-			//walk->SetLoop(false);
-			//attack->SetLoop(false);
-			//death02->SetLoop(false);
-
-			//this->animations.Add(walk);
-			this->animations.Add(attack);
-			this->animations.Add(death);
-			this->animations.Add(run);
-			//this->animations.Add(breakdance);
-
-			this->animationId = 0;
-
-			this->model->BlendToAnimation(walk);
+			this->animationEvent = new AnimationEvent();
+			this->animationEvent->AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -94,8 +71,6 @@ namespace TikiEngine
 			this->AddElement(go);
 			//go->Release();
 
-
-
 			Scene::Initialize(args);
 		}
 
@@ -111,29 +86,24 @@ namespace TikiEngine
 			engine->sprites->Draw(
 				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 200, 200, 180)
-				);
-
-
+			);
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
 			Scene::Update(args);
 			
-			if(args.Input.GetKeyPressed(TikiEngine::KEY_SPACE))
+			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
-  				this->animationId = (animationId + 1) % this->animations.Count();
-				//this->model->SetAnimation(this->animations[animationId]);
-				this->model->BlendToAnimation(this->animations[animationId]);
+				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
 			}
-
-			if(args.Input.GetKeyPressed(KEY_NUMPAD0))
+			if(args.Input.GetKeyPressed(KEY_ALPHA2))
 			{
-				bone->IgnoreUpdate(true);
+				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
 			}
-			if(args.Input.GetKeyPressed(KEY_NUMPAD1))
+			if(args.Input.GetKeyPressed(KEY_ALPHA3))
 			{
-				bone->IgnoreUpdate(false);
+				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
 			}
 		}
 	}

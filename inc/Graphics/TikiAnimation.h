@@ -26,7 +26,7 @@ namespace TikiEngine
 			void SetTimeStamps(List<double>& timeStamps);
 			void AddTimeStampKey(double time);
 
-			void Update(const double& deltaTime = -1.0);
+			void Update(const double& deltaTime = 0.0);
 
 			int GetBSV() { return bsv; }
 			void SetBSV(int bsv);

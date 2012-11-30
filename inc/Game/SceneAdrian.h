@@ -5,6 +5,8 @@
 #include <Core/IFont.h>
 #include <Graphics/TikiBone.h>
 
+#include "Core/EventAnimation.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -35,6 +37,8 @@ namespace TikiEngine
 			IModel* model;
 
 			IBone* bone;
+
+			AnimationEvent* animationEvent;
 		};
 	}
 }

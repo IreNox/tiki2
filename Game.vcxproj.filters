@@ -138,6 +138,12 @@
     <Filter Include="Quelldateien\AI\Triggers">
       <UniqueIdentifier>{dd83813e-5c29-49e1-8f21-1cc93bebf10d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Animation">
+      <UniqueIdentifier>{4955c06b-417b-4696-8d26-ff69b5f95c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Animation">
+      <UniqueIdentifier>{efccb9fe-a6aa-4cd5-aee4-dc249338dac6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -362,6 +368,9 @@
     <ClInclude Include="inc\Game\Trigger.h">
       <Filter>Headerdateien\AI\Triggers</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
+      <Filter>Headerdateien\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -540,6 +549,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\Trigger.cpp">
       <Filter>Quelldateien\AI\Triggers</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp">
+      <Filter>Quelldateien\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
