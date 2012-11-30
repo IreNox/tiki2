@@ -5,6 +5,7 @@
 
 #include "Game/TikiBot.h"
 #include "Game/Trigger.h"
+#include "Game/AnimationHandlerDefaultUnit.h"
 
 namespace TikiEngine
 {
@@ -41,6 +42,7 @@ namespace TikiEngine
 					break;
 				case 1: // player
 					this->SModel(engine->content->LoadModel(L"soldier"));
+					this->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->GModel()));
 
                     botDesc.Faction = 0;
 					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);

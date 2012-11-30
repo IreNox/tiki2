@@ -1,9 +1,9 @@
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Core/IModel.h"
 
+
 namespace TikiEngine
 {
-
 	AnimationHandlerDefaultUnit::AnimationHandlerDefaultUnit(IModel* model) : AnimationHandler(model)
 	{
 		this->walk = model->GetAnimation("walk");

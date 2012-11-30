@@ -19,6 +19,12 @@ namespace TikiEngine
 			}
 		}
 
+		void SetHandlerOnly(EventHandler<T, TArgs>* handler)
+		{
+			eventHandler.Clear();
+			eventHandler.Add(handler);
+		}
+
 		void AddHandler(EventHandler<T, TArgs>* handler)
 		{
 			eventHandler.Add(handler);

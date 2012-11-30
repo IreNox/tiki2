@@ -4,11 +4,10 @@
 
 namespace TikiEngine
 {
-
-    namespace Resources
-    {
-        class IModel;
-    }
+	namespace Resources
+	{
+		class IModel;
+	}
 
 	using namespace Resources;
 
