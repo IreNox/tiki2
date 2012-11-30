@@ -27,7 +27,7 @@ namespace TikiEngine
 		{
 		public:
 
-			IModel(Engine* engine) : IResource(engine) 
+			IModel(Engine* engine) : IResource(engine), animationEvent(new AnimationEvent())
 			{
 				this->animationEvent->AddHandler(new AnimationHandler(this));
 			}

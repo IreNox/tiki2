@@ -48,8 +48,8 @@ namespace TikiEngine
 
 			this->model = go->GModel();
 
-			this->animationEvent = new AnimationEvent();
-			this->animationEvent->AddHandler(new AnimationHandlerDefaultUnit(this->model));
+			//this->animationEvent = new AnimationEvent();
+			//this->animationEvent->AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -95,15 +95,15 @@ namespace TikiEngine
 			
 			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
-				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA2))
 			{
-				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA3))
 			{
-				this->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
 			}
 		}
 	}

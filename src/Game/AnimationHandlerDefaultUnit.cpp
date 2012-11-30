@@ -29,6 +29,8 @@ namespace TikiEngine
 		case Run:
 			model->BlendToAnimation(this->run);
 			break;
+		default:
+			break;
 		}
 	}
 }
