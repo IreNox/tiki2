@@ -33,7 +33,11 @@ namespace TikiEngine
 			}
 
 
-			virtual ~IModel() {}
+			virtual ~IModel() 
+			{
+				SafeDelete(&animationEvent);
+			}
+
 
 			virtual void Draw(GameObject* gameObject, const DrawArgs& args) = 0;
 			virtual void Update(const UpdateArgs& args) = 0;

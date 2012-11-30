@@ -47,9 +47,7 @@ namespace TikiEngine
 			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
 
 			this->model = go->GModel();
-
-			//this->animationEvent = new AnimationEvent();
-			//this->animationEvent->AddHandler(new AnimationHandlerDefaultUnit(this->model));
+			this->model->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->model));
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -103,7 +101,7 @@ namespace TikiEngine
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA3))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Death));
 			}
 		}
 	}

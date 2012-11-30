@@ -5,14 +5,6 @@
 
 namespace TikiEngine
 {
-
-    namespace Resources
-    {
-        class IModel;
-    }
-
-    using namespace TikiEngine::Resources;
-
 	class AnimationHandlerDefaultUnit : public AnimationHandler
 	{
 	public:
@@ -27,6 +19,8 @@ namespace TikiEngine
 		IAnimation* walk;
 		IAnimation* attack;
 		IAnimation* run;
-        IAnimation* death;
+		IAnimation* death1;
+		IAnimation* death2;
+		IAnimation* idle;
 	};
 }

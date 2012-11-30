@@ -8,7 +8,6 @@ namespace TikiEngine
 	class Event
 	{
 	public:
-
 		void RaiseEvent(T* sender, const TArgs& args) const
 		{
 			UInt32 i = 0;
@@ -21,6 +20,10 @@ namespace TikiEngine
 
 		void SetHandlerOnly(EventHandler<T, TArgs>* handler)
 		{
+			for(int i = 0; i < eventHandler.Count(); i++)
+			{
+				SafeDelete(&eventHandler[i]);
+			}
 			eventHandler.Clear();
 			eventHandler.Add(handler);
 		}
