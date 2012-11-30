@@ -23,8 +23,8 @@ namespace TikiEngine
 
 			virtual void IgnoreUpdate(bool b) = 0;
 
-			virtual Matrix ShiftMatrix() = 0;
-			virtual Matrix& BoneCurrentTransform() = 0;
+			virtual Vector3 Position() = 0;
+			virtual Vector3 Forward() = 0;
 
 		protected:
 

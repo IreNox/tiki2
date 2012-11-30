@@ -797,6 +797,21 @@ namespace TikiEngine
 			return (this->boneInitInverse * this->boneCurrent).Transpose();
 		}
 
+		Vector3 TikiBone::Position()
+		{
+			return Vector3::TransformCoordinate(Vector3(), this->boneCurrent);
+		}
+
+		Vector3 TikiBone::Forward()
+		{
+			if(this->parent == 0)
+				return Vector3::One;
+			else
+			{
+				return Vector3::Normalize(this->Position() - this->GetParent()->Position());
+			}
+		}
+
 		int TikiBone::Count()
 		{
 			int count = 1;
@@ -1082,6 +1097,9 @@ namespace TikiEngine
 
 		void TikiAnimation::Update(const double& deltaTime)
 		{
+			if(finished)
+				return;
+
 			this->currentTime += deltaTime * this->animationSpeed;
 
 			if(currentTime >= stopTime)

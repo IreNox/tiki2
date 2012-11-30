@@ -49,6 +49,8 @@ namespace TikiEngine
 			this->model = go->GModel();
 			this->model->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->model));
 
+			this->bone = this->model->GetBone("weapon_MgTip_bn");
+
 			go->PRS.SScale() = Vector3(0.01f);
 
 			this->AddElement(go);
@@ -85,6 +87,13 @@ namespace TikiEngine
 				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 200, 200, 180)
 			);
+
+			if(bone != 0)
+			{
+
+				Vector3 pos = bone->Position() * 0.01f;
+				args.Graphics->DrawLine(pos, pos + bone->Forward(), Color::Red);
+			}
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)

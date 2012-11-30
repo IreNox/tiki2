@@ -41,6 +41,9 @@ namespace TikiEngine
 
 			Matrix ShiftMatrix();
 
+			Vector3 Position();
+			Vector3 Forward();
+
 
 			TikiBone* GetBoneByName(const string& name);
 			TikiBone* GetBoneByIndex(int index);
@@ -68,6 +71,8 @@ namespace TikiEngine
 			Matrix boneInit;
 			Matrix boneInitInverse;
 			Matrix boneCurrent;
+
+			Vector3 position;
 
 			TikiBone* parent;
 			List<TikiBone*> childs;
