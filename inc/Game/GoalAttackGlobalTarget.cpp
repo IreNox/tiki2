@@ -74,7 +74,9 @@ namespace TikiEngine
 			else
 			{
 				owner->GetTargetSys()->ClearGlobalTarget();
-				target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. \n");
+				target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. Raised idle event.");
+                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
+
 				status = Completed;
 			}
 

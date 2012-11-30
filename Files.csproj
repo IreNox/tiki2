@@ -41,7 +41,7 @@
     <None Include="bin\Data\Models\mark.tiki" />
     <None Include="bin\Data\Models\replaceme_cube.tiki" />
     <None Include="bin\Data\Models\soldier.tiki" />
-    <None Include="bin\Data\Models\soldier2.tiki" />
+    <None Include="bin\Data\Models\soldier_enemy.tiki" />
     <None Include="bin\Data\Textures\building03_05\building03_05_diff.dds" />
     <None Include="bin\Data\Textures\building03_05\building03_05_normal.dds" />
     <None Include="bin\Data\Textures\building03_05\building03_05_spec.dds" />

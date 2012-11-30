@@ -48,8 +48,8 @@ namespace TikiEngine
 					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
 					break;
                 case 2: // enemy
-                    this->SModel(engine->content->LoadModel(L"mark"));
-
+                    this->SModel(engine->content->LoadModel(L"soldier_enemy"));
+                    this->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->GModel()));
                     botDesc.Faction = 1;
                     (new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
                     break;
