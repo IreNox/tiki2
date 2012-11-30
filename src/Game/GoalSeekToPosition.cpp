@@ -55,7 +55,7 @@ namespace TikiEngine
             // TODO: IDLE
             if( owner->GetGameObject()->GModel())
             {
-                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Death));
+                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
             }
 
 			status = Completed;
