@@ -1,5 +1,6 @@
 
 #include "Core/Transform.h"
+#include "Core/GameObject.h"
 
 namespace TikiEngine
 {
@@ -33,7 +34,7 @@ namespace TikiEngine
 	{
 		checkWorldMatrix();
 
-		*worldMatrix = world;
+		*worldMatrix = totalWorld;
 	}
 	#pragma endregion
 
@@ -92,13 +93,24 @@ namespace TikiEngine
 	#pragma region Private Member
 	void Transform::checkWorldMatrix()
 	{
-		if (!isDirty) return;
+		if (isDirty)
+		{
+			Matrix rot = Matrix::CreateFromQuaternion(this->rotation);
+			Matrix scale = Matrix::CreateScaleMatrix(this->scale);
+			Matrix trans = Matrix::CreateTranslation(this->position);
 
-		Matrix rot = Matrix::CreateFromQuaternion(this->rotation);
-		Matrix scale = Matrix::CreateScaleMatrix(this->scale);
-		Matrix trans = Matrix::CreateTranslation(this->position);
+			goWorld = Matrix::Transpose(scale * rot * trans);
+		}
 
-		world = Matrix::Transpose(scale * rot * trans);
+		if (gameObject->parent && gameObject->parent->PRS.isDirty)
+		{
+			totalWorld = gameObject->parent->PRS.totalWorld * goWorld;
+		}
+		else if (isDirty)
+		{
+			totalWorld = goWorld;
+		}
+
 		isDirty = false;
 	}
 	#pragma endregion

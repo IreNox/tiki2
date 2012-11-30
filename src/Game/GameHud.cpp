@@ -16,27 +16,28 @@ namespace TikiEngine
 		GameHud::GameHud(GameState* state)
 			: EngineObject(state->GetEngine()), state(state)
 		{
-			texRes1 = engine->content->LoadTexture(L"hud/mass");
-			texRes1->AddRef();
-			imageRes1 = new GUIImage(state->GetEngine());
-			imageRes1->SetTexture(texRes1);
-			imageRes1->SSize() = Vector2(16, 16);
-			enabledControls.Add(imageRes1);
+			buttonMenu = new GUIButton(engine);
+			buttonMenu->SPosition() = Vector2(25, -5);
+			buttonMenu->Text() = L"Menu";
+			buttonMenu->SSize() = Vector2(75, 35);
+			buttonMenu->AddRef();
+			enabledControls.Add(buttonMenu);
 
-			labelRes1 = new GUILabel(state->GetEngine());
-			labelRes1->Text() = L"100/2500";
-			enabledControls.Add(labelRes1);
+			windowResources = new GUIWindow(engine);
+			windowResources->SSize() = Vector2(175, 35);
+			windowResources->AddRef();
+			enabledControls.Add(windowResources);
 
-			texRes2 = engine->content->LoadTexture(L"hud/energy");
-			texRes2->AddRef();
-			imageRes2 = new GUIImage(state->GetEngine());
-			imageRes2->SetTexture(texRes2);
-			imageRes2->SSize() = Vector2(16, 16);
-			enabledControls.Add(imageRes2);
+			GUIImage* image = new GUIImage(engine);
+			image->SetTexture(engine->content->LoadTexture(L"hud/mass"));
+			image->SSize() = Vector2(16, 16);
+			image->SPosition() = Vector2(16, 10);
+			windowResources->AddChild(image);
 
-			labelRes2 = new GUILabel(state->GetEngine());
-			labelRes2->Text() = L"5/10";
-			enabledControls.Add(labelRes2);
+			GUILabel* label = new GUILabel(engine);
+			label->Text() = L"0/2500";
+			label->SPosition() = Vector2(32, 10);
+			windowResources->AddChild(label);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
@@ -44,15 +45,16 @@ namespace TikiEngine
 
 		GameHud::~GameHud()
 		{
-			//SafeRelease(&buttonMenu);
+			SafeRelease(&buttonMenu);
+			SafeRelease(&windowResources);
 
-			SafeRelease(&texRes1);
+			/*SafeRelease(&texRes1);
 			SafeRelease(&imageRes1);
 			SafeRelease(&labelRes1);
 
 			SafeRelease(&texRes2);
 			SafeRelease(&imageRes2);
-			SafeRelease(&labelRes2);
+			SafeRelease(&labelRes2);*/
 		}
 		#pragma endregion
 
@@ -61,16 +63,23 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			imageRes1->SPosition() = Vector2((float)vp->Width - 200, 10);
-			labelRes1->SPosition() = Vector2((float)vp->Width - 180, 10);
+			windowResources->SPosition() = Vector2((float)vp->Width - 200, -10);
 
-			imageRes2->SPosition() = Vector2((float)vp->Width - 100, 10);
-			labelRes2->SPosition() = Vector2((float)vp->Width - 80, 10);
+			//imageRes1->SPosition() = Vector2((float)vp->Width - 200, 10);
+			//labelRes1->SPosition() = Vector2((float)vp->Width - 180, 10);
+
+			//imageRes2->SPosition() = Vector2((float)vp->Width - 100, 10);
+			//labelRes2->SPosition() = Vector2((float)vp->Width - 80, 10);
 		}
 
 		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
 		{
 			this->ResetScreen();
+		}
+
+		void GameHud::Handle(GUIControl* sender, const ClickEventArgs& args)
+		{
+
 		}
 		#pragma endregion
 
@@ -88,13 +97,13 @@ namespace TikiEngine
 
 		void GameHud::Update(const UpdateArgs& args)
 		{
-			wostringstream str;
-			str << state->GetResource1() << L"/" << 1000;
-			labelRes1->Text() = str.str();
+			//wostringstream str;
+			//str << state->GetResource1() << L"/" << 1000;
+			//labelRes1->Text() = str.str();
 
-			str = wostringstream();
-			str << state->GetResource2() << L"/" << 100;
-			labelRes2->Text() = str.str();
+			//str = wostringstream();
+			//str << state->GetResource2() << L"/" << 100;
+			//labelRes2->Text() = str.str();
 
 			UInt32 i = 0;
 			while (i < enabledControls.Count())

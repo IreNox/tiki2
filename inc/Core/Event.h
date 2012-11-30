@@ -20,7 +20,7 @@ namespace TikiEngine
 
 		void SetHandlerOnly(EventHandler<T, TArgs>* handler)
 		{
-			for(int i = 0; i < eventHandler.Count(); i++)
+			for(UInt32 i = 0; i < eventHandler.Count(); i++)
 			{
 				SafeDelete(&eventHandler[i]);
 			}

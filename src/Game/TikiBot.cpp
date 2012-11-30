@@ -21,7 +21,7 @@ namespace TikiEngine
 
 		static GoalTypeToString* ttsInstance = new GoalTypeToString();
 
-		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, TikiBotDescription desc) 
+		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
 			: MovingEntity(gameState, gameObject)
 		{
             // Init MovingEntity stats
@@ -52,7 +52,7 @@ namespace TikiEngine
 
             // init CharacterController
             controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);
-            controller->SetCenter(Pos3D());
+            controller->SetCenter(Pos3D() + Vector3(0, desc.Height / 2, 0));
             controller->SetRadius((float)boundingRadius);
             controller->SetHeight(desc.Height);
             controller->SetSlopeLimit(desc.SlopeLimit);

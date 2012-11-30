@@ -94,9 +94,9 @@ namespace TikiEngine
 			
 			// Check entity intersection
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetObjects()->Count())
+			while (i < gameState->GetScene()->GetElements().Count())
 			{
-				GameObject* go = gameState->GetScene()->GetObjects()->Get(i);
+				GameObject* go = gameState->GetScene()->GetElements()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
@@ -154,9 +154,9 @@ namespace TikiEngine
 		{
 			// loop all bots, check sensor and targeting
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetObjects()->Count())
+			while (i < gameState->GetScene()->GetElements().Count())
 			{
-				GameObject* go = gameState->GetScene()->GetObjects()->Get(i);
+				GameObject* go = gameState->GetScene()->GetElements()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
@@ -184,7 +184,7 @@ namespace TikiEngine
 			}
 
 			bot->GetGameObject()->Release();
-			gameState->GetScene()->GetObjects()->RemoveAt(index);
+			gameState->GetScene()->RemoveElementAt(index);
 		}
 		#pragma endregion
 	}

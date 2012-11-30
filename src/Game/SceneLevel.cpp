@@ -25,7 +25,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
-			: Scene(engine), enemies(), objects()
+			: Scene(engine) //, enemies(), objects()
 		{
 			gameState = new GameState(engine, this);
 			gameState->AddRef();
@@ -67,11 +67,6 @@ namespace TikiEngine
 		Level* SceneLevel::GetLevel()
 		{
 			return level;
-		}
-
-		List<LevelObject*>* SceneLevel::GetObjects()
-		{
-			return &objects;
 		}
 
 		Camera* SceneLevel::GetCamera()
@@ -117,9 +112,8 @@ namespace TikiEngine
 				{
 					LevelEnemy* enemy = new LevelEnemy(gameState);
 					enemy->LoadFromDatabase(state);
-					enemy->AddRef();
-
-					enemies.Add(enemy);
+					
+					this->AddElement(enemy);
 				}
 				sqlite3_finalize(state);
 			}
@@ -136,9 +130,8 @@ namespace TikiEngine
 				{
 					LevelObject* object = new LevelObject(gameState);
 					object->LoadFromDatabase(state);
-					object->AddRef();
-
-					objects.Add(object);
+					
+					this->AddElement(object);
 				}
 				sqlite3_finalize(state);
 			}
@@ -148,21 +141,21 @@ namespace TikiEngine
 
 		void SceneLevel::DisposeLevel()
 		{
-			UInt32 i = 0;
-			while (i < enemies.Count())
-			{
-				SafeRelease(&enemies[i]);
-				i++;
-			}
-			enemies.Clear();
+			//UInt32 i = 0;
+			//while (i < enemies.Count())
+			//{
+			//	SafeRelease(&enemies[i]);
+			//	i++;
+			//}
+			//enemies.Clear();
 
-			i = 0;
-			while (i < objects.Count())
-			{
-				SafeRelease(&objects[i]);
-				i++;
-			}
-			objects.Clear();
+			//i = 0;
+			//while (i < objects.Count())
+			//{
+			//	SafeRelease(&objects[i]);
+			//	i++;
+			//}
+			//objects.Clear();
 		}
 		#pragma endregion
 
@@ -171,52 +164,44 @@ namespace TikiEngine
 		{
 			if (level) level->Draw(args);
 			
-			UInt32 i = 0;
-			while (i < enemies.Count())
-			{
-				enemies[i]->Draw(args);
-				i++;
-			}
+			//UInt32 i = 0;
+			//while (i < enemies.Count())
+			//{
+			//	enemies[i]->Draw(args);
+			//	i++;
+			//}
 
-			i = 0;
-			while (i < objects.Count())
-			{
-				objects[i]->Draw(args);
-				i++;
-			}
+			//i = 0;
+			//while (i < objects.Count())
+			//{
+			//	objects[i]->Draw(args);
+			//	i++;
+			//}
+			Scene::Draw(args);
 
 			gameState->Draw(args);
-			Scene::Draw(args);
 		}
 
 		void SceneLevel::Update(const UpdateArgs& args)
 		{
-			#if _DEBUG
-			if (args.Input.GetKeyPressed(KEY_F1))
-			{
-				//this->lighting.Properties.IsDirty = true;
-				//this->lighting.Properties.DefaultShading = this->lighting.Properties.DefaultShading;
-			}
-			#endif
-
 			if (level) level->Update(args);
 
-			UInt32 i = 0;
-			while (i < enemies.Count())
-			{
-				enemies[i]->Update(args);
-				i++;
-			}
+			//UInt32 i = 0;
+			//while (i < enemies.Count())
+			//{
+			//	enemies[i]->Update(args);
+			//	i++;
+			//}
 
-			i = 0;
-			while (i < objects.Count())
-			{
-				objects[i]->Update(args);
-				i++;
-			}
+			//i = 0;
+			//while (i < objects.Count())
+			//{
+			//	objects[i]->Update(args);
+			//	i++;
+			//}
+			Scene::Update(args);
 
 			gameState->Update(args);
-			Scene::Update(args);
 		}
 		#pragma endregion
 	}

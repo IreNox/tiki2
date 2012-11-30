@@ -82,7 +82,7 @@ namespace TikiEngine
 		{
 		public:
 
-			TikiBot(GameState* gameState, GameObject* gameObject, TikiBotDescription desc);
+			TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc);
 			~TikiBot();
 
 			//void Init();

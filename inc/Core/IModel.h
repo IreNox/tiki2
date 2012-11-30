@@ -12,7 +12,6 @@
 #include "Core/IBone.h"
 
 #include "Core/EventAnimation.h"
-#include "Core/AnimationHandler.h"
 
 namespace TikiEngine
 {
@@ -21,22 +20,18 @@ namespace TikiEngine
 		using namespace TikiEngine;
 		using namespace TikiEngine::Vertices;
 
-		
-
 		class IModel : public IResource
 		{
 		public:
 
-			IModel(Engine* engine) : IResource(engine), animationEvent(new AnimationEvent())
-			{
-				this->animationEvent->AddHandler(new AnimationHandler(this));
-			}
+			AnimationEvent AnimationHandler;
 
-
-			virtual ~IModel() 
+			IModel(Engine* engine)
+				: IResource(engine)
 			{
-				SafeDelete(&animationEvent);
+				//this->AnimationHandler.AddHandler(new AnimationHandler(this));
 			}
+			virtual ~IModel() { }
 
 
 			virtual void Draw(GameObject* gameObject, const DrawArgs& args) = 0;
@@ -52,7 +47,6 @@ namespace TikiEngine
 
 			virtual IBone* GetBone(string name) = 0;
 
-			AnimationEvent* animationEvent;
 		};
 	}
 }

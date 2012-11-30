@@ -123,9 +123,11 @@ namespace TikiEngine
 		return elements.Remove(element);
 	}
 
-	const List<GameObject*>* Scene::GetElements() const
+	void Scene::RemoveElementAt(UInt32 index)
 	{
-		return &elements;
+		this->RemoveElement(
+			elements[index]
+		);
 	}
 	#pragma endregion
 

@@ -6,7 +6,8 @@
 
 namespace TikiEngine
 {
-	AnimationHandlerDefaultUnit::AnimationHandlerDefaultUnit(IModel* model) : AnimationHandler(model)
+	AnimationHandlerDefaultUnit::AnimationHandlerDefaultUnit(IModel* model)
+		: model(model)
 	{
 		this->walk = model->GetAnimation("walk");
 		this->walk->SetDuration(1.0);
@@ -20,13 +21,12 @@ namespace TikiEngine
 		this->death1->SetDuration(1.0);
 		this->death2 = model->GetAnimation("death02");
 		this->death2->SetDuration(1.5);
-		this->idle = model->GetAnimation("idle");
+		this->idle = model->GetAnimation("idle01");
 		this->idle->SetDuration(2.0);
 
 	}
 	AnimationHandlerDefaultUnit::~AnimationHandlerDefaultUnit()
 	{
-
 	}
 
 	void AnimationHandlerDefaultUnit::Handle(IModel* model, const AnimationArgs& args)
@@ -35,7 +35,6 @@ namespace TikiEngine
 
 		switch(args.animationType)
 		{
-
 		case Idle:
 			model->BlendToAnimation(this->idle);
 			break;

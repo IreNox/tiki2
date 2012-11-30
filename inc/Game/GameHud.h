@@ -5,12 +5,13 @@
 #include "Core/GUILabel.h"
 #include "Core/GUIImage.h"
 #include "Core/GUIButton.h"
-#include "Core/GUICustomButton.h"
+#include "Core/GUIWindow.h"
 
 #include "Game/HUDFunctionList.h"
 
 #include "Game/UnitFunctions.h"
 
+#include "Core/EventControls.h"
 #include "Core/EventScreenSizeChanged.h"
 
 namespace TikiEngine
@@ -21,7 +22,7 @@ namespace TikiEngine
 
 		class GameState;
 
-		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler
+		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler, public ClickEventHandler
 		{
 		public:
 
@@ -34,21 +35,18 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
+			void Handle(GUIControl* sender, const ClickEventArgs& args);
 
 		private:
 
 			GameState* state;
 
-			GUICustomButton* buttonMenu;
+			GUIButton* buttonMenu;
+			GUIWindow* windowResources;
 			
-			ITexture* texRes1;
-			GUIImage* imageRes1;
-			GUILabel* labelRes1;
+			GUIWindow* windowInfo;
+			GUIWindow* windowFunc;
 
-			ITexture* texRes2;
-			GUIImage* imageRes2;
-			GUILabel* labelRes2;
-			
 			Dictionary<UnitFunctions, GUIButton*> funcButton;
 
 			List<GUIControl*> enabledControls;

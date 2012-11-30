@@ -18,7 +18,7 @@
 #include "Core/LightObject.h"
 
 #include "Game/AnimationHandlerDefaultUnit.h"
-#include "Core/AnimationHandler.h"
+#include "Core/EventAnimation.h"
 
 namespace TikiEngine
 {
@@ -47,7 +47,7 @@ namespace TikiEngine
 			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
 
 			this->model = go->GModel();
-			this->model->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->model));
+			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
 			this->bone = this->model->GetBone("weapon_MgTip_bn");
 
@@ -102,23 +102,23 @@ namespace TikiEngine
 			
 			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Idle));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA2))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA3))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA4))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Death));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
 			}
 		}
 	}

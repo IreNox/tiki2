@@ -133,7 +133,12 @@ namespace TikiEngine
 		#pragma region Member - Draw/Update
 		void Model::Draw(GameObject* gameObject, const DrawArgs& args)
 		{
-			if (!this->GetReady()) return;
+#if _DEBUG
+			if (!this->GetReady())
+			{
+				throw "Model don't ready.";
+			}
+#endif
 
 			UInt32 i = 0;
 			while (i < meshes.Count())
@@ -153,7 +158,12 @@ namespace TikiEngine
 
 		void Model::Update(const UpdateArgs& args)
 		{
-			if (!this->GetReady()) return;
+#if _DEBUG
+			if (!this->GetReady())
+			{
+				throw "Model don't ready.";
+			}
+#endif
 
 			this->animationStack.Update(args);
 

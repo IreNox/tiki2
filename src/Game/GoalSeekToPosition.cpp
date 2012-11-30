@@ -53,7 +53,7 @@ namespace TikiEngine
 			owner->GetSteering()->ArriveOff();
 
             if( owner->GetGameObject()->GModel())
-                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
+                owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
 
 			status = Completed;
 		}

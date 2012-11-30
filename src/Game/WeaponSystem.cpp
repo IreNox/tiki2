@@ -63,7 +63,7 @@ namespace TikiEngine
 					if (owner->RotateFacingTowardPosition(Vector2(aimingPos.X, aimingPos.Z)))
 					{
 						//owner->GetEngine()->HLog.Write("WeaponSystem - Raised Attack Animation. \n");
-						owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+						owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
 						currentWeapon->ShootAt(args, aimingPos);
 					}
 

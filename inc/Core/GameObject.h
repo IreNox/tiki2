@@ -17,6 +17,7 @@ namespace TikiEngine
 
 	class GameObject : public EngineObject
 	{
+		friend class Transform;
 		friend class Component;
 
 	public:
@@ -76,11 +77,22 @@ namespace TikiEngine
 		IModel* GModel() const;
 		void SModel(IModel* model);
 
+		GameObject* GParent();
+		
+		void AddChild(GameObject* gameObject);
+		bool RemoveChild(GameObject* gameObject);
+		const List<GameObject*>& Childs();
+
 	protected:
 
-		IModel* model;
+		GameObject* parent;
 
+		IModel* model;
 		List<Component*> components;
+
+	private:
+
+		List<GameObject*> childs;
 
 	};
 }

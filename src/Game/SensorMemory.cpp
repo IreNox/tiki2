@@ -27,9 +27,9 @@ namespace TikiEngine
 		{
 			UInt32 i = 0;
 			
-			while (i < owner->GetGameState()->GetScene()->GetObjects()->Count())
+			while (i < owner->GetGameState()->GetScene()->GetElements().Count())
 			{
-				GameObject* go = owner->GetGameState()->GetScene()->GetObjects()->Get(i);
+				GameObject* go = owner->GetGameState()->GetScene()->GetElements()[i];
 				TikiBot* curBot = go->GetComponent<TikiBot>();
 				if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
 				{

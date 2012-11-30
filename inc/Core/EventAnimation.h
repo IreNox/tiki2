@@ -8,7 +8,6 @@ namespace TikiEngine
 	{
 		class IModel;
 	}
-
 	using namespace Resources;
 
 	enum AnimationType
@@ -19,8 +18,7 @@ namespace TikiEngine
 		Run,
 		Death
 	};
-
-
+	
 	struct AnimationArgs
 	{
 		AnimationType animationType;

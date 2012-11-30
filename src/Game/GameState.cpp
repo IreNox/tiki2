@@ -75,7 +75,7 @@ namespace TikiEngine
 			// Create go
 			GameObject* botGo = new GameObject(engine);
 			botGo->SModel(engine->content->LoadModel(L"soldier_enemy"));
-			botGo->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(botGo->GModel()));
+			botGo->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(botGo->GModel()));
 
 			botGo->PRS.SPosition() = pos;
 
@@ -116,9 +116,9 @@ namespace TikiEngine
 			//TikiBotDescription desc;
 
 			UInt32 i = 0;
-			while (i < scene->objects.Count())
+			while (i < scene->GetElements().Count())
 			{
-				TikiBot* bot = scene->objects[i]->GetComponent<TikiBot>();
+				TikiBot* bot = scene->GetElements()[i]->GetComponent<TikiBot>();
 
 				if (bot != 0)
 				{

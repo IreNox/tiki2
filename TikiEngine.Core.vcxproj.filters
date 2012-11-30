@@ -126,9 +126,6 @@
     <Filter Include="Extern">
       <UniqueIdentifier>{8f2cbc43-077d-4d14-9df5-61430ca269f1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Core\Args/States\EventHandler">
-      <UniqueIdentifier>{e45837ec-aac1-4d98-9f5f-815c1272bd95}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -630,9 +627,6 @@
     </ClInclude>
     <ClInclude Include="inc\Core\EventAnimation.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\AnimationHandler.h">
-      <Filter>Headerdateien\Core\Args/States\EventHandler</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

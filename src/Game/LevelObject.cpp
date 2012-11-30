@@ -42,14 +42,19 @@ namespace TikiEngine
 					break;
 				case 1: // player
 					this->SModel(engine->content->LoadModel(L"soldier"));
-					this->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->GModel()));
+					this->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->GModel()));
 
+					botDesc.Height = 7.5f;
+					botDesc.Radius = 3.0f;
                     botDesc.Faction = 0;
 					(new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
 					break;
                 case 2: // enemy
                     this->SModel(engine->content->LoadModel(L"soldier_enemy"));
-                    this->GModel()->animationEvent->SetHandlerOnly(new AnimationHandlerDefaultUnit(this->GModel()));
+                    this->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->GModel()));
+
+					botDesc.Height = 7.5f;
+					botDesc.Radius = 3.0f;
                     botDesc.Faction = 1;
                     (new TikiBot(gameState, this, botDesc))->SetScale(0.06f);
                     break;

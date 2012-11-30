@@ -7,7 +7,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), PRS(), components(), model(0)
+		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs()
 	{
 		this->PRS = Transform(this);
 	}
@@ -33,6 +33,37 @@ namespace TikiEngine
 	{
 		SafeRelease(&this->model);
 		SafeAddRef(model, &this->model);
+	}
+	#pragma endregion
+
+	#pragma region Member - Childs
+	GameObject* GameObject::GParent()
+	{
+		return parent;
+	}
+
+	void GameObject::AddChild(GameObject* gameObject)
+	{
+		gameObject->parent = this;
+		gameObject->AddRef();
+
+		childs.Add(gameObject);
+	}
+
+	bool GameObject::RemoveChild(GameObject* gameObject)
+	{
+		if (childs.Remove(gameObject))
+		{
+			gameObject->Release();
+			return true;
+		}
+
+		return false;
+	}
+
+	const List<GameObject*>& GameObject::Childs()
+	{
+		return childs;
 	}
 	#pragma endregion
 
@@ -62,22 +93,40 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void GameObject::Draw(const DrawArgs& args)
 	{
-		if (model && model->GetReady()) model->Draw(this, args);
+		UInt32 i = 0;
+		while (i < childs.Count())
+		{
+			childs[i]->Draw(args);
+			i++;
+		}
 
-		for (UInt32 i = 0; i < components.Count(); i++)
+		i = 0;
+		while (i < components.Count())
 		{
 			components[i]->Draw(args);
+			i++;
 		}
+
+		if (model) model->Draw(this, args);
 	}
 
 	void GameObject::Update(const UpdateArgs& args)
 	{
-		if (model && model->GetReady()) model->Update(args);
+		UInt32 i = 0;
+		while (i < childs.Count())
+		{
+			childs[i]->Update(args);
+			i++;
+		}
 
-		for (UInt32 i = 0; i < components.Count(); i++)
+		i = 0;
+		while (i < components.Count())
 		{
 			components[i]->Update(args);
+			i++;
 		}
+
+		if (model) model->Update(args);
 	}
 	#pragma endregion
 	

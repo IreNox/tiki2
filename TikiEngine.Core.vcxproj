@@ -68,7 +68,6 @@
     <ClInclude Include="inc\Core\BufferedVariable.h" />
     <ClInclude Include="inc\Core\CBMatrices.h" />
     <ClInclude Include="inc\Core\EventAnimation.h" />
-    <ClInclude Include="inc\Core\AnimationHandler.h" />
     <ClInclude Include="inc\Core\EventLog.h" />
     <ClInclude Include="inc\Core\EventTriggers.h" />
     <ClInclude Include="inc\Core\HelperThreading.h" />

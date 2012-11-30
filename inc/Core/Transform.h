@@ -41,7 +41,8 @@ namespace TikiEngine
 		//List<GameObject*> childs;
 
 		bool isDirty;
-		Matrix world;
+		Matrix goWorld;
+		Matrix totalWorld;
 
 		Vector3 position;
 		Quaternion rotation;

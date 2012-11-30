@@ -31,14 +31,11 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 			Level* GetLevel();
-			List<LevelObject*>* GetObjects();
 			Camera* GetCamera();
 
 		private:
 
 			Level* level;
-			List<LevelEnemy*> enemies;
-			List<LevelObject*> objects;
 			
 			Camera* mainCamera;
 
