@@ -15,7 +15,7 @@ namespace TikiEngine
 			path(wayPoints)
 		{
 			currWp = path.front();
-            timeWpLeft = 0;
+            //timeWpLeft = 0;
 			attacking = false;
 		}
 
@@ -43,15 +43,15 @@ namespace TikiEngine
 			}
 			else
 			{
-                if (timeWpLeft == 0)
-                    timeWpLeft = args.Time.TotalTime;
+     //           if (timeWpLeft == 0)
+     //               timeWpLeft = args.Time.TotalTime;
 
-                if (args.Time.TotalTime - timeWpLeft > 5.0f)
-                {
-                    timeWpLeft = 0;
-					attacking = false;
-                    return;
-                }
+     //           if (args.Time.TotalTime - timeWpLeft > 5.0f)
+     //           {
+     //               timeWpLeft = 0;
+					//attacking = false;
+     //               return;
+     //           }
 
 				if (attacking == false)
 				{

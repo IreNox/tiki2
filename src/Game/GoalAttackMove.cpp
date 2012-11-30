@@ -29,9 +29,9 @@ namespace TikiEngine
 				{
 					attacking = true;
 					owner->GetEngine()->HLog.Write("AttackMove - Attacking. \n");
+					AddSubgoal(new GoalAttackTarget(owner));
 				}
 
-				AddSubgoal(new GoalAttackTarget(owner));
 			}
 			else
 			{

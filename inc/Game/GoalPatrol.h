@@ -21,7 +21,7 @@ namespace TikiEngine
 		private:
 			std::list<Vector2> path;
 			Vector2 currWp;
-            double timeWpLeft;
+            //double timeWpLeft;
 			bool attacking;
 
 		};

@@ -60,17 +60,13 @@ namespace TikiEngine
                 // if the weapon is aimed correctly, there is line of sight between the
                 // bot and the aiming position
 				if (owner->GetBrain()->NotPresent(Goal_Move_To_Position))
-				//if (!owner->GetBrain()->NotPresent(Goal_Attack_Target))
 					if (owner->RotateFacingTowardPosition(Vector2(aimingPos.X, aimingPos.Z)))
 					{
 						currentWeapon->ShootAt(args, aimingPos);
 					}
 
             }
-           // else
-            //    owner->RotateFacingTowardPosition(owner->Pos() + owner->Heading());
 
-            //currentWeapon->ShootAt(args, )
         }
 
 

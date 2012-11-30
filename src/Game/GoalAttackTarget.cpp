@@ -55,7 +55,5 @@ namespace TikiEngine
 		{
 			status = Completed;
 		}
-
-
 	}
 }
