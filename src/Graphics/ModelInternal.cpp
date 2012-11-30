@@ -1184,12 +1184,22 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
-			if(stack.Contains((TikiAnimation*)animation) || blendTarget == animation)
+			if(blendTarget == animation)
 				return;
+
 #if _DEBUG
 			if(animation == 0)
 				_CrtDbgBreak();
 #endif
+			
+			if(stack.Contains((TikiAnimation*)animation))
+			{
+				blendTarget = (TikiAnimation*)animation;
+				blendTimer = time;
+				blendTime = blendTimer * blendTarget->GetWeight();
+				return;
+			}
+
 			this->blendTarget = (TikiAnimation*)animation;
 			this->blendTarget->Reset();
 			this->blendTarget->SetWeight(0.0);
