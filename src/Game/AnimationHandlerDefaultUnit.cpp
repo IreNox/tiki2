@@ -27,20 +27,21 @@ namespace TikiEngine
 
 		switch(args.animationType)
 		{
-		case Walk:
-			model->BlendToAnimation(this->walk);
+
+		case Idle:
+			model->BlendToAnimation(this->idle);
 			break;
 
-		case Attack:
-			model->BlendToAnimation(this->attack);
+		case Walk:
+			model->BlendToAnimation(this->walk);
 			break;
 
 		case Run:
 			model->BlendToAnimation(this->run);
 			break;
 
-		case Idle:
-			model->BlendToAnimation(this->idle);
+		case Attack:
+			model->BlendToAnimation(this->attack);
 			break;
 
 		case Death:

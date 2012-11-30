@@ -93,13 +93,21 @@ namespace TikiEngine
 			
 			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Idle));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA2))
 			{
-				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Walk));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA3))
+			{
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Run));
+			}
+			if(args.Input.GetKeyPressed(KEY_ALPHA4))
+			{
+				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Attack));
+			}
+			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
 				this->model->animationEvent->RaiseEvent(this->model, AnimationArgs(Death));
 			}
