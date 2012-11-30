@@ -27,7 +27,7 @@ namespace TikiEngine
 			// so we must test to make sure the bot always has an active target
 			if (!owner->GetTargetSys()->IsTargetPresent())
 			{
-				owner->GetEngine()->HLog.Write("no target to attack (GoalAttackTarget). \n");
+				//owner->GetEngine()->HLog.Write("no target to attack (GoalAttackTarget). \n");
 				status = Completed;
 				return;
 			}

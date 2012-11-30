@@ -30,7 +30,7 @@ namespace TikiEngine
 				proj->Init(desc, args);
 				owner->GetGameState()->AddProjectile(go);
 
-				owner->GetEngine()->HLog.Write("WeaponSystem - Raised Attack Animation. \n");
+				//owner->GetEngine()->HLog.Write("WeaponSystem - Raised Attack Animation. \n");
 				owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
 
 				UpdateTimeWeaponIsAvailable(args);

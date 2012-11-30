@@ -25,7 +25,7 @@ namespace TikiEngine
 			// make sure subgoal list is clear
 			RemoveAllSubgoals();
 
-            owner->GetEngine()->HLog.Write("GoalMoveToPosition - Raised Walk event.");
+            //owner->GetEngine()->HLog.Write("GoalMoveToPosition - Raised Walk event.");
             owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Run));
 
 			// requests a path to the target position from the path planner
@@ -35,11 +35,11 @@ namespace TikiEngine
 				Vector2 t = Vector2(owner->GetPathPlanner()->GetTargetSnap().X,
 									owner->GetPathPlanner()->GetTargetSnap().Z);
 				AddSubgoal(new GoalSeekToPosition(owner, t));
-				owner->GetEngine()->HLog.Write("has Path LOS - Seeking To position. \n");
+				//owner->GetEngine()->HLog.Write("has Path LOS - Seeking To position. \n");
 			}
 			else
 			{
-				owner->GetEngine()->HLog.Write("No Path LOS - path finding To position. \n");
+				//owner->GetEngine()->HLog.Write("No Path LOS - path finding To position. \n");
 				AddSubgoal(new GoalFollowPath(owner, owner->GetPathPlanner()->GetPath(true)));
 			}
 		}

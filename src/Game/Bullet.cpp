@@ -40,7 +40,7 @@ namespace TikiEngine
                     impacted = true;
                     dead = true;
 
-					gameState->GetEngine()->HLog.Write("bot hit, health reduced.");
+					//gameState->GetEngine()->HLog.Write("bot hit, health reduced.");
                     bot->ReduceHealth(damage);
                 }
             }

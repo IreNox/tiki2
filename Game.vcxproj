@@ -84,6 +84,7 @@
     <ClInclude Include="inc\Game\TargetingSystem.h" />
     <ClInclude Include="inc\Game\Telegram.h" />
     <ClInclude Include="inc\Game\TikiBot.h" />
+    <ClInclude Include="inc\Game\TikiBotFactory.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\TriBox.h" />
     <ClInclude Include="inc\Game\Trigger.h" />
@@ -149,6 +150,7 @@
     <ClCompile Include="src\Game\SensorMemory.cpp" />
     <ClCompile Include="src\Game\TargetingSystem.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
+    <ClCompile Include="src\Game\TikiBotFactory.cpp" />
     <ClCompile Include="src\Game\TikiSteering.cpp" />
     <ClCompile Include="src\Game\TriBox.cpp" />
     <ClCompile Include="src\Game\Trigger.cpp" />

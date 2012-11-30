@@ -115,7 +115,7 @@ namespace TikiEngine
 
 						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
 						{
-							engine->HLog.Write("Rect-Select unit.");
+							//engine->HLog.Write("Rect-Select unit.");
 							selectedUnits.Add(go);
 							changed = true;
 						}
@@ -128,7 +128,7 @@ namespace TikiEngine
 								screenPos.Y <= selectionRect.Y + eps && 
 								screenPos.Y >= selectionRect.Y - eps)
 							{
-								engine->HLog.Write("click-Select unit.\n");
+								//engine->HLog.Write("click-Select unit.\n");
 								selectedUnits.Add(go);
 							}
 
@@ -175,11 +175,11 @@ namespace TikiEngine
 			}
 
 			// remove bot from lists
-			engine->HLog.Write("Removed dead bot.");
+			//engine->HLog.Write("Removed dead bot.");
 
 			if (selectedUnits.Contains(bot->GetGameObject()))
 			{
-				engine->HLog.Write("Removed dead bot from selction.");
+				//engine->HLog.Write("Removed dead bot from selction.");
 				selectedUnits.Remove(bot->GetGameObject());
 			}
 

@@ -371,6 +371,9 @@
     <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
       <Filter>Headerdateien\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\TikiBotFactory.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -552,6 +555,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp">
       <Filter>Quelldateien\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\TikiBotFactory.cpp">
+      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -28,7 +28,7 @@ namespace TikiEngine
 				if (attacking == false)
 				{
 					attacking = true;
-					owner->GetEngine()->HLog.Write("AttackMove - Attacking. \n");
+					//owner->GetEngine()->HLog.Write("AttackMove - Attacking. \n");
 					AddSubgoal(new GoalAttackTarget(owner));
 				}
 
@@ -36,7 +36,7 @@ namespace TikiEngine
 			else
 			{
 				attacking = false;
-				owner->GetEngine()->HLog.Write("AttackMove - Moving. \n");
+				//owner->GetEngine()->HLog.Write("AttackMove - Moving. \n");
 				AddSubgoal(new GoalMoveToPosition(owner, destination));
 			}
 		}

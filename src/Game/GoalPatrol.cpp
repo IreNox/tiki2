@@ -36,7 +36,7 @@ namespace TikiEngine
                 {
                     currWp = path.front();
                     path.pop_front();
-                    owner->GetEngine()->HLog.Write("GoalPatrol - set currWp and popped front. \n");
+                   // owner->GetEngine()->HLog.Write("GoalPatrol - set currWp and popped front. \n");
                 }
 				
 				AddSubgoal(new GoalMoveToPosition(owner, Vector3(currWp.X, 0, currWp.Y)));
@@ -57,7 +57,7 @@ namespace TikiEngine
 				{
                     AddSubgoal(new GoalAttackTarget(owner));
                     attacking = true;
-                    owner->GetEngine()->HLog.Write("GoalPatrol - Target in range while patrolling. Attacking. Raised Attack event. \n");
+                    //owner->GetEngine()->HLog.Write("GoalPatrol - Target in range while patrolling. Attacking. Raised Attack event. \n");
 				}
 			}
 		}

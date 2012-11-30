@@ -16,6 +16,7 @@ namespace TikiEngine
 
 		Projectile::~Projectile()
 		{
+			sphere->TriggerEnter.RemoveHandler(this);
 			SafeRelease(&sphere);
 		}
 

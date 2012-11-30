@@ -44,7 +44,7 @@ namespace TikiEngine
                         owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
 
 
-						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. Raised Attack event \n");
+						//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. Raised Attack event \n");
 						attacking = true;
 					}
 
@@ -52,7 +52,7 @@ namespace TikiEngine
 				else
 				{
 					attacking = false;
-					target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Moving to target \n");
+					//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Moving to target \n");
 					AddSubgoal(new GoalMoveToPosition(owner, target->Pos3D()));
 				}
 			}
@@ -74,7 +74,7 @@ namespace TikiEngine
 			else
 			{
 				owner->GetTargetSys()->ClearGlobalTarget();
-				target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. Raised idle event.");
+				//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. Raised idle event.");
                 owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
 
 				status = Completed;

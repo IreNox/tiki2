@@ -13,6 +13,8 @@
 #include "Game/AnimationHandlerDefaultUnit.h"
 
 
+#include "Game/TikiBotFactory.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -29,13 +31,16 @@ namespace TikiEngine
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
 
-			spawnRegulator = new Regulator(0.01);
+			botFactory = new TikiBotFactory(this);
+			botFactory->SetSpawnInterval(20.0);
 
 		}
 
 		GameState::~GameState()
 		{
 			projectiles.Clear();
+
+			SafeDelete(&botFactory);
 
 			SafeRelease(&hud);
 			SafeDelete(&navMesh);
@@ -54,6 +59,11 @@ namespace TikiEngine
 			return scene;
 		}
 
+		NavigationMesh* GameState::GetNavMesh()
+		{
+			return navMesh;
+		}
+
 
 		UInt64 GameState::GetResource1()
 		{
@@ -70,38 +80,6 @@ namespace TikiEngine
 			projectiles.Add(go);
 		}
 
-		void GameState::AddBot(const Vector3& pos)
-		{
-			// Create go
-			GameObject* botGo = new GameObject(engine);
-			botGo->SModel(engine->content->LoadModel(L"soldier_enemy"));
-			botGo->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(botGo->GModel()));
-
-			botGo->PRS.SPosition() = pos;
-
-			// Create bot
-			TikiBotDescription botDesc;
-			botDesc.Faction = 1;
-			(new TikiBot(this, botGo, botDesc));
-
-			TikiBot* bot = botGo->GetComponent<TikiBot>();
-			bot->SetScale(0.06f);
-			bot->CreateNav(navMesh);
-			//bot->GetController()->SetCenter(pos);
-
-
-			// set list of waypoints
-			std::list<Vector2> wayPoints;
-			wayPoints.push_back(Vector2(0, -100));
-			wayPoints.push_back(Vector2(100, -100));
-			wayPoints.push_back(Vector2(100, 100));
-			wayPoints.push_back(Vector2(-100, 100));
-			wayPoints.push_back(Vector2(-100, -100));
-			bot->GetBrain()->AddGoalPatrol(wayPoints);
-
-			scene->AddElement(botGo);
-		}
-
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
@@ -113,8 +91,6 @@ namespace TikiEngine
 				Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
-			//TikiBotDescription desc;
-
 			UInt32 i = 0;
 			while (i < scene->GetElements().Count())
 			{
@@ -122,7 +98,6 @@ namespace TikiEngine
 
 				if (bot != 0)
 				{
-					//bot->Init(desc);
 					bot->CreateNav(navMesh);
  					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
  					pos = pos + Vector3(0, 30, 0);
@@ -139,14 +114,14 @@ namespace TikiEngine
                         wayPoints.push_back(Vector2(-100, -100));
                         bot->GetBrain()->AddGoalPatrol(wayPoints);
                     }
-                   // if (bot->GetFaction() == 0)
-                    //    bot->TakePossession();
 
 
 				}
 
 				i++;
 			}
+
+
 
 			return true;
 		}
@@ -179,10 +154,15 @@ namespace TikiEngine
 		{
 			// spawn bots if it's time
 			//if (spawnRegulator->IsReady())
-			if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				AddBot(Vector3(150, 50, 150));
-			}
+// 			if (args.Input.GetKeyPressed(KEY_F5))
+// 			{
+// 				GameObject* go = new GameObject(engine);
+// 				go->PRS.SPosition() = Vector3(150, 50, 150);
+// 				botFactory->CreateEnemy1(go);
+// 				//AddBot(Vector3(150, 50, 150));
+// 			}
+
+			botFactory->Update(args);
 
 
 			hud->Update(args);
@@ -264,7 +244,7 @@ namespace TikiEngine
 									if (target->ID() != bot->ID())
 									{
 										bot->GetBrain()->RemoveAllSubgoals();
-										engine->HLog.Write("Target found.");
+										//engine->HLog.Write("Target found.");
 										bot->GetBrain()->AddGoalAttackGlobalTarget(target);
 
 									}
