@@ -27,5 +27,6 @@ namespace TikiEngine
 		IAnimation* walk;
 		IAnimation* attack;
 		IAnimation* run;
+        IAnimation* death;
 	};
 }

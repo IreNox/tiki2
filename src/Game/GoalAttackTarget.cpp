@@ -22,6 +22,7 @@ namespace TikiEngine
 			// if this goal is reactivated then there may be some existing subgoals that must be removed
 			RemoveAllSubgoals();
 
+
 			// it is possible for a bot's target to die whilst this goal is active 
 			// so we must test to make sure the bot always has an active target
 			if (!owner->GetTargetSys()->IsTargetPresent())
@@ -30,24 +31,11 @@ namespace TikiEngine
 				status = Completed;
 				return;
 			}
-
-			// if the bot is able to shoot the target (there is LOS between bot and
-			// target), then select a tactic to follow while shooting
-			if (owner->GetTargetSys()->IsTargetShootable()) //&&  dist > weaponRange)
-			{
-				// TODO: ShootAt() owner->GetTargetBot()->Pos();
-
-
-				//target->GetEngine()->HLog.Write("Target Shootable:  PEW PEW ! \n");
-				//owner->GetTargetBot()->GetBrain()->AddGoalAttackTarget();
-			}
-			else
-			{
-				// if the target is not visible, go hunt it.
-				//target->GetEngine()->HLog.Write("Target not shootable. Hunting it. \n");
-				//AddSubgoal(new GoalHuntTarget(owner));
-			}
-
+            else
+            {
+                owner->GetEngine()->HLog.Write("Raised Attack Animation. \n");
+                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+            }
 		}
 
 		int GoalAttackTarget::Process(const UpdateArgs& args)

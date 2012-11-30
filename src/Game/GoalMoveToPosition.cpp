@@ -25,6 +25,9 @@ namespace TikiEngine
 			// make sure subgoal list is clear
 			RemoveAllSubgoals();
 
+            owner->GetEngine()->HLog.Write("GoalMoveToPosition - Raised Walk event.");
+            owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Walk));
+
 			// requests a path to the target position from the path planner
 			// if we can see the target, we just seek to it, else we use A* and path smoothing
 			if (!owner->GetPathPlanner()->RequestPathTo(destination))

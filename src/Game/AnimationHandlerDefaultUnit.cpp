@@ -9,7 +9,8 @@ namespace TikiEngine
 		this->walk = model->GetAnimation("walk");
 		this->attack = model->GetAnimation("attack");
 		this->run = model->GetAnimation("run");
-
+        this->death = model->GetAnimation("death");
+        
 	}
 	AnimationHandlerDefaultUnit::~AnimationHandlerDefaultUnit()
 	{
@@ -29,6 +30,9 @@ namespace TikiEngine
 		case Run:
 			model->BlendToAnimation(this->run);
 			break;
+        case Death:
+            model->BlendToAnimation(this->death);
+            break;
 		default:
 			break;
 		}

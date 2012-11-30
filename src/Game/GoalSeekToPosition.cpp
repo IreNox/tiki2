@@ -52,6 +52,12 @@ namespace TikiEngine
 			owner->GetSteering()->SeekOff();
 			owner->GetSteering()->ArriveOff();
 
+            // TODO: IDLE
+            if( owner->GetGameObject()->GModel())
+            {
+                owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Death));
+            }
+
 			status = Completed;
 		}
 

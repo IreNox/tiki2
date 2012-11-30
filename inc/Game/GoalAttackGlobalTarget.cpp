@@ -40,7 +40,11 @@ namespace TikiEngine
 					{
 						owner->GetSteering()->SeekOff();
 						owner->GetSteering()->ArriveOff();
-						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. \n");
+
+                        owner->GetGameObject()->GModel()->animationEvent->RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+
+
+						target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. Raised Attack event \n");
 						attacking = true;
 					}
 

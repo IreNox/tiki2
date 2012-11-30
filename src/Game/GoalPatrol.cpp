@@ -17,9 +17,7 @@ namespace TikiEngine
 			currWp = path.front();
             timeWpLeft = 0;
 			attacking = false;
-            
 		}
-
 
 		void GoalPatrol::Activate(const UpdateArgs& args)
 		{
@@ -41,7 +39,6 @@ namespace TikiEngine
                     owner->GetEngine()->HLog.Write("GoalPatrol - set currWp and popped front. \n");
                 }
 				
-                owner->GetGameObject()->GModel()->animationEvent.RaiseEvent(owner->GetGameObject()->GModel(), Walk);
 				AddSubgoal(new GoalMoveToPosition(owner, Vector3(currWp.X, 0, currWp.Y)));
 			}
 			else
@@ -56,12 +53,10 @@ namespace TikiEngine
                     return;
                 }
 
-				AddSubgoal(new GoalAttackTarget(owner));
-
 				if (attacking == false)
 				{
-                    owner->GetGameObject()->GModel()->animationEvent.RaiseEvent(owner->GetGameObject()->GModel(), Attack);
-					attacking = true;
+                    AddSubgoal(new GoalAttackTarget(owner));
+                    attacking = true;
                     owner->GetEngine()->HLog.Write("GoalPatrol - Target in range while patrolling. Attacking. Raised Attack event. \n");
 				}
 			}
@@ -89,7 +84,5 @@ namespace TikiEngine
 		{
 			GoalComposite<TikiBot>::Draw(args);
 		}
-
-
 	}
 }
