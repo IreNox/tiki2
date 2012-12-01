@@ -377,6 +377,9 @@
     <ClInclude Include="inc\Game\LevelPoint.h">
       <Filter>Headerdateien\Level</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PPFogOfWar.h">
+      <Filter>Headerdateien\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -546,6 +549,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\DatabaseLevel.cpp">
       <Filter>Quelldateien\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PPFogOfWar.cpp">
+      <Filter>Quelldateien\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,48 +1,27 @@
+//////////////
+// TYPEDEFS //
+//////////////
+#include "Data/Effects/IncPP/is_structs.fx"
+
 /////////////
 // GLOBALS //
 /////////////
+#include "Data/Effects/IncPP/is_input.fx"
 
 Texture2D tex;
-
-SamplerState sam 
-{    
-  AddressU  = CLAMP;
-  AddressV = CLAMP;
-  FILTER = MIN_MAG_LINEAR_MIP_POINT;
-};
 
 float BlurRange = 16.0f;
 float BlurIntensity = 1.0f;
 
 float2 ScreenSize = float2(400, 300);
 
-//////////////
-// TYPEDEFS //
-//////////////
-struct VS_INPUT
-{
-    float3 Pos	  : POSITION;
-	float2 UV	  : TEXCOORD;
-};
-
-struct PS_INPUT
-{
-    float4 Pos : SV_POSITION;
-    float2 UV  : TEXCOORD0;
-};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
-PS_INPUT VS_Main(VS_INPUT input)
-{
-    PS_INPUT output = (PS_INPUT)0;    
 
-	output.Pos = float4(input.Pos, 1.0f);
-    output.UV = input.UV;
-    
-    return output;
-}
+#include "Data/Effects/IncPP/is_defaultshader_vertex.fx"
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Pixel Shader
@@ -86,6 +65,11 @@ float4 PSPP_BlurHorizontal(PS_INPUT input) : SV_TARGET
 		tex
 	);
 }
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Technique
+////////////////////////////////////////////////////////////////////////////////
 
 technique11 basic
 {

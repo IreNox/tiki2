@@ -62,7 +62,7 @@ namespace TikiEngine
 		{
 			if (type == ST_Object)
 			{
-				CBObjectData* objData = DllMain::ModuleGraphics->GetCBufferObject()->Map();
+				CBObjectData* objData = DllMain::ModuleGraphics->GetCBufferObject()->MapTI();
 
 				gameObject->PRS.FillWorldMatrix(&objData->WorldM);
 
@@ -127,9 +127,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Variable
-		void Shader::SetConstantBuffer(cstring key, ID3D11Buffer* constantBuffer)
+		void Shader::SetConstantBuffer(cstring key, IConstantBuffer* constantBuffer)
 		{
-			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(constantBuffer);
+			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(
+				(ID3D11Buffer*)constantBuffer->GBuffer()
+			);
 
 			if (FAILED(r))
 			{
@@ -370,17 +372,17 @@ namespace TikiEngine
 
 				this->SetConstantBuffer(
 					"ObjectData",
-					DllMain::ModuleGraphics->GetCBufferObject()->GetBuffer()
+					DllMain::ModuleGraphics->GetCBufferObject()
 				);
 
 				this->SetConstantBuffer(
 					"LightBuffer",
-					DllMain::ModuleGraphics->GetCBufferLight()->GetBuffer()
+					DllMain::ModuleGraphics->GetCBufferLight()
 				);
 
 				this->SetConstantBuffer(
 					"MatrixBuffer",
-					DllMain::ModuleGraphics->GetCBufferCamera()->GetBuffer()
+					DllMain::ModuleGraphics->GetCBufferCamera()
 				);
 				break;
 			case 'p':
@@ -389,7 +391,7 @@ namespace TikiEngine
 
 				this->SetConstantBuffer(
 					"LightBuffer",
-					DllMain::ModuleGraphics->GetCBufferLight()->GetBuffer()
+					DllMain::ModuleGraphics->GetCBufferLight()
 				);
 				break;
 			default:

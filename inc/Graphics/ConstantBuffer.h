@@ -3,19 +3,23 @@
 #include "Core/Engine.h"
 #include "Core/HelperLog.h"
 
+#include "Core/IConstantBuffer.h"
+
 namespace TikiEngine
 {
 	namespace Graphics
 	{
-		template <class T>
-		class ConstantBuffer
+		template <typename T>
+		class ConstantBuffer : public IConstantBuffer
 		{
 		public:
 
 			#pragma region Class
-			ConstantBuffer(Engine* engine)
-				: engine(engine), buffer(0)
+			ConstantBuffer(Engine* engine, UInt32 size = 0)
+				: IConstantBuffer(engine), buffer(0), size(size)
 			{
+				if (!this->size) this->size = sizeof(T);
+
 				this->createBuffer();
 			}
 
@@ -26,7 +30,7 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region Member
-			T* Map()
+			inline void* Map()
 			{
 				D3D11_MAPPED_SUBRESOURCE mapped;
 
@@ -43,25 +47,29 @@ namespace TikiEngine
 					engine->HLog.WriteError("Can't map ConstantBuffer", 0);
 				}
 
-				return (T*)mapped.pData;
+				return mapped.pData;
 			}
 
-			void Unmap()
+			inline T* MapTI()
+			{
+				return (T*)this->Map();
+			}
+
+			inline void Unmap()
 			{
 				DllMain::Context->Unmap(buffer, 0);
 			}
 
-			ID3D11Buffer* GetBuffer()
-			{
-				return buffer;
-			}
+			inline void* GBuffer() { return buffer; }
+			inline UInt32 GSize() { return size; }
 			#pragma endregion
 
 		private:
 
 			#pragma region Vars
-			Engine* engine;
 			ID3D11Buffer* buffer;
+
+			UInt32 size;
 			#pragma endregion
 
 			#pragma region Member - CreateBuffer
@@ -71,7 +79,7 @@ namespace TikiEngine
 				desc.Usage = D3D11_USAGE_DYNAMIC;
 				desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-				desc.ByteWidth = sizeof(T);
+				desc.ByteWidth = size;
 				desc.MiscFlags = 0;
 				desc.StructureByteStride = 0;
 

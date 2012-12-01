@@ -32,15 +32,18 @@ namespace TikiEngine
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), inited(false), rasterStateBackfaces(0), device(0), blendStateAlphaBlend(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtScreen(0), rtBackBuffer(0),
+			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtBackBuffer(0),
 			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
 			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
-			cbufferLights(0), cbufferCamera(0), cbufferObject(0)
+			cbufferLights(0), cbufferCamera(0), cbufferObject(0), rtScreenIndex(0), defaultPostProcessPass(0)
 #if _DEBUG
 			, debugConsole(0), debugLineRenderer(0)
 #endif
 		{
 			clearColor = Color::TikiBlue;
+
+			rtScreen[0] = 0;
+			rtScreen[1] = 0;
 		}
 
 		GraphicsModule::~GraphicsModule()
@@ -72,9 +75,11 @@ namespace TikiEngine
 
 			SafeRelease(&rtDepth);
 			SafeRelease(&rtNormal);
-			SafeRelease(&rtScreen);
+			SafeRelease(&rtScreen[0]);
+			SafeRelease(&rtScreen[1]);
 			SafeRelease(&rtBackBuffer);
 
+			SafeRelease(&defaultPostProcessPass);
 			this->RemovePostProcess(defaultPostProcess);
 
 			UInt32 i = 0;
@@ -113,6 +118,19 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
+		IConstantBuffer* GraphicsModule::CreateConstantBuffer(UInt32 size)
+		{
+			return new ConstantBuffer<Byte>(engine, size);
+		}
+
+		void GraphicsModule::SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget)
+		{
+			*inputTarget = rtScreen[rtScreenIndex];
+			*outputTarget = rtScreen[!rtScreenIndex];
+
+			rtScreenIndex = !rtScreenIndex;
+		}
+
 		void GraphicsModule::MakeScreenshot(wcstring fileName)
 		{
 			bool newName = false;
@@ -272,7 +290,7 @@ namespace TikiEngine
 
 		IRenderTarget* GraphicsModule::GetScreenTarget()
 		{
-			return rtScreen;
+			return rtScreen[rtScreenIndex];
 		}
 		#pragma endregion
 
@@ -376,13 +394,13 @@ namespace TikiEngine
 				//args.Lights.Properties.IsDirty = false;
 			}
 
-			defaultPostProcess->GetPasses()->Get(0)->SetOutput(
+			defaultPostProcessPass->SetOutput(
 				0,
 				(args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
 			);
 
-			rtScreen->Apply(0);
-			rtScreen->Clear(clearColor);
+			rtScreen[rtScreenIndex]->Apply(0);
+			rtScreen[rtScreenIndex]->Clear(clearColor);
 			this->SetStateDepthEnabled(true);
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 						
@@ -393,7 +411,7 @@ namespace TikiEngine
 
 			if (args.CurrentCamera)
 			{
-				CBMatrices* matrices = cbufferCamera->Map();
+				CBMatrices* matrices = cbufferCamera->MapTI();
 				*matrices = *args.CurrentCamera->GetMatrices();
 				cbufferCamera->Unmap();
 			}
@@ -420,6 +438,7 @@ namespace TikiEngine
 
 				i++;
 			}
+			defaultPostProcessPass->SetInput("rtScreen", rtScreen[rtScreenIndex]);
 			drawPostProcess(defaultPostProcess);
 
 			swapChain->Present(0, 0);
@@ -435,19 +454,19 @@ namespace TikiEngine
 
 		void GraphicsModule::AddDefaultProcessTarget(cstring varName, IRenderTarget* target)
 		{
-			defaultPostProcess->GetPasses()->Get(0)->AddInput(varName, target);
+			defaultPostProcessPass->AddInput(varName, target);
 		}
 
 		void GraphicsModule::RemovePostProcess(PostProcess* postProcess)
 		{
 			postProcesses.Remove(postProcess);
 
-			const List<PostProcessPass*>* passes = postProcess->GetPasses();
+			const List<PostProcessPass*>& passes = postProcess->GetPasses();
 
 			UInt32 i = 0;
-			while (i < passes->Count())
+			while (i < passes.Count())
 			{
-				PostProcessPass* pass = passes->Get(i);
+				PostProcessPass* pass = passes[i];
 
 				if (postProcessPassQuads.ContainsKey(pass))
 				{
@@ -789,9 +808,13 @@ namespace TikiEngine
 			this->rtBackBuffer = new RenderTarget(engine, renderTargetView, false);
 			this->rtBackBuffer->AddRef();
 
-			this->rtScreen = new RenderTarget(engine);
-			this->rtScreen->CreateScreenSize();
-			this->rtScreen->AddRef();
+			this->rtScreen[0] = new RenderTarget(engine);
+			this->rtScreen[0]->CreateScreenSize();
+			this->rtScreen[0]->AddRef();
+
+			this->rtScreen[1] = new RenderTarget(engine);
+			this->rtScreen[1]->CreateScreenSize();
+			this->rtScreen[1]->AddRef();
 
 			this->rtNormal = new RenderTarget(engine);
 			this->rtNormal->CreateScreenSize();
@@ -801,16 +824,18 @@ namespace TikiEngine
 			this->rtDepth->CreateScreenSize();
 			this->rtDepth->AddRef();
 
-			IShader* shader = engine->content->LoadShader(L"pp_default");
-
-			PostProcessPass* pass = new PostProcessPass(engine, shader);
-			pass->AddInput("rtScreen", rtScreen);
-			pass->AddInput("rtNormal", rtNormal);
+			defaultPostProcessPass = new PostProcessPass(
+				engine,
+				engine->content->LoadShader(L"pp_default")
+			);
+			defaultPostProcessPass->AddInput("rtScreen", rtScreen[0]);
+			defaultPostProcessPass->AddInput("rtNormal", rtNormal);
 			//pass->AddInput("rtDepth", rtDepth);
-			pass->AddOutput(0, rtBackBuffer);
+			defaultPostProcessPass->AddOutput(0, rtBackBuffer);
+			defaultPostProcessPass->AddRef();
 
 			defaultPostProcess = new PostProcess(engine);
-			defaultPostProcess->AddPass(pass);
+			defaultPostProcess->AddPass(defaultPostProcessPass);
 			defaultPostProcess->AddRef();
 
 #if _DEBUG
@@ -825,12 +850,12 @@ namespace TikiEngine
 		#pragma region Private Member - Draw - PostProcess
 		void GraphicsModule::drawPostProcess(PostProcess* postProcess)
 		{
-			const List<PostProcessPass*>* passes = postProcess->GetPasses();
+			const List<PostProcessPass*>& passes = postProcess->GetPasses();
 
 			UInt32 i = 0;
-			while (i < passes->Count())
+			while (i < passes.Count())
 			{
-				PostProcessPass* pass = passes->Get(i);
+				PostProcessPass* pass = passes[i];
 				Quad* quad = 0;
 
 				if (!postProcessPassQuads.ContainsKey(pass))
@@ -860,7 +885,7 @@ namespace TikiEngine
 		#pragma region Private Member - Set - Lights
 		void GraphicsModule::setLightChanged(const DrawArgs& args)
 		{
-			CBLights* buf = cbufferLights->Map();
+			CBLights* buf = cbufferLights->MapTI();
 			buf->Props = args.Lights.Properties;
 
 			buf->Count = (float)args.Lights.SceneLights->Count();

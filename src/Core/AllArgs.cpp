@@ -9,7 +9,7 @@ namespace TikiEngine
 	const UpdateArgs UpdateArgs::Empty = UpdateArgs();
 	const DrawLightArgs DrawLightArgs::Empty = DrawLightArgs();
 
-	const DrawArgs DrawArgs::Empty = DrawArgs();
+	DrawArgs DrawArgs::Empty = DrawArgs();
 	UpdateArgs DrawArgs::UpdateEmpty = UpdateArgs::Empty;
 	DrawLightArgs DrawArgs::DrawLightEmpty = DrawLightArgs::Empty;
 }

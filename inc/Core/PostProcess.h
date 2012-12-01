@@ -23,7 +23,7 @@ namespace TikiEngine
 			PostProcessPass* AddPass(PostProcessPass* pass);
 			void RemovePass(PostProcessPass* pass);
 
-			const List<PostProcessPass*>* GetPasses();
+			inline const List<PostProcessPass*>& GetPasses() { return passes; }
 
 			virtual void UpdatePass(UInt32 index, const DrawArgs& args);
 

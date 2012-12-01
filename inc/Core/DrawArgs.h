@@ -25,7 +25,7 @@ namespace TikiEngine
 	// Implementation in AllArgs.cpp
 	struct DrawArgs
 	{
-		static const DrawArgs Empty;
+		static DrawArgs Empty;
 
 		GameTime Time;
 

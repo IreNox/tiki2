@@ -21,17 +21,17 @@ namespace TikiEngine
 			PostProcessPass(Engine* engine, IShader* shader);
 			~PostProcessPass();
 
-			void AddInput(cstring varName, IRenderTarget* target);
-			void SetInput(cstring varName, IRenderTarget* target);
+			void AddInput(string varName, IRenderTarget* target);
+			void SetInput(string varName, IRenderTarget* target);
 			//void RemoveInput(IRenderTarget* target);
 
 			void AddOutput(UInt32 slot, IRenderTarget* target);
 			void SetOutput(UInt32 slot, IRenderTarget* target);
 			//void RemoveOutput(IRenderTarget* target);
 
-			IShader* GetShader();
-			const Dictionary<cstring, IRenderTarget*>* GetInput();
-			const Dictionary<UInt32, IRenderTarget*>* GetOutput();
+			inline IShader* GetShader() { return shader; }
+			inline const Dictionary<string, IRenderTarget*>& GetInput() { return inputTargets; }
+			inline const Dictionary<UInt32, IRenderTarget*>& GetOutput() { return outputTargets; }
 
 			virtual void UpdateVars(const DrawArgs& args);
 
@@ -39,7 +39,7 @@ namespace TikiEngine
 
 			IShader* shader;
 
-			Dictionary<cstring, IRenderTarget*> inputTargets;
+			Dictionary<string, IRenderTarget*> inputTargets;
 			Dictionary<UInt32, IRenderTarget*> outputTargets;
 
 		};

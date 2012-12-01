@@ -45,35 +45,18 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Get
-		IShader* PostProcessPass::GetShader()
-		{
-			return shader;
-		}
-
-		const Dictionary<cstring, IRenderTarget*>* PostProcessPass::GetInput()
-		{
-			return &inputTargets;
-		}
-
-		const Dictionary<UInt32, IRenderTarget*>* PostProcessPass::GetOutput()
-		{
-			return &outputTargets;
-		}
-		#pragma endregion
-
 		#pragma region Member - Add/Remove
-		void PostProcessPass::AddInput(cstring varName, IRenderTarget* target)
+		void PostProcessPass::AddInput(string varName, IRenderTarget* target)
 		{
 			inputTargets.Add(varName, target);
 			SafeAddRef(&target);
 		}
 
-		void PostProcessPass::SetInput(cstring varName, IRenderTarget* target)
+		void PostProcessPass::SetInput(string varName, IRenderTarget* target)
 		{
-			inputTargets[varName]->Release();
+			SafeRelease(&inputTargets[varName]);
 			inputTargets[varName] = target;
-			inputTargets[varName]->AddRef();
+			target->AddRef();
 		}
 
 		//void PostProcessPass::RemoveInput(IRenderTarget* target)
@@ -90,7 +73,7 @@ namespace TikiEngine
 
 		void PostProcessPass::SetOutput(UInt32 slot, IRenderTarget* target)
 		{
-			outputTargets[slot]->Release();
+			SafeRelease(&outputTargets[slot]);
 			outputTargets[slot] = target;
 			outputTargets[slot]->AddRef();
 		}

@@ -4,6 +4,7 @@
 
 #include "Core/ViewPort.h"
 #include "Core/IRenderTarget.h"
+#include "Core/IConstantBuffer.h"
 
 #include "Core/Light.h"
 #include "Core/PostProcess.h"
@@ -16,6 +17,7 @@ namespace TikiEngine
 	{
 		using TikiEngine::Graphics::PostProcess;
 		using TikiEngine::Graphics::PostProcessPass;
+		using TikiEngine::Graphics::IConstantBuffer;
 		using TikiEngine::Resources::ITexture;
 		using TikiEngine::Resources::IRenderTarget;
 		using TikiEngine::Components::Light;
@@ -46,8 +48,10 @@ namespace TikiEngine
 			virtual void* GetDeviceContext() = 0;
 
 			virtual void AddPostProcess(PostProcess* postProcess) = 0;
-			virtual void AddDefaultProcessTarget(cstring varName, IRenderTarget* target) = 0;
 			virtual void RemovePostProcess(PostProcess* postProcess) = 0;
+
+			virtual void AddDefaultProcessTarget(cstring varName, IRenderTarget* target) = 0;
+			virtual void SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget) = 0;
 
 			virtual ViewPort* GetViewPort() = 0;
 			virtual IRenderTarget* GetScreenTarget() = 0;
@@ -57,14 +61,13 @@ namespace TikiEngine
 			virtual void SetStateAlphaBlend(bool value) = 0;
 			virtual void SetStateDepthEnabled(bool value) = 0;
 
-			/*!
-			 * @brief Reset the Graphics Device and apply new values. Use values from Engine::GetDescription()
-			 */
+			virtual IConstantBuffer* CreateConstantBuffer(UInt32 size) = 0;
+
+			/*! @brief Reset the Graphics Device and apply new values. Use values from Engine::GetDescription() */
 			virtual void Reset() = 0;
 
 			/*!
 			 * @brief Save an Screen shot image from the last Frame on HDD 
-			 *
 			 * @param fileName Filename for Screen shot. Use NULL for default Name.
 			 */
 			virtual void MakeScreenshot(wcstring fileName = 0) = 0;

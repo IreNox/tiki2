@@ -39,11 +39,6 @@ namespace TikiEngine
 			SafeRelease(&pass);
 		}
 
-		const List<PostProcessPass*>* PostProcess::GetPasses()
-		{
-			return &passes;
-		}
-
 		void PostProcess::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
 		}

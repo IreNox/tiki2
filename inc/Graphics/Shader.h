@@ -23,7 +23,7 @@ namespace TikiEngine
 			void Apply();
 			void ApplyVars(GameObject* gameObject, Material* material);
 
-			void SetConstantBuffer(cstring key, ID3D11Buffer* constantBuffer);
+			void SetConstantBuffer(cstring key, IConstantBuffer* constantBuffer);
 
 			Int32 GetInt(cstring key);
 			Single GetSingle(cstring key);

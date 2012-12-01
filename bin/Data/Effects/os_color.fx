@@ -51,4 +51,4 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return input.Color;
 }
 
-#include "Data/Effects/IncOS/is_technique.fx"
+#include "Data/Effects/Inc/is_technique.fx"

@@ -8,6 +8,8 @@ Texture2D<float4> tNormal;
 
 #define M_PI 3.14159265f
 
+//AO ~= 1-saturate(dot(VecA,Normal)/length(VecA))
+
 SamplerState samNearest
 {    
     Filter   = MIN_MAG_MIP_POINT;

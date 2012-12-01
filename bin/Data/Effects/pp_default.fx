@@ -15,25 +15,12 @@ Texture2D rtNormal;
 Texture2D spriteBatch;
 Texture2D debugLines;
 
-SamplerState sam 
-{    
-  AddressU  = CLAMP;
-  AddressV = CLAMP;
-  FILTER = MIN_MAG_LINEAR_MIP_POINT;
-};
-
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
-PS_INPUT VS_Main(VS_INPUT input)
-{
-    PS_INPUT output = (PS_INPUT)0;    
 
-	output.Pos = float4(input.Pos, 1.0f);
-    output.UV = input.UV;
-    
-    return output;
-}
+#include "Data/Effects/IncPP/is_defaultshader_vertex.fx"
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // Pixel Shader
@@ -72,14 +59,5 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return color;
 }
 
-technique11 basic
-{
-    pass p0
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-		SetGeometryShader( NULL );
-        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-    }
-}
 
-//#include "Data/Effects/IncOS/is_technique.fx"
+#include "Data/Effects/Inc/is_technique.fx"

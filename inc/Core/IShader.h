@@ -6,10 +6,8 @@
 #include "Core/Vector4.h"
 #include "Core/Matrix.h"
 
-#include "Core/IResource.h"
 #include "Core/ITexture.h"
-
-
+#include "Core/IConstantBuffer.h"
 
 namespace TikiEngine
 {
@@ -17,6 +15,8 @@ namespace TikiEngine
 
 	namespace Resources
 	{
+		using namespace TikiEngine::Graphics;
+
 		enum ShaderType
 		{
 			ST_Object,
@@ -30,11 +30,8 @@ namespace TikiEngine
 		{
 		public:
 
-			IShader(Engine* engine)
-				: IResource(engine)
-			{
-			}
-			~IShader() {}
+			IShader(Engine* engine) : IResource(engine) {}
+			virtual ~IShader() {}
 
 			virtual void SelectSubByIndex(UInt32 index) = 0;
 			virtual void SelectSubByName(cstring name) = 0;
@@ -60,8 +57,9 @@ namespace TikiEngine
 			virtual void SetTexture(cstring key, ITexture* value) = 0;
 			virtual void SetTextureArray(cstring key, List<ITexture*>* array) = 0;
 
-			virtual ShaderType GetShaderType() = 0;
+			virtual void SetConstantBuffer(cstring key, IConstantBuffer* buffer) = 0;
 
+			virtual ShaderType GetShaderType() = 0;
 			virtual bool GetReady() = 0;
 		};
 	}

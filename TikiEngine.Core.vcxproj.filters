@@ -628,5 +628,8 @@
     <ClInclude Include="inc\Core\EventAnimation.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IConstantBuffer.h">
+      <Filter>Headerdateien\Core\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

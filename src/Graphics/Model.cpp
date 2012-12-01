@@ -170,7 +170,7 @@ namespace TikiEngine
 			if(this->rootBone != 0)
 				rootBone->Update(this->animationStack.GetStack());
 
-			SkinMatrices* matrices = constantBufferMatrices->Map();
+			SkinMatrices* matrices = constantBufferMatrices->MapTI();
 			int matrixCount = this->constantBufferElements.Count();
 			for(int i = 0; i < matrixCount; i++)
 			{

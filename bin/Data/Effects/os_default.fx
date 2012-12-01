@@ -19,4 +19,4 @@
 #include "Data/Effects/IncOS/is_defaultshader_pixel.fx"
 
 
-#include "Data/Effects/IncOS/is_technique.fx"
+#include "Data/Effects/Inc/is_technique.fx"

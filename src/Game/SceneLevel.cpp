@@ -13,8 +13,11 @@
 
 #include "Game/CameraRTS.h"
 
+#include "Game/PPFogOfWar.h"
+
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
+using namespace TikiEngine::Graphics;
 
 namespace TikiEngine
 {
@@ -55,6 +58,9 @@ namespace TikiEngine
 
 			mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
+
+			// PostProcess
+			engine->graphics->AddPostProcess(new PPFogOfWar(gameState));
 			
 			Scene::Initialize(args);
 		}

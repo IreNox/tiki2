@@ -569,7 +569,7 @@ namespace TikiEngine
 
 			if (hasDeformation)
 			{
-				((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer()->GetBuffer());
+				((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer());
 			}
 
 			material->UpdateDrawArgs(args, gameObject);

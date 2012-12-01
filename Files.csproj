@@ -101,10 +101,9 @@
     <Content Include="bin\Data\Effects\IncOS\is_particle_gs_linelist.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_particle_gs_linestrip.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_particle_gs_point.fx" />
-    <Content Include="bin\Data\Effects\IncOS\is_skinning_input.fx" />
-    <Content Include="bin\Data\Effects\IncOS\is_skinning_vertex.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_structs.fx" />
-    <Content Include="bin\Data\Effects\IncOS\is_technique.fx" />
+    <Content Include="bin\Data\Effects\Inc\is_technique.fx" />
+    <Content Include="bin\Data\Effects\IncPP\is_defaultshader_vertex.fx" />
     <Content Include="bin\Data\Effects\IncPP\is_input.fx" />
     <Content Include="bin\Data\Effects\IncPP\is_structs.fx" />
     <Content Include="bin\Data\Effects\Inc\is_input_light.fx" />
@@ -117,6 +116,7 @@
     <Content Include="bin\Data\Effects\os_spritebatch.fx" />
     <Content Include="bin\Data\Effects\pp_blur.fx" />
     <Content Include="bin\Data\Effects\pp_default.fx" />
+    <Content Include="bin\Data\Effects\pp_fow.fx" />
     <Content Include="bin\Data\Effects\pp_ssao.fx" />
     <Content Include="bin\Data\Sounds\beep.wav" />
   </ItemGroup>

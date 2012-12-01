@@ -26,8 +26,8 @@ namespace TikiEngine
 			IShader* GetShader();
 			void SetShader(IShader* shader);
 
-			void SetInput(const Dictionary<cstring, IRenderTarget*>* input);
-			void SetOutput(const Dictionary<UInt32, IRenderTarget*>* output);
+			void SetInput(const Dictionary<string, IRenderTarget*>& input);
+			void SetOutput(const Dictionary<UInt32, IRenderTarget*>& output);
 
 			void Draw();
 

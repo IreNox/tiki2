@@ -72,11 +72,13 @@ namespace TikiEngine
 			ConstantBuffer<CBObjectData>* GetCBufferObject();
 
 			void AddPostProcess(PostProcess* postProcess);
-			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
-			void AddScreenSizeRenderTarget(RenderTarget* target);
-
 			void RemovePostProcess(PostProcess* postProcess);
+
+			void AddScreenSizeRenderTarget(RenderTarget* target);
 			void RemoveScreenSizeRenderTarget(RenderTarget* target);
+
+			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
+			void SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget);
 
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
@@ -84,12 +86,14 @@ namespace TikiEngine
 			void SetStateAlphaBlend(bool value);
 			void SetStateDepthEnabled(bool value);
 
+			IConstantBuffer* CreateConstantBuffer(UInt32 size);
+
 			bool GetReady();
 
 		private:
 
 			bool inited;
-			DrawArgs currentArgs;
+			DrawArgs& currentArgs;
 
 			IDXGIFactory* factory;
 			IDXGIAdapter* adapter;
@@ -116,12 +120,14 @@ namespace TikiEngine
 
 			RenderTarget* rtDepth;
 			RenderTarget* rtNormal;
-			RenderTarget* rtScreen;
 			RenderTarget* rtBackBuffer;
+			bool rtScreenIndex;
+			RenderTarget* rtScreen[2];
 			List<RenderTarget*> screenSizeRenderTargets;
 			List<ID3D11RenderTargetView*> renderTargets;
 
 			PostProcess* defaultPostProcess;
+			PostProcessPass* defaultPostProcessPass;
 			List<PostProcess*> postProcesses;
 			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
 
