@@ -19,10 +19,9 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-
 		#pragma region Class
 		GameState::GameState(Engine* engine, SceneLevel* scene)
-			: EngineObject(engine), scene(scene), resource1(0), resource2(0)
+			: EngineObject(engine), scene(scene), resource(0.0)
 #if _DEBUG
 			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false)
 #endif
@@ -33,7 +32,6 @@ namespace TikiEngine
 
 			botFactory = new TikiBotFactory(this);
 			botFactory->SetSpawnInterval(20.0);
-
 		}
 
 		GameState::~GameState()
@@ -48,82 +46,53 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Get
-		Engine* GameState::GetEngine()
-		{
-			return engine;
-		}
-
-		SceneLevel* GameState::GetScene()
-		{
-			return scene;
-		}
-
-		NavigationMesh* GameState::GetNavMesh()
-		{
-			return navMesh;
-		}
-
-
-		UInt64 GameState::GetResource1()
-		{
-			return resource1;
-		}
-
-		UInt64 GameState::GetResource2()
-		{
-			return resource1;
-		}
-
+		#pragma region Member
 		void GameState::AddProjectile(GameObject* go)
 		{
 			projectiles.Add(go);
 		}
-
 		#pragma endregion
 
 		#pragma region Member - Load/Dispose
-		bool GameState::LoadLevel(Level* level)
+		void GameState::LoadLevel(Level* level)
 		{			
 			navMesh->Clear();
 			navMesh->Load(
-				L"navmesh/navmesh_" + StringAtoW(scene->GetLevel()->GetName()),
+				L"navmesh/navmesh_" + StringAtoW(scene->GLevel()->GetName()),
 				Matrix::CreateTranslation(Vector3(0, 6, 0))
 			);
 
-			UInt32 i = 0;
-			while (i < scene->GetElements().Count())
-			{
-				TikiBot* bot = scene->GetElements()[i]->GetComponent<TikiBot>();
+			botFactory->Init();
 
-				if (bot != 0)
-				{
-					bot->CreateNav(navMesh);
- 					Vector3 pos = bot->GetGameObject()->PRS.GPosition();
- 					pos = pos + Vector3(0, 30, 0);
- 					bot->GetController()->SetCenter(pos);
+			//UInt32 i = 0;
+			//while (i < scene->GetElements().Count())
+			//{
+			//	TikiBot* bot = scene->GetElements()[i]->GetComponent<TikiBot>();
 
-					// if we have a patrol bot, set the wayPoints.
-                    if (bot->GetFaction() == 1)
-                    {
-                        std::list<Vector2> wayPoints;
-                        wayPoints.push_back(Vector2(0, -100));
-                        wayPoints.push_back(Vector2(100, -100));
-                        wayPoints.push_back(Vector2(100, 100));
-                        wayPoints.push_back(Vector2(-100, 100));
-                        wayPoints.push_back(Vector2(-100, -100));
-                        bot->GetBrain()->AddGoalPatrol(wayPoints);
-                    }
+			//	if (bot != 0)
+			//	{
+			//		bot->CreateNav(navMesh);
+ 		//			Vector3 pos = bot->GetGameObject()->PRS.GPosition();
+ 		//			pos = pos + Vector3(0, 30, 0);
+ 		//			bot->GetController()->SetCenter(pos);
 
-
-				}
-
-				i++;
-			}
+			//		// if we have a patrol bot, set the wayPoints.
+   //                 if (bot->GetFaction() == 1)
+   //                 {
+   //                     std::list<Vector2> wayPoints;
+   //                     wayPoints.push_back(Vector2(0, -100));
+   //                     wayPoints.push_back(Vector2(100, -100));
+   //                     wayPoints.push_back(Vector2(100, 100));
+   //                     wayPoints.push_back(Vector2(-100, 100));
+   //                     wayPoints.push_back(Vector2(-100, -100));
+   //                     bot->GetBrain()->AddGoalPatrol(wayPoints);
+   //                 }
 
 
+			//	}
 
-			return true;
+			//	i++;
+			//}
 		}
 
 		void GameState::DisposeLevel()
@@ -266,10 +235,5 @@ namespace TikiEngine
 
 		}
 		#pragma endregion
-
-
-		/*void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
-		void ExecuteUnitFunction(UnitFunctions func);*/
-
 	}
 }

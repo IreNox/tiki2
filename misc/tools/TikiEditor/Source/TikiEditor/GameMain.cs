@@ -78,6 +78,8 @@ namespace TikiEditor
 
         protected override void LoadContent()
         {
+            _mode.Init();
+
             base.LoadContent();
         }
         #endregion

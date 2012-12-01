@@ -260,9 +260,10 @@ namespace TikiEngine
 				mesh->SetMaterial(model->GetEngine()->content->LoadMaterial(L"os_default"));
 			}
 
-			mesh->GetMaterial()->TexDiffuse   = readTexture(binMesh->DiffuseTexId);
-			mesh->GetMaterial()->TexNormalMap = readTexture(binMesh->NormalTexId);
-			mesh->GetMaterial()->TexSpecular  = readTexture(binMesh->SpecTexId);
+			mesh->GetMaterial()->TexDiffuse     = readTexture(binMesh->DiffuseTexId);
+			mesh->GetMaterial()->TexLightMap    = readTexture(binMesh->LightTexId);
+			mesh->GetMaterial()->TexNormalMap   = readTexture(binMesh->NormalTexId);
+			mesh->GetMaterial()->TexSpecularMap = readTexture(binMesh->SpecTexId);
 			//mesh->GetMaterial()->TexDiffuse   = readTexture(binMesh->SpecTexId);
 #endif
 
@@ -436,9 +437,9 @@ namespace TikiEngine
 			if (mat != 0)
 			{
 				btm->DiffuseTexId = addPartsTexture(mat->TexDiffuse);
+				btm->LightTexId   = addPartsTexture(mat->TexLightMap);
 				btm->NormalTexId  = addPartsTexture(mat->TexNormalMap);
-				btm->SpecTexId    = addPartsTexture(mat->TexSpecular);
-				btm->LightTexId   = addPartsTexture(mat->TexDiffuse);
+				btm->SpecTexId    = addPartsTexture(mat->TexSpecularMap);
 			}
 
 			meshIds.Add(
@@ -1051,7 +1052,7 @@ namespace TikiEngine
 
 		void TikiAnimation::SetDuration(double time)
 		{
-			this->animationSpeed = (this->stopTime - this->startTime) / time;
+			this->animationSpeed = (float)((this->stopTime - this->startTime) / time);
 		}
 
 		double TikiAnimation::GetAnimationSpeed()
@@ -1060,7 +1061,7 @@ namespace TikiEngine
 		}
 		void TikiAnimation::SetAnimationSpeed(double speed)
 		{
-			this->animationSpeed = speed;
+			this->animationSpeed = (float)speed;
 		}
 
 		bool TikiAnimation::GetLoop()
@@ -1178,7 +1179,7 @@ namespace TikiEngine
 		{
 			this->blend(args);
 
-			for(int i = 0; i < this->stack.Count(); i++)
+			for(UInt32 i = 0; i < this->stack.Count(); i++)
 			{
 				TikiAnimation* anim = stack[i];
 				if(anim == blendTarget)
@@ -1250,13 +1251,13 @@ namespace TikiEngine
 				return;
 			}
 
-			float currWeight = blendTime / blendTimer;
+			float currWeight = (float)(blendTime / blendTimer);
 			blendTarget->SetWeight(currWeight);
 
 			lastWeight = 1 - lastWeight;
 			currWeight = 1 - currWeight;
 
-			for(int i = 0; i < stack.Count(); i++)
+			for(UInt32 i = 0; i < stack.Count(); i++)
 			{
 				TikiAnimation* anim = stack[i];
 				if(blendTarget == anim)

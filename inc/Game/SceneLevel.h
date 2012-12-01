@@ -4,6 +4,7 @@
 #include "Core/sqlite3.h"
 
 #include "Game/Level.h"
+#include "Game/LevelPoint.h"
 #include "Game/LevelEnemy.h"
 #include "Game/LevelObject.h"
 
@@ -30,16 +31,18 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
-			Level* GetLevel();
-			Camera* GetCamera();
+			inline Level* GLevel() { return level; }
+			inline Camera* GCamera() { return mainCamera; }
+			inline const List<LevelPoint*>& GPoints() { return points; }
 
 		private:
 
-			Level* level;
-			
+			Level* level;			
 			Camera* mainCamera;
 
 			GameState* gameState;
+
+			List<LevelPoint*> points;
 
 		};	
 	}

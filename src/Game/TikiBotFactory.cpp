@@ -15,25 +15,35 @@ namespace TikiEngine
 		{
 			this->gameState = gameState;
 			
-			interval = 10.0;
+			interval = 30.0;
 			elapsed = 0;
-
-			// default waypoints
-			wayPoints.push_back(Vector2(0, -100));
-			wayPoints.push_back(Vector2(100, -100));
-			wayPoints.push_back(Vector2(100, 100));
-			wayPoints.push_back(Vector2(-100, 100));
-			wayPoints.push_back(Vector2(-100, -100));
-
-
-			// set spawnPoints
-			spawnPoint1 = Vector3(150, 50, 150);
-			spawnPoint2 = Vector3(-150, 50, -150);
-			spawnPoint3 = Vector3(-150, 50, 150);
 		}
 
 		TikiBotFactory::~TikiBotFactory()
 		{
+		}
+
+		void TikiBotFactory::Init()
+		{
+			const List<LevelPoint*>& points = gameState->GetScene()->GPoints();
+
+			UInt32 i = 0;
+			while (i < points.Count())
+			{
+				switch (points[i]->GType())
+				{
+				case 0:
+					break;
+				case 2:
+					wayPoints.push_back(points[i]->GPosition());
+					break;
+				case 3:
+					spawnPoints.Add(Vector3(points[i]->GPosition().X, gameState->GetScene()->GLevel()->GetTerrain()->GElevation(), points[i]->GPosition().Y));
+					break;
+				}
+
+				i++;
+			}		
 		}
 
 		void TikiBotFactory::SetSpawnInterval( double interval )
@@ -44,12 +54,14 @@ namespace TikiEngine
 		void TikiBotFactory::CreateEnemy1(GameObject* go)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier_enemy"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
 			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
+			botDesc.Height = 8.0f;
+			botDesc.Radius = 3.0f;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
@@ -62,12 +74,14 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerMop(GameObject* go)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
 			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
+			botDesc.Height = 8.5f;
+			botDesc.Radius = 3.0f;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
@@ -86,52 +100,30 @@ namespace TikiEngine
 				elapsed -= interval;
 
 				// spawn from three sides
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = spawnPoint1;
-				CreateEnemy1(go);
+				UInt32 i = 0;
+				while (i < spawnPoints.Count())
+				{
+					GameObject* go = new GameObject(gameState->GetEngine());
+					go->PRS.SPosition() = spawnPoints[i];
+					CreateEnemy1(go);
 
-				GameObject* go2 = new GameObject(gameState->GetEngine());
-				go2->PRS.SPosition() = spawnPoint2;
-				CreateEnemy1(go2);
-
-				GameObject* go3 = new GameObject(gameState->GetEngine());
-				go3->PRS.SPosition() = spawnPoint3;
-				CreateEnemy1(go3);
+					i++;
+				}
 			}
 
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = spawnPoint1;
-				CreateEnemy1(go);
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F6))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = spawnPoint2;
-				CreateEnemy1(go);
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F7))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = spawnPoint3;
+				go->PRS.SPosition() = spawnPoints[0];
 				CreateEnemy1(go);
 			}
 
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = Vector3(0, 50, 0);
+				go->PRS.SPosition() = Vector3(0, gameState->GetScene()->GLevel()->GetTerrain()->GElevation(), 0);
 				CreatePlayerMop(go);
 			}
-
-
-
 		}
-
-
-
 	}
 }

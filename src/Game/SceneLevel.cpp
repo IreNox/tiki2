@@ -16,16 +16,13 @@
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
 
-#include <sstream>
-using namespace std;
-
 namespace TikiEngine
 {
 	namespace Game
 	{
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
-			: Scene(engine) //, enemies(), objects()
+			: Scene(engine)
 		{
 			gameState = new GameState(engine, this);
 			gameState->AddRef();
@@ -63,18 +60,6 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Get
-		Level* SceneLevel::GetLevel()
-		{
-			return level;
-		}
-
-		Camera* SceneLevel::GetCamera()
-		{
-			return mainCamera;
-		}
-		#pragma endregion
-
 		#pragma region Member - Level
 		bool SceneLevel::LoadLevel(Int64 id)
 		{
@@ -99,6 +84,30 @@ namespace TikiEngine
 			level->LoadFromDatabase(state);
 			level->AddRef();
 			sqlite3_finalize(state);
+
+			// Load Points
+			sql = ostringstream();
+			sql << "SELECT * FROM \"tiki_level_points\" WHERE \"LevelID\" = '" << id << "';";
+
+			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
+
+			if (r == SQLITE_OK)
+			{
+				while (sqlite3_step(state) == SQLITE_ROW)
+				{
+					LevelPoint* point = new LevelPoint();
+					point->LoadFromDatabase(state);
+
+					points.Add(point);
+				}
+				sqlite3_finalize(state);
+			}
+
+			////////////////////////////////
+			// Init GameState			  //
+			gameState->LoadLevel(level);  //
+			//							  //
+			////////////////////////////////
 
 			// Load Enemies
 			sql = ostringstream();
@@ -136,7 +145,7 @@ namespace TikiEngine
 				sqlite3_finalize(state);
 			}
 
-			return gameState->LoadLevel(level);
+			return true;
 		}
 
 		void SceneLevel::DisposeLevel()
@@ -164,21 +173,7 @@ namespace TikiEngine
 		{
 			if (level) level->Draw(args);
 			
-			//UInt32 i = 0;
-			//while (i < enemies.Count())
-			//{
-			//	enemies[i]->Draw(args);
-			//	i++;
-			//}
-
-			//i = 0;
-			//while (i < objects.Count())
-			//{
-			//	objects[i]->Draw(args);
-			//	i++;
-			//}
 			Scene::Draw(args);
-
 			gameState->Draw(args);
 		}
 
@@ -186,21 +181,7 @@ namespace TikiEngine
 		{
 			if (level) level->Update(args);
 
-			//UInt32 i = 0;
-			//while (i < enemies.Count())
-			//{
-			//	enemies[i]->Update(args);
-			//	i++;
-			//}
-
-			//i = 0;
-			//while (i < objects.Count())
-			//{
-			//	objects[i]->Update(args);
-			//	i++;
-			//}
 			Scene::Update(args);
-
 			gameState->Update(args);
 		}
 		#pragma endregion

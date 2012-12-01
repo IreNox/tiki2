@@ -13,7 +13,7 @@ namespace TikiEngine
 		HelperLog();
 		~HelperLog();
 
-		void Write(string text) const;
+		void Write(string text, bool output = true) const;
 		void WriteError(string message, void* exception) const;
 
 	};

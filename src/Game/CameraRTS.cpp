@@ -41,7 +41,12 @@ namespace TikiEngine
 				(args.Input.MousePosition.Y < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.Y > 0.99f ? 1.0f : 0.0f)
 			) * speed;		
 
-			gameObject->PRS.SPosition() += Vector3(move.X, 0, move.Y) * (float)args.Time.ElapsedTime;
+			float sizeOver2 = ((float)terrain->GSize() / 2) * 0.8f;
+
+			Vector3 pos = gameObject->PRS.GPosition() + Vector3(move.X, 0, move.Y) * (float)args.Time.ElapsedTime;
+			pos.X = Clamp(pos.X, -sizeOver2, sizeOver2);
+			pos.Z = Clamp(pos.Z, -sizeOver2, sizeOver2);
+			gameObject->PRS.SPosition() = pos;
 
 			if (args.Input.MouseWheel != 0)
 			{

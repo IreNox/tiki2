@@ -59,6 +59,7 @@
     <ClInclude Include="inc\Game\LevelChild.h" />
     <ClInclude Include="inc\Game\LevelEnemy.h" />
     <ClInclude Include="inc\Game\LevelObject.h" />
+    <ClInclude Include="inc\Game\LevelPoint.h" />
     <ClInclude Include="inc\Game\MachineGun.h" />
     <ClInclude Include="inc\Game\MessageDispatcher.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
@@ -101,8 +102,7 @@
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
-    <ClCompile Include="src\Game\BasicDatabase.cpp" />
-    <ClCompile Include="src\Game\BasicTransform.cpp" />
+    <ClCompile Include="src\Game\DatabaseLevel.cpp" />
     <ClCompile Include="src\Game\BoxSide.cpp" />
     <ClCompile Include="src\Game\Bullet.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
@@ -122,10 +122,6 @@
     <ClCompile Include="src\Game\GoalThink.cpp" />
     <ClCompile Include="src\Game\GoalTraverseEdge.cpp" />
     <ClCompile Include="src\Game\GoalWander.cpp" />
-    <ClCompile Include="src\Game\Level.cpp" />
-    <ClCompile Include="src\Game\LevelChild.cpp" />
-    <ClCompile Include="src\Game\LevelEnemy.cpp" />
-    <ClCompile Include="src\Game\LevelObject.cpp" />
     <ClCompile Include="src\Game\MachineGun.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
     <ClCompile Include="src\Game\MessageDispatcher.cpp" />

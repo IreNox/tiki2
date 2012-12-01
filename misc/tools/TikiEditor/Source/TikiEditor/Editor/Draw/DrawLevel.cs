@@ -40,11 +40,18 @@ namespace TikiEditor
         private void _drawBasicTransform(BasicTransform bt)
         {
             Vector2[] vertices = bt.Vertices;
+            Color c = new Color(0, 1, 0, 0.5f);
 
-            batch.Draw(
-                vertices,
-                new Color(0, 0, 1, 0.5f)
-            );
+            if (bt is LevelEnemy)
+            {
+                c = new Color(1, 0, 0, 0.5f);
+            }
+            else if (bt is LevelPoint)
+            {
+                c = new Color(0, 0, 1, 0.5f);
+            }
+
+            batch.Draw(vertices, c);
 
             batch.DrawLine(
                 vertices,

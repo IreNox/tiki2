@@ -230,14 +230,14 @@ namespace TikiEngine
 				tex,
 				&rects,
 				rd
-				);
+			);
 
 			engine->sprites->DrawString(
 				GUIControl::GetDefaultFont(),
 				text,
 				posText,
 				Color::White
-				);
+			);
 
 			GUIControl::Draw(args);
 		}
@@ -534,14 +534,9 @@ namespace TikiEngine
 		{
 			engine->sprites->Draw(
 				texture,
-				RectangleF::Create(
-				position.X,
-				position.Y,
-				size.X,
-				size.Y
-				),
+				boundingBox,
 				Color::White
-				);
+			);
 		}
 		#pragma endregion
 		#pragma endregion
@@ -596,7 +591,7 @@ namespace TikiEngine
 		{
 			if (!this->GetReady()) return;
 
-			engine->sprites->DrawString(font, text, position, Color::White);
+			engine->sprites->DrawString(font, text, boundingBox.Position(), Color::White);
 		}
 		#pragma endregion
 

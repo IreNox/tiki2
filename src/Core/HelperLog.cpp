@@ -7,8 +7,6 @@ using namespace std;
 
 namespace TikiEngine
 {
-	//MessageReceivedEvent HelperLog::MessageReceived = MessageReceivedEvent();
-
 	HelperLog::HelperLog()
 		: MessageReceived()
 	{
@@ -21,12 +19,12 @@ namespace TikiEngine
 	{
 	}
 
-	void HelperLog::Write(string text) const
+	void HelperLog::Write(string text, bool output) const
 	{
-		MessageReceived.RaiseEvent(
-			0,
-			MessageReceivedArgs(text.c_str())
-		);
+		if (output)
+		{
+			MessageReceived.RaiseEvent(this, MessageReceivedArgs(text.c_str()));
+		}
 
 		FILE* h;
 		fopen_s(&h, "engine.log", "a");

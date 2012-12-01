@@ -400,7 +400,7 @@ namespace TikiEngine
 			ostringstream s;
 			s << "Loading Module: " << typeid(*module).name() << " - Elapsed Time: " << ((double)(end.QuadPart - start.QuadPart) / freq.QuadPart); 
 
-			this->HLog.Write(s.str());
+			this->HLog.Write(s.str(), false);
 #endif
 
 			return true;

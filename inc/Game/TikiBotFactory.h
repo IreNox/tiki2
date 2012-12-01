@@ -12,8 +12,11 @@ namespace TikiEngine
 		class TikiBotFactory
 		{
 		public:
+
 			TikiBotFactory(GameState* gameState);
 			~TikiBotFactory();
+
+			void Init();
 
 			void SetSpawnInterval(double interval);
 
@@ -31,10 +34,9 @@ namespace TikiEngine
 		private:
 			//Regulator* spawnRegulator;
 			GameState* gameState;
+
 			std::list<Vector2> wayPoints;
-			Vector3 spawnPoint1;
-			Vector3 spawnPoint2;
-			Vector3 spawnPoint3;
+			List<Vector3> spawnPoints;
 
 			double interval;
 			double elapsed;

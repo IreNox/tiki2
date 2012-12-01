@@ -86,13 +86,13 @@ namespace TikiEditor
 					if (mat == 0)
 					{
 						mat = new Material(0);
-
 						mesh->SetMaterial(mat);
 					}
 
 					mat->TexDiffuse = createFakeTexture(meshMat->TextureDiffuse);
+					mat->TexLightMap = createFakeTexture(meshMat->TextureLight);
 					mat->TexNormalMap = createFakeTexture(meshMat->TextureNormal);
-					mat->TexSpecular = createFakeTexture(meshMat->TextureSpec);
+					mat->TexSpecularMap = createFakeTexture(meshMat->TextureSpec);
 				}
 
 				i++;
@@ -140,6 +140,11 @@ namespace TikiEditor
 	ITexture* FBXImport::createFakeTexture(String^ fileName)
 	{
 		wstring str = (wcstring)Marshal::StringToHGlobalUni(fileName).ToPointer();
+
+		if (str == L"")
+		{
+			return 0;
+		}
 
 		ITexture* tex = new FakeTexture();
 		tex->LoadFromFile(str.c_str());

@@ -64,6 +64,13 @@ namespace TikiEditor.Designer
                 new LevelObject()
             );
         }
+        
+        private void buttonAddPoint_Click(object sender, EventArgs e)
+        {
+            GI.ModeLevel.Level.Points.Add(
+                new LevelPoint()
+            );
+        }
 
         private void buttonAddEnemyBasic_Click(object sender, EventArgs e)
         {

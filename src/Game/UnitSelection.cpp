@@ -104,7 +104,7 @@ namespace TikiEngine
 					// select player units only
 					if (ent->GetFaction() == 0)
 					{
-						Camera* cam = gameState->GetScene()->GetCamera();
+						Camera* cam = gameState->GetScene()->GCamera();
 						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
 						Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *

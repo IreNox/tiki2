@@ -374,6 +374,9 @@
     <ClInclude Include="inc\Game\TikiBotFactory.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\LevelPoint.h">
+      <Filter>Headerdateien\Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -402,24 +405,6 @@
     </ClCompile>
     <ClCompile Include="src\Game\CameraRTS.cpp">
       <Filter>Quelldateien\Scripts</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\BasicDatabase.cpp">
-      <Filter>Quelldateien\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\BasicTransform.cpp">
-      <Filter>Quelldateien\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\Level.cpp">
-      <Filter>Quelldateien\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\LevelEnemy.cpp">
-      <Filter>Quelldateien\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\LevelObject.cpp">
-      <Filter>Quelldateien\Level</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\LevelChild.cpp">
-      <Filter>Quelldateien\Level</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BaseGameEntity.cpp">
       <Filter>Quelldateien\AI\BaseEntities</Filter>
@@ -558,6 +543,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\TikiBotFactory.cpp">
       <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\DatabaseLevel.cpp">
+      <Filter>Quelldateien\Level</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

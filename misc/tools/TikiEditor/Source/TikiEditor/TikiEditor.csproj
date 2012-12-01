@@ -112,6 +112,7 @@
     <Compile Include="Editor\ModeModel.cs" />
     <Compile Include="Editor\ModeTest.cs" />
     <Compile Include="Editor\Objects\GUI\GUIRect.cs" />
+    <Compile Include="Editor\Objects\Level\LevelPoint.cs" />
     <Compile Include="Engine\EditorMode.cs" />
     <Compile Include="Editor\ModeLevel.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
@@ -188,6 +189,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TikiEditor.Cloddy\TikiEditor.Cloddy.vcxproj">
+      <Project>{4F25939D-C9FA-452A-805C-96E4EDFE3137}</Project>
+      <Name>TikiEditor.Cloddy</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TikiEditor.Model\TikiEditor.Model.vcxproj">
       <Project>{7FCF27FA-70D3-48ED-A52E-7C7DB64CC61D}</Project>
       <Name>TikiEditor.Model</Name>

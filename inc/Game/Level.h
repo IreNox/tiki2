@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/GameObject.h"
+
 #include "Game/BasicDatabase.h"
 
 #include "Core/ITerrainRenderer.h"
@@ -9,7 +11,7 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		class Level : public BasicDatabase
+		class Level : public GameObject, public BasicDatabase
 		{
 		public:
 
@@ -26,6 +28,8 @@ namespace TikiEngine
 		private:
 
 			string name;
+
+			GameState* gameState;
 
 			string heightmapFilename;
 			int heightmapScale;

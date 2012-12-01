@@ -153,7 +153,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - EventHandler
-		void DebugConsole::Handle(void* sender, const MessageReceivedArgs& args)
+		void DebugConsole::Handle(const HelperLog* sender, const MessageReceivedArgs& args)
 		{
 			lines.Add(
 				StringAtoW(args.Message),

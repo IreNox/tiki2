@@ -17,27 +17,49 @@ namespace TikiEngine
 			: EngineObject(state->GetEngine()), state(state)
 		{
 			buttonMenu = new GUIButton(engine);
-			buttonMenu->SPosition() = Vector2(25, -5);
+			buttonMenu->SPosition() = Vector2(20, -15);
 			buttonMenu->Text() = L"Menu";
-			buttonMenu->SSize() = Vector2(75, 35);
+			buttonMenu->SSize() = Vector2(100, 55);
 			buttonMenu->AddRef();
+			buttonMenu->Click.AddHandler(this);
 			enabledControls.Add(buttonMenu);
 
 			windowResources = new GUIWindow(engine);
-			windowResources->SSize() = Vector2(175, 35);
+			windowResources->SSize() = Vector2(180, 55);
 			windowResources->AddRef();
 			enabledControls.Add(windowResources);
 
 			GUIImage* image = new GUIImage(engine);
 			image->SetTexture(engine->content->LoadTexture(L"hud/mass"));
 			image->SSize() = Vector2(16, 16);
-			image->SPosition() = Vector2(16, 10);
+			image->SPosition() = Vector2(16, 20);
 			windowResources->AddChild(image);
 
 			GUILabel* label = new GUILabel(engine);
 			label->Text() = L"0/2500";
-			label->SPosition() = Vector2(32, 10);
+			label->SPosition() = Vector2(35, 20);
 			windowResources->AddChild(label);
+
+			windowFunc = new GUIWindow(engine);
+			windowFunc->SSize() = Vector2(225, 225);
+			enabledControls.Add(windowFunc);
+
+			UInt32 i = 0;
+			while (i < 9)
+			{
+				int x = i % 3;
+				int y = i / 3;
+
+				GUIButton* cmd = new GUIButton(engine);
+				cmd->SSize() = Vector2(70, 70);
+				cmd->SPosition() = Vector2(
+					10.0f + (x * 68),
+					10.0f + (y * 68)
+				);
+				windowFunc->AddChild(cmd);
+
+				i++;
+			}
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
@@ -63,7 +85,15 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			windowResources->SPosition() = Vector2((float)vp->Width - 200, -10);
+			windowFunc->SPosition() = Vector2((float)vp->Width - 220, (float)vp->Height - 220);
+			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15);
+
+			//UInt32 i = 0;
+			//while (i < windowResources->ChildControls().Count())
+			//{
+			//	windowResources->ChildControls()[i]->SPosition() = Vector2(10, 10);
+			//	i++;
+			//}
 
 			//imageRes1->SPosition() = Vector2((float)vp->Width - 200, 10);
 			//labelRes1->SPosition() = Vector2((float)vp->Width - 180, 10);

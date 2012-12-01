@@ -14,8 +14,9 @@ namespace TikiEngine
 			bool FlipTexcorrdV;
 
 			ITexture* TexDiffuse;
+			ITexture* TexLightMap;
 			ITexture* TexNormalMap;
-			ITexture* TexSpecular;
+			ITexture* TexSpecularMap;
 
 			Material(Engine* engine);
 			~Material();

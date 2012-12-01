@@ -227,7 +227,7 @@ namespace TikiEngine
 			sensorMem->Draw(args);
 
 			// Draw Goals
-			Camera* cam = gameState->GetScene()->GetCamera();
+			Camera* cam = gameState->GetScene()->GCamera();
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
 			Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *

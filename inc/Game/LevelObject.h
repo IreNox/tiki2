@@ -13,9 +13,7 @@ namespace TikiEngine
 			LevelObject(GameState* state);
 			~LevelObject();
 
-			#if _DEBUG
-			void Update(const UpdateArgs& args);
-			#endif
+			void LoadFromDatabase(sqlite3_stmt* state);
 
 		private:
 

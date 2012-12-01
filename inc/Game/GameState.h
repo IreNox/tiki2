@@ -14,7 +14,7 @@
 
 namespace TikiEngine
 {
-	typedef void (*FuncExecuteUnitFunction)(GameObject* gameObject);
+	//typedef void (*FuncExecuteUnitFunction)(GameObject* gameObject);
 
 	namespace Game
 	{
@@ -41,46 +41,39 @@ namespace TikiEngine
 			GameState(Engine* engine, SceneLevel* scene);
 			~GameState();
 
-			bool LoadLevel(Level* level);
+			void LoadLevel(Level* level);
 			void DisposeLevel();
 
-			Engine* GetEngine();
-			SceneLevel* GetScene();
-			NavigationMesh* GetNavMesh();
+			inline Engine* GetEngine() { return engine; }
+			inline SceneLevel* GetScene() { return scene; }
+			inline NavigationMesh* GetNavMesh() { return navMesh; }
+			inline TikiBotFactory* GetBotFactory() { return botFactory; }
 
-			void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
-
-			UInt64 GetResource1();
-			UInt64 GetResource2();
+			inline double GetResource() { return resource; }
 
 			void AddProjectile(GameObject* go);
 			void AddTrigger(GameObject* go);
 
 			void ExecuteUnitFunction(UnitFunctions func);
+			void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
 		private:
 			
-			UInt64 resource1;
-			UInt64 resource2;
+			double resource;
 
 			GameHud* hud;
 			SceneLevel* scene;
 
-			NavigationMesh* navMesh;
-			
+			NavigationMesh* navMesh;			
+			TikiBotFactory* botFactory;
 			UnitSelection* unitSelection;
 
 			List<GameObject*> projectiles;
 
-			TikiBotFactory* botFactory;
-
-			//List<Unit*> levelUnits;
-			//List<Building*> levelBuildings;
-
-			Dictionary<UnitFunctions, FuncExecuteUnitFunction> funcButton;
+			//Dictionary<UnitFunctions, FuncExecuteUnitFunction> funcButton;
 
 		};
 	}

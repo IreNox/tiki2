@@ -73,13 +73,15 @@ namespace TikiEngine
 				if (material)
 				{
 					objData->UseDiffuse = (material->TexDiffuse != 0);
+					//objData->UseLightMap = (material->TexLightMap != 0);
 					objData->UseNormalMap = (material->TexNormalMap != 0);
-					objData->UseSpecular = (material->TexSpecular != 0);
+					objData->UseSpecularMap = (material->TexSpecularMap != 0);
 					objData->FlipTexcoordV = material->FlipTexcorrdV;
 
 					if (objData->UseDiffuse) this->SetTexture("TexDiffuse", material->TexDiffuse);
+					//if (objData->UseLightMap) this->SetTexture("TexLightMap", material->TexLightMap);
 					if (objData->UseNormalMap) this->SetTexture("TexNormalMap", material->TexNormalMap);
-					if (objData->UseSpecular) this->SetTexture("TexSpecular", material->TexSpecular);
+					if (objData->UseSpecularMap) this->SetTexture("TexSpecularMap", material->TexSpecularMap);
 				}
 
 				DllMain::ModuleGraphics->GetCBufferObject()->Unmap();

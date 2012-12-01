@@ -23,8 +23,8 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
-			void Handle(void* sender, const MessageReceivedArgs& args);
 			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
+			void Handle(const HelperLog* sender, const MessageReceivedArgs& args);
 
 		private:
 			

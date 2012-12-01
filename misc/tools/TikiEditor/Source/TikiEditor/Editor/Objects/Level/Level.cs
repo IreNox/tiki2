@@ -19,6 +19,7 @@ namespace TikiEditor.Objects
         private int _heightmapSize;
         private float _heightmapElevation;
 
+        private DbList<LevelPoint> _points;
         private DbList<LevelEnemy> _enemies;
         private DbList<LevelObject> _objects;
         #endregion
@@ -88,6 +89,14 @@ namespace TikiEditor.Objects
         }
 
         [Browsable(false)]
+        [DataRelation("ID", typeof(LevelPoint), "LevelID")]
+        public DbList<LevelPoint> Points
+        {
+            get { return _points; }
+            set { SetProperty(ref _points, value, "Points"); }
+        }
+        
+        [Browsable(false)]
         [DataRelation("ID", typeof(LevelEnemy), "LevelID")]
         public DbList<LevelEnemy> Enemies
         {
@@ -107,7 +116,7 @@ namespace TikiEditor.Objects
         #region Properties - Dynamic
         public BasicTransform[] AllTransforms
         {
-            get { return _objects.Cast<BasicTransform>().Concat(_enemies).ToArray(); }
+            get { return _objects.Cast<BasicTransform>().Concat(_enemies).Concat(_points).ToArray(); }
         }
         #endregion
     }

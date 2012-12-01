@@ -5,13 +5,14 @@
 
 namespace TikiEngine
 {
+	class HelperLog;
+
 	struct MessageReceivedArgs
 	{
 		cstring Message;
-
 		MessageReceivedArgs(cstring message) : Message(message) {}
 	};
 
-	typedef Event<void, MessageReceivedArgs> MessageReceivedEvent;
-	typedef EventHandler<void, MessageReceivedArgs> MessageReceivedEventHandler;
+	typedef Event<const HelperLog, MessageReceivedArgs> MessageReceivedEvent;
+	typedef EventHandler<const HelperLog, MessageReceivedArgs> MessageReceivedEventHandler;
 }

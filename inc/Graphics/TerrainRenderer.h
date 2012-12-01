@@ -45,6 +45,10 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* mat);
 
+			int GScale() { return scale; }
+			int GSize() { return size; }
+			float GElevation() { return elevation; }
+
 			float SampleHeight(const Vector3& position);
 
 			void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
@@ -59,6 +63,10 @@ namespace TikiEngine
 			UInt32 collisionRegions;
 			TerrainIndexBuffer* collisionIndexBuffer;
 			TerrainVertexBuffer* collisionVertexBuffer;
+
+			int size;
+			int scale;
+			float elevation;
 
 			codex_Ptr<IVertexFormat> vertexFormat;
 

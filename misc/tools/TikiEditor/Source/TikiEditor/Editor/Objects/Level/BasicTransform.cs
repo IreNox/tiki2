@@ -43,14 +43,14 @@ namespace TikiEditor.Objects
         }
 
         [DataField("Rotation")]
-        public float Rotation
+        public virtual float Rotation
         {
             get { return _rotation; }
             set { SetProperty(ref _rotation, value, "Rotation"); }
         }
 
         [DataField("Scale")]
-        public float Scale
+        public virtual float Scale
         {
             get { return _scale; }
             set { SetProperty(ref _scale, value, "Scale"); }

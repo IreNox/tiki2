@@ -14,8 +14,8 @@ namespace TikiEditor
     public class ModeLevel : EditorMode
     {
         #region Vars
-        //private string _heightmapName = null;
-        //private Heightmap _heightmap;
+        private string _heightmapName = null;
+        private Heightmap _heightmap;
         private Texture2D _background;
 
         private int _levelId;
@@ -32,10 +32,10 @@ namespace TikiEditor
             _levelId = levelId;
 
             _designer = new ucDesignLevel();
-            //_heightmap = new Heightmap();
+            _heightmap = new Heightmap();
         }
 
-        public override void Initialize()
+        public override void  Init()
         {
             var row = GI.DB.Select<Level>(_levelId);
 
@@ -126,41 +126,62 @@ namespace TikiEditor
         #region Member - EventHandler
         private void Level_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName == "HeightmapFilename")
-            //{
-            //    if (_heightmapName != _level.HeightmapFilename && File.Exists(_level.HeightmapFilename))
-            //    {
-            //        try
-            //        {
-            //            _heightmap.LoadHeightmap(_level.HeightmapFilename);
+            if (e.PropertyName == "HeightmapFilename")
+            {
+                string fileIn = Path.Combine(Path.GetDirectoryName(GI.DataPath), _level.HeightmapFilename);
 
-            //            int[] data = new int[_heightmap.GetWidth() * _heightmap.GetHeight()];
-            //            _heightmap.FillData(data);
+                if (_heightmapName != _level.HeightmapFilename && File.Exists(fileIn))
+                {
+                    try
+                    {
+                        string fileOut = "Content/" + Path.GetFileNameWithoutExtension(_level.HeightmapFilename) + ".png";
 
-            //            Texture2D tex = new Texture2D(
-            //                this.GraphicsDevice,
-            //                _heightmap.GetWidth(),
-            //                _heightmap.GetHeight()
-            //            );
+                        if (File.Exists(fileOut))
+                        {
+                            using (Stream io = File.OpenRead(fileOut))
+                            {
+                                _background = Texture2D.FromStream(GI.Device, io);
+                            }
+                        }
+                        else
+                        {
+                            _heightmap.LoadHeightmap(fileIn);
 
-            //            int max = data.Max();
+                            int[] data = new int[_heightmap.GetWidth() * _heightmap.GetHeight()];
+                            _heightmap.FillData(data);
 
-            //            tex.SetData(
-            //                data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()
-            //            );
+                            Texture2D tex = new Texture2D(
+                                this.GraphicsDevice,
+                                _heightmap.GetWidth(),
+                                _heightmap.GetHeight()
+                            );
 
-            //            if (_background != null)
-            //            {
-            //                _background.Dispose();
-            //            }
-            //            _background = tex;
-            //            _heightmapName = _level.HeightmapFilename;
-            //        }
-            //        catch
-            //        {
-            //        }
-            //    }
-            //}
+                            int max = data.Max();
+
+                            tex.SetData(
+                                data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()
+                            );
+
+                            if (_background != null)
+                            {
+                                _background.Dispose();
+                            }
+
+                            _background = tex;
+
+                            using (Stream io = File.OpenWrite(fileOut))
+                            {
+                                _background.SaveAsPng(io, _background.Width, _background.Height);
+                            }
+                        }
+
+                        _heightmapName = _level.HeightmapFilename;
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
         }
         #endregion
 

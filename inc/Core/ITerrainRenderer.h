@@ -29,6 +29,10 @@ namespace TikiEngine
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* mat) = 0;
 
+			virtual int GScale() = 0;
+			virtual int GSize() = 0;
+			virtual float GElevation() = 0;
+
 			virtual float SampleHeight(const Vector3& position) = 0;
 
 			virtual void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi) = 0;

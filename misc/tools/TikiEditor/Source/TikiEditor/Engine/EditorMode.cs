@@ -16,6 +16,10 @@ namespace TikiEditor
         #endregion
 
         #region Mebmber
+        public virtual void Init()
+        {
+        }
+
         public virtual object ResetBefore()
         {
             return null;

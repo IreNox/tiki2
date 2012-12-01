@@ -326,6 +326,10 @@ namespace TikiEngine
 		#pragma region Member - Load
 		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size, float elevation)
 		{
+			this->size = size;
+			this->scale = scale;
+			this->elevation = elevation;
+
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 
 			vertexFormat = cloddy_VertexFormat::P3F()

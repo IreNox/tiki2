@@ -7,7 +7,7 @@ namespace TikiEngine
 	namespace Resources
 	{
 		Material::Material(Engine* engine)
-			: EngineObject(engine), shader(0), TexDiffuse(0), TexNormalMap(0), TexSpecular(0), FlipTexcorrdV(false)
+			: EngineObject(engine), shader(0), TexDiffuse(0), TexLightMap(0), TexNormalMap(0), TexSpecularMap(0), FlipTexcorrdV(false)
 		{
 		}
 
