@@ -65,12 +65,12 @@ namespace TikiEngine
 				float sample = 32.0f; //terrain->SampleHeight(gameObject->PRS.GPosition());
 				gameObject->PRS.SPosition().Y = sample + (164.0f - zoom);
 
-				if (args.Input.MouseWheel != 0)
-				{
-					ostringstream s;
-					s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
-					engine->HLog.Write(s.str());
-				}
+				//if (args.Input.MouseWheel != 0)
+				//{
+				//	ostringstream s;
+				//	s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+				//	engine->HLog.Write(s.str());
+				//}
 
 			}
 		}

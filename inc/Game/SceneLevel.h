@@ -42,6 +42,8 @@ namespace TikiEngine
 
 			GameState* gameState;
 
+			IRenderTarget* temp;
+
 			List<LevelPoint*> points;
 
 		};	

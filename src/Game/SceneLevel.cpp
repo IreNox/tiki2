@@ -14,6 +14,7 @@
 #include "Game/CameraRTS.h"
 
 #include "Game/PPFogOfWar.h"
+#include "Game/PPScreenSpaceAmbientOcclusion.h"
 
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
@@ -62,6 +63,10 @@ namespace TikiEngine
 			// PostProcess
 			engine->graphics->AddPostProcess(new PPFogOfWar(gameState));
 			
+			auto ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			temp = ssao->GetAO();
+			engine->graphics->AddPostProcess(ssao);
+
 			Scene::Initialize(args);
 		}
 		#pragma endregion

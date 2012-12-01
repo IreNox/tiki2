@@ -16,7 +16,7 @@ namespace TikiEngine
 			: PostProcess(engine)
 		{
 			SafeAddRef(
-				engine->content->LoadShader(L"Data/Effects/pp_ssao.fx"),
+				engine->content->LoadShader(L"pp_ssao"),
 				&shader
 			);
 
@@ -26,15 +26,14 @@ namespace TikiEngine
 			Vector2 screenSize = engine->graphics->GetViewPort()->GetSize();
 			shader->SetVector2("ScreenSize", Vector2(screenSize.X, screenSize.Y));
 
-			randomTexture = engine->content->LoadTexture(L"Data/Resources/Textures/random.png");
+			randomTexture = engine->content->LoadTexture(L"random");
 			shader->SetTexture("tRandom", randomTexture);
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
-			pass->AddInput("tNormal", engine->graphics->GetNormalTarget());
-			pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
+			pass->AddInput("rtNormal", engine->graphics->GetNormalTarget());
+			//pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, aoTarget);
 			this->AddPass(pass);
-			SafeRelease(&pass);
 		}
 
 		PPScreenSpaceAmbientOcclusion::~PPScreenSpaceAmbientOcclusion()
@@ -51,15 +50,15 @@ namespace TikiEngine
 
 		void PPScreenSpaceAmbientOcclusion::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
-			shader->SetVector3(
-				"ViewForward",
-				args.CurrentCamera->GetGameObject()->PRS.GetForward()
-			);
+			//shader->SetVector3(
+			//	"ViewForward",
+			//	args.CurrentCamera->GetGameObject()->PRS.GetForward()
+			//);
 
-			shader->SetMatrix(
-				"SceneViewProj",
-				Matrix::Identity
-			);
+			//shader->SetMatrix(
+			//	"SceneViewProj",
+			//	Matrix::Identity
+			//);
 		}
 	}
 }
