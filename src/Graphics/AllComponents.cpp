@@ -489,7 +489,10 @@ namespace TikiEngine
 				terrain->DisableLight(0);
 			}
 
-			terrain->Triangulate(cloddy_Mat4F(args.CurrentCamera->GetViewMatrix()->n), cloddy_Mat4F(args.CurrentCamera->GetProjectionMatrix()->n));
+			terrain->Triangulate(
+				cloddy_Mat4F((float*)args.CurrentCamera->GetViewMatrix().n),
+				cloddy_Mat4F((float*)args.CurrentCamera->GetProjectionMatrix().n)
+			);
 			manager->EndTriangulation();
 
 			//if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)

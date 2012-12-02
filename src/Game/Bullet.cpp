@@ -21,11 +21,11 @@ namespace TikiEngine
 
             Vector3 toTarget = Vector3::Normalize(desc.Target - desc.Origin);
             toTarget = toTarget * desc.MaxSpeed;
-            Vector2 vel = desc.Heading * desc.MaxSpeed;
-            vel.Truncate(desc.MaxSpeed);
+            Vector3 vel = toTarget; // * desc.MaxSpeed; //desc.Heading statt toTarget
+            //vel.Truncate(desc.MaxSpeed);
 
             sphere->GetRigidBody()->SetMass(desc.Mass);
-            sphere->GetRigidBody()->SetVelocity(Vector3(vel.X, toTarget.Y, vel.Y));
+            sphere->GetRigidBody()->SetVelocity(Vector3(vel.X, toTarget.Y, vel.Z));
         }
 
 

@@ -60,13 +60,17 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 8.0f;
-			botDesc.Radius = 3.0f;
+			botDesc.Height = 9.0f;
+			botDesc.Radius = 3.5f;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
 			bot->CreateNav(gameState->GetNavMesh());
-			bot->GetBrain()->AddGoalPatrol(wayPoints);
+
+			if (count(wayPoints.begin(), wayPoints.end(), 1) != 0)
+			{
+				bot->GetBrain()->AddGoalPatrol(wayPoints);
+			}
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -80,8 +84,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 8.5f;
-			botDesc.Radius = 3.0f;
+			botDesc.Height = 9.0f;
+			botDesc.Radius = 3.5f;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
@@ -93,7 +97,7 @@ namespace TikiEngine
 		void TikiBotFactory::Update( const UpdateArgs& args )
 		{
 			//if (spawnRegulator->IsReady())
-			elapsed += args.Time.ElapsedTime;
+			//elapsed += args.Time.ElapsedTime;
 
 			if (elapsed > interval)
 			{
@@ -111,6 +115,7 @@ namespace TikiEngine
 				}
 			}
 
+#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
@@ -124,6 +129,7 @@ namespace TikiEngine
 				go->PRS.SPosition() = Vector3(0, gameState->GetScene()->GLevel()->GetTerrain()->GElevation(), 0);
 				CreatePlayerMop(go);
 			}
+#endif
 		}
 	}
 }

@@ -2,6 +2,7 @@
 
 #include "Core/PostProcess.h"
 #include "Game/GameState.h"
+#include "Game/EventUnitSelectionChanged.h"
 
 namespace TikiEngine
 {
@@ -9,7 +10,7 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Game;
 
-		class PPFogOfWar : public PostProcess
+		class PPFogOfWar : public PostProcess, public UnitSelectionChangedEventHandler
 		{
 		public:
 
@@ -18,6 +19,8 @@ namespace TikiEngine
 
 			void UpdatePass(UInt32 index, const DrawArgs& args);
 
+			void Handle(GameState* sender, const UnitSelectionChangedArgs& args);
+
 		private:
 
 			GameState* state;
@@ -25,10 +28,13 @@ namespace TikiEngine
 			IShader* shader;
 			IConstantBuffer* buffer;
 
+			List<GameObject*> selected;
+
 			struct CBUnit
 			{
-				Vector3 Position;
+				Vector2 Position;				
 				float Range;
+				float Type;
 			};
 
 			struct CBFogOfWar

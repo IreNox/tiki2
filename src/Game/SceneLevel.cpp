@@ -13,6 +13,7 @@
 
 #include "Game/CameraRTS.h"
 
+#include "Game/PPBlur.h"
 #include "Game/PPFogOfWar.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
@@ -66,6 +67,11 @@ namespace TikiEngine
 			auto ssao = new PPScreenSpaceAmbientOcclusion(engine);
 			temp = ssao->GetAO();
 			engine->graphics->AddPostProcess(ssao);
+
+			//auto blur = new PPBlur(engine);
+			//blur->GetPasses()[0]->SetInput("tex", temp);
+			//blur->GetPasses()[1]->SetOutput(0, temp);
+			//engine->graphics->AddPostProcess(blur);
 
 			Scene::Initialize(args);
 		}

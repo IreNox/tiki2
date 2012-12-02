@@ -3,6 +3,7 @@
 #include "Game/TikiBot.h"
 #include "Game/SceneLevel.h"
 #include "Game/UnitSelection.h"
+#include "Game/ProjectileManager.h"
 
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
@@ -29,6 +30,7 @@ namespace TikiEngine
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
+			projectiles = new ProjectileManager(this);
 
 			botFactory = new TikiBotFactory(this);
 			botFactory->SetSpawnInterval(20.0);
@@ -36,20 +38,12 @@ namespace TikiEngine
 
 		GameState::~GameState()
 		{
-			projectiles.Clear();
-
+			SafeDelete(&navMesh);
 			SafeDelete(&botFactory);
+			SafeDelete(&unitSelection);
 
 			SafeRelease(&hud);
-			SafeDelete(&navMesh);
-			SafeDelete(&unitSelection);
-		}
-		#pragma endregion
-
-		#pragma region Member
-		void GameState::AddProjectile(GameObject* go)
-		{
-			projectiles.Add(go);
+			SafeRelease(&projectiles);
 		}
 		#pragma endregion
 
@@ -72,23 +66,21 @@ namespace TikiEngine
 			//	if (bot != 0)
 			//	{
 			//		bot->CreateNav(navMesh);
- 		//			Vector3 pos = bot->GetGameObject()->PRS.GPosition();
- 		//			pos = pos + Vector3(0, 30, 0);
- 		//			bot->GetController()->SetCenter(pos);
+ 			//		Vector3 pos = bot->GetGameObject()->PRS.GPosition();
+ 			//		pos = pos + Vector3(0, 30, 0);
+ 			//		bot->GetController()->SetCenter(pos);
 
 			//		// if we have a patrol bot, set the wayPoints.
-   //                 if (bot->GetFaction() == 1)
-   //                 {
-   //                     std::list<Vector2> wayPoints;
-   //                     wayPoints.push_back(Vector2(0, -100));
-   //                     wayPoints.push_back(Vector2(100, -100));
-   //                     wayPoints.push_back(Vector2(100, 100));
-   //                     wayPoints.push_back(Vector2(-100, 100));
-   //                     wayPoints.push_back(Vector2(-100, -100));
-   //                     bot->GetBrain()->AddGoalPatrol(wayPoints);
-   //                 }
-
-
+			//      if (bot->GetFaction() == 1)
+			//      {
+			//			std::list<Vector2> wayPoints;
+			//			wayPoints.push_back(Vector2(0, -100));
+			//			wayPoints.push_back(Vector2(100, -100));
+			//			wayPoints.push_back(Vector2(100, 100));
+			//			wayPoints.push_back(Vector2(-100, 100));
+			//			wayPoints.push_back(Vector2(-100, -100));
+			//			bot->GetBrain()->AddGoalPatrol(wayPoints);
+			//		}
 			//	}
 
 			//	i++;
@@ -104,7 +96,9 @@ namespace TikiEngine
 		void GameState::Draw(const DrawArgs& args)
 		{
 			hud->Draw(args);
+			projectiles->Draw(args);
 			unitSelection->Draw(args);
+
 			#if _DEBUG
 			if (DrawNavMesh) navMesh->Draw(args);
 
@@ -121,39 +115,20 @@ namespace TikiEngine
 
 		void GameState::Update(const UpdateArgs& args)
 		{
-			// spawn bots if it's time
-			//if (spawnRegulator->IsReady())
-// 			if (args.Input.GetKeyPressed(KEY_F5))
-// 			{
-// 				GameObject* go = new GameObject(engine);
-// 				go->PRS.SPosition() = Vector3(150, 50, 150);
-// 				botFactory->CreateEnemy1(go);
-// 				//AddBot(Vector3(150, 50, 150));
-// 			}
-
-			botFactory->Update(args);
-
-
+			//// spawn bots if it's time
+			////if (spawnRegulator->IsReady())
+ 			//if (args.Input.GetKeyPressed(KEY_F5))
+ 			//{
+ 			//	GameObject* go = new GameObject(engine);
+ 			//	go->PRS.SPosition() = Vector3(150, 50, 150);
+ 			//	botFactory->CreateEnemy1(go);
+ 			//	//AddBot(Vector3(150, 50, 150));
+ 			//}
+			
 			hud->Update(args);
+			botFactory->Update(args);
+			projectiles->Update(args);
 			unitSelection->Update(args);
-
-
-			for(UInt32 i = 0; i < projectiles.Count(); i++)
-			{
-				GameObject* go = projectiles[i];
-
-				if (go != 0)
-				{
-					go->Update(args);
-
-					Projectile* p = go->GetComponent<Projectile>();
-					if (p != 0 && p->IsDead())
-					{
-						projectiles.Remove(go);
-						SafeRelease(&go);
-					}
-				}
-			}
 
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;

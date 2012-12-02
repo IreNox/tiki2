@@ -380,6 +380,9 @@
     <ClInclude Include="inc\Game\PPFogOfWar.h">
       <Filter>Headerdateien\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\ProjectileManager.h">
+      <Filter>Headerdateien\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -552,6 +555,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\PPFogOfWar.cpp">
       <Filter>Quelldateien\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\ProjectileManager.cpp">
+      <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

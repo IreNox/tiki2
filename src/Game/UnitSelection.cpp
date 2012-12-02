@@ -54,6 +54,7 @@ namespace TikiEngine
 			if (args.Input.GetMousePressed(MB_Left))
 			{
 				if (selectedUnits.Count() != 0) changed = true;
+
 				// clear list from last selection
 				if (!args.Input.GetKey(KEY_LSHIFT))
 					selectedUnits.Clear();
@@ -107,9 +108,9 @@ namespace TikiEngine
 						Camera* cam = gameState->GetScene()->GCamera();
 						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
-						Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
-							Matrix::Transpose(*cam->GetViewMatrix()) * 
-							Matrix::Transpose(*cam->GetProjectionMatrix());
+						Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
+							//Matrix::Transpose(cam->GetViewMatrix()) * 
+							//Matrix::Transpose(cam->GetProjectionMatrix());
 
 						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
@@ -130,6 +131,7 @@ namespace TikiEngine
 							{
 								//engine->HLog.Write("click-Select unit.\n");
 								selectedUnits.Add(go);
+								changed = true;
 							}
 
 						}
@@ -144,9 +146,13 @@ namespace TikiEngine
  				i++;
 			}
 
+			if (changed)
+			{
+				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(&selectedUnits));
+			}
+
 			selectButton->Update(args);
 		}
-
 		#pragma endregion
 
 		#pragma region Member - RemoveBot

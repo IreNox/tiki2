@@ -64,14 +64,9 @@ namespace TikiEngine
 			return &((CBMatrices)matrices);
 		}
 
-		Matrix* Camera::GetViewMatrix()
+		const Matrix Camera::WorldToScreen()
 		{
-			return &matrices->ViewMatrix;
-		}
-
-		Matrix* Camera::GetProjectionMatrix()
-		{
-			return &matrices->ProjectionMatrix;
+			return Matrix::Transpose(matrices->ViewMatrix) * Matrix::Transpose(matrices->ProjectionMatrix);
 		}
 
 		IRenderTarget* Camera::GetRenderTarget()
@@ -107,6 +102,8 @@ namespace TikiEngine
 				frustum->Set(
 					view * Matrix::Transpose(matrices->ProjectionMatrix)
 				);
+
+				gameObject->PRS.MarkAsClean();
 			}
 		}
 		#pragma endregion

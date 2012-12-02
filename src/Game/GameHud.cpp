@@ -61,6 +61,10 @@ namespace TikiEngine
 				i++;
 			}
 
+			windowInfo = new GUIWindow(engine);
+			windowInfo->SSize() = Vector2(500, 225);
+			enabledControls.Add(windowInfo);
+
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
 		}
@@ -68,15 +72,9 @@ namespace TikiEngine
 		GameHud::~GameHud()
 		{
 			SafeRelease(&buttonMenu);
+			SafeRelease(&windowInfo);
+			SafeRelease(&windowFunc);
 			SafeRelease(&windowResources);
-
-			/*SafeRelease(&texRes1);
-			SafeRelease(&imageRes1);
-			SafeRelease(&labelRes1);
-
-			SafeRelease(&texRes2);
-			SafeRelease(&imageRes2);
-			SafeRelease(&labelRes2);*/
 		}
 		#pragma endregion
 
@@ -85,21 +83,9 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			windowFunc->SPosition() = Vector2((float)vp->Width - 220, (float)vp->Height - 220);
+			windowInfo->SPosition() = vp->GetSize() - Vector2(740, 220);
+			windowFunc->SPosition() = vp->GetSize() - Vector2(220, 220);
 			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15);
-
-			//UInt32 i = 0;
-			//while (i < windowResources->ChildControls().Count())
-			//{
-			//	windowResources->ChildControls()[i]->SPosition() = Vector2(10, 10);
-			//	i++;
-			//}
-
-			//imageRes1->SPosition() = Vector2((float)vp->Width - 200, 10);
-			//labelRes1->SPosition() = Vector2((float)vp->Width - 180, 10);
-
-			//imageRes2->SPosition() = Vector2((float)vp->Width - 100, 10);
-			//labelRes2->SPosition() = Vector2((float)vp->Width - 80, 10);
 		}
 
 		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)

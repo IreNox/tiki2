@@ -18,10 +18,14 @@ namespace TikiEngine
 
 			void Update(const UpdateArgs& args);
 
+			void Allocate(Particle** p1, Particle** p2);
+
 		private:
 
 			Vector3 offset; 
 			double birthTime;
+
+			UInt32 allocIndex;
 
 		};
 	}

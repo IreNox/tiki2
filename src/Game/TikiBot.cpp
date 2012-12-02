@@ -79,6 +79,9 @@ namespace TikiEngine
             brain = new GoalThink(this);
             brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
 
+			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
+			texHealth = engine->content->LoadTexture(L"hud/unit_health");
+			texShield = engine->content->LoadTexture(L"hud/unit_shield");
 		}
 
 		TikiBot::~TikiBot()
@@ -94,12 +97,6 @@ namespace TikiEngine
 			SafeDelete(&targetSelectionRegulator);
 
 		}
-
-// 		void TikiBot::Init(TikiBotDescription desc)
-// 		{
-// 
-// 
-// 		}
 
 		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
 		{
@@ -173,11 +170,16 @@ namespace TikiEngine
 
 			// Move y Up, else we raycast against the bot's own collider.
 			float headingEps = 0.5f;
-			ray.Origin = Pos3D();
-			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+			
+			Vector3 dir = Vector3::Normalize(pos - Pos3D());
+			
+			ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
+			//ray.Origin.Y += controller->GetHeight() * 2.1f; // * 0.6f + controller->GetRadius();
             
-            //ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
 			ray.Direction = pos - ray.Origin;
+
+			//ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
+			//ray.Origin = Pos3D() + (Vector3::Normalize(ray.Direction) * controller->GetRadius() * 1.1f);
 
 			orig = ray.Origin;
 			dir = ray.Direction;
@@ -186,6 +188,15 @@ namespace TikiEngine
 
 			if (engine->physics->RayCast(ray, &info, weaponSys->GetCurrentWeapon()->GetIdealRange()))
 			{				
+#if _DEBUG
+				if (info.Collider == controller)
+				{
+					_CrtDbgBreak();
+					// RayCast ist falsch und trifft sich selbst
+				}
+#endif
+
+
 				float eps = 5.0f;
 				// check the intersection points for nearly equal
 				if (info.Point.X >= pos.X - eps && info.Point.X <= pos.X + eps &&
@@ -212,31 +223,55 @@ namespace TikiEngine
 
 		void TikiBot::Draw(const DrawArgs& args)
 		{
+			Matrix vp = args.CurrentCamera->WorldToScreen();
+
+			Vector2 ss = args.Graphics->GetViewPort()->GetSize();
+
+			Vector3 pos = gameObject->PRS.GPosition();
+			pos.Y += controller->GetHeight() + 2.0f;
+			pos = Vector3::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
+			pos *= 0.5f;
+			pos = Vector3(pos.X * ss.X, (1 - pos.Y) * ss.Y, 0);
+
+			args.SpriteBatch->Draw(
+				texInfo,
+				RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 10),
+				Color::White
+			);
+
+			args.SpriteBatch->Draw(
+				texHealth,
+				RectangleF::Create(pos.X - 19, pos.Y - 15, ((float)health / maxHealth) * 38.0f, 6),
+				Color::White
+			);
+
+			args.SpriteBatch->Draw(
+				texShield,
+				RectangleF::Create(pos.X - 19, pos.Y - 9, 38, 2),
+				Color::White
+			);
+
 			// connect the waypoins to draw lines in green
 			#if _DEBUG
-			if (!gameState->DrawNavMesh) return;
+			if (gameState->DrawNavMesh)
+			{
+				pathPlanner->Draw(args);
+				brain->Draw(args);
 
-            pathPlanner->Draw(args);
+				// draw raycast Check
+				args.Graphics->DrawLine(orig, orig + dir, Color::Blue);
 
-			brain->Draw(args);
+				// draw recently sensed opponents
+				sensorMem->Draw(args);
 
-			// draw raycast Check
-			args.Graphics->DrawLine(orig, orig + dir, Color::Blue);
+				// Draw Goals
+				Camera* cam = gameState->GetScene()->GCamera();
+				Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
-			// draw recently sensed opponents
-			sensorMem->Draw(args);
+				Vector3 screenPos = Vector3::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-			// Draw Goals
-			Camera* cam = gameState->GetScene()->GCamera();
-			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
-
-			Matrix vp = //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
-				Matrix::Transpose(*cam->GetViewMatrix()) * 
-				Matrix::Transpose(*cam->GetProjectionMatrix());
-
-			Vector3 screenPos = Vector3::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-
-			brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y), ttsInstance);
+				brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y), ttsInstance);
+			}
 			#endif
 		}
 

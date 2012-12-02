@@ -4,18 +4,15 @@
 #include "Core/TypeGlobals.h"
 
 #include "Game/GameHud.h"
-#include "Game/UnitFunctions.h"
-
 #include "Game/NavigationMesh.h"
+//#include "Game/ProjectileManager.h"
 
 #include "Game/EventUnitSelectionChanged.h"
 
-
+//#include "Game/UnitFunctions.h"
 
 namespace TikiEngine
 {
-	//typedef void (*FuncExecuteUnitFunction)(GameObject* gameObject);
-
 	namespace Game
 	{
 		using namespace TikiEngine::AI;
@@ -25,6 +22,7 @@ namespace TikiEngine
 		class SceneLevel;
 		class UnitSelection;
 		class TikiBotFactory;
+		class ProjectileManager;
 
 		class GameState : public EngineObject
 		{
@@ -48,10 +46,10 @@ namespace TikiEngine
 			inline SceneLevel* GetScene() { return scene; }
 			inline NavigationMesh* GetNavMesh() { return navMesh; }
 			inline TikiBotFactory* GetBotFactory() { return botFactory; }
+			inline ProjectileManager* GetProjectiles() { return projectiles; }
 
 			inline double GetResource() { return resource; }
 
-			void AddProjectile(GameObject* go);
 			void AddTrigger(GameObject* go);
 
 			void ExecuteUnitFunction(UnitFunctions func);
@@ -70,10 +68,7 @@ namespace TikiEngine
 			NavigationMesh* navMesh;			
 			TikiBotFactory* botFactory;
 			UnitSelection* unitSelection;
-
-			List<GameObject*> projectiles;
-
-			//Dictionary<UnitFunctions, FuncExecuteUnitFunction> funcButton;
+			ProjectileManager* projectiles;
 
 		};
 	}

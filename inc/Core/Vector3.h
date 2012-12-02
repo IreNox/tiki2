@@ -127,20 +127,38 @@ public:
 
 		return *this;
 	}
+
+	inline Vector3 operator*= (float rhs)
+	{
+		this->X *= rhs;
+		this->Y *= rhs;
+		this->Z *= rhs;
+
+		return *this;
+	}
+
+	inline Vector3 operator/= (float rhs) 
+	{
+		this->X /= rhs;
+		this->Y /= rhs;
+		this->Z /= rhs;
+
+		return *this;
+	}
 	#pragma endregion
 
 	//static attributes
-	static Vector3 Zero;
-	static Vector3 One;
-	static Vector3 UnitX;
-	static Vector3 UnitY;
-	static Vector3 UnitZ;
+	static const Vector3 Zero;
+	static const Vector3 One;
+	static const Vector3 UnitX;
+	static const Vector3 UnitY;
+	static const Vector3 UnitZ;
 
-	static Vector3 Up;
-	static Vector3 Down;
-	static Vector3 Right;
-	static Vector3 Left;
-	static Vector3 Forward;
-	static Vector3 Backward;
+	static const Vector3 Up;
+	static const Vector3 Down;
+	static const Vector3 Right;
+	static const Vector3 Left;
+	static const Vector3 Forward;
+	static const Vector3 Backward;
 
 };

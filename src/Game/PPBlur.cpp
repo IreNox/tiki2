@@ -14,25 +14,24 @@ namespace TikiEngine
 		{
 			verticleTarget = engine->librarys->CreateResource<IRenderTarget>();
 			verticleTarget->CreateScreenSize();
+			verticleTarget->AddRef();
 
 			SafeAddRef(
-				engine->content->LoadShader(L"Data\\Effects\\pp_blur.fx"),
+				engine->content->LoadShader(L"pp_blur"),
 				&shader
 			);
 
-			shader->SetVector2("ScreenSize", Vector2((float)verticleTarget->GetWidth(), (float)verticleTarget->GetHeight()));
+			shader->SetVector2("ScreenSize", engine->graphics->GetViewPort()->GetSize());
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
 			pass->AddInput("tex", engine->graphics->GetScreenTarget());
 			pass->AddOutput(0, verticleTarget);
 			this->AddPass(pass);
-			SafeRelease(&pass);
 
 			pass = new PostProcessPass(engine, shader);
 			pass->AddInput("tex", verticleTarget);
 			pass->AddOutput(0, engine->graphics->GetScreenTarget());
 			this->AddPass(pass);
-			SafeRelease(&pass);
 		}
 
 		PPBlur::~PPBlur()

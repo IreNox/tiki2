@@ -55,6 +55,9 @@
     <None Include="bin\Data\Textures\Hud\circle_main_1.dds" />
     <None Include="bin\Data\Textures\Hud\energy.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
+    <None Include="bin\Data\Textures\Hud\unit_bg.dds" />
+    <None Include="bin\Data\Textures\Hud\unit_health.dds" />
+    <None Include="bin\Data\Textures\Hud\unit_shield.dds" />
     <None Include="bin\Data\Textures\logo.dds" />
     <None Include="bin\Data\Textures\Marine_L\LP_Gun_Diff.dds" />
     <None Include="bin\Data\Textures\Marine_L\LP_Gun_Normal.dds" />

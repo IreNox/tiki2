@@ -30,8 +30,9 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 			
 			CBMatrices* GetMatrices();
-			Matrix* GetViewMatrix();
-			Matrix* GetProjectionMatrix();
+			inline const Matrix& GetViewMatrix() { return matrices->ViewMatrix; }
+			inline const Matrix& GetProjectionMatrix() { return matrices->ProjectionMatrix; }
+			const Matrix WorldToScreen();
 
 			Frustum* GetFrustum();
 			Ray ScreenPointToRay(const Vector2& screenPos);

@@ -16,29 +16,27 @@ namespace TikiEngine
 		
 		~Transform();
 
-		Vector3 GetForward();
-		Vector3 GetUp();
-		Vector3 GetLeft();
+		inline Vector3 GetForward() const { return rotation * Vector3::Forward; }
+		inline Vector3 GetUp() const { return rotation * Vector3::Up; }
+		inline Vector3 GetLeft() const { return rotation * Vector3::Left; }
 
-		const Vector3& GPosition() const;
-		const Vector3& GScale() const;
-		const Quaternion& GRotation() const;
+		inline const Vector3& GPosition() const { return position; }
+		inline const Vector3& GScale() const { return scale; }
+		inline const Quaternion& GRotation() const { return rotation; }
 
-		Vector3& SPosition();
-		Vector3& SScale();
-		Quaternion& SRotation();
+		inline Vector3& SPosition()		{ isDirty = true; return position; }
+		inline Vector3& SScale()		{ isDirty = true; return scale; }
+		inline Quaternion& SRotation()	{ isDirty = true; return rotation; }
 
-		bool IsDirty();
+		inline bool IsDirty() { return isDirty; }
 		void MarkAsClean();
 
 		void FillWorldMatrix(Matrix* worldMatrix);
+		inline const Matrix& GetWorld() { return totalWorld; }
 
 	private:
 
 		GameObject* gameObject;
-
-		//GameObject* parent;
-		//List<GameObject*> childs;
 
 		bool isDirty;
 		Matrix goWorld;

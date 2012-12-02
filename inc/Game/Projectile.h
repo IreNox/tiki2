@@ -51,6 +51,11 @@ namespace TikiEngine
 			void Write(std::ostream&  os)const { }
 			void Read(std::ifstream& is) { }
 
+			inline TikiBot* GetShooter() { return shooter; }
+			inline ISphereCollider* GetCollider() { return sphere; }
+
+			inline const Vector3& GetTarget() { return target; }
+
 			virtual void Handle(ICollider* sender, const TriggerEnterArgs& args);
 
 			// set to true if the projectile has impacted and has finished any explosion 
@@ -63,6 +68,7 @@ namespace TikiEngine
 
 
 		protected:
+
 			Vector3 target;
 			Vector3 origin;
 			int damage;
@@ -75,8 +81,7 @@ namespace TikiEngine
 			double lifeTime;
 			
 			ISphereCollider* sphere;
-
-
+			
 		};
 		
 

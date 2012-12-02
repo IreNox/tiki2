@@ -12,13 +12,14 @@ namespace TikiEngine
 {
 	namespace Graphics
 	{
+		#pragma region Class
 		PPFogOfWar::PPFogOfWar(GameState* state)
 			: PostProcess(state->GetEngine()), state(state)
 		{
 			SafeAddRef(
 				engine->content->LoadShader(L"pp_fow"),
 				&shader
-			);
+				);
 
 			buffer = engine->graphics->CreateConstantBuffer(sizeof(CBFogOfWar));
 			shader->SetConstantBuffer("FogOfWar", buffer);
@@ -27,14 +28,18 @@ namespace TikiEngine
 			pass->AddInput("rtScreen", 0);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, 0);
-			this->AddPass(pass);			
+			this->AddPass(pass);		
+
+			state->UnitSelectionChanged.AddHandler(this);
 		}
 
 		PPFogOfWar::~PPFogOfWar()
 		{
 			SafeRelease(&shader);
 		}
+		#pragma endregion
 
+		#pragma region Member - Update
 		void PPFogOfWar::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
 			IRenderTarget* input;
@@ -58,8 +63,9 @@ namespace TikiEngine
 
 				if (bot != 0 && bot->GetFaction() == 0)
 				{
-					fow->Units[count].Position = bot->Pos3D();
+					fow->Units[count].Position = bot->Pos();
 					fow->Units[count].Range = 50;
+					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
 
 					count++;
 				}
@@ -74,5 +80,21 @@ namespace TikiEngine
 
 			buffer->Unmap();
 		}
+		#pragma endregion
+
+		#pragma region Member - EventHandler
+		void PPFogOfWar::Handle(GameState* sender, const UnitSelectionChangedArgs& args)
+		{
+			selected.Clear();
+
+			UInt32 i = 0;
+			while (i < args.SelectedUnits->Count())
+			{
+				selected.Add(args.SelectedUnits->Get(i));
+				i++;
+			}
+		}
+		#pragma endregion
+
 	}
 }
