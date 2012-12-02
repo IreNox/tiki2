@@ -42,7 +42,7 @@ namespace TikiEngine
 
 			windowFunc = new GUIWindow(engine);
 			windowFunc->SSize() = Vector2(225, 225);
-			enabledControls.Add(windowFunc);
+			//enabledControls.Add(windowFunc);
 
 			UInt32 i = 0;
 			while (i < 9)
@@ -63,7 +63,7 @@ namespace TikiEngine
 
 			windowInfo = new GUIWindow(engine);
 			windowInfo->SSize() = Vector2(500, 225);
-			enabledControls.Add(windowInfo);
+			//enabledControls.Add(windowInfo);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();

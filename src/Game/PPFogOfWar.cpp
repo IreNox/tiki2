@@ -7,6 +7,8 @@
 
 #include "Game/SceneLevel.h"
 #include "Game/TikiBot.h"
+#include "Game/Weapon.h"
+#include "Game/WeaponSystem.h"
 
 namespace TikiEngine
 {
@@ -64,7 +66,7 @@ namespace TikiEngine
 				if (bot != 0 && bot->GetFaction() == 0)
 				{
 					fow->Units[count].Position = bot->Pos();
-					fow->Units[count].Range = 50;
+					fow->Units[count].Range = bot->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange();
 					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
 
 					count++;

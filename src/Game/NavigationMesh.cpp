@@ -271,11 +271,13 @@ namespace TikiEngine
 			NavigationCell::CELL_SIDE WallNumber;  
 			NavigationCell::PATH_RESULT Result;  
 
+			int i = 0;
 			while((Result = NextCell->ClassifyPathToCell(MotionPath, &NextCell, WallNumber, 0)) == NavigationCell::EXITING_CELL)  
 			{  
-				if (!NextCell) 
-					return(false);  
-			}  
+				i++;
+				if (!NextCell || i >= 500) 
+					return (false);
+			}
 
 			return (Result == NavigationCell::ENDING_CELL);  
 		}  

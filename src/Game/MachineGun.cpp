@@ -29,6 +29,7 @@ namespace TikiEngine
 				desc.Origin = start;
 				desc.Heading = owner->Heading();
 				desc.ShooterID = owner->ID();
+				desc.Damage = owner->MaxHealth() / 20;
 				GameObject* go = new GameObject(owner->GetGameState()->GetEngine());
 				Bullet* proj = new Bullet(owner->GetGameState(), go);
 				proj->Init(desc, args);

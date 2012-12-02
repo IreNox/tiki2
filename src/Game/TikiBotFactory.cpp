@@ -62,6 +62,7 @@ namespace TikiEngine
 			botDesc.Faction = 1;
 			botDesc.Height = 9.0f;
 			botDesc.Radius = 3.5f;
+			botDesc.MaxHealth = 1000;			
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);

@@ -374,7 +374,7 @@ namespace TikiEngine
 			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
-			terrain->SetTolerance(0.05f);
+			terrain->SetTolerance(0.01f);
 		}
 		#pragma endregion
 
