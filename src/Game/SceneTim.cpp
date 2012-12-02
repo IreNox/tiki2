@@ -134,6 +134,16 @@ namespace TikiEngine
 			(new CameraFly(engine, camera));
 			this->AddElement(camera);
 
+			// SSAO
+			ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			engine->graphics->AddPostProcess(ssao);
+			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
+
+			//auto blur = new PPBlur(engine);
+			//blur->GetPasses()[0]->SetInput("tex", ssao->GetAO());
+			//blur->GetPasses()[1]->SetOutput(0, ssao->GetAO());
+			//engine->graphics->AddPostProcess(blur);
+
 			#pragma region Old Stuff
 			//IPhysicsMaterial* material; 
 			////material = engine->content->LoadPhysicsMaterial(L"TODO");
@@ -178,11 +188,6 @@ namespace TikiEngine
 			//// Blur
 			//engine->graphics->AddPostProcess(new PPBlur(engine));
 
-			//// SSAO
-			//ssao = new PPScreenSpaceAmbientOcclusion(engine);
-			//engine->graphics->AddPostProcess(ssao);
-			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
-
 			//// Sound
 			//ISound* sound = engine->librarys->CreateResource<ISound>();
 			//sound->LoadFromFile(L"beep");
@@ -207,7 +212,7 @@ namespace TikiEngine
 			//engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
 			engine->sprites->Draw(
-				engine->graphics->GetDepthTarget(),
+				ssao->GetAO(),
 				Rectangle(10, 10, 200, 180)
 			);
 

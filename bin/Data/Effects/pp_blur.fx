@@ -11,7 +11,7 @@
 Texture2D tex;
 
 float BlurRange = 16.0f;
-float BlurIntensity = 1.0f;
+float BlurIntensity = 0.8f;
 
 float2 ScreenSize = float2(400, 300);
 

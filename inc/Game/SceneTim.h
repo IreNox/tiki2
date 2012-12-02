@@ -57,6 +57,8 @@ namespace TikiEngine
 			//ITerrainRenderer* terrain;
 			//ITriangleMeshCollider* collider;
 
+			PPScreenSpaceAmbientOcclusion* ssao;
+
 		};
 	}
 }
