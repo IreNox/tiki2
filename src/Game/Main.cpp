@@ -26,6 +26,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.Window.Height = 750;
 		desc.Window.Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 
+#if !_DEBUG
+		desc.Graphics.Fullscreen = true;
+#endif
+
 		Engine* engine = new Engine();
 		
 		if (engine->Initialize(desc))

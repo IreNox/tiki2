@@ -11,6 +11,8 @@ namespace TikiEditor
     public class DrawLevel : DrawBasic<BasicTransform>
     {
         #region Vars
+        public float Scale = 1.0f;
+
         private Level _level;
         #endregion
 
@@ -39,7 +41,7 @@ namespace TikiEditor
         #region Private Member - Draw
         private void _drawBasicTransform(BasicTransform bt)
         {
-            Vector2[] vertices = bt.Vertices;
+            Vector2[] vertices = bt.Vertices(this.Scale);
             Color c = new Color(0, 1, 0, 0.5f);
 
             if (bt is LevelEnemy)

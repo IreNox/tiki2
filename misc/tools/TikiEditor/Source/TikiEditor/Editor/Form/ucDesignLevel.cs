@@ -55,6 +55,11 @@ namespace TikiEditor.Designer
         {
             GI.ModeLevel.LevelDraw.ShowBounding = checkShowBoundingBox.Checked;
         }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            GI.ModeLevel.LevelDraw.Scale = (float)trackBar1.Value / 100.0f;
+        }
         #endregion
 
         #region Member - EventHandler - Add

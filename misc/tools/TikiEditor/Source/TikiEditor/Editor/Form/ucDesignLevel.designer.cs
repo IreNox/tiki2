@@ -52,6 +52,7 @@
             this.buttonAddObject = new System.Windows.Forms.Button();
             this.tabEdit = new System.Windows.Forms.TabPage();
             this.tabView = new System.Windows.Forms.TabPage();
+            this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.label1 = new System.Windows.Forms.Label();
             this.checkShowBoundingBox = new System.Windows.Forms.CheckBox();
             this.checkShowPoints = new System.Windows.Forms.CheckBox();
@@ -61,6 +62,7 @@
             this.panelButtons.SuspendLayout();
             this.tabEdit.SuspendLayout();
             this.tabView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -195,7 +197,7 @@
             this.button7.Enabled = false;
             this.button7.Location = new System.Drawing.Point(3, 351);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(168, 23);
+            this.button7.Size = new System.Drawing.Size(134, 23);
             this.button7.TabIndex = 12;
             this.button7.Text = "-none-";
             this.button7.UseVisualStyleBackColor = true;
@@ -207,7 +209,7 @@
             this.button8.Enabled = false;
             this.button8.Location = new System.Drawing.Point(3, 322);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(168, 23);
+            this.button8.Size = new System.Drawing.Size(134, 23);
             this.button8.TabIndex = 11;
             this.button8.Text = "-none-";
             this.button8.UseVisualStyleBackColor = true;
@@ -219,7 +221,7 @@
             this.button9.Enabled = false;
             this.button9.Location = new System.Drawing.Point(3, 293);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(168, 23);
+            this.button9.Size = new System.Drawing.Size(134, 23);
             this.button9.TabIndex = 10;
             this.button9.Text = "-none-";
             this.button9.UseVisualStyleBackColor = true;
@@ -231,7 +233,7 @@
             this.button10.Enabled = false;
             this.button10.Location = new System.Drawing.Point(3, 264);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(168, 23);
+            this.button10.Size = new System.Drawing.Size(134, 23);
             this.button10.TabIndex = 9;
             this.button10.Text = "-none-";
             this.button10.UseVisualStyleBackColor = true;
@@ -243,7 +245,7 @@
             this.button11.Enabled = false;
             this.button11.Location = new System.Drawing.Point(3, 235);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(168, 23);
+            this.button11.Size = new System.Drawing.Size(134, 23);
             this.button11.TabIndex = 8;
             this.button11.Text = "-none-";
             this.button11.UseVisualStyleBackColor = true;
@@ -255,7 +257,7 @@
             this.button12.Enabled = false;
             this.button12.Location = new System.Drawing.Point(3, 206);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(168, 23);
+            this.button12.Size = new System.Drawing.Size(134, 23);
             this.button12.TabIndex = 7;
             this.button12.Text = "-none-";
             this.button12.UseVisualStyleBackColor = true;
@@ -267,7 +269,7 @@
             this.buttonAddEnemyBasic.Enabled = false;
             this.buttonAddEnemyBasic.Location = new System.Drawing.Point(3, 177);
             this.buttonAddEnemyBasic.Name = "buttonAddEnemyBasic";
-            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(168, 23);
+            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(134, 23);
             this.buttonAddEnemyBasic.TabIndex = 6;
             this.buttonAddEnemyBasic.Text = "Basic Enemy";
             this.buttonAddEnemyBasic.UseVisualStyleBackColor = true;
@@ -280,7 +282,7 @@
             this.button3.Enabled = false;
             this.button3.Location = new System.Drawing.Point(3, 90);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(168, 23);
+            this.button3.Size = new System.Drawing.Size(134, 23);
             this.button3.TabIndex = 3;
             this.button3.Text = "-none-";
             this.button3.UseVisualStyleBackColor = true;
@@ -291,7 +293,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddPoint.Location = new System.Drawing.Point(3, 61);
             this.buttonAddPoint.Name = "buttonAddPoint";
-            this.buttonAddPoint.Size = new System.Drawing.Size(168, 23);
+            this.buttonAddPoint.Size = new System.Drawing.Size(134, 23);
             this.buttonAddPoint.TabIndex = 2;
             this.buttonAddPoint.Text = "Point";
             this.buttonAddPoint.UseVisualStyleBackColor = true;
@@ -304,7 +306,7 @@
             this.button1.Enabled = false;
             this.button1.Location = new System.Drawing.Point(3, 119);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(168, 23);
+            this.button1.Size = new System.Drawing.Size(134, 23);
             this.button1.TabIndex = 1;
             this.button1.Text = "-none-";
             this.button1.UseVisualStyleBackColor = true;
@@ -315,7 +317,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddObject.Location = new System.Drawing.Point(3, 32);
             this.buttonAddObject.Name = "buttonAddObject";
-            this.buttonAddObject.Size = new System.Drawing.Size(168, 23);
+            this.buttonAddObject.Size = new System.Drawing.Size(134, 23);
             this.buttonAddObject.TabIndex = 0;
             this.buttonAddObject.Text = "Object";
             this.buttonAddObject.UseVisualStyleBackColor = true;
@@ -335,6 +337,7 @@
             // 
             // tabView
             // 
+            this.tabView.Controls.Add(this.trackBar1);
             this.tabView.Controls.Add(this.label1);
             this.tabView.Controls.Add(this.checkShowBoundingBox);
             this.tabView.Controls.Add(this.checkShowPoints);
@@ -345,14 +348,29 @@
             this.tabView.Text = "View/Help";
             this.tabView.UseVisualStyleBackColor = true;
             // 
+            // trackBar1
+            // 
+            this.trackBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackBar1.LargeChange = 750;
+            this.trackBar1.Location = new System.Drawing.Point(5, 53);
+            this.trackBar1.Maximum = 10000;
+            this.trackBar1.Minimum = 100;
+            this.trackBar1.Name = "trackBar1";
+            this.trackBar1.Size = new System.Drawing.Size(223, 45);
+            this.trackBar1.TabIndex = 3;
+            this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBar1.Value = 100;
+            this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
             // label1
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Location = new System.Drawing.Point(3, 50);
+            this.label1.Location = new System.Drawing.Point(3, 108);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 270);
+            this.label1.Size = new System.Drawing.Size(264, 212);
             this.label1.TabIndex = 2;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -396,6 +414,7 @@
             this.tabEdit.ResumeLayout(false);
             this.tabView.ResumeLayout(false);
             this.tabView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -428,5 +447,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TrackBar trackBar1;
     }
 }

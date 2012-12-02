@@ -27,6 +27,22 @@ namespace TikiEditor.Objects
         }
         #endregion
 
+        #region Member
+        public Vector2[] Vertices(float scale = 1.0f)
+        {
+            Matrix world = this.WorldMatrix;
+            Vector2[] vertices = new Vector2[]
+            {
+                new Vector2(-0.5f, -0.5f) * scale,
+                new Vector2( 0.5f, -0.5f) * scale,
+                new Vector2( 0.5f,  0.5f) * scale,
+                new Vector2(-0.5f,  0.5f) * scale
+            };
+
+            return vertices.Select(v => Vector2.Transform(v, world)).ToArray();
+        }
+        #endregion
+
         #region Properties
         [DataField("PositionX")]
         public float PositionX
@@ -89,7 +105,7 @@ namespace TikiEditor.Objects
         {
             get
             {
-                Vector2[] vertices = this.Vertices;
+                Vector2[] vertices = this.Vertices();
 
                 float x = vertices.Min(v => v.X);
                 float y = vertices.Min(v => v.Y);
@@ -100,23 +116,6 @@ namespace TikiEditor.Objects
                     vertices.Max(v => v.X) - x,
                     vertices.Max(v => v.Y) - y
                 );
-            }
-        }
-
-        public Vector2[] Vertices
-        {
-            get
-            {
-                Matrix world = this.WorldMatrix;
-                Vector2[] vertices = new Vector2[]
-                {
-                    new Vector2(-0.5f, -0.5f),
-                    new Vector2( 0.5f, -0.5f),
-                    new Vector2( 0.5f,  0.5f),
-                    new Vector2(-0.5f,  0.5f)
-                };
-
-                return vertices.Select(v => Vector2.Transform(v, world)).ToArray();
             }
         }
         #endregion
