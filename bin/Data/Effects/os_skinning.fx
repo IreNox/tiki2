@@ -51,10 +51,10 @@ PS_INPUT VS_Main(VS_INPUT input)
 	}
     
 	output.WorldPos = output.Pos.xyz;
+	output.ViewPos = normalize(ViewIM[3] - output.Pos);
 
     output.Pos = mul(output.Pos, ViewM);
     output.Pos = mul(output.Pos, ProjectionM);
-    output.DepthPos = output.Pos;
 
 	output.UV = input.UV;
 	output.UV.y = 1 - output.UV.y;

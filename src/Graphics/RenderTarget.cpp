@@ -52,10 +52,12 @@ namespace TikiEngine
 
 		void RenderTarget::Resize(UInt32 width, UInt32 height)
 		{
+			DXGI_FORMAT format = texture->desc.Format;
+
 			SafeRelease(&texture);
 			SafeRelease(&renderTarget);
 
-			this->Create(width, height, false);
+			this->Create(width, height, false, (PixelFormat)format);
 		}
 
 		void RenderTarget::Resize(ID3D11RenderTargetView* renderTarget)
@@ -123,7 +125,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
-		void RenderTarget::Create(UInt32 width, UInt32 height, bool dynamic)
+		void RenderTarget::Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format)
 		{
 			if (this->GetReady()) return;
 
@@ -136,7 +138,7 @@ namespace TikiEngine
 			desc.Height = height;
 			desc.MipLevels = 1;
 			desc.ArraySize = 1;
-			desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+			desc.Format = (DXGI_FORMAT)format;
 			desc.SampleDesc.Count = 1;
 			desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
@@ -172,12 +174,13 @@ namespace TikiEngine
 			);
 		}
 
-		void RenderTarget::CreateScreenSize(bool dynamic)
+		void RenderTarget::CreateScreenSize(bool dynamic, PixelFormat format)
 		{
 			this->Create(
 				DllMain::ModuleGraphics->GetViewPort()->Width,
 				DllMain::ModuleGraphics->GetViewPort()->Height,
-				dynamic
+				dynamic,
+				format
 			);
 
 			DllMain::ModuleGraphics->AddScreenSizeRenderTarget(this);

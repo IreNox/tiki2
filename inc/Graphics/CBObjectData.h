@@ -16,11 +16,9 @@ namespace TikiEngine
 			Matrix WorldMIT;
 
 			Boolean UseDiffuse;
-			//Boolean UseLightMap;
+			Boolean UseLightMap;
 			Boolean UseNormalMap;
 			Boolean UseSpecularMap;
-
-			Boolean FlipTexcoordV;
 			
 		};
 	}

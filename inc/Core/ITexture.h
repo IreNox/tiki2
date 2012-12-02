@@ -10,7 +10,8 @@ namespace TikiEngine
 		enum PixelFormat
 		{
 			PF_A8R8G8B8,
-			PF_R32G32B32A32
+			PF_R8G8B8A8 = 28,
+			PF_R32G32B32A32 = 2
 		};
 
 		class ITexture : public IResource
@@ -26,7 +27,7 @@ namespace TikiEngine
 			{
 			}
 
-			virtual void Create(UInt32 width, UInt32 height, bool dynamic) = 0;
+			virtual void Create(UInt32 width, UInt32 height, bool dynamic = false, PixelFormat format = PF_R8G8B8A8) = 0;
 
 			virtual Int32 GetWidth() = 0;
 			virtual Int32 GetHeight() = 0;

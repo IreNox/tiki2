@@ -129,14 +129,14 @@ namespace TikiEngine
 			//this->AddElement(cameraLight);
 
 			camera = new CameraObject(engine);			
-			camera->PRS.SPosition() = Vector3(0, 0, 5.0f);
+			camera->PRS.SPosition() = Vector3(-1, 1.5f, 4.0f);
 			camera->AddRef();
 			(new CameraFly(engine, camera));
 			this->AddElement(camera);
 
 			// SSAO
-			ssao = new PPScreenSpaceAmbientOcclusion(engine);
-			engine->graphics->AddPostProcess(ssao);
+			//ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			//engine->graphics->AddPostProcess(ssao);
 			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
 
 			//auto blur = new PPBlur(engine);
@@ -212,7 +212,7 @@ namespace TikiEngine
 			//engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
 
 			engine->sprites->Draw(
-				ssao->GetAO(),
+				engine->graphics->GetLightTarget(),
 				Rectangle(10, 10, 200, 180)
 			);
 
@@ -221,10 +221,10 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
-			//engine->sprites->Draw(
-			//	targetLight,
-			//	Rectangle(10, 390, 200, 180)
-			//);
+			engine->sprites->Draw(
+				engine->graphics->GetScreenTarget(),
+				Rectangle(10, 390, 200, 180)
+			);
 
 			//Vector2 mouse = Vector2(1.1f - args.Update.Input.MousePosition.X + 0.1f, 1.1f - args.Update.Input.MousePosition.Y + 0.1f);
 			//Vector2 rot = Vector2(0.3f * mouse.X, 0.4f * mouse.Y);

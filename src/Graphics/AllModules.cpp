@@ -277,21 +277,6 @@ namespace TikiEngine
 		{
 			return &viewPort;
 		}
-
-		IRenderTarget* GraphicsModule::GetDepthTarget()
-		{
-			return rtDepth;
-		}
-
-		IRenderTarget* GraphicsModule::GetNormalTarget()
-		{
-			return rtNormal;
-		}
-
-		IRenderTarget* GraphicsModule::GetScreenTarget()
-		{
-			return rtScreen[rtScreenIndex];
-		}
 		#pragma endregion
 
 		#pragma region Member - Get - Buffer
@@ -408,6 +393,8 @@ namespace TikiEngine
 			rtDepth->Apply(1);
 			rtNormal->Clear(Color::Black);
 			rtNormal->Apply(2);
+			rtLight->Clear(Color::Black);
+			rtLight->Apply(3);
 
 			if (args.CurrentCamera)
 			{
@@ -809,12 +796,16 @@ namespace TikiEngine
 			this->rtBackBuffer->AddRef();
 
 			this->rtScreen[0] = new RenderTarget(engine);
-			this->rtScreen[0]->CreateScreenSize();
+			this->rtScreen[0]->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtScreen[0]->AddRef();
 
 			this->rtScreen[1] = new RenderTarget(engine);
-			this->rtScreen[1]->CreateScreenSize();
+			this->rtScreen[1]->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtScreen[1]->AddRef();
+
+			this->rtLight = new RenderTarget(engine);
+			this->rtLight->CreateScreenSize(false, PF_R8G8B8A8);
+			this->rtLight->AddRef();
 
 			this->rtNormal = new RenderTarget(engine);
 			this->rtNormal->CreateScreenSize();
@@ -830,6 +821,7 @@ namespace TikiEngine
 			);
 			defaultPostProcessPass->AddInput("rtScreen", rtScreen[0]);
 			defaultPostProcessPass->AddInput("rtNormal", rtNormal);
+			defaultPostProcessPass->AddInput("rtLight", rtLight);
 			//pass->AddInput("rtDepth", rtDepth);
 			defaultPostProcessPass->AddOutput(0, rtBackBuffer);
 			defaultPostProcessPass->AddRef();

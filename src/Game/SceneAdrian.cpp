@@ -88,12 +88,13 @@ namespace TikiEngine
 				Rectangle(10, 200, 200, 180)
 			);
 
+#if _DEBUG
 			if(bone != 0)
 			{
-
 				Vector3 pos = bone->Position() * 0.01f;
 				args.Graphics->DrawLine(pos, pos + bone->Forward(), Color::Red);
 			}
+#endif
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)

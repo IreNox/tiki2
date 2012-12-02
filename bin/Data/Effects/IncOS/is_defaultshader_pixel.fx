@@ -17,14 +17,23 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 		bumpedNormal = normalize(mul(normalSample, TBN));
 	}
 
-	//if (UseSpecular)
-	//{
-		
-	//}
+	if (UseSpecularMap)
+	{
+		float specularIntensity = 1.0f;
+		float specularity = 7.5f;
+
+		float3 H = normalize(input.ViewPos - Lights[0].Direction);
+		termDiffuse += specularIntensity * TexSpecularMap.Sample(sam, input.UV) * pow(saturate(dot(H, bumpedNormal)), specularity);
+	}
+
+	if (UseLightMap)
+	{
+		output.Light = TexLightMap.Sample(sam, input.UV);
+	}
 
 	output.Screen = termDiffuse;
 	output.Depth.rgb = input.WorldPos;
-	output.Depth.a = 1 - (input.DepthPos.z / 1000.0f);
+	output.Depth.a = 1 - (input.Pos.z / 1000.0f);
 	output.Normal = float4(bumpedNormal, 1.0f);
 	
 	return output;

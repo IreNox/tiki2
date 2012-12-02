@@ -13,13 +13,15 @@ namespace TikiEngine
 
 		class Texture : public ITexture
 		{
+			friend class RenderTarget;
+
 		public:
 
 			Texture(Engine* engine);
 			Texture(Engine* engine, ID3D11Texture2D* tex, bool createShaderView, bool dynamic);
 			~Texture();
 
-			void Create(UInt32 width, UInt32 height, bool dynamic);
+			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
 
 			Int32 GetWidth();
 			Int32 GetHeight();
@@ -36,7 +38,7 @@ namespace TikiEngine
 
 		protected:
 
-			void createInternal(UInt32 width, UInt32 height, bool dynamic);
+			void createInternal(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
 
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);

@@ -17,8 +17,8 @@ namespace TikiEngine
 			RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget, bool shaderView);
 			~RenderTarget();
 
-			void Create(UInt32 width, UInt32 height, bool dynamic);
-			void CreateScreenSize(bool dynamic = false);
+			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
+			void CreateScreenSize(bool dynamic = false, PixelFormat format = PF_R32G32B32A32);
 
 			void SaveToFile(wcstring fileName);
 

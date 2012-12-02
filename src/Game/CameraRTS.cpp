@@ -67,13 +67,12 @@ namespace TikiEngine
 				height = Clamp(height, sample, 1000.0f);
 				gameObject->PRS.SPosition().Y = height + (164.0f - zoom);
 
-				if (args.Input.MouseWheel != 0)
-				{
-					ostringstream s;
-					s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
-					engine->HLog.Write(s.str());
-				}
-
+				//if (args.Input.MouseWheel != 0)
+				//{
+				//	ostringstream s;
+				//	s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+				//	engine->HLog.Write(s.str());
+				//}
 			}
 		}
 	}

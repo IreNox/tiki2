@@ -76,12 +76,12 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create
-		void Texture::Create(UInt32 width, UInt32 height, bool dynamic)
+		void Texture::Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format)
 		{
-			this->createInternal(width, height, dynamic);
+			this->createInternal(width, height, dynamic, format);
 		}
 
-		void Texture::createInternal(UInt32 width, UInt32 height, bool dynamic)
+		void Texture::createInternal(UInt32 width, UInt32 height, bool dynamic, PixelFormat format)
 		{
 			if (this->GetReady()) return;
 
@@ -91,7 +91,7 @@ namespace TikiEngine
 			desc.Height = height;
 			desc.MipLevels = 1;
 			desc.ArraySize = 1;
-			desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+			desc.Format = (DXGI_FORMAT)format;
 			desc.SampleDesc.Count = 1;
 			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 

@@ -57,6 +57,7 @@ namespace TikiEngine
 			virtual IRenderTarget* GetScreenTarget() = 0;
 			virtual IRenderTarget* GetNormalTarget() = 0;
 			virtual IRenderTarget* GetDepthTarget() = 0;
+			virtual IRenderTarget* GetLightTarget() = 0;
 
 			virtual void SetStateAlphaBlend(bool value) = 0;
 			virtual void SetStateDepthEnabled(bool value) = 0;

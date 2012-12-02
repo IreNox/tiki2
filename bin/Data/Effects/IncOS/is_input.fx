@@ -9,21 +9,22 @@ cbuffer ObjectData : register(b1)
 	matrix WorldMIT;	// World Inverse Transpose Matrix
 
 	bool UseDiffuse;
+	bool UseLightMap;
 	bool UseNormalMap;
-	bool UseSpecular;
-
-	bool FlipTexcoordV;
+	bool UseSpecularMap;
 };
 
 cbuffer MatrixBuffer : register(b2)
 {
     matrix ViewM;		// View Matrix;
+	matrix ViewIM;		// View Inverse Matrix;
     matrix ProjectionM;	// Projection Matrix;
 };
 
 Texture2D TexDiffuse;
+Texture2D TexLightMap;
 Texture2D TexNormalMap;
-Texture2D TexSpecular;
+Texture2D TexSpecularMap;
 
 SamplerState sam : register(s0)
 {    

@@ -59,9 +59,10 @@ namespace TikiEngine
 			void* GetDeviceContext();
 
 			ViewPort* GetViewPort();
-			IRenderTarget* GetScreenTarget();
-			IRenderTarget* GetNormalTarget();
-			IRenderTarget* GetDepthTarget();
+			IRenderTarget* GetScreenTarget() { return rtScreen[rtScreenIndex]; }
+			IRenderTarget* GetNormalTarget() { return rtNormal; }
+			IRenderTarget* GetDepthTarget() { return rtDepth; }
+			IRenderTarget* GetLightTarget() { return rtLight; }
 
 			void Reset();
 
@@ -118,6 +119,7 @@ namespace TikiEngine
 			ConstantBuffer<CBMatrices>* cbufferCamera;
 			ConstantBuffer<CBObjectData>* cbufferObject;
 
+			RenderTarget* rtLight;
 			RenderTarget* rtDepth;
 			RenderTarget* rtNormal;
 			RenderTarget* rtBackBuffer;

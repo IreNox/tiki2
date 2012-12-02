@@ -31,7 +31,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		Ray Camera::ScreenPointToRay( const Vector2& screenPos )
+		Ray Camera::ScreenPointToRay(const Vector2& screenPos)
 		{
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
@@ -97,6 +97,7 @@ namespace TikiEngine
 				);
 
 				matrices->ViewMatrix = Matrix::Transpose(view);
+				matrices->ViewInverseMatrix = Matrix::Transpose(Matrix::Invert(view));
 
 				// create frustum from view * re-transposed Proj
 				frustum->Set(

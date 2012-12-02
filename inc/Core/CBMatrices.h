@@ -8,6 +8,7 @@ namespace TikiEngine
 	struct CBMatrices 
 	{
 		Matrix ViewMatrix;
+		Matrix ViewInverseMatrix;
 		Matrix ProjectionMatrix;
 	};
 }

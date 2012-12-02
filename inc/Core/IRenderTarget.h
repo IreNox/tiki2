@@ -20,7 +20,7 @@ namespace TikiEngine
 			{
 			}
 
-			virtual void CreateScreenSize(bool dynamic = false) = 0;
+			virtual void CreateScreenSize(bool dynamic = false, PixelFormat format = PF_R32G32B32A32) = 0;
 
 			virtual void Apply(UInt32 slot) = 0;
 			virtual void ApplyFirstAndOnly() = 0;

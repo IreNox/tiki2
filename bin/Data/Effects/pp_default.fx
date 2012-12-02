@@ -10,7 +10,7 @@
 
 Texture2D rtScreen;
 Texture2D rtNormal;
-//Texture2D rtDepth;
+Texture2D rtLight;
 
 Texture2D spriteBatch;
 Texture2D debugLines;
@@ -27,7 +27,7 @@ Texture2D debugLines;
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	float4 bbColor = rtScreen.Sample(sam, input.UV);
+	float4 bbColor = rtScreen.Sample(sam, input.UV) + rtLight.Sample(sam, input.UV);
 	float4 sbColor = spriteBatch.Sample(sam, input.UV);
 	float4 dlColor = debugLines.Sample(sam, input.UV);
 	float4 alColor = float4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);

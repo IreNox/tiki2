@@ -21,7 +21,7 @@ namespace TikiEngine
 			UInt32 color = 0x99000000;
 
 			bgTexture = new Texture(engine);
-			bgTexture->Create(1, 1, true);
+			bgTexture->Create(1, 1, true, PF_R8G8B8A8);
 			bgTexture->SetData(PF_A8R8G8B8, &color, 4);
 			bgTexture->AddRef();
 

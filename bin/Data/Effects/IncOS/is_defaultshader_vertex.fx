@@ -7,15 +7,15 @@ PS_INPUT VS_Main(VS_INPUT input)
 
 	output.Pos = float4(input.Pos, 1.0f);
     output.Pos = mul(output.Pos, WorldM);
+
 	output.WorldPos = output.Pos.xyz;
+	output.ViewPos = normalize(ViewIM[3] - output.Pos);
 
     output.Pos = mul(output.Pos, ViewM);
     output.Pos = mul(output.Pos, ProjectionM);
-    output.DepthPos = output.Pos;
 
 	output.UV = input.UV;
 	output.UV.y = 1 - output.UV.y;
-	//if (FlipTexcoordV) 
 
 	float3 c1 = cross(input.Normal, float3(0.0, 0.0, 1.0)); 
 	float3 c2 = cross(input.Normal, float3(0.0, 1.0, 0.0)); 

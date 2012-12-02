@@ -22,7 +22,7 @@ struct PS_INPUT
 {
     float4 Pos		: SV_POSITION;
 	float3 WorldPos	: POSITION0;
-	float4 DepthPos	: POSITION1;
+	float4 ViewPos	: POSITION1;
     float2 UV		: TEXCOORD0;
 
 	float3 Normal	: NORMAL;
@@ -41,5 +41,6 @@ struct PS_OUTPUT
 	float4 Screen	: SV_TARGET;
 	float4 Depth	: SV_TARGET;
 	float4 Normal	: SV_TARGET;
+	float4 Light	: SV_TARGET;
 };
 #endif
