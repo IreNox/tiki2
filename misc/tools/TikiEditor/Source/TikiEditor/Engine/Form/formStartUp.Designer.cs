@@ -32,10 +32,10 @@
             this.buttonGUI = new System.Windows.Forms.Button();
             this.buttonTest = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.buttonModel = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textLevelId = new System.Windows.Forms.TextBox();
-            this.buttonModel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -82,6 +82,16 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Other Editors";
             // 
+            // buttonModel
+            // 
+            this.buttonModel.Location = new System.Drawing.Point(6, 103);
+            this.buttonModel.Name = "buttonModel";
+            this.buttonModel.Size = new System.Drawing.Size(237, 36);
+            this.buttonModel.TabIndex = 3;
+            this.buttonModel.Text = "Model Converter";
+            this.buttonModel.UseVisualStyleBackColor = true;
+            this.buttonModel.Click += new System.EventHandler(this.buttonModel_Click);
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.label1);
@@ -109,17 +119,7 @@
             this.textLevelId.Name = "textLevelId";
             this.textLevelId.Size = new System.Drawing.Size(181, 20);
             this.textLevelId.TabIndex = 1;
-            this.textLevelId.Text = "1";
-            // 
-            // buttonModel
-            // 
-            this.buttonModel.Location = new System.Drawing.Point(6, 103);
-            this.buttonModel.Name = "buttonModel";
-            this.buttonModel.Size = new System.Drawing.Size(237, 36);
-            this.buttonModel.TabIndex = 3;
-            this.buttonModel.Text = "Model Converter";
-            this.buttonModel.UseVisualStyleBackColor = true;
-            this.buttonModel.Click += new System.EventHandler(this.buttonModel_Click);
+            this.textLevelId.Text = "2";
             // 
             // formStartUp
             // 

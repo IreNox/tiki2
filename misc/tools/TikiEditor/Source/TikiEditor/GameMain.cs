@@ -78,7 +78,7 @@ namespace TikiEditor
 
         protected override void LoadContent()
         {
-            _mode.Init();
+            if (_mode != null) _mode.Init();
 
             base.LoadContent();
         }

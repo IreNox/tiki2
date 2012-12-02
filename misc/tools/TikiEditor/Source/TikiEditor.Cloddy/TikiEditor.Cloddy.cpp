@@ -61,7 +61,7 @@ namespace TikiEditor
 		while (i < c)
 		{
 			::System::UInt64 x = i % width;
-			::System::UInt64 y = i / width;
+			::System::UInt64 y = height - (i / width);
 
 			heightmap->Get(
 				(int)x,
