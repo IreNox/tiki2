@@ -5,7 +5,8 @@
 #include "Core/Component.h"
 
 #include "Core/Material.h"
-#include "Core/ITriangleMeshCollider.h"
+#include "Core/IHeightFieldCollider.h"
+//#include "Core/ITriangleMeshCollider.h"
 
 namespace TikiEngine
 {
@@ -35,7 +36,12 @@ namespace TikiEngine
 
 			virtual float SampleHeight(const Vector3& position) = 0;
 
-			virtual void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi) = 0;
+			virtual void UpdateCollider(IHeightFieldCollider* collider) = 0;
+			//virtual void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi) = 0;
+
+#if _DEBUG
+			virtual void ToggleDrawCollider() = 0;
+#endif
 
 		};
 	}

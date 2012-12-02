@@ -292,6 +292,9 @@ namespace TikiEngine
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
 			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0),
 			  collisionRegions(0), layout(0)
+#if _DEBUG
+			  , drawCollider(false)
+#endif
 		{
 		}
 
@@ -318,8 +321,6 @@ namespace TikiEngine
 			callback = 0;
 
 			terrainDescription = 0;
-
-			datasetElevation = 0;
 		}
 		#pragma endregion
 
@@ -329,8 +330,7 @@ namespace TikiEngine
 			this->size = size;
 			this->scale = scale;
 			this->elevation = elevation;
-
-			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
+			this->fileName = fileName;
 
 			vertexFormat = cloddy_VertexFormat::P3F()
 				->Append(cloddy_VertexFormat::T2F(1, 1))
@@ -338,6 +338,11 @@ namespace TikiEngine
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());
 
+			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			datasetSample = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			heightmap = datasetSample->GetHeightmap();
+
+			int size2 = (heightmap->GetWidth() * heightmap->GetHeight()) / 10;
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
 			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 2);
 
@@ -354,21 +359,11 @@ namespace TikiEngine
 			manager->SetLicence("Data/Cloddy/Licence/licence.dat");
 			manager->Initialize();
 
-			datasetElevation = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
-
-			//datasetColor = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c24.cube.dat", true, cloddy_CloddyDatasetConverterType::C24);
-			//datasetElevation = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.e16.cube.dat", true, cloddy_CloddyDatasetConverterType::E16);
-			//datasetDetail = new cloddy_CloddyLocalDataset("Data/Cloddy/Datasets/mars.like.planet.c32.cube.dat", true, cloddy_CloddyDatasetConverterType::C32);
-
-			//heightmap = new TikiHeightmap(8192 + 1);
-			//heightmap->SetColor(datasetColor->GetHeightmap());
-			//heightmap->SetDetail(datasetDetail->GetHeightmap());
-			//heightmap->SetElevation(datasetElevation->GetHeightmap());
 
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(elevation);
-			terrainDescription->SetHeightmap(datasetElevation->GetHeightmap()->Scale(scale + 1));
+			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1));
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);
 			//terrainDescription->set
@@ -407,10 +402,19 @@ namespace TikiEngine
 
 		float TerrainRenderer::SampleHeight(const Vector3& position)
 		{
-			Vec3F asd = Vec3F((float*)position.arr);
-			asd.Y = 10000.0f;
+			HeightmapSample sam;
 
-			return terrain->GetAltitude(asd, 0);
+			Vector3 pos = position + Vector3((float)size / 2, 0, (float)size / 2);
+
+			heightmap->Get(
+				(int32)pos.X,
+				(int32)pos.Z,
+				&sam
+			);
+
+			double height = ((double)sam.Elevation / 1073741823) * elevation;
+
+			return (float)height;
 		}
 
 		bool TerrainRenderer::GetReady()
@@ -420,41 +424,40 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Collision
-		void TerrainRenderer::UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi)
+		void TerrainRenderer::UpdateCollider(IHeightFieldCollider* collider)
 		{
-			if (collisionIndexBuffer == 0)
-			{
-				collisionIndexBuffer = new TerrainIndexBuffer(poi->Count() * 1000);
-			}
-
-			if (collisionVertexBuffer == 0)
-			{
-				collisionVertexBuffer = new TerrainVertexBuffer(poi->Count() * 500);
-			}
-
-			while (collisionRegions < poi->Count())
-			{
-				terrain->AddCollisionRegion(cloddy_Vec::To3D(Vec3F::Zero), 0.5f);
-				collisionRegions++;
-			}
-
 			UInt32 i = 0;
-			while (i < poi->Count())
+			UInt32 w = heightmap->GetWidth() / 20;
+			UInt32 h = heightmap->GetHeight() / 20;
+			UInt32 c = w * h;
+			
+			UInt16* height = new UInt16[c];
+			HeightmapSample sam;
+
+			while (i < c)
 			{
-				terrain->UpdateCollisionRegion(i, cloddy_Vec::To3D(cloddy_Vec3F(poi->Get(i).arr)), 10.0f);
+				UInt32 x = (w - (i % w)) * 20;
+				UInt32 y = (i / w) * 20;
+
+				heightmap->Get(x, y, &sam);
+
+				height[i] = (UInt16)(((double)sam.Elevation / 1073741823) * 65536);
+
 				i++;
 			}
 
-			CloddyCollisionMeshInfo info = terrain->GenerateCollisionMesh(collisionVertexBuffer, collisionIndexBuffer, false, 0.5f);
+			float s = (float)size;
 
-			collisionIndexBuffer->indexCount = (info.GetIndexCount() * 3) - 6;
+			HeightFieldDesc desc;
+			desc.Columns = w;
+			desc.Rows = h;
+			desc.ColumnScale = s / w;
+			desc.RowScale = s / h;
+			desc.HeightScale = elevation;
 
-			collider->SetMeshData(
-				collisionIndexBuffer->GetDataList(),
-				(info.GetIndexCount() * 3) - 6,
-				collisionVertexBuffer->GetData(),
-				info.GetVertexCount()
-				);
+			collider->SetCenter(Vector3(-s / 2, 0, -s / 2));
+			collider->SetHeightField(height, desc);
+			delete[](height);
 		}
 		#pragma endregion
 
@@ -474,6 +477,10 @@ namespace TikiEngine
 			Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
 
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
+
+#if _DEBUG
+			if (!drawCollider) {
+#endif
 
 			manager->BeginTriangulation();
 			terrain->SetTransform(cloddy_Mat4F(world.n));
@@ -495,19 +502,22 @@ namespace TikiEngine
 			);
 			manager->EndTriangulation();
 
-			//if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
-			//{
-			//	DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
+#if _DEBUG
+			}
+			else if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
+			{
+				DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
-			//	UInt32 offset = 0;
-			//	UInt32 stride = sizeof(CloddyVertex);
-			//	ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
+				UInt32 offset = 0;
+				UInt32 stride = sizeof(CloddyVertex);
+				ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
 
-			//	DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
-			//	DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+				DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-			//	DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
-			//}
+				DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
+			}
+#endif
 		}
 
 		void TerrainRenderer::Update(const UpdateArgs& args)

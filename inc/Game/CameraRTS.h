@@ -21,6 +21,7 @@ namespace TikiEngine
 
 			float zoom;
 			float targetZoom;
+			float height;
 
 			ITerrainRenderer* terrain;
 

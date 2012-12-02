@@ -156,7 +156,7 @@ namespace TikiEditor
                                 _heightmap.GetHeight()
                             );
 
-                            int max = data.Max();
+                            int max = 1073741823;
 
                             tex.SetData(
                                 data.Select(c => (float)c / max).Select(c => new Color(c, c, c, 1.0f)).ToArray()

@@ -151,6 +151,25 @@ namespace TikiEngine
 				collider->SetDynamic(false);
 				collider->SetGroup(CG_Collidable_Non_Pushable);
 				collider->AddRef();
+
+				Mesh* mesh = engine->content->LoadMesh(L"navmesh/navmesh_" + StringAtoW(name));
+
+				UInt32 indexCount;
+				UInt32* indexData;
+				mesh->GetIndexData(&indexData, &indexCount);
+
+				UInt32 vertexLength;
+				DefaultVertex* vertexData;
+				mesh->GetVertexData((void**)&vertexData, &vertexLength);
+
+				UInt32 i = 0;
+				UInt32 vertexCount = vertexLength / sizeof(DefaultVertex);
+				Vector3* vertices = new Vector3[vertexCount];
+				while (i < vertexCount) { vertices[i] = vertexData[i].Position; i++; }
+
+				collider->SetMeshData(indexData, indexCount, vertices, vertexCount);
+
+				delete[](vertices);
 			}
 		}
 
@@ -182,29 +201,35 @@ namespace TikiEngine
 		{
 			GameObject::Update(args);
 
-			if (frameCount % 10 == 0 && frameCount < 100)
+#if _DEBUG
+			if (args.Input.GetKeyPressed(KEY_F11))
 			{
-				float hSize = (float)heightmapSize / 2;
-
-				List<Vector3> poi;
-				Vector3 pos = Vector3::Zero;
-
-				for (float x = -hSize; x <= hSize; x += 64)
-				{
-					pos.X = x;
-
-					for (float y = -hSize; y <= hSize; y += 64)
-					{
-						pos.Z = y;
-						pos.Y = terrain->SampleHeight(pos) + 5;
-
-						poi.Add(pos);
-					}
-				}
-
-				terrain->UpdateCollider(collider, &poi);
+				terrain->ToggleDrawCollider();
 			}
-			frameCount++;
+#endif
+
+			//if (frameCount % 10 == 0 && frameCount < 100)
+			//{
+			//	float hSize = (float)heightmapSize / 2;
+
+			//	List<Vector3> poi;
+			//	Vector3 pos = Vector3::Zero;
+
+			//	for (float x = -hSize; x <= hSize; x += 64)
+			//	{
+			//		pos.X = x;
+
+			//		for (float y = -hSize; y <= hSize; y += 64)
+			//		{
+			//			pos.Z = y;
+			//			pos.Y = terrain->SampleHeight(pos) + 5;
+
+			//			poi.Add(pos);
+			//		}
+			//	}
+
+			//}
+			//frameCount++;
 		}
 		#pragma endregion
 

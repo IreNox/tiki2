@@ -255,6 +255,8 @@ namespace TikiEngine
 		#pragma region Private Member
 		IResource* ContentManagerModule::findLoadedResource(PInt hash, wstring name)
 		{
+			if (hash == typeid(IModel).hash_code()) return 0;
+
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{

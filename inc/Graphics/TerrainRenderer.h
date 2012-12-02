@@ -51,7 +51,12 @@ namespace TikiEngine
 
 			float SampleHeight(const Vector3& position);
 
-			void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
+			void UpdateCollider(IHeightFieldCollider* collider);
+			//void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
+
+#if _DEBUG
+			void ToggleDrawCollider() { drawCollider = !drawCollider; }
+#endif
 
 			bool GetReady();
 	
@@ -67,6 +72,7 @@ namespace TikiEngine
 			int size;
 			int scale;
 			float elevation;
+			string fileName;
 
 			codex_Ptr<IVertexFormat> vertexFormat;
 
@@ -76,15 +82,19 @@ namespace TikiEngine
 			codex_Ptr<CloddyManager> manager;
 			codex_Ptr<CloddyDescription> description;
 
-			//codex_Ptr<TikiHeightmap> heightmap;
-
 			codex_Ptr<ICloddyTerrain> terrain;
 			codex_Ptr<cloddy_CloddyRectangularTerrainDescription> terrainDescription;
-			codex_Ptr<CloddyLocalDataset> datasetElevation;
-			//codex_Ptr<CloddyLocalDataset> datasetDetail;
-			//codex_Ptr<CloddyLocalDataset> datasetColor;
+			codex_Ptr<CloddyLocalDataset> datasetDraw;
+			codex_Ptr<CloddyLocalDataset> datasetSample;
+
+			IHeightmap* heightmap;
 
 			codex_Ptr<TriangulationCallback> callback;
+
+
+#if _DEBUG
+			bool drawCollider;
+#endif
 
 			CodeX::int32 toCloddyColor(Color c);
 

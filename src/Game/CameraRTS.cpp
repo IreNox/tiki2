@@ -29,7 +29,7 @@ namespace TikiEngine
 
 		void CameraRTS::Update(const UpdateArgs& args)
 		{
-			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 150.0f : 75.0f);
+			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 400.0f : 200.0f);
 
 			Vector2 move = Vector2(
 				(args.Input.GetKey(KEY_LEFT) || args.Input.GetKey(KEY_A) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) || args.Input.GetKey(KEY_D) ? 1.0f : 0.0f),
@@ -62,15 +62,17 @@ namespace TikiEngine
 				rot = Lerp(0.2f, 1.57f, rot);
 				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
 
-				float sample = 32.0f; //terrain->SampleHeight(gameObject->PRS.GPosition());
-				gameObject->PRS.SPosition().Y = sample + (164.0f - zoom);
+				float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
+				height = Lerp(height, sample, (float)args.Time.ElapsedTime * 2);
+				height = Clamp(height, sample, 1000.0f);
+				gameObject->PRS.SPosition().Y = height + (164.0f - zoom);
 
-				//if (args.Input.MouseWheel != 0)
-				//{
-				//	ostringstream s;
-				//	s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
-				//	engine->HLog.Write(s.str());
-				//}
+				if (args.Input.MouseWheel != 0)
+				{
+					ostringstream s;
+					s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
+					engine->HLog.Write(s.str());
+				}
 
 			}
 		}

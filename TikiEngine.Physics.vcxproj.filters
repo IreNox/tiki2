@@ -77,6 +77,9 @@
     <ClInclude Include="inc\Physics\ControllerHitReport.h">
       <Filter>Headerdateien\Reports</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Physics\HeightFieldCollider.h">
+      <Filter>Headerdateien\Colliders</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Physics\DllMain.cpp">
@@ -120,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="src\Physics\ControllerHitReport.cpp">
       <Filter>Quelldateien\Reports</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Physics\HeightFieldCollider.cpp">
+      <Filter>Quelldateien\Colliders</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

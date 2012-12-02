@@ -17,6 +17,11 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 		bumpedNormal = normalize(mul(normalSample, TBN));
 	}
 
+	//if (UseSpecular)
+	//{
+		
+	//}
+
 	output.Screen = termDiffuse;
 	output.Depth.rgb = input.WorldPos;
 	output.Depth.a = 1 - (input.DepthPos.z / 1000.0f);

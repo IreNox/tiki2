@@ -49,6 +49,7 @@ namespace TikiEngine
 			NxActor* actor;
 			NxActorDesc actorDescription;
 			int materialIndex;
+			UInt16 group;
 			
 			NxVec3 center;
 		};

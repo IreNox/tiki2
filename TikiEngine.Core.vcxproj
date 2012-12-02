@@ -74,6 +74,7 @@
     <ClInclude Include="inc\Core\IAnimation.h" />
     <ClInclude Include="inc\Core\IBone.h" />
     <ClInclude Include="inc\Core\IConstantBuffer.h" />
+    <ClInclude Include="inc\Core\IHeightFieldCollider.h" />
     <ClInclude Include="inc\Core\Mutex.h" />
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventControls.h" />

@@ -631,5 +631,8 @@
     <ClInclude Include="inc\Core\IConstantBuffer.h">
       <Filter>Headerdateien\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IHeightFieldCollider.h">
+      <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

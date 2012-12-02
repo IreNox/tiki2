@@ -383,6 +383,9 @@
     <ClInclude Include="inc\Game\ProjectileManager.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PPTerrainDiffuse.h">
+      <Filter>Headerdateien\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -558,6 +561,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\ProjectileManager.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PPTerrainDiffuse.cpp">
+      <Filter>Quelldateien\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -75,6 +75,7 @@
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPFogOfWar.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
+    <ClInclude Include="inc\Game\PPTerrainDiffuse.h" />
     <ClInclude Include="inc\Game\Projectile.h" />
     <ClInclude Include="inc\Game\ProjectileManager.h" />
     <ClInclude Include="inc\Game\Regulator.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPFogOfWar.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
+    <ClCompile Include="src\Game\PPTerrainDiffuse.cpp" />
     <ClCompile Include="src\Game\Projectile.cpp" />
     <ClCompile Include="src\Game\ProjectileManager.cpp" />
     <ClCompile Include="src\Game\Regulator.cpp" />

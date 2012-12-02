@@ -149,7 +149,7 @@ namespace TikiEngine
 			meshDesc.triangleStrideBytes	= 3 * sizeof(NxU32);
 			meshDesc.points					= vertexData;
 			meshDesc.triangles				= indexData;
-			meshDesc.flags				    = NX_MF_FLIPNORMALS;
+			//meshDesc.flags				    = NX_MF_FLIPNORMALS;
 			//meshDesc.materialIndices		= &materialIndex;
 			//meshDesc.materialIndexStride	= 4;
 

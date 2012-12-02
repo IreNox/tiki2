@@ -81,6 +81,8 @@ namespace TikiEngine
 
 		void Collider::SetCollisionGroup(unsigned short group)
 		{
+			this->group = group;
+
 			if (actor == 0)
 				return;
 
