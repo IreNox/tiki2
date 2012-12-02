@@ -358,6 +358,15 @@ namespace TikiEngine
 			case 5:
 				this->SModel(engine->content->LoadModel(L"env_pipe_01"));
 				break;
+			case 6:
+				this->SModel(engine->content->LoadModel(L"rock_01"));
+				break;
+			case 7:
+				this->SModel(engine->content->LoadModel(L"rock_02"));
+				break;
+			case 8:
+				this->SModel(engine->content->LoadModel(L"rock_03"));
+				break;
 			}
 		}
 
