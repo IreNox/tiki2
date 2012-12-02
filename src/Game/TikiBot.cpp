@@ -171,9 +171,12 @@ namespace TikiEngine
 			// Move y Up, else we raycast against the bot's own collider.
 			float headingEps = 0.5f;
 			
-			Vector3 dir = Vector3::Normalize(pos - Pos3D());
+			//Vector3 dir = Vector3::Normalize(pos - Pos3D());
 			
-			ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
+			ray.Origin = Pos3D() + (Vector3::Normalize(pos - Pos3D()) * controller->GetRadius() * 2.0f);
+			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+
+			//ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
 			//ray.Origin.Y += controller->GetHeight() * 2.1f; // * 0.6f + controller->GetRadius();
             
 			ray.Direction = pos - ray.Origin;
