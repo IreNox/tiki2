@@ -137,8 +137,10 @@ namespace TikiEngine
 			if (heightmapFilename != "" && heightmapScale != 0 && heightmapSize != 0)
 			{
 				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
-				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation);
+				mat->TexDiffuse = engine->content->LoadTexture(L"terrain/color_" + StringAtoW(name));
+				//mat->GetShader()->SetVector2("TerrainSize", 307)
 				terrain->SetMaterial(mat);
+				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation);
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
 				material->SetRestitution(0.2f);

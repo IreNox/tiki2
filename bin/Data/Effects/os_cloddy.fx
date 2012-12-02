@@ -16,7 +16,7 @@
 /////////////
 #include "Data/Effects/IncOS/is_input.fx"
 
-//Texture2DArray 
+float2 TerrainSize;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -32,7 +32,10 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 {
 	PS_OUTPUT output = PS_Main(input);
 	
-	output.Screen = input.Color;
+	float2 uv = input.WorldPos.xz + float2(1536, 1536);
+	uv /= 3072;
+
+	output.Screen = TexDiffuse.Sample(sam, uv);
 
 	return output;
 }

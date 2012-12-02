@@ -124,7 +124,7 @@ namespace TikiEngine
 			case 0:
 				sLevel = new SceneLevel(engine);
 				engine->SetScene(sLevel);
-				sLevel->LoadLevel(1);
+				sLevel->LoadLevel(2);
 				break;
 			case 1:
 				s = new SceneTim(engine);
