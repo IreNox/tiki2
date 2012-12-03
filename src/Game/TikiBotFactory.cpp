@@ -11,18 +11,18 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
+			: gameState(gameState), elapsed(0), interval(30.0), enemySpawnCount(7), playerSpawnCount(5)
 		{
-			this->gameState = gameState;
-			
-			interval = 30.0;
-			elapsed = 0;
 		}
 
 		TikiBotFactory::~TikiBotFactory()
 		{
 		}
+		#pragma endregion
 
+		#pragma region Member - Init
 		void TikiBotFactory::Init()
 		{
 			const List<LevelPoint*>& points = gameState->GetScene()->GPoints();
@@ -32,25 +32,98 @@ namespace TikiEngine
 			{
 				switch (points[i]->GType())
 				{
-				case 0:
+				case 1:
+					playerBase = points[i]->GPosition();
+					{
+						GameObject* go = new GameObject(gameState->GetEngine());
+						go->PRS.SPosition() = getPos(points[i]->GPosition());
+						CreatePlayerHero(go);
+					}
 					break;
 				case 2:
 					wayPoints.push_back(points[i]->GPosition());
+					//{
+					//	GameObject* go = new GameObject(gameState->GetEngine());
+					//	go->PRS.SPosition() = getPos(points[i]->GPosition());
+
+					//	IMeshRenderer* render = gameState->GetEngine()->librarys->CreateComponent<IMeshRenderer>(go);
+
+					//	Material* mat = gameState->GetEngine()->content->LoadMaterial(L"os_default");
+					//	mat->TexDiffuse = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_diff");
+					//	mat->TexNormalMap = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_normal");
+					//	mat->TexSpecularMap = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_spec");
+					//	render->SetMaterial(mat);
+
+					//	render->SetMesh(gameState->GetEngine()->content->LoadMesh(L"building03_05"));
+					//	gameState->GetScene()->AddElement(go);
+					//}
 					break;
 				case 3:
-					spawnPoints.Add(Vector3(points[i]->GPosition().X, gameState->GetScene()->GLevel()->GetTerrain()->GElevation(), points[i]->GPosition().Y));
+					spawnPoints.Add(getPos(points[i]->GPosition()));
 					break;
 				}
 
 				i++;
 			}		
 		}
+		#pragma endregion
 
-		void TikiBotFactory::SetSpawnInterval( double interval )
+		#pragma region Member - Update
+		void TikiBotFactory::Update( const UpdateArgs& args )
 		{
-			this->interval = interval;
-		}
+			elapsed += args.Time.ElapsedTime;
 
+			if (elapsed > interval)
+			{
+				elapsed -= interval;
+
+				// spawn from three sides
+				UInt32 i = 0;
+				while (i < spawnPoints.Count())
+				{
+					UInt32 a = 0;
+					while (a < enemySpawnCount)
+					{
+						GameObject* go = new GameObject(gameState->GetEngine());
+						go->PRS.SPosition() = getPos(spawnPoints[i]);
+						CreateEnemy1(go);
+
+						a++;
+					}
+
+					i++;
+				}
+
+				UInt32 a = 0;
+				while (a < playerSpawnCount)
+				{
+					GameObject* go = new GameObject(gameState->GetEngine());
+					go->PRS.SPosition() = getPos(spawnPoints[i]);
+					CreatePlayerMop(go);
+
+					a++;
+				}
+			}
+
+#if _DEBUG
+			if (args.Input.GetKeyPressed(KEY_F5))
+			{
+				GameObject* go = new GameObject(gameState->GetEngine());
+				go->PRS.SPosition() = getPos(spawnPoints[0]);
+				CreateEnemy1(go);
+			}
+
+			if (args.Input.GetKeyPressed(KEY_F8))
+			{
+				GameObject* go = new GameObject(gameState->GetEngine());
+				go->PRS.SPosition() = getPos(Vector2::Zero);
+				CreatePlayerMop(go);
+			}
+#endif
+		}
+		#pragma endregion
+
+		#pragma region Member - Create - Enemy
 		void TikiBotFactory::CreateEnemy1(GameObject* go)
 		{
 			// Set Model
@@ -62,16 +135,38 @@ namespace TikiEngine
 			botDesc.Faction = 1;
 			botDesc.Height = 9.0f;
 			botDesc.Radius = 3.5f;
-			botDesc.MaxHealth = 100;			
+			botDesc.MaxHealth = 30;			
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
 			bot->CreateNav(gameState->GetNavMesh());
 
-			if (count(wayPoints.begin(), wayPoints.end(), 1) != 0)
+			if (!wayPoints.empty())
 			{
 				bot->GetBrain()->AddGoalPatrol(wayPoints);
 			}
+
+			gameState->GetScene()->AddElement(go);
+		}
+		#pragma endregion
+
+		#pragma region Member - Create - Player
+		void TikiBotFactory::CreatePlayerHero(GameObject* go)
+		{
+			// Set Model
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
+			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 11.0f;
+			botDesc.Radius = 3.5f;
+			botDesc.MaxHealth = 300;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetScale(0.1f);
+			bot->CreateNav(gameState->GetNavMesh());
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -85,53 +180,36 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 9.0f;
-			botDesc.Radius = 3.5f;
-			botDesc.MaxHealth = 500;
+			botDesc.Height = 8.0f;
+			botDesc.Radius = 4.0f;
+			botDesc.MaxHealth = 30;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.06f);
 			bot->CreateNav(gameState->GetNavMesh());
 
+			bot->GetBrain()->AddGoalAttackMove(spawnPoints[0]);
+
 			gameState->GetScene()->AddElement(go);
 		}
+		#pragma endregion
 
-		void TikiBotFactory::Update( const UpdateArgs& args )
+		#pragma region Private Member
+		Vector3 TikiBotFactory::getPos(const Vector2& pos)
 		{
-			//if (spawnRegulator->IsReady())
-			//elapsed += args.Time.ElapsedTime;
+			Vector3 outPos;
+			
+			outPos.X = pos.X + Random(3, 10);
+			outPos.Z = pos.Y + Random(3, 10);
 
-			if (elapsed > interval)
-			{
-				elapsed -= interval;
-
-				// spawn from three sides
-				UInt32 i = 0;
-				while (i < spawnPoints.Count())
-				{
-					GameObject* go = new GameObject(gameState->GetEngine());
-					go->PRS.SPosition() = spawnPoints[i];
-					CreateEnemy1(go);
-
-					i++;
-				}
-			}
-
-#if _DEBUG
-			if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = spawnPoints[0];
-				CreateEnemy1(go);
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F8))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = Vector3(0, gameState->GetScene()->GLevel()->GetTerrain()->GElevation(), 0);
-				CreatePlayerMop(go);
-			}
-#endif
+			outPos.Y = gameState->GetScene()->GLevel()->GetTerrain()->SampleHeight(outPos) + 10.0f;
+			return outPos;
 		}
+
+		Vector3 TikiBotFactory::getPos(const Vector3& pos)
+		{
+			return getPos(Vector2(pos.X, pos.Z));
+		}
+		#pragma endregion
 	}
 }

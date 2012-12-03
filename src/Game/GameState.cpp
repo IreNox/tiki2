@@ -33,7 +33,6 @@ namespace TikiEngine
 			projectiles = new ProjectileManager(this);
 
 			botFactory = new TikiBotFactory(this);
-			botFactory->SetSpawnInterval(20.0);
 		}
 
 		GameState::~GameState()

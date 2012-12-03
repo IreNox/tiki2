@@ -14,7 +14,7 @@ namespace TikiEditor
 		FakeTexture() : ITexture(0) {}
 		~FakeTexture() {}
 
-		void Create(UInt32 width, UInt32 height, bool dynamic) {}
+		void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format) {}
 
 		Int32 GetWidth() { return 0; }
 		Int32 GetHeight() { return 0; }

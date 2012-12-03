@@ -174,7 +174,7 @@ namespace TikiEngine
 			//Vector3 dir = Vector3::Normalize(pos - Pos3D());
 			
 			ray.Origin = Pos3D() + (Vector3::Normalize(pos - Pos3D()) * controller->GetRadius() * 2.0f);
-			ray.Origin.Y += controller->GetHeight() * 0.5f + controller->GetRadius();
+			ray.Origin.Y += (controller->GetHeight() * 0.6f) + (controller->GetRadius() + 1.0f);
 
 			//ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
 			//ray.Origin.Y += controller->GetHeight() * 2.1f; // * 0.6f + controller->GetRadius();
@@ -194,7 +194,7 @@ namespace TikiEngine
 #if _DEBUG
 				if (info.Collider == controller)
 				{
-					_CrtDbgBreak();
+					//_CrtDbgBreak();
 					// RayCast ist falsch und trifft sich selbst
 				}
 #endif
