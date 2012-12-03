@@ -14,7 +14,7 @@ namespace TikiEngine
 		class Level : public GameObject, public BasicDatabase
 		{
 		public:
-
+			
 			Level(GameState* state);
 			~Level();
 
