@@ -147,7 +147,7 @@ namespace TikiEditor
             tabControl1.TabPages.Remove(tabAnimations);
 
             FBXImport import = new FBXImport();
-            var meshes = import.GetNames(_inputsSelected.First().FileName);
+            var meshes = import.GetNames(listAnimations.SelectedItems.Cast<INAnimation>().First().FileName);
 
             string name = Path.GetFileNameWithoutExtension(textOutputFilename.Text);
 
