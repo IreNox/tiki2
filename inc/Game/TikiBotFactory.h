@@ -29,10 +29,11 @@ namespace TikiEngine
 
 			void CreateEnemy1(GameObject* go);
 			//void CreateEnemy2(GameObject* go);
+			void CreateEnemyTower(GameObject* go);
 
 			void CreatePlayerMop(GameObject* go);
 			void CreatePlayerHero(GameObject* go);
-			//void CreateTower(GameObject* go);
+			void CreatePlayerTower(GameObject* go);
 
 
 

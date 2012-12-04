@@ -20,9 +20,18 @@ namespace TikiEngine
 		{
 			if (IsReadyForNextShot(args))
 			{
-				IBone* bone = owner->GetGameObject()->GModel()->GetBone("weapon_MgTip_bn");				
-				Vector3 start = Vector3::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
-
+				Vector3 start;
+				if (owner->EntityType() == ET_Bot)
+				{
+					IBone* bone = owner->GetGameObject()->GModel()->GetBone("weapon_MgTip_bn");				
+					 start = Vector3::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
+				}
+				else if (owner->EntityType() == ET_Tower)
+				{
+					// TODO: Tower bone
+					start = owner->Pos3D();
+				}
+				
 				ProjectileDescription desc;
 				desc.Target = pos; //owner->GetTargetBot()->Pos3D();
                 desc.Shooter = owner;

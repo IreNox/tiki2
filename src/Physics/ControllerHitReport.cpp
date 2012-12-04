@@ -39,7 +39,8 @@ namespace TikiEngine
              NxActor* actor = hit.controller->getActor();
              NxActor* other = hit.other->getActor();
  
-             if (other->isDynamic())
+			 // check shape for group flags, not the freakin actor itself!
+             if (other->getShapes()[0]->getGroup() != CG_Collidable_Non_Pushable)
              {
                  NxF32 coeff = 10.0f; //actor->getMass() * 1000.0f;
                  NxVec3 dir = hit.other->getPosition() - hit.controller->getPosition();

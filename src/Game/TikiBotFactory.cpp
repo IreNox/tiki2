@@ -113,10 +113,24 @@ namespace TikiEngine
 				CreateEnemy1(go);
 			}
 
-			if (args.Input.GetKeyPressed(KEY_F8))
+			if (args.Input.GetKeyPressed(KEY_F6))
+			{
+				GameObject* go = new GameObject(gameState->GetEngine());
+				go->PRS.SPosition() = getPos(Vector2(100, 100));
+				CreateEnemyTower(go);
+			}
+
+			if (args.Input.GetKeyPressed(KEY_F7))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = getPos(Vector2::Zero);
+				CreatePlayerTower(go);
+			}
+
+			if (args.Input.GetKeyPressed(KEY_F8))
+			{
+				GameObject* go = new GameObject(gameState->GetEngine());
+				go->PRS.SPosition() = getPos(Vector2(10, 10));
 				CreatePlayerMop(go);
 			}
 #endif
@@ -148,6 +162,30 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+
+		void TikiBotFactory::CreateEnemyTower(GameObject* go)
+		{
+			// Set Model
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
+			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 1;
+			botDesc.Height = 9.0f;
+			botDesc.Radius = 3.5f;
+			botDesc.MaxHealth = 100;	
+			botDesc.MaxSpeed = 0.000001f;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetEntityType(ET_Tower);
+			bot->SetScale(8.0f);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->GetBrain()->AddGoalExplore();
+
+			gameState->GetScene()->AddElement(go);
+		}
+
 		#pragma endregion
 
 		#pragma region Member - Create - Player
@@ -192,6 +230,30 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+
+		void TikiBotFactory::CreatePlayerTower(GameObject* go)
+		{
+			// Set Model
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
+			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 9.0f;
+			botDesc.Radius = 3.5f;
+			botDesc.MaxHealth = 100;	
+			botDesc.MaxSpeed = 0.000001f;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetEntityType(ET_Tower);
+			bot->SetScale(8.0f);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->GetBrain()->AddGoalExplore();
+
+			gameState->GetScene()->AddElement(go);
+		}
+
 		#pragma endregion
 
 		#pragma region Private Member

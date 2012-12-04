@@ -19,6 +19,12 @@ namespace TikiEngine
 		class SensorMemory;
         class WeaponSystem;
 
+		enum EntityTypes
+		{
+			ET_Bot,
+			ET_Tower
+		};
+
 		struct TikiBotDescription
 		{
 			int Faction;		  // 0 = Player, 1 = Enemy
@@ -56,7 +62,7 @@ namespace TikiEngine
 				ReactionTime = 0.001f;
 				AimPresistance = 1.0f;
 				AimAccuracy = 0.0f;
-				MemorySpan = 1.0f; //0.5f;
+				MemorySpan = 0.5f; //0.5f;
 
 				// brain
 				ExploreBias = 0.05f;
@@ -81,6 +87,7 @@ namespace TikiEngine
 		class TikiBot : public MovingEntity
 		{
 		public:
+
 
 			TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc);
 			~TikiBot();

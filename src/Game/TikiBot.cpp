@@ -30,6 +30,7 @@ namespace TikiEngine
 
             // Init bot attributes
             faction = desc.Faction;
+			SetEntityType(ET_Bot);
 
             maxHealth = desc.MaxHealth;
             health = maxHealth;
@@ -40,9 +41,6 @@ namespace TikiEngine
             status = alive; //spawning;
             //possessed = true;
             fieldOfView = DegsToRads(desc.FoV);
-
-            // TODO: game types
-            //SetEntityType(type_bot);
 
             // create the navigation module
             pathPlanner = new PathPlanner(this);
