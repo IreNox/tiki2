@@ -12,7 +12,7 @@
 #include "Game/GoalThink.h"
 #include "Game/Bullet.h"
 #include "Game/AnimationHandlerDefaultUnit.h"
-
+#include "Game/BuildSlot.h"
 
 #include "Game/TikiBotFactory.h"
 
@@ -222,7 +222,14 @@ namespace TikiEngine
 				while (i < unitSelection->GetSelectedSlots()->Count())
 				{
 					GameObject* go = unitSelection->GetSelectedSlots()->Get(i);
-					botFactory->CreatePlayerTower(go);
+					BuildSlot* slot = go->GetComponent<BuildSlot>();
+					
+					// only create once
+					if (slot->Enabled())
+					{
+						slot->Disable();
+						botFactory->CreatePlayerTower(go);
+					}
 
 					i++;
 				}

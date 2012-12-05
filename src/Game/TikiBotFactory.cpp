@@ -254,6 +254,7 @@ namespace TikiEngine
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
+
 			gameState->GetScene()->AddElement(go);
 		}
 

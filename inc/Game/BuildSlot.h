@@ -22,9 +22,12 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args) {}
 			bool GetReady() { return true; }
 
+			void Disable(); 
+			bool Enabled();
+
 		private:
 			GameState* gameState;
-
+			bool enabled;
 
 		};
 

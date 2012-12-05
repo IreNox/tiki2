@@ -7,7 +7,7 @@ namespace TikiEngine
 	{
 
 		BuildSlot::BuildSlot(GameState* gameState, GameObject* gameObject)
-			: Component(gameState->GetEngine(), gameObject)
+			: Component(gameState->GetEngine(), gameObject), enabled(true)
 		{
 			this->gameState = gameState;
 		}
@@ -16,5 +16,14 @@ namespace TikiEngine
 		{
 		}
 
+		void BuildSlot::Disable()
+		{
+			enabled = false;
+		}
+
+		bool BuildSlot::Enabled()
+		{
+			return enabled;
+		}
 	}
 }
