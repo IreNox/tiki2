@@ -22,6 +22,7 @@ namespace TikiEngine
 			~UnitSelection();
 
 			List<GameObject*>* GetSelectedUnits();
+			List<GameObject*>* GetSelectedSlots();
 
 			void Update(const UpdateArgs& args);
 			void Draw(const DrawArgs& args);
@@ -35,6 +36,8 @@ namespace TikiEngine
 
 			GameState* gameState;
 			List<GameObject*> selectedUnits;
+
+			List<GameObject*> selectedSlots;
 
 			GUIButton* selectButton;
 		};

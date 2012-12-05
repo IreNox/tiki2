@@ -4,8 +4,10 @@
 #include "Game/GoalThink.h"
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Game/SceneLevel.h"
+#include "Game/BuildSlot.h"
 
 #include "Core/IContentManager.h"
+
 
 namespace TikiEngine
 {
@@ -133,6 +135,7 @@ namespace TikiEngine
 				go->PRS.SPosition() = getPos(Vector2(10, 10));
 				CreatePlayerMop(go);
 			}
+
 #endif
 		}
 		#pragma endregion
@@ -255,6 +258,18 @@ namespace TikiEngine
 		}
 
 		#pragma endregion
+
+		#pragma region Member - Create - BuildSlot
+		void TikiBotFactory::CreateBuildSlot(GameObject* go)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
+
+			BuildSlot* slot = new BuildSlot(gameState, go);
+			//slot->GetGameObject()->PRS.SScale() = Vector3(8.0f, 8.0f, 8.0f);
+			gameState->GetScene()->AddElement(go);
+		}
+		#pragma endregion
+
 
 		#pragma region Private Member
 		Vector3 TikiBotFactory::getPos(const Vector2& pos)

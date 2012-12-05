@@ -367,6 +367,9 @@ namespace TikiEngine
 			case 8:
 				this->SModel(engine->content->LoadModel(L"rock_03"));
 				break;
+			case 9: // Tower Build slot
+				gameState->GetBotFactory()->CreateBuildSlot(this);
+				break;
 			}
 		}
 

@@ -25,6 +25,7 @@
     <ClInclude Include="inc\Game\BasicDatabase.h" />
     <ClInclude Include="inc\Game\BasicTransform.h" />
     <ClInclude Include="inc\Game\BoxSide.h" />
+    <ClInclude Include="inc\Game\BuildSlot.h" />
     <ClInclude Include="inc\Game\Bullet.h" />
     <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\CameraRTS.h" />
@@ -105,6 +106,7 @@
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
+    <ClCompile Include="src\Game\BuildSlot.cpp" />
     <ClCompile Include="src\Game\DatabaseLevel.cpp" />
     <ClCompile Include="src\Game\BoxSide.cpp" />
     <ClCompile Include="src\Game\Bullet.cpp" />

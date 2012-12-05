@@ -35,6 +35,7 @@ namespace TikiEngine
 			void CreatePlayerHero(GameObject* go);
 			void CreatePlayerTower(GameObject* go);
 
+			void CreateBuildSlot(GameObject* go);
 
 
 			void Update(const UpdateArgs& args);

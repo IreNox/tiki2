@@ -169,10 +169,14 @@ namespace TikiEngine
 							// movement command will be queued
 							if (args.Input.GetKey(KEY_LSHIFT))
 							{
-								if (args.Input.GetKey(KEY_T))
-									bot->GetBrain()->QueueGoalAttackMove(info.Point);
-								else
-									bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
+								if (bot->EntityType() != ET_Tower)
+								{
+									if (args.Input.GetKey(KEY_T))
+										bot->GetBrain()->QueueGoalAttackMove(info.Point);
+									else
+										bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
+								}
+
 							}
 							else if (args.Input.GetKey(KEY_T))
 							{
@@ -194,8 +198,11 @@ namespace TikiEngine
 								}
 								else
 								{
-									bot->GetBrain()->RemoveAllSubgoals();
-									bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+									if (bot->EntityType() != ET_Tower)
+									{
+										bot->GetBrain()->RemoveAllSubgoals();
+										bot->GetBrain()->AddGoalMoveToPosition(info.Point);
+									}
 								}
 
 							}
@@ -206,6 +213,21 @@ namespace TikiEngine
 					}
 				}
 			}
+
+
+			// Handle tower 
+			if (args.Input.GetKeyPressed(KEY_F9))
+			{
+				UInt32 i = 0;
+				while (i < unitSelection->GetSelectedSlots()->Count())
+				{
+					GameObject* go = unitSelection->GetSelectedSlots()->Get(i);
+					botFactory->CreatePlayerTower(go);
+
+					i++;
+				}
+			}
+
 
 		}
 		#pragma endregion

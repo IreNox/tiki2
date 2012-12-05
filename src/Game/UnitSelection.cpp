@@ -7,7 +7,7 @@
 #include "Game/SceneLevel.h"
 
 #include "Core/IGraphics.h"
-
+#include "Game/BuildSlot.h"
 
 
 namespace TikiEngine
@@ -27,6 +27,7 @@ namespace TikiEngine
 		UnitSelection::~UnitSelection()
 		{
 			selectedUnits.Clear();
+			selectedSlots.Clear();
 			SafeRelease(&selectButton);
 		}
 		#pragma endregion
@@ -35,6 +36,11 @@ namespace TikiEngine
 		List<GameObject*>* UnitSelection::GetSelectedUnits()
 		{
 			return &selectedUnits;
+		}
+
+		List<GameObject*>* UnitSelection::GetSelectedSlots()
+		{
+			return &selectedSlots;
 		}
 
 		void UnitSelection::Draw(const DrawArgs& args)
@@ -57,8 +63,10 @@ namespace TikiEngine
 
 				// clear list from last selection
 				if (!args.Input.GetKey(KEY_LSHIFT))
+				{
 					selectedUnits.Clear();
-
+					selectedSlots.Clear();
+				}
 				selectionStartPoint = args.Input.MousePositionDisplay;
 
 				// Set the selection box starting point
@@ -93,12 +101,54 @@ namespace TikiEngine
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
 			
+
+	
 			// Check entity intersection
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetElements().Count())
 			{
 				GameObject* go = gameState->GetScene()->GetElements()[i];
 
+				#pragma region SlotSelection
+				BuildSlot* slot = 0;
+				slot = go->GetComponent<BuildSlot>();
+				if(slot != 0)
+				{
+					Camera* cam = gameState->GetScene()->GCamera();
+					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+
+					Matrix vp = cam->WorldToScreen();
+					Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+
+					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
+					{
+						engine->HLog.Write("Rect-Select slot.");
+						selectedSlots.Add(go);
+						changed = true;
+					}
+
+					float eps = 15.0f;
+					if (args.Input.GetMousePressed(MB_Left))
+					{
+						if(screenPos.X <= selectionRect.X + eps && 
+							screenPos.X >= selectionRect.X - eps &&
+							screenPos.Y <= selectionRect.Y + eps && 
+							screenPos.Y >= selectionRect.Y - eps)
+						{
+							if (!selectedSlots.Contains(go))
+							{
+								engine->HLog.Write("click-Select slot.\n");
+								selectedSlots.Add(go);
+								changed = true;
+							}
+						}
+
+					}
+
+				}
+				#pragma endregion
+
+				#pragma region UnitSelection
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
 				{
@@ -125,9 +175,9 @@ namespace TikiEngine
 						if (args.Input.GetMousePressed(MB_Left))
 						{
 							if(screenPos.X <= selectionRect.X + eps && 
-								screenPos.X >= selectionRect.X - eps &&
-								screenPos.Y <= selectionRect.Y + eps && 
-								screenPos.Y >= selectionRect.Y - eps)
+							   screenPos.X >= selectionRect.X - eps &&
+							   screenPos.Y <= selectionRect.Y + eps && 
+							   screenPos.Y >= selectionRect.Y - eps)
 							{
 								//engine->HLog.Write("click-Select unit.\n");
 								selectedUnits.Add(go);
@@ -137,12 +187,12 @@ namespace TikiEngine
 						}
 					}
 
-
 					// check if dead and clear from list
 					if (ent->IsDead())
 						RemoveBot(ent, i);
-
 				}
+				#pragma endregion
+
  				i++;
 			}
 
