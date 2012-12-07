@@ -45,7 +45,7 @@ namespace TikiEngine
                  NxF32 coeff = 10.0f; //actor->getMass() * 1000.0f;
                  NxVec3 dir = hit.other->getPosition() - hit.controller->getPosition();
                  dir.y = 0;
-                 dir.setMagnitude(0.05f);
+                 dir.setMagnitude(0.2f);
                  //dir.normalize();
 
                  NxCCTInteractionFlag c, o;

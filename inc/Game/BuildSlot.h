@@ -23,6 +23,7 @@ namespace TikiEngine
 			bool GetReady() { return true; }
 
 			void Disable(); 
+			void Enable();
 			bool Enabled();
 
 		private:

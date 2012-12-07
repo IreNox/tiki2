@@ -236,6 +236,21 @@ namespace TikiEngine
 			}
 
 
+			if (args.Input.GetKeyPressed(KEY_F6))
+			{
+				UInt32 i = 0;
+				while (i < unitSelection->GetSelectedSlots()->Count())
+				{
+					GameObject* go = unitSelection->GetSelectedSlots()->Get(i);
+					TikiBot* b = go->GetComponent<TikiBot>();
+					b->ReduceHealth(100);
+
+					i++;
+				}
+			}
+
+
+
 		}
 		#pragma endregion
 	}

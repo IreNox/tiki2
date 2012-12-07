@@ -239,8 +239,21 @@ namespace TikiEngine
 				selectedUnits.Remove(bot->GetGameObject());
 			}
 
-			bot->GetGameObject()->Release();
-			gameState->GetScene()->RemoveElementAt(index);
+
+			if (bot->EntityType() == ET_Tower)
+			{
+				//engine->HLog.Write("This is a dead tower, only removed bot component.");
+				bot->GetGameObject()->RemoveComponent(bot);
+				BuildSlot* slot = bot->GetGameObject()->GetComponent<BuildSlot>();
+				slot->Enable();
+			}
+			else if(bot->EntityType() == ET_Bot)
+			{
+				//engine->HLog.Write("Released bot go");
+				bot->GetGameObject()->Release();
+				gameState->GetScene()->RemoveElementAt(index);
+			}
+
 		}
 		#pragma endregion
 	}

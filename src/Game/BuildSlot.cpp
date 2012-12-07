@@ -21,6 +21,11 @@ namespace TikiEngine
 			enabled = false;
 		}
 
+		void BuildSlot::Enable()
+		{
+			enabled = true;
+		}
+
 		bool BuildSlot::Enabled()
 		{
 			return enabled;

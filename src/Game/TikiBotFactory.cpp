@@ -115,19 +115,19 @@ namespace TikiEngine
 				CreateEnemy1(go);
 			}
 
-			if (args.Input.GetKeyPressed(KEY_F6))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(100, 100));
-				CreateEnemyTower(go);
-			}
+			//if (args.Input.GetKeyPressed(KEY_F6))
+			//{
+			//	GameObject* go = new GameObject(gameState->GetEngine());
+			//	go->PRS.SPosition() = getPos(Vector2(100, 100));
+			//	CreateEnemyTower(go);
+			//}
 
-			if (args.Input.GetKeyPressed(KEY_F7))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2::Zero);
-				CreatePlayerTower(go);
-			}
+			//if (args.Input.GetKeyPressed(KEY_F7))
+			//{
+			//	GameObject* go = new GameObject(gameState->GetEngine());
+			//	go->PRS.SPosition() = getPos(Vector2::Zero);
+			//	CreatePlayerTower(go);
+			//}
 
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
