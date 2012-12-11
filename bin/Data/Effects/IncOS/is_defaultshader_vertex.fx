@@ -3,10 +3,11 @@
 ////////////////////////////////////////////////////////////////////////////////
 PS_INPUT VS_Main(VS_INPUT input)
 {
+	matrix world = GetWorld(input);
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
-    output.Pos = mul(output.Pos, WorldM);
+    output.Pos = mul(output.Pos, world);
 
 	output.WorldPos = output.Pos.xyz;
 	output.ViewPos = normalize(ViewIM[3] - output.Pos);
@@ -20,7 +21,7 @@ PS_INPUT VS_Main(VS_INPUT input)
 	float3 c1 = cross(input.Normal, float3(0.0, 0.0, 1.0)); 
 	float3 c2 = cross(input.Normal, float3(0.0, 1.0, 0.0)); 
 
-	output.Normal = normalize(mul(input.Normal, (float3x3)WorldMIT));
+	output.Normal = normalize(mul(input.Normal, (float3x3)world));
 	output.Tangent = normalize(length(c1) > length(c2) ? c1 : c2);
     output.Binormal = normalize(cross(output.Normal, output.Tangent));
     

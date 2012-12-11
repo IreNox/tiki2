@@ -12,6 +12,8 @@
 #include "Graphics/SpriteBatchModule.h"
 #include "Graphics/DllMain.h"
 
+#include "Graphics/PPDefault.h"
+
 #include "Core/DrawArgs.h"
 
 #include "Core/Camera.h"
@@ -73,8 +75,10 @@ namespace TikiEngine
 				swapChain->SetFullscreenState(false, NULL);
 			}
 
+			SafeRelease(&rtInterface);
 			SafeRelease(&rtDepth);
 			SafeRelease(&rtNormal);
+			SafeRelease(&rtLight);
 			SafeRelease(&rtScreen[0]);
 			SafeRelease(&rtScreen[1]);
 			SafeRelease(&rtBackBuffer);
@@ -322,7 +326,7 @@ namespace TikiEngine
 
 		void GraphicsModule::SetStateAlphaBlend(bool value)
 		{			
-			float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+			static float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 			if (value)
 			{
@@ -384,6 +388,7 @@ namespace TikiEngine
 				(args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
 			);
 
+			rtInterface->Clear(Color::TransparentBlack);
 			rtScreen[rtScreenIndex]->Apply(0);
 			rtScreen[rtScreenIndex]->Clear(clearColor);
 			this->SetStateDepthEnabled(true);
@@ -393,7 +398,7 @@ namespace TikiEngine
 			rtDepth->Apply(1);
 			rtNormal->Clear(Color::Black);
 			rtNormal->Apply(2);
-			rtLight->Clear(Color::Black);
+			rtLight->Clear(Color::TransparentBlack);
 			rtLight->Apply(3);
 
 			if (args.CurrentCamera)
@@ -410,7 +415,7 @@ namespace TikiEngine
 
 		void GraphicsModule::End()
 		{
-			deviceContext->OMSetDepthStencilState(depthStencilStateDisable, 1);
+			this->SetStateDepthEnabled(false);
 
 #if _DEBUG
 			debugLineRenderer->End();
@@ -568,7 +573,7 @@ namespace TikiEngine
 
 			depthStencilDesc.DepthEnable = true;
 			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-			depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+			depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 
 			depthStencilDesc.StencilEnable = true;
 			depthStencilDesc.StencilReadMask = 0xFF;
@@ -625,24 +630,12 @@ namespace TikiEngine
 			ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
 
 			depthDisabledStencilDesc.DepthEnable = false;
-			depthDisabledStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-			depthDisabledStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
-			depthDisabledStencilDesc.StencilEnable = true;
-			depthDisabledStencilDesc.StencilReadMask = 0xFF;
-			depthDisabledStencilDesc.StencilWriteMask = 0xFF;
-			depthDisabledStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-			depthDisabledStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
-			depthDisabledStencilDesc.FrontFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-			depthDisabledStencilDesc.FrontFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
-			depthDisabledStencilDesc.BackFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
-			depthDisabledStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
-			depthDisabledStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
-			depthDisabledStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+			depthDisabledStencilDesc.StencilEnable = false;
 
 			r = device->CreateDepthStencilState(
 				&depthDisabledStencilDesc,
 				&depthStencilStateDisable
-				);
+			);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
 			#pragma endregion
@@ -807,6 +800,10 @@ namespace TikiEngine
 			this->rtLight->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtLight->AddRef();
 
+			this->rtInterface = new RenderTarget(engine);
+			this->rtInterface->CreateScreenSize(false, PF_R8G8B8A8);
+			this->rtInterface->AddRef();
+
 			this->rtNormal = new RenderTarget(engine);
 			this->rtNormal->CreateScreenSize();
 			this->rtNormal->AddRef();
@@ -815,20 +812,11 @@ namespace TikiEngine
 			this->rtDepth->CreateScreenSize();
 			this->rtDepth->AddRef();
 
-			defaultPostProcessPass = new PostProcessPass(
-				engine,
-				engine->content->LoadShader(L"pp_default")
-			);
-			defaultPostProcessPass->AddInput("rtScreen", rtScreen[0]);
-			defaultPostProcessPass->AddInput("rtNormal", rtNormal);
-			defaultPostProcessPass->AddInput("rtLight", rtLight);
-			//pass->AddInput("rtDepth", rtDepth);
-			defaultPostProcessPass->AddOutput(0, rtBackBuffer);
-			defaultPostProcessPass->AddRef();
-
-			defaultPostProcess = new PostProcess(engine);
-			defaultPostProcess->AddPass(defaultPostProcessPass);
+			defaultPostProcess = new PPDefault(engine, rtBackBuffer);
 			defaultPostProcess->AddRef();
+
+			defaultPostProcessPass = defaultPostProcess->GetPasses()[3];
+			defaultPostProcessPass->AddRef();
 
 #if _DEBUG
 			debugConsole = new DebugConsole(engine);
@@ -927,11 +915,6 @@ namespace TikiEngine
 			shader->SetMatrix("spLocalM", Matrix::Identity);
 			shader->SetMatrix("spWorldM", Matrix::Identity);
 
-			renderTarget = new RenderTarget(engine);
-			renderTarget->CreateScreenSize();
-			renderTarget->AddRef();
-			DllMain::ModuleGraphics->AddDefaultProcessTarget("spriteBatch", renderTarget);
-
 			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, SpriteBatchVertex::DeclarationCount, true);
 
 			declaration = new VertexDeclaration(
@@ -959,7 +942,6 @@ namespace TikiEngine
 			SafeRelease(&buffer);
 			SafeRelease(&shader);
 			SafeRelease(&declaration);
-			SafeRelease(&renderTarget);
 		}
 		#pragma endregion
 
@@ -978,17 +960,14 @@ namespace TikiEngine
 
 		void SpriteBatchModule::End()
 		{
-			renderTarget->Clear(Color::TransparentBlack);
-
 			if (sprites.Count() == 0) return;
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
-			renderTarget->ApplyFirstAndOnly();
+			DllMain::ModuleGraphics->GetInterfaceTarget()->ApplyFirstAndOnly();
 
 			UINT offset = 0;
 			UINT stride = declaration->GetElementSize();
-			ID3D11Buffer* buffer = this->buffer->GetBuffer();
 
 			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
@@ -1009,10 +988,11 @@ namespace TikiEngine
 						bufferData,
 						vertices.GetInternalData(),
 						sizeof(SpriteBatchVertex) * vertices.Count()
-						);
+					);
 
 					this->buffer->Unmap();
 
+					ID3D11Buffer* buffer = this->buffer->GetBuffer();
 					DllMain::Context->IASetVertexBuffers(
 						0,
 						1,

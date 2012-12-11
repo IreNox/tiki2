@@ -8,12 +8,12 @@
 /////////////
 #include "Data/Effects/IncPP/is_input.fx"
 
-Texture2D rtScreen;
-Texture2D rtNormal;
+Texture2D rtDepth;
 Texture2D rtLight;
-
-Texture2D spriteBatch;
-Texture2D debugLines;
+Texture2D rtNormal;
+Texture2D rtScreen;
+Texture2D rtShadow;
+Texture2D rtInterface;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -25,23 +25,27 @@ Texture2D debugLines;
 ////////////////////////////////////////////////////////////////////////////////
 // Pixel Shader
 ////////////////////////////////////////////////////////////////////////////////
+
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	float4 bbColor = rtScreen.Sample(sam, input.UV) + rtLight.Sample(sam, input.UV);
-	float4 sbColor = spriteBatch.Sample(sam, input.UV);
-	float4 dlColor = debugLines.Sample(sam, input.UV);
-	float4 alColor = float4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);
-	float4 color = float4(0, 0, 0, 0);
+	float4 sceneColor = rtScreen.Sample(sam, input.UV);
+	float4 shadowColor = rtShadow.Sample(sam, input.UV);
+	float4 lightColor = rtLight.Sample(sam, input.UV);
+	float4 interfaceColor = rtInterface.Sample(sam, input.UV);
+	float4 ambientColor = float4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);
+
+	float4 color = sceneColor;
 
 	if (LightsCount != 0.0f)
 	{
 		float3 termLight = float3(1, 1, 1);
 
+		float3 pixelPos = rtDepth.Sample(sam, input.UV).xyz;
 		float3 pixelNormal = rtNormal.Sample(sam, input.UV).xyz;
 
 		for (float i = 0; i < LightsCount; i++)
 		{
-			float3 lightDir = normalize(Lights[i].Direction);
+			float3 lightDir = normalize(Lights[i].Position - pixelPos);
 
 			float lighting = dot(pixelNormal, lightDir);	
 			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));
@@ -49,15 +53,37 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			termLight += Lights[i].Color * lighting;
 		}		
 
-		bbColor.rgb *= termLight;
+		color.rgb *= termLight;
 	}
+	color *= shadowColor;
+	color *= ambientColor;
+	color += lightColor;
 
-	color = ((bbColor * alColor) * (1 - dlColor.a)) + dlColor;
-	color = (color * (1 - sbColor.a)) + sbColor;
+	color = (color * (1 - interfaceColor.a)) + interfaceColor;
 	color.a = 1;
 
 	return color;
 }
 
 
-#include "Data/Effects/Inc/is_technique.fx"
+////////////////////////////////////////////////////////////////////////////////
+// Technique
+////////////////////////////////////////////////////////////////////////////////
+
+DepthStencilState DisableDepth
+{
+    DepthEnable = FALSE;
+    DepthWriteMask = ZERO;
+};
+
+technique11 basic
+{
+    pass FinalScreen
+    {
+        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+		SetGeometryShader(  NULL );
+        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+
+		SetDepthStencilState( DisableDepth, 0 );
+    }
+}

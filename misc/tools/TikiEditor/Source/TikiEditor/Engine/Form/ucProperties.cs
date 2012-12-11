@@ -182,6 +182,11 @@ namespace TikiEditor.Designer
                 }
             }
 
+            if (_propertys.Count == 0)
+            {
+                return;
+            }
+
             int tabIndex = 1;
             int posLabelY = this.Padding.Top + 3;
             int posTextBoxY = this.Padding.Top;

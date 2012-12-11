@@ -5,6 +5,7 @@
 
 #include "FbxHelper.h"
 #include "FbxLoader.h"
+#include "D3DX10MeshLoader.h"
 
 #include "Core/Material.h"
 #include "Core/FileStream.h"
@@ -81,6 +82,19 @@ namespace TikiEditor
 
 				if (mesh->GetName() == str)
 				{
+					mesh->SetAdjacencyIndices(
+						meshMat->CreatetAdjacencyIndices
+					);
+
+					if (mesh->HasAdjacencyIndices())
+					{
+						D3DX10MeshLoader* indexGen = new D3DX10MeshLoader();
+						indexGen->ImportMesh(mesh);
+						indexGen->ConvertToAdjacency(mesh);
+
+						delete(indexGen);
+					}
+
 					Material* mat = mesh->GetMaterial();
 
 					if (mat == 0)

@@ -240,14 +240,14 @@ namespace TikiEditor
 			}
 
 			indices.Add(indicesArray[0]);
-			indices.Add(indicesArray[1]);
 			indices.Add(indicesArray[2]);
+			indices.Add(indicesArray[1]);
 
 			if(verticesInPolygon == 4)
 			{
 				indices.Add(indicesArray[0]);
-				indices.Add(indicesArray[2]);
 				indices.Add(indicesArray[3]);
+				indices.Add(indicesArray[2]);
 			}
 		}
 	}

@@ -107,9 +107,9 @@ namespace TikiEngine
 			Clear();
 			for(UInt32 i = 0; i < indexCount; i+=3)
 			{
-				Vector3 vertA = vertexData[indexData[i]].Position;
+				Vector3 vertC = vertexData[indexData[i]].Position;
 				Vector3 vertB = vertexData[indexData[i+1]].Position;
-				Vector3 vertC = vertexData[indexData[i+2]].Position;
+				Vector3 vertA = vertexData[indexData[i+2]].Position;
 				
 				vertA = Vector3::TransformCoordinate(vertA, transform);
 				vertB = Vector3::TransformCoordinate(vertB, transform);

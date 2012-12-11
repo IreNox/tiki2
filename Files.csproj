@@ -29,17 +29,18 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\Data\Cloddy\Datasets\pitch.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Datasets\ms1.E16C24.rect.dat" />
+    <None Include="bin\Data\Cloddy\Datasets\map1.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Licence\licence.dat" />
     <None Include="bin\Data\Meshes\building03_05.obj" />
-    <None Include="bin\Data\Meshes\navmesh\navmesh_pitch.obj" />
+    <None Include="bin\Data\Meshes\Laptop.obj" />
+    <None Include="bin\Data\Meshes\marine_l.obj" />
+    <None Include="bin\Data\Meshes\mark.obj" />
+    <None Include="bin\Data\Meshes\navmesh\navmesh_map1.obj" />
     <None Include="bin\Data\Meshes\navmesh\navmesh_ms1.obj" />
-    <None Include="bin\Data\Models\cylinder.tiki" />
-    <None Include="bin\Data\Models\cylinder2.tiki" />
+    <None Include="bin\Data\Meshes\test.obj" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
     <None Include="bin\Data\Models\marine_l.tiki" />
-    <None Include="bin\Data\Models\mark.tiki" />
     <None Include="bin\Data\Models\replaceme_cube.tiki" />
     <None Include="bin\Data\Models\rock_01.tiki" />
     <None Include="bin\Data\Models\rock_02.tiki" />
@@ -85,6 +86,7 @@
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Diff.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Normal.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Spec.dds" />
+    <None Include="bin\Data\Textures\terrain\color_map1.dds" />
     <None Include="bin\Data\Textures\terrain\color_ms1.dds" />
     <None Include="bin\Data\TikiData.sqlite" />
   </ItemGroup>
@@ -112,12 +114,18 @@
     <Content Include="bin\Data\Effects\IncOS\is_particle_gs_linestrip.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_particle_gs_point.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_structs.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_defaultshader_shadow.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_getworld_skinning.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_getworld_default.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_states.fx" />
     <Content Include="bin\Data\Effects\Inc\is_technique.fx" />
     <Content Include="bin\Data\Effects\IncPP\is_defaultshader_vertex.fx" />
     <Content Include="bin\Data\Effects\IncPP\is_input.fx" />
     <Content Include="bin\Data\Effects\IncPP\is_structs.fx" />
     <Content Include="bin\Data\Effects\Inc\is_input_light.fx" />
     <Content Include="bin\Data\Effects\Inc\is_struct_light.fx" />
+    <Content Include="bin\Data\Effects\IncOS\is_technique.fx" />
+    <Content Include="bin\Data\Effects\pp_shadow.fx" />
     <Content Include="bin\Data\Effects\os_cloddy.fx" />
     <Content Include="bin\Data\Effects\os_color.fx" />
     <Content Include="bin\Data\Effects\os_default.fx" />

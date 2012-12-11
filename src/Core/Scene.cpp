@@ -89,6 +89,11 @@ namespace TikiEngine
 		if (comCameras) cameras.AddRange(comCameras, 0, len);
 		delete(comCameras);
 
+		if (lighting.SceneLights->Count())
+		{
+			lighting.MainLightIndex = 0;
+		}
+
 		return element;
 	}
 

@@ -51,7 +51,7 @@ namespace TikiEngine
 			IRenderTarget* targetLight;
 
 			//ITexture* tex;
-			//Vector3 tmp;
+			Vector3 tmp;
 			//double lastTime;
 			//IBoxCollider* dynamicBox;
 			//ITerrainRenderer* terrain;

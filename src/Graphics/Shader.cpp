@@ -8,6 +8,8 @@
 #include "Core/HelperPath.h"
 #include "Core/GameObject.h"
 #include "Core/Material.h"
+#include "Core/FileStream.h"
+#include "Core/MemoryStream.h"
 
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
@@ -23,6 +25,8 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		using namespace TikiEngine::IO;
+
 		#pragma region Class
 		Shader::Shader(Engine* engine)
 			: IShader(engine), effect(0)
@@ -295,72 +299,113 @@ namespace TikiEngine
 		#pragma region Private Member
 		void Shader::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			ID3D10Blob *blob = 0;
-			ID3D10Blob *errorBlob = 0;
+			bool readFromFile = true;
 
-			UPInt size = stream->GetLength();
-			char* data = new char[size];
-			stream->Read(data, 0, (UInt32)size);
+#if !_DEBUG
+			wstring binFileName = engine->HPath.CombineWorkingPath(L"Data/BinShader/" + engine->HPath.GetFilenameWithoutExtension(fileName) + L".binfx");
 
-			HRESULT r = D3DX11CompileFromMemory(
-				data,
-				size,
-				0,
-				0,
-				0,
-				0,
-				"fx_5_0",
-				0, //D3D10_SHADER_ENABLE_STRICTNESS,
-				0,
-				0,
-				&blob,
-				&errorBlob,
-				0
+			engine->HPath.CheckPath(
+				engine->HPath.GetDirectoryName(binFileName)
 			);
 
-			if (FAILED(r))
+			if (!engine->HPath.FileExists(binFileName))
 			{
-				if (r == D3D11_ERROR_FILE_NOT_FOUND)
+#else
+			{
+#endif
+
+				ID3D10Blob *blob = 0;
+				ID3D10Blob *errorBlob = 0;
+
+				UPInt size = stream->GetLength();
+				char* data = new char[size];
+				stream->Read(data, 0, (UInt32)size);
+
+				HRESULT r = D3DX11CompileFromMemory(
+					data,
+					size,
+					0,
+					0,
+					0,
+					0,
+					"fx_5_0",
+					0,
+					0,
+					0,
+					&blob,
+					&errorBlob,
+					0
+					);
+
+				if (FAILED(r))
 				{
-					engine->HLog.WriteError("Failed to compile effect. File not found", 0);
-				}
-				else
-				{
-					if (errorBlob)
+					if (r == D3D11_ERROR_FILE_NOT_FOUND)
 					{
-						char* error = (char*)errorBlob->GetBufferPointer();
-						engine->HLog.WriteError("Failed to compile effect. Error Message: " + (string)error, 0);
+						engine->HLog.WriteError("Failed to compile effect. File not found", 0);
 					}
 					else
 					{
-						engine->HLog.WriteError("Failed to compile effect", 0);
+						if (errorBlob)
+						{
+							char* error = (char*)errorBlob->GetBufferPointer();
+							engine->HLog.WriteError("Failed to compile effect. Error Message: " + (string)error, 0);
+						}
+						else
+						{
+							engine->HLog.WriteError("Failed to compile effect", 0);
+						}
 					}
+
+					throw "Shader: .ctor: An error was corrupted.";
 				}
 
-				throw "Shader: .ctor: An error was corrupted.";
+				delete[](data);
+
+#if !_DEBUG
+				FileStream* binShader = new FileStream(binFileName, FM_Write);
+
+				binShader->Write(
+					blob->GetBufferPointer(),
+					0,
+					blob->GetBufferSize()
+				);
+				delete(binShader);
+
+				SafeRelease(&blob);
 			}
 
-			delete[](data);
+			stream = new FileStream(binFileName, FM_Read);
+#else
+				stream = new MemoryStream(blob->GetBufferPointer(), blob->GetBufferSize());
+				SafeRelease(&blob);
+			}
 
 			ID3DX11Effect* oldEffect = effect;
+#endif
 
-			r = D3DX11CreateEffectFromMemory(
-				blob->GetBufferPointer(),
-				blob->GetBufferSize(),
+			UPInt size = stream->GetLength();
+			char* data = new char[size];
+			stream->Read(data, 0, size);
+
+			HRESULT r = D3DX11CreateEffectFromMemory(
+				data,
+				size,
 				0,
 				device,
 				&effect
 			);
-
-			SafeRelease(&blob);
-
+			
 			if (FAILED(r))
 			{
+#if _DEBUG
 				effect = oldEffect;
+#endif
 
 				engine->HLog.WriteError("Failed to create effect.", 0);
 			}
+#if _DEBUG
 			SafeRelease(&oldEffect);
+#endif
 
 			wstring file = engine->HPath.GetFilename(fileName);
 

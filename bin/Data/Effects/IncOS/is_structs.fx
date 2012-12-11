@@ -44,3 +44,15 @@ struct PS_OUTPUT
 	float4 Light	: SV_TARGET;
 };
 #endif
+
+#ifndef SHADOW_NODEF
+struct GS_INPUT_SHADOW
+{
+    float4 Pos		: SV_POSITION;
+};
+
+struct PS_INPUT_SHADOW
+{
+	float4 Pos		: SV_POSITION;
+};
+#endif

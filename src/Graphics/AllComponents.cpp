@@ -70,7 +70,7 @@ namespace TikiEngine
 		#pragma region Member - Draw/Update
 		void MeshRenderer::Draw(const DrawArgs& args)
 		{			
-			if (!this->GetReady()) return;
+			if (!this->GetReady() || args.Mode == DM_Shadows) return;
 
 			material->UpdateDrawArgs(args, gameObject);
 
@@ -225,6 +225,8 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void ParticleRenderer::Draw(const DrawArgs& args)
 		{
+			if (args.Mode != DM_Geometry) return;
+
 			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 
@@ -287,6 +289,7 @@ namespace TikiEngine
 		using namespace Cloddy::API;
 		using namespace Cloddy::API::MeshVisitors;
 		using namespace Cloddy::Core::Math::Vectors;
+		using namespace Cloddy::API::Geometries;
 
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
@@ -342,9 +345,9 @@ namespace TikiEngine
 			datasetSample = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			heightmap = datasetSample->GetHeightmap();
 
-			int size2 = (heightmap->GetWidth() * heightmap->GetHeight()) / 10;
+			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
-			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 2);
+			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 3);
 
 			callback = new cloddy_TriangulationCallback(engine->graphics->GetDevice(), vertexBuffer, indexBuffer);
 
@@ -358,18 +361,18 @@ namespace TikiEngine
 			manager = new cloddy_CloddyManager(description);
 			manager->SetLicence("Data/Cloddy/Licence/licence.dat");
 			manager->Initialize();
-
-
+			
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(elevation);
-			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1));
+			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1)); // an passen für perfekte aussehen
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);
+			terrainDescription->SetHandedness(Handedness_RightHanded);
 			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
-			terrain->SetTolerance(0.01f);
+			terrain->SetTolerance(5.0f);
 		}
 		#pragma endregion
 
@@ -464,7 +467,7 @@ namespace TikiEngine
 		#pragma region Member - Draw/Update
 		void TerrainRenderer::Draw(const DrawArgs& args)
 		{
-			if (!this->GetReady()) return;
+			if (!this->GetReady() || args.Mode == DM_Shadows) return;
 
 			material->UpdateDrawArgs(args, gameObject);
 			material->Apply();
@@ -488,7 +491,11 @@ namespace TikiEngine
 
 			if (light)
 			{
-				terrain->SetLight(0, cloddy_Vec3F(light->GetGameObject()->PRS.GetForward().arr), toCloddyColor(light->GetColor()));
+				Vector3 lightD = light->GetGameObject()->PRS.GetForward();
+				//lightD.X = -lightD.X;
+				lightD.Z = -lightD.Z;
+
+				terrain->SetLight(0, cloddy_Vec3F(lightD.arr), toCloddyColor(light->GetColor()));
 				terrain->EnableLight(0);
 			}
 			else

@@ -41,6 +41,7 @@
     <Import Project="..\..\..\..\props\TikiEditor.Include.props" />
     <Import Project="..\..\..\..\props\TikiEditor.Output.props" />
     <Import Project="..\..\..\..\props\TikiEngine.Librarys.FBX.props" />
+    <Import Project="..\..\..\..\props\TikiEditor.DirecX.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -88,6 +89,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="D3DX10MeshLoader.h" />
     <ClInclude Include="FakeTexture.h" />
     <ClInclude Include="FBXConverter.h" />
     <ClInclude Include="FbxHelper.h" />
@@ -99,6 +101,7 @@
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
     <ClCompile Include="CompileHeader.cpp" />
+    <ClCompile Include="D3DX10MeshLoader.cpp" />
     <ClCompile Include="FBXConverter.cpp" />
     <ClCompile Include="FbxHelper.cpp" />
     <ClCompile Include="FBXImport.cpp" />

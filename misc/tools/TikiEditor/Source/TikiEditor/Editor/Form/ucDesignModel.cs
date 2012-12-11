@@ -21,6 +21,9 @@ namespace TikiEditor
         {
             InitializeComponent();
 
+            tabControl1.TabPages.Remove(tabMeshes);
+            tabControl1.TabPages.Remove(tabOverview);
+
             if (String.IsNullOrEmpty(Properties.Settings.Default.ModelOutput))
             {
                 FileDialog.InitialDirectory = Path.Combine(Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)), "Data/Models");
@@ -48,20 +51,32 @@ namespace TikiEditor
             return _inputsSelected;
         }
 
-        private void checkMeshTab()
+        private void selectObjectToEdit(object obj)
         {
-            if (listAnimations.SelectedItems.Count != 0)
+            if (ucProperties1.SettingsChanged)
             {
-                if (!tabControl1.TabPages.Contains(tabMeshes)) tabControl1.TabPages.Add(tabMeshes);
+                ucProperties1.Save();
+
+                if (tabControl1.TabPages.Contains(tabAnimations))
+                {
+                    textInputPrefix_TextChanged(null, null);
+                }
             }
-            else
-            {
-                tabControl1.TabPages.Remove(tabMeshes);
-            }
+
+            if (obj == null) obj = new object();
+
+            ucProperties1.CurrentObject = obj;
         }
         #endregion
 
-        #region Member - EventHandler
+        #region Private Member - Animation
+        private void checkNextAnimation()
+        {
+            buttonNextToMeshes.Enabled = (listAnimations.SelectedItems.Count != 0);
+        }
+        #endregion
+
+        #region Member - EventHandler - Animation
         private void textInputPath_TextChanged(object sender, EventArgs e)
         {
             _inputs.Clear();
@@ -93,23 +108,15 @@ namespace TikiEditor
             Properties.Settings.Default.ModelPrefix = textInputPrefix.Text;
             Properties.Settings.Default.Save();
 
-            checkMeshTab();
+            checkNextAnimation();
         }
 
         private void listInputs_SelectedIndexChanged(object sender, EventArgs e)
         {
-            checkMeshTab();
-
-            ucProperties1.CurrentObject = listAnimations.SelectedValue;
+            checkNextAnimation();
+            selectObjectToEdit(listAnimations.SelectedValue);
         }
 
-        private void listMeshes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            ucProperties1.CurrentObject = listMeshes.SelectedItem;
-        }
-        #endregion
-
-        #region Member - EventHandler - Click
         private void buttonSearchOutput_Click(object sender, EventArgs e)
         {
             if (!String.IsNullOrEmpty(textInputPrefix.Text))
@@ -142,9 +149,11 @@ namespace TikiEditor
             }
         }
 
-        private void buttonLoadMeshes_Click(object sender, EventArgs e)
+        private void buttonNextToMeshes_Click(object sender, EventArgs e)
         {
             tabControl1.TabPages.Remove(tabAnimations);
+            tabControl1.TabPages.Add(tabMeshes);
+            selectObjectToEdit(null);
 
             FBXImport import = new FBXImport();
             var meshes = import.GetNames(listAnimations.SelectedItems.Cast<INAnimation>().First().FileName);
@@ -156,11 +165,35 @@ namespace TikiEditor
             listMeshes.DataSource = _inputMeshes;
             listMeshes.DisplayMember = "Name";
         }
+        #endregion
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        #region Member - EventHandler - Meshes
+        private void listMeshes_SelectedIndexChanged(object sender, EventArgs e)
         {
-            ucProperties1.Save();
-            textInputPrefix_TextChanged(null, null);
+            selectObjectToEdit(listMeshes.SelectedItem);
+        }
+
+        private void buttonBackToAnimations_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabMeshes);
+            tabControl1.TabPages.Add(tabAnimations);
+            selectObjectToEdit(null);
+        }
+
+        private void buttonNextToOverview_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabMeshes);
+            tabControl1.TabPages.Add(tabOverview);
+            selectObjectToEdit(null);
+        }
+        #endregion
+
+        #region Member - EventHandler - Overview
+        private void buttonBackToMeshes_Click(object sender, EventArgs e)
+        {
+            tabControl1.TabPages.Remove(tabOverview);
+            tabControl1.TabPages.Add(tabMeshes);
+            selectObjectToEdit(null);
         }
 
         private void buttonExecute_Click(object sender, EventArgs e)
@@ -170,7 +203,14 @@ namespace TikiEditor
             foreach (INMesh m in _inputMeshes)
             {
                 import.InputMaterials.Add(
-                    new MeshMaterial() { Name = m.Name, TextureDiffuse = m.MatDiffuse, TextureNormal = m.MatNormal, TextureSpec = m.MatSpec, TextureLight = m.MatLight }
+                    new MeshMaterial() {
+                        Name = m.Name,
+                        CreatetAdjacencyIndices = m.CreatetShadow,
+                        TextureDiffuse = m.MatDiffuse,
+                        TextureNormal = m.MatNormal,
+                        TextureSpec = m.MatSpec,
+                        TextureLight = m.MatLight
+                    }
                 );
             }
 
@@ -181,6 +221,9 @@ namespace TikiEditor
 
             import.OutputFilename = textOutputFilename.Text;
             import.Execute();
+
+            tabControl1.TabPages.Remove(tabOverview);
+            tabControl1.TabPages.Add(tabAnimations);
         }
         #endregion
 
@@ -234,6 +277,8 @@ namespace TikiEditor
             #region Vars
             private string _name;
 
+            private bool _createtAdjacencyIndices;
+
             private string _matDiffuse;
             private string _matNormal;
             private string _matSpec;
@@ -253,11 +298,16 @@ namespace TikiEditor
             #endregion
 
             #region Properties
-            [System.ComponentModel.Browsable(false)]
             public string Name
             {
                 get { return _name; }
                 set { _name = value; }
+            }
+
+            public bool CreatetShadow
+            {
+                get { return _createtAdjacencyIndices; }
+                set { _createtAdjacencyIndices = value; }
             }
 
             [SearchFile("Texture2D", "*.dds")]

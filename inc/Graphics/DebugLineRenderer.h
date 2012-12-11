@@ -5,7 +5,6 @@
 #include "Core/ColorVertex.h"
 
 #include "Graphics/Shader.h"
-#include "Graphics/RenderTarget.h"
 #include "Graphics/DynamicBuffer.h"
 #include "Graphics/VertexDeclaration.h"
 #include "Graphics/DllMain.h"
@@ -36,8 +35,6 @@ namespace TikiEngine
 		Shader* shader;
 		VertexDeclaration* decl;
 		DynamicBuffer<ColorVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
-
-		RenderTarget* renderTarget;
 
 	};
 }

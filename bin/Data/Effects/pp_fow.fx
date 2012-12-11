@@ -38,7 +38,7 @@ Texture2D rtDepth;
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	float fog = 1;
+	float fog = 0;
 	float3 worldPos = rtDepth.Sample(sam, input.UV).rgb;
 
 	float4 diff = rtScreen.Sample(sam, input.UV);
@@ -50,7 +50,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 		float dis = bDis / r;
 		dis = clamp(dis, 0, 3.14159);
 
-		fog -= sin(dis) * 2.5;
+		fog = max(sin(dis) * 1.25, fog);
 
 		if (Units[i].Type == 1.0f)
 		{
@@ -59,12 +59,17 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 			diff.b += sin(dis);
 		}
-	}	
+	}
 
 	fog = clamp(fog, 0, 1);
-	float4 grey = float4((diff.r + diff.g + diff.b).xxx * 0.15f, 1);
+	fog = lerp(0.2f, 1, fog);
+	//float4 fogColor = diff * 0.25f;
+	//fogColor.a = 1.0f;
 
-	return (diff * (1 - fog)) + (grey * fog);
+	diff *= fog;
+	diff.a = 1.0f;
+
+	return diff; //(diff * (1 - fog)) + (fogColor * fog);
 }
 
 

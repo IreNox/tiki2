@@ -19,6 +19,10 @@ namespace TikiEngine
 
 		private:
 
+#if _DEBUG
+			bool useMouse;
+#endif
+
 			float zoom;
 			float targetZoom;
 			float height;

@@ -13,28 +13,33 @@ namespace TikiEngine
 		HelperPath();
 		~HelperPath();
 
-		wstring GetBinaryPath() const;
-		wstring GetWorkingPath() const;
+		const wstring& GetBinaryPath() const;
+		const wstring& GetWorkingPath() const;
 
-		wstring Combine(wstring path1, wstring path2) const;
-		wstring CombineWorkingPath(wstring path) const;
+		wstring Combine(const wstring& path1, const wstring& path2) const;
+		wstring CombineWorkingPath(const wstring& path) const;
 
-		wstring GetFilename(wstring fullPath) const;
-		wstring GetDirectoryName(wstring fullPath) const;
+		wstring GetFilename(const wstring& fullPath) const;
+		wstring GetFilenameWithoutExtension(const wstring& fullPath) const;
+		wstring GetDirectoryName(const wstring& fullPath) const;
+
+		bool FileExists(const wstring& fullPath) const;
+		bool DirectoryExists(const wstring& fullPath) const;
 
 		template<class T>
-		wstring GetResourcePath(wstring fileName) const
+		wstring GetResourcePath(const wstring& fileName) const
 		{
 			return HelperPath::GetResourcePath(typeid(T).hash_code(), fileName);
 		}
-		wstring GetResourcePath(PInt typeHash, wstring fileName) const;
+		wstring GetResourcePath(PInt typeHash, const wstring& fileName) const;
+
+		void CheckPath(const wstring& path) const;
 
 	private:
 
 		wstring binaryPath;
 		wstring workingPath;
 
-		void checkPath(wstring path) const;
 		void checkSlashes(wstring& path) const;
 
 	};

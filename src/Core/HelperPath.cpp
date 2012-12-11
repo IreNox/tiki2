@@ -11,9 +11,7 @@
 
 namespace TikiEngine
 {
-	#pragma region Vars
 	using namespace TikiEngine::Resources;
-	#pragma endregion
 
 	#pragma region Init/Dispose
 	HelperPath::HelperPath()
@@ -36,20 +34,67 @@ namespace TikiEngine
 	}
 	#pragma endregion
 
-	#pragma region Member - WorkingPath
-	wstring HelperPath::GetBinaryPath() const
+	#pragma region Member
+	void HelperPath::CheckPath(const wstring& path) const
 	{
-		return binaryPath;
+		if (GetFileAttributes(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+		{
+			CreateDirectory(path.c_str(), 0);
+		}
+	}
+	#pragma endregion
+
+	#pragma region Member - Part
+	wstring HelperPath::GetFilename(const wstring& fullPath) const
+	{
+		wstring fileName = fullPath;
+		checkSlashes(fileName);
+		PInt index = fileName.find_last_of(L'/') + 1;
+
+		return fileName.substr(index, fileName.size() - index);
 	}
 
-	wstring HelperPath::GetWorkingPath() const
+	wstring HelperPath::GetFilenameWithoutExtension(const wstring& fullPath) const
 	{
-		return workingPath;
+		wstring fileName = fullPath;
+		checkSlashes(fileName);
+
+		PInt index = fileName.find_last_of(L'/') + 1;
+		fileName = fullPath.substr(index, fileName.size() - index);
+		
+		index = fileName.find_last_of(L'.');
+		fileName = fileName.substr(0, index);
+
+		return fileName;
+	}
+
+	wstring HelperPath::GetDirectoryName(const wstring& fullPath) const
+	{
+		wstring dirName = fullPath;
+		checkSlashes(dirName);
+
+		return dirName.substr(0, dirName.find_last_of(L'/'));
+	}
+	#pragma endregion
+
+	#pragma region Member - Exists
+	bool HelperPath::FileExists(const wstring& fullPath) const
+	{
+		DWORD att = GetFileAttributes(fullPath.c_str());
+
+		return (att != INVALID_FILE_ATTRIBUTES) && (att != FILE_ATTRIBUTE_DIRECTORY);
+	}
+
+	bool HelperPath::DirectoryExists(const wstring& fullPath) const
+	{
+		DWORD att = GetFileAttributes(fullPath.c_str());
+
+		return (att != INVALID_FILE_ATTRIBUTES) && (att == FILE_ATTRIBUTE_DIRECTORY);
 	}
 	#pragma endregion
 
 	#pragma region Member - Compine
-	wstring HelperPath::Combine(wstring path1, wstring path2) const
+	wstring HelperPath::Combine(const wstring& path1, const wstring& path2) const
 	{
 		wchar_t i1 = path1[path1.size() - 1];
 		wchar_t i2 = path2[0];
@@ -61,15 +106,15 @@ namespace TikiEngine
 
 		wstring fullPath = left + L"/" + right;
 
-		checkPath(
+		CheckPath(
 			HelperPath::GetDirectoryName(fullPath)
-		);
+			);
 		checkSlashes(fullPath);
 
 		return fullPath;
 	}
 
-	wstring HelperPath::CombineWorkingPath(wstring path) const
+	wstring HelperPath::CombineWorkingPath(const wstring& path) const
 	{
 		wchar_t i2 = path[0];
 		int rightV = (i2 == '/' || i2 == '\\' ? 1 : 0);
@@ -80,30 +125,8 @@ namespace TikiEngine
 	}
 	#pragma endregion
 
-	#pragma region Member - Part
-	wstring HelperPath::GetFilename(wstring fullPath) const
-	{
-		PInt i1 = fullPath.find_last_of(L'\\');
-		PInt i2 = fullPath.find_last_of(L'/');
-		PInt index = ++(i1 > i2 ? i1 : i2);
-
-		return fullPath.substr(index, fullPath.size() - index);
-	}
-
-	wstring HelperPath::GetDirectoryName(wstring fullPath) const
-	{
-		checkSlashes(fullPath);
-
-		PInt i1 = fullPath.find_last_of(L'\\');
-		PInt i2 = fullPath.find_last_of(L'/');
-		PInt index = (i1 > i2 ? i1 : i2);
-
-		return fullPath.substr(0, index);
-	}
-	#pragma endregion
-
 	#pragma region Member - Resource
-	wstring HelperPath::GetResourcePath(PInt typeHash, wstring fileName) const
+	wstring HelperPath::GetResourcePath(PInt typeHash, const wstring& fileName) const
 	{
 		wstring typeExt = L"";
 		wstring typeName = L"";
@@ -141,19 +164,23 @@ namespace TikiEngine
 		return HelperPath::Combine(
 			HelperPath::GetWorkingPath() + L"/Data/" + typeName,
 			fileName + L"." + typeExt
-		);
+			);
 	}
 	#pragma endregion
 
-	#pragma region Private Member
-	void HelperPath::checkPath(wstring path) const
+	#pragma region Member - WorkingPath
+	const wstring& HelperPath::GetBinaryPath() const
 	{
-		if (GetFileAttributes(path.c_str()) == INVALID_FILE_ATTRIBUTES)
-		{
-			CreateDirectory(path.c_str(), 0);
-		}
+		return binaryPath;
 	}
 
+	const wstring& HelperPath::GetWorkingPath() const
+	{
+		return workingPath;
+	}
+	#pragma endregion
+	
+	#pragma region Private Member
 	void HelperPath::checkSlashes(wstring& path) const
 	{
 		UInt32 i = 0;

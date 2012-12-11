@@ -39,6 +39,9 @@
     <ClInclude Include="FakeTexture.h">
       <Filter>Model\MeshMaterial</Filter>
     </ClInclude>
+    <ClInclude Include="D3DX10MeshLoader.h">
+      <Filter>Model\Load</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -60,6 +63,9 @@
       <Filter>Model\FBX</Filter>
     </ClCompile>
     <ClCompile Include="FBXImport.cpp">
+      <Filter>Model\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="D3DX10MeshLoader.cpp">
       <Filter>Model\Load</Filter>
     </ClCompile>
   </ItemGroup>

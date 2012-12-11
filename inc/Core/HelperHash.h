@@ -32,7 +32,7 @@ namespace TikiEngine
 			return HelperHash::Hash(
 				(Byte*)&val,
 				sizeof(T)
-				);
+			);
 		}
 
 	private:

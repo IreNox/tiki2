@@ -634,5 +634,11 @@
     <ClInclude Include="inc\Core\IHeightFieldCollider.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\TikiType.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiReflect.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

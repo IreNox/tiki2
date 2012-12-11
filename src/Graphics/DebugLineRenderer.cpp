@@ -16,11 +16,6 @@ namespace TikiEngine
 		List<InputElement> elements = List<InputElement>(ColorVertex::Declaration, ColorVertex::DeclarationCount, true);
 		decl = new VertexDeclaration(engine, shader, &elements);
 
-		renderTarget = new RenderTarget(engine);
-		renderTarget->CreateScreenSize();
-		renderTarget->AddRef();
-		DllMain::ModuleGraphics->AddDefaultProcessTarget("debugLines", renderTarget);
-
 		vertexBuffer = new DynamicBuffer<ColorVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 	}
 
@@ -29,7 +24,6 @@ namespace TikiEngine
 		SafeRelease(&decl);
 		SafeRelease(&shader);
 		SafeRelease(&vertexBuffer);
-		SafeRelease(&renderTarget);
 	}
 
 	void DebugLineRenderer::Begin()
@@ -113,9 +107,7 @@ namespace TikiEngine
 		shader->Apply();
 		decl->Apply();
 
-		renderTarget->Clear(Color::TransparentBlack);
-		renderTarget->Apply(0);
-
+		DllMain::ModuleGraphics->GetInterfaceTarget()->Apply(0);
 		DllMain::Context->Draw(count, 0);
 	}
 

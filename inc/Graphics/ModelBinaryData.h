@@ -85,8 +85,10 @@ namespace TikiEngine
 
 			UInt32 VertexDataId;
 			UInt32 IndexDataId;
+			UInt32 AdjacencyIndexDataId;
 
 			Boolean UseDeformation;
+			Boolean HasAdjacencyIndices;
 
 			UInt32 DiffuseTexId;
 			UInt32 NormalTexId;

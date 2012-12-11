@@ -49,6 +49,7 @@ namespace TikiEngine
 		{
 			//Light
 			LightObject* lo = new LightObject(engine);
+			lo->PRS.SPosition() = Vector3(0, 256, 0);
 			lo->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			lo->GetLight()->SetColor(Color::White);
 			lo->GetLight()->SetRange(1000);

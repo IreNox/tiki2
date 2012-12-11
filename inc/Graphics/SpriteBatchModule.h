@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/ISpriteBatch.h"
-#include "Core/IRenderTarget.h"
 
 #include "Core/EventScreenSizeChanged.h"
 
@@ -20,8 +19,6 @@ namespace TikiEngine
 		class SpriteBatchModule : public ISpriteBatch, public ScreenSizeChangedEventHandler
 		{
 		public:
-
-			IRenderTarget* renderTarget;
 
 			SpriteBatchModule(Engine* engine);
 			~SpriteBatchModule();

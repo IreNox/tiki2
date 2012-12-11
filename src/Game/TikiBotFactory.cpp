@@ -15,7 +15,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), elapsed(0), interval(30.0), enemySpawnCount(7), playerSpawnCount(5)
+			: gameState(gameState), elapsed(0), interval(30000000.0), enemySpawnCount(7), playerSpawnCount(5)
 		{
 		}
 
@@ -37,9 +37,9 @@ namespace TikiEngine
 				case 1:
 					playerBase = points[i]->GPosition();
 					{
-						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(points[i]->GPosition());
-						CreatePlayerHero(go);
+						//GameObject* go = new GameObject(gameState->GetEngine());
+						//go->PRS.SPosition() = getPos(points[i]->GPosition());
+						//CreatePlayerHero(go);
 					}
 					break;
 				case 2:

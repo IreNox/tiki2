@@ -249,6 +249,7 @@ namespace TikiEngine
 
 			mesh->SetName(readString(binMesh->NameId));
 			mesh->SetDeformation(binMesh->UseDeformation != 0);
+			mesh->SetAdjacencyIndices(binMesh->HasAdjacencyIndices != 0);
 
 #ifdef TIKI_ENGINE
 			if (binMesh->UseDeformation)
@@ -264,7 +265,6 @@ namespace TikiEngine
 			mesh->GetMaterial()->TexLightMap    = readTexture(binMesh->LightTexId);
 			mesh->GetMaterial()->TexNormalMap   = readTexture(binMesh->NormalTexId);
 			mesh->GetMaterial()->TexSpecularMap = readTexture(binMesh->SpecTexId);
-			//mesh->GetMaterial()->TexDiffuse   = readTexture(binMesh->SpecTexId);
 #endif
 
 			BinaryPart& dataPart = context->ReadPart(binMesh->VertexDataId);			
@@ -278,6 +278,15 @@ namespace TikiEngine
 				(UInt32*)context->ReadPartPointer(dataPart.Id),
 				dataPart.ArrayCount
 			);
+
+			if (mesh->HasAdjacencyIndices())
+			{
+				dataPart = context->ReadPart(binMesh->AdjacencyIndexDataId);
+				mesh->SetAdjacencyIndexData(
+					(UInt32*)context->ReadPartPointer(dataPart.Id),
+					dataPart.ArrayCount
+				);
+			}
 
 			return mesh;
 		}
@@ -418,6 +427,8 @@ namespace TikiEngine
 		{
 			BinaryTikiMesh* btm = new BinaryTikiMesh();
 			btm->NameId = addPartsString(mesh->GetName());
+			btm->UseDeformation = mesh->UseDeformation();
+			btm->HasAdjacencyIndices = mesh->HasAdjacencyIndices();
 
 			UInt32 indexCount;
 			UInt32* indexData;
@@ -430,7 +441,15 @@ namespace TikiEngine
 			btm->VertexDataId = context->AddPart(vertexData, sizeof(SkinningVertex), PT_Array, PT_Byte, vertexLength / sizeof(SkinningVertex));
 			btm->IndexDataId = context->AddPart(indexData, sizeof(UInt32), PT_Array, PT_UInt, indexCount);
 
-			btm->UseDeformation = mesh->UseDeformation();
+			if (btm->HasAdjacencyIndices)
+			{
+				mesh->GetAdjacencyIndexData(&indexData, &indexCount);
+				btm->AdjacencyIndexDataId = context->AddPart(indexData, sizeof(UInt32), PT_Array, PT_UInt, indexCount);
+			}
+			else
+			{
+				btm->AdjacencyIndexDataId = 0;
+			}
 
 			Material* mat = mesh->GetMaterial();
 
@@ -539,7 +558,8 @@ namespace TikiEngine
 		#pragma region TikiMesh
 		#pragma region Class
 		TikiMesh::TikiMesh(Model* model)
-			: model(model), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0), vertexLength(0)
+			: model(model), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0),
+			  vertexLength(0), adjacencyIndexData(0), adjacencyIndexCount(0)
 #ifdef TIKI_ENGINE
 			, indexBuffer(0), vertexBuffer(0), decl(0)
 #endif
@@ -567,46 +587,36 @@ namespace TikiEngine
 #ifdef TIKI_ENGINE
 			if (!this->GetReady()) return;
 
-			if (hasDeformation)
-			{
-				((Shader*)material->GetShader())->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer());
-			}
-
+			material->GetShader()->SelectSubByIndex(args.Mode);
 			material->UpdateDrawArgs(args, gameObject);
 			material->Apply();
 
-			indexBuffer->Apply();
-			vertexBuffer->Apply();
+			if (hasDeformation)
+			{
+				material->GetShader()->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer());
+			}
 
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 			decl->Apply();
+			vertexBuffer->Apply();
+			(args.Mode == DM_Shadows || true ? indexAdjacencyBuffer : indexBuffer)->Apply();
 
-			DllMain::Context->DrawIndexed(indexCount, 0, 0);
+			if (args.Mode == DM_Shadows || true)
+			{
+				if (!hasAdjacencyIndices) return;
+				
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ);
+				DllMain::Context->DrawIndexed(adjacencyIndexCount, 0, 0);
+			}
+			else
+			{
+				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+				DllMain::Context->DrawIndexed(indexCount, 0, 0);
+			}
 #endif
 		}
 		#pragma endregion
 
 		#pragma region Member - Get/Set
-		string TikiMesh::GetName()
-		{
-			return this->name;
-		}
-
-		void TikiMesh::SetName(string name)
-		{
-			this->name = name;
-		}
-
-		void TikiMesh::SetDeformation(bool b)
-		{
-			hasDeformation = b;
-		}
-
-		bool TikiMesh::UseDeformation()
-		{
-			return hasDeformation;
-		}
-
 		Material* TikiMesh::GetMaterial()
 		{
 			return material;
@@ -649,6 +659,25 @@ namespace TikiEngine
 
 #ifdef TIKI_ENGINE
 			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(model->GetEngine(), sizeof(UInt32), count, indexData);
+#endif
+		}
+
+		void TikiMesh::GetAdjacencyIndexData(UInt32** data, UInt32* count)
+		{
+			*data = adjacencyIndexData;
+			*count = adjacencyIndexCount;
+		}
+
+		void TikiMesh::SetAdjacencyIndexData(const UInt32* data, UInt32 count)
+		{
+			SafeDeleteArray(&adjacencyIndexData);
+			adjacencyIndexData = new UInt32[count];
+			adjacencyIndexCount = count;
+
+			memcpy(adjacencyIndexData, data, sizeof(UInt32) * count);
+
+#ifdef TIKI_ENGINE
+			indexAdjacencyBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(model->GetEngine(), sizeof(UInt32), count, adjacencyIndexData);
 #endif
 		}
 
@@ -1191,14 +1220,18 @@ namespace TikiEngine
 
 		void AnimationStack::SetAnimation(IAnimation* animation)
 		{
-#if _DEBUG
-			if(animation == 0)
-				_CrtDbgBreak();
-#endif
+//#if _DEBUG
+//			if(animation == 0) 
+//				_CrtDbgBreak();
+//#endif
 			this->stack.Clear();
-			animation->Reset();
-			animation->SetWeight(1.0);
-			this->stack.Add((TikiAnimation*)animation);
+
+			if (animation != 0)
+			{
+				animation->Reset();
+				animation->SetWeight(1.0);
+				this->stack.Add((TikiAnimation*)animation);
+			}
 		}
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)

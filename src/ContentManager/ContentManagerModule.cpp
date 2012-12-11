@@ -308,11 +308,14 @@ namespace TikiEngine
 						wstring(dataInfo->FileName, dataInfo->FileNameLength / sizeof(wchar_t))
 					);
 
-					HANDLE handle;
-					while((handle = CreateFile(fileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
-					CloseHandle(handle);
+					if (engine->HPath.FileExists(fileName))
+					{
+						HANDLE handle;
+						while((handle = CreateFile(fileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
+						CloseHandle(handle);
 
-					changedFiles.Add(fileName);
+						changedFiles.Add(fileName);
+					}
 
 					dataBin += dataInfo->NextEntryOffset;
 					dataInfo = (FILE_NOTIFY_INFORMATION*)dataBin;

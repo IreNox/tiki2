@@ -12,6 +12,9 @@ namespace TikiEngine
 	{
 		CameraRTS::CameraRTS(GameObject* gameObject, ITerrainRenderer* terrain)
 			: IScript(gameObject->GetEngine(), gameObject), zoom(0.0f), targetZoom(0.0f)
+#if _DEBUG
+			, useMouse(false)
+#endif
 		{
 			SafeAddRef(terrain, &this->terrain);
 
@@ -36,10 +39,17 @@ namespace TikiEngine
 				(args.Input.GetKey(KEY_UP)  || args.Input.GetKey(KEY_W) ?  -1.0f : 0.0f) + (args.Input.GetKey(KEY_DOWN)  || args.Input.GetKey(KEY_S) ? 1.0f : 0.0f)
 			) * speed;
 
+#if _DEBUG
+			if (args.Input.GetKeyPressed(KEY_F10)) useMouse = !useMouse;
+			if (useMouse) {
+#endif
 			move += Vector2(
 				(args.Input.MousePosition.X < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.X > 0.99f ? 1.0f : 0.0f),
 				(args.Input.MousePosition.Y < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.Y > 0.99f ? 1.0f : 0.0f)
 			) * speed;		
+#if _DEBUG
+			}
+#endif
 
 			float sizeOver2 = ((float)terrain->GSize() / 2) * 0.8f;
 

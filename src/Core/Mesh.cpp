@@ -121,6 +121,7 @@ namespace TikiEngine
 			stream->Read(file, 0, size);
 			file[size] = 10;
 
+			#pragma region Parse Data
 			bool newLine = true;
 			bool bufferWork = false;
 
@@ -292,8 +293,8 @@ namespace TikiEngine
 								if (quad.Count() == 4)
 								{
 									data.Add(0);
-									data.Add(1);
 									data.Add(2);
+									data.Add(1);
 									data.Add(0);
 									data.Add(3);
 									data.Add(2);
@@ -302,8 +303,8 @@ namespace TikiEngine
 								else if (quad.Count() == 3)
 								{
 									data.Add(0);
-									data.Add(1);
 									data.Add(2);
+									data.Add(1);
 								}
 								else
 								{
@@ -347,6 +348,7 @@ namespace TikiEngine
 
 				i++;
 			}
+			#pragma endregion
 
 			vertexData = vertices.ToArray();
 			vertexDataLength = vertices.Count() * sizeof(DefaultVertex);

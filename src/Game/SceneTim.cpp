@@ -87,21 +87,37 @@ namespace TikiEngine
 			//	this->AddElement(go);
 			//}
 
+			//target = engine->librarys->CreateResource<IRenderTarget>();
+			//target->CreateScreenSize();
+
 			GameObject* go = new GameObject(engine);
 
 			go->SModel(args.Content->LoadModel(L"marine_l"));
+			//go->GModel()->SetAnimation(0);
 
-			//IMeshRenderer* render = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			//renB = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
 			//Material* mat = engine->content->LoadMaterial(L"os_default");
-			//mat->TexDiffuse   = engine->content->LoadTexture(L"building_03/building_03_Diff");
-			//mat->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
-			////mat->TexSpecular = engine->content->LoadTexture(L"building_03/building_03_Spec");
-			//render->SetMaterial(mat);
-			//render->SetMesh(engine->content->LoadMesh(L"test"));
+			//mat->TexDiffuse		= engine->content->LoadTexture(L"building03_05/building03_05_Diff");
+			//mat->TexNormalMap	= engine->content->LoadTexture(L"building03_05/building03_05_Normal");
+			//mat->TexSpecularMap	= engine->content->LoadTexture(L"building03_05/building03_05_Spec");
+			//renB->SetMaterial(mat);
+			//renB->SetMesh(engine->content->LoadMesh(L"marine_l"));
 
-			go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SScale() = Vector3(0.02f);
+			this->AddElement(go);
 
+
+			go = new GameObject(engine);
+			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+
+			Material* mat = engine->content->LoadMaterial(L"os_default");
+			mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_ms1");
+			renP->SetMaterial(mat);
+			renP->SetMesh(engine->content->LoadMesh(L"test"));
+			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			//go->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, 3.14159f, 0);
+			//go->PRS.SScale() = Vector3(1, 1, -1);
 			this->AddElement(go);
 
 			//RenderTarget
@@ -140,8 +156,8 @@ namespace TikiEngine
 			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
 
 			//auto blur = new PPBlur(engine);
-			//blur->GetPasses()[0]->SetInput("tex", ssao->GetAO());
-			//blur->GetPasses()[1]->SetOutput(0, ssao->GetAO());
+			//blur->GetPasses()[0]->SetInput("tex", engine->graphics->GetLightTarget());
+			//blur->GetPasses()[1]->SetOutput(0, engine->graphics->GetLightTarget());
 			//engine->graphics->AddPostProcess(blur);
 
 			#pragma region Old Stuff
@@ -205,12 +221,6 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			//Vector3 tmp = Vector3((float*)camera->PRS.GRotation().arr);
-
-			//wostringstream s;
-			//s << "Time: " << args.Time.TotalTime;
-			//engine->sprites->DrawString(font, s.str(), Vector2(10, 600));
-
 			engine->sprites->Draw(
 				engine->graphics->GetLightTarget(),
 				Rectangle(10, 10, 200, 180)
@@ -225,6 +235,7 @@ namespace TikiEngine
 				engine->graphics->GetScreenTarget(),
 				Rectangle(10, 390, 200, 180)
 			);
+
 
 			//Vector2 mouse = Vector2(1.1f - args.Update.Input.MousePosition.X + 0.1f, 1.1f - args.Update.Input.MousePosition.Y + 0.1f);
 			//Vector2 rot = Vector2(0.3f * mouse.X, 0.4f * mouse.Y);
@@ -245,80 +256,24 @@ namespace TikiEngine
 			#if _DEBUG
 			//engine->physics->DrawDebug();
 			#endif
-
-			/*engine->sprites->Draw(
-				tex,
-				Vector2(300, 300),
-				args.Time.TotalTime,
-				Vector2(256, 256),
-				Vector2(1),
-				1
-			);*/
 		}
 		#pragma endregion
 
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{
-			//elements[0]->PRS.SPosition() = Vector3(
-			//	sin(args.Time.TotalTime) * 3,
-			//	0,
-			//	cos(args.Time.TotalTime) * 3
-			//);
+			float b = (float)args.Time.TotalTime / 4;
+			elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
 
-			//if (args.Input.GetKeyPressed(KEY_F5))
-			//{
-			//	if (elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap != 0)
-			//	{
-			//		elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = 0;
-			//	}
-			//	else
-			//	{
-			//		elements[0]->GetComponent<IMeshRenderer>()->GetMaterial()->TexNormalMap = engine->content->LoadTexture(L"building_03/building_03_Normal");
-			//	}
-			//}
+			Vector3 move = Vector3(
+				(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
+				(args.Input.GetKey(KEY_I) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_K) ? -1.0f : 0.0f),
+				(args.Input.GetKey(KEY_O) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_U) ? -1.0f : 0.0f)
+			) * (float)args.Time.ElapsedTime;
 
-			//// light settings test
-			//Vector3 move = Vector3(
-			//	(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
-			//	(args.Input.GetKey(KEY_I)   ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_K) ?  -1.0f : 0.0f),
-			//	(args.Input.GetKey(KEY_O)   ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_U) ?  -1.0f : 0.0f)
-			//) * args.Time.ElapsedTime;
+			tmp += move;
 
-			//// tmp = class var
-			//if (dynamicBox)
-			//{
-			//	tmp = dynamicBox->GetGameObject()->PRS.GPosition();
-			//}
-
-			//tmp.Z = terrain->SampleHeight(tmp);
-
-			//light->PRS.SetRotation(
-			//	Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z)
-			//);
-
-
-			//elements[0]->PRS.Rotation = Quaternion::CreateFromYawPitchRoll(args.Time.TotalTime, 0, 0);
-
-			/*if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				dynamicBox->SetCenter(Vector3(0, 30, 0));
-			}
-
-			if (args.Input.GetKeyPressed(KEY_F6))
-			{
-				dynamicBox->SetCenter(camera->PRS.GPosition());
-				dynamicBox->GetRigidBody()->SetVelocity(camera->PRS.GetForward() * 20);
-			}
-
-			if (args.Time.TotalTime - lastTime > 0.1f)
-			{
-				List<GameObject*> list = List<GameObject*>();
-				list.Add(dynamicBox->GetGameObject());
-
-				terrain->UpdateCollider(collider, &list);
-				lastTime = args.Time.TotalTime;
-			}*/
+			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z);
 
 			//if (args.Input.GetKey(KEY_F12))
 			//{

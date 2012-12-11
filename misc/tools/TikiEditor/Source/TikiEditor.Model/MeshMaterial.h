@@ -17,6 +17,12 @@ namespace TikiEditor
 			void set(String^ value) { name = value; }
 		}
 
+		property System::Boolean CreatetAdjacencyIndices
+		{
+			System::Boolean get() { return createtAdjacencyIndices; }
+			void set(System::Boolean value) { createtAdjacencyIndices = value; }
+		}
+
 		property String^ TextureDiffuse
 		{
 			String^ get() { return texDiffuse; }
@@ -44,6 +50,8 @@ namespace TikiEditor
 	private:
 
 		String^ name;
+
+		bool createtAdjacencyIndices;
 
 		String^ texDiffuse;
 		String^ texNormal;

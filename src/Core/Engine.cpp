@@ -297,6 +297,7 @@ namespace TikiEngine
 			{
 				DrawArgs drawArgs = DrawArgs(
 					state.CurrentTime,
+					DM_Geometry,
 					scene->GetCameras()->Get(i),
 					graphics,
 					sprites,
@@ -307,9 +308,21 @@ namespace TikiEngine
 				graphics->Begin(drawArgs);
 				sprites->Begin();
 
-				if (scene)
+				UInt32 b = 0;
+				while (b < 1)
 				{
-					scene->Draw(drawArgs);
+					if (b != 0)
+					{
+						drawArgs.Mode = (DrawMode)b;
+						graphics->GetUnusedScreenTarget()->ApplyFirstAndOnly();
+					}
+
+					if (scene)
+					{
+						scene->Draw(drawArgs);
+					}
+
+					b++;
 				}
 
 #if _DEBUG

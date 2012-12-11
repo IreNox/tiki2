@@ -233,12 +233,11 @@ namespace TikiEngine
 		//}
 		#pragma endregion
 
+		#pragma region Protected Member
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
-
-			//Initialize();
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)
@@ -247,8 +246,6 @@ namespace TikiEngine
 			convert->WriteToStream(stream);
 			delete(stream);
 		}
-
-
-
+		#pragma endregion
 	}
 }

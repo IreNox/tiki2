@@ -59,10 +59,12 @@ namespace TikiEngine
 			void* GetDeviceContext();
 
 			ViewPort* GetViewPort();
-			IRenderTarget* GetScreenTarget() { return rtScreen[rtScreenIndex]; }
-			IRenderTarget* GetNormalTarget() { return rtNormal; }
 			IRenderTarget* GetDepthTarget() { return rtDepth; }
 			IRenderTarget* GetLightTarget() { return rtLight; }
+			IRenderTarget* GetNormalTarget() { return rtNormal; }
+			IRenderTarget* GetScreenTarget() { return rtScreen[rtScreenIndex]; }
+			IRenderTarget* GetUnusedScreenTarget() { return rtScreen[!rtScreenIndex]; }
+			IRenderTarget* GetInterfaceTarget() { return rtInterface; }
 
 			void Reset();
 
@@ -119,12 +121,14 @@ namespace TikiEngine
 			ConstantBuffer<CBMatrices>* cbufferCamera;
 			ConstantBuffer<CBObjectData>* cbufferObject;
 
+			RenderTarget* rtBackBuffer;
 			RenderTarget* rtLight;
 			RenderTarget* rtDepth;
 			RenderTarget* rtNormal;
-			RenderTarget* rtBackBuffer;
-			bool rtScreenIndex;
+			RenderTarget* rtInterface;
 			RenderTarget* rtScreen[2];
+			bool rtScreenIndex;
+
 			List<RenderTarget*> screenSizeRenderTargets;
 			List<ID3D11RenderTargetView*> renderTargets;
 
