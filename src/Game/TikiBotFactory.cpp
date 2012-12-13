@@ -312,14 +312,14 @@ namespace TikiEngine
 			TikiBotDescription desc;
 
 			//desc.MaxHealth = sqlite3_column_int(state, fieldId);
-			//desc.HealthReg = sqlite3_column_int(state, fieldId);
-			//desc.Sichtweite = sqlite3_column_int(state, fieldId);
+			// nicht impl: desc.HealthReg = sqlite3_column_int(state, fieldId);
+			//desc.SightRadius = sqlite3_column_int(state, fieldId);
 			//desc.Loot = sqlite3_column_int(state, fieldId);
 			//desc.Armor = sqlite3_column_int(state, fieldId);
 			//desc.weapon = load weapon from database;
-			
+
 			//TikiBot* bot = createBot(desc);
-			//bot->GetWeaponSys()->SetWeapon(from weapon id);
+			//bot->GetWeaponSys()->Init(desc);
 
 			/////////////////////////////////////////////////////////////////////////////////
 
