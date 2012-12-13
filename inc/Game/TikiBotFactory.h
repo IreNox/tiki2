@@ -4,6 +4,8 @@
 #include "Core/GameObject.h"
 #include "Game/GameState.h"
 
+#include "Core/sqlite3.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -60,6 +62,8 @@ namespace TikiEngine
 
 			Vector3 getPos(const Vector2& pos);
 			Vector3 getPos(const Vector3& pos);
+
+			void loadFromDatabase(sqlite3_stmt* state, GameObject* obj);
 
 		};
 

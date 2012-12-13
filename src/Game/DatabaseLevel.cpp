@@ -340,8 +340,8 @@ namespace TikiEngine
 			case 2: // enemy
 				gameState->GetBotFactory()->CreateEnemy1(this);
 				break;
-			case 3: // Trigger
-				(new Trigger(gameState, this));
+			case 3: // Hero
+				gameState->GetBotFactory()->CreatePlayerHero(this);
 				break;
 			case 4:
 				this->SModel(engine->content->LoadModel(L"building03_05"));

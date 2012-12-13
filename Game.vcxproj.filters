@@ -144,6 +144,9 @@
     <Filter Include="Quelldateien\Animation">
       <UniqueIdentifier>{efccb9fe-a6aa-4cd5-aee4-dc249338dac6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Database">
+      <UniqueIdentifier>{39fec312-4d0a-4abb-b297-20baf31ecb23}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">

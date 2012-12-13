@@ -17,6 +17,7 @@ namespace TikiEngine
 		class TikiSteering;
 		class GoalThink;
 		class SensorMemory;
+		class Weapon;
         class WeaponSystem;
 
 		enum EntityTypes
@@ -56,7 +57,14 @@ namespace TikiEngine
 			float MaxForce;
 			float Radius;
 
+			Weapon* weapon;
+
+			// EntityTypes Type;
+			// Noch weitere Felder hinzufügen: Loot, Armor, Sichtweite, EntityTypes
+
+
 			TikiBotDescription()
+				: weapon(0)
 			{
 				Faction = 0;
 				MaxHealth = 100;

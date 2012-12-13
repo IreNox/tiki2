@@ -35,10 +35,10 @@ namespace TikiEngine
 			image->SPosition() = Vector2(16, 20);
 			windowResources->AddChild(image);
 
-			GUILabel* label = new GUILabel(engine);
-			label->Text() = L"0/2500";
-			label->SPosition() = Vector2(35, 20);
-			windowResources->AddChild(label);
+			labelRes = new GUILabel(engine);
+			labelRes->Text() = L"0";
+			labelRes->SPosition() = Vector2(35, 20);
+			windowResources->AddChild(labelRes);
 
 			windowFunc = new GUIWindow(engine);
 			windowFunc->SSize() = Vector2(225, 225);
@@ -113,13 +113,9 @@ namespace TikiEngine
 
 		void GameHud::Update(const UpdateArgs& args)
 		{
-			//wostringstream str;
-			//str << state->GetResource1() << L"/" << 1000;
-			//labelRes1->Text() = str.str();
-
-			//str = wostringstream();
-			//str << state->GetResource2() << L"/" << 100;
-			//labelRes2->Text() = str.str();
+			wostringstream str;
+			str << state->GetResource();
+			labelRes->Text() = str.str();
 
 			UInt32 i = 0;
 			while (i < enabledControls.Count())

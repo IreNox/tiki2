@@ -36,29 +36,9 @@ namespace TikiEngine
 				{
 				case 1:
 					playerBase = points[i]->GPosition();
-					{
-						//GameObject* go = new GameObject(gameState->GetEngine());
-						//go->PRS.SPosition() = getPos(points[i]->GPosition());
-						//CreatePlayerHero(go);
-					}
 					break;
 				case 2:
 					wayPoints.push_back(points[i]->GPosition());
-					//{
-					//	GameObject* go = new GameObject(gameState->GetEngine());
-					//	go->PRS.SPosition() = getPos(points[i]->GPosition());
-
-					//	IMeshRenderer* render = gameState->GetEngine()->librarys->CreateComponent<IMeshRenderer>(go);
-
-					//	Material* mat = gameState->GetEngine()->content->LoadMaterial(L"os_default");
-					//	mat->TexDiffuse = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_diff");
-					//	mat->TexNormalMap = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_normal");
-					//	mat->TexSpecularMap = gameState->GetEngine()->content->LoadTexture(L"building03_05/building03_05_spec");
-					//	render->SetMaterial(mat);
-
-					//	render->SetMesh(gameState->GetEngine()->content->LoadMesh(L"building03_05"));
-					//	gameState->GetScene()->AddElement(go);
-					//}
 					break;
 				case 3:
 					spawnPoints.Add(getPos(points[i]->GPosition()));
@@ -307,7 +287,6 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-
 		#pragma region Private Member
 		Vector3 TikiBotFactory::getPos(const Vector2& pos)
 		{
@@ -325,6 +304,32 @@ namespace TikiEngine
 			return getPos(Vector2(pos.X, pos.Z));
 		}
 
+		#pragma endregion
+
+		#pragma region Private Member - Database
+		void TikiBotFactory::loadFromDatabase(sqlite3_stmt* state, GameObject* obj)
+		{
+			TikiBotDescription desc;
+
+			//desc.MaxHealth = sqlite3_column_int(state, fieldId);
+			//desc.HealthReg = sqlite3_column_int(state, fieldId);
+			//desc.Sichtweite = sqlite3_column_int(state, fieldId);
+			//desc.Loot = sqlite3_column_int(state, fieldId);
+			//desc.Armor = sqlite3_column_int(state, fieldId);
+			//desc.weapon = load weapon from database;
+			
+			//TikiBot* bot = createBot(desc);
+			//bot->GetWeaponSys()->SetWeapon(from weapon id);
+
+			/////////////////////////////////////////////////////////////////////////////////
+
+			//obj->SModel(***);
+
+			//foreach (AttributesModificator am in Db.GetAttributes())
+			//{
+				//bot->GetAttributes()->add(am);
+			//}
+		}
 		#pragma endregion
 	}
 }

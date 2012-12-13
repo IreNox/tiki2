@@ -22,12 +22,12 @@ namespace TikiEngine
                 SafeDelete(&weaponMap[i]);
         }
 
-        void WeaponSystem::Init(float reactionTime, float aimAccuracy, float aimPersistance)
+        void WeaponSystem::Init(const TikiBotDescription& desc)
         {
             // set attributes
-            this->reactionTime = reactionTime;
-            this->aimAccuracy = aimAccuracy;
-            this->aimPersistance = aimPersistance;
+            this->reactionTime = desc.ReactionTime;
+            this->aimAccuracy = desc.AimAccuracy;
+            this->aimPersistance = desc.AimPresistance;
 
             // delete any existing weapons and clear the map
             WeaponMap::iterator currWeap = weaponMap.begin();
@@ -35,13 +35,17 @@ namespace TikiEngine
                 SafeDelete(&currWeap->second);
 
             weaponMap.clear();
-
+			
             // setup the container
-            MachineGunDescription mgDesc;
-            currentWeapon = new MachineGun(owner, mgDesc);
-            weaponMap[WT_MachineGun] = currentWeapon;
-
-
+			if (desc.weapon == 0)
+			{
+				MachineGunDescription mgDesc;
+				currentWeapon = new MachineGun(owner, mgDesc);
+			}
+			else
+			{
+				currentWeapon = desc.weapon;
+			}
         }
 
         void WeaponSystem::ShootAt(const UpdateArgs& args, Vector3 pos)

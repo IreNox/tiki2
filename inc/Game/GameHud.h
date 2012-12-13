@@ -41,6 +41,8 @@ namespace TikiEngine
 
 			GameState* state;
 
+			GUILabel* labelRes;
+
 			GUIButton* buttonMenu;
 			GUIWindow* windowResources;
 			

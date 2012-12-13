@@ -71,7 +71,7 @@ namespace TikiEngine
 				sensorMem = new SensorMemory(this, desc.MemorySpan);
 
 				weaponSys = new WeaponSystem(this);
-				weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
+				weaponSys->Init(desc);
 
 				// Create the goal queue
 				brain = new GoalThink(this);

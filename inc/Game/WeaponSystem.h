@@ -8,6 +8,7 @@ namespace TikiEngine
     namespace AI
     {
         class TikiBot;
+		struct TikiBotDescription;
         class Weapon;
 
         class WeaponSystem
@@ -17,7 +18,7 @@ namespace TikiEngine
             ~WeaponSystem();
 
             // sets up the weapon map with bot attributes and just one  machinegun
-            void Init(float reactionTime, float aimAccuracy, float aimPersistance);
+            void Init(const TikiBotDescription& desc);
             
             // returns a pointer to the current weapon
             Weapon* GetCurrentWeapon() const { return currentWeapon; }
