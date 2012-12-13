@@ -27,17 +27,10 @@ namespace TikiEngine
             void TakeAimAndShoot(const UpdateArgs& args);
 
         private:
-            //a map of weapon instances indexed into by type
-            typedef std::map<int, Weapon*>  WeaponMap;
-
-            // pointers to the weapons the bot is carrying (curently only one)
-            WeaponMap weaponMap;
-
             TikiBot* owner;
 
             // a pointer to the weapon the bot is currently holding
             Weapon* currentWeapon;
-
 
             float reactionTime;
             float aimAccuracy;

@@ -30,7 +30,10 @@ namespace TikiEngine
 
             // Init bot attributes
             faction = desc.Faction;
-			SetEntityType(ET_Bot);
+			sightRadius = desc.SightRadius;
+			loot = desc.Loot;
+			armor = desc.Armor;
+			type = desc.entityType;
 
             maxHealth = desc.MaxHealth;
             health = maxHealth;
@@ -38,8 +41,7 @@ namespace TikiEngine
             numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
             hit = false;
             score = 0;
-            status = alive; //spawning;
-            //possessed = true;
+            status = alive;
             fieldOfView = DegsToRads(desc.FoV);
 
             // create the navigation module
@@ -62,7 +64,7 @@ namespace TikiEngine
             visionUpdateRegulator = new Regulator(12.0);
             targetSelectionRegulator = new Regulator(12.0);
 
-			if (!desc.isBuilding)
+			if (type != ET_Building)
 			{
 				// create Targeting System
 				targSys = new TargetingSystem(this);

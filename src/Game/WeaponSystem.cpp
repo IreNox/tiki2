@@ -18,8 +18,7 @@ namespace TikiEngine
 
         WeaponSystem::~WeaponSystem()
         {
-            for(UInt32 i = 0; i < weaponMap.size(); i++)
-                SafeDelete(&weaponMap[i]);
+			SafeDelete(&currentWeapon);
         }
 
         void WeaponSystem::Init(const TikiBotDescription& desc)
@@ -28,13 +27,6 @@ namespace TikiEngine
             this->reactionTime = desc.ReactionTime;
             this->aimAccuracy = desc.AimAccuracy;
             this->aimPersistance = desc.AimPresistance;
-
-            // delete any existing weapons and clear the map
-            WeaponMap::iterator currWeap = weaponMap.begin();
-            for(currWeap; currWeap != weaponMap.end(); ++currWeap)
-                SafeDelete(&currWeap->second);
-
-            weaponMap.clear();
 			
             // setup the container
 			if (desc.weapon == 0)

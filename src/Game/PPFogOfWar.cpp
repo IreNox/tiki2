@@ -66,11 +66,7 @@ namespace TikiEngine
 				if (bot != 0 && bot->GetFaction() == 0)
 				{
 					fow->Units[count].Position = bot->Pos();
-					if (bot->EntityType() != ET_Building)
-						fow->Units[count].Range = bot->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange();
-					else
-						fow->Units[count].Range = 20; // Building range
-
+					fow->Units[count].Range = bot->GetSightRadius();
 					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
 
 					count++;

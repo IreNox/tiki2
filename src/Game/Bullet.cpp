@@ -43,7 +43,7 @@ namespace TikiEngine
 
 					if (bot->IsDead() && shooter->EntityType() == ET_Hero)
 					{
-						gameState->GetEngine()->HLog.Write("Hero has last hit, incremented resources (+10)");
+						//gameState->GetEngine()->HLog.Write("Hero has last hit, incremented resources (+10)");
 						gameState->IncrementResource(10);
 					}
                 }

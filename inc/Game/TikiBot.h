@@ -32,7 +32,6 @@ namespace TikiEngine
 		{
 			int Faction;		  // 0 = Player, 1 = Enemy
 			int MaxHealth;		  // the maximum amount of health
-			bool isBuilding;
 
 			float FoV;            // the bot's field of view in degrees
 			float ReactionTime;	  // the bot's reaction time (in seconds)
@@ -57,18 +56,18 @@ namespace TikiEngine
 			float MaxForce;
 			float Radius;
 
+			// weitere Felder hinzufügen: Loot, Armor, Sichtweite, EntityTypes
 			Weapon* weapon;
-
-			// EntityTypes Type;
-			// Noch weitere Felder hinzufügen: Loot, Armor, Sichtweite, EntityTypes
-
+			EntityTypes entityType;
+			float SightRadius;
+			int Loot;
+			int Armor;
 
 			TikiBotDescription()
 				: weapon(0)
 			{
 				Faction = 0;
 				MaxHealth = 100;
-				isBuilding = false;
 
 				FoV = 180.0f;
 				ReactionTime = 0.001f;
@@ -92,6 +91,13 @@ namespace TikiEngine
 				MaxTurnRate = 0.5f;
 				MaxForce = 1.0f;
 				Radius = 2.0f;
+
+				// weitere Felder
+				entityType = ET_Bot;
+				weapon = 0;
+				SightRadius = 60;
+				Loot = 0;
+				Armor = 0;
 			}
 
 		};
@@ -132,6 +138,7 @@ namespace TikiEngine
 
             // 0 = Player, 1 = Enemy
             int GetFaction() const { return faction; }
+			float GetSightRadius() const { return sightRadius; }
 			//bool IsPossessed() const {return possessed;}
 			bool IsDead() const {return status == dead;}
 			bool IsAlive() const {return status == alive;}
@@ -242,6 +249,11 @@ namespace TikiEngine
 			ITexture* texInfo;
 			ITexture* texHealth;
 			ITexture* texShield;
+
+			float sightRadius;
+			int loot;
+			int armor;
+
 		};
 
 	}

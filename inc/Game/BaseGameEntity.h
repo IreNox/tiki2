@@ -55,7 +55,7 @@ namespace TikiEngine
 			void SetScale(float val);
 
 			int EntityType() const { return type; }
-			void SetEntityType(int newType) { type = newType; }
+			//void SetEntityType(int newType) { type = newType; }
 
 			bool GetReady() { return true; }
 
@@ -65,13 +65,15 @@ namespace TikiEngine
 
 			GameState* gameState;
 
-		    Double boundingRadius;   // the magnitude of this object's bounding radius
+		    Double boundingRadius;    // the magnitude of this object's bounding radius
+
+		protected:
+			
+			int type;			      // every entity has a type associated with it (health, troll, ammo etc)
+			bool tag;				  // generic flag. 
 
 		private:
 			int id;					  // each entity has a unique ID
-			int type;			      // every entity has a type associated with it (health, troll, ammo etc)
-			bool tag;		      // generic flag. 
-
 			static int nextValidID;	  // this is the next valid ID. Each time a BaseGameEntity is instantiated this value is updated
 		};
 	}
