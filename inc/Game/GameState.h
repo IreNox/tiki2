@@ -49,6 +49,7 @@ namespace TikiEngine
 			inline ProjectileManager* GetProjectiles() { return projectiles; }
 
 			inline double GetResource() { return resource; }
+			inline void IncrementResource(double toIncrement) { resource += toIncrement; }
 
 			void AddTrigger(GameObject* go);
 

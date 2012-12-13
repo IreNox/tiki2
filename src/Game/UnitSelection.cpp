@@ -215,7 +215,7 @@ namespace TikiEngine
 				GameObject* go = gameState->GetScene()->GetElements()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
-				if(ent != 0)
+				if(ent != 0 && ent->EntityType() != ET_Building)
 				{
 					ent->GetSensorMem()->RemoveBotFromMemory(bot);
 
@@ -247,7 +247,7 @@ namespace TikiEngine
 				BuildSlot* slot = bot->GetGameObject()->GetComponent<BuildSlot>();
 				slot->Enable();
 			}
-			else if(bot->EntityType() == ET_Bot)
+			else //if(bot->EntityType() == ET_Bot || bot->EntityType() == ET_Building)
 			{
 				//engine->HLog.Write("Released bot go");
 				bot->GetGameObject()->Release();

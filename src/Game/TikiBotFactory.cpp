@@ -122,12 +122,13 @@ namespace TikiEngine
 			//	CreateEnemyTower(go);
 			//}
 
-			//if (args.Input.GetKeyPressed(KEY_F7))
-			//{
-			//	GameObject* go = new GameObject(gameState->GetEngine());
-			//	go->PRS.SPosition() = getPos(Vector2::Zero);
-			//	CreatePlayerTower(go);
-			//}
+			if (args.Input.GetKeyPressed(KEY_F7))
+			{
+				GameObject* go = new GameObject(gameState->GetEngine());
+				go->PRS.SPosition() = getPos(Vector2(10, 10));
+				CreatePlayerHero(go);
+			}
+
 
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
@@ -189,6 +190,24 @@ namespace TikiEngine
 			gameState->GetScene()->AddElement(go);
 		}
 
+
+		void TikiBotFactory::CreateEnemyBuilding( GameObject* go )
+		{
+			TikiBotDescription botDesc;
+			botDesc.Faction = 1;
+			botDesc.Height = 5.0f;
+			botDesc.Radius = 5.0f;
+			botDesc.MaxHealth = 100;	
+			botDesc.MaxSpeed = 0.000001f;
+			botDesc.isBuilding = true;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetEntityType(ET_Building);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+
+			gameState->GetScene()->AddElement(go);
+		}
+
 		#pragma endregion
 
 		#pragma region Member - Create - Player
@@ -207,6 +226,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.1f);
+			bot->SetEntityType(ET_Hero);
 			bot->CreateNav(gameState->GetNavMesh());
 
 			gameState->GetScene()->AddElement(go);
@@ -258,6 +278,22 @@ namespace TikiEngine
 			gameState->GetScene()->AddElement(go);
 		}
 
+		void TikiBotFactory::CreatePlayerBuilding(GameObject* go)
+		{
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 5.0f;
+			botDesc.Radius = 5.0f;
+			botDesc.MaxHealth = 100;	
+			botDesc.MaxSpeed = 0.000001f;
+			botDesc.isBuilding = true;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetEntityType(ET_Building);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+
+			gameState->GetScene()->AddElement(go);
+		}
 		#pragma endregion
 
 		#pragma region Member - Create - BuildSlot
@@ -288,6 +324,7 @@ namespace TikiEngine
 		{
 			return getPos(Vector2(pos.X, pos.Z));
 		}
+
 		#pragma endregion
 	}
 }

@@ -22,14 +22,17 @@ namespace TikiEngine
 		enum EntityTypes
 		{
 			ET_Bot,
-			ET_Tower
+			ET_Tower,
+			ET_Building,
+			ET_Hero
 		};
 
 		struct TikiBotDescription
 		{
 			int Faction;		  // 0 = Player, 1 = Enemy
 			int MaxHealth;		  // the maximum amount of health
-			
+			bool isBuilding;
+
 			float FoV;            // the bot's field of view in degrees
 			float ReactionTime;	  // the bot's reaction time (in seconds)
 			float AimPresistance; // how long (in seconds) the bot will keep pointing its weapon at its target after the target goes out of view
@@ -57,7 +60,8 @@ namespace TikiEngine
 			{
 				Faction = 0;
 				MaxHealth = 100;
-				
+				isBuilding = false;
+
 				FoV = 180.0f;
 				ReactionTime = 0.001f;
 				AimPresistance = 1.0f;

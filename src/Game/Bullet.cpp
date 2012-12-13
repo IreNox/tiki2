@@ -31,7 +31,6 @@ namespace TikiEngine
 
         void Bullet::Handle(ICollider* sender, const TriggerEnterArgs& args)
         {
-            // TODO: faction
             TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
             if (bot != 0)
             {
@@ -40,13 +39,17 @@ namespace TikiEngine
                     impacted = true;
                     dead = true;
 
-					//gameState->GetEngine()->HLog.Write("bot hit, health reduced.");
                     bot->ReduceHealth(damage);
+
+					if (bot->IsDead() && shooter->EntityType() == ET_Hero)
+					{
+						gameState->GetEngine()->HLog.Write("Hero has last hit, incremented resources (+10)");
+						gameState->IncrementResource(10);
+					}
                 }
             }
             else
             {
-                // ITriangleMeshCollider* coll = args.otherCollider->GetGameObject()->GetComponent<ITriangleMeshCollider>();
                 ITriangleMeshCollider* coll = dynamic_cast<ITriangleMeshCollider*>(args.otherCollider);
                 if (coll != 0)
                 {

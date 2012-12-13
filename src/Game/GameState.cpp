@@ -238,14 +238,13 @@ namespace TikiEngine
 
 			if (args.Input.GetKeyPressed(KEY_F6))
 			{
-				UInt32 i = 0;
-				while (i < unitSelection->GetSelectedSlots()->Count())
+				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
+				RaycastHit info;
+				if (engine->physics->RayCast(ray, &info))
 				{
-					GameObject* go = unitSelection->GetSelectedSlots()->Get(i);
-					TikiBot* b = go->GetComponent<TikiBot>();
-					b->ReduceHealth(100);
-
-					i++;
+					GameObject* go = new GameObject(engine);
+					go->PRS.SPosition() = info.Point + Vector3(0, 10, 0);
+					botFactory->CreateEnemyBuilding(go);
 				}
 			}
 

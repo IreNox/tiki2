@@ -59,27 +59,36 @@ namespace TikiEngine
             controller->AddRef();
 
             // create regulators
-            visionUpdateRegulator = new Regulator(4.0);
-            targetSelectionRegulator = new Regulator(2.0);
+            visionUpdateRegulator = new Regulator(12.0);
+            targetSelectionRegulator = new Regulator(12.0);
 
+			if (!desc.isBuilding)
+			{
+				// create Targeting System
+				targSys = new TargetingSystem(this);
 
+				// we can remember bots
+				sensorMem = new SensorMemory(this, desc.MemorySpan);
 
-            // create Targeting System
-            targSys = new TargetingSystem(this);
+				weaponSys = new WeaponSystem(this);
+				weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
 
-            // we can remember bots
-            sensorMem = new SensorMemory(this, desc.MemorySpan);
-
-            weaponSys = new WeaponSystem(this);
-            weaponSys->Init(desc.ReactionTime, desc.AimAccuracy, desc.AimPresistance);
-
-            // Create the goal queue
-            brain = new GoalThink(this);
-            brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
+				// Create the goal queue
+				brain = new GoalThink(this);
+				brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
+			}
+			else
+			{
+				targSys = 0;
+				sensorMem = 0;
+				weaponSys = 0;
+				brain = 0;
+			}
 
 			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
 			texHealth = engine->content->LoadTexture(L"hud/unit_health");
 			texShield = engine->content->LoadTexture(L"hud/unit_shield");
+
 		}
 
 		TikiBot::~TikiBot()
@@ -254,7 +263,7 @@ namespace TikiEngine
 
 			// connect the waypoins to draw lines in green
 			#if _DEBUG
-			if (gameState->DrawNavMesh)
+			if (gameState->DrawNavMesh && EntityType() != ET_Building)
 			{
 				pathPlanner->Draw(args);
 				brain->Draw(args);
@@ -278,6 +287,10 @@ namespace TikiEngine
 
 		void TikiBot::Update(const UpdateArgs& args)
 		{
+			// don't do this for buildings
+			if (EntityType() == ET_Building)
+				return;
+
 			// process the currently active goal. Note this is required even if the bot
 			// is under user control. This is because a goal is created whenever a user 
 			// clicks on an area of the map that necessitates a path planning request.

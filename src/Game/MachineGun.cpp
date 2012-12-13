@@ -21,12 +21,12 @@ namespace TikiEngine
 			if (IsReadyForNextShot(args))
 			{
 				Vector3 start;
-				if (owner->EntityType() == ET_Bot)
+				if (owner->EntityType() != ET_Tower)
 				{
 					IBone* bone = owner->GetGameObject()->GModel()->GetBone("weapon_MgTip_bn");				
 					 start = Vector3::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
 				}
-				else if (owner->EntityType() == ET_Tower)
+				else //if (owner->EntityType() == )
 				{
 					// TODO: Tower bone
 					start = owner->Pos3D();
