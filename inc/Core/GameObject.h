@@ -9,6 +9,7 @@
 
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
+#include "Core/RectangleF.h"
 
 namespace TikiEngine
 {
@@ -83,6 +84,8 @@ namespace TikiEngine
 		bool RemoveChild(GameObject* gameObject);
 		const List<GameObject*>& Childs();
 
+		RectangleF& Bounds();
+
 	protected:
 
 		GameObject* parent;
@@ -93,6 +96,7 @@ namespace TikiEngine
 	private:
 
 		List<GameObject*> childs;
+		RectangleF bounding;
 
 	};
 }

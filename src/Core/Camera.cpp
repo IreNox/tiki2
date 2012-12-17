@@ -46,6 +46,10 @@ namespace TikiEngine
 
 			return Ray(orig, dir);
 		}
+		Vector3 Camera::GetViewDirection()
+		{
+			return gameObject->PRS.GetForward();
+		}
 		#pragma endregion
 
 		#pragma region Member - Get/Set

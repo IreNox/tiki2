@@ -73,6 +73,9 @@ public:
 	Vector2& operator+= (const Vector2& rhs);
 	Vector2& operator-= (const Vector2& rhs);
 
+	Vector2& operator*= (const float& rhs);
+	Vector2& operator/= (const float& rhs);
+
 	inline float operator[](const int& index)
 	{
 		return arr[index];

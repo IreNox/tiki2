@@ -126,6 +126,12 @@
     <Filter Include="Extern">
       <UniqueIdentifier>{8f2cbc43-077d-4d14-9df5-61430ca269f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\SceneGraph">
+      <UniqueIdentifier>{e3d9d9fe-f637-4354-a4bf-aeca012bae3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Core\SceneGraph">
+      <UniqueIdentifier>{38399b81-c9cb-49f2-b1ad-3188ffd30e3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -259,6 +265,12 @@
     </ClCompile>
     <ClCompile Include="src\Core\VertexFormats.cpp">
       <Filter>Quelldateien\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\SceneGraph.cpp">
+      <Filter>Quelldateien\Core\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Quadtree.cpp">
+      <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -633,6 +645,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\IHeightFieldCollider.h">
       <Filter>Headerdateien\Interfaces\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SceneGraph.h">
+      <Filter>Headerdateien\Core\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Quadtree.h">
+      <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TikiType.h">
       <Filter>Headerdateien\Core\System</Filter>

@@ -20,6 +20,8 @@
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Core/EventAnimation.h"
 
+#include "Core/RectangleF.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -32,6 +34,8 @@ namespace TikiEngine
 		SceneAdrian::SceneAdrian(Engine* engine)
 			: Scene(engine)
 		{
+			this->sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
+			this->selectionRectangle = RectangleF::Create(0,0,50,50);
 		}
 
 		SceneAdrian::~SceneAdrian()
@@ -89,11 +93,12 @@ namespace TikiEngine
 			);
 
 #if _DEBUG
-			if(bone != 0)
-			{
-				Vector3 pos = bone->Position() * 0.01f;
-				args.Graphics->DrawLine(pos, pos + bone->Forward(), Color::Red);
-			}
+			this->sceneGraph.Draw(args);
+
+			args.Graphics->DrawLine(selectionRectangle.TopLeft(), selectionRectangle.TopRight(), Color::Black);
+			args.Graphics->DrawLine(selectionRectangle.TopRight(), selectionRectangle.BottomRight(), Color::Black);
+			args.Graphics->DrawLine(selectionRectangle.BottomRight(), selectionRectangle.BottomLeft(), Color::Black);
+			args.Graphics->DrawLine(selectionRectangle.BottomLeft(), selectionRectangle.TopLeft(), Color::Black);
 #endif
 		}
 
@@ -120,6 +125,48 @@ namespace TikiEngine
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
+			}
+
+			//links
+			if(args.Input.GetKey(KEY_NUMPAD4))
+			{
+				this->selectionRectangle.X -= 10.0f * (float)args.Time.ElapsedTime;
+			}
+
+			//rechts
+			if(args.Input.GetKey(KEY_NUMPAD6))
+			{
+				this->selectionRectangle.X += 10.0f * (float)args.Time.ElapsedTime;
+			}
+
+			//hoch
+			if(args.Input.GetKey(KEY_NUMPAD8))
+			{
+				this->selectionRectangle.Y -= 10.0f * (float)args.Time.ElapsedTime;
+			}
+
+			//runter
+			if(args.Input.GetKey(KEY_NUMPAD5))
+			{
+				this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
+			}
+
+			if(args.Input.GetKeyPressed(KEY_RETURN))
+			{
+				sceneGraph.Intersect(this->selectionRectangle);
+			}
+
+
+			if(args.Input.GetMousePressed(MB_Left))
+			{
+				GameObject* go = new GameObject(this->engine);
+				Vector2 pos = args.Input.MousePosition;
+				pos *= 100;
+				pos += Vector2(-50);
+				go->PRS.SPosition() = Vector3(pos.X, 0, pos.Y);
+				go->Update(args);
+
+				sceneGraph.Insert(go);
 			}
 		}
 	}

@@ -90,7 +90,7 @@ namespace TikiEngine
 	{
 		// set the normal vector
 		normal = Vector3(a,b,c);
-		//compute the lenght of the vector
+		//compute the length of the vector
 		float l = normal.Length();
 		// normalize the vector
 		normal = Vector3(a/l, b/l, c/l);

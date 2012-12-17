@@ -10,6 +10,10 @@ namespace TikiEngine
 		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs()
 	{
 		this->PRS = Transform(this);
+		this->bounding.X = PRS.GPosition().X;
+		this->bounding.Y = PRS.GPosition().Z;
+		this->bounding.Width = 1;
+		this->bounding.Height = 1;
 	}
 
 	GameObject::~GameObject()
@@ -127,6 +131,18 @@ namespace TikiEngine
 		}
 
 		if (model) model->Update(args);
+
+		//TODO anständige bounds
+
+		this->bounding.X = PRS.GPosition().X;
+		this->bounding.Y = PRS.GPosition().Z;
+	}
+	#pragma endregion
+
+	#pragma region SceneGraph
+	RectangleF& GameObject::Bounds()
+	{
+		return this->bounding;
 	}
 	#pragma endregion
 	

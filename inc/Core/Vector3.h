@@ -145,6 +145,7 @@ public:
 
 		return *this;
 	}
+
 	#pragma endregion
 
 	//static attributes

@@ -51,5 +51,7 @@ namespace TikiEngine
 		List<Camera*> cameras;
 		DrawLightArgs lighting;
 
+
+
 	};
 }

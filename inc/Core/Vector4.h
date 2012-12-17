@@ -57,6 +57,11 @@ public:
 	Vector4& operator+= (const Vector4& rhs);
 	Vector4& operator-= (const Vector4& rhs);
 
+	inline float operator[](const int& index)
+	{
+		return arr[index];
+	}
+
 	static int Dimensions;
 	static Vector4 Input();
 

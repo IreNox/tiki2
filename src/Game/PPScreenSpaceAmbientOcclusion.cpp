@@ -7,6 +7,10 @@
 
 #include "Core/Camera.h"
 #include "Core/GameObject.h"
+#include "Core/Scene.h"
+#include "Core/Camera.h"
+#include "Core/List.h"
+#include "Core/Matrix.h"
 
 namespace TikiEngine
 {
@@ -23,6 +27,8 @@ namespace TikiEngine
 			aoTarget = engine->librarys->CreateResource<IRenderTarget>();
 			aoTarget->CreateScreenSize();
 
+			engine->graphics->AddDefaultProcessTarget("ambientLight", aoTarget);
+
 			Vector2 screenSize = engine->graphics->GetViewPort()->GetSize();
 			shader->SetVector2("ScreenSize", Vector2(screenSize.X, screenSize.Y));
 
@@ -31,7 +37,8 @@ namespace TikiEngine
 
 			PostProcessPass* pass = new PostProcessPass(engine, shader);
 			pass->AddInput("rtNormal", engine->graphics->GetNormalTarget());
-			//pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
+			pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
+			
 			pass->AddOutput(0, aoTarget);
 			this->AddPass(pass);
 		}
@@ -50,15 +57,7 @@ namespace TikiEngine
 
 		void PPScreenSpaceAmbientOcclusion::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
-			//shader->SetVector3(
-			//	"ViewForward",
-			//	args.CurrentCamera->GetGameObject()->PRS.GetForward()
-			//);
-
-			//shader->SetMatrix(
-			//	"SceneViewProj",
-			//	Matrix::Identity
-			//);
+			shader->SetVector3("viewDirection", Vector3::Normalize(-engine->GetScene()->GetCameras()->Get(0)->GetViewDirection()));
 		}
 	}
 }

@@ -36,6 +36,7 @@ namespace TikiEngine
 
 			Frustum* GetFrustum();
 			Ray ScreenPointToRay(const Vector2& screenPos);
+			Vector3 GetViewDirection();
 
 			IRenderTarget* GetRenderTarget();
 			void SetRenderTarget(IRenderTarget* renderTarget);

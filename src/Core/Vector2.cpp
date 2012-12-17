@@ -191,6 +191,17 @@ Vector2& Vector2::operator-= (const Vector2& rhs)
 {
 	return *this = *this - rhs;
 }
+
+Vector2& Vector2::operator*= (const float& rhs)
+{
+	return *this = *this * rhs;
+}
+
+Vector2& Vector2::operator/= (const float& rhs)
+{
+	return *this = *this / rhs;
+}
+
 #pragma endregion arithmetic updates
 
 #pragma endregion

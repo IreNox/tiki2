@@ -6,6 +6,8 @@
 #include <Graphics/TikiBone.h>
 
 #include "Core/EventAnimation.h"
+#include "PPScreenSpaceAmbientOcclusion.h"
+#include "Core/SceneGraph.h"
 
 namespace TikiEngine
 {
@@ -39,6 +41,10 @@ namespace TikiEngine
 			IBone* bone;
 
 			AnimationEvent* animationEvent;
+
+			SceneGraph sceneGraph;
+
+			RectangleF selectionRectangle;
 		};
 	}
 }

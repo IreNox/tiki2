@@ -107,6 +107,9 @@ public:
 
 	inline void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
+		if(length == 0)
+			return;
+
 		Int32 badFix = lengthData;
 		getNewIndex(this->lengthData + (length - 1), true);
 		lengthData = badFix;
