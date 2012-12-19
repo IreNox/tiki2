@@ -45,6 +45,7 @@ namespace TikiEngine
 		if(!this->initialized)
 			return;
 
+#if _DEBUG
 		quadtree.Draw(args);
 
 		for(UINT i = 0; i < queryContent.Count(); i++)
@@ -55,5 +56,6 @@ namespace TikiEngine
 			args.Graphics->DrawLine(pos - Vector3::UnitY, pos + Vector3::UnitY, Color::Blue);
 			args.Graphics->DrawLine(pos - Vector3::UnitZ, pos + Vector3::UnitZ, Color::Blue);
 		}
+#endif
 	}
 }

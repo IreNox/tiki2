@@ -333,9 +333,10 @@ namespace TikiEngine
 			{
 			case 0:
 				this->SModel(engine->content->LoadModel(L"replaceme_cube"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 1: // player
-				gameState->GetBotFactory()->CreatePlayerMop(this);
+				gameState->GetBotFactory()->CreatePlayerMop(this, Vector3::Zero);
 				break;
 			case 2: // enemy
 				gameState->GetBotFactory()->CreateEnemy1(this);
@@ -362,14 +363,11 @@ namespace TikiEngine
 				gameState->GetBotFactory()->CreateBuildSlot(this);
 				break;
 			case 10:
-				this->SModel(engine->content->LoadModel(L"building03_05"));
 				gameState->GetBotFactory()->CreateEnemyBuilding(this);
 				break;
 			case 11:
-				this->SModel(engine->content->LoadModel(L"building03_05"));
 				gameState->GetBotFactory()->CreatePlayerBuilding(this);
 				break;
-
 			}
 		}
 

@@ -41,6 +41,21 @@ namespace TikiEditor.Objects
 
             return vertices.Select(v => Vector2.Transform(v, world)).ToArray();
         }
+
+        public RectangleF BoundingBox(float scale)
+        {
+            Vector2[] vertices = this.Vertices(scale);
+
+            float x = vertices.Min(v => v.X);
+            float y = vertices.Min(v => v.Y);
+
+            return new RectangleF(
+                x,
+                y,
+                vertices.Max(v => v.X) - x,
+                vertices.Max(v => v.Y) - y
+            );
+        }
         #endregion
 
         #region Properties
@@ -97,24 +112,6 @@ namespace TikiEditor.Objects
                     _rotation
                 ) * Matrix.CreateTranslation(
                     new Vector3(this.Position, 0)
-                );
-            }
-        }
-
-        public RectangleF BoundingBox
-        {
-            get
-            {
-                Vector2[] vertices = this.Vertices();
-
-                float x = vertices.Min(v => v.X);
-                float y = vertices.Min(v => v.Y);
-
-                return new RectangleF(
-                    x,
-                    y,
-                    vertices.Max(v => v.X) - x,
-                    vertices.Max(v => v.Y) - y
                 );
             }
         }

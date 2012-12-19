@@ -157,8 +157,6 @@ namespace TikiEngine
 				{
 					LevelObject* object = new LevelObject(gameState);
 					object->LoadFromDatabase(state);
-					
-					this->AddElement(object);
 				}
 				sqlite3_finalize(state);
 			}

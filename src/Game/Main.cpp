@@ -42,13 +42,13 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Tim") && true)
+			if ((name == L"tim.boden" || name == L"Tim") && false)
 			{
-				//scene = new SceneTim(engine);
+				scene = new SceneTim(engine);
 
-				scene = new SceneLevel(engine);
-				engine->SetScene(scene);
-				((SceneLevel*)scene)->LoadLevel(1);
+				//scene = new SceneLevel(engine);
+				//engine->SetScene(scene);
+				//((SceneLevel*)scene)->LoadLevel(1);
 			}
 			else if((name == L"adrian.lück" || name == L"Adrian") && false)
 			{

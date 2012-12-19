@@ -50,6 +50,7 @@ namespace TikiEngine
 
 			inline double GetResource() { return resource; }
 			inline void IncrementResource(double toIncrement) { resource += toIncrement; }
+			inline void DecrementResource(double toDecrement) { resource -= toDecrement; }
 
 			void AddTrigger(GameObject* go);
 

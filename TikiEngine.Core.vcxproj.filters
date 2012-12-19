@@ -658,5 +658,8 @@
     <ClInclude Include="inc\Core\TikiReflect.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\TikiTimer.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

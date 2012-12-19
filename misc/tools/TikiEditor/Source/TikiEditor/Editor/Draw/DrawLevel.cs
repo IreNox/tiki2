@@ -34,7 +34,7 @@ namespace TikiEditor
         #region Private Member
         private BasicTransform _getTransformAtPoint(Vector2 point)
         {
-            return _level.AllTransforms.FirstOrDefault(t => t.BoundingBox.Contains(point));
+            return _level.AllTransforms.FirstOrDefault(t => t.BoundingBox(this.Scale).Contains(point));
         }
         #endregion
 
@@ -176,7 +176,7 @@ namespace TikiEditor
             {
                 foreach (BasicTransform bt in _level.AllTransforms)
                 {
-                    var rect = bt.BoundingBox;
+                    var rect = bt.BoundingBox(this.Scale);
 
                     drawRect(
                         rect.Position + (rect.Size / 2),

@@ -113,9 +113,9 @@ namespace TikiEngine
 
 		void GameHud::Update(const UpdateArgs& args)
 		{
-			wostringstream str;
-			str << state->GetResource();
-			labelRes->Text() = str.str();
+			wostringstream s;
+			s << state->GetResource();
+			labelRes->Text() = s.str();
 
 			UInt32 i = 0;
 			while (i < enabledControls.Count())

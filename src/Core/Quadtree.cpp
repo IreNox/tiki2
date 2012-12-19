@@ -98,6 +98,7 @@ namespace TikiEngine
 
 	void QuadtreeNode::Draw(const DrawArgs& args)
 	{
+#if _DEBUG
 		args.Graphics->DrawLine(bounds.TopLeft(), bounds.TopRight(), Color::Red);
 		args.Graphics->DrawLine(bounds.TopRight(), bounds.BottomRight(), Color::Red);
 		args.Graphics->DrawLine(bounds.BottomRight(), bounds.BottomLeft(), Color::Red);
@@ -114,6 +115,7 @@ namespace TikiEngine
 
 		for(UINT i = 0; i < childs.Count(); i++)
 			childs[i]->Draw(args);
+#endif
 	}
 
 	bool QuadtreeNode::CreateSubdivision()

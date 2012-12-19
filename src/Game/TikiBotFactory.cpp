@@ -15,7 +15,8 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), elapsed(0), interval(30000000.0), enemySpawnCount(7), playerSpawnCount(5)
+			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.25f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
+			  playerSpawnLeft(0)
 		{
 		}
 
@@ -53,38 +54,41 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void TikiBotFactory::Update( const UpdateArgs& args )
 		{
-			elapsed += args.Time.ElapsedTime;
-
-			if (elapsed > interval)
+			if (timerSpawn.IsReady(args.Time))
 			{
-				elapsed -= interval;
+				enemySpawnLeft = enemySpawnCount;
+				playerSpawnLeft = playerSpawnCount;
 
+				timerNextUnit.Reset();
+			}
+
+			if ((enemySpawnLeft != 0 || playerSpawnLeft != 0) && timerNextUnit.IsReady(args.Time))
+			{
 				// spawn from three sides
 				UInt32 i = 0;
 				while (i < spawnPoints.Count())
 				{
-					UInt32 a = 0;
-					while (a < enemySpawnCount)
+					// Spawn Enemy
+					if (enemySpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
 						go->PRS.SPosition() = getPos(spawnPoints[i]);
-						CreateEnemy1(go);
+						CreateEnemy1(go);						
+					}
 
-						a++;
+					// Spawn Player
+					if (enemySpawnLeft > 0)
+					{
+						GameObject* go = new GameObject(gameState->GetEngine());
+						go->PRS.SPosition() = getPos(playerBase);
+						CreatePlayerMop(go, spawnPoints[i]);
 					}
 
 					i++;
 				}
 
-				UInt32 a = 0;
-				while (a < playerSpawnCount)
-				{
-					GameObject* go = new GameObject(gameState->GetEngine());
-					go->PRS.SPosition() = getPos(spawnPoints[i]);
-					CreatePlayerMop(go);
-
-					a++;
-				}
+				if (enemySpawnLeft > 0) enemySpawnLeft--;
+				if (playerSpawnLeft > 0) playerSpawnLeft--;
 			}
 
 #if _DEBUG
@@ -114,7 +118,7 @@ namespace TikiEngine
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = getPos(Vector2(10, 10));
-				CreatePlayerMop(go);
+				CreatePlayerMop(go, spawnPoints[0]);
 			}
 
 #endif
@@ -174,6 +178,8 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreateEnemyBuilding( GameObject* go )
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"building03_05"));
+
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
 			botDesc.Height = 5.0f;
@@ -184,6 +190,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->SetScale(25.0f);
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -212,7 +219,7 @@ namespace TikiEngine
 			gameState->GetScene()->AddElement(go);
 		}
 
-		void TikiBotFactory::CreatePlayerMop(GameObject* go)
+		void TikiBotFactory::CreatePlayerMop(GameObject* go, const Vector3& dest)
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
@@ -230,7 +237,7 @@ namespace TikiEngine
 			bot->SetScale(0.06f);
 			bot->CreateNav(gameState->GetNavMesh());
 
-			bot->GetBrain()->AddGoalAttackMove(spawnPoints[0]);
+			bot->GetBrain()->AddGoalAttackMove(dest);
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -238,7 +245,7 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerTower(GameObject* go)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_mg"));
 			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
@@ -251,16 +258,17 @@ namespace TikiEngine
 			botDesc.entityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(8.0f);
+			bot->SetScale(1.0f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
-
-
+			
 			gameState->GetScene()->AddElement(go);
 		}
 
 		void TikiBotFactory::CreatePlayerBuilding(GameObject* go)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"building_main"));
+
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
 			botDesc.Height = 5.0f;
@@ -271,6 +279,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->SetScale(30.0f);
 
 			gameState->GetScene()->AddElement(go);
 		}

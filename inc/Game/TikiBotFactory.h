@@ -5,6 +5,7 @@
 #include "Game/GameState.h"
 
 #include "Core/sqlite3.h"
+#include "Core/TikiTimer.h"
 
 namespace TikiEngine
 {
@@ -20,8 +21,8 @@ namespace TikiEngine
 
 			void Init();
 
-			inline double GSpawnInterval() { return interval; }
-			inline void SSpawnInterval(double interval) { this->interval = interval; }
+			inline double GSpawnInterval() { return timerSpawn.Interval; }
+			inline void SSpawnInterval(double interval) { timerSpawn.Interval = interval; }
 
 			inline UInt32 GEnemySpawnCount() { return enemySpawnCount; }
 			inline void SEnemySpawnCount(UInt32 count) { enemySpawnCount = count; }
@@ -33,17 +34,14 @@ namespace TikiEngine
 			//void CreateEnemy2(GameObject* go);
 			void CreateEnemyTower(GameObject* go);
 			void CreateEnemyBuilding(GameObject* go);
-
-
-			void CreatePlayerMop(GameObject* go);
+			
+			void CreatePlayerMop(GameObject* go, const Vector3& destination);
 			void CreatePlayerHero(GameObject* go);
 			void CreatePlayerTower(GameObject* go);
 			void CreatePlayerBuilding(GameObject* go);
-
-
+			
 			void CreateBuildSlot(GameObject* go);
-
-
+			
 			void Update(const UpdateArgs& args);
 
 		private:
@@ -54,10 +52,12 @@ namespace TikiEngine
 			std::list<Vector2> wayPoints;
 			List<Vector3> spawnPoints;
 
-			double interval;
-			double elapsed;
+			TikiTimer timerSpawn;
+			TikiTimer timerNextUnit;
 
+			UInt32 enemySpawnLeft;
 			UInt32 enemySpawnCount;
+			UInt32 playerSpawnLeft;
 			UInt32 playerSpawnCount;
 
 			Vector3 getPos(const Vector2& pos);

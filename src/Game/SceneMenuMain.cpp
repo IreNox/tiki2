@@ -40,11 +40,12 @@ namespace TikiEngine
 			image->AddRef();
 
 			window = new GUIWindow(engine);
-			window->SSize() = Vector2(350, 400);
+			window->SSize() = Vector2(350, 475);
 			window->AddRef();
 
 			wcstring text[] = {
-				L"Start Game",
+				L"Start - Level 1",
+				L"Start - Level 2",
 				L"Test Scene - Tim",
 				L"Test Scene - Mark",
 				L"Test Scene - Adrian",
@@ -52,7 +53,7 @@ namespace TikiEngine
 			};
 
 			UInt32 i = 0;
-			while (i < 5)
+			while (i < 6)
 			{
 				GUIButton* cmd = new GUIButton(engine);
 				cmd->SSize() = Vector2(300, 50);
@@ -124,21 +125,26 @@ namespace TikiEngine
 			case 0:
 				sLevel = new SceneLevel(engine);
 				engine->SetScene(sLevel);
-				sLevel->LoadLevel(2);
+				sLevel->LoadLevel(1);
 				break;
 			case 1:
+				sLevel = new SceneLevel(engine);
+				engine->SetScene(sLevel);
+				sLevel->LoadLevel(2);
+				break;
+			case 2:
 				s = new SceneTim(engine);
 				engine->SetScene(s);
 				break;
-			case 2:
+			case 3:
 				s = new SceneMark(engine);
 				engine->SetScene(s);
 				break;
-			case 3:
+			case 4:
 				s = new SceneAdrian(engine);
 				engine->SetScene(s);
 				break;
-			case 4:
+			case 5:
 				engine->Exit();
 				break;
 			}

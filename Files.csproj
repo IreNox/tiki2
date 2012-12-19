@@ -29,6 +29,7 @@
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="bin\clean.bat" />
     <None Include="bin\Data\Cloddy\Datasets\ms1.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Datasets\map1.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Licence\licence.dat" />
@@ -40,6 +41,7 @@
     <None Include="bin\Data\Meshes\navmesh\navmesh_ms1.obj" />
     <None Include="bin\Data\Meshes\test.obj" />
     <None Include="bin\Data\Models\building03_05.tiki" />
+    <None Include="bin\Data\Models\building_main.tiki" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
     <None Include="bin\Data\Models\marine_l.tiki" />
     <None Include="bin\Data\Models\replaceme_cube.tiki" />
@@ -47,6 +49,7 @@
     <None Include="bin\Data\Models\rock_02.tiki" />
     <None Include="bin\Data\Models\rock_03.tiki" />
     <None Include="bin\Data\Models\soldier.tiki" />
+    <None Include="bin\Data\Models\tower_mg.tiki" />
     <None Include="bin\Data\Textures\building03_05\building03_05_diff.dds" />
     <None Include="bin\Data\Textures\building03_05\building03_05_normal.dds" />
     <None Include="bin\Data\Textures\building03_05\building03_05_spec.dds" />

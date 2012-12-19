@@ -119,7 +119,7 @@
             this.textLevelId.Name = "textLevelId";
             this.textLevelId.Size = new System.Drawing.Size(181, 20);
             this.textLevelId.TabIndex = 1;
-            this.textLevelId.Text = "2";
+            this.textLevelId.Text = "1";
             // 
             // formStartUp
             // 
