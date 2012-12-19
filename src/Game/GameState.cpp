@@ -161,7 +161,7 @@ namespace TikiEngine
 					{
 						TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
 
-						if (bot != 0)
+						if (bot != 0 && bot->GetBrain() != 0)
 						{
 							//bot->TakePossession();
 
