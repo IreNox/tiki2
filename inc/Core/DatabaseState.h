@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/EngineObject.h"
+#include "Core/sqlite3.h"
 
 namespace TikiEngine
 {

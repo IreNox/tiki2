@@ -272,6 +272,9 @@
     <ClCompile Include="src\Core\Quadtree.cpp">
       <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\DatabaseState.cpp">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -622,12 +625,6 @@
     <ClInclude Include="inc\Core\EventLog.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\Timer.h">
-      <Filter>Headerdateien\Core\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Timer.h">
-      <Filter>Quelldateien\Core\System</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\sqlite3.h">
       <Filter>Extern</Filter>
     </ClInclude>
@@ -659,6 +656,9 @@
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TikiTimer.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\DatabaseState.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
   </ItemGroup>

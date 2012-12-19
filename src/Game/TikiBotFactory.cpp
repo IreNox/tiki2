@@ -304,7 +304,7 @@ namespace TikiEngine
 			outPos.X = pos.X + Random(3, 10);
 			outPos.Z = pos.Y + Random(3, 10);
 
-			outPos.Y = gameState->GetScene()->GLevel()->GetTerrain()->SampleHeight(outPos) + 10.0f;
+			outPos.Y = gameState->GetScene()->GLevel()->GetTerrain()->SampleHeight(outPos) + 50.0f;
 			return outPos;
 		}
 

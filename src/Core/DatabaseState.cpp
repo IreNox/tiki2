@@ -28,7 +28,7 @@ namespace TikiEngine
 		int r = sqlite3_prepare(
 			engine->GetDB(),
 			sql.c_str(),
-			sql.size(),
+			(int)sql.size(),
 			&state,
 			&tmp
 		);
@@ -44,7 +44,7 @@ namespace TikiEngine
 
 		if (r == SQLITE_ROW)
 		{
-			static UInt32 typeLength[] = { 0, 32, 32, 0, 0, 0 };
+			UInt32 typeLength[] = { 0, 32, 32, 0, 0, 0 };
 
 			dataLength = 0;
 			SafeDeleteArray(&data);
@@ -57,7 +57,16 @@ namespace TikiEngine
 			{
 				DatabaseTypes type = (DatabaseTypes)sqlite3_column_type(state, i);
 
+				sqlite3_value* val = sqlite3_column_value(state, i);
 
+				//val
+
+				switch (type)
+				{
+				case DBT_Blob:
+					//typeLength[DBT_Blob] = sqlite3_column_bl
+					break;
+				}
 
 				i++;
 			}

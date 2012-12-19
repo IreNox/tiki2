@@ -49,12 +49,15 @@ namespace TikiEngine
 			UInt32 temp;
 
 			SafeRelease(&this->inputLayout);
-			SafeRelease(&this->shader);
+
+			Shader* oldShader = this->shader;
 
 			SafeAddRef(
 				(Shader*)shader,
 				&this->shader
 			);
+
+			SafeRelease(&oldShader);
 
 			if (this->shader != 0)
 			{

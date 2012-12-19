@@ -346,18 +346,23 @@ namespace TikiEngine
 				break;
 			case 4:
 				this->SModel(engine->content->LoadModel(L"building03_05"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 5:
 				this->SModel(engine->content->LoadModel(L"env_pipe_01"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 6:
 				this->SModel(engine->content->LoadModel(L"rock_01"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 7:
 				this->SModel(engine->content->LoadModel(L"rock_02"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 8:
 				this->SModel(engine->content->LoadModel(L"rock_03"));
+				gameState->GetScene()->AddElement(this);
 				break;
 			case 9: // Tower Build slot
 				gameState->GetBotFactory()->CreateBuildSlot(this);

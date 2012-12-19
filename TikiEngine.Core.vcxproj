@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\DatabaseState.cpp" />
     <ClCompile Include="src\Core\HelperHash.cpp" />
     <ClCompile Include="src\Core\HelperThreading.cpp" />
     <ClCompile Include="src\Core\Mutex.cpp" />
@@ -69,6 +70,7 @@
     <ClInclude Include="inc\Core\BufferState.h" />
     <ClInclude Include="inc\Core\BufferedVariable.h" />
     <ClInclude Include="inc\Core\CBMatrices.h" />
+    <ClInclude Include="inc\Core\DatabaseState.h" />
     <ClInclude Include="inc\Core\EventAnimation.h" />
     <ClInclude Include="inc\Core\EventLog.h" />
     <ClInclude Include="inc\Core\EventTriggers.h" />
@@ -141,7 +143,6 @@
     <ClInclude Include="inc\Core\TikiReflect.h" />
     <ClInclude Include="inc\Core\TikiTimer.h" />
     <ClInclude Include="inc\Core\TikiType.h" />
-    <ClInclude Include="inc\Core\Timer.h" />
     <ClInclude Include="inc\Core\TypeGlobals.h" />
     <ClInclude Include="inc\Core\IPhysicsMaterial.h" />
     <ClInclude Include="inc\Core\IResource.h" />
@@ -195,7 +196,6 @@
     <ClInclude Include="inc\Core\WindowModule.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
     <ClCompile Include="src\Core\HelperPath.cpp" />
-    <ClInclude Include="src\Core\Timer.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>
