@@ -81,7 +81,6 @@ namespace TikiEngine
 			double lifeTime;
 			
 			ISphereCollider* sphere;
-			
 		};
 		
 

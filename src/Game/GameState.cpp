@@ -16,6 +16,9 @@
 
 #include "Game/TikiBotFactory.h"
 
+#include "Game/Rocket.h"
+
+
 namespace TikiEngine
 {
 	namespace Game
@@ -56,34 +59,6 @@ namespace TikiEngine
 			);
 
 			botFactory->Init();
-
-			//UInt32 i = 0;
-			//while (i < scene->GetElements().Count())
-			//{
-			//	TikiBot* bot = scene->GetElements()[i]->GetComponent<TikiBot>();
-
-			//	if (bot != 0)
-			//	{
-			//		bot->CreateNav(navMesh);
- 			//		Vector3 pos = bot->GetGameObject()->PRS.GPosition();
- 			//		pos = pos + Vector3(0, 30, 0);
- 			//		bot->GetController()->SetCenter(pos);
-
-			//		// if we have a patrol bot, set the wayPoints.
-			//      if (bot->GetFaction() == 1)
-			//      {
-			//			std::list<Vector2> wayPoints;
-			//			wayPoints.push_back(Vector2(0, -100));
-			//			wayPoints.push_back(Vector2(100, -100));
-			//			wayPoints.push_back(Vector2(100, 100));
-			//			wayPoints.push_back(Vector2(-100, 100));
-			//			wayPoints.push_back(Vector2(-100, -100));
-			//			bot->GetBrain()->AddGoalPatrol(wayPoints);
-			//		}
-			//	}
-
-			//	i++;
-			//}
 		}
 
 		void GameState::DisposeLevel()
@@ -114,16 +89,6 @@ namespace TikiEngine
 
 		void GameState::Update(const UpdateArgs& args)
 		{
-			//// spawn bots if it's time
-			////if (spawnRegulator->IsReady())
- 			//if (args.Input.GetKeyPressed(KEY_F5))
- 			//{
- 			//	GameObject* go = new GameObject(engine);
- 			//	go->PRS.SPosition() = Vector3(150, 50, 150);
- 			//	botFactory->CreateEnemy1(go);
- 			//	//AddBot(Vector3(150, 50, 150));
- 			//}
-			
 			hud->Update(args);
 			botFactory->Update(args);
 			projectiles->Update(args);
@@ -246,6 +211,43 @@ namespace TikiEngine
 					go->PRS.SPosition() = info.Point + Vector3(0, 10, 0);
 					botFactory->CreateEnemyBuilding(go);
 				}
+			}
+
+
+			if (args.Input.GetKeyPressed(KEY_R))
+			{
+				Vector3 target = Vector3::Zero;
+
+				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
+				RaycastHit info;
+				if (engine->physics->RayCast(ray, &info))
+				{
+					target = info.Point;
+				}
+
+				for (UInt32 i = 0; i < unitSelection->GetSelectedUnits()->Count(); i++)
+				{
+					TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
+
+					if (bot != 0 && bot->EntityType() == ET_Hero)
+					{
+						ProjectileDescription desc;
+						desc.Target = target; //owner->GetTargetBot()->Pos3D();
+						desc.Shooter = bot;
+						desc.Origin = bot->Pos3D();
+						desc.Heading = bot->Heading();
+						desc.ShooterID = bot->ID();
+						desc.Damage = 20; //owner->MaxHealth() / 20;
+						desc.LifeTime = 10.0f;
+						GameObject* go = new GameObject(engine);
+						Rocket* proj = new Rocket(this, go);
+						proj->Init(desc, 30,  args);
+						projectiles->AddProjectile(proj);
+					}
+
+				}
+
+
 			}
 
 

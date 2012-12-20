@@ -171,25 +171,17 @@ namespace TikiEngine
 			return ( Vector2::DistanceSquared(Pos(), pos) < 200.0f);
 		}
 
-		bool TikiBot::HasLOSTo(Vector3 pos)
+		bool TikiBot::HasLOSTo(Vector3 pos, float dist, float eps)
 		{
 			bool los = false;
 
 			Ray ray(Vector3::Zero, Vector3::Zero);
-
-			// Move y Up, else we raycast against the bot's own collider.
-			float headingEps = 0.5f;
-			
-			//Vector3 dir = Vector3::Normalize(pos - Pos3D());
-			
 			ray.Origin = Pos3D() + (Vector3::Normalize(pos - Pos3D()) * controller->GetRadius() * 2.0f);
 			ray.Origin.Y += (controller->GetHeight() * 0.6f) + (controller->GetRadius() + 1.0f);
-
 			//ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
 			//ray.Origin.Y += controller->GetHeight() * 2.1f; // * 0.6f + controller->GetRadius();
             
 			ray.Direction = pos - ray.Origin;
-
 			//ray.Origin = Pos3D() + (Vector3::Normalize(Vector3(heading.X, 0, heading.Y)) * (controller->GetRadius() + headingEps));
 			//ray.Origin = Pos3D() + (Vector3::Normalize(ray.Direction) * controller->GetRadius() * 1.1f);
 
@@ -198,7 +190,7 @@ namespace TikiEngine
 
 			RaycastHit info;
 
-			if (engine->physics->RayCast(ray, &info, weaponSys->GetCurrentWeapon()->GetIdealRange()))
+			if (engine->physics->RayCast(ray, &info, dist))
 			{				
 #if _DEBUG
 				if (info.Collider == controller)
@@ -207,9 +199,6 @@ namespace TikiEngine
 					// RayCast ist falsch und trifft sich selbst
 				}
 #endif
-
-
-				float eps = 5.0f;
 				// check the intersection points for nearly equal
 				if (info.Point.X >= pos.X - eps && info.Point.X <= pos.X + eps &&
 					info.Point.Y >= pos.Y - eps && info.Point.Y <= pos.Y + eps &&

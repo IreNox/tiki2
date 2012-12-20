@@ -80,6 +80,7 @@
     <ClInclude Include="inc\Game\Projectile.h" />
     <ClInclude Include="inc\Game\ProjectileManager.h" />
     <ClInclude Include="inc\Game\Regulator.h" />
+    <ClInclude Include="inc\Game\Rocket.h" />
     <ClInclude Include="inc\Game\SceneAdrian.h" />
     <ClInclude Include="inc\Game\SceneLevel.h" />
     <ClInclude Include="inc\Game\SceneMenuMain.h" />
@@ -146,6 +147,7 @@
     <ClCompile Include="src\Game\Projectile.cpp" />
     <ClCompile Include="src\Game\ProjectileManager.cpp" />
     <ClCompile Include="src\Game\Regulator.cpp" />
+    <ClCompile Include="src\Game\Rocket.cpp" />
     <ClCompile Include="src\Game\SceneAdrian.cpp" />
     <ClCompile Include="src\Game\SceneLevel.cpp" />
     <ClCompile Include="src\Game\SceneMark.cpp" />

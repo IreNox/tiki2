@@ -5,6 +5,7 @@
 #include "Game/SceneLevel.h"
 #include "Core/IGraphics.h"
 #include "Game/WeaponSystem.h"
+#include "Game/Weapon.h"
 
 namespace TikiEngine
 {
@@ -38,7 +39,15 @@ namespace TikiEngine
 					MemoryRecord& info = memoryMap[curBot];
 
 					// test if there is LOS between bots
-					if (owner->HasLOSTo(curBot->Pos3D()))
+					if (curBot->EntityType() == ET_Building)
+					{
+						float test = 1.0f;
+						float bla = 0;
+					}
+
+					float dist = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange() + (float)curBot->BRadius();
+					float eps = (float)curBot->BRadius();
+					if (owner->HasLOSTo(curBot->Pos3D(), dist, eps))
 					{
 						info.Shootable = true;
                         info.TimeLastSensed = args.Time.TotalTime;

@@ -392,6 +392,9 @@
     <ClInclude Include="inc\Game\BuildSlot.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\Rocket.h">
+      <Filter>Headerdateien\AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -573,6 +576,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\BuildSlot.cpp">
       <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Rocket.cpp">
+      <Filter>Quelldateien\AI\WeaponSystem\Projectiles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

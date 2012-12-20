@@ -183,7 +183,7 @@ namespace TikiEngine
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
 			botDesc.Height = 5.0f;
-			botDesc.Radius = 5.0f;
+			botDesc.Radius = 30.0f; //5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.entityType = ET_Building;

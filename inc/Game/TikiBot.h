@@ -157,7 +157,7 @@ namespace TikiEngine
 			bool IsAtPosition(Vector2 pos);
 
 			// returns true if the bot has line of sight to the given position.
-			bool HasLOSTo(Vector3 pos);
+			bool HasLOSTo(Vector3 pos, float dist, float eps);
 
 			// this is called to allow a human player to control the bot
 			void TakePossession();
