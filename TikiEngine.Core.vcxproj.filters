@@ -275,6 +275,9 @@
     <ClCompile Include="src\Core\DatabaseState.cpp">
       <Filter>Quelldateien\Core\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\SceneGraphNode.cpp">
+      <Filter>Quelldateien\Core\SceneGraph</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -660,6 +663,9 @@
     </ClInclude>
     <ClInclude Include="inc\Core\DatabaseState.h">
       <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\SceneGraphNode.h">
+      <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

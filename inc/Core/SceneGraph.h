@@ -2,6 +2,7 @@
 #include "Core/Quadtree.h"
 #include "Core/List.h"
 #include "Core/DrawArgs.h"
+#include "Core/SceneGraphNode.h"
 
 namespace TikiEngine
 {
@@ -25,5 +26,9 @@ namespace TikiEngine
 		bool initialized;
 
 		List<GameObject*> queryContent;
+
+		SceneGraphNode rootNode;
+
+
 	};
 }
