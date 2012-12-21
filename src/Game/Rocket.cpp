@@ -28,11 +28,10 @@ namespace TikiEngine
 
 			Vector3 toTarget = Vector3::Normalize(desc.Target - desc.Origin);
 			toTarget = toTarget * desc.MaxSpeed;
-			Vector3 vel = toTarget;
 
 			sphere->SetCenter(desc.Origin);
 			sphere->GetRigidBody()->SetMass(desc.Mass);
-			sphere->GetRigidBody()->SetVelocity(Vector3(vel.X, toTarget.Y, vel.Z));
+			sphere->GetRigidBody()->SetVelocity(Vector3(toTarget.X, 0, toTarget.Z));
 		}
 
 
@@ -124,8 +123,6 @@ namespace TikiEngine
 					if (dist < rad)
 					{
 						curBot->IncreaseHealth(damage);
-						if (curBot->IsDead() && shooter->EntityType() == ET_Hero)
-							gameState->IncrementResource(10);
 					}
 				}
 			}
