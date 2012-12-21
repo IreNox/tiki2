@@ -13,7 +13,7 @@ namespace TikiEngine
 			Rocket(GameState* gameState, GameObject* gameObject);
 			~Rocket();
 
-			void Init(ProjectileDescription desc, float radius, const UpdateArgs& args);
+			void Init(ProjectileDescription desc, float radius, bool heal, const UpdateArgs& args);
 
 			void Handle(ICollider* sender, const TriggerEnterArgs& args);
 
@@ -21,9 +21,10 @@ namespace TikiEngine
 
 		private:
 			void InflictAoEDamage();
+			void InflictAoeHeal();
 
 			float aoeRadius;
-
+			bool heal;
 		};
 
 

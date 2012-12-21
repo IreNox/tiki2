@@ -12,6 +12,7 @@ namespace TikiEngine
 			: Projectile(gameState, gameObject)			
 		{
 			aoeRadius = 20.0f;
+			heal = false;
 		}
 
 		Rocket::~Rocket()
@@ -19,10 +20,11 @@ namespace TikiEngine
 
 		}
 
-		void Rocket::Init(ProjectileDescription desc, float radius, const UpdateArgs& args)
+		void Rocket::Init(ProjectileDescription desc, float radius, bool heal, const UpdateArgs& args)
 		{
 			Projectile::Init(desc, args);
 			this->aoeRadius = radius;
+			this->heal = heal;
 
 			Vector3 toTarget = Vector3::Normalize(desc.Target - desc.Origin);
 			toTarget = toTarget * desc.MaxSpeed;
@@ -39,12 +41,28 @@ namespace TikiEngine
 			TikiBot* bot = args.otherCollider->GetGameObject()->GetComponent<TikiBot>();
 			if (bot != 0)
 			{
-				if (bot->ID() != shooterID && bot->GetFaction() != shooter->GetFaction())
+				if (bot->ID() != shooterID)
 				{
-					impacted = true;
-					dead = true;
-					InflictAoEDamage();
+					if (heal)
+					{
+						if (bot->GetFaction() == shooter->GetFaction())
+						{
+							impacted = true;
+							dead = true;
+							InflictAoeHeal();
+						}
+					}
+					else
+					{
+						if (bot->GetFaction() != shooter->GetFaction())
+						{
+							impacted = true;
+							dead = true;
+							InflictAoEDamage();
+						}
+					}
 				}
+
 			}
 			else
 			{
@@ -53,7 +71,11 @@ namespace TikiEngine
 				{
 					impacted = true;
 					dead = true;
-					InflictAoEDamage();
+
+					if (heal)
+						InflictAoeHeal();
+					else
+						InflictAoEDamage();
 				}
 			}
 		}
@@ -80,6 +102,28 @@ namespace TikiEngine
 					if (dist < rad)
 					{
 						curBot->ReduceHealth(damage);
+						if (curBot->IsDead() && shooter->EntityType() == ET_Hero)
+							gameState->IncrementResource(10);
+					}
+				}
+			}
+		}
+
+		void Rocket::InflictAoeHeal()
+		{
+			// loop all bots and make distance check
+			for (UInt32 i = 0; i < gameState->GetScene()->GetElements().Count(); i++)
+			{
+				GameObject* current = gameState->GetScene()->GetElements().Get(i);
+				TikiBot* curBot = current->GetComponent<TikiBot>();
+				if (curBot != 0 && curBot->GetFaction() == shooter->GetFaction())
+				{
+					float rad = aoeRadius + (float)curBot->BRadius();
+					Vector2 projPos = Vector2(GetCollider()->GetCenter().X, GetCollider()->GetCenter().Z);
+					float dist = Vector2::Distance(projPos, curBot->Pos());
+					if (dist < rad)
+					{
+						curBot->IncreaseHealth(damage);
 						if (curBot->IsDead() && shooter->EntityType() == ET_Hero)
 							gameState->IncrementResource(10);
 					}

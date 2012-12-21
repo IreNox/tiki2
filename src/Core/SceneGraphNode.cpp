@@ -42,7 +42,7 @@ namespace TikiEngine
 
 	SceneGraphNode* SceneGraphNode::Find(GameObject* gameObject)
 	{
-
+		return 0;
 	}
 
 	void SceneGraphNode::GetContent(List<GameObject*> content)

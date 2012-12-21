@@ -213,44 +213,67 @@ namespace TikiEngine
 				}
 			}
 
-
+			#pragma region Skills
+			// Aoe Damage
 			if (args.Input.GetKeyPressed(KEY_R))
 			{
 				Vector3 target = Vector3::Zero;
-
 				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
 				RaycastHit info;
 				if (engine->physics->RayCast(ray, &info))
-				{
 					target = info.Point;
-				}
 
 				for (UInt32 i = 0; i < unitSelection->GetSelectedUnits()->Count(); i++)
 				{
 					TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
-
 					if (bot != 0 && bot->EntityType() == ET_Hero)
 					{
 						ProjectileDescription desc;
-						desc.Target = target; //owner->GetTargetBot()->Pos3D();
+						desc.Target = target; 
 						desc.Shooter = bot;
 						desc.Origin = bot->Pos3D();
 						desc.Heading = bot->Heading();
 						desc.ShooterID = bot->ID();
-						desc.Damage = 20; //owner->MaxHealth() / 20;
+						desc.Damage = 20; 
 						desc.LifeTime = 10.0f;
 						GameObject* go = new GameObject(engine);
 						Rocket* proj = new Rocket(this, go);
-						proj->Init(desc, 30,  args);
+						proj->Init(desc, 30, false,  args);
 						projectiles->AddProjectile(proj);
 					}
-
 				}
-
-
 			}
 
+			// AoeHeal
+			if (args.Input.GetKeyPressed(KEY_E))
+			{
+				Vector3 target = Vector3::Zero;
+				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
+				RaycastHit info;
+				if (engine->physics->RayCast(ray, &info))
+					target = info.Point;
 
+				for (UInt32 i = 0; i < unitSelection->GetSelectedUnits()->Count(); i++)
+				{
+					TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
+					if (bot != 0 && bot->EntityType() == ET_Hero)
+					{
+						ProjectileDescription desc;
+						desc.Target = target;
+						desc.Shooter = bot;
+						desc.Origin = bot->Pos3D();
+						desc.Heading = bot->Heading();
+						desc.ShooterID = bot->ID();
+						desc.Damage = 20; 
+						desc.LifeTime = 10.0f;
+						GameObject* go = new GameObject(engine);
+						Rocket* proj = new Rocket(this, go);
+						proj->Init(desc, 30, true,  args);
+						projectiles->AddProjectile(proj);
+					}
+				}
+			}
+			#pragma endregion
 
 		}
 		#pragma endregion
