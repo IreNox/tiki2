@@ -25,10 +25,8 @@ namespace TikiEngine
 
 		bool initialized;
 
-		List<GameObject*> queryContent;
+		List<GameObject*> selection;
 
 		SceneGraphNode rootNode;
-
-
 	};
 }

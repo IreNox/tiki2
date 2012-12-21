@@ -22,6 +22,8 @@ namespace TikiEngine
 		this->quadtree = Quadtree(rect, layerDepth);
 		this->quadtree.Create();
 
+		this->rootNode = SceneGraphNode(rect, layerDepth);
+
 		this->initialized = true;
 	}
 
@@ -30,14 +32,16 @@ namespace TikiEngine
 		if(!this->initialized)
 			return;
 
-		quadtree.Insert(go);
+		//quadtree.Insert(go);
+		rootNode.Insert(go);
 	}
 
 	void SceneGraph::Intersect(RectangleF& rect)
 	{
-		this->queryContent.Clear();
+		this->selection.Clear();
 
-		this->quadtree.Intersects(this->queryContent, rect);
+		//this->quadtree.Intersects(this->selection, rect);
+		this->rootNode.Intersects(this->selection, rect);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
@@ -47,10 +51,11 @@ namespace TikiEngine
 
 #if _DEBUG
 		quadtree.Draw(args);
+		
 
-		for(UINT i = 0; i < queryContent.Count(); i++)
+		for(UINT i = 0; i < selection.Count(); i++)
 		{
-			Vector3 pos = queryContent[i]->PRS.GPosition();
+			Vector3 pos = selection[i]->PRS.GPosition();
 
 			args.Graphics->DrawLine(pos - Vector3::UnitX, pos + Vector3::UnitX, Color::Blue);
 			args.Graphics->DrawLine(pos - Vector3::UnitY, pos + Vector3::UnitY, Color::Blue);

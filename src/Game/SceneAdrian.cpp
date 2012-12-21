@@ -63,6 +63,7 @@ namespace TikiEngine
 			light->AddRef();
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
+			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			this->AddElement(light);
 
@@ -91,6 +92,11 @@ namespace TikiEngine
 				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 200, 200, 180)
 			);
+
+			engine->sprites->Draw(
+				engine->graphics->GetScreenTarget(),
+				Rectangle(10, 390, 200, 180)
+				);
 
 #if _DEBUG
 			this->sceneGraph.Draw(args);

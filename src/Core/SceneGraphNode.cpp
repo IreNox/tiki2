@@ -40,19 +40,62 @@ namespace TikiEngine
 
 	}
 
+	void SceneGraphNode::Intersects(List<GameObject*>& content, RectangleF& rect)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			if(data[i]->Bounds().Collide(rect) == Intersect)
+				content.Add(data[i]);
+		}
+
+		if(subdivided)
+		{
+			for(UINT i = 0; i < 4; i++)
+			{
+				SceneGraphNode* node = childs[i];
+
+				if(node->IsEmpty())
+					continue;
+
+				if(node->Bounds().Collide(rect) == Contain)
+				{
+					node->Intersects(content, rect);
+					break;
+				}
+
+				if(rect.Collide(node->Bounds()) == Contain)
+				{
+					node->GetSubContent(content);
+					continue;
+				}
+
+				if(node->Bounds().Collide(rect) == Intersect)
+				{
+					node->Intersects(content, rect);
+				}
+			}
+		}
+	}
+
 	SceneGraphNode* SceneGraphNode::Find(GameObject* gameObject)
 	{
 		return 0;
 	}
 
-	void SceneGraphNode::GetContent(List<GameObject*> content)
+	void SceneGraphNode::GetContent(List<GameObject*>& content)
 	{
-
+		content.AddRange(this->data.GetInternalData(),0, this->data.Count());
 	}
 
-	void SceneGraphNode::GetSubContent(List<GameObject*> content)
+	void SceneGraphNode::GetSubContent(List<GameObject*>& content)
 	{
+		content.AddRange(this->data.GetInternalData(), 0, this->data.Count());
 
+		if(subdivided)
+		{
+			for(UINT i = 0; i < 4; i++)
+				childs[i]->GetSubContent(content);
+		}
 	}
 
 	bool SceneGraphNode::Subdivide()

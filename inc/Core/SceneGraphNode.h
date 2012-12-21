@@ -16,10 +16,12 @@ namespace TikiEngine
 
 		void Insert(GameObject* gameObject);
 		void Remove(GameObject* gameObject);
+		void Intersects(List<GameObject*>& content, RectangleF& rect);
+
 		SceneGraphNode* Find(GameObject* gameObject);
 
-		void GetContent(List<GameObject*> content);
-		void GetSubContent(List<GameObject*> content);
+		void GetContent(List<GameObject*>& content);
+		void GetSubContent(List<GameObject*>& content);
 
 		bool Subdivide();
 
