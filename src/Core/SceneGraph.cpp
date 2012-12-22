@@ -11,7 +11,7 @@ namespace TikiEngine
 
 	SceneGraph::~SceneGraph()
 	{
-
+		
 	}
 
 	void SceneGraph::Initialize(RectangleF& rect , int layerDepth)
@@ -19,21 +19,29 @@ namespace TikiEngine
 		if(this->initialized)
 			return;
 
-		this->quadtree = Quadtree(rect, layerDepth);
-		this->quadtree.Create();
+		//this->quadtree = Quadtree(rect, layerDepth);
+		//this->quadtree.Create();
 
 		this->rootNode = SceneGraphNode(rect, layerDepth);
 
 		this->initialized = true;
 	}
 
-	void SceneGraph::Insert(GameObject* go)
+	void SceneGraph::Add(GameObject* go)
 	{
 		if(!this->initialized)
 			return;
 
 		//quadtree.Insert(go);
-		rootNode.Insert(go);
+		rootNode.Add(go);
+	}
+
+	bool SceneGraph::Remove(GameObject* go)
+	{
+		if(!this->initialized)
+			return false;
+
+		return rootNode.Remove(go);
 	}
 
 	void SceneGraph::Intersect(RectangleF& rect)
@@ -44,13 +52,22 @@ namespace TikiEngine
 		this->rootNode.Intersects(this->selection, rect);
 	}
 
+	void SceneGraph::Update(const UpdateArgs& args)
+	{
+		if(!this->initialized)
+			return;
+
+		this->rootNode.Update(args);
+	}
+
 	void SceneGraph::Draw(const DrawArgs& args)
 	{
 		if(!this->initialized)
 			return;
 
 #if _DEBUG
-		quadtree.Draw(args);
+		//quadtree.Draw(args);
+		rootNode.Draw(args);
 		
 
 		for(UINT i = 0; i < selection.Count(); i++)

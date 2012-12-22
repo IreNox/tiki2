@@ -47,6 +47,9 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
+
+			sceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
+
 			//Light
 			LightObject* lo = new LightObject(engine);
 			lo->PRS.SPosition() = Vector3(0, 256, 0);

@@ -250,11 +250,12 @@ namespace TikiEngine
 			else //if(bot->EntityType() == ET_Bot || bot->EntityType() == ET_Building)
 			{
 				//engine->HLog.Write("Released bot go");
+				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
-				gameState->GetScene()->RemoveElementAt(index);
+				//gameState->GetScene()->RemoveElementAt(index);
 			}
 
 		}
-		#pragma endregion
+		#pragma endregion 
 	}
 }

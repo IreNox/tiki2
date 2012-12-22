@@ -34,7 +34,7 @@ namespace TikiEngine
 		SceneAdrian::SceneAdrian(Engine* engine)
 			: Scene(engine)
 		{
-			this->sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
+			//this->sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
 			this->selectionRectangle = RectangleF::Create(0,0,50,50);
 		}
 
@@ -46,6 +46,8 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
+			sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
+
 			GameObject* go = new GameObject(engine);
 
 			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
@@ -57,6 +59,7 @@ namespace TikiEngine
 
 			go->PRS.SScale() = Vector3(0.01f);
 
+			//sceneGraph.Add(go);
 			this->AddElement(go);
 
 			light = new LightObject(engine);
@@ -99,7 +102,7 @@ namespace TikiEngine
 				);
 
 #if _DEBUG
-			this->sceneGraph.Draw(args);
+			//this->sceneGraph.Draw(args);
 
 			args.Graphics->DrawLine(selectionRectangle.TopLeft(), selectionRectangle.TopRight(), Color::Black);
 			args.Graphics->DrawLine(selectionRectangle.TopRight(), selectionRectangle.BottomRight(), Color::Black);
@@ -111,6 +114,8 @@ namespace TikiEngine
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
 			Scene::Update(args);
+
+			//this->sceneGraph.Update(args);
 			
 			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
@@ -172,7 +177,7 @@ namespace TikiEngine
 				go->PRS.SPosition() = Vector3(pos.X, 0, pos.Y);
 				go->Update(args);
 
-				sceneGraph.Insert(go);
+				sceneGraph.Add(go);
 			}
 		}
 	}

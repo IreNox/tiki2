@@ -42,7 +42,7 @@ namespace TikiEngine
 
 			AnimationEvent* animationEvent;
 
-			SceneGraph sceneGraph;
+			//SceneGraph sceneGraph;
 
 			RectangleF selectionRectangle;
 		};

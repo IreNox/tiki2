@@ -11,6 +11,7 @@
 #include "Core/UpdateArgs.h"
 #include "Core/DrawLightArgs.h"
 #include "Core/InitializationArgs.h"
+#include "Core/SceneGraph.h"
 
 #include <Core/List.h>
 
@@ -27,7 +28,7 @@ namespace TikiEngine
 
 		GameObject* AddElement(GameObject* element);
 		bool RemoveElement(GameObject* element);
-		void RemoveElementAt(UInt32 index);
+		/*void RemoveElementAt(UInt32 index);*/
 		inline const List<GameObject*>& GetElements() const
 		{
 			return elements;
@@ -51,7 +52,7 @@ namespace TikiEngine
 		List<Camera*> cameras;
 		DrawLightArgs lighting;
 
-
+		SceneGraph sceneGraph;
 
 	};
 }

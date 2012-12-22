@@ -1,4 +1,5 @@
 #include "Core/SceneGraphNode.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -15,29 +16,34 @@ namespace TikiEngine
 
 	SceneGraphNode::~SceneGraphNode()
 	{
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			SafeRelease(&data[i]);
+		}
 
+		for(UINT i = 0; i < childs.Count(); i++)
+			SafeDelete(&childs[i]);
 	}
 
-	void SceneGraphNode::Insert(GameObject* gameObject)
+	void SceneGraphNode::Add(GameObject* gameObject)
 	{
-		if(Subdivide())
+
+		for(UINT i = 0; i < childs.Count(); i++)
 		{
-			for(UINT i = 0; i < 4; i++)
+			if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
 			{
-				if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
-				{
-					childs[i]->Insert(gameObject);
-					return;
-				}
+				childs[i]->Add(gameObject);
+				return;
 			}
 		}
+		
 		gameObject->AddRef();
 		this->data.Add(gameObject);
 	}
 
-	void SceneGraphNode::Remove(GameObject* gameObject)
+	bool SceneGraphNode::Remove(GameObject* gameObject)
 	{
-
+		return true;
 	}
 
 	void SceneGraphNode::Intersects(List<GameObject*>& content, RectangleF& rect)
@@ -48,33 +54,69 @@ namespace TikiEngine
 				content.Add(data[i]);
 		}
 
-		if(subdivided)
+		for(UINT i = 0; i < childs.Count(); i++)
 		{
-			for(UINT i = 0; i < 4; i++)
+			SceneGraphNode* node = childs[i];
+
+			if(node->IsEmpty())
+				continue;
+
+			if(node->Bounds().Collide(rect) == Contain)
 			{
-				SceneGraphNode* node = childs[i];
+				node->Intersects(content, rect);
+				break;
+			}
 
-				if(node->IsEmpty())
-					continue;
+			if(rect.Collide(node->Bounds()) == Contain)
+			{
+				node->GetSubContent(content);
+				continue;
+			}
 
-				if(node->Bounds().Collide(rect) == Contain)
-				{
-					node->Intersects(content, rect);
-					break;
-				}
-
-				if(rect.Collide(node->Bounds()) == Contain)
-				{
-					node->GetSubContent(content);
-					continue;
-				}
-
-				if(node->Bounds().Collide(rect) == Intersect)
-				{
-					node->Intersects(content, rect);
-				}
+			if(node->Bounds().Collide(rect) == Intersect)
+			{
+				node->Intersects(content, rect);
 			}
 		}
+		
+	}
+
+
+	void SceneGraphNode::Update(const UpdateArgs& args)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+			data[i]->Update(args);
+
+
+		for(UINT i = 0; i < childs.Count(); i++)
+			childs[i]->Update(args);
+	}
+
+	void SceneGraphNode::Draw(const DrawArgs& args)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+			data[i]->Draw(args);
+
+
+		for(UINT i = 0; i < childs.Count(); i++)
+			childs[i]->Draw(args);
+
+
+#if _DEBUG
+		//args.Graphics->DrawLine(bounds.TopLeft(), bounds.TopRight(), Color::Red);
+		//args.Graphics->DrawLine(bounds.TopRight(), bounds.BottomRight(), Color::Red);
+		//args.Graphics->DrawLine(bounds.BottomRight(), bounds.BottomLeft(), Color::Red);
+		//args.Graphics->DrawLine(bounds.BottomLeft(), bounds.TopLeft(), Color::Red);
+
+		//for(UINT i = 0; i < data.Count(); i++)
+		//{
+		//	Vector3 pos = data[i]->PRS.GPosition();
+
+		//	args.Graphics->DrawLine(pos - Vector3::UnitX, pos + Vector3::UnitX, Color::Green);
+		//	args.Graphics->DrawLine(pos - Vector3::UnitY, pos + Vector3::UnitY, Color::Green);
+		//	args.Graphics->DrawLine(pos - Vector3::UnitZ, pos + Vector3::UnitZ, Color::Green);
+		//}
+#endif
 	}
 
 	SceneGraphNode* SceneGraphNode::Find(GameObject* gameObject)
