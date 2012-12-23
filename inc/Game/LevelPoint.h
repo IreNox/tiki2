@@ -15,7 +15,10 @@ namespace TikiEngine
 			~LevelPoint();
 
 			inline const Vector2& GPosition() { return position; }
+
 			inline const Int32& GType() { return type; }
+			inline const Int32& GAssignment() { return assignment; }
+
 			inline const string& GName() { return name; }
 
 		protected:
@@ -27,6 +30,8 @@ namespace TikiEngine
 			Vector2 position;
 
 			Int32 type;
+			Int32 assignment;
+
 			string name;
 
 		};

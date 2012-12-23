@@ -7,10 +7,6 @@
 #include "Core/GUIButton.h"
 #include "Core/GUIWindow.h"
 
-#include "Game/HUDFunctionList.h"
-
-#include "Game/UnitFunctions.h"
-
 #include "Core/EventControls.h"
 #include "Core/EventScreenSizeChanged.h"
 
@@ -49,7 +45,7 @@ namespace TikiEngine
 			GUIWindow* windowInfo;
 			GUIWindow* windowFunc;
 
-			Dictionary<UnitFunctions, GUIButton*> funcButton;
+			//Dictionary<UnitFunctions, GUIButton*> funcButton;
 
 			List<GUIControl*> enabledControls;
 

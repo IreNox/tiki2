@@ -129,9 +129,6 @@
     <Filter Include="Headerdateien\Events">
       <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Gameplay\HUD">
-      <UniqueIdentifier>{a9ee065d-4c19-4f52-a22d-8130cb9668b2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\AI\Triggers">
       <UniqueIdentifier>{4a62173d-18e2-4ebd-b1ad-ed654939ffb5}</UniqueIdentifier>
     </Filter>
@@ -146,6 +143,9 @@
     </Filter>
     <Filter Include="Headerdateien\Database">
       <UniqueIdentifier>{39fec312-4d0a-4abb-b297-20baf31ecb23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Gameplay\GameParts">
+      <UniqueIdentifier>{b1da0587-967f-423e-b6a3-2057fd563109}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -182,16 +182,10 @@
     <ClInclude Include="inc\Game\LevelObject.h">
       <Filter>Headerdateien\Level</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\LevelEnemy.h">
-      <Filter>Headerdateien\Level</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\BasicTransform.h">
       <Filter>Headerdateien\Level</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\BasicDatabase.h">
-      <Filter>Headerdateien\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\LevelChild.h">
       <Filter>Headerdateien\Level</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\BaseGameEntity.h">
@@ -234,9 +228,6 @@
       <Filter>Headerdateien\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\GameState.h">
-      <Filter>Headerdateien\Gameplay</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\UnitFunctions.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\GameHud.h">
@@ -350,21 +341,6 @@
     <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h">
       <Filter>Headerdateien\AI\Goals\Composite</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\HUDFunctionList.h">
-      <Filter>Headerdateien\Gameplay\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\HUDSelectedUnits.h">
-      <Filter>Headerdateien\Gameplay\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\HUDResourcen.h">
-      <Filter>Headerdateien\Gameplay\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\HUDMenuButton.h">
-      <Filter>Headerdateien\Gameplay\HUD</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\HUDBase.h">
-      <Filter>Headerdateien\Gameplay\HUD</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\EventUnitSelectionChanged.h">
       <Filter>Headerdateien\Events</Filter>
     </ClInclude>
@@ -373,9 +349,6 @@
     </ClInclude>
     <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
       <Filter>Headerdateien\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TikiBotFactory.h">
-      <Filter>Headerdateien\AI</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\LevelPoint.h">
       <Filter>Headerdateien\Level</Filter>
@@ -386,14 +359,23 @@
     <ClInclude Include="inc\Game\ProjectileManager.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\PPTerrainDiffuse.h">
-      <Filter>Headerdateien\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\BuildSlot.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\Rocket.h">
       <Filter>Headerdateien\AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiBotFactory.h">
+      <Filter>Headerdateien\Gameplay</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EnemyBase.h">
+      <Filter>Headerdateien\Gameplay\GameParts</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GamePart.h">
+      <Filter>Headerdateien\Gameplay\GameParts</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PlayerBase.h">
+      <Filter>Headerdateien\Gameplay\GameParts</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -559,9 +541,6 @@
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp">
       <Filter>Quelldateien\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\TikiBotFactory.cpp">
-      <Filter>Quelldateien\AI</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\DatabaseLevel.cpp">
       <Filter>Quelldateien\Level</Filter>
     </ClCompile>
@@ -571,14 +550,17 @@
     <ClCompile Include="src\Game\ProjectileManager.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\PPTerrainDiffuse.cpp">
-      <Filter>Quelldateien\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\BuildSlot.cpp">
       <Filter>Quelldateien\AI</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Rocket.cpp">
       <Filter>Quelldateien\AI\WeaponSystem\Projectiles</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\TikiBotFactory.cpp">
+      <Filter>Quelldateien\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\GameParts.cpp">
+      <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

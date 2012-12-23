@@ -17,7 +17,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine) , loadedResources(), disposing(false)
+			: IContentManager(engine), loadedResources(), disposing(false)
 		{
 		}
 
@@ -255,14 +255,24 @@ namespace TikiEngine
 		#pragma region Private Member
 		IResource* ContentManagerModule::findLoadedResource(PInt hash, wstring name)
 		{
-			if (hash == typeid(IModel).hash_code()) return 0;
-
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{
 				if (loadedResources[i].hash == hash && loadedResources[i].fileName == name)
 				{
-					return loadedResources[i].resource;
+					if (hash == typeid(IModel).hash_code())
+					{
+						IModel* model = engine->librarys->CreateResource<IModel>();
+						model->CreateInstance(
+							(IModel*)loadedResources[i].resource
+						);
+
+						return model;
+					}
+					else
+					{
+						return loadedResources[i].resource;
+					}
 				}
 
 				i++;

@@ -13,6 +13,7 @@ namespace TikiEditor.Objects
         private long _levelId;
 
         private int _type;
+        private int _assignment;
         #endregion
 
         #region Properties
@@ -28,6 +29,13 @@ namespace TikiEditor.Objects
         {
             get { return _type; }
             set { SetProperty(ref _type, value, "Type"); }
+        }
+
+        [DataField("Assignment")]
+        public int Assignment
+        {
+            get { return _assignment; }
+            set { SetProperty(ref _assignment, value, "Assignment"); }
         }
         #endregion
     }

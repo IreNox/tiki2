@@ -20,14 +20,13 @@ namespace TikiEditor.Objects
         private float _heightmapElevation;
 
         private DbList<LevelPoint> _points;
-        private DbList<LevelEnemy> _enemies;
         private DbList<LevelObject> _objects;
         #endregion
 
         #region Init
         public Level()
         {
-            _enemies = new DbList<LevelEnemy>(this, this.GetType().GetProperty("Enemies"));
+            _points = new DbList<LevelPoint>(this, this.GetType().GetProperty("Points"));
             _objects = new DbList<LevelObject>(this, this.GetType().GetProperty("Objects"));
         }
         #endregion
@@ -35,13 +34,6 @@ namespace TikiEditor.Objects
         #region Member
         public void RemoveTransform(BasicTransform transform)
         {
-            LevelEnemy enemy = transform as LevelEnemy;
-
-            if (enemy != null)
-            {
-                _enemies.Remove(enemy);
-            }
-
             LevelObject obj = transform as LevelObject;
 
             if (obj != null)
@@ -97,14 +89,6 @@ namespace TikiEditor.Objects
         }
         
         [Browsable(false)]
-        [DataRelation("ID", typeof(LevelEnemy), "LevelID")]
-        public DbList<LevelEnemy> Enemies
-        {
-            get { return _enemies; }
-            set { SetProperty(ref _enemies, value, "Objects"); }
-        }
-
-        [Browsable(false)]
         [DataRelation("ID", typeof(LevelObject), "LevelID")]
         public DbList<LevelObject> Objects
         {
@@ -116,7 +100,7 @@ namespace TikiEditor.Objects
         #region Properties - Dynamic
         public BasicTransform[] AllTransforms
         {
-            get { return _objects.Cast<BasicTransform>().Concat(_enemies).Concat(_points).ToArray(); }
+            get { return _objects.Cast<BasicTransform>().Concat(_points).ToArray(); }
         }
         #endregion
     }

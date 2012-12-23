@@ -2,9 +2,7 @@
 #include "Game/BasicDatabase.h"
 #include "Game/BasicTransform.h"
 #include "Game/Level.h"
-#include "Game/LevelChild.h"
 #include "Game/LevelPoint.h"
-#include "Game/LevelEnemy.h"
 #include "Game/LevelObject.h"
 
 #include "Game/Trigger.h"
@@ -234,38 +232,7 @@ namespace TikiEngine
 			//frameCount++;
 		}
 		#pragma endregion
-
-		#pragma region LevelChild
-		LevelChild::LevelChild(GameState* state)
-			: BasicTransform(state)
-		{
-		}
-
-		LevelChild::~LevelChild()
-		{
-		}
-
-		void LevelChild::LoadFromDatabase(sqlite3_stmt* state)
-		{
-			BasicTransform::LoadFromDatabase(state);
-		}
-
-		Int64 LevelChild::GetLevelID()
-		{
-			return levelId;
-		}
-
-		void LevelChild::databaseToField(string fieldName, sqlite3_stmt* state, int fieldId)
-		{
-			if (fieldName == "LevelID")
-			{
-				levelId = sqlite3_column_int64(state, fieldId);
-			}
-
-			BasicTransform::databaseToField(fieldName, state, fieldId);
-		}
-		#pragma endregion
-
+		
 		#pragma region LevelPoint
 		LevelPoint::LevelPoint()
 			: type(0), name(), position()
@@ -294,30 +261,18 @@ namespace TikiEngine
 			{
 				type = sqlite3_column_int(state, fieldId);
 			}
+			else if (fieldName == "Assignment")
+			{
+				assignment = sqlite3_column_int(state, fieldId);
+			}
 
 			BasicDatabase::databaseToField(fieldName, state, fieldId);
 		}
 		#pragma endregion
 
-		#pragma region LevelEnemy
-		LevelEnemy::LevelEnemy(GameState* state)
-			: LevelChild(state)
-		{
-		}
-
-		LevelEnemy::~LevelEnemy()
-		{
-		}
-
-		void LevelEnemy::databaseToField(string fieldName, sqlite3_stmt* state, int fieldId)
-		{
-			LevelChild::databaseToField(fieldName, state, fieldId);
-		}
-		#pragma endregion
-
 		#pragma region LevelObject
 		LevelObject::LevelObject(GameState* state)
-			: LevelChild(state), type(0)
+			: BasicTransform(state), type(0)
 		{
 		}
 
@@ -325,9 +280,14 @@ namespace TikiEngine
 		{
 		}
 
+		Int64 LevelObject::GetLevelID()
+		{
+			return levelId;
+		}
+
 		void LevelObject::LoadFromDatabase(sqlite3_stmt* state)
 		{
-			LevelChild::LoadFromDatabase(state);
+			BasicTransform::LoadFromDatabase(state);
 
 			switch (type)
 			{
@@ -382,10 +342,17 @@ namespace TikiEngine
 			{
 				type = sqlite3_column_int(state, fieldId);
 			}
+			else if (fieldName == "LevelID")
+			{
+				levelId = sqlite3_column_int64(state, fieldId);
+			}
+			else if (fieldName == "Assignment")
+			{
+				assignment = sqlite3_column_int(state, fieldId);
+			}
 
-			LevelChild::databaseToField(fieldName, state, fieldId);
+			BasicTransform::databaseToField(fieldName, state, fieldId);
 		}
 		#pragma endregion
-
 	}
 }

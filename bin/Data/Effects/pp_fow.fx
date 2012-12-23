@@ -63,13 +63,9 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	fog = clamp(fog, 0, 1);
 	fog = lerp(0.2f, 1, fog);
-	//float4 fogColor = diff * 0.25f;
-	//fogColor.a = 1.0f;
 
-	diff *= fog;
-	diff.a = 1.0f;
-
-	return diff; //(diff * (1 - fog)) + (fogColor * fog);
+	diff.rgb *= fog;
+	return diff;
 }
 
 

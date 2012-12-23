@@ -5,7 +5,6 @@
 
 #include "Game/Level.h"
 #include "Game/LevelPoint.h"
-#include "Game/LevelEnemy.h"
 #include "Game/LevelObject.h"
 
 namespace TikiEngine
@@ -41,8 +40,6 @@ namespace TikiEngine
 			Camera* mainCamera;
 
 			GameState* gameState;
-
-			IRenderTarget* temp;
 
 			List<LevelPoint*> points;
 

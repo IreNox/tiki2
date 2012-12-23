@@ -245,7 +245,9 @@ namespace TikiEngine
 
 		TikiMesh* ModelConverter::readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
 		{
-			TikiMesh* mesh = new TikiMesh(model);
+			TikiMesh* mesh = new TikiMesh(
+				model->GetEngine()
+			);
 
 			mesh->SetName(readString(binMesh->NameId));
 			mesh->SetDeformation(binMesh->UseDeformation != 0);
@@ -557,8 +559,8 @@ namespace TikiEngine
 
 		#pragma region TikiMesh
 		#pragma region Class
-		TikiMesh::TikiMesh(Model* model)
-			: model(model), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0),
+		TikiMesh::TikiMesh(Engine* engine)
+			: EngineObject(engine), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0),
 			  vertexLength(0), adjacencyIndexData(0), adjacencyIndexCount(0)
 #ifdef TIKI_ENGINE
 			, indexBuffer(0), vertexBuffer(0), decl(0)
@@ -582,7 +584,7 @@ namespace TikiEngine
 		#pragma endregion
 		
 		#pragma region Member - Draw
-		void TikiMesh::Draw(const DrawArgs& args, GameObject* gameObject)
+		void TikiMesh::Draw(const DrawArgs& args, Model* model, GameObject* gameObject)
 		{
 #ifdef TIKI_ENGINE
 			if (!this->GetReady()) return;
@@ -631,7 +633,7 @@ namespace TikiEngine
 			if (material)
 			{
 				SafeRelease(&decl);
-				decl = new VertexDeclaration(model->GetEngine(), material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
+				decl = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
 #endif
 		}
@@ -658,7 +660,7 @@ namespace TikiEngine
 			memcpy(indexData, data, sizeof(UInt32) * count);
 
 #ifdef TIKI_ENGINE
-			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(model->GetEngine(), sizeof(UInt32), count, indexData);
+			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
 #endif
 		}
 
@@ -677,7 +679,7 @@ namespace TikiEngine
 			memcpy(adjacencyIndexData, data, sizeof(UInt32) * count);
 
 #ifdef TIKI_ENGINE
-			indexAdjacencyBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(model->GetEngine(), sizeof(UInt32), count, adjacencyIndexData);
+			indexAdjacencyBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UInt32), count, adjacencyIndexData);
 #endif
 		}
 
@@ -696,7 +698,7 @@ namespace TikiEngine
 			memcpy(vertexData, data, length);
 
 #ifdef TIKI_ENGINE
-			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(model->GetEngine(), sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
+			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
 #endif
 		}
 		#pragma endregion
@@ -992,6 +994,19 @@ namespace TikiEngine
 		TikiAnimation::TikiAnimation()
 			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false), nextAnimation(0)
 		{
+		}
+
+		TikiAnimation::TikiAnimation(TikiAnimation* copy)
+			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed), isLoop(copy->isLoop),
+			  finished(copy->finished), nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
+			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime)
+		{
+			timeStamps = copy->timeStamps;
+
+#if _DEBUG
+			if (nextAnimation != 0)
+				throw "Not implemented Exception";
+#endif
 		}
 
 		TikiAnimation::~TikiAnimation()

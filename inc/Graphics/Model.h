@@ -30,6 +30,8 @@ namespace TikiEngine
 			Model(Engine* engine);
 			~Model();
 
+			void CreateInstance(IModel* model);
+
 			void Draw(GameObject* gameObject, const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
@@ -67,14 +69,15 @@ namespace TikiEngine
 
 		private:
 
-			TikiBone* rootBone;
+			bool mainInstance;
 
+			TikiBone* rootBone;
+			
 			List<TikiMesh*> meshes;
 			List<TikiAnimation*> animations;
 			List<TikiBone*> constantBufferElements;
 
 			AnimationStack animationStack;
-			//List<TikiAnimation*> animationStack;
 
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;

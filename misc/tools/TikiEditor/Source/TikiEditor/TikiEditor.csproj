@@ -171,7 +171,6 @@
     <Compile Include="Engine\GDB\DbRelation.cs" />
     <Compile Include="Engine\GDB\DbRow.cs" />
     <Compile Include="Engine\GDB\DbTable.cs" />
-    <Compile Include="Editor\Objects\Level\LevelEnemy.cs" />
     <Compile Include="Editor\Objects\Level\LevelObject.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Base\Program.cs" />

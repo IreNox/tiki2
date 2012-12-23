@@ -15,7 +15,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.25f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
+			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.5f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
 			  playerSpawnLeft(0)
 		{
 		}
@@ -334,7 +334,7 @@ namespace TikiEngine
 
 			//obj->SModel(***);
 
-			//foreach (AttributesModificator am in Db.GetAttributes())
+			//foreach (AttributeModificator am in Db.GetAttributes())
 			//{
 				//bot->GetAttributes()->add(am);
 			//}

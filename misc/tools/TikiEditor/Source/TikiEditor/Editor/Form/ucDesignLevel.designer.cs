@@ -37,18 +37,21 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
             this.panelButtons = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
+            this.buttonAddPointWaypoint = new System.Windows.Forms.Button();
+            this.buttonAddPointSpawnpoint = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button9 = new System.Windows.Forms.Button();
-            this.button10 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.buttonAddEnemyBasic = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.buttonAddPoint = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonAddPlayerBuilding = new System.Windows.Forms.Button();
+            this.buttonAddEnemyBuilding = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.buttonAddPlayerMop = new System.Windows.Forms.Button();
+            this.buttonAddEnvRock03 = new System.Windows.Forms.Button();
+            this.buttonAddEnvRock02 = new System.Windows.Forms.Button();
+            this.buttonAddEnvRock01 = new System.Windows.Forms.Button();
+            this.buttonAddEnvPipes = new System.Windows.Forms.Button();
+            this.buttonAddEnvBuilding = new System.Windows.Forms.Button();
+            this.buttonAddEnemyMop = new System.Windows.Forms.Button();
+            this.buttonAddPointCamera = new System.Windows.Forms.Button();
+            this.buttonAddPlayerHero = new System.Windows.Forms.Button();
             this.buttonAddObject = new System.Windows.Forms.Button();
             this.tabEdit = new System.Windows.Forms.TabPage();
             this.tabView = new System.Windows.Forms.TabPage();
@@ -110,14 +113,14 @@
             this.ucProperties1.Name = "ucProperties1";
             this.ucProperties1.Padding = new System.Windows.Forms.Padding(0, 3, 0, 0);
             this.ucProperties1.SettingsChanged = false;
-            this.ucProperties1.Size = new System.Drawing.Size(225, 285);
+            this.ucProperties1.Size = new System.Drawing.Size(225, 424);
             this.ucProperties1.TabIndex = 0;
             // 
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.buttonSave.Location = new System.Drawing.Point(137, 294);
+            this.buttonSave.Location = new System.Drawing.Point(140, 433);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(88, 23);
             this.buttonSave.TabIndex = 2;
@@ -136,7 +139,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 67);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(239, 351);
+            this.tabControl1.Size = new System.Drawing.Size(239, 488);
             this.tabControl1.TabIndex = 6;
             // 
             // tabAdd
@@ -145,7 +148,7 @@
             this.tabAdd.Location = new System.Drawing.Point(4, 22);
             this.tabAdd.Name = "tabAdd";
             this.tabAdd.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdd.Size = new System.Drawing.Size(231, 325);
+            this.tabAdd.Size = new System.Drawing.Size(231, 462);
             this.tabAdd.TabIndex = 0;
             this.tabAdd.Text = "Add";
             this.tabAdd.UseVisualStyleBackColor = true;
@@ -153,24 +156,84 @@
             // panelButtons
             // 
             this.panelButtons.AutoScroll = true;
-            this.panelButtons.Controls.Add(this.label3);
+            this.panelButtons.Controls.Add(this.buttonAddPointWaypoint);
+            this.panelButtons.Controls.Add(this.buttonAddPointSpawnpoint);
             this.panelButtons.Controls.Add(this.label2);
-            this.panelButtons.Controls.Add(this.button7);
-            this.panelButtons.Controls.Add(this.button8);
-            this.panelButtons.Controls.Add(this.button9);
-            this.panelButtons.Controls.Add(this.button10);
-            this.panelButtons.Controls.Add(this.button11);
-            this.panelButtons.Controls.Add(this.button12);
-            this.panelButtons.Controls.Add(this.buttonAddEnemyBasic);
-            this.panelButtons.Controls.Add(this.button3);
-            this.panelButtons.Controls.Add(this.buttonAddPoint);
-            this.panelButtons.Controls.Add(this.button1);
+            this.panelButtons.Controls.Add(this.buttonAddPlayerBuilding);
+            this.panelButtons.Controls.Add(this.buttonAddEnemyBuilding);
+            this.panelButtons.Controls.Add(this.label3);
+            this.panelButtons.Controls.Add(this.buttonAddPlayerMop);
+            this.panelButtons.Controls.Add(this.buttonAddEnvRock03);
+            this.panelButtons.Controls.Add(this.buttonAddEnvRock02);
+            this.panelButtons.Controls.Add(this.buttonAddEnvRock01);
+            this.panelButtons.Controls.Add(this.buttonAddEnvPipes);
+            this.panelButtons.Controls.Add(this.buttonAddEnvBuilding);
+            this.panelButtons.Controls.Add(this.buttonAddEnemyMop);
+            this.panelButtons.Controls.Add(this.buttonAddPointCamera);
+            this.panelButtons.Controls.Add(this.buttonAddPlayerHero);
             this.panelButtons.Controls.Add(this.buttonAddObject);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelButtons.Location = new System.Drawing.Point(3, 3);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(225, 319);
+            this.panelButtons.Size = new System.Drawing.Size(225, 456);
             this.panelButtons.TabIndex = 0;
+            // 
+            // buttonAddPointWaypoint
+            // 
+            this.buttonAddPointWaypoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddPointWaypoint.Location = new System.Drawing.Point(3, 407);
+            this.buttonAddPointWaypoint.Name = "buttonAddPointWaypoint";
+            this.buttonAddPointWaypoint.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointWaypoint.TabIndex = 19;
+            this.buttonAddPointWaypoint.Text = "Enemy: Waypoint";
+            this.buttonAddPointWaypoint.UseVisualStyleBackColor = true;
+            this.buttonAddPointWaypoint.Click += new System.EventHandler(this.buttonAddPointWaypoint_Click);
+            // 
+            // buttonAddPointSpawnpoint
+            // 
+            this.buttonAddPointSpawnpoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddPointSpawnpoint.Location = new System.Drawing.Point(3, 433);
+            this.buttonAddPointSpawnpoint.Name = "buttonAddPointSpawnpoint";
+            this.buttonAddPointSpawnpoint.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointSpawnpoint.TabIndex = 18;
+            this.buttonAddPointSpawnpoint.Text = "Enemy: Spawnpoint";
+            this.buttonAddPointSpawnpoint.UseVisualStyleBackColor = true;
+            this.buttonAddPointSpawnpoint.Click += new System.EventHandler(this.buttonAddPointSpawnpoint_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(3, 362);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(39, 13);
+            this.label2.TabIndex = 17;
+            this.label2.Text = "Points:";
+            // 
+            // buttonAddPlayerBuilding
+            // 
+            this.buttonAddPlayerBuilding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddPlayerBuilding.Location = new System.Drawing.Point(3, 322);
+            this.buttonAddPlayerBuilding.Name = "buttonAddPlayerBuilding";
+            this.buttonAddPlayerBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerBuilding.TabIndex = 16;
+            this.buttonAddPlayerBuilding.Text = "Player: Main Building";
+            this.buttonAddPlayerBuilding.UseVisualStyleBackColor = true;
+            this.buttonAddPlayerBuilding.Click += new System.EventHandler(this.buttonAddPlayerBuilding_Click);
+            // 
+            // buttonAddEnemyBuilding
+            // 
+            this.buttonAddEnemyBuilding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnemyBuilding.Location = new System.Drawing.Point(3, 293);
+            this.buttonAddEnemyBuilding.Name = "buttonAddEnemyBuilding";
+            this.buttonAddEnemyBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnemyBuilding.TabIndex = 15;
+            this.buttonAddEnemyBuilding.Text = "Enemy: Gate Control";
+            this.buttonAddEnemyBuilding.UseVisualStyleBackColor = true;
+            this.buttonAddEnemyBuilding.Click += new System.EventHandler(this.buttonAddEnemyBuilding_Click);
             // 
             // label3
             // 
@@ -181,135 +244,113 @@
             this.label3.TabIndex = 14;
             this.label3.Text = "Objects:";
             // 
-            // label2
+            // buttonAddPlayerMop
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 161);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 13);
-            this.label2.TabIndex = 13;
-            this.label2.Text = "Enemies:";
-            // 
-            // button7
-            // 
-            this.button7.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddPlayerMop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button7.Enabled = false;
-            this.button7.Location = new System.Drawing.Point(3, 351);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(134, 23);
-            this.button7.TabIndex = 12;
-            this.button7.Text = "-none-";
-            this.button7.UseVisualStyleBackColor = true;
+            this.buttonAddPlayerMop.Location = new System.Drawing.Point(3, 61);
+            this.buttonAddPlayerMop.Name = "buttonAddPlayerMop";
+            this.buttonAddPlayerMop.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerMop.TabIndex = 12;
+            this.buttonAddPlayerMop.Text = "Player: Mop";
+            this.buttonAddPlayerMop.UseVisualStyleBackColor = true;
+            this.buttonAddPlayerMop.Click += new System.EventHandler(this.buttonAddPlayerMop_Click);
             // 
-            // button8
+            // buttonAddEnvRock03
             // 
-            this.button8.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnvRock03.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button8.Enabled = false;
-            this.button8.Location = new System.Drawing.Point(3, 322);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(134, 23);
-            this.button8.TabIndex = 11;
-            this.button8.Text = "-none-";
-            this.button8.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock03.Location = new System.Drawing.Point(3, 264);
+            this.buttonAddEnvRock03.Name = "buttonAddEnvRock03";
+            this.buttonAddEnvRock03.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock03.TabIndex = 11;
+            this.buttonAddEnvRock03.Text = "Environment: Rock 03";
+            this.buttonAddEnvRock03.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock03.Click += new System.EventHandler(this.buttonAddEnvRock03_Click);
             // 
-            // button9
+            // buttonAddEnvRock02
             // 
-            this.button9.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnvRock02.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button9.Enabled = false;
-            this.button9.Location = new System.Drawing.Point(3, 293);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(134, 23);
-            this.button9.TabIndex = 10;
-            this.button9.Text = "-none-";
-            this.button9.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock02.Location = new System.Drawing.Point(3, 235);
+            this.buttonAddEnvRock02.Name = "buttonAddEnvRock02";
+            this.buttonAddEnvRock02.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock02.TabIndex = 10;
+            this.buttonAddEnvRock02.Text = "Environment: Rock 02";
+            this.buttonAddEnvRock02.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock02.Click += new System.EventHandler(this.buttonAddEnvRock02_Click);
             // 
-            // button10
+            // buttonAddEnvRock01
             // 
-            this.button10.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnvRock01.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button10.Enabled = false;
-            this.button10.Location = new System.Drawing.Point(3, 264);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(134, 23);
-            this.button10.TabIndex = 9;
-            this.button10.Text = "-none-";
-            this.button10.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock01.Location = new System.Drawing.Point(3, 206);
+            this.buttonAddEnvRock01.Name = "buttonAddEnvRock01";
+            this.buttonAddEnvRock01.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock01.TabIndex = 9;
+            this.buttonAddEnvRock01.Text = "Environment: Rock 01";
+            this.buttonAddEnvRock01.UseVisualStyleBackColor = true;
+            this.buttonAddEnvRock01.Click += new System.EventHandler(this.buttonAddEnvRock01_Click);
             // 
-            // button11
+            // buttonAddEnvPipes
             // 
-            this.button11.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnvPipes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button11.Enabled = false;
-            this.button11.Location = new System.Drawing.Point(3, 235);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(134, 23);
-            this.button11.TabIndex = 8;
-            this.button11.Text = "-none-";
-            this.button11.UseVisualStyleBackColor = true;
+            this.buttonAddEnvPipes.Location = new System.Drawing.Point(3, 177);
+            this.buttonAddEnvPipes.Name = "buttonAddEnvPipes";
+            this.buttonAddEnvPipes.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvPipes.TabIndex = 8;
+            this.buttonAddEnvPipes.Text = "Environment: Pipes";
+            this.buttonAddEnvPipes.UseVisualStyleBackColor = true;
+            this.buttonAddEnvPipes.Click += new System.EventHandler(this.buttonAddEnvPipes_Click);
             // 
-            // button12
+            // buttonAddEnvBuilding
             // 
-            this.button12.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnvBuilding.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button12.Enabled = false;
-            this.button12.Location = new System.Drawing.Point(3, 206);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(134, 23);
-            this.button12.TabIndex = 7;
-            this.button12.Text = "-none-";
-            this.button12.UseVisualStyleBackColor = true;
+            this.buttonAddEnvBuilding.Location = new System.Drawing.Point(3, 148);
+            this.buttonAddEnvBuilding.Name = "buttonAddEnvBuilding";
+            this.buttonAddEnvBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvBuilding.TabIndex = 7;
+            this.buttonAddEnvBuilding.Text = "Environment: Building";
+            this.buttonAddEnvBuilding.UseVisualStyleBackColor = true;
+            this.buttonAddEnvBuilding.Click += new System.EventHandler(this.buttonAddEnvBuilding_Click);
             // 
-            // buttonAddEnemyBasic
+            // buttonAddEnemyMop
             // 
-            this.buttonAddEnemyBasic.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddEnemyMop.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddEnemyBasic.Enabled = false;
-            this.buttonAddEnemyBasic.Location = new System.Drawing.Point(3, 177);
-            this.buttonAddEnemyBasic.Name = "buttonAddEnemyBasic";
-            this.buttonAddEnemyBasic.Size = new System.Drawing.Size(134, 23);
-            this.buttonAddEnemyBasic.TabIndex = 6;
-            this.buttonAddEnemyBasic.Text = "Basic Enemy";
-            this.buttonAddEnemyBasic.UseVisualStyleBackColor = true;
-            this.buttonAddEnemyBasic.Click += new System.EventHandler(this.buttonAddEnemyBasic_Click);
+            this.buttonAddEnemyMop.Location = new System.Drawing.Point(3, 90);
+            this.buttonAddEnemyMop.Name = "buttonAddEnemyMop";
+            this.buttonAddEnemyMop.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnemyMop.TabIndex = 3;
+            this.buttonAddEnemyMop.Text = "Enemy: Mop";
+            this.buttonAddEnemyMop.UseVisualStyleBackColor = true;
+            this.buttonAddEnemyMop.Click += new System.EventHandler(this.buttonAddEnemyMop_Click);
             // 
-            // button3
+            // buttonAddPointCamera
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddPointCamera.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Enabled = false;
-            this.button3.Location = new System.Drawing.Point(3, 90);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(134, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "-none-";
-            this.button3.UseVisualStyleBackColor = true;
+            this.buttonAddPointCamera.Location = new System.Drawing.Point(3, 378);
+            this.buttonAddPointCamera.Name = "buttonAddPointCamera";
+            this.buttonAddPointCamera.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointCamera.TabIndex = 2;
+            this.buttonAddPointCamera.Text = "Camera Start";
+            this.buttonAddPointCamera.UseVisualStyleBackColor = true;
+            this.buttonAddPointCamera.Click += new System.EventHandler(this.buttonAddPoint_Click);
             // 
-            // buttonAddPoint
+            // buttonAddPlayerHero
             // 
-            this.buttonAddPoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            this.buttonAddPlayerHero.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddPoint.Location = new System.Drawing.Point(3, 61);
-            this.buttonAddPoint.Name = "buttonAddPoint";
-            this.buttonAddPoint.Size = new System.Drawing.Size(134, 23);
-            this.buttonAddPoint.TabIndex = 2;
-            this.buttonAddPoint.Text = "Point";
-            this.buttonAddPoint.UseVisualStyleBackColor = true;
-            this.buttonAddPoint.Click += new System.EventHandler(this.buttonAddPoint_Click);
-            // 
-            // button1
-            // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Enabled = false;
-            this.button1.Location = new System.Drawing.Point(3, 119);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(134, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "-none-";
-            this.button1.UseVisualStyleBackColor = true;
+            this.buttonAddPlayerHero.Location = new System.Drawing.Point(3, 119);
+            this.buttonAddPlayerHero.Name = "buttonAddPlayerHero";
+            this.buttonAddPlayerHero.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerHero.TabIndex = 1;
+            this.buttonAddPlayerHero.Text = "Player: Hero";
+            this.buttonAddPlayerHero.UseVisualStyleBackColor = true;
+            this.buttonAddPlayerHero.Click += new System.EventHandler(this.buttonAddPlayerHero_Click);
             // 
             // buttonAddObject
             // 
@@ -317,9 +358,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddObject.Location = new System.Drawing.Point(3, 32);
             this.buttonAddObject.Name = "buttonAddObject";
-            this.buttonAddObject.Size = new System.Drawing.Size(134, 23);
+            this.buttonAddObject.Size = new System.Drawing.Size(219, 23);
             this.buttonAddObject.TabIndex = 0;
-            this.buttonAddObject.Text = "Object";
+            this.buttonAddObject.Text = "Replace Me Cube";
             this.buttonAddObject.UseVisualStyleBackColor = true;
             this.buttonAddObject.Click += new System.EventHandler(this.buttonAddObject_Click);
             // 
@@ -330,7 +371,7 @@
             this.tabEdit.Location = new System.Drawing.Point(4, 22);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEdit.Size = new System.Drawing.Size(231, 325);
+            this.tabEdit.Size = new System.Drawing.Size(231, 462);
             this.tabEdit.TabIndex = 1;
             this.tabEdit.Text = "Edit";
             this.tabEdit.UseVisualStyleBackColor = true;
@@ -343,7 +384,7 @@
             this.tabView.Controls.Add(this.checkShowPoints);
             this.tabView.Location = new System.Drawing.Point(4, 22);
             this.tabView.Name = "tabView";
-            this.tabView.Size = new System.Drawing.Size(231, 325);
+            this.tabView.Size = new System.Drawing.Size(231, 462);
             this.tabView.TabIndex = 2;
             this.tabView.Text = "View/Help";
             this.tabView.UseVisualStyleBackColor = true;
@@ -370,7 +411,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.Location = new System.Drawing.Point(3, 108);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 212);
+            this.label1.Size = new System.Drawing.Size(225, 354);
             this.label1.TabIndex = 2;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -404,7 +445,7 @@
             this.Controls.Add(this.tabControl1);
             this.Location = new System.Drawing.Point(1300, 100);
             this.Name = "ucDesignLevel";
-            this.Size = new System.Drawing.Size(245, 421);
+            this.Size = new System.Drawing.Size(245, 558);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -430,23 +471,26 @@
         private System.Windows.Forms.TabPage tabAdd;
         private System.Windows.Forms.TabPage tabEdit;
         private System.Windows.Forms.Panel panelButtons;
-        private System.Windows.Forms.Button button7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button9;
-        private System.Windows.Forms.Button button10;
-        private System.Windows.Forms.Button button11;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button buttonAddEnemyBasic;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button buttonAddPoint;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonAddPlayerMop;
+        private System.Windows.Forms.Button buttonAddEnvRock03;
+        private System.Windows.Forms.Button buttonAddEnvRock02;
+        private System.Windows.Forms.Button buttonAddEnvRock01;
+        private System.Windows.Forms.Button buttonAddEnvPipes;
+        private System.Windows.Forms.Button buttonAddEnvBuilding;
+        private System.Windows.Forms.Button buttonAddEnemyMop;
+        private System.Windows.Forms.Button buttonAddPointCamera;
+        private System.Windows.Forms.Button buttonAddPlayerHero;
         private System.Windows.Forms.Button buttonAddObject;
         private System.Windows.Forms.TabPage tabView;
         private System.Windows.Forms.CheckBox checkShowBoundingBox;
         private System.Windows.Forms.CheckBox checkShowPoints;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar trackBar1;
+        private System.Windows.Forms.Button buttonAddPlayerBuilding;
+        private System.Windows.Forms.Button buttonAddEnemyBuilding;
+        private System.Windows.Forms.Button buttonAddPointWaypoint;
+        private System.Windows.Forms.Button buttonAddPointSpawnpoint;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }

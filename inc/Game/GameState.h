@@ -4,12 +4,10 @@
 #include "Core/TypeGlobals.h"
 
 #include "Game/GameHud.h"
+#include "Game/GamePart.h"
 #include "Game/NavigationMesh.h"
-//#include "Game/ProjectileManager.h"
 
 #include "Game/EventUnitSelectionChanged.h"
-
-//#include "Game/UnitFunctions.h"
 
 namespace TikiEngine
 {
@@ -45,6 +43,7 @@ namespace TikiEngine
 			inline Engine* GetEngine() { return engine; }
 			inline SceneLevel* GetScene() { return scene; }
 			inline NavigationMesh* GetNavMesh() { return navMesh; }
+			inline List<GamePart*>& GetGameParts() { return gameParts; }
 			inline TikiBotFactory* GetBotFactory() { return botFactory; }
 			inline ProjectileManager* GetProjectiles() { return projectiles; }
 
@@ -54,8 +53,8 @@ namespace TikiEngine
 
 			void AddTrigger(GameObject* go);
 
-			void ExecuteUnitFunction(UnitFunctions func);
-			void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
+			//void ExecuteUnitFunction(UnitFunctions func);
+			//void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -66,6 +65,7 @@ namespace TikiEngine
 
 			GameHud* hud;
 			SceneLevel* scene;
+			List<GamePart*> gameParts;
 
 			NavigationMesh* navMesh;			
 			TikiBotFactory* botFactory;

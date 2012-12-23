@@ -1,23 +1,28 @@
 #pragma once
 
-#include "Game/LevelChild.h"
+#include "Game/BasicTransform.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-		class LevelObject : public LevelChild
+		class LevelObject : public BasicTransform
 		{
 		public:
 
 			LevelObject(GameState* state);
 			~LevelObject();
 
+			Int64 GetLevelID();
+
 			void LoadFromDatabase(sqlite3_stmt* state);
 
 		private:
 
+			Int64 levelId;
+
 			Int32 type;
+			Int32 assignment;
 
 		protected:
 

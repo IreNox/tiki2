@@ -27,7 +27,6 @@ namespace TikiEngine
 
 	void SceneGraphNode::Add(GameObject* gameObject)
 	{
-
 		for(UINT i = 0; i < childs.Count(); i++)
 		{
 			if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)

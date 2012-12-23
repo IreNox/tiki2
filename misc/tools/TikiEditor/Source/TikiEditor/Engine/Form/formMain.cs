@@ -39,11 +39,14 @@ namespace TikiEditor.Designer
         #region Member - EventHandler
         private void panelViewport_SizeChanged(object sender, EventArgs e)
         {
-            Program.Game.Reset(
-                panelViewport.Width,
-                panelViewport.Height,
-                false
-            );
+            if (Program.Game != null)
+            {
+                Program.Game.Reset(
+                    panelViewport.Width,
+                    panelViewport.Height,
+                    false
+                );
+            }
         }
 
         private void formMain_FormClosed(object sender, FormClosedEventArgs e)

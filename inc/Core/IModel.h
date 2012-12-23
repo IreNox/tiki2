@@ -29,10 +29,10 @@ namespace TikiEngine
 			IModel(Engine* engine)
 				: IResource(engine)
 			{
-				//this->AnimationHandler.AddHandler(new AnimationHandler(this));
 			}
 			virtual ~IModel() { }
-
+			
+			virtual void CreateInstance(IModel* model) = 0;
 
 			virtual void Draw(GameObject* gameObject, const DrawArgs& args) = 0;
 			virtual void Update(const UpdateArgs& args) = 0;

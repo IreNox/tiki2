@@ -68,9 +68,9 @@ namespace TikiEngine
 			// PostProcess
 			engine->graphics->AddPostProcess(new PPFogOfWar(gameState));
 			
-			auto ssao = new PPScreenSpaceAmbientOcclusion(engine);
-			temp = ssao->GetAO();
-			engine->graphics->AddPostProcess(ssao);
+			//auto ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			//temp = ssao->GetAO();
+			//engine->graphics->AddPostProcess(ssao);
 
 			//auto blur = new PPBlur(engine);
 			//blur->GetPasses()[0]->SetInput("tex", temp);
@@ -84,10 +84,7 @@ namespace TikiEngine
 		#pragma region Member - Level
 		bool SceneLevel::LoadLevel(Int64 id)
 		{
-			if (level->GetId() != 0)
-			{
-				this->DisposeLevel();
-			}
+			if (level->GetId() != 0) DisposeLevel();
 
 			const char* tmp = 0;
 			sqlite3_stmt* state = 0;
@@ -106,6 +103,7 @@ namespace TikiEngine
 			level->AddRef();
 			sqlite3_finalize(state);
 
+			//////////////
 			// Load Points
 			sql = ostringstream();
 			sql << "SELECT * FROM \"tiki_level_points\" WHERE \"LevelID\" = '" << id << "';";
@@ -124,30 +122,11 @@ namespace TikiEngine
 				sqlite3_finalize(state);
 			}
 
-			////////////////////////////////
-			// Init GameState			  //
-			gameState->LoadLevel(level);  //
-			//							  //
-			////////////////////////////////
+			/////////////////
+			// Init GameState
+			gameState->LoadLevel(level);
 
-			// Load Enemies
-			sql = ostringstream();
-			sql << "SELECT * FROM \"tiki_level_enemies\" WHERE \"LevelID\" = '" << id << "';";
-
-			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
-
-			if (r == SQLITE_OK)
-			{
-				while (sqlite3_step(state) == SQLITE_ROW)
-				{
-					LevelEnemy* enemy = new LevelEnemy(gameState);
-					enemy->LoadFromDatabase(state);
-					
-					this->AddElement(enemy);
-				}
-				sqlite3_finalize(state);
-			}
-
+			///////////////
 			// Load Objects
 			sql = ostringstream();
 			sql << "SELECT * FROM \"tiki_level_objects\" WHERE \"LevelID\" = '" << id << "';";
@@ -169,21 +148,6 @@ namespace TikiEngine
 
 		void SceneLevel::DisposeLevel()
 		{
-			//UInt32 i = 0;
-			//while (i < enemies.Count())
-			//{
-			//	SafeRelease(&enemies[i]);
-			//	i++;
-			//}
-			//enemies.Clear();
-
-			//i = 0;
-			//while (i < objects.Count())
-			//{
-			//	SafeRelease(&objects[i]);
-			//	i++;
-			//}
-			//objects.Clear();
 		}
 		#pragma endregion
 

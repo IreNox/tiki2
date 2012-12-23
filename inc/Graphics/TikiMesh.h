@@ -19,15 +19,14 @@ namespace TikiEngine
 	{
 		class Model;
 
-		class TikiMesh : public TikiObject
+		class TikiMesh : public EngineObject
 		{
-
 		public:
 
-			TikiMesh(Model* model);
+			TikiMesh(Engine* engine);
 			~TikiMesh();
 
-			void Draw(const DrawArgs& args, GameObject* gameObject);
+			void Draw(const DrawArgs& args, Model* model, GameObject* gameObject);
 
 			void GetIndexData(UInt32** data, UInt32* count);
 			void SetIndexData(const UInt32* data, UInt32 count);
@@ -53,8 +52,6 @@ namespace TikiEngine
 			bool GetReady();
 
 		private:
-
-			Model* model;
 
 			string name;
 

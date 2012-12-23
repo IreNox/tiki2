@@ -40,7 +40,7 @@
             this.panelViewport.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelViewport.Location = new System.Drawing.Point(0, 0);
             this.panelViewport.Name = "panelViewport";
-            this.panelViewport.Size = new System.Drawing.Size(657, 544);
+            this.panelViewport.Size = new System.Drawing.Size(857, 544);
             this.panelViewport.TabIndex = 0;
             this.panelViewport.SizeChanged += new System.EventHandler(this.panelViewport_SizeChanged);
             // 
@@ -54,7 +54,7 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.panelViewport);
             this.splitContainer1.Size = new System.Drawing.Size(961, 544);
-            this.splitContainer1.SplitterDistance = 300;
+            this.splitContainer1.SplitterDistance = 100;
             this.splitContainer1.TabIndex = 2;
             // 
             // formMain
@@ -65,6 +65,7 @@
             this.Controls.Add(this.splitContainer1);
             this.Name = "formMain";
             this.Text = "TikiEditor 2.0";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.formMain_FormClosed);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();

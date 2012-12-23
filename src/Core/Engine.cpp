@@ -242,13 +242,13 @@ namespace TikiEngine
 			//csUpdate->Unlock();
 			//csDraw->Unlock();
 
-			// TODO: 
+			// TODO: Fullscreen
 			//if (args.Input.GetKeyPressed(KEY_F11))
 			//{
 			//	desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
 			//	graphics->Reset();
 			//}
-
+			
 			window->End();
 		}
 	}
@@ -378,6 +378,14 @@ namespace TikiEngine
 			if (state.UpdateState.Input.GetKeyPressed(KEY_ESCAPE)) 
 			{
 				this->Exit();
+			}
+
+			double wait = (1.0 / 60.0) - state.CurrentTime.ElapsedTime;
+
+			if (wait > 0.0)
+			{
+				int milli = (int)(wait * 1000.0);
+				Sleep(milli);
 			}
 
 			//state.UpdateState = args;

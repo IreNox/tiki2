@@ -44,11 +44,7 @@ namespace TikiEditor
             Vector2[] vertices = bt.Vertices(this.Scale);
             Color c = new Color(0, 1, 0, 0.5f);
 
-            if (bt is LevelEnemy)
-            {
-                c = new Color(1, 0, 0, 0.5f);
-            }
-            else if (bt is LevelPoint)
+            if (bt is LevelPoint)
             {
                 c = new Color(0, 0, 1, 0.5f);
             }

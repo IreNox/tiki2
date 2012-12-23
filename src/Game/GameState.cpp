@@ -78,7 +78,7 @@ namespace TikiEngine
 
 			if (DrawRenderTarget)
 			{
-				engine->sprites->Draw(scene->temp, Rectangle(10, 10, 200, 180));
+				engine->sprites->Draw(engine->graphics->GetDepthTarget(), Rectangle(10, 10, 200, 180));
 				engine->sprites->Draw(engine->graphics->GetNormalTarget(), Rectangle(10, 200, 200, 180));
 				engine->sprites->Draw(engine->graphics->GetScreenTarget(), Rectangle(10, 400, 200, 180));
 			}

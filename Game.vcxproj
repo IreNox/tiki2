@@ -30,10 +30,12 @@
     <ClInclude Include="inc\Game\CameraFly.h" />
     <ClInclude Include="inc\Game\CameraRTS.h" />
     <ClInclude Include="inc\Game\CellSpacePartition.h" />
+    <ClInclude Include="inc\Game\EnemyBase.h" />
     <ClInclude Include="inc\Game\EntityManager.h" />
     <ClInclude Include="inc\Game\EventUnitSelectionChanged.h" />
     <ClInclude Include="inc\Game\ExploreGoalEvaluator.h" />
     <ClInclude Include="inc\Game\GameHud.h" />
+    <ClInclude Include="inc\Game\GamePart.h" />
     <ClInclude Include="inc\Game\GameState.h" />
     <ClInclude Include="inc\Game\Goal.h" />
     <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h" />
@@ -51,14 +53,7 @@
     <ClInclude Include="inc\Game\GoalTraverseEdge.h" />
     <ClInclude Include="inc\Game\GoalTypes.h" />
     <ClInclude Include="inc\Game\GoalWander.h" />
-    <ClInclude Include="inc\Game\HUDBase.h" />
-    <ClInclude Include="inc\Game\HUDFunctionList.h" />
-    <ClInclude Include="inc\Game\HUDMenuButton.h" />
-    <ClInclude Include="inc\Game\HUDResourcen.h" />
-    <ClInclude Include="inc\Game\HUDSelectedUnits.h" />
     <ClInclude Include="inc\Game\Level.h" />
-    <ClInclude Include="inc\Game\LevelChild.h" />
-    <ClInclude Include="inc\Game\LevelEnemy.h" />
     <ClInclude Include="inc\Game\LevelObject.h" />
     <ClInclude Include="inc\Game\LevelPoint.h" />
     <ClInclude Include="inc\Game\MachineGun.h" />
@@ -73,10 +68,10 @@
     <ClInclude Include="inc\Game\PEShootMG.h" />
     <ClInclude Include="inc\Game\PathEdge.h" />
     <ClInclude Include="inc\Game\PathPlanner.h" />
+    <ClInclude Include="inc\Game\PlayerBase.h" />
     <ClInclude Include="inc\Game\PPBlur.h" />
     <ClInclude Include="inc\Game\PPFogOfWar.h" />
     <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h" />
-    <ClInclude Include="inc\Game\PPTerrainDiffuse.h" />
     <ClInclude Include="inc\Game\Projectile.h" />
     <ClInclude Include="inc\Game\ProjectileManager.h" />
     <ClInclude Include="inc\Game\Regulator.h" />
@@ -94,7 +89,6 @@
     <ClInclude Include="inc\Game\TikiSteering.h" />
     <ClInclude Include="inc\Game\TriBox.h" />
     <ClInclude Include="inc\Game\Trigger.h" />
-    <ClInclude Include="inc\Game\UnitFunctions.h" />
     <ClInclude Include="inc\Game\UnitSelection.h" />
     <ClInclude Include="inc\Game\Utils.h" />
     <ClInclude Include="inc\Game\VoidList.h" />
@@ -116,6 +110,7 @@
     <ClCompile Include="src\Game\EntityManager.cpp" />
     <ClCompile Include="src\Game\ExploreGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\GameHud.cpp" />
+    <ClCompile Include="src\Game\GameParts.cpp" />
     <ClCompile Include="src\Game\GameState.cpp" />
     <ClCompile Include="src\Game\GoalAttackMove.cpp" />
     <ClCompile Include="src\Game\GoalAttackTarget.cpp" />
@@ -143,7 +138,6 @@
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPFogOfWar.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
-    <ClCompile Include="src\Game\PPTerrainDiffuse.cpp" />
     <ClCompile Include="src\Game\Projectile.cpp" />
     <ClCompile Include="src\Game\ProjectileManager.cpp" />
     <ClCompile Include="src\Game\Regulator.cpp" />

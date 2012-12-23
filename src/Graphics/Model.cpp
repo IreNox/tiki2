@@ -19,22 +19,52 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), rootBone(0)
+			: IModel(engine), rootBone(0), mainInstance(false)
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
 		}
 
 		Model::~Model()
 		{
-			for(UInt32 i = 0; i < animations.Count(); i++)
-				SafeRelease(&animations[i]);
+			if (mainInstance)
+			{
+				for(UInt32 i = 0; i < animations.Count(); i++)
+					SafeRelease(&animations[i]);
 
-			for(UInt32 i = 0; i < meshes.Count(); i++)
-				SafeRelease(&meshes[i]);
+				for(UInt32 i = 0; i < meshes.Count(); i++)
+					SafeRelease(&meshes[i]);
 
-			SafeDelete(&constantBufferMatrices);
+				SafeDelete(&constantBufferMatrices);
 
-			SafeRelease(&rootBone);
+				SafeRelease(&rootBone);
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - CreateInstance
+		void Model::CreateInstance(IModel* model)
+		{
+			Model* baseModel = dynamic_cast<Model*>(model);
+
+			rootBone = baseModel->rootBone;
+
+			meshes = baseModel->meshes;
+			constantBufferElements = baseModel->constantBufferElements;
+
+			UInt32 i = 0;
+			while (i < baseModel->animations.Count())
+			{
+				animations.Add(
+					new TikiAnimation(baseModel->animations[i])
+				);
+
+				i++;
+			}
+
+			if (i > 0)
+			{
+				animationStack.SetAnimation(animations[0]);
+			}
 		}
 		#pragma endregion
 
@@ -143,16 +173,16 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < meshes.Count())
 			{
-				meshes[i]->Draw(args, gameObject);
+				meshes[i]->Draw(args, this, gameObject);
 				i++;
 			}
 
 #if _DEBUG
-			args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
-			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
-			args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
+			//args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
+			//args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
+			//args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
 
-			rootBone->Draw(args);
+			//rootBone->Draw(args);
 #endif
 		}
 
@@ -176,68 +206,20 @@ namespace TikiEngine
 			{
 				matrices->bones[i] = this->constantBufferElements[i]->ShiftMatrix();
 			}
-			constantBufferMatrices->Unmap();	
-
+			constantBufferMatrices->Unmap();
 		}
-		#pragma endregion
-
-		#pragma region Private Member - Init
-		//void Model::Initialize()
-		//{
-		//	this->CopyIndexData();
-		//	this->CopyVertexData();
-		//}
-
-		//void Model::CopyVertexData()
-		//{
-		//	verticesList.Clear();
-
-		//	UInt32 i = 0;
-		//	while (i < meshes.Count())
-		//	{
-		//		verticesList.AddRange(
-		//			meshes[i]->verticesList.GetInternalData(),
-		//			0,
-		//			meshes[i]->verticesList.Count()
-		//		);
-
-		//		i++;
-		//	}
-
-		//	this->vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), verticesList.Count(), (void*)verticesList.GetInternalData());
-		//}
-
-		//void Model::CopyIndexData()
-		//{
-		//	indicesList.Clear();
-
-		//	UInt32 i = 0;
-		//	UInt32 offset = 0;
-		//	while (i < meshes.Count())
-		//	{
-		//		UInt32 a = 0;
-		//		UInt32 c = meshes[i]->indicesList.Count();
-		//		while (a < c)
-		//		{
-		//			indicesList.Add(
-		//				meshes[i]->indicesList[a] + offset
-		//			);
-
-		//			a++;
-		//		}
-
-		//		offset += meshes[i]->verticesList.Count();
-		//		i++;
-		//	}
-		//	this->indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UINT), indicesList.Count(), (void*)indicesList.GetInternalData());
-		//}
 		#pragma endregion
 
 		#pragma region Protected Member
 		void Model::loadFromStream(wcstring fileName, Stream* stream)
 		{
+			mainInstance = true;
+
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
+
+			UpdateArgs args = UpdateArgs();
+			this->Update(args);
 		}
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)

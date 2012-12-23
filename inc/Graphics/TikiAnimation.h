@@ -11,6 +11,8 @@ namespace TikiEngine
 		{
 		public:
 			TikiAnimation();
+			TikiAnimation(TikiAnimation* copy);
+
 			~TikiAnimation();
 
 			string GetName();
