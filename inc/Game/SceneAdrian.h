@@ -45,6 +45,8 @@ namespace TikiEngine
 			//SceneGraph sceneGraph;
 
 			RectangleF selectionRectangle;
+
+			GameObject* spidermine;
 		};
 	}
 }

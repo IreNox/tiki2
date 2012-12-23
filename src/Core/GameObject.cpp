@@ -134,8 +134,8 @@ namespace TikiEngine
 
 		//TODO anständige bounds
 
-		this->bounding.X = PRS.GPosition().X;
-		this->bounding.Y = PRS.GPosition().Z;
+		this->bounding.X = PRS.GPosition().X - bounding.Width * 0.5f;
+		this->bounding.Y = PRS.GPosition().Z - bounding.Height * 0.5f;
 	}
 	#pragma endregion
 

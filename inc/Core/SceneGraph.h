@@ -1,12 +1,13 @@
 #pragma once
-#include "Core/Quadtree.h"
 #include "Core/List.h"
 #include "Core/UpdateArgs.h"
 #include "Core/DrawArgs.h"
 #include "Core/SceneGraphNode.h"
+#include "Core/Vector3.h"
 
 namespace TikiEngine
 {
+
 	class SceneGraph
 	{
 	public:
@@ -22,7 +23,7 @@ namespace TikiEngine
 
 		void Draw(const DrawArgs& args);
 
-		void Intersect(RectangleF& rect);
+		void Find(RectangleF& rect);
 
 	private:
 		bool initialized;

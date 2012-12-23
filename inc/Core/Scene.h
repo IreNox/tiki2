@@ -43,6 +43,8 @@ namespace TikiEngine
 		DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
 
+		SceneGraph SceneGraph;
+
 	protected:
 
 		bool initialized;
@@ -52,7 +54,7 @@ namespace TikiEngine
 		List<Camera*> cameras;
 		DrawLightArgs lighting;
 
-		SceneGraph sceneGraph;
+		
 
 	};
 }

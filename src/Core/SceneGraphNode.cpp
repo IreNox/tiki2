@@ -22,35 +22,53 @@ namespace TikiEngine
 		}
 
 		for(UINT i = 0; i < childs.Count(); i++)
+		{
 			SafeDelete(&childs[i]);
+		}
 	}
 
-	void SceneGraphNode::Add(GameObject* gameObject)
+	bool SceneGraphNode::Add(GameObject* gameObject)
+	{
+		if(childs.Count() == 0)
+		{
+			Subdivide();
+		}
+
+		for(UINT i = 0; i < childs.Count(); i++)
+		{
+			if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
+			{
+				return childs[i]->Add(gameObject);
+			}
+		}
+
+		this->data.Add(gameObject);
+		return true;
+	}
+
+	bool SceneGraphNode::Remove(GameObject* gameObject)
 	{
 		for(UINT i = 0; i < childs.Count(); i++)
 		{
 			if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
 			{
-				childs[i]->Add(gameObject);
-				return;
+				return childs[i]->Remove(gameObject);
 			}
 		}
-		
-		gameObject->AddRef();
-		this->data.Add(gameObject);
+		if(data.Contains(gameObject))
+		{
+			data.Remove(gameObject);
+			return true;
+		}
+		return false;
 	}
 
-	bool SceneGraphNode::Remove(GameObject* gameObject)
-	{
-		return true;
-	}
-
-	void SceneGraphNode::Intersects(List<GameObject*>& content, RectangleF& rect)
+	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
 		{
 			if(data[i]->Bounds().Collide(rect) == Intersect)
-				content.Add(data[i]);
+				result.Add(data[i]);
 		}
 
 		for(UINT i = 0; i < childs.Count(); i++)
@@ -62,29 +80,75 @@ namespace TikiEngine
 
 			if(node->Bounds().Collide(rect) == Contain)
 			{
-				node->Intersects(content, rect);
+				node->Find(result, rect);
 				break;
 			}
 
 			if(rect.Collide(node->Bounds()) == Contain)
 			{
-				node->GetSubContent(content);
+				node->GetSubContent(result);
 				continue;
 			}
 
 			if(node->Bounds().Collide(rect) == Intersect)
 			{
-				node->Intersects(content, rect);
+				node->Find(result, rect);
 			}
 		}
-		
+	}
+
+	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect, bool(where)(GameObject*))
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			GameObject* go = data[i];
+
+			if(go->Bounds().Collide(rect) == Intersect)
+			{
+				if(where(go))
+					result.Add(go);
+			}
+		}
+
+		for(UINT i = 0; i < childs.Count(); i++)
+		{
+			SceneGraphNode* node = childs[i];
+
+			if(node->IsEmpty())
+				continue;
+
+			if(node->Bounds().Collide(rect) == Contain)
+			{
+				node->Find(result, rect, where);
+				break;
+			}
+
+			if(rect.Collide(node->Bounds()) == Contain)
+			{
+				node->GetSubContent(result, where);
+				continue;
+			}
+
+			if(node->Bounds().Collide(rect) == Intersect)
+			{
+				node->Find(result, rect, where);
+			}
+		}
 	}
 
 
 	void SceneGraphNode::Update(const UpdateArgs& args)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
-			data[i]->Update(args);
+		{
+			GameObject* go = data[i];
+			go->Update(args);
+			if(UpdatePosition(go))
+			{
+				this->data.Remove(go);
+				i--;
+			}
+		}
 
 
 		for(UINT i = 0; i < childs.Count(); i++)
@@ -109,13 +173,36 @@ namespace TikiEngine
 
 		//for(UINT i = 0; i < data.Count(); i++)
 		//{
-		//	Vector3 pos = data[i]->PRS.GPosition();
+		//	RectangleF rec = data[i]->Bounds();
 
-		//	args.Graphics->DrawLine(pos - Vector3::UnitX, pos + Vector3::UnitX, Color::Green);
-		//	args.Graphics->DrawLine(pos - Vector3::UnitY, pos + Vector3::UnitY, Color::Green);
-		//	args.Graphics->DrawLine(pos - Vector3::UnitZ, pos + Vector3::UnitZ, Color::Green);
+		//	args.Graphics->DrawLine(rec.TopLeft(), rec.TopRight(), Color::Green);
+		//	args.Graphics->DrawLine(rec.TopRight(), rec.BottomRight(), Color::Green);
+		//	args.Graphics->DrawLine(rec.BottomRight(), rec.BottomLeft(), Color::Green);
+		//	args.Graphics->DrawLine(rec.BottomLeft(), rec.TopLeft(), Color::Green);
+
 		//}
 #endif
+	}
+
+	bool SceneGraphNode::UpdatePosition(GameObject* go)
+	{
+		if(!this->bounds.Collide(go->Bounds()) == Contain)
+		{
+			return parent->UpdatePosition(go);
+		}
+		else
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+			{
+				SceneGraphNode* node = childs[i];
+				if(node->Bounds().Collide(go->Bounds()) == Contain)
+				{
+					return node->Add(go);
+				}
+
+			}
+		}
+		return false;
 	}
 
 	SceneGraphNode* SceneGraphNode::Find(GameObject* gameObject)
@@ -123,20 +210,30 @@ namespace TikiEngine
 		return 0;
 	}
 
-	void SceneGraphNode::GetContent(List<GameObject*>& content)
+	void SceneGraphNode::GetContent(List<GameObject*>& content, bool (where)(GameObject*))
 	{
-		content.AddRange(this->data.GetInternalData(),0, this->data.Count());
+		if(where != 0)
+		{
+			for(UINT i = 0; i < this->data.Count(); i++)
+			{
+				
+				GameObject* go = data[i];
+				if(where(go))
+					content.Add(go);
+			}
+		}
+		else
+		{
+			content.AddRange(this->data.GetInternalData(),0, this->data.Count());
+		}
 	}
 
-	void SceneGraphNode::GetSubContent(List<GameObject*>& content)
+	void SceneGraphNode::GetSubContent(List<GameObject*>& content, bool (where)(GameObject*))
 	{
-		content.AddRange(this->data.GetInternalData(), 0, this->data.Count());
+		GetContent(content, where);
 
-		if(subdivided)
-		{
-			for(UINT i = 0; i < 4; i++)
-				childs[i]->GetSubContent(content);
-		}
+		for(UINT i = 0; i < childs.Count(); i++)
+			childs[i]->GetSubContent(content, where);
 	}
 
 	bool SceneGraphNode::Subdivide()
@@ -152,10 +249,10 @@ namespace TikiEngine
 		float width = this->bounds.Width * 0.5f;
 		float height = this->bounds.Height * 0.5f;
 
-		childs[0] = new SceneGraphNode(RectangleF::Create(x ,y , width, height), layerDepth -1, this);
-		childs[1] = new SceneGraphNode(RectangleF::Create(x + width,y , width, height), layerDepth -1, this);
-		childs[2] = new SceneGraphNode(RectangleF::Create(x ,y + height, width, height), layerDepth -1, this);
-		childs[3] = new SceneGraphNode(RectangleF::Create(x + width ,y + height, width, height), layerDepth -1, this);
+		childs.Add(new SceneGraphNode(RectangleF::Create(x ,y , width, height), layerDepth -1, this));
+		childs.Add(new SceneGraphNode(RectangleF::Create(x + width,y , width, height), layerDepth -1, this));
+		childs.Add(new SceneGraphNode(RectangleF::Create(x ,y + height, width, height), layerDepth -1, this));
+		childs.Add(new SceneGraphNode(RectangleF::Create(x + width ,y + height, width, height), layerDepth -1, this));
 
 		return this->subdivided = true;
 	}

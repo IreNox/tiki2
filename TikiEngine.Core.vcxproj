@@ -24,7 +24,6 @@
     <ClCompile Include="src\Core\HelperThreading.cpp" />
     <ClCompile Include="src\Core\Mutex.cpp" />
     <ClCompile Include="src\Core\ParticleEffect.cpp" />
-    <ClCompile Include="src\Core\Quadtree.cpp" />
     <ClCompile Include="src\Core\SceneGraph.cpp" />
     <ClCompile Include="src\Core\SceneGraphNode.cpp" />
     <ClCompile Include="src\Core\sqlite3.c" />
@@ -89,7 +88,6 @@
     <ClInclude Include="inc\Core\IParticleRenderer.h" />
     <ClInclude Include="inc\Core\Particle.h" />
     <ClInclude Include="inc\Core\ParticleEffect.h" />
-    <ClInclude Include="inc\Core\Quadtree.h" />
     <ClInclude Include="inc\Core\SceneGraph.h" />
     <ClInclude Include="inc\Core\SceneGraphNode.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />

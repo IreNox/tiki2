@@ -33,7 +33,9 @@ namespace TikiEngine
 			return;
 
 		//quadtree.Insert(go);
-		rootNode.Add(go);
+		if(rootNode.Add(go))
+			go->AddRef();
+
 	}
 
 	bool SceneGraph::Remove(GameObject* go)
@@ -44,12 +46,11 @@ namespace TikiEngine
 		return rootNode.Remove(go);
 	}
 
-	void SceneGraph::Intersect(RectangleF& rect)
+	void SceneGraph::Find(RectangleF& rect)
 	{
 		this->selection.Clear();
 
-		//this->quadtree.Intersects(this->selection, rect);
-		this->rootNode.Intersects(this->selection, rect);
+		this->rootNode.Find(this->selection, rect);
 	}
 
 	void SceneGraph::Update(const UpdateArgs& args)

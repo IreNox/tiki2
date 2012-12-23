@@ -16,17 +16,21 @@ namespace TikiEngine
 		SceneGraphNode(RectangleF bounds, int layerDepth, SceneGraphNode* parent = NULL);
 		~SceneGraphNode();
 
-		void Add(GameObject* gameObject);
+		bool Add(GameObject* gameObject);
 		bool Remove(GameObject* gameObject);
-		void Intersects(List<GameObject*>& content, RectangleF& rect);
+		void Find(List<GameObject*>& result, RectangleF& rect);
+		void Find(List<GameObject*>& result, RectangleF& rect, bool(where)(GameObject*));
 
 		SceneGraphNode* Find(GameObject* gameObject);
 
 		void Update(const UpdateArgs& args);
+		bool UpdatePosition(GameObject* go);
 		void Draw(const DrawArgs& args);
 
-		void GetContent(List<GameObject*>& content);
-		void GetSubContent(List<GameObject*>& content);
+		void Clean();
+
+		void GetContent(List<GameObject*>& content, bool (where)(GameObject*) = 0);
+		void GetSubContent(List<GameObject*>& content, bool (where)(GameObject*) = 0);
 
 		bool Subdivide();
 
@@ -36,6 +40,8 @@ namespace TikiEngine
 		int Count();
 
 	private:
+		
+
 		int layerDepth;
 		bool subdivided;
 		RectangleF bounds;

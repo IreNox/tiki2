@@ -48,7 +48,7 @@ namespace TikiEngine
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
 
-			sceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
+			SceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
 
 			//Light
 			LightObject* lo = new LightObject(engine);

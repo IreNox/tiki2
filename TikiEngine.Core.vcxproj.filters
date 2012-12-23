@@ -269,9 +269,6 @@
     <ClCompile Include="src\Core\SceneGraph.cpp">
       <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Quadtree.cpp">
-      <Filter>Quelldateien\Core\SceneGraph</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\DatabaseState.cpp">
       <Filter>Quelldateien\Core\System</Filter>
     </ClCompile>
@@ -647,9 +644,6 @@
       <Filter>Headerdateien\Interfaces\Components</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\SceneGraph.h">
-      <Filter>Headerdateien\Core\SceneGraph</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\Quadtree.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\TikiType.h">

@@ -571,11 +571,13 @@ namespace TikiEngine
 		TikiMesh::~TikiMesh()
 		{
 			SafeDeleteArray(&indexData);
+			SafeDeleteArray(&adjacencyIndexData);
 			SafeDeleteArray(&vertexData);
 
 #ifdef TIKI_ENGINE
 			SafeRelease(&decl);
 			SafeRelease(&indexBuffer);
+			SafeRelease(&indexAdjacencyBuffer);
 			SafeRelease(&vertexBuffer);
 #endif
 

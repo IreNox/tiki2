@@ -30,7 +30,7 @@ namespace TikiEngine
 			GameState* gameState;
 
 			virtual void internActivation() = 0;
-			virtual void internUpdate(const UpdateArgs& args);
+			virtual void internUpdate(const UpdateArgs& args) = 0;
 
 		private:
 

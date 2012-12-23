@@ -46,13 +46,14 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
-			sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
+			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
 
 			GameObject* go = new GameObject(engine);
 
 			go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 
 			this->model = go->GModel();
+			this->spidermine = go;
 			//this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
 			//this->bone = this->model->GetBone("weapon_MgTip_bn");
@@ -141,30 +142,34 @@ namespace TikiEngine
 			//links
 			if(args.Input.GetKey(KEY_NUMPAD4))
 			{
-				this->selectionRectangle.X -= 10.0f * (float)args.Time.ElapsedTime;
+				//this->selectionRectangle.X -= 10.0f * (float)args.Time.ElapsedTime;
+				this->spidermine->PRS.SPosition() += Vector3(-1,0,0) * (float)args.Time.ElapsedTime;
 			}
 
 			//rechts
 			if(args.Input.GetKey(KEY_NUMPAD6))
 			{
-				this->selectionRectangle.X += 10.0f * (float)args.Time.ElapsedTime;
+				//this->selectionRectangle.X += 10.0f * (float)args.Time.ElapsedTime;
+				this->spidermine->PRS.SPosition() += Vector3(1,0,0) * (float)args.Time.ElapsedTime;
 			}
 
 			//hoch
 			if(args.Input.GetKey(KEY_NUMPAD8))
 			{
-				this->selectionRectangle.Y -= 10.0f * (float)args.Time.ElapsedTime;
+				//this->selectionRectangle.Y -= 10.0f * (float)args.Time.ElapsedTime;
+				this->spidermine->PRS.SPosition() += Vector3(0,0,-1) * (float)args.Time.ElapsedTime;
 			}
 
 			//runter
 			if(args.Input.GetKey(KEY_NUMPAD5))
 			{
-				this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
+				//this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
+				this->spidermine->PRS.SPosition() += Vector3(0,0,1) * (float)args.Time.ElapsedTime;
 			}
 
 			if(args.Input.GetKeyPressed(KEY_RETURN))
 			{
-				sceneGraph.Intersect(this->selectionRectangle);
+				SceneGraph.Find(this->selectionRectangle);
 			}
 
 
@@ -177,7 +182,7 @@ namespace TikiEngine
 				go->PRS.SPosition() = Vector3(pos.X, 0, pos.Y);
 				go->Update(args);
 
-				sceneGraph.Add(go);
+				SceneGraph.Add(go);
 			}
 		}
 	}

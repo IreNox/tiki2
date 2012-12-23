@@ -8,6 +8,8 @@
 
 namespace TikiEngine
 {
+	bool useSceneGraph = false;
+
 	using namespace Concurrency;
 
 	#pragma region Class
@@ -74,9 +76,17 @@ namespace TikiEngine
 	#pragma region Member - Elements
 	GameObject* Scene::AddElement(GameObject* element)
 	{
-		//this->sceneGraph.Add(element);
-		elements.Add(element);
-		element->AddRef();
+		if(useSceneGraph)
+		{
+			this->SceneGraph.Add(element);
+		}
+		else
+		{
+			elements.Add(element);
+			element->AddRef();
+		}
+		
+
 
 		UInt32 len = 0;
 		Light** comLights = 0;
@@ -126,28 +136,24 @@ namespace TikiEngine
 			}
 		}
 
-		//TODO VERY IMPORTANT
-		//return sceneGraph.Remove(element);
-
-		return elements.Remove(element);
+		if(useSceneGraph)
+			return SceneGraph.Remove(element);
+		else
+			return elements.Remove(element);
 	}
-
-	//void Scene::RemoveElementAt(UInt32 index)
-	//{
-	//	this->RemoveElement(
-	//		elements[index]
-	//	);
-	//}
 	#pragma endregion
 
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-		//sceneGraph.Draw(args);
-
-		for (UInt32 i = 0; i < elements.Count(); i++)
+		if(useSceneGraph)
+			SceneGraph.Draw(args);
+		else
 		{
-			elements[i]->Draw(args);
+			for (UInt32 i = 0; i < elements.Count(); i++)
+			{
+				elements[i]->Draw(args);
+			}
 		}
 	}
 
@@ -157,12 +163,14 @@ namespace TikiEngine
 		//	elements.FirstIndex(), elements.Count(),
 		//	[=](UInt32 i){ elements[i]->Update(args); }
 		//);
-
-		//sceneGraph.Update(args);
-
-		for (UInt32 i = 0; i < elements.Count(); i++)
+		if(useSceneGraph)
+			SceneGraph.Update(args);
+		else
 		{
-			elements[i]->Update(args);
+			for (UInt32 i = 0; i < elements.Count(); i++)
+			{
+				elements[i]->Update(args);
+			}
 		}
 	}
 	#pragma endregion
