@@ -50,12 +50,12 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"soldier")); //soldier_l_testForAgga10
+			go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 
 			this->model = go->GModel();
-			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
+			//this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
-			this->bone = this->model->GetBone("weapon_MgTip_bn");
+			//this->bone = this->model->GetBone("weapon_MgTip_bn");
 
 			go->PRS.SScale() = Vector3(0.01f);
 
