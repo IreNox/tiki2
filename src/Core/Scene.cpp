@@ -75,8 +75,8 @@ namespace TikiEngine
 	GameObject* Scene::AddElement(GameObject* element)
 	{
 		this->sceneGraph.Add(element);
-		//elements.Add(element);
-		//element->AddRef();
+		elements.Add(element);
+		element->AddRef();
 
 		UInt32 len = 0;
 		Light** comLights = 0;
@@ -127,43 +127,22 @@ namespace TikiEngine
 		}
 
 		//TODO VERY IMPORTANT
-		return sceneGraph.Remove(element);
+		sceneGraph.Remove(element);
 
-		//return elements.Remove(element);
+		element->Release();
+		return elements.Remove(element);
 	}
-
-	//void Scene::RemoveElementAt(UInt32 index)
-	//{
-	//	this->RemoveElement(
-	//		elements[index]
-	//	);
-	//}
 	#pragma endregion
 
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
 		sceneGraph.Draw(args);
-
-		//for (UInt32 i = 0; i < elements.Count(); i++)
-		//{
-		//	elements[i]->Draw(args);
-		//}
 	}
 
 	void Scene::Update(const UpdateArgs& args)
 	{
-		//parallel_for(
-		//	elements.FirstIndex(), elements.Count(),
-		//	[=](UInt32 i){ elements[i]->Update(args); }
-		//);
-
 		sceneGraph.Update(args);
-
-		//for (UInt32 i = 0; i < elements.Count(); i++)
-		//{
-		//	elements[i]->Update(args);
-		//}
 	}
 	#pragma endregion
 }
