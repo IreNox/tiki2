@@ -577,6 +577,9 @@
     <ClCompile Include="src\Game\GameParts.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game\Skill.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="misc\res\icon.ico">

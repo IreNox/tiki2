@@ -150,6 +150,7 @@
     <ClCompile Include="src\Game\SceneMenuMain.cpp" />
     <ClCompile Include="src\Game\SceneTim.cpp" />
     <ClCompile Include="src\Game\SensorMemory.cpp" />
+    <ClCompile Include="src\Game\Skill.cpp" />
     <ClCompile Include="src\Game\TargetingSystem.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />
     <ClCompile Include="src\Game\TikiBotFactory.cpp" />

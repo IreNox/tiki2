@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/EngineObject.h"
+#include "Core/TikiTimer.h"
 
 namespace TikiEngine
 {
@@ -19,14 +20,21 @@ namespace TikiEngine
 			virtual void CancelActivation() = 0;
 
 			virtual void Draw(const DrawArgs& args) = 0;
-			virtual void Update(const UpdateArgs& args) = 0;
+			void Update(const UpdateArgs& args);
 
 		protected:
 
-			bool passiv;
-			double cooldown;
+			bool isPassiv;
+			TikiTimer cooldownTimer;
+
+			GameState* gameState;
 
 			virtual void internActivation() = 0;
+			virtual void internUpdate(const UpdateArgs& args);
+
+		private:
+
+			bool isReady;
 
 		};
 	}
