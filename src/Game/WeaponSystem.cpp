@@ -51,7 +51,7 @@ namespace TikiEngine
             if (owner->GetTargetSys()->IsTargetShootable())//->IsTargetPresent())// ||
                 //(owner->GetTargetSys()->GetTimeTargetHasBeenOutOfView(args) < aimPersistance))
             {
-                Vector3 aimingPos = owner->GetTargetBot()->Pos3D();
+                Vector3 aimingPos = owner->GetTargetBot()->GetController()->GetCenter();
 
                 // if the weapon is aimed correctly, there is line of sight between the
                 // bot and the aiming position
