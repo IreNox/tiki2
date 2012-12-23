@@ -6,6 +6,7 @@
 #include "Game/PathPlanner.h"
 #include "Game/TargetingSystem.h"
 #include "Game/Regulator.h"
+#include "Game/SkillSystem.h"
 
 #include "Core/ICharacterController.h"
 
@@ -208,6 +209,9 @@ namespace TikiEngine
 
             // Handles all the weapons and aims
             WeaponSystem* weaponSys;
+
+			// Skillsystem used by hero type
+			SkillSystem* skillSys;
 
 			// A regulator object limits the update frequency of a specific AI component
 			// In combination with a distance check, this can be used to create LOD for AI

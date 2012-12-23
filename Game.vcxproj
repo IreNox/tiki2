@@ -82,6 +82,7 @@
     <ClInclude Include="inc\Game\SceneMark.h" />
     <ClInclude Include="inc\Game\SceneTim.h" />
     <ClInclude Include="inc\Game\SensorMemory.h" />
+    <ClInclude Include="inc\Game\SkillSystem.h" />
     <ClInclude Include="inc\Game\Skill.h" />
     <ClInclude Include="inc\Game\TargetingSystem.h" />
     <ClInclude Include="inc\Game\Telegram.h" />

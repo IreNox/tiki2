@@ -75,6 +75,8 @@ namespace TikiEngine
 				weaponSys = new WeaponSystem(this);
 				weaponSys->Init(desc);
 
+				skillSys = new SkillSystem(this);
+
 				// Create the goal queue
 				brain = new GoalThink(this);
 				brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
@@ -85,6 +87,7 @@ namespace TikiEngine
 				sensorMem = 0;
 				weaponSys = 0;
 				brain = 0;
+				skillSys = 0;
 			}
 
 			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
@@ -252,6 +255,12 @@ namespace TikiEngine
 				Color::White
 			);
 
+
+			// Draw Hero Skills
+			if (EntityType() == ET_Hero)
+				skillSys->Draw(args);
+
+
 			// connect the waypoins to draw lines in green
 			#if _DEBUG
 			if (gameState->DrawNavMesh && EntityType() != ET_Building)
@@ -302,6 +311,10 @@ namespace TikiEngine
 			
             // aim the current weapon at the current target and takes a shot if possible
             weaponSys->TakeAimAndShoot(args);
+
+			// Update Hero Skills
+			if (EntityType() == ET_Hero)
+				skillSys->Update(args);
 		}
 
 

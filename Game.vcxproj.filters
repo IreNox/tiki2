@@ -150,6 +150,12 @@
     <Filter Include="Headerdateien\AI\Skill">
       <UniqueIdentifier>{af468e16-06b8-4eb7-8280-3c83926315fe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\AI\SkillSystem">
+      <UniqueIdentifier>{c42db035-1f96-4d9b-b1c3-2c15a931c76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\SkillSystem">
+      <UniqueIdentifier>{a594a1ff-d6dd-427a-9daf-420f80e6980d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -382,6 +388,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\Skill.h">
       <Filter>Headerdateien\AI\Skill</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillSystem.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
