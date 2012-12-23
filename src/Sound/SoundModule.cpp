@@ -180,7 +180,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 				
-		void SoundModule::PlaySound(ISound* sound)
+		void SoundModule::Play(ISound* sound)
 		{
 			system->playSound(
 				FMOD_CHANNEL_FREE,

@@ -308,31 +308,27 @@ namespace TikiEngine
 			SafeRelease(&material);
 			SafeRelease(&layout);
 
-			try
+			if (terrain != 0)
 			{
 				terrain->Dispose();
 				terrain = 0;
-
-				if (manager != 0)
-				{
-					manager->Shutdown();
-					manager = 0;
-				}
-
-				vertexFormat = 0;
-
-				indexBuffer = 0;
-				vertexBuffer = 0;
-
-				callback->Dispose();
-				callback = 0;
-
-				terrainDescription = 0;
 			}
-			catch (void* e)
+
+			if (manager != 0)
 			{
-				engine->HLog.Write("Cloddy disposing error.", false);
+				manager->Shutdown();
+				manager = 0;
 			}
+
+			vertexFormat = 0;
+
+			indexBuffer = 0;
+			vertexBuffer = 0;
+
+			callback->Dispose();
+			callback = 0;
+
+			terrainDescription = 0;
 		}
 		#pragma endregion
 

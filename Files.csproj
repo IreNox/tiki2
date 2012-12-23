@@ -142,6 +142,7 @@
     <Content Include="bin\Data\Effects\pp_fow.fx" />
     <Content Include="bin\Data\Effects\pp_ssao.fx" />
     <Content Include="bin\Data\Sounds\beep.wav" />
+    <Content Include="bin\Data\Sounds\Mech_Spawn.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

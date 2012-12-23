@@ -2,6 +2,7 @@
 #include "Game/SceneMenuMain.h"
 
 #include "Core/IGraphics.h"
+#include "Core/ISoundSystem.h"
 
 #include "Game/SceneTim.h"
 #include "Game/SceneMark.h"
@@ -123,6 +124,10 @@ namespace TikiEngine
 			switch ((Int32)sender->UserData)
 			{
 			case 0:
+				engine->sound->Play(
+					engine->content->LoadSound(L"Mesh_Spawn")
+				);
+
 				sLevel = new SceneLevel(engine);
 				engine->SetScene(sLevel);
 				sLevel->LoadLevel(1);

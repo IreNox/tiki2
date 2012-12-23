@@ -16,7 +16,7 @@ namespace TikiEngine
 			ISoundSystem(Engine* engine) : IModule(engine) {}
 			~ISoundSystem() {}
 
-			virtual void PlaySound(ISound* sound) = 0;
+			virtual void Play(ISound* sound) = 0;
 
 		};
 	}

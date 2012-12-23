@@ -164,6 +164,10 @@ namespace TikiEngine
 				{
 					value = engine->librarys->CreateResource<IModel>();
 				}
+				else if (hash == typeid(ISound).hash_code())
+				{
+					value = engine->librarys->CreateResource<ISound>();
+				}
 				else if (hash == typeid(IPhysicsMaterial).hash_code())
 				{
 					value = engine->librarys->CreateResource<IPhysicsMaterial>();
@@ -203,6 +207,14 @@ namespace TikiEngine
 		{
 			return (IModel*)this->Load(
 				typeid(IModel).hash_code(),
+				name
+			);
+		}
+
+		ISound* ContentManagerModule::LoadSound(const wstring& name)
+		{
+			return (ISound*)this->Load(
+				typeid(ISound).hash_code(),
 				name
 			);
 		}

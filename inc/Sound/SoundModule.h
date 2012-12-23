@@ -23,7 +23,7 @@ namespace TikiEngine
 
 			void Dispose();
 
-			void PlaySound(ISound* sound);
+			void Play(ISound* sound);
 
 			FMOD::Sound* LoadSound(cstring fileName);
 

@@ -147,6 +147,9 @@
     <Filter Include="Headerdateien\Gameplay\GameParts">
       <UniqueIdentifier>{b1da0587-967f-423e-b6a3-2057fd563109}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\AI\Skill">
+      <UniqueIdentifier>{af468e16-06b8-4eb7-8280-3c83926315fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\SceneTim.h">
@@ -376,6 +379,9 @@
     </ClInclude>
     <ClInclude Include="inc\Game\PlayerBase.h">
       <Filter>Headerdateien\Gameplay\GameParts</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\ISkill.h">
+      <Filter>Headerdateien\AI\Skill</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

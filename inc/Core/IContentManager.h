@@ -4,6 +4,7 @@
 
 #include "Core/Mesh.h"
 #include "Core/IModel.h"
+#include "Core/ISound.h"
 #include "Core/ITexture.h"
 #include "Core/Material.h"
 #include "Core/IPhysicsMaterial.h"
@@ -30,6 +31,8 @@ namespace TikiEngine
 
 			virtual Mesh* LoadMesh(const wstring& name) = 0;
 			virtual IModel* LoadModel(const wstring& name) = 0;
+
+			virtual ISound* LoadSound(const wstring& name) = 0;
 
 			virtual ITexture* LoadTexture(const wstring& name) = 0;
 

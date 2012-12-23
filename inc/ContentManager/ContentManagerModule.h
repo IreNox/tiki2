@@ -26,6 +26,8 @@ namespace TikiEngine
 			Mesh* LoadMesh(const wstring& name);
 			IModel* LoadModel(const wstring& name);
 
+			ISound* LoadSound(const wstring& name);
+
 			ITexture* LoadTexture(const wstring& name);
 
 			IShader* LoadShader(const wstring& name);
