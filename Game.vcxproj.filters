@@ -380,7 +380,7 @@
     <ClInclude Include="inc\Game\PlayerBase.h">
       <Filter>Headerdateien\Gameplay\GameParts</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\ISkill.h">
+    <ClInclude Include="inc\Game\Skill.h">
       <Filter>Headerdateien\AI\Skill</Filter>
     </ClInclude>
   </ItemGroup>
