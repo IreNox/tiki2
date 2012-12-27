@@ -26,6 +26,15 @@ cbuffer FogOfWar
 Texture2D rtScreen;
 Texture2D rtDepth;
 
+Texture2D SkillCrosshair;
+
+SamplerState samW
+{    
+  AddressU  = BORDER;
+  AddressV = BORDER;
+  FILTER = MIN_MAG_LINEAR_MIP_POINT;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
@@ -41,23 +50,45 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	float fog = 0;
 	float3 worldPos = rtDepth.Sample(sam, input.UV).rgb;
 
+	float3 addc = float3(0, 0, 0);
 	float4 diff = rtScreen.Sample(sam, input.UV);
 
 	for (float i = 0; i < UnitCount; i++)
 	{
-		float r = (Units[i].Range + 3.14159f) / 2;
-		float bDis = distance(Units[i].Position, worldPos.xz) + 3.14159f;
-		float dis = bDis / r;
-		dis = clamp(dis, 0, 3.14159);
-
-		fog = max(sin(dis) * 1.25, fog);
-
-		if (Units[i].Type == 1.0f)
+		if (Units[i].Type < 2.0f)
 		{
-			dis = bDis - 8;
-			dis = clamp(dis * 1.5f, 0, 3.14159);
+			float r = (Units[i].Range + 3.14159f) / 2;
+			float bDis = distance(Units[i].Position, worldPos.xz) + 3.14159f;
+			float dis = bDis / r;
+			dis = clamp(dis, 0, 3.14159);
 
-			diff.b += sin(dis);
+			fog = max(sin(dis) * 1.25, fog);
+
+			if (Units[i].Type == 1.0f)
+			{
+				dis = bDis - 8;
+				dis = clamp(dis * 1.5f, 0, 3.14159);
+
+				diff.b += sin(dis);
+			}
+		}
+		else
+		{
+			float3 pos = rtDepth.Sample(sam, Units[i].Position);
+			float range = Units[i].Range;
+
+			float2 uv = float2(
+				((worldPos.x - pos.x) + (range / 2)) / range,
+				((worldPos.z - pos.z) + (range / 2)) / range
+			);
+			
+			float4 color = SkillCrosshair.Sample(samW, uv);
+			addc += color.rgb * color.a;
+
+			if (uv.x >= 0.0f && uv.x <= 1.0f &&
+				uv.y >= 0.0f && uv.y <= 1.0f)
+			{
+			}
 		}
 	}
 
@@ -65,6 +96,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	fog = lerp(0.2f, 1, fog);
 
 	diff.rgb *= fog;
+	diff.rgb += addc;
 	return diff;
 }
 

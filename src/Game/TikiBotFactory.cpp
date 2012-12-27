@@ -5,6 +5,7 @@
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Game/SceneLevel.h"
 #include "Game/BuildSlot.h"
+#include "Game/SkillRocket.h"
 
 #include "Core/IContentManager.h"
 
@@ -215,6 +216,8 @@ namespace TikiEngine
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.1f);
 			bot->CreateNav(gameState->GetNavMesh());
+
+			bot->GetSkillSys()->AddSkill(new SkillRocket(bot));
 
 			gameState->GetScene()->AddElement(go);
 		}

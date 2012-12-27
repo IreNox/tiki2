@@ -16,7 +16,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		UnitSelection::UnitSelection(GameState* gameState)
-			: EngineObject(gameState->GetEngine()), gameState(gameState)
+			: EngineObject(gameState->GetEngine()), gameState(gameState), enabled(true)
 		{
 			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
@@ -45,7 +45,7 @@ namespace TikiEngine
 
 		void UnitSelection::Draw(const DrawArgs& args)
 		{
-			if (selectionRect.Width != 0 && selectionRect.Height != 0)
+			if (enabled && selectionRect.Width != 0 && selectionRect.Height != 0)
 				selectButton->Draw(args);
 		}
 		#pragma endregion
@@ -53,6 +53,8 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void UnitSelection::Update(const UpdateArgs& args)
 		{
+			if (!enabled) return;
+
 			bool changed = false;
 
 			// Handle Rectangle
@@ -100,9 +102,7 @@ namespace TikiEngine
 			{
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
-			
-
-	
+				
 			// Check entity intersection
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetElements().Count())

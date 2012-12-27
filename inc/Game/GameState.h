@@ -53,8 +53,7 @@ namespace TikiEngine
 
 			void AddTrigger(GameObject* go);
 
-			//void ExecuteUnitFunction(UnitFunctions func);
-			//void GetSelectedAvailableFunctions(List<UnitFunctions>* list);
+			void SetSpecialCursor(ITexture* tex);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);

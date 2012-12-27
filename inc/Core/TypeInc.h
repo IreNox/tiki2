@@ -2,6 +2,8 @@
 
 #include "Core/TypeDef.h"
 
+#include "Core/TikiEnum.h"
+
 #include "Core/Vector2.h"
 #include "Core/Vector3.h"
 #include "Core/Vector4.h"

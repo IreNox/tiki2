@@ -93,6 +93,11 @@ namespace TikiEngine
 			return texture->GetSize();
 		}
 
+		Vector2 RenderTarget::GetCenter()
+		{
+			return texture->GetCenter();
+		}
+
 		Rectangle RenderTarget::GetRectangle()
 		{
 			return texture->GetRectangle();

@@ -661,5 +661,8 @@
     <ClInclude Include="inc\Core\SceneGraphNode.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\TikiEnum.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

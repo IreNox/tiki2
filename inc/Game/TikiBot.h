@@ -166,14 +166,16 @@ namespace TikiEngine
 			// called when a human is exorcised from this bot and the AI takes control
 			void Exorcise();
 
-			PathPlanner* GetPathPlanner() { return pathPlanner; }
-			ICharacterController* GetController() { return controller; }
-			TikiSteering* const GetSteering() { return steering; }
-			GoalThink* const GetBrain() { return brain; }
-			TargetingSystem* const GetTargetSys(){ return targSys; }
-			TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
-			SensorMemory* const GetSensorMem() const {return sensorMem; }
-            WeaponSystem* const GetWeaponSys() const {return weaponSys; }
+			inline TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
+			inline ICharacterController* GetController() { return controller; }
+
+			inline GoalThink* const GetBrain() { return brain; }
+			inline PathPlanner* GetPathPlanner() { return pathPlanner; }
+			inline TikiSteering* const GetSteering() { return steering; }
+			inline TargetingSystem* const GetTargetSys(){ return targSys; }
+			inline SensorMemory* const GetSensorMem() const {return sensorMem; }
+            inline WeaponSystem* const GetWeaponSys() const {return weaponSys; }
+			inline SkillSystem* const GetSkillSys() const { return skillSys; }
 
 		private:
 			// bots shouldn't be copied, only created or respawned

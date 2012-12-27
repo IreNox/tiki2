@@ -34,12 +34,9 @@
     <None Include="bin\Data\Cloddy\Datasets\map1.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Licence\licence.dat" />
     <None Include="bin\Data\Meshes\building03_05.obj" />
-    <None Include="bin\Data\Meshes\Laptop.obj" />
-    <None Include="bin\Data\Meshes\marine_l.obj" />
-    <None Include="bin\Data\Meshes\mark.obj" />
+    <None Include="bin\Data\Meshes\collider\collider_map1.obj" />
     <None Include="bin\Data\Meshes\navmesh\navmesh_map1.obj" />
     <None Include="bin\Data\Meshes\navmesh\navmesh_ms1.obj" />
-    <None Include="bin\Data\Meshes\test.obj" />
     <None Include="bin\Data\Models\building03_05.tiki" />
     <None Include="bin\Data\Models\building_main.tiki" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
@@ -60,10 +57,12 @@
     <None Include="bin\Data\Textures\env_pipe_01\Box001_normal.dds" />
     <None Include="bin\Data\Textures\env_pipe_01\Box001_spec.dds" />
     <None Include="bin\Data\Textures\Hud\button_uf.dds" />
+    <None Include="bin\Data\Textures\Hud\ch_rocket.dds" />
     <None Include="bin\Data\Textures\Hud\circle_main_0.dds" />
     <None Include="bin\Data\Textures\Hud\circle_main_1.dds" />
     <None Include="bin\Data\Textures\Hud\energy.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
+    <None Include="bin\Data\Textures\Hud\mouse_crosshair.dds" />
     <None Include="bin\Data\Textures\Hud\unit_bg.dds" />
     <None Include="bin\Data\Textures\Hud\unit_health.dds" />
     <None Include="bin\Data\Textures\Hud\unit_shield.dds" />
@@ -91,6 +90,7 @@
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Diff.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Normal.dds" />
     <None Include="bin\Data\Textures\Soldier_S\Soldier_S_Spec.dds" />
+    <None Include="bin\Data\Textures\SpiderMine\checker.dds" />
     <None Include="bin\Data\Textures\terrain\color_map1.dds" />
     <None Include="bin\Data\Textures\terrain\color_ms1.dds" />
     <None Include="bin\Data\TikiData.sqlite" />

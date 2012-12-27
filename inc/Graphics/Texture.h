@@ -26,6 +26,7 @@ namespace TikiEngine
 			Int32 GetWidth();
 			Int32 GetHeight();
 			Vector2 GetSize();
+			Vector2 GetCenter();
 			Rectangle GetRectangle();
 
 			void GetData(PixelFormat format, void** data, UInt32* dataLength);

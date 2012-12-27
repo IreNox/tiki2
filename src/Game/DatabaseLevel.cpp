@@ -152,7 +152,7 @@ namespace TikiEngine
 				collider->SetGroup(CG_Collidable_Non_Pushable);
 				collider->AddRef();
 
-				Mesh* mesh = engine->content->LoadMesh(L"navmesh/navmesh_" + StringAtoW(name));
+				Mesh* mesh = engine->content->LoadMesh(L"collider/collider_" + StringAtoW(name));
 
 				UInt32 indexCount;
 				UInt32* indexData;

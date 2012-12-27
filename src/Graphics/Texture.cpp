@@ -223,6 +223,14 @@ namespace TikiEngine
 			);
 		}
 
+		Vector2 Texture::GetCenter()
+		{
+			return Vector2(
+				(float)desc.Width / 2.0f,
+				(float)desc.Height / 2.0f
+			);
+		}
+
 		Rectangle Texture::GetRectangle()
 		{
 			return Rectangle(0, 0, desc.Width, desc.Height);

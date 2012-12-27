@@ -2,31 +2,36 @@
 
 #include "Core/DrawArgs.h"
 
-//#include "Game/Skill.h"
+#include "Game/Skill.h"
 
 namespace TikiEngine
 {
 	namespace AI
 	{
+		using namespace TikiEngine::Game;
+
 		class TikiBot;
 
 		class SkillSystem
 		{
 		public:
-			SkillSystem(TikiBot* owner) { this->owner = owner; }
-			~SkillSystem() { }
 
-			void Init() { }
+			SkillSystem(TikiBot* owner);
+			~SkillSystem();
 
-			void Update(const UpdateArgs& args) { }
+			void Init();
 
-			void Draw(const DrawArgs& args) { }
-
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
+			
+			inline void AddSkill(Skill* skill) { skills.Add(skill); }
+			inline List<Skill*>& GetSkills() { return skills; }
 
 		private:
-			TikiBot* owner;
-			//List<Skill> skills;
 
+			TikiBot* owner;
+						
+			List<Skill*> skills;
 
 		};
 	}

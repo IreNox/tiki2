@@ -21,6 +21,9 @@ namespace TikiEngine
 			UnitSelection(GameState* gameState);
 			~UnitSelection();
 
+			inline bool GetEnabled() { return enabled; }
+			inline void SetEnabled(bool val) { enabled = val; }
+
 			List<GameObject*>* GetSelectedUnits();
 			List<GameObject*>* GetSelectedSlots();
 
@@ -29,7 +32,8 @@ namespace TikiEngine
 			
 		private:
 			void RemoveBot(TikiBot* bot, UInt32 index);
-
+			
+			bool enabled;
 
 			Vector2 selectionStartPoint;
 			RectangleF selectionRect;

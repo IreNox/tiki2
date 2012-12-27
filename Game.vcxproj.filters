@@ -147,9 +147,6 @@
     <Filter Include="Headerdateien\Gameplay\GameParts">
       <UniqueIdentifier>{b1da0587-967f-423e-b6a3-2057fd563109}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\AI\Skill">
-      <UniqueIdentifier>{af468e16-06b8-4eb7-8280-3c83926315fe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\AI\SkillSystem">
       <UniqueIdentifier>{c42db035-1f96-4d9b-b1c3-2c15a931c76a}</UniqueIdentifier>
     </Filter>
@@ -386,10 +383,13 @@
     <ClInclude Include="inc\Game\PlayerBase.h">
       <Filter>Headerdateien\Gameplay\GameParts</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\Skill.h">
-      <Filter>Headerdateien\AI\Skill</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\SkillSystem.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Skill.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillRocket.h">
       <Filter>Headerdateien\AI\SkillSystem</Filter>
     </ClInclude>
   </ItemGroup>
@@ -578,6 +578,12 @@
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Skill.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillRocket.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillSystem.cpp">
       <Filter>Quelldateien\AI\SkillSystem</Filter>
     </ClCompile>
   </ItemGroup>

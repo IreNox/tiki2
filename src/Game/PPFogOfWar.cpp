@@ -59,7 +59,7 @@ namespace TikiEngine
 
 			UInt32 i = 0;
 			UInt32 count = 0;
-			while (i < state->GetScene()->GetElements().Count())
+			while (i < state->GetScene()->GetElements().Count() && count < 32)
 			{
 				TikiBot* bot = state->GetScene()->GetElements()[i]->GetComponent<TikiBot>();
 
@@ -68,8 +68,28 @@ namespace TikiEngine
 					fow->Units[count].Position = bot->Pos();
 					fow->Units[count].Range = bot->GetSightRadius();
 					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
-
 					count++;
+
+					if (bot->GetSkillSys() != 0)
+					{
+						List<Skill*>& skills = bot->GetSkillSys()->GetSkills();
+
+						UInt32 i = 0;
+						while (i < skills.Count())
+						{
+							if (skills[i]->GetOnActivation())
+							{
+								shader->SetTexture("SkillCrosshair", skills[i]->GetCrosshairTexture());
+
+								fow->Units[count].Position = args.Update.Input.MousePosition;
+								fow->Units[count].Range = skills[i]->GetCrosshairSize();
+								fow->Units[count].Type = 2.0f;
+								count++;
+							}
+
+							i++;
+						}
+					}
 				}
 
 				i++;

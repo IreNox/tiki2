@@ -85,8 +85,6 @@ namespace TikiEngine
 			elements.Add(element);
 			element->AddRef();
 		}
-		
-
 
 		UInt32 len = 0;
 		Light** comLights = 0;
