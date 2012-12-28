@@ -46,6 +46,8 @@ namespace TikiEngine
 
 			SafeRelease(&hud);
 			SafeRelease(&projectiles);
+
+			FOREACH(gameParts, SafeRelease(&gameParts[i]));
 		}
 		#pragma endregion
 
@@ -66,7 +68,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Draw/Update
+		#pragma region Member - Draw
 		void GameState::Draw(const DrawArgs& args)
 		{
 			hud->Draw(args);
@@ -86,7 +88,9 @@ namespace TikiEngine
 			if (DrawPhysX) engine->physics->DrawDebug();
 			#endif
 		}
+		#pragma endregion
 
+		#pragma region Member - Update
 		void GameState::Update(const UpdateArgs& args)
 		{
 			hud->Update(args);

@@ -13,8 +13,6 @@ namespace TikiEngine
 		{
 		public:
 
-			Int32 Id;
-
 			LevelPoint* SpawnPoint;
 			GameObject* GateControl;
 

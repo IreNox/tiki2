@@ -2,6 +2,7 @@
 
 #include "Core/TikiObject.h"
 #include "Game/BasicDatabase.h"
+#include "Game/GameState.h"
 
 namespace TikiEngine
 {
@@ -11,7 +12,7 @@ namespace TikiEngine
 		{
 		public:
 
-			LevelPoint();
+			LevelPoint(GameState* state);
 			~LevelPoint();
 
 			inline const Vector2& GPosition() { return position; }
@@ -21,7 +22,11 @@ namespace TikiEngine
 
 			inline const string& GName() { return name; }
 
+			void LoadFromDatabase(sqlite3_stmt* state);
+
 		protected:
+
+			GameState* gameState;
 
 			void databaseToField(string fieldName, sqlite3_stmt* state, int fieldId);
 

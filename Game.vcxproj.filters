@@ -141,9 +141,6 @@
     <Filter Include="Quelldateien\Animation">
       <UniqueIdentifier>{efccb9fe-a6aa-4cd5-aee4-dc249338dac6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Database">
-      <UniqueIdentifier>{39fec312-4d0a-4abb-b297-20baf31ecb23}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Gameplay\GameParts">
       <UniqueIdentifier>{b1da0587-967f-423e-b6a3-2057fd563109}</UniqueIdentifier>
     </Filter>

@@ -14,6 +14,8 @@ namespace TikiEngine
 		public:
 
 			LevelPoint* SpawnPoint;
+
+			GameObject* Hero;
 			GameObject* MainBuilding;
 
 			PlayerBase(GameState* state);

@@ -47,7 +47,6 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
-
 			SceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
 
 			//Light
@@ -114,7 +113,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{
-					LevelPoint* point = new LevelPoint();
+					LevelPoint* point = new LevelPoint(gameState);
 					point->LoadFromDatabase(state);
 
 					points.Add(point);

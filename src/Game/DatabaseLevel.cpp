@@ -13,6 +13,9 @@
 #include "Core/IContentManager.h"
 #include "Core/ITerrainRenderer.h"
 
+#include "Game/EnemyBase.h"
+#include "Game/PlayerBase.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -234,13 +237,34 @@ namespace TikiEngine
 		#pragma endregion
 		
 		#pragma region LevelPoint
-		LevelPoint::LevelPoint()
-			: type(0), name(), position()
+		LevelPoint::LevelPoint(GameState* state)
+			: BasicDatabase(), type(0), name(), position(), gameState(state)
 		{
 		}
 
 		LevelPoint::~LevelPoint()
 		{
+		}
+
+		void LevelPoint::LoadFromDatabase(sqlite3_stmt* state)
+		{
+			BasicDatabase::LoadFromDatabase(state);
+
+			switch (type)
+			{
+			case 2:
+				{
+					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
+					eb->WayPoints.Add(position);
+				}
+				break;
+			case 3:
+				{
+					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
+					eb->SpawnPoint = this;
+				}
+				break;
+			}
 		}
 
 		void LevelPoint::databaseToField(string fieldName, sqlite3_stmt* state, int fieldId)
@@ -303,6 +327,10 @@ namespace TikiEngine
 				break;
 			case 3: // Hero
 				gameState->GetBotFactory()->CreatePlayerHero(this);
+				{
+					PlayerBase* pb = gameState->GetPart<PlayerBase>(assignment);
+					pb->Hero = this;
+				}
 				break;
 			case 4:
 				this->SModel(engine->content->LoadModel(L"building03_05"));
@@ -329,9 +357,17 @@ namespace TikiEngine
 				break;
 			case 10:
 				gameState->GetBotFactory()->CreateEnemyBuilding(this);
+				{
+					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
+					eb->GateControl = this;
+				}
 				break;
 			case 11:
 				gameState->GetBotFactory()->CreatePlayerBuilding(this);
+				{
+					PlayerBase* pb = gameState->GetPart<PlayerBase>(assignment);
+					pb->MainBuilding = this;
+				}
 				break;
 			}
 		}

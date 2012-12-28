@@ -51,12 +51,27 @@ namespace TikiEngine
 			inline void IncrementResource(double toIncrement) { resource += toIncrement; }
 			inline void DecrementResource(double toDecrement) { resource -= toDecrement; }
 
-			void AddTrigger(GameObject* go);
-
-			void SetSpecialCursor(ITexture* tex);
-
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+
+			template <typename T>
+			T* GetPart(int id)
+			{
+				UInt32 i = 0;
+				while (i < gameParts.Count())
+				{
+					T* part = dynamic_cast<T*>(gameParts[i]);
+					if (part != 0 && part->GetID()) return part;
+
+					i++;
+				}
+
+				T* nT = new T(this);
+				gameParts.Add(nT);
+
+				return nT;
+			}
+			inline void AddPart(GamePart* part) { gameParts.Add(part); }
 
 		private:
 			
