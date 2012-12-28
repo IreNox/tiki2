@@ -34,6 +34,18 @@ namespace TikiEngine
 		EnemyBase::~EnemyBase()
 		{
 		}
+
+		void EnemyBase::Init()
+		{
+#if _DEBUG
+			if (this->GateControl == 0 || this->SpawnPoint == 0)
+			{
+				engine->HLog.Write("Enemy Base Definition failed");
+			}
+#endif
+
+			//this->GateControl->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
+		}
 		#pragma endregion
 
 		#pragma region PlayerBase
@@ -44,6 +56,19 @@ namespace TikiEngine
 
 		PlayerBase::~PlayerBase()
 		{
+		}
+
+		void PlayerBase::Init()
+		{
+#if _DEBUG
+			if (this->MainBuilding == 0 || this->Hero == 0)
+			{
+				engine->HLog.Write("Player Base Definition failed");
+			}
+#endif
+
+			//this->Hero->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
+			//this->MainBuilding->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
 		}
 		#pragma endregion
 	}

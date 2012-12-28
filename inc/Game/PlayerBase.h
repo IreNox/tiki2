@@ -20,6 +20,8 @@ namespace TikiEngine
 
 			PlayerBase(GameState* state);
 			~PlayerBase();
+			
+			void Init();
 
 		};
 	}

@@ -21,6 +21,8 @@ namespace TikiEngine
 			EnemyBase(GameState* state);
 			~EnemyBase();
 
+			void Init();
+
 		};
 	}
 }
