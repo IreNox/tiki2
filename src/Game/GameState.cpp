@@ -57,7 +57,7 @@ namespace TikiEngine
 			navMesh->Clear();
 			navMesh->Load(
 				L"navmesh/navmesh_" + StringAtoW(scene->GLevel()->GetName()),
-				Matrix::CreateTranslation(Vector3(0, 6, 0))
+				Matrix::CreateTranslation(Vector3(0, 0.2f, 0))
 			);
 
 			botFactory->Init();
@@ -242,7 +242,7 @@ namespace TikiEngine
 						desc.LifeTime = 10.0f;
 						GameObject* go = new GameObject(engine);
 						Rocket* proj = new Rocket(this, go);
-						proj->Init(desc, 30, false,  args);
+						proj->Init(desc, 30, false);
 						projectiles->AddProjectile(proj);
 					}
 				}
@@ -272,7 +272,7 @@ namespace TikiEngine
 						desc.LifeTime = 10.0f;
 						GameObject* go = new GameObject(engine);
 						Rocket* proj = new Rocket(this, go);
-						proj->Init(desc, 30, true,  args);
+						proj->Init(desc, 30, true);
 						projectiles->AddProjectile(proj);
 					}
 				}

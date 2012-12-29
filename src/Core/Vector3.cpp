@@ -1,37 +1,6 @@
 
 #include "Core/Vector3.h"
 
-#pragma region Init
-Vector3::Vector3(void)
-	: X(0), Y(0), Z(0)
-{
-}
-
-Vector3::Vector3(float all)
-	: X(all), Y(all), Z(all)
-{
-}
-
-Vector3::Vector3(Vector2 v, float z)
-	: X(v.X), Y(v.Y), Z(z)
-{
-}
-
-Vector3::Vector3(float x, float y, float z)
-	: X(x), Y(y), Z(z)
-{
-}
-
-Vector3::Vector3(float* arr)
-	: X(arr[0]), Y(arr[1]), Z(arr[2])
-{
-}
-
-Vector3::~Vector3(void)
-{
-}
-#pragma endregion
-
 #pragma region Methods
 float Vector3::Length() const
 {

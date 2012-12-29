@@ -17,7 +17,7 @@ namespace TikiEngine
 
         void Bullet::Init(ProjectileDescription desc, const UpdateArgs& args)
         {
-            Projectile::Init(desc, args);
+            Projectile::Init(desc);
 
             Vector3 toTarget = Vector3::Normalize(desc.Target - desc.Origin);
             toTarget = toTarget * desc.MaxSpeed;

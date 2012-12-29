@@ -23,11 +23,11 @@ struct PS_INPUT
 	float4 Color	: COLOR;
 };
 
-matrix spViewM;
-matrix spProjM;
-
-matrix spLocalM;
-matrix spWorldM;
+//matrix spViewM;
+//matrix spProjM;
+//
+//matrix spLocalM;
+//matrix spWorldM;
 
 /////////////
 // GLOBALS //
@@ -44,10 +44,10 @@ PS_INPUT VS_Main(VS_INPUT input)
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
-	output.Pos = mul(output.Pos, spLocalM);
-	output.Pos = mul(output.Pos, spWorldM);
-	output.Pos = mul(output.Pos, spViewM);
-	output.Pos = mul(output.Pos, spProjM);
+	//output.Pos = mul(output.Pos, spLocalM);
+	//output.Pos = mul(output.Pos, spWorldM);
+	//output.Pos = mul(output.Pos, spViewM);
+	//output.Pos = mul(output.Pos, spProjM);
 	output.UV = input.UV;
 	output.Color = input.Color;
 	    

@@ -30,7 +30,19 @@ namespace TikiEngine
 
 		void SkillSystem::Update(const UpdateArgs& args)
 		{
-			FOREACH_PTR_CALL(skills, Update(args));
+			static Key keys[4] = { KEY_Q, KEY_W, KEY_E, KEY_R };
+
+			UInt32 i = 0;
+			while (i < skills.Count())
+			{
+				if (args.Input.GetKeyPressed(keys[i]))
+				{
+					skills[i]->Aktivate();
+				}
+
+				skills[i]->Update(args);
+				i++;
+			}
 		}
 		#pragma endregion
 	}

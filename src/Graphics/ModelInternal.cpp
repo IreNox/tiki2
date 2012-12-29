@@ -245,9 +245,13 @@ namespace TikiEngine
 
 		TikiMesh* ModelConverter::readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
 		{
+#ifdef TIKI_ENGINE
 			TikiMesh* mesh = new TikiMesh(
 				model->GetEngine()
 			);
+#else
+			TikiMesh* mesh = new TikiMesh();
+#endif
 
 			mesh->SetName(readString(binMesh->NameId));
 			mesh->SetDeformation(binMesh->UseDeformation != 0);
@@ -559,12 +563,14 @@ namespace TikiEngine
 
 		#pragma region TikiMesh
 		#pragma region Class
-		TikiMesh::TikiMesh(Engine* engine)
-			: EngineObject(engine), material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0),
-			  vertexLength(0), adjacencyIndexData(0), adjacencyIndexCount(0)
 #ifdef TIKI_ENGINE
-			, indexBuffer(0), vertexBuffer(0), decl(0)
+		TikiMesh::TikiMesh(Engine* engine)
+			: EngineObject(engine), indexBuffer(0), vertexBuffer(0), decl(0),
+#else
+		TikiMesh::TikiMesh()
+			: EngineObject(0),
 #endif
+			  material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0), vertexLength(0), adjacencyIndexData(0), adjacencyIndexCount(0)
 		{
 		}
 

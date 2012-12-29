@@ -23,7 +23,11 @@ namespace TikiEngine
 		{
 		public:
 
+#ifdef TIKI_ENGINE
 			TikiMesh(Engine* engine);
+#else
+			TikiMesh();
+#endif
 			~TikiMesh();
 
 			void Draw(const DrawArgs& args, Model* model, GameObject* gameObject);

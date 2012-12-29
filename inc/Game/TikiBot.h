@@ -88,7 +88,7 @@ namespace TikiEngine
 
 				// MovingEntity
 				Heading = Vector2::Zero;
-				MaxSpeed = 30.0f;
+				MaxSpeed = 5.0f;
 				MaxTurnRate = 0.5f;
 				MaxForce = 1.0f;
 				Radius = 2.0f;
@@ -96,7 +96,7 @@ namespace TikiEngine
 				// weitere Felder
 				entityType = ET_Bot;
 				weapon = 0;
-				SightRadius = 60;
+				SightRadius = 15;
 				Loot = 0;
 				Armor = 0;
 			}
@@ -165,6 +165,8 @@ namespace TikiEngine
 
 			// called when a human is exorcised from this bot and the AI takes control
 			void Exorcise();
+
+			void Teleport(const Vector3& pos);
 
 			inline TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
 			inline ICharacterController* GetController() { return controller; }

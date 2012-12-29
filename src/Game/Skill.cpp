@@ -12,21 +12,31 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		Skill::Skill(TikiBot* owner, SkillFlags flags, double cooldown, float crosshairSize, wstring texture)
-			: owner(owner), EngineObject(owner->GetEngine()), gameState(owner->GetGameState()), cooldownTimer(cooldown),
-			flags(flags), crosshairSize(crosshairSize), onActivation(false), isReady(false), atWork(false)
+		#pragma region Class
+		Skill::Skill(TikiBot* owner, const SkillDescription& desc)
+			: owner(owner), EngineObject(owner->GetEngine()), gameState(owner->GetGameState()), onActivation(false), isReady(true), atWork(false),
+			  icon(0), crosshair(0), description(desc), inRange(false),
+			  cooldownTimer(desc.Cooldown),	flags(desc.Flags)
 		{
-			if (texture != L"" && this->flags.HasFlag(ST_TargetAOE))
+			if (wstring(desc.TexNameIcon) != L"")
 			{
 				SafeAddRef(
-					engine->content->LoadTexture(L"hud/" + texture),
+					engine->content->LoadTexture(L"hud/icons/" + wstring(desc.TexNameIcon)),
+					&icon
+				);
+			}
+
+			if (wstring(desc.TexNameCrosshair) != L"" && !this->flags.HasFlag(ST_TargetAura))
+			{
+				SafeAddRef(
+					engine->content->LoadTexture(L"hud/crosshair/" + wstring(desc.TexNameCrosshair)),
 					&crosshair
 				);
 			}
-			else
+			else if (!this->flags.HasFlag(ST_TargetAura))
 			{
 				SafeAddRef(
-					engine->content->LoadTexture(L"hud/mouse_crosshair"),
+					engine->content->LoadTexture(L"hud/crosshair/pointer"),
 					&crosshair
 				);
 			}
@@ -34,9 +44,12 @@ namespace TikiEngine
 
 		Skill::~Skill()
 		{
+			SafeRelease(&icon);
 			SafeRelease(&crosshair);
 		}
+		#pragma endregion
 
+		#pragma region Member
 		void Skill::Aktivate()
 		{
 			if (isReady && !flags.HasFlag(ST_Passive))
@@ -48,12 +61,65 @@ namespace TikiEngine
 				// play sound
 			}
 		}
+		#pragma endregion
 
+		#pragma region Member - Draw
 		void Skill::Draw(const DrawArgs& args)
 		{
 			if (onActivation)
 			{
-				if (flags.HasFlag(ST_TargetBot))
+				Ray r = args.CurrentCamera->ScreenPointToRay(args.Update.Input.MousePositionDisplay);
+				RaycastHit hit;
+
+				if (engine->physics->RayCast(r, &hit))
+				{
+					inRange = Vector2::Distance(hit.Point.XZ(), owner->Pos()) < description.ActivationRange;
+
+					if (args.Update.Input.GetMousePressed(MB_Left) && inRange)
+					{
+						bool activated = false;
+					
+						if (flags.HasFlag(ST_TargetAOE))
+						{
+							activated = true;
+							this->internActivation(hit.Point);
+						}
+						else if (flags.HasFlag(ST_TargetBot) || flags.HasFlag(ST_TargetNoBot))
+						{
+							GameObject* obj = hit.Collider->GetGameObject();
+
+							if (obj->GetComponent<TikiBot>() != 0 && flags.HasFlag(ST_TargetBot))
+							{
+								activated = true;
+								this->internActivation(obj);
+							}
+							else if (flags.HasFlag(ST_TargetNoBot))
+							{
+								activated = true;
+								this->internActivation(hit.Point);
+							}
+						}
+						else if (flags.HasFlag(ST_TargetAura))
+						{
+							activated = true;
+							this->internActivation(owner->Pos3D());
+						}
+
+						if (activated)
+						{
+							onActivation = false;
+							isReady = false;
+						}
+						// else play sound/throw exception???
+					}
+					else if (args.Update.Input.GetMousePressed(MB_Left) && !inRange)
+					{
+						onActivation = false;
+					}
+				}
+
+				// TargetAOE - Drawing in FogOfWar-Shader
+				if (flags.HasFlag(ST_TargetBot) || flags.HasFlag(ST_TargetNoBot))
 				{
 					args.SpriteBatch->Draw(
 						crosshair,
@@ -61,47 +127,17 @@ namespace TikiEngine
 						0.0f,
 						crosshair->GetCenter(),
 						1.0f,
-						1.0f
+						1.0f,
+						(inRange ? Color::White : Color::Black)
 					);
 				}
-				// TargetAOE - Drawing in FOW-Shader
-				
-				if (args.Update.Input.GetMousePressed(MB_Left))
-				{
-					bool activated = false;
-
-					Ray r = args.CurrentCamera->ScreenPointToRay(args.Update.Input.MousePositionDisplay);
-					RaycastHit hit;
-
-					if (engine->physics->RayCast(r, &hit))
-					{
-						if (flags.HasFlag(ST_TargetAOE))
-						{
-							activated = true;
-							this->internActivation(args.Update, hit.Point);
-						}
-						else
-						{
-							GameObject* obj = hit.Collider->GetGameObject();
-
-							if (obj->GetComponent<TikiBot>() != 0)
-							{
-								activated = true;
-								this->internActivation(args.Update, obj);
-							}
-						}
-					}
-
-					if (activated)
-					{
-						onActivation = false;
-						isReady = false;
-					}
-					// else play sound/throw exception???
-				}
 			}
-		}
 
+			internDraw(args);
+		}
+		#pragma endregion
+
+		#pragma region Member - Update
 		void Skill::Update(const UpdateArgs& args)
 		{
 			if (!isReady)
@@ -112,12 +148,10 @@ namespace TikiEngine
 			{
 				onActivation = false;
 			}
-			// Activation in Draw-Method
-			// TODO: only for debugging!!!!
-			else if (args.Input.GetKeyPressed(KEY_Q))
-			{
-				this->Aktivate();
-			}
+			// Activation in Draw-Method because CurrentCamera
+
+			internUpdate(args);
 		}
+		#pragma endregion
 	}
 }

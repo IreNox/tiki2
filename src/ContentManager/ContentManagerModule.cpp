@@ -186,7 +186,19 @@ namespace TikiEngine
 						ResourceInfo(hash, name, value)
 					);
 
-					if (loadFile) value->LoadFromFile(name.c_str());
+					if (loadFile)
+					{
+						if (!engine->HPath.FileExists(name))
+						{
+#if _DEBUG
+							engine->HLog.Write("Can't Load Resource: " + StringWtoA(name));
+#endif
+
+							return 0;
+						}
+
+						value->LoadFromFile(name.c_str());
+					}
 				}
 			}
 			

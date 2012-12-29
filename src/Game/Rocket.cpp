@@ -20,9 +20,9 @@ namespace TikiEngine
 
 		}
 
-		void Rocket::Init(ProjectileDescription desc, float radius, bool heal, const UpdateArgs& args)
+		void Rocket::Init(ProjectileDescription desc, float radius, bool heal)
 		{
-			Projectile::Init(desc, args);
+			Projectile::Init(desc);
 			this->aoeRadius = radius;
 			this->heal = heal;
 

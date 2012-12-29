@@ -19,6 +19,7 @@ namespace TikiEditor
 		Int32 GetWidth() { return 0; }
 		Int32 GetHeight() { return 0; }
 		Vector2 GetSize() { return Vector2(); }
+		Vector2 GetCenter() { return Vector2(); }
 		TikiEngine::Rectangle GetRectangle() { return TikiEngine::Rectangle(); }
 
 		bool GetDynamic() { return false; }

@@ -66,8 +66,8 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 			if (Units[i].Type == 1.0f)
 			{
-				dis = bDis - 8;
-				dis = clamp(dis * 1.5f, 0, 3.14159);
+				dis = bDis - 4.5f;
+				dis = clamp(dis * 4.5f, 0, 3.14159);
 
 				diff.b += sin(dis);
 			}
@@ -83,11 +83,14 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			);
 			
 			float4 color = SkillCrosshair.Sample(samW, uv);
-			addc += color.rgb * color.a;
 
-			if (uv.x >= 0.0f && uv.x <= 1.0f &&
-				uv.y >= 0.0f && uv.y <= 1.0f)
+			if (Units[i].Type == 3.0f)
 			{
+				addc.r += color.rgb * color.a;
+			}
+			else
+			{
+				addc.rgb -= color.a;
 			}
 		}
 	}

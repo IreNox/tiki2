@@ -10,6 +10,8 @@
 class Vector3
 {
 public:
+
+	#pragma region Vars
 	union
 	{
 		struct
@@ -20,14 +22,19 @@ public:
 		};
 		float arr[3];
 	};
+	#pragma endregion
 
-	Vector3(void);
-	Vector3(float all);
-	Vector3(float* arr);
-	Vector3(Vector2 v, float z);
-	Vector3(float x, float y, float z);
-
-	~Vector3(void);
+	#pragma region Class
+	Vector3() : X(0), Y(0), Z(0) {}
+	Vector3(float all) : X(all), Y(all), Z(all) {}
+	Vector3(float* arr) : X(arr[0]), Y(arr[1]), Z(arr[2]) {}
+	Vector3(Vector2 v, float z) : X(v.X), Y(v.Y), Z(z) {}
+	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
+	~Vector3() {}
+	#pragma endregion
+	
+	/*! @brief Get Vector2 with X = X and Y = Z */
+	inline Vector2 XZ() const { return Vector2(X, Z); }
 
 	float Length() const;
 	float LengthSquared() const;

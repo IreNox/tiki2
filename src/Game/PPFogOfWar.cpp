@@ -21,7 +21,7 @@ namespace TikiEngine
 			SafeAddRef(
 				engine->content->LoadShader(L"pp_fow"),
 				&shader
-				);
+			);
 
 			buffer = engine->graphics->CreateConstantBuffer(sizeof(CBFogOfWar));
 			shader->SetConstantBuffer("FogOfWar", buffer);
@@ -83,7 +83,7 @@ namespace TikiEngine
 
 								fow->Units[count].Position = args.Update.Input.MousePosition;
 								fow->Units[count].Range = skills[i]->GetCrosshairSize();
-								fow->Units[count].Type = 2.0f;
+								fow->Units[count].Type = (skills[i]->GetInRange() ? 3.0f : 4.0f );
 								count++;
 							}
 

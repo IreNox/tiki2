@@ -11,7 +11,7 @@ namespace TikiEngine
 	namespace Game
 	{
 		SkillRocket::SkillRocket(TikiBot* owner)
-			: Skill(owner, (SkillFlags)(ST_Active | ST_TargetAOE), 4.5, 20.0f, L"ch_rocket")
+			: Skill(owner, SkillRocket::Desc)
 		{
 		}
 
@@ -19,7 +19,7 @@ namespace TikiEngine
 		{
 		}
 
-		void SkillRocket::internActivation(const UpdateArgs& args, const Vector3& target)
+		void SkillRocket::internActivation(const Vector3& target)
 		{
 			ProjectileDescription desc;
 			desc.Target = target; 
@@ -32,7 +32,7 @@ namespace TikiEngine
 
 			GameObject* go = new GameObject(engine);
 			Rocket* proj = new Rocket(gameState, go);
-			proj->Init(desc, 30, false, args);
+			proj->Init(desc, 30, false);
 
 			gameState->GetProjectiles()->AddProjectile(proj);
 		}
@@ -44,5 +44,15 @@ namespace TikiEngine
 		void SkillRocket::internUpdate(const UpdateArgs& args)
 		{
 		}
+
+		SkillDescription SkillRocket::Desc = SkillDescription(
+			100,
+			(SkillFlags)(ST_Active | ST_TargetAOE),
+			20,
+			L"rocket",
+			L"rocket",
+			4.5,
+			2
+		);
 	}
 }

@@ -6,6 +6,7 @@
 #include "Game/SceneLevel.h"
 #include "Game/BuildSlot.h"
 #include "Game/SkillRocket.h"
+#include "Game/SkillFlash.h"
 
 #include "Core/IContentManager.h"
 
@@ -136,13 +137,13 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 9.0f;
-			botDesc.Radius = 3.5f;
+			botDesc.Height = 3.0f;
+			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 30;			
 			botDesc.entityType = ET_Bot;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.06f);
+			bot->SetScale(0.01f);
 			bot->CreateNav(gameState->GetNavMesh());
 
 			if (!wayPoints.empty())
@@ -162,14 +163,14 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 9.0f;
-			botDesc.Radius = 3.5f;
+			botDesc.Height = 5.0f;
+			botDesc.Radius = 3.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.entityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(8.0f);
+			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
@@ -183,7 +184,7 @@ namespace TikiEngine
 
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 5.0f;
+			botDesc.Height = 10.0f;
 			botDesc.Radius = 30.0f; //5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
@@ -191,7 +192,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
-			bot->SetScale(25.0f);
+			bot->SetScale(0.01f);
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -208,15 +209,16 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 11.0f;
-			botDesc.Radius = 3.5f;
+			botDesc.Height = 3.0f;
+			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 300;
 			botDesc.entityType = ET_Hero;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.1f);
+			bot->SetScale(0.01f);
 			bot->CreateNav(gameState->GetNavMesh());
 
+			bot->GetSkillSys()->AddSkill(new SkillFlash(bot));
 			bot->GetSkillSys()->AddSkill(new SkillRocket(bot));
 
 			gameState->GetScene()->AddElement(go);
@@ -231,13 +233,13 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 8.0f;
-			botDesc.Radius = 4.0f;
+			botDesc.Height = 3.0f;
+			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 30;
 			botDesc.entityType = ET_Bot;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.06f);
+			bot->SetScale(0.01f);
 			bot->CreateNav(gameState->GetNavMesh());
 
 			bot->GetBrain()->AddGoalAttackMove(dest);
@@ -255,14 +257,14 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 9.0f;
-			botDesc.Radius = 3.5f;
+			botDesc.Height = 10.0f;
+			botDesc.Radius = 5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.entityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(1.0f);
+			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			
@@ -283,7 +285,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
-			bot->SetScale(30.0f);
+			bot->SetScale(10.0f);
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -293,11 +295,10 @@ namespace TikiEngine
 		void TikiBotFactory::CreateBuildSlot(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
-
 			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
+			go->PRS.SScale() = Vector3(0.01f);
 
-			BuildSlot* slot = new BuildSlot(gameState, go);
-			//slot->GetGameObject()->PRS.SScale() = Vector3(8.0f, 8.0f, 8.0f);
+			new BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);
 		}
 		#pragma endregion
@@ -319,7 +320,6 @@ namespace TikiEngine
 		{
 			return getPos(Vector2(pos.X, pos.Z), heightAdjust);
 		}
-
 		#pragma endregion
 
 		#pragma region Private Member - Database

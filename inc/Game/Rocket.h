@@ -13,13 +13,14 @@ namespace TikiEngine
 			Rocket(GameState* gameState, GameObject* gameObject);
 			~Rocket();
 
-			void Init(ProjectileDescription desc, float radius, bool heal, const UpdateArgs& args);
+			void Init(ProjectileDescription desc, float radius, bool heal);
 
 			void Handle(ICollider* sender, const TriggerEnterArgs& args);
 
 			void Update(const UpdateArgs& args);
 
 		private:
+
 			void InflictAoEDamage();
 			void InflictAoeHeal();
 

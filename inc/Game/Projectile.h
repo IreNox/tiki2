@@ -44,8 +44,6 @@ namespace TikiEngine
 			Projectile(GameState* gameState, GameObject* gameObject);
 			virtual ~Projectile();
 
-			void Init(ProjectileDescription desc, const UpdateArgs& args);
-
 			virtual void Draw(const DrawArgs& args) { }
 			virtual void Update(const UpdateArgs& args);
 			void Write(std::ostream&  os)const { }
@@ -77,13 +75,13 @@ namespace TikiEngine
 			bool impacted;
             TikiBot* shooter;
 
-			double timeOfCreation;
 			double lifeTime;
+			double timeOfLife;
 			
 			ISphereCollider* sphere;
+
+			void Init(ProjectileDescription desc);
+
 		};
-		
-
-
 	}
 }

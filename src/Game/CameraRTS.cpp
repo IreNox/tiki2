@@ -32,11 +32,11 @@ namespace TikiEngine
 
 		void CameraRTS::Update(const UpdateArgs& args)
 		{
-			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 400.0f : 200.0f);
+			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 150.0f : 75.0f);
 
 			Vector2 move = Vector2(
-				(args.Input.GetKey(KEY_LEFT) || args.Input.GetKey(KEY_A) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) || args.Input.GetKey(KEY_D) ? 1.0f : 0.0f),
-				(args.Input.GetKey(KEY_UP)  || args.Input.GetKey(KEY_W) ?  -1.0f : 0.0f) + (args.Input.GetKey(KEY_DOWN)  || args.Input.GetKey(KEY_S) ? 1.0f : 0.0f)
+				(args.Input.GetKey(KEY_LEFT) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) ? 1.0f : 0.0f),
+				(args.Input.GetKey(KEY_UP) ?   -1.0f : 0.0f) + (args.Input.GetKey(KEY_DOWN) ?  1.0f : 0.0f)
 			) * speed;
 
 #if _DEBUG
@@ -64,7 +64,7 @@ namespace TikiEngine
 				targetZoom = Clamp(targetZoom, -600.0f, 100.0f);
 			}
 
-			if (abs(zoom - targetZoom) > 0.01f)
+			if (abs(zoom - targetZoom) > 0.01f || move != Vector2::Zero)
 			{
 				zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime * 2);
 
@@ -75,7 +75,7 @@ namespace TikiEngine
 				float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
 				height = Lerp(height, sample, (float)args.Time.ElapsedTime * 2);
 				height = Clamp(height, sample, 1000.0f);
-				gameObject->PRS.SPosition().Y = height + (164.0f - zoom);
+				gameObject->PRS.SPosition().Y = height + (32.0f - zoom);
 
 				//if (args.Input.MouseWheel != 0)
 				//{

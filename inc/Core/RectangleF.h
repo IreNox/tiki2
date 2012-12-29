@@ -35,6 +35,13 @@ namespace TikiEngine
 			return rect;
 		}
 
+		static RectangleF Create(const Vector2& pos, const Vector2& size)
+		{
+			RectangleF rect = { pos.X, pos.Y, size.X, size.Y };
+
+			return rect;
+		}
+
 		//RectangleF()
 		//	: X(0), Y(0)
 		//{

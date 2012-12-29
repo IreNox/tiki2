@@ -5,6 +5,15 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Quelldateien\Colliders">
+      <UniqueIdentifier>{dc264be6-3d54-4d01-97d7-6b3fc8fc0f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\NxFail">
+      <UniqueIdentifier>{4fc170d3-caf5-4984-a364-07e5a4061f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\Reports">
+      <UniqueIdentifier>{821b1671-98a7-4f5b-87af-d38b807da36e}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Headerdateien">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
@@ -12,20 +21,11 @@
     <Filter Include="Headerdateien\Colliders">
       <UniqueIdentifier>{055799a8-dd2a-463d-9860-da4266d2ff76}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Colliders">
-      <UniqueIdentifier>{dc264be6-3d54-4d01-97d7-6b3fc8fc0f8e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\NxFail">
       <UniqueIdentifier>{40cb4656-b042-4c52-b39c-ff095ec18ba6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\NxFail">
-      <UniqueIdentifier>{4fc170d3-caf5-4984-a364-07e5a4061f45}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Reports">
       <UniqueIdentifier>{5d78382e-56a0-4677-aee4-f721933c4572}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Reports">
-      <UniqueIdentifier>{821b1671-98a7-4f5b-87af-d38b807da36e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

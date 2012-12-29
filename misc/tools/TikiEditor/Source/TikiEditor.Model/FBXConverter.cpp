@@ -40,7 +40,11 @@ namespace TikiEditor
 
 	Vector3 FBXConverter::ConvertDrop(const FbxVector4 &vector)
 	{
-		return Vector3((float)vector[0],(float)vector[1], (float)vector[2]);
+		return Vector3(
+			(float)vector[0] * 100,
+			(float)vector[1] * 100,
+			(float)vector[2] * 100
+		);
 	}
 
 	Matrix FBXConverter::Convert(const FbxAMatrix& mat)

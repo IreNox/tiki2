@@ -166,7 +166,7 @@ namespace TikiEditor
 
 	void FbxHelper::InitializeMesh(FbxMesh* mesh)
 	{
-		TikiMesh* tiki = new TikiMesh(0);
+		TikiMesh* tiki = new TikiMesh();
 		tiki->SetName(mesh->GetNode()->GetName());
 
 		int vertexCount = mesh->GetControlPointsCount();
@@ -226,9 +226,10 @@ namespace TikiEditor
 				Vector3 normals = FBXConverter::ConvertDrop(mesh->GetElementNormal(0)->GetDirectArray().GetAt(counter));
 
 				SkinningVertex skin(
-					position[0],position[1],position[2],
-					uv[0],uv[1],
-					normals[0],normals[1],normals[2]);
+					position[0], position[1], position[2],
+					uv[0], uv[1],
+					normals[0], normals[1], normals[2]
+				);
 
 				indicesArray[k] = buffer.IndexOf(skin);
 				if(indicesArray[k] == -1)
@@ -335,8 +336,12 @@ namespace TikiEditor
 
 		for(int i = 0; i < vertexCount; i++)
 		{
-			vertexArray[i] = (static_cast<FbxMatrix>(mesh->GetNode()->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE)).
-				MultNormalize(vertexArray[i]));
+			vertexArray[i] = (
+				static_cast<FbxMatrix>(
+					mesh->GetNode()->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE)).MultNormalize(vertexArray[i]
+				)
+			);
+
 			list.Add(FBXConverter::ConvertDrop(vertexArray[i]));
 		}
 

@@ -36,10 +36,8 @@ namespace TikiEngine
 			//this can be used to reset the next ID
 			static void ResetNextValidID() {nextValidID = 0;}
 
-
-			Vector2 Pos() { return Vector2(GetGameObject()->PRS.GPosition().X, GetGameObject()->PRS.GPosition().Z); }
+			Vector2 Pos() { return gameObject->PRS.GPosition().XZ(); }
 			Vector3 Pos3D() { return GetGameObject()->PRS.GPosition(); }
-			void SetPos(const Vector3& newPos) { GetGameObject()->PRS.SPosition() = newPos; }
 
 			Double BRadius() const { return boundingRadius; }
 			void SetBRadius(Double r) { boundingRadius = r; }
@@ -51,8 +49,8 @@ namespace TikiEngine
 			void UnTag() {tag = false; }
 
 			Vector3 Scale() { return GetGameObject()->PRS.GScale(); }
-			void SetScale(Vector3 val);
-			void SetScale(float val);
+			void SetScale(Vector3 val) { gameObject->PRS.SScale() = val; }
+			void SetScale(float val) { gameObject->PRS.SScale() = Vector3(val); }
 
 			int EntityType() const { return type; }
 			//void SetEntityType(int newType) { type = newType; }

@@ -1,20 +1,17 @@
 #pragma once
 
 #include "Game/Skill.h"
-#include "Game/TikiBot.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-		using namespace TikiEngine::AI;
-
-		class SkillRocket : public Skill
+		class SkillFlash : public Skill
 		{
 		public:
-			
-			SkillRocket(TikiBot* owner);
-			~SkillRocket();
+
+			SkillFlash(TikiBot* owner);
+			~SkillFlash();
 
 		protected:
 

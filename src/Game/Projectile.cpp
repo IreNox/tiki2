@@ -20,7 +20,7 @@ namespace TikiEngine
 			SafeRelease(&sphere);
 		}
 
-		void Projectile::Init(ProjectileDescription desc, const UpdateArgs& args)
+		void Projectile::Init(ProjectileDescription desc)
 		{
 			//Vector2 heading2D = Vector2(desc.Heading.X, desc.Heading.Z);
 			MovingEntity::Init(desc.Scale, Vector2::Zero, desc.MaxSpeed, desc.Heading, 0, desc.MaxForce);
@@ -32,8 +32,8 @@ namespace TikiEngine
             shooter = desc.Shooter;
 			dead = false;
 			impacted = false;	
-			timeOfCreation = args.Time.TotalTime;
-			lifeTime = timeOfCreation;
+			timeOfLife = 0;
+			lifeTime = desc.LifeTime;
 
 			sphere->SetMaterial(0);
 			sphere->SetCenter(desc.Origin);
@@ -57,9 +57,9 @@ namespace TikiEngine
 
 		void Projectile::Update(const UpdateArgs& args)
 		{
-			// remove if older than 2 secs
-       		lifeTime += args.Time.ElapsedTime;
-			if (lifeTime >=  timeOfCreation + 2.0)
+			// remove if older than lifeTime
+       		timeOfLife += args.Time.ElapsedTime;
+			if (timeOfLife >= lifeTime)
 				dead = true;
 		}
 

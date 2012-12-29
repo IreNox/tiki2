@@ -225,6 +225,14 @@ namespace TikiEngine
 			//brain->AddGoalExplore();
 		}
 
+		void TikiBot::Teleport(const Vector3& pos)
+		{
+			Vector3 sp = pos;
+			sp.Y += controller->GetHeight();
+
+			controller->SetCenter(sp);
+		}
+
 		void TikiBot::Draw(const DrawArgs& args)
 		{
 			Matrix vp = args.CurrentCamera->WorldToScreen();

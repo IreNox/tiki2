@@ -892,7 +892,7 @@ namespace TikiEngine
 		#pragma region SpriteBatchModule
 		#pragma region Class
 		SpriteBatchModule::SpriteBatchModule(Engine* engine)
-			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), matrices(), sprites()
+			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), sprites()
 		{
 		}
 
@@ -910,10 +910,10 @@ namespace TikiEngine
 			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
 			shader->AddRef();
 
-			shader->SetMatrix("spViewM", Matrix::Identity);
-			shader->SetMatrix("spProjM", Matrix::Identity);
-			shader->SetMatrix("spLocalM", Matrix::Identity);
-			shader->SetMatrix("spWorldM", Matrix::Identity);
+			//shader->SetMatrix("spViewM", Matrix::Identity);
+			//shader->SetMatrix("spProjM", Matrix::Identity);
+			//shader->SetMatrix("spLocalM", Matrix::Identity);
+			//shader->SetMatrix("spWorldM", Matrix::Identity);
 
 			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, SpriteBatchVertex::DeclarationCount, true);
 
@@ -925,11 +925,11 @@ namespace TikiEngine
 
 			buffer = new DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 
-			viewMatrix = Matrix::CreateLookAt(
-				Vector3(0, 0, 10),
-				Vector3::Zero,
-				Vector3::Up
-				);
+			//viewMatrix = Matrix::CreateLookAt(
+			//	Vector3(0, 0, 10),
+			//	Vector3::Zero,
+			//	Vector3::Up
+			//);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));
@@ -955,7 +955,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			matrices.Clear();
+			//matrices.Clear();
 		}
 
 		void SpriteBatchModule::End()
@@ -1120,7 +1120,7 @@ namespace TikiEngine
 				tl.X + (pixelSize.X * destRect.Width),
 				tl.Y - (pixelSize.Y * destRect.Height),
 				0.0f
-				);
+			);
 
 			Vector2 size = texture->GetSize();
 
@@ -1129,7 +1129,7 @@ namespace TikiEngine
 				srcRect.Y / size.Y,
 				(srcRect.X + srcRect.Width) / size.X,
 				(srcRect.Y + srcRect.Height) / size.Y
-				);
+			);
 
 			drawInternal(
 				texture,
@@ -1139,22 +1139,25 @@ namespace TikiEngine
 				br,
 				texCorrd,
 				color
-				);
+			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth)
 		{
-			this->Draw(
-				texture,
-				position,
-				rotation,
-				origin,
-				Vector2(scale),
-				layerDepth
-				);
+			this->Draw(texture, position, rotation, origin, Vector2(scale), layerDepth, Color::White);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth)
+		{
+			this->Draw(texture, position, rotation, origin, scale, layerDepth, Color::White);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth, const Color& color)
+		{
+			this->Draw(texture, position, rotation, origin, Vector2(scale),	layerDepth, color);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color)
 		{
 			Vector3 origin3 = Vector3(origin, 0);
 			Vector3 size = Vector3(texture->GetSize(), 0);
@@ -1181,29 +1184,7 @@ namespace TikiEngine
 			bl = transformPoint(bl + position3);
 			br = transformPoint(br + position3);
 
-			drawInternal(texture, tl, tr, bl, br, Vector4(0.0f, 0.0f, 1.0f, 1.0f), Color::White);
-		}
-		#pragma endregion
-
-		#pragma region Member - Draw3D
-		void SpriteBatchModule::Draw3D(ITexture* texture, const Matrix& world, const Matrix& local)
-		{
-			drawInternal(
-				texture,
-				Vector3(-0.1f, -0.1f, 0),
-				Vector3( 0.1f, -0.1f, 0),
-				Vector3(-0.1f,  0.1f, 0),
-				Vector3( 0.1f,  0.1f, 0),
-				Vector4(0, 0, 1, 1),
-				Color::White
-				);
-
-			LocalWorldMatrices lw = { local, world };
-
-			matrices.Add(
-				sprites.Count() - 1,
-				lw
-			);
+			drawInternal(texture, tl, tr, bl, br, Vector4(0.0f, 0.0f, 1.0f, 1.0f), color);
 		}
 		#pragma endregion
 
@@ -1230,14 +1211,14 @@ namespace TikiEngine
 			pixelSize = Vector2(
 				2.0f / screenSize.X,
 				2.0f / screenSize.Y
-				);
+			);
 
-			projMatrix = Matrix::CreateOrthographic(
-				screenSize.X,
-				screenSize.Y,
-				1.0f,
-				10000.0f
-				);
+			//projMatrix = Matrix::CreateOrthographic(
+			//	screenSize.X,
+			//	screenSize.Y,
+			//	1.0f,
+			//	10000.0f
+			//);
 		}
 		#pragma endregion
 
@@ -1271,14 +1252,11 @@ namespace TikiEngine
 				{ br.X, br.Y, br.Z, texCoord.Z, texCoord.W, color.R, color.G, color.B, color.A }, // BR
 			};
 
-			List<SpriteBatchVertex>& vertices = sprites.GetRef(texture);
-			vertices.AddRange(vertex, 0, 6);
-			//vertices.Add(vertex[0]);
-			//vertices.Add(vertex[1]);
-			//vertices.Add(vertex[2]);
-			//vertices.Add(vertex[2]);
-			//vertices.Add(vertex[1]);
-			//vertices.Add(vertex[3]);
+			sprites.GetRef(texture).AddRange(
+				vertex,
+				0,
+				6
+			);
 		}
 		#pragma endregion
 		#pragma endregion

@@ -412,7 +412,12 @@ namespace TikiEngine
 		{
 			HeightmapSample sam;
 
-			Vector3 pos = position + Vector3((float)size / 2, 0, (float)size / 2);
+			float s = (float)size;
+			float w = (float)heightmap->GetWidth();
+			float h = (float)heightmap->GetHeight();
+
+			Vector3 pos = position * (w / s);
+			pos = pos + Vector3(w / 2, 0, h / 2);
 
 			heightmap->Get(
 				(int32)pos.X,

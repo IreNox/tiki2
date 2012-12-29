@@ -108,9 +108,6 @@
     <Filter Include="Quelldateien\AI\Goals\Evaluation">
       <UniqueIdentifier>{f6092538-ec1e-4cb0-b179-7645fd28da62}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\AI\WeaponSystem">
-      <UniqueIdentifier>{e69b5898-bbbc-4060-8eb0-a53dd4193baf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\AI\WeaponSystem">
       <UniqueIdentifier>{148fb390-ee74-4372-87be-df54d5ae8944}</UniqueIdentifier>
     </Filter>
@@ -119,12 +116,6 @@
     </Filter>
     <Filter Include="Headerdateien\AI\WeaponSystem\Weapons">
       <UniqueIdentifier>{432e7abc-45ba-4bf8-ac36-c085a2215ec3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\AI\WeaponSystem\Projectiles">
-      <UniqueIdentifier>{f7aa7432-dcaa-485b-a362-1f8edd00c151}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\AI\WeaponSystem\Weapons">
-      <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
     </Filter>
     <Filter Include="Headerdateien\Events">
       <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
@@ -149,6 +140,15 @@
     </Filter>
     <Filter Include="Headerdateien\AI\SkillSystem">
       <UniqueIdentifier>{a594a1ff-d6dd-427a-9daf-420f80e6980d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\WeaponSystem">
+      <UniqueIdentifier>{e69b5898-bbbc-4060-8eb0-a53dd4193baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\WeaponSystem\Projectiles">
+      <UniqueIdentifier>{f7aa7432-dcaa-485b-a362-1f8edd00c151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\WeaponSystem\Weapons">
+      <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +389,9 @@
     <ClInclude Include="inc\Game\SkillRocket.h">
       <Filter>Headerdateien\AI\SkillSystem</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SkillFlash.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -574,13 +577,16 @@
     <ClCompile Include="src\Game\GameParts.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\Skill.cpp">
-      <Filter>Quelldateien\AI\SkillSystem</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\SkillRocket.cpp">
       <Filter>Quelldateien\AI\SkillSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SkillSystem.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Skill.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillFlash.cpp">
       <Filter>Quelldateien\AI\SkillSystem</Filter>
     </ClCompile>
   </ItemGroup>
