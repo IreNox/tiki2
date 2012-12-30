@@ -240,29 +240,21 @@ namespace TikiEngine
 				selectedUnits.Remove(bot->GetGameObject());
 			}
 
+			if (bot->EntityType() == ET_Tower)
+			{
+				//engine->HLog.Write("Dead tower, Adding Player BuiltSlot");
 
-			if (bot->EntityType() == ET_Tower && bot->GetFaction() == 0)
-			{
-				//engine->HLog.Write("This is a dead tower, only removed bot component.");
-				GameObject* go = bot->GetGameObject();
-				go->SModel(0);
-				go->RemoveComponent(bot->GetController());
-				go->RemoveComponent(bot);
-				BuildSlot* slot = go->GetComponent<BuildSlot>();
-				slot->Enable();
-			}
-			else if (bot->EntityType() == ET_Tower && bot->GetFaction() == 1)
-			{
-				//engine->HLog.Write("Dead Enemy tower, Adding Player BuiltSlot");
+				// Save old tower position
 				Vector3 towerPos = bot->GetController()->GetCenter();
-				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f +  bot->GetController()->GetRadius());
+				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
 
+				// Clear old GameObject
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
 
+				// Create new GameObject and BuildSlot
 				GameObject* go = new GameObject(engine);
 				gameState->GetBotFactory()->CreateBuildSlot(go);
-				go->PRS.SScale() = Vector3(1, 1, 1);
 				go->PRS.SPosition() = towerPos;
 
 				BuildSlot* slot = go->GetComponent<BuildSlot>();
