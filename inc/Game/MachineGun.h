@@ -20,7 +20,7 @@ namespace TikiEngine
 				DefaultRounds = 0;		// not used, a machinegun always has ammo
 				MaxRoundsCarried = 0;	// not used, a machinegun always has ammo
 				FiringFrequency = 3;
-				IdealRange = 50;
+				IdealRange = 20;
 				MaxSpeed = 5;
 			}
 		};

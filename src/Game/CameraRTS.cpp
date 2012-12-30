@@ -75,7 +75,7 @@ namespace TikiEngine
 				float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
 				height = Lerp(height, sample, (float)args.Time.ElapsedTime * 2);
 				height = Clamp(height, sample, 100.0f);
-				gameObject->PRS.SPosition().Y = height + 10.0f; // (32.0f - zoom);
+				gameObject->PRS.SPosition().Y = height + (32.0f - zoom); // + 10.0f;
 
 				//if (args.Input.MouseWheel != 0)
 				//{
