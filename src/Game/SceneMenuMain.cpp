@@ -124,9 +124,9 @@ namespace TikiEngine
 			switch ((Int32)sender->UserData)
 			{
 			case 0:
-				engine->sound->Play(
-					engine->content->LoadSound(L"Mesh_Spawn")
-				);
+				//engine->sound->Play(
+				//	engine->content->LoadSound(L"Mesh_Spawn")
+				//);
 
 				sLevel = new SceneLevel(engine);
 				engine->SetScene(sLevel);
