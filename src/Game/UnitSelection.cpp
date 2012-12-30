@@ -244,8 +244,11 @@ namespace TikiEngine
 			if (bot->EntityType() == ET_Tower && bot->GetFaction() == 0)
 			{
 				//engine->HLog.Write("This is a dead tower, only removed bot component.");
-				bot->GetGameObject()->RemoveComponent(bot);
-				BuildSlot* slot = bot->GetGameObject()->GetComponent<BuildSlot>();
+				GameObject* go = bot->GetGameObject();
+				go->SModel(0);
+				go->RemoveComponent(bot->GetController());
+				go->RemoveComponent(bot);
+				BuildSlot* slot = go->GetComponent<BuildSlot>();
 				slot->Enable();
 			}
 			else if (bot->EntityType() == ET_Tower && bot->GetFaction() == 1)
