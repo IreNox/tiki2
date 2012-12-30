@@ -9,6 +9,7 @@
 #include "Core/IGraphics.h"
 #include "Game/BuildSlot.h"
 
+#include "Game/TikiBotFactory.h"
 
 namespace TikiEngine
 {
@@ -247,12 +248,28 @@ namespace TikiEngine
 				BuildSlot* slot = bot->GetGameObject()->GetComponent<BuildSlot>();
 				slot->Enable();
 			}
-			else //if(bot->EntityType() == ET_Bot || bot->EntityType() == ET_Building)
+			else if (bot->EntityType() == ET_Tower && bot->GetFaction() == 1)
+			{
+				//engine->HLog.Write("Dead Enemy tower, Adding Player BuiltSlot");
+				Vector3 towerPos = bot->GetController()->GetCenter();
+				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f +  bot->GetController()->GetRadius());
+
+				gameState->GetScene()->RemoveElement(bot->GetGameObject());
+				bot->GetGameObject()->Release();
+
+				GameObject* go = new GameObject(engine);
+				gameState->GetBotFactory()->CreateBuildSlot(go);
+				go->PRS.SScale() = Vector3(1, 1, 1);
+				go->PRS.SPosition() = towerPos;
+
+				BuildSlot* slot = go->GetComponent<BuildSlot>();
+				slot->Enable();
+			}
+			else 
 			{
 				//engine->HLog.Write("Released bot go");
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
-				//gameState->GetScene()->RemoveElementAt(index);
 			}
 
 		}

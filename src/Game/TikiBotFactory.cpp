@@ -257,7 +257,7 @@ namespace TikiEngine
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_mg"));
 			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
-
+			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -269,7 +269,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.01f);
+			//bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			
@@ -328,7 +328,7 @@ namespace TikiEngine
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
 			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
-			go->PRS.SScale() = Vector3(0.01f);
+			//go->PRS.SScale() = Vector3(0.01f);
 
 			new BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);
