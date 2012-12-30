@@ -175,7 +175,7 @@ namespace TikiEngine
 
 		bool TikiBot::IsAtPosition(Vector2 pos)
 		{
-			return ( Vector2::DistanceSquared(Pos(), pos) < 200.0f);
+			return ( Vector2::DistanceSquared(Pos(), pos) < 2.0f);
 		}
 
 		bool TikiBot::HasLOSTo(Vector3 pos, float dist, float eps)
