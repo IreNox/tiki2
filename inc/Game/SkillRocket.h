@@ -18,10 +18,7 @@ namespace TikiEngine
 
 		protected:
 
-			void internActivation(const Vector3& target);
-
-			void internDraw(const DrawArgs& args);
-			void internUpdate(const UpdateArgs& args);
+			void internActivationPoint(const Vector3& target);
 
 		private:
 

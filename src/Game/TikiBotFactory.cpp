@@ -5,11 +5,14 @@
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Game/SceneLevel.h"
 #include "Game/BuildSlot.h"
+
 #include "Game/SkillRocket.h"
 #include "Game/SkillFlash.h"
+#include "Game/SkillHealAura.h"
+#include "Game/SkillSpiderMine.h"
+#include "Game/SkillSystem.h"
 
 #include "Core/IContentManager.h"
-
 
 namespace TikiEngine
 {
@@ -140,7 +143,7 @@ namespace TikiEngine
 			botDesc.Height = 3.0f;
 			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 30;			
-			botDesc.entityType = ET_Bot;
+			botDesc.EntityType = ET_Bot;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -167,7 +170,7 @@ namespace TikiEngine
 			botDesc.Radius = 3.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
-			botDesc.entityType = ET_Tower;
+			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -188,18 +191,18 @@ namespace TikiEngine
 			botDesc.Radius = 30.0f; //5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
-			botDesc.entityType = ET_Building;
+			botDesc.EntityType = ET_Building;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
-			bot->SetScale(0.01f);
+			bot->SetScale(1.0f);
 
 			gameState->GetScene()->AddElement(go);
 		}
 
 		#pragma endregion
 
-		#pragma region Member - Create - Player
+		#pragma region Member - Create - Player - Units
 		void TikiBotFactory::CreatePlayerHero(GameObject* go)
 		{
 			// Set Model
@@ -212,7 +215,7 @@ namespace TikiEngine
 			botDesc.Height = 3.0f;
 			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 300;
-			botDesc.entityType = ET_Hero;
+			botDesc.EntityType = ET_Hero;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -220,6 +223,8 @@ namespace TikiEngine
 
 			bot->GetSkillSys()->AddSkill(new SkillFlash(bot));
 			bot->GetSkillSys()->AddSkill(new SkillRocket(bot));
+			bot->GetSkillSys()->AddSkill(new SkillHealAura(bot));
+			bot->GetSkillSys()->AddSkill(new SkillSpiderMine(bot));
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -228,7 +233,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -236,7 +241,7 @@ namespace TikiEngine
 			botDesc.Height = 3.0f;
 			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 30;
-			botDesc.entityType = ET_Bot;
+			botDesc.EntityType = ET_Bot;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -246,7 +251,9 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+		#pragma endregion
 
+		#pragma region Member - Create - Player - Buildings
 		void TikiBotFactory::CreatePlayerTower(GameObject* go)
 		{
 			// Set Model
@@ -261,7 +268,7 @@ namespace TikiEngine
 			botDesc.Radius = 5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
-			botDesc.entityType = ET_Tower;
+			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -281,11 +288,38 @@ namespace TikiEngine
 			botDesc.Radius = 5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
-			botDesc.entityType = ET_Building;
+			botDesc.EntityType = ET_Building;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(10.0f);
+
+			gameState->GetScene()->AddElement(go);
+		}
+		#pragma endregion
+
+		#pragma region Member - Create - Player - Misc
+		void TikiBotFactory::CreatePlayerSpiderMine(GameObject* go, TikiBot* target)
+		{
+			// Set Model
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
+			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 0.33f;
+			botDesc.Radius = 0.33f;
+			botDesc.MaxHealth = 10;
+			botDesc.MaxSpeed = 25;
+			botDesc.EntityType = ET_Bot;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->SetScale(0.01f);
+			bot->CreateNav(gameState->GetNavMesh());
+
+			bot->GetTargetSys()->SetGlobalTarget(target);
+			bot->GetBrain()->AddGoalAttackTarget();
 
 			gameState->GetScene()->AddElement(go);
 		}

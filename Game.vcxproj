@@ -83,7 +83,9 @@
     <ClInclude Include="inc\Game\SceneTim.h" />
     <ClInclude Include="inc\Game\SensorMemory.h" />
     <ClInclude Include="inc\Game\SkillFlash.h" />
+    <ClInclude Include="inc\Game\SkillHealAura.h" />
     <ClInclude Include="inc\Game\SkillRocket.h" />
+    <ClInclude Include="inc\Game\SkillSpiderMine.h" />
     <ClInclude Include="inc\Game\SkillSystem.h" />
     <ClInclude Include="inc\Game\Skill.h" />
     <ClInclude Include="inc\Game\TargetingSystem.h" />
@@ -154,7 +156,9 @@
     <ClCompile Include="src\Game\SensorMemory.cpp" />
     <ClCompile Include="src\Game\Skill.cpp" />
     <ClCompile Include="src\Game\SkillFlash.cpp" />
+    <ClCompile Include="src\Game\SkillHealAura.cpp" />
     <ClCompile Include="src\Game\SkillRocket.cpp" />
+    <ClCompile Include="src\Game\SkillSpiderMine.cpp" />
     <ClCompile Include="src\Game\SkillSystem.cpp" />
     <ClCompile Include="src\Game\TargetingSystem.cpp" />
     <ClCompile Include="src\Game\TikiBot.cpp" />

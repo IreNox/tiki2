@@ -21,15 +21,15 @@ namespace TikiEngine
 
 		enum SkillFlags
 		{
-			ST_Invalid		= 0,
+			SF_Invalid		= 0,
 
-			ST_Active		= 1 << 0,
-			ST_Passive		= 1 << 1,
+			SF_Active		= 1 << 0,
+			SF_Passive		= 1 << 1,
 
-			ST_TargetAOE	= 1 << 2,
-			ST_TargetBot	= 1 << 3,
-			ST_TargetAura	= 1 << 4,		
-			ST_TargetNoBot	= 1 << 5,
+			SF_TargetAOE	= 1 << 2,
+			SF_TargetBot	= 1 << 3,
+			SF_TargetAura	= 1 << 4,		
+			SF_TargetPoint	= 1 << 5,
 		};
 
 		struct SkillDescription
@@ -44,7 +44,7 @@ namespace TikiEngine
 			double Cooldown;
 			double DurationOfEffect;
 
-			SkillDescription(float activationRange, SkillFlags flags, float aoeRange, wcstring texNameIcon, wcstring texNameCrosshair, double cooldown, double durationOfEffect)
+			SkillDescription(double cooldown, float activationRange, float aoeRange, double durationOfEffect, SkillFlags flags, wcstring texNameIcon, wcstring texNameCrosshair)
 				: ActivationRange(activationRange), AOERange(aoeRange), Flags(flags), TexNameIcon(texNameIcon), TexNameCrosshair(texNameCrosshair),
 				  Cooldown(cooldown), DurationOfEffect(durationOfEffect)
 			{
@@ -65,6 +65,7 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 			inline float GetInRange() { return inRange; }
+			inline bool GetHasAOE() { return flags.HasFlag(SF_TargetAOE); }
 			inline bool GetOnActivation() { return onActivation; }
 
 			inline float GetCrosshairSize() { return description.AOERange; }
@@ -72,14 +73,19 @@ namespace TikiEngine
 
 		protected:
 
+			bool atWork;
+			bool isReady;
+			bool onActivation;
+
 			TikiBot* owner;
 			GameState* gameState;
 
-			virtual void internActivation(const Vector3& target) { throw "NotImplemented"; }
-			virtual void internActivation(GameObject* target) { throw "NotImplemented"; }
+			virtual bool internActivationBot(TikiBot* target) { throw "NotImplemented"; }
+			virtual void internActivationPoint(const Vector3& target) { throw "NotImplemented"; }
+			virtual void internActivationAuraFrame(const UpdateArgs& args, TikiBot* target) { throw "NotImplemented"; }
 
-			virtual void internDraw(const DrawArgs& args) = 0;
-			virtual void internUpdate(const UpdateArgs& args) = 0;
+			virtual void internDraw(const DrawArgs& args) {};
+			virtual void internUpdate(const UpdateArgs& args) {};
 
 		private:
 
@@ -89,11 +95,9 @@ namespace TikiEngine
 			ITexture* icon;
 			ITexture* crosshair;
 
-			bool isReady;
+			TikiTimer workTimer;
 			TikiTimer cooldownTimer;
 
-			bool onActivation;
-			bool atWork;
 			bool inRange;
 		
 		};

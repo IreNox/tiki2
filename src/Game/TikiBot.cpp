@@ -10,6 +10,8 @@
 #include "Game/SensorMemory.h"
 #include "Game/WeaponSystem.h"
 #include "Game/Weapon.h"
+#include "Game/SkillSystem.h"
+#include "Game/TargetingSystem.h"
 
 #include "Game/SceneLevel.h"
 
@@ -33,14 +35,13 @@ namespace TikiEngine
 			sightRadius = desc.SightRadius;
 			loot = desc.Loot;
 			armor = desc.Armor;
-			type = desc.entityType;
+			type = desc.EntityType;
 
             maxHealth = desc.MaxHealth;
             health = maxHealth;
 
             numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
             hit = false;
-            score = 0;
             status = alive;
             fieldOfView = DegsToRads(desc.FoV);
 
@@ -115,7 +116,7 @@ namespace TikiEngine
             pathPlanner->Create(par);
 		}
 
-		void TikiBot::ReduceHealth(unsigned int val)
+		void TikiBot::ReduceHealth(float val)
 		{
 			health -= val;
 
@@ -129,10 +130,10 @@ namespace TikiEngine
 			numUpdatesHitPersistant = (int)(FrameRate * HitFlashTime);
 		}
 
-		void TikiBot::IncreaseHealth(unsigned int val)
+		void TikiBot::IncreaseHealth(float val)
 		{
 			health += val; 
-			ClampT(health, 0, maxHealth);
+			ClampT(health, 0.0f, maxHealth);
 		}
 
 

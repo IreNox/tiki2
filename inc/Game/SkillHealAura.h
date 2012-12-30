@@ -6,16 +6,16 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		class SkillFlash : public Skill
+		class SkillHealAura : public Skill
 		{
 		public:
 
-			SkillFlash(TikiBot* owner);
-			~SkillFlash();
+			SkillHealAura(TikiBot* owner);
+			~SkillHealAura();
 
 		protected:
 
-			void internActivationPoint(const Vector3& target);
+			void internActivationAuraFrame(const UpdateArgs& args, TikiBot* target);
 
 		private:
 

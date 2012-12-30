@@ -12,11 +12,18 @@ namespace TikiEngine
 
 		struct ProjectileDescription
 		{
-			Vector3 Target; // the target's position
-			int ShooterID;  // the ID of the bot that fired this shot
-			Vector3 Origin; // the start position of the projectile
-			Vector2 Heading;// the heading of the projectile
-			int Damage;		// how much damage it inflicts
+			/*! @brief how much damage it inflicts */
+			float Damage;
+
+			/*! @brief the target's position */
+			Vector3 Target;
+			/*! @brief the ID of the bot that fired this shot */
+			int ShooterID;
+			/*! @brief the start position of the projectile */
+			Vector3 Origin;
+			/*! @brief the heading of the projectile */
+			Vector2 Heading;
+
 			float Scale;
 			float MaxSpeed;
 			float Mass;
@@ -30,7 +37,7 @@ namespace TikiEngine
 				Mass = 1;
 				MaxForce = 150;
 				Scale = 0.7f;
-				Damage = 5;
+				Damage = 5.0f;
                 LifeTime = 3.0f;
                 Shooter = 0;
 			}
@@ -67,9 +74,10 @@ namespace TikiEngine
 
 		protected:
 
+			float damage;
+
 			Vector3 target;
 			Vector3 origin;
-			int damage;
 			int shooterID;
 			bool dead;
 			bool impacted;

@@ -9,6 +9,7 @@
 #include "Game/TikiBot.h"
 #include "Game/Weapon.h"
 #include "Game/WeaponSystem.h"
+#include "Game/SkillSystem.h"
 
 namespace TikiEngine
 {
@@ -77,7 +78,7 @@ namespace TikiEngine
 						UInt32 i = 0;
 						while (i < skills.Count())
 						{
-							if (skills[i]->GetOnActivation())
+							if (skills[i]->GetOnActivation() && skills[i]->GetHasAOE())
 							{
 								shader->SetTexture("SkillCrosshair", skills[i]->GetCrosshairTexture());
 

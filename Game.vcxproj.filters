@@ -392,6 +392,12 @@
     <ClInclude Include="inc\Game\SkillFlash.h">
       <Filter>Headerdateien\AI\SkillSystem</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SkillHealAura.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillSpiderMine.h">
+      <Filter>Headerdateien\AI\SkillSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -587,6 +593,12 @@
       <Filter>Quelldateien\AI\SkillSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SkillFlash.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillHealAura.cpp">
+      <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillSpiderMine.cpp">
       <Filter>Quelldateien\AI\SkillSystem</Filter>
     </ClCompile>
   </ItemGroup>

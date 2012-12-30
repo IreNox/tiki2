@@ -4,7 +4,6 @@
 #include "Game/GoalMoveToPosition.h"
 #include "Game/GoalTypes.h"
 
-
 namespace TikiEngine
 {
 	namespace AI

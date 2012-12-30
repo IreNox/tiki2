@@ -29,14 +29,14 @@ namespace TikiEngine
             this->aimPersistance = desc.AimPresistance;
 			
             // setup the container
-			if (desc.weapon == 0)
+			if (desc.StartWeapon == 0)
 			{
 				MachineGunDescription mgDesc;
 				currentWeapon = new MachineGun(owner, mgDesc);
 			}
 			else
 			{
-				currentWeapon = desc.weapon;
+				currentWeapon = desc.StartWeapon;
 			}
         }
 

@@ -3,6 +3,7 @@
 
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
+#include "Game/SceneLevel.h"
 
 #include "Core/Camera.h"
 #include "Core/IPhysics.h"
@@ -16,7 +17,7 @@ namespace TikiEngine
 		Skill::Skill(TikiBot* owner, const SkillDescription& desc)
 			: owner(owner), EngineObject(owner->GetEngine()), gameState(owner->GetGameState()), onActivation(false), isReady(true), atWork(false),
 			  icon(0), crosshair(0), description(desc), inRange(false),
-			  cooldownTimer(desc.Cooldown),	flags(desc.Flags)
+			  workTimer(desc.DurationOfEffect), cooldownTimer(desc.Cooldown), flags(desc.Flags)
 		{
 			if (wstring(desc.TexNameIcon) != L"")
 			{
@@ -26,14 +27,14 @@ namespace TikiEngine
 				);
 			}
 
-			if (wstring(desc.TexNameCrosshair) != L"" && !this->flags.HasFlag(ST_TargetAura))
+			if (wstring(desc.TexNameCrosshair) != L"" && !this->flags.HasFlag(SF_TargetAura))
 			{
 				SafeAddRef(
 					engine->content->LoadTexture(L"hud/crosshair/" + wstring(desc.TexNameCrosshair)),
 					&crosshair
 				);
 			}
-			else if (!this->flags.HasFlag(ST_TargetAura))
+			else if (!this->flags.HasFlag(SF_TargetAura))
 			{
 				SafeAddRef(
 					engine->content->LoadTexture(L"hud/crosshair/pointer"),
@@ -52,13 +53,22 @@ namespace TikiEngine
 		#pragma region Member
 		void Skill::Aktivate()
 		{
-			if (isReady && !flags.HasFlag(ST_Passive))
+			if (isReady && flags.HasFlag(SF_Active))
 			{
-				onActivation = true;
+				if (flags.HasFlag(SF_TargetAura))
+				{
+					onActivation = false;
+					isReady = false;
+					atWork = true;
+				}
+				else
+				{
+					onActivation = true;
+				}
 			}
 			else if (!isReady)
 			{
-				// play sound
+				//TODO: Play Sound
 			}
 		}
 		#pragma endregion
@@ -79,36 +89,32 @@ namespace TikiEngine
 					{
 						bool activated = false;
 					
-						if (flags.HasFlag(ST_TargetAOE))
+						if (flags.HasFlag(SF_TargetAOE))
 						{
 							activated = true;
-							this->internActivation(hit.Point);
+							this->internActivationPoint(hit.Point);
 						}
-						else if (flags.HasFlag(ST_TargetBot) || flags.HasFlag(ST_TargetNoBot))
+						else if (flags.HasFlag(SF_TargetBot) || flags.HasFlag(SF_TargetPoint))
 						{
 							GameObject* obj = hit.Collider->GetGameObject();
+							TikiBot* bot = obj->GetComponent<TikiBot>();
 
-							if (obj->GetComponent<TikiBot>() != 0 && flags.HasFlag(ST_TargetBot))
+							if (bot != 0 && flags.HasFlag(SF_TargetBot))
+							{
+								activated = this->internActivationBot(bot);								
+							}
+							else if (flags.HasFlag(SF_TargetPoint))
 							{
 								activated = true;
-								this->internActivation(obj);
+								this->internActivationPoint(hit.Point);
 							}
-							else if (flags.HasFlag(ST_TargetNoBot))
-							{
-								activated = true;
-								this->internActivation(hit.Point);
-							}
-						}
-						else if (flags.HasFlag(ST_TargetAura))
-						{
-							activated = true;
-							this->internActivation(owner->Pos3D());
 						}
 
 						if (activated)
 						{
 							onActivation = false;
 							isReady = false;
+							atWork = true;
 						}
 						// else play sound/throw exception???
 					}
@@ -119,7 +125,7 @@ namespace TikiEngine
 				}
 
 				// TargetAOE - Drawing in FogOfWar-Shader
-				if (flags.HasFlag(ST_TargetBot) || flags.HasFlag(ST_TargetNoBot))
+				if (flags.HasFlag(SF_TargetBot) || flags.HasFlag(SF_TargetPoint))
 				{
 					args.SpriteBatch->Draw(
 						crosshair,
@@ -140,7 +146,36 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void Skill::Update(const UpdateArgs& args)
 		{
-			if (!isReady)
+			if (atWork)
+			{
+				atWork = !workTimer.IsReady(args.Time);
+
+				if (flags.HasFlag(SF_TargetAura))
+				{					
+					Vector2 pos = owner->GetController()->GetCenter().XZ();
+
+					UInt32 i = 0;
+					while (i < gameState->GetScene()->GetElements().Count())
+					{
+						GameObject* current = gameState->GetScene()->GetElements()[i];
+						TikiBot* bot = current->GetComponent<TikiBot>();
+
+						if (bot != 0 && bot->GetFaction() == owner->GetFaction())
+						{
+							float rad = description.AOERange + (float)bot->BRadius();
+
+							float dist = Vector2::Distance(pos, bot->Pos());
+							if (dist < rad)
+							{
+								internActivationAuraFrame(args, bot);
+							}
+						}
+
+						i++;
+					}
+				}
+			}
+			else if (!isReady)
 			{
 				isReady = cooldownTimer.IsReady(args.Time);
 			}

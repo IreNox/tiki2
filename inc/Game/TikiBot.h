@@ -1,25 +1,23 @@
 #pragma once
 
-#include <vector>
 #include "Game/MovingEntity.h"
-#include "Game/TikiSteering.h"
-#include "Game/PathPlanner.h"
-#include "Game/TargetingSystem.h"
 #include "Game/Regulator.h"
-#include "Game/SkillSystem.h"
+
+#include "Game/PathPlanner.h"
+#include "Game/TikiSteering.h"
+#include "Game/TargetingSystem.h"
 
 #include "Core/ICharacterController.h"
-
 
 namespace TikiEngine
 {
 	namespace AI
 	{
-		class TikiSteering;
 		class GoalThink;
 		class SensorMemory;
 		class Weapon;
         class WeaponSystem;
+		class SkillSystem;
 
 		enum EntityTypes
 		{
@@ -29,16 +27,24 @@ namespace TikiEngine
 			ET_Hero
 		};
 
+		#pragma region TikiBotDescription
 		struct TikiBotDescription
 		{
-			int Faction;		  // 0 = Player, 1 = Enemy
-			int MaxHealth;		  // the maximum amount of health
+			/*! @brief 0 = Player, 1 = Enemy */
+			int Faction;
+			/*! @brief The maximum amount of health */
+			float MaxHealth;
 
-			float FoV;            // the bot's field of view in degrees
-			float ReactionTime;	  // the bot's reaction time (in seconds)
-			float AimPresistance; // how long (in seconds) the bot will keep pointing its weapon at its target after the target goes out of view
-			float AimAccuracy;	  // how accurate the bots are at aiming. 0 is very accurate, (the value represents the max deviation in range (in radians))
-			float MemorySpan;	  // how long (in seconds) a bot's sensory memory persists
+			/*! @brief The Bots field of view in degrees */
+			float FoV;
+			/*! @brief The Bots reaction time (in seconds) */
+			float ReactionTime;
+			/*! @brief How long (in seconds) the bot will keep pointing its weapon at its target after the target goes out of view */
+			float AimPresistance;
+			/*! @brief How accurate the bots are at aiming. 0 is very accurate, (the value represents the max deviation in range (in radians)) */
+			float AimAccuracy;
+			/*! @brief How long (in seconds) a bots sensory memory persists */
+			float MemorySpan;
 
 			// Brain
 			float ExploreBias;
@@ -46,9 +52,12 @@ namespace TikiEngine
 			float PatrolBias;
 
 			// Controller
-			float Height;		  // Capsule height
-			float SlopeLimit;	  // Limits the collider to only climb slopes that are equal to or less than the indicated value in degrees
-			float StepOffset;	  // The bot will step up a stair only if it is closer to the ground than the indicated value
+			/*! @brief Capsule height */
+			float Height;
+			/*! @brief Limits the collider to only climb slopes that are equal to or less than the indicated value in degrees */
+			float SlopeLimit;
+			/*! @brief The bot will step up a stair only if it is closer to the ground than the indicated value */
+			float StepOffset;
 
 			// MovingEntity
 			Vector2 Heading;
@@ -57,17 +66,17 @@ namespace TikiEngine
 			float MaxForce;
 			float Radius;
 
-			// weitere Felder hinzufügen: Loot, Armor, Sichtweite, EntityTypes
-			Weapon* weapon;
-			EntityTypes entityType;
-			float SightRadius;
 			int Loot;
+			/*! @brief 1 Armor blocks 1 Damage */
 			int Armor;
 
+			// New fields Added: Loot, Armor, SightRadius, EntityType
+			Weapon* StartWeapon;
+			EntityTypes EntityType;
+			float SightRadius;
+
 			TikiBotDescription()
-				: weapon(0)
 			{
-				Faction = 0;
 				MaxHealth = 100;
 
 				FoV = 180.0f;
@@ -93,21 +102,23 @@ namespace TikiEngine
 				MaxForce = 1.0f;
 				Radius = 2.0f;
 
-				// weitere Felder
-				entityType = ET_Bot;
-				weapon = 0;
 				SightRadius = 15;
 				Loot = 0;
 				Armor = 0;
+
+				// Darf NICHT Bearbeitet werden!
+				EntityType = ET_Bot;
+				StartWeapon = 0;
+				Faction = 0;
 			}
 
 		};
+		#pragma endregion
 
 		class TikiBot : public MovingEntity
 		{
 		public:
-
-
+			
 			TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc);
 			~TikiBot();
 
@@ -121,33 +132,30 @@ namespace TikiEngine
 			//bool HandleMessage(const Telegram& msg); // TODO
 			void Write(std::ostream&  os)const { }
 		    void Read(std::ifstream& is) { }
-
-
-
+			
 			#pragma region Accessing attribute data
-			int Health() const {return health;}
-			int MaxHealth() const {return maxHealth;}
-			void ReduceHealth(unsigned int val);
-			void IncreaseHealth(unsigned int val);
-			void RestoreHealthToMaximum() {health = maxHealth;}
+			inline float Health() const { return health; }
+			inline float MaxHealth() const { return maxHealth; }
+			inline void RestoreHealthToMaximum() { health = maxHealth; }
+			void ReduceHealth(float val);
+			void IncreaseHealth(float val);
 				 
-			int Score() const {return score;}
-			void IncrementScore() {++score;}
-
 			//Vector2 Facing() const {return facing;}
-			float FieldOfView() const {return fieldOfView;}
+			inline float FieldOfView() const { return fieldOfView; }
 
             // 0 = Player, 1 = Enemy
-            int GetFaction() const { return faction; }
-			float GetSightRadius() const { return sightRadius; }
+            inline int GetFaction() const { return faction; }
+			inline float GetSightRadius() const { return sightRadius; }
+
 			//bool IsPossessed() const {return possessed;}
-			bool IsDead() const {return status == dead;}
-			bool IsAlive() const {return status == alive;}
-			bool IsSpawning() const {return status == spawning;}
-  
-			void SetSpawning() {status = spawning;}
-			void SetDead() {status = dead;}
-			void SetAlive() {status = alive;}
+
+			inline bool IsDead() const { return status == dead; }
+			inline bool IsAlive() const { return status == alive; }
+			inline bool IsSpawning() const { return status == spawning; }
+
+			inline void SetDead() { status = dead; }
+			inline void SetAlive() { status = alive; }
+			inline void SetSpawning() { status = spawning; }
 			#pragma endregion
 
 			// rotates the bot's heading until it is facing directly at the target
@@ -225,13 +233,10 @@ namespace TikiEngine
 
 			// the bot's health. Every time the bot is shot this value is decreased. If
 			// it reaches zero then the bot dies (and respawns)
-			int health;
+			float health;
   
 			// the bot's maximum health value. It starts its life with health at this value
-			int maxHealth;
-
-			// each time this bot kills another this value is incremented
-			int score;
+			float maxHealth;
 
 			// a bot only perceives other bots within this field of view
 			float fieldOfView;

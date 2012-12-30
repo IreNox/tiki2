@@ -6,16 +6,16 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-		class SkillFlash : public Skill
+		class SkillSpiderMine : public Skill
 		{
 		public:
 
-			SkillFlash(TikiBot* owner);
-			~SkillFlash();
+			SkillSpiderMine(TikiBot* owner);
+			~SkillSpiderMine();
 
 		protected:
 
-			void internActivationPoint(const Vector3& target);
+			bool internActivationBot(TikiBot* target);
 
 		private:
 

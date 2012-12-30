@@ -1,9 +1,11 @@
 #pragma once
 
-#include "Game/Regulator.h"
-#include "Core/GameObject.h"
-#include "Game/GameState.h"
 
+#include "Game/Regulator.h"
+#include "Game/GameState.h"
+#include "Game/TikiBot.h"
+
+#include "Core/GameObject.h"
 #include "Core/sqlite3.h"
 #include "Core/TikiTimer.h"
 
@@ -11,7 +13,6 @@ namespace TikiEngine
 {
 	namespace Game
 	{
-
 		class TikiBotFactory
 		{
 		public:
@@ -39,6 +40,7 @@ namespace TikiEngine
 			void CreatePlayerHero(GameObject* go);
 			void CreatePlayerTower(GameObject* go);
 			void CreatePlayerBuilding(GameObject* go);
+			void CreatePlayerSpiderMine(GameObject* go, TikiBot* target);
 			
 			void CreateBuildSlot(GameObject* go);
 			

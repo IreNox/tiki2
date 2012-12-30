@@ -10,8 +10,18 @@ namespace TikiEngine
 {
 	namespace Game
 	{
+		SkillDescription SkillRocket::Desc = SkillDescription(
+			4.5,
+			25,
+			20,
+			2,
+			(SkillFlags)(SF_Active | SF_TargetAOE),
+			L"rocket",
+			L"rocket"
+		);
+
 		SkillRocket::SkillRocket(TikiBot* owner)
-			: Skill(owner, SkillRocket::Desc)
+			: Skill(owner, Desc)
 		{
 		}
 
@@ -19,7 +29,7 @@ namespace TikiEngine
 		{
 		}
 
-		void SkillRocket::internActivation(const Vector3& target)
+		void SkillRocket::internActivationPoint(const Vector3& target)
 		{
 			ProjectileDescription desc;
 			desc.Target = target; 
@@ -36,23 +46,5 @@ namespace TikiEngine
 
 			gameState->GetProjectiles()->AddProjectile(proj);
 		}
-
-		void SkillRocket::internDraw(const DrawArgs& args)
-		{
-		}
-
-		void SkillRocket::internUpdate(const UpdateArgs& args)
-		{
-		}
-
-		SkillDescription SkillRocket::Desc = SkillDescription(
-			100,
-			(SkillFlags)(ST_Active | ST_TargetAOE),
-			20,
-			L"rocket",
-			L"rocket",
-			4.5,
-			2
-		);
 	}
 }
