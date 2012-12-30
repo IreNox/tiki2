@@ -159,10 +159,6 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreateEnemyTower(GameObject* go)
 		{
-			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
-			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
-
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
@@ -172,10 +168,10 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
 
-			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
+			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.01f);
+			bot->SetScale(0.5f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
