@@ -35,17 +35,15 @@ namespace TikiEngine
 
 		private:
 
-			GameState* state;
+			GameState* gameState;
 
 			GUILabel* labelRes;
 
 			GUIButton* buttonMenu;
 			GUIWindow* windowResources;
 			
-			GUIWindow* windowInfo;
 			GUIWindow* windowFunc;
-
-			//Dictionary<UnitFunctions, GUIButton*> funcButton;
+			GUIWindow* windowSkills;
 
 			List<GUIControl*> enabledControls;
 

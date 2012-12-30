@@ -26,7 +26,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="bin\Data\Textures\Hud\icons\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
@@ -60,6 +59,10 @@
     <None Include="bin\Data\Textures\Hud\circle_main_0.dds" />
     <None Include="bin\Data\Textures\Hud\circle_main_1.dds" />
     <None Include="bin\Data\Textures\Hud\energy.dds" />
+    <None Include="bin\Data\Textures\Hud\icons\flash.dds" />
+    <None Include="bin\Data\Textures\Hud\icons\heal_aura.dds" />
+    <None Include="bin\Data\Textures\Hud\icons\rocket.dds" />
+    <None Include="bin\Data\Textures\Hud\icons\spider_mine.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
     <None Include="bin\Data\Textures\Hud\crosshair\pointer.dds" />
     <None Include="bin\Data\Textures\Hud\unit_bg.dds" />

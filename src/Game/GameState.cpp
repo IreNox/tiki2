@@ -1,6 +1,8 @@
 
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
+
+#include "Game/GameHud.h"
 #include "Game/SceneLevel.h"
 #include "Game/UnitSelection.h"
 #include "Game/ProjectileManager.h"

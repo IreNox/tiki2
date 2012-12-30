@@ -55,7 +55,7 @@ namespace TikiEngine
 		{
 		public:
 			
-			Skill(TikiBot* owner, const SkillDescription& desc); //SkillFlags flags, double cooldown, float crosshairSize, wstring crosshair);
+			Skill(TikiBot* owner, const SkillDescription& desc);
 			~Skill();
 
 			void Aktivate();
@@ -70,6 +70,8 @@ namespace TikiEngine
 
 			inline float GetCrosshairSize() { return description.AOERange; }
 			inline ITexture* GetCrosshairTexture() { return crosshair; }
+
+			inline ITexture* GetIconTexture() { return icon; }
 
 		protected:
 

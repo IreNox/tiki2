@@ -32,7 +32,7 @@ namespace TikiEngine
 
 			const Vector2& GSize() const;
 			Vector2& SSize();
-
+			
 			void AddChild(GUIControl* child);
 			bool RemoveChild(GUIControl* child);
 			const List<GUIControl*>& ChildControls();
@@ -43,6 +43,10 @@ namespace TikiEngine
 			virtual void Update(const UpdateArgs& args);
 			
 			virtual bool GetReady();
+
+			inline GUIControl* GetParent() { return parent; }
+
+			inline RectangleF GetBoundingBox() { return boundingBox; }
 
 			static IFont* GetDefaultFont();
 			static void SetDefaultFont(IFont* font);

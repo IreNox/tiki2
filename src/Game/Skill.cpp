@@ -7,6 +7,7 @@
 
 #include "Core/Camera.h"
 #include "Core/IPhysics.h"
+#include "Core/ISpriteBatch.h"
 #include "Core/IContentManager.h"
 
 namespace TikiEngine

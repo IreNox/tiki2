@@ -1,9 +1,7 @@
 #pragma once
 
-#include "Core/GUIButton.h"
 #include "Core/TypeGlobals.h"
 
-#include "Game/GameHud.h"
 #include "Game/GamePart.h"
 #include "Game/NavigationMesh.h"
 
@@ -14,9 +12,9 @@ namespace TikiEngine
 	namespace Game
 	{
 		using namespace TikiEngine::AI;
-		using namespace TikiEngine::UserInterface;
 
 		class Level;
+		class GameHud;
 		class SceneLevel;
 		class UnitSelection;
 		class TikiBotFactory;

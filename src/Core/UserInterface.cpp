@@ -133,7 +133,7 @@ namespace TikiEngine
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
 
-			mouseClicked = (args.Input.GetMousePressed(MB_Left) && mouseOver);
+			mouseClicked = (args.Input.GetMouseRelease(MB_Left) && mouseOver);
 			if (mouseClicked) this->Click.RaiseEvent(this, ClickEventArgs(this));
 
 			UInt32 i = 0;

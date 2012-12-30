@@ -12,7 +12,7 @@ namespace TikiEngine
 			0.0f,
 			10.0,
 			(SkillFlags)(SF_Active | SF_TargetBot),
-			L"sider_mine",
+			L"spider_mine",
 			L""
 		);
 

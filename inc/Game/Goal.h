@@ -1,12 +1,17 @@
 #pragma once
 
 #include "Core/DrawArgs.h"
+#include "Core/ISpriteBatch.h"
+#include "Core/GUIControl.h"
+
 #include "Game/GoalTypes.h"
 
 namespace TikiEngine
 {
     namespace AI
     {
+		using namespace TikiEngine::UserInterface;
+
         struct Telegram;
 
         template <class entity_type>

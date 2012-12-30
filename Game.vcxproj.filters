@@ -66,12 +66,6 @@
     <Filter Include="Resources">
       <UniqueIdentifier>{ddc500a7-223a-4a4c-8f62-e267bd854925}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\AI\OcTree">
-      <UniqueIdentifier>{217db9dc-55b2-4d21-a6c2-342e1ce53dca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\AI\OcTree">
-      <UniqueIdentifier>{3445e5b7-03a9-45c1-975a-d6ca029d5005}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\Particle">
       <UniqueIdentifier>{739812fe-bed1-4148-8b62-744e3351f8ff}</UniqueIdentifier>
     </Filter>
@@ -149,6 +143,18 @@
     </Filter>
     <Filter Include="Quelldateien\AI\WeaponSystem\Weapons">
       <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Movement\OcTree">
+      <UniqueIdentifier>{217db9dc-55b2-4d21-a6c2-342e1ce53dca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\AI\Attributes">
+      <UniqueIdentifier>{109d67f1-2f4f-4fa4-addd-e86e9a8ad061}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Movement\OcTree">
+      <UniqueIdentifier>{3445e5b7-03a9-45c1-975a-d6ca029d5005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Quelldateien\AI\Attributes">
+      <UniqueIdentifier>{1918e6f0-25d4-490d-a337-b1cb434052c1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -243,16 +249,16 @@
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\VoidList.h">
-      <Filter>Headerdateien\AI\OcTree</Filter>
+      <Filter>Headerdateien\AI\Movement\OcTree</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\OcTree.h">
-      <Filter>Headerdateien\AI\OcTree</Filter>
+      <Filter>Headerdateien\AI\Movement\OcTree</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\TriBox.h">
-      <Filter>Headerdateien\AI\OcTree</Filter>
+      <Filter>Headerdateien\AI\Movement\OcTree</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\BoxSide.h">
-      <Filter>Headerdateien\AI\OcTree</Filter>
+      <Filter>Headerdateien\AI\Movement\OcTree</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\Goal.h">
       <Filter>Headerdateien\AI\Goals\Atomic</Filter>
@@ -398,6 +404,18 @@
     <ClInclude Include="inc\Game\SkillSpiderMine.h">
       <Filter>Headerdateien\AI\SkillSystem</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\AttributeSystem.h">
+      <Filter>Headerdateien\AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiAtt.h">
+      <Filter>Headerdateien\AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiAttModifier.h">
+      <Filter>Headerdateien\AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Attributes.h">
+      <Filter>Headerdateien\AI\Attributes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -470,16 +488,16 @@
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\VoidList.cpp">
-      <Filter>Quelldateien\AI\OcTree</Filter>
+      <Filter>Quelldateien\AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\OcTree.cpp">
-      <Filter>Quelldateien\AI\OcTree</Filter>
+      <Filter>Quelldateien\AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\TriBox.cpp">
-      <Filter>Quelldateien\AI\OcTree</Filter>
+      <Filter>Quelldateien\AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BoxSide.cpp">
-      <Filter>Quelldateien\AI\OcTree</Filter>
+      <Filter>Quelldateien\AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalThink.cpp">
       <Filter>Quelldateien\AI\Goals\Composite</Filter>
@@ -600,6 +618,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\SkillSpiderMine.cpp">
       <Filter>Quelldateien\AI\SkillSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AttributeSystem.cpp">
+      <Filter>Quelldateien\AI\Attributes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
