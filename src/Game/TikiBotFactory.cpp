@@ -20,7 +20,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.5f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
+			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.75f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
 			  playerSpawnLeft(0)
 		{
 		}
@@ -77,15 +77,15 @@ namespace TikiEngine
 					if (enemySpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(spawnPoints[i],  20);
+						go->PRS.SPosition() = getPos(spawnPoints[i],  0);
 						CreateEnemy1(go);						
 					}
 
 					// Spawn Player
-					if (enemySpawnLeft > 0)
+					if (playerSpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(playerBase, 20);
+						go->PRS.SPosition() = getPos(playerBase, 0);
 						CreatePlayerMop(go, spawnPoints[i]);
 					}
 
@@ -100,7 +100,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(spawnPoints[0], 20);
+				go->PRS.SPosition() = getPos(spawnPoints[0], 1);
 				CreateEnemy1(go);
 			}
 
@@ -114,7 +114,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F7))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 20);
+				go->PRS.SPosition() = getPos(Vector2(10, 10), 1);
 				CreatePlayerHero(go);
 			}
 
@@ -122,7 +122,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 20);
+				go->PRS.SPosition() = getPos(Vector2(10, 10), 1);
 				CreatePlayerMop(go, spawnPoints[0]);
 			}
 
@@ -233,7 +233,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
-			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -291,7 +291,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Building;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->GetController()->SetGroup(CG_Non_Collidable);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(10.0f);
 
 			gameState->GetScene()->AddElement(go);
@@ -303,7 +303,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -352,7 +352,7 @@ namespace TikiEngine
 
 		Vector3 TikiBotFactory::getPos(const Vector3& pos, float heightAdjust)
 		{
-			return getPos(Vector2(pos.X, pos.Z), heightAdjust);
+			return getPos(pos.XZ(), heightAdjust);
 		}
 		#pragma endregion
 
