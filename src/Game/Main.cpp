@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 			wstring name = username;
 
-			if ((name == L"tim.boden" || name == L"Tim") && false)
+			if ((name == L"tim.boden" || name == L"Tim") && true)
 			{
 				//scene = new SceneTim(engine);
 

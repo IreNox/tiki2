@@ -78,7 +78,33 @@ namespace TikiEngine
 			unitSelection->Draw(args);
 
 			#if _DEBUG
-			if (DrawNavMesh) navMesh->Draw(args);
+			if (DrawNavMesh)
+			{
+				navMesh->Draw(args);
+
+				UInt32 i = 0;
+				while (i < scene->GPoints().Count())
+				{
+					Vector2 pos1 = scene->GPoints()[i]->GPosition();
+					Vector3 pos = Vector3(pos1.X, 0, pos1.Y);
+					pos.Y = scene->GLevel()->GetTerrain()->SampleHeight(pos);
+
+					// Axis align
+					engine->graphics->DrawLine(
+						pos - Vector3(-1.0f, 0, 0), pos + Vector3(-1.0f, 0, 0), Color::Yellow
+					);
+
+					engine->graphics->DrawLine(
+						pos - Vector3(0, -1.0f, 0), pos + Vector3(0, -1.0f, 0), Color::Yellow
+					);
+
+					engine->graphics->DrawLine(
+						pos - Vector3(0, 0, -1.0f), pos + Vector3(0, 0, -1.0f), Color::Yellow
+					);
+
+					i++;
+				}
+			}
 
 			if (DrawRenderTarget)
 			{
