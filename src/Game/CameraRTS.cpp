@@ -32,7 +32,7 @@ namespace TikiEngine
 
 		void CameraRTS::Update(const UpdateArgs& args)
 		{
-			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 150.0f : 75.0f);
+			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 60.0f : 30.0f);
 
 			Vector2 move = Vector2(
 				(args.Input.GetKey(KEY_LEFT) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) ? 1.0f : 0.0f),
@@ -74,8 +74,8 @@ namespace TikiEngine
 
 				float sample = terrain->SampleHeight(gameObject->PRS.GPosition());
 				height = Lerp(height, sample, (float)args.Time.ElapsedTime * 2);
-				height = Clamp(height, sample, 1000.0f);
-				gameObject->PRS.SPosition().Y = height + (32.0f - zoom);
+				height = Clamp(height, sample, 100.0f);
+				gameObject->PRS.SPosition().Y = height + 10.0f; // (32.0f - zoom);
 
 				//if (args.Input.MouseWheel != 0)
 				//{
