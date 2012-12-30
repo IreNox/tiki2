@@ -171,6 +171,18 @@ public:
 		return list.GetRef(index).GetValueRef();
 	}
 
+	inline const TValue& GetCRef(TKey key) const
+	{
+		int index = _keyToIndex(key);
+
+		if (index == -1)
+		{
+			throw "Key not found.";
+		}
+
+		return list.GetCRef(index).GetValueCRef();
+	}
+
 	inline TValue operator[](TKey key) const
 	{
 		return this->Get(key);

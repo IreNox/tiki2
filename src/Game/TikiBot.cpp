@@ -12,6 +12,7 @@
 #include "Game/Weapon.h"
 #include "Game/SkillSystem.h"
 #include "Game/TargetingSystem.h"
+#include "Game/AttributeSystem.h"
 
 #include "Game/SceneLevel.h"
 
@@ -24,11 +25,10 @@ namespace TikiEngine
 		static GoalTypeToString* ttsInstance = new GoalTypeToString();
 
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
-			: MovingEntity(gameState, gameObject)
+			: MovingEntity(gameState, gameObject), attSys(gameObject->GetEngine())
 		{
             // Init MovingEntity stats
             MovingEntity::Init(desc.Radius, Vector2::Zero, desc.MaxSpeed, desc.Heading, desc.MaxTurnRate, desc.MaxForce);
-
 
             // Init bot attributes
             faction = desc.Faction;
@@ -37,8 +37,9 @@ namespace TikiEngine
 			armor = desc.Armor;
 			type = desc.EntityType;
 
-            maxHealth = desc.MaxHealth;
-            health = maxHealth;
+			attSys[TA_MaxHealth] = desc.MaxHealth;
+            //maxHealth = desc.MaxHealth;
+            health = attSys[TA_MaxHealth];
 
             numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
             hit = false;
@@ -133,7 +134,7 @@ namespace TikiEngine
 		void TikiBot::IncreaseHealth(float val)
 		{
 			health += val; 
-			ClampT(health, 0.0f, maxHealth);
+			ClampT(health, 0.0f, attSys[TA_MaxHealth]);
 		}
 
 
@@ -254,7 +255,7 @@ namespace TikiEngine
 
 			args.SpriteBatch->Draw(
 				texHealth,
-				RectangleF::Create(pos.X - 19, pos.Y - 15, ((float)health / maxHealth) * 38.0f, 6),
+				RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(health / attSys[TA_MaxHealth]) * 38.0f, 6),
 				Color::White
 			);
 

@@ -5,6 +5,7 @@
 
 #include "Game/PathPlanner.h"
 #include "Game/TikiSteering.h"
+#include "Game/AttributeSystem.h"
 #include "Game/TargetingSystem.h"
 
 #include "Core/ICharacterController.h"
@@ -134,9 +135,9 @@ namespace TikiEngine
 		    void Read(std::ifstream& is) { }
 			
 			#pragma region Accessing attribute data
-			inline float Health() const { return health; }
-			inline float MaxHealth() const { return maxHealth; }
-			inline void RestoreHealthToMaximum() { health = maxHealth; }
+			inline double Health() const { return health; }
+			inline double MaxHealth() const { return attSys[TA_MaxHealth]; }
+			inline void RestoreHealthToMaximum() { health = attSys[TA_MaxHealth]; }
 			void ReduceHealth(float val);
 			void IncreaseHealth(float val);
 				 
@@ -204,6 +205,9 @@ namespace TikiEngine
 			// PhysX Controller
 			ICharacterController* controller;
 
+			/*! @brief Manage all Attributes */
+			AttributeSystem attSys;
+
 			// this object handles the arbitration and processing of high level goals
 			GoalThink* brain;
 
@@ -233,10 +237,10 @@ namespace TikiEngine
 
 			// the bot's health. Every time the bot is shot this value is decreased. If
 			// it reaches zero then the bot dies (and respawns)
-			float health;
+			double health;
   
 			// the bot's maximum health value. It starts its life with health at this value
-			float maxHealth;
+			//float maxHealth;
 
 			// a bot only perceives other bots within this field of view
 			float fieldOfView;

@@ -7,8 +7,8 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		AttributeSystem::AttributeSystem(TikiBot* owner)
-			: EngineObject(owner->GetEngine())
+		AttributeSystem::AttributeSystem(Engine* engine)
+			: EngineObject(engine)
 		{
 			Attributes atts[] = {
 				TIKI_ALL_ATTRIBUTES
@@ -25,6 +25,8 @@ namespace TikiEngine
 
 				i++;
 			}
+
+			attributes.Optimize();
 		}
 
 		AttributeSystem::~AttributeSystem()
@@ -39,11 +41,6 @@ namespace TikiEngine
 		void AttributeSystem::RemoveModifier(TikiAttModifier* mod)
 		{
 			attributes[mod->GetAttributeType()].removeModifier(mod);
-		}
-
-		TikiAtt& AttributeSystem::operator[](Attributes att)
-		{
-			return attributes.GetRef(att);
 		}
 	}
 }

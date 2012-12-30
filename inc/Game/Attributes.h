@@ -1,7 +1,6 @@
 #pragma once
 
 #define TIKI_ALL_ATTRIBUTES \
-	TA_Health, \
 	TA_MaxHealth, \
 	TA_MaxSpeed, \
 	TA_Armor, \

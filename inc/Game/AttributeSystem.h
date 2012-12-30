@@ -14,13 +14,14 @@ namespace TikiEngine
 		{
 		public:
 
-			AttributeSystem(TikiBot* owner);
+			AttributeSystem(Engine* engine);
 			~AttributeSystem();
 
 			void AddModifiert(TikiAttModifier* mod);
 			void RemoveModifier(TikiAttModifier* mod);
 
-			TikiAtt& operator[](Attributes att);
+			inline TikiAtt& operator[](Attributes att) { return attributes.GetRef(att); }
+			inline const TikiAtt& operator[](Attributes att) const { return attributes.GetCRef(att); }
 
 		private:
 
