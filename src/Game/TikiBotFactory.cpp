@@ -77,7 +77,7 @@ namespace TikiEngine
 					if (enemySpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(spawnPoints[i],  0);
+						go->PRS.SPosition() = getPos(spawnPoints[i],  3);
 						CreateEnemy1(go);						
 					}
 
@@ -85,7 +85,7 @@ namespace TikiEngine
 					if (playerSpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(playerBase, 0);
+						go->PRS.SPosition() = getPos(playerBase, 3);
 						CreatePlayerMop(go, spawnPoints[i]);
 					}
 
@@ -100,7 +100,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(spawnPoints[0], 1);
+				go->PRS.SPosition() = getPos(spawnPoints[0], 3);
 				CreateEnemy1(go);
 			}
 
@@ -114,7 +114,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F7))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 1);
+				go->PRS.SPosition() = getPos(Vector2(10, 10), 3);
 				CreatePlayerHero(go);
 			}
 
@@ -122,7 +122,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 1);
+				go->PRS.SPosition() = getPos(Vector2(10, 10), 3);
 				CreatePlayerMop(go, spawnPoints[0]);
 			}
 

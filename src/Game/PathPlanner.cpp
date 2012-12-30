@@ -38,7 +38,7 @@ namespace TikiEngine
 
                 // make sure our position is within the current cell
                 pathPos = parent->SnapPointToCell(currentCell, pathPos);
-				pathPos.Y += bot->GetController()->GetHeight() * 0.5f +  bot->GetController()->GetRadius() + 40.0f;
+				pathPos.Y += bot->GetController()->GetHeight() * 0.5f +  bot->GetController()->GetRadius();
                 bot->GetController()->SetCenter(pathPos);
                 return true;
             }
