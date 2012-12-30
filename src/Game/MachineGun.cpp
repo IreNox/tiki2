@@ -24,7 +24,7 @@ namespace TikiEngine
 				if (owner->EntityType() != ET_Tower)
 				{
 					IBone* bone = owner->GetGameObject()->GModel()->GetBone("weapon_MgTip_bn");				
-					 start = Vector3::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
+					start = Vector3::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
 				}
 				else //if (owner->EntityType() == )
 				{
