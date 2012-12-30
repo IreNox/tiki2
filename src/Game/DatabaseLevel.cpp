@@ -369,6 +369,9 @@ namespace TikiEngine
 					pb->MainBuilding = this;
 				}
 				break;
+			case 12:
+				gameState->GetBotFactory()->CreateEnemyTower(this);
+				break;
 			}
 		}
 

@@ -122,8 +122,10 @@ namespace TikiEngine
 			health -= val;
 
 			if (health <= 0)
+			{
+				OnDeath.RaiseEvent(this, BotDeadArgs(this));
 				SetDead();
-
+			}
 			hit = true;
 
 			const int FrameRate = 60;

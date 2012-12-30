@@ -10,6 +10,8 @@
 
 #include "Core/ICharacterController.h"
 
+#include "Game/EventBotDead.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -149,6 +151,7 @@ namespace TikiEngine
 			inline float GetSightRadius() const { return sightRadius; }
 
 			//bool IsPossessed() const {return possessed;}
+			BotDeadEvent OnDeath;
 
 			inline bool IsDead() const { return status == dead; }
 			inline bool IsAlive() const { return status == alive; }

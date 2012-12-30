@@ -172,6 +172,8 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
 
+			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
+
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);

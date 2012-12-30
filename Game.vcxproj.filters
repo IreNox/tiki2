@@ -416,6 +416,9 @@
     <ClInclude Include="inc\Game\Attributes.h">
       <Filter>Headerdateien\AI\Attributes</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\EventBotDead.h">
+      <Filter>Headerdateien\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">

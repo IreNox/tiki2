@@ -22,6 +22,7 @@
     <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h" />
     <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h" />
     <ClInclude Include="inc\Game\Attributes.h" />
+    <ClInclude Include="inc\Game\EventBotDead.h" />
     <ClInclude Include="inc\Game\TikiAtt.h" />
     <ClInclude Include="inc\Game\TikiAttModifier.h" />
     <ClInclude Include="inc\Game\AttributeSystem.h" />
