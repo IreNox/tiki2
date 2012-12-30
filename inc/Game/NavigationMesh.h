@@ -45,8 +45,10 @@ namespace TikiEngine
 			// Force a point to be inside the nearest cell on the mesh  
 			Vector3 SnapPointToMesh(NavigationCell** CellOut, const Vector3& Point);
 			
-			// TODO:: Speed this up with cellspace! Find the closest cell on the mesh to the given point  
+			// Find the closest cell on the mesh to the given point  
 			NavigationCell* FindClosestCell(const Vector3& Point) const;
+			// If no cell was found, search by looping all cells. (no OcTree usage)
+			NavigationCell* FindClosestCellSlow(const Vector3& Point) const;
 
 			// Test to see if two points on the mesh can view each other  
 			bool LineOfSightTest(NavigationCell* StartCell, const Vector3& StartPos, NavigationCell* EndCell, const Vector3& EndPos);

@@ -200,12 +200,6 @@ namespace TikiEngine
 			for(UInt32 i = 0; i < triangles->Count(); i++)
 			{
 				NavigationCell* pCell = (NavigationCell*)triangles->Get(i).UserData;
-			
-
-// 			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
-// 			for(;CellIter != cellArray.end(); ++CellIter)  
-// 			{  
-// 				NavigationCell* pCell = *CellIter;
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
@@ -263,6 +257,77 @@ namespace TikiEngine
 				engine->HLog.Write("No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
 			return ClosestCell;
 		}  
+
+		NavigationCell* NavigationMesh::FindClosestCellSlow(const Vector3& Point) const  
+		{  
+			float ClosestDistance = 3.4E+38f;  
+			float ClosestHeight = 3.4E+38f;  
+			bool FoundHomeCell = false;  
+			float ThisDistance;  
+			NavigationCell* ClosestCell = 0;  
+
+			CELL_ARRAY::const_iterator  CellIter = cellArray.begin();  
+			for(;CellIter != cellArray.end(); ++CellIter)  
+			{  
+				NavigationCell* pCell = *CellIter;
+
+				if (pCell->IsPointInCellCollumn(Point))  
+				{  
+					Vector3 NewPosition(Point);  
+					pCell->MapVectorHeightToCell(NewPosition);  
+
+					ThisDistance = fabs(NewPosition.Y - Point.Y);  
+
+					if (FoundHomeCell)  
+					{  
+						if (ThisDistance < ClosestHeight)  
+						{  
+							ClosestCell = pCell;  
+							ClosestHeight = ThisDistance;  
+						}  
+					}  
+					else  
+					{  
+						ClosestCell = pCell;  
+						ClosestHeight = ThisDistance;  
+						FoundHomeCell = true;  
+					}  
+				}  
+
+				if (!FoundHomeCell)  
+				{  
+					Vector2 Start(pCell->CenterPoint().X, pCell->CenterPoint().Z);  
+					Vector2 End(Point.X, Point.Z);  
+					Line2D MotionPath(Start, End);  
+					NavigationCell* NextCell;  
+					NavigationCell::CELL_SIDE WallHit;  
+					Vector2 PointOfIntersection;  
+
+					NavigationCell::PATH_RESULT Result = pCell->ClassifyPathToCell(MotionPath, &NextCell, WallHit, &PointOfIntersection);  
+
+					if (Result == NavigationCell::EXITING_CELL)  
+					{  
+						Vector3 ClosestPoint3D(PointOfIntersection.X, 0.0f, PointOfIntersection.Y);  
+						pCell->MapVectorHeightToCell(ClosestPoint3D);  
+
+						ClosestPoint3D -= Point;  
+
+						ThisDistance = ClosestPoint3D.LengthSquared();  
+
+						if (ThisDistance < ClosestDistance)  
+						{  
+							ClosestDistance=ThisDistance;  
+							ClosestCell = pCell;  
+						}  
+					}  
+				}  
+			}
+
+			if (!ClosestCell)
+				engine->HLog.Write("No closeset cell found in FindClosestCell() (navigationMesh.cpp) \n");
+			return ClosestCell;
+		}  
+
 
 		bool NavigationMesh::LineOfSightTest(NavigationCell* StartCell, const Vector3& StartPos, NavigationCell* EndCell, const Vector3& EndPos)  
 		{  

@@ -122,7 +122,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 50);
+				go->PRS.SPosition() = getPos(Vector2(10, 10), 20);
 				CreatePlayerMop(go, spawnPoints[0]);
 			}
 
@@ -291,7 +291,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Building;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->GetController()->SetGroup(CG_Non_Collidable);
 			bot->SetScale(10.0f);
 
 			gameState->GetScene()->AddElement(go);
