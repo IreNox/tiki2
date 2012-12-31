@@ -2,15 +2,14 @@
 #include "Game/SkillSpiderMine.h"
 #include "Game/TikiBotFactory.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
 		SkillDescription SkillSpiderMine::Desc = SkillDescription(
-			5.0,
-			25.0f,
-			0.0f,
-			10.0,
+			SKILL_SPIDERMINE_DESC,
 			(SkillFlags)(SF_Active | SF_TargetBot),
 			L"spider_mine",
 			L""

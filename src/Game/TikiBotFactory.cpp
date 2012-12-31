@@ -147,7 +147,6 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
-			bot->CreateNav(gameState->GetNavMesh());
 
 			if (!wayPoints.empty())
 			{
@@ -217,7 +216,6 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
-			bot->CreateNav(gameState->GetNavMesh());
 
 			bot->GetSkillSys()->AddSkill(new SkillFlash(bot));
 			bot->GetSkillSys()->AddSkill(new SkillRocket(bot));
@@ -243,7 +241,6 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
-			bot->CreateNav(gameState->GetNavMesh());
 
 			bot->GetBrain()->AddGoalAttackMove(dest);
 
@@ -314,7 +311,6 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
-			bot->CreateNav(gameState->GetNavMesh());
 
 			bot->GetTargetSys()->SetGlobalTarget(target);
 			bot->GetBrain()->AddGoalAttackTarget();

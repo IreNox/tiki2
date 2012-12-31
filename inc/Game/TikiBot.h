@@ -122,26 +122,26 @@ namespace TikiEngine
 		{
 		public:
 			
+			//Events
+			BotDeadEvent OnDeath;
+
 			TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc);
 			~TikiBot();
 
-			//void Init();
-
-			// Navigation
-			void CreateNav(NavigationMesh* par, NavigationCell* currCell = 0);
-
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
-			//bool HandleMessage(const Telegram& msg); // TODO
-			void Write(std::ostream&  os)const { }
-		    void Read(std::ifstream& is) { }
+			
+			// TODO?: Messaging
+			//bool HandleMessage(const Telegram& msg);
+			//void Write(std::ostream&  os)const { }
+		    //void Read(std::ifstream& is) { }
 			
 			#pragma region Accessing attribute data
 			inline double Health() const { return health; }
 			inline double MaxHealth() const { return attSys[TA_MaxHealth]; }
 			inline void RestoreHealthToMaximum() { health = attSys[TA_MaxHealth]; }
-			void ReduceHealth(float val);
-			void IncreaseHealth(float val);
+			void ReduceHealth(double val);
+			void IncreaseHealth(double val);
 				 
 			//Vector2 Facing() const {return facing;}
 			inline float FieldOfView() const { return fieldOfView; }
@@ -151,8 +151,6 @@ namespace TikiEngine
 			inline float GetSightRadius() const { return sightRadius; }
 
 			//bool IsPossessed() const {return possessed;}
-			BotDeadEvent OnDeath;
-
 			inline bool IsDead() const { return status == dead; }
 			inline bool IsAlive() const { return status == alive; }
 			inline bool IsSpawning() const { return status == spawning; }
@@ -161,6 +159,9 @@ namespace TikiEngine
 			inline void SetAlive() { status = alive; }
 			inline void SetSpawning() { status = spawning; }
 			#pragma endregion
+
+			// Called if this Bot has killed
+			void KilledBot(TikiBot* deadBot);
 
 			// rotates the bot's heading until it is facing directly at the target
 			// position. Returns false if not facing at the target.
@@ -173,22 +174,31 @@ namespace TikiEngine
 			bool HasLOSTo(Vector3 pos, float dist, float eps);
 
 			// this is called to allow a human player to control the bot
-			void TakePossession();
+			//void TakePossession();
 
 			// called when a human is exorcised from this bot and the AI takes control
-			void Exorcise();
+			//void Exorcise();
 
 			void Teleport(const Vector3& pos);
 
 			inline TikiBot* const GetTargetBot() const { return targSys->GetTarget(); }
 			inline ICharacterController* GetController() { return controller; }
 
+			/*! @brief Manage all Attributes */
+			inline AttributeSystem& GetAttSys() { return attSys; }
+			/*! @brief this object handles the arbitration and processing of high level goals */
 			inline GoalThink* const GetBrain() { return brain; }
+			/*! @brief Object for planning paths */
 			inline PathPlanner* GetPathPlanner() { return pathPlanner; }
+			/*! @brief The bot uses this object to steer */
 			inline TikiSteering* const GetSteering() { return steering; }
+			/*! @brief This is responsible for choosing the bots current target */
 			inline TargetingSystem* const GetTargetSys(){ return targSys; }
+			/*! @brief Whenever this bot sees or hears an opponent, a record of the event is updated in the memory. */
 			inline SensorMemory* const GetSensorMem() const {return sensorMem; }
+			/*! @brief Handles all the weapons and aims */
             inline WeaponSystem* const GetWeaponSys() const {return weaponSys; }
+			/*! @brief Skillsystem used by hero type */
 			inline SkillSystem* const GetSkillSys() const { return skillSys; }
 
 		private:
@@ -208,28 +218,14 @@ namespace TikiEngine
 			// PhysX Controller
 			ICharacterController* controller;
 
-			/*! @brief Manage all Attributes */
+			// Systems
 			AttributeSystem attSys;
-
-			// this object handles the arbitration and processing of high level goals
 			GoalThink* brain;
-
-			// Whenever this bot sees or hears an opponent, a record of the event is updated in the memory.
 			SensorMemory* sensorMem;
-
-			// the bot uses this object to steer
 			TikiSteering* steering;
-            
-            // object for planning paths
             PathPlanner* pathPlanner;
-
-			// this is responsible for choosing the bot's current target
 			TargetingSystem* targSys;
-
-            // Handles all the weapons and aims
             WeaponSystem* weaponSys;
-
-			// Skillsystem used by hero type
 			SkillSystem* skillSys;
 
 			// A regulator object limits the update frequency of a specific AI component

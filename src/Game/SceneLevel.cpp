@@ -116,6 +116,15 @@ namespace TikiEngine
 					LevelPoint* point = new LevelPoint(gameState);
 					point->LoadFromDatabase(state);
 
+					if (point->GType() == 1)
+					{
+						mainCamera->GetGameObject()->PRS.SPosition() = Vector3(
+							point->GPosition().X,
+							32.0f,
+							point->GPosition().Y
+						);
+					}
+
 					points.Add(point);
 				}
 				sqlite3_finalize(state);

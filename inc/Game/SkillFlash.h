@@ -17,6 +17,8 @@ namespace TikiEngine
 
 			void internActivationPoint(const Vector3& target);
 
+			void internUpgrade();
+
 		private:
 
 			static SkillDescription Desc;

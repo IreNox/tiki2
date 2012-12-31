@@ -6,15 +6,14 @@
 #include "Game/GameState.h"
 #include "Game/ProjectileManager.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
 		SkillDescription SkillRocket::Desc = SkillDescription(
-			4.5,
-			25,
-			20,
-			2,
+			SKILL_ROCKET_DESC,
 			(SkillFlags)(SF_Active | SF_TargetAOE),
 			L"rocket",
 			L"rocket"
@@ -37,7 +36,7 @@ namespace TikiEngine
 			desc.ShooterID = owner->ID();
 			desc.Origin = owner->Pos3D();
 			desc.Heading = owner->Heading();
-			desc.Damage = 20; 
+			desc.Damage = SkillRocketDamage[currentLevel - 1]; 
 			desc.LifeTime = 10.0f;
 
 			GameObject* go = new GameObject(engine);

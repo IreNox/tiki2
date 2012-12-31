@@ -42,8 +42,8 @@ namespace TikiEngine
 			GUIButton* buttonMenu;
 			GUIWindow* windowResources;
 			
-			GUIWindow* windowFunc;
 			GUIWindow* windowSkills;
+			GUIWindow* windowSkillUpgrades;
 
 			List<GUIControl*> enabledControls;
 

@@ -34,19 +34,22 @@ namespace TikiEngine
 
 		struct SkillDescription
 		{
+			double Cooldown;
+			double DurationOfEffect;
+
 			float AOERange;
 			float ActivationRange;
+
+			UInt32 MaxLevel;
+
 			SkillFlags Flags;
 
 			wcstring TexNameIcon;
 			wcstring TexNameCrosshair;
 
-			double Cooldown;
-			double DurationOfEffect;
-
-			SkillDescription(double cooldown, float activationRange, float aoeRange, double durationOfEffect, SkillFlags flags, wcstring texNameIcon, wcstring texNameCrosshair)
+			SkillDescription(double cooldown, float activationRange, float aoeRange, double durationOfEffect, UInt32 maxLevel, SkillFlags flags, wcstring texNameIcon, wcstring texNameCrosshair)
 				: ActivationRange(activationRange), AOERange(aoeRange), Flags(flags), TexNameIcon(texNameIcon), TexNameCrosshair(texNameCrosshair),
-				  Cooldown(cooldown), DurationOfEffect(durationOfEffect)
+				  Cooldown(cooldown), DurationOfEffect(durationOfEffect), MaxLevel(maxLevel)
 			{
 			}
 		};
@@ -61,23 +64,32 @@ namespace TikiEngine
 			void Aktivate();
 			void CancelActivation();
 
+			void Upgrade();
+
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
-			inline float GetInRange() { return inRange; }
-			inline bool GetHasAOE() { return flags.HasFlag(SF_TargetAOE); }
-			inline bool GetOnActivation() { return onActivation; }
+			inline bool GetInRange() const { return inRange; }
+			inline bool GetHasAOE() const { return flags.HasFlag(SF_TargetAOE); }
+			inline bool GetOnActivation() const { return onActivation; }
 
-			inline float GetCrosshairSize() { return description.AOERange; }
-			inline ITexture* GetCrosshairTexture() { return crosshair; }
+			inline ITexture* GetIconTexture() const { return icon; }
+			inline ITexture* GetCrosshairTexture() const { return crosshair; }
 
-			inline ITexture* GetIconTexture() { return icon; }
+			inline const SkillDescription& GetDesc() const { return description; }
+
+			inline UInt32 GetCurrentLevel() const { return currentLevel; }
+			inline const wstring& GetCurrentLevelString() const { return currentLevelString; }
 
 		protected:
 
 			bool atWork;
 			bool isReady;
 			bool onActivation;
+
+			UInt32 currentLevel;
+			wstring currentLevelString;
+			SkillDescription description;
 
 			TikiBot* owner;
 			GameState* gameState;
@@ -89,10 +101,11 @@ namespace TikiEngine
 			virtual void internDraw(const DrawArgs& args) {};
 			virtual void internUpdate(const UpdateArgs& args) {};
 
+			virtual void internUpgrade() {}
+
 		private:
 
 			TikiEnum<SkillFlags> flags;
-			SkillDescription description;
 
 			ITexture* icon;
 			ITexture* crosshair;

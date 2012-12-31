@@ -13,7 +13,7 @@ namespace TikiEngine
 		struct ProjectileDescription
 		{
 			/*! @brief how much damage it inflicts */
-			float Damage;
+			double Damage;
 
 			/*! @brief the target's position */
 			Vector3 Target;
@@ -37,7 +37,7 @@ namespace TikiEngine
 				Mass = 1;
 				MaxForce = 150;
 				Scale = 0.7f;
-				Damage = 5.0f;
+				Damage = 5.0;
                 LifeTime = 3.0f;
                 Shooter = 0;
 			}
@@ -74,7 +74,7 @@ namespace TikiEngine
 
 		protected:
 
-			float damage;
+			double damage;
 
 			Vector3 target;
 			Vector3 origin;

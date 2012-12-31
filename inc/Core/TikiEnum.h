@@ -21,13 +21,13 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		inline T GetValue() { return value; }
+		inline T GetValue() const { return value; }
 		inline T& SetValue() { return value; }
 
 		inline void SetFlag(T flag) { value |= flag; }
 		inline void RemoveFlag(T flag) { value ^= flag; }
 
-		inline bool HasFlag(T flag) { return (value & flag) != 0; }
+		inline bool HasFlag(T flag) const { return (value & flag) != 0; }
 		#pragma endregion
 
 	private:

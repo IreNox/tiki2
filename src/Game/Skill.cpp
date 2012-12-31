@@ -16,8 +16,8 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Skill::Skill(TikiBot* owner, const SkillDescription& desc)
-			: owner(owner), EngineObject(owner->GetEngine()), gameState(owner->GetGameState()), onActivation(false), isReady(true), atWork(false),
-			  icon(0), crosshair(0), description(desc), inRange(false),
+			: owner(owner), EngineObject(owner->GetEngine()), gameState(owner->GetGameState()), onActivation(false), isReady(true), atWork(false), inRange(false),
+			  icon(0), crosshair(0), description(desc), currentLevel(0), currentLevelString(L"0"),
 			  workTimer(desc.DurationOfEffect), cooldownTimer(desc.Cooldown), flags(desc.Flags)
 		{
 			if (wstring(desc.TexNameIcon) != L"")
@@ -54,6 +54,8 @@ namespace TikiEngine
 		#pragma region Member
 		void Skill::Aktivate()
 		{
+			if (currentLevel < 1) return;
+
 			if (isReady && flags.HasFlag(SF_Active))
 			{
 				if (flags.HasFlag(SF_TargetAura))
@@ -72,11 +74,28 @@ namespace TikiEngine
 				//TODO: Play Sound
 			}
 		}
+
+		void Skill::Upgrade()
+		{
+			if (currentLevel < description.MaxLevel)
+			{
+				currentLevel++;
+
+				wostringstream s;
+				s << currentLevel;
+
+				currentLevelString = s.str();
+
+				internUpgrade();
+			}
+		}
 		#pragma endregion
 
 		#pragma region Member - Draw
 		void Skill::Draw(const DrawArgs& args)
 		{
+			if (currentLevel < 1) return;
+
 			if (onActivation)
 			{
 				Ray r = args.CurrentCamera->ScreenPointToRay(args.Update.Input.MousePositionDisplay);
@@ -147,6 +166,8 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void Skill::Update(const UpdateArgs& args)
 		{
+			if (currentLevel < 1) return;
+
 			if (atWork)
 			{
 				atWork = !workTimer.IsReady(args.Time);

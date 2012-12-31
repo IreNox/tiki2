@@ -83,7 +83,7 @@ namespace TikiEngine
 								shader->SetTexture("SkillCrosshair", skills[i]->GetCrosshairTexture());
 
 								fow->Units[count].Position = args.Update.Input.MousePosition;
-								fow->Units[count].Range = skills[i]->GetCrosshairSize();
+								fow->Units[count].Range = skills[i]->GetDesc().AOERange;
 								fow->Units[count].Type = (skills[i]->GetInRange() ? 3.0f : 4.0f );
 								count++;
 							}

@@ -101,8 +101,7 @@ namespace TikiEngine
 					if (dist < rad)
 					{
 						curBot->ReduceHealth(damage);
-						if (curBot->IsDead() && shooter->EntityType() == ET_Hero)
-							gameState->IncrementResource(10);
+						if (curBot->IsDead()) shooter->KilledBot(curBot);
 					}
 				}
 			}

@@ -44,37 +44,16 @@ namespace TikiEngine
 			labelRes->SPosition() = Vector2(35, 20);
 			windowResources->AddChild(labelRes);
 
-			windowFunc = new GUIWindow(engine);
-			windowFunc->SSize() = Vector2(225, 225);
-			//enabledControls.Add(windowFunc);
-
-			UInt32 i = 0;
-			while (i < 9)
-			{
-				int x = i % 3;
-				int y = i / 3;
-
-				GUIButton* cmd = new GUIButton(engine);
-				cmd->SSize() = Vector2(70, 70);
-				cmd->SPosition() = Vector2(
-					10.0f + (x * 68),
-					10.0f + (y * 68)
-				);
-				windowFunc->AddChild(cmd);
-
-				i++;
-			}
-
 			windowSkills = new GUIWindow(engine);
 			windowSkills->SSize() = Vector2(295, 90);
 			enabledControls.Add(windowSkills);
 
-			i = 0;
+			UInt32 i = 0;
 			while (i < 4)
 			{
 				GUIButton* cmd = new GUIButton(engine);
 				cmd->SSize() = Vector2(70, 70);
-				cmd->SPosition() = Vector2(10.0f + (i * 68), 10.0f);
+				cmd->SPosition() = Vector2(10.0f + (68.0f * i), 10.0f);
 				cmd->Click.AddHandler(this);
 
 				windowSkills->AddChild(cmd);
@@ -82,6 +61,23 @@ namespace TikiEngine
 				i++;
 			}
 
+			windowSkillUpgrades = new GUIWindow(engine);
+			windowSkillUpgrades->SSize() = Vector2(219, 67);
+
+			i = 0;
+			while (i < 4)
+			{
+				GUIButton* cmd = new GUIButton(engine);
+				cmd->SSize() = Vector2(48, 48);
+				cmd->SPosition() = Vector2(10.0f + (50.0f * i), 10.0f);
+				cmd->Text() = L"+";
+				cmd->Click.AddHandler(this);
+
+				windowSkillUpgrades->AddChild(cmd);
+
+				i++;
+			}
+			
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
 		}
@@ -89,30 +85,22 @@ namespace TikiEngine
 		GameHud::~GameHud()
 		{
 			SafeRelease(&buttonMenu);
-			SafeRelease(&windowFunc);
+
 			SafeRelease(&windowSkills);
+			SafeRelease(&windowSkillUpgrades);
+
 			SafeRelease(&windowResources);
 		}
 		#pragma endregion
 
-		#pragma region Member - ResetScreen
-		void GameHud::ResetScreen()
-		{
-			ViewPort* vp = engine->graphics->GetViewPort();
-
-			windowFunc->SPosition() = vp->GetSize() - Vector2(220, 220);
-			windowSkills->SPosition() = Vector2(100, (float)vp->Height - 90);
-			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15.0f);
-		}
-
-		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
-		{
-			this->ResetScreen();
-		}
-
+		#pragma region Member - Click
 		void GameHud::Handle(GUIControl* sender, const ClickEventArgs& args)
 		{
-			if (sender->GetParent() == windowSkills)
+			if (sender == buttonMenu)
+			{
+				//engine->SetScene()
+			}
+			else if (sender->GetParent() == windowSkills)
 			{
 				Int32 index = windowSkills->ChildControls().IndexOf(sender);
 
@@ -121,9 +109,41 @@ namespace TikiEngine
 					gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys()->GetSkills().Get(index)->Aktivate();
 				}
 			}
+			else if (sender->GetParent() == windowSkillUpgrades)
+			{
+				Int32 index = windowSkillUpgrades->ChildControls().IndexOf(sender);
+				
+				if (index != -1)
+				{
+					SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
+					sys->UpgradeSkill(index);
+
+					Skill* skill = sys->GetSkills().Get(index);
+					if (skill->GetCurrentLevel() == skill->GetDesc().MaxLevel)
+					{
+						windowSkillUpgrades->RemoveChild(sender);
+					}
+				}
+			}
 		}
 		#pragma endregion
 
+		#pragma region Member - ResetScreen
+		void GameHud::ResetScreen()
+		{
+			ViewPort* vp = engine->graphics->GetViewPort();
+
+			windowSkills->SPosition() = Vector2(100, (float)vp->Height - 90);
+			windowSkillUpgrades->SPosition() = Vector2(140, (float)vp->Height - 150);
+			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15.0f);
+		}
+
+		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
+		{
+			this->ResetScreen();
+		}
+		#pragma endregion
+		
 		#pragma region Member - Draw/Update
 		void GameHud::Draw(const DrawArgs& args)
 		{
@@ -135,23 +155,41 @@ namespace TikiEngine
 				i++;
 			}
 
-			i = 0;
 			SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
+
+			if (sys->GetSkillUpgrades() > 0)
+			{
+				windowSkillUpgrades->Draw(args);
+			}
+
+			i = 0;
 			while (i < 4)
 			{
+				Skill* skill = sys->GetSkills()[i];
+				GUIControl* cont = windowSkills->ChildControls()[i];
+
 				args.SpriteBatch->Draw(
-					sys->GetSkills().Get(i)->GetIconTexture(),
-					windowSkills->ChildControls().Get(i)->GetBoundingBox().Position() + Vector2(13.0f),
+					skill->GetIconTexture(),
+					cont->GetBoundingBox().Position() + Vector2(13.0f),
 					0.0f,
 					Vector2::Zero,
 					0.35f,
 					1.0f
 				);
 
+				args.SpriteBatch->DrawString(
+					GUIControl::GetDefaultFont(),
+					skill->GetCurrentLevelString(),
+					cont->GetBoundingBox().Position() + Vector2(13.0f),
+					Color::White
+				);
+
 				i++;
 			}
 		}
+		#pragma endregion
 
+		#pragma region Member - Update
 		void GameHud::Update(const UpdateArgs& args)
 		{
 			wostringstream s;
@@ -164,6 +202,13 @@ namespace TikiEngine
 				enabledControls[i]->Update(args);
 
 				i++;
+			}
+
+			SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
+
+			if (sys->GetSkillUpgrades() > 0)
+			{
+				windowSkillUpgrades->Update(args);
 			}
 		}
 		#pragma endregion

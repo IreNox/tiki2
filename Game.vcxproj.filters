@@ -419,6 +419,12 @@
     <ClInclude Include="inc\Game\EventBotDead.h">
       <Filter>Headerdateien\Events</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\GD.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EventHeroEvents.h">
+      <Filter>Headerdateien\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">

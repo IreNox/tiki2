@@ -1,13 +1,15 @@
 
 #include "Game/SkillSystem.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 	namespace AI
 	{
 		#pragma region Class
 		SkillSystem::SkillSystem(TikiBot* owner)
-			: owner(owner)
+			: owner(owner), heroLevel(1), skillUpgrades(1), currentXp(0), nextLevelXp(HeroNeededXPFirstLevelUp), lastLevelXp(0)
 		{
 		}
 
@@ -42,6 +44,27 @@ namespace TikiEngine
 
 				skills[i]->Update(args);
 				i++;
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - XP
+		void SkillSystem::IncementXP(double xp)
+		{
+			currentXp += xp;
+
+			if (currentXp > nextLevelXp)
+			{
+				heroLevel++;
+				skillUpgrades++;
+
+				lastLevelXp = nextLevelXp;
+				nextLevelXp = HERO_XP_CALC_NEXTLEVEL(lastLevelXp, heroLevel);
+
+				this->LevelUp.RaiseEvent(
+					owner,
+					HeroLevelUpEventArgs(currentXp, nextLevelXp)
+				);
 			}
 		}
 		#pragma endregion

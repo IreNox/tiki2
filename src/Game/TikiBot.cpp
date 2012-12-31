@@ -16,6 +16,8 @@
 
 #include "Game/SceneLevel.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -24,6 +26,7 @@ namespace TikiEngine
 
 		static GoalTypeToString* ttsInstance = new GoalTypeToString();
 
+		#pragma region Class
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
 			: MovingEntity(gameState, gameObject), attSys(gameObject->GetEngine())
 		{
@@ -96,6 +99,9 @@ namespace TikiEngine
 			texHealth = engine->content->LoadTexture(L"hud/unit_health");
 			texShield = engine->content->LoadTexture(L"hud/unit_shield");
 
+			pathPlanner->Create(
+				gameState->GetNavMesh()
+			);			
 		}
 
 		TikiBot::~TikiBot()
@@ -111,13 +117,10 @@ namespace TikiEngine
 			SafeDelete(&targetSelectionRegulator);
 
 		}
+		#pragma endregion
 
-		void TikiBot::CreateNav(NavigationMesh* par, NavigationCell* currCell)
-		{
-            pathPlanner->Create(par);
-		}
-
-		void TikiBot::ReduceHealth(float val)
+		#pragma region Member - Health
+		void TikiBot::ReduceHealth(double val)
 		{
 			health -= val;
 
@@ -133,12 +136,36 @@ namespace TikiEngine
 			numUpdatesHitPersistant = (int)(FrameRate * HitFlashTime);
 		}
 
-		void TikiBot::IncreaseHealth(float val)
+		void TikiBot::IncreaseHealth(double val)
 		{
 			health += val; 
 			ClampT(health, 0.0f, attSys[TA_MaxHealth]);
 		}
-
+		#pragma endregion
+		
+		#pragma region Member - Killed Bot
+		void TikiBot::KilledBot(TikiBot* deadBot)
+		{
+			if (this->EntityType() == ET_Hero && deadBot->GetFaction() != faction)
+			{
+				switch (deadBot->EntityType())
+				{
+					case ET_Bot:
+						skillSys->IncementXP(XPKillBot);
+						gameState->IncrementResource(ResKillBot);
+						break;
+					case ET_Tower:
+						skillSys->IncementXP(XPKillTower);
+						gameState->IncrementResource(ResKillTower);
+						break;
+					case ET_Building:
+						skillSys->IncementXP(XPKillBuilding);
+						gameState->IncrementResource(ResKillBuilding);
+						break;
+				}
+			}
+		}
+		#pragma endregion
 
 		bool TikiBot::RotateFacingTowardPosition(Vector2 target)
 		{
@@ -171,8 +198,7 @@ namespace TikiEngine
             side = heading.Cross();
 			return false;
 		}
-
-
+		
 		bool TikiBot::IsAtPosition(Vector2 pos)
 		{
 			return ( Vector2::DistanceSquared(Pos(), pos) < 2.0f);
@@ -216,18 +242,18 @@ namespace TikiEngine
 			return los;
 		}
 
-		void TikiBot::TakePossession()
-		{
-// 			// TODO: Player + enemy bots check
-// 			if ( !(IsSpawning() || IsDead()) )
-// 				possessed = true;
-		}
-
-		void TikiBot::Exorcise()
-		{
-			//possessed = false;
-			//brain->AddGoalExplore();
-		}
+//		void TikiBot::TakePossession()
+//		{
+//// 			// TODO: Player + enemy bots check
+//// 			if ( !(IsSpawning() || IsDead()) )
+//// 				possessed = true;
+//		}
+//
+//		void TikiBot::Exorcise()
+//		{
+//			//possessed = false;
+//			//brain->AddGoalExplore();
+//		}
 
 		void TikiBot::Teleport(const Vector3& pos)
 		{
@@ -237,6 +263,7 @@ namespace TikiEngine
 			controller->SetCenter(sp);
 		}
 
+		#pragma region Member - Draw
 		void TikiBot::Draw(const DrawArgs& args)
 		{
 			Matrix vp = args.CurrentCamera->WorldToScreen();
@@ -244,35 +271,51 @@ namespace TikiEngine
 			Vector2 ss = args.Graphics->GetViewPort()->GetSize();
 
 			Vector3 pos = gameObject->PRS.GPosition();
-			pos.Y += controller->GetHeight() + 2.0f;
+			pos.Y += controller->GetHeight() + 1.0f;
 			pos = Vector3::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
 			pos *= 0.5f;
 			pos = Vector3(pos.X * ss.X, (1 - pos.Y) * ss.Y, 0);
 
-			args.SpriteBatch->Draw(
-				texInfo,
-				RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 10),
-				Color::White
-			);
+			if (EntityType() == ET_Hero)
+			{
+				args.SpriteBatch->Draw(
+					texInfo,
+					RectangleF::Create(pos.X - 40, pos.Y - 20, 80, 16),
+					Color::White
+				);
 
-			args.SpriteBatch->Draw(
-				texHealth,
-				RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(health / attSys[TA_MaxHealth]) * 38.0f, 6),
-				Color::White
-			);
+				args.SpriteBatch->Draw(
+					texHealth,
+					RectangleF::Create(pos.X - 39, pos.Y - 19, (float)(health / attSys[TA_MaxHealth]) * 78.0f, 11),
+					Color::White
+				);
 
-			args.SpriteBatch->Draw(
-				texShield,
-				RectangleF::Create(pos.X - 19, pos.Y - 9, 38, 2),
-				Color::White
-			);
+				float xp = (float)((skillSys->GetXP() - skillSys->GetXPLastLevel()) / (skillSys->GetXPNextLevel() - skillSys->GetXPLastLevel()));
+				args.SpriteBatch->Draw(
+					texShield,
+					RectangleF::Create(pos.X - 39, pos.Y - 8, xp * 78.0f, 4),
+					Color::White
+				);
+			}
+			else
+			{
+				args.SpriteBatch->Draw(
+					texInfo,
+					RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 9),
+					Color::White
+				);
 
-
+				args.SpriteBatch->Draw(
+					texHealth,
+					RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(health / attSys[TA_MaxHealth]) * 38.0f, 7),
+					Color::White
+				);
+			}
+			
 			// Draw Hero Skills
 			if (EntityType() == ET_Hero)
 				skillSys->Draw(args);
-
-
+			
 			// connect the waypoins to draw lines in green
 			#if _DEBUG
 			if (gameState->DrawNavMesh && EntityType() != ET_Building)
@@ -296,7 +339,9 @@ namespace TikiEngine
 			}
 			#endif
 		}
+		#pragma endregion
 
+		#pragma region Member - Update
 		void TikiBot::Update(const UpdateArgs& args)
 		{
 			// don't do this for buildings
@@ -385,6 +430,6 @@ namespace TikiEngine
 
 			//velocity[bufferState.UpdateIndex] = new value;
 		}
-
+		#pragma endregion
 	}
 }
