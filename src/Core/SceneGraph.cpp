@@ -22,7 +22,7 @@ namespace TikiEngine
 		//this->quadtree = Quadtree(rect, layerDepth);
 		//this->quadtree.Create();
 
-		this->rootNode = SceneGraphNode(rect, layerDepth);
+		this->rootNode.Initialize(rect, layerDepth);
 
 		this->initialized = true;
 	}
@@ -59,6 +59,7 @@ namespace TikiEngine
 			return;
 
 		this->rootNode.Update(args);
+		this->rootNode.LateUpdate(args);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)

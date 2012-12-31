@@ -46,7 +46,7 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
-			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
+			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
 
 			GameObject* go = new GameObject(engine);
 

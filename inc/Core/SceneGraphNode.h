@@ -13,8 +13,9 @@ namespace TikiEngine
 	public:
 
 		SceneGraphNode();
-		SceneGraphNode(RectangleF bounds, int layerDepth, SceneGraphNode* parent = NULL);
 		~SceneGraphNode();
+
+		void Initialize(RectangleF bounds, int layerDepth, SceneGraphNode* parent = NULL);
 
 		bool Add(GameObject* gameObject);
 		bool Remove(GameObject* gameObject);
@@ -24,6 +25,8 @@ namespace TikiEngine
 		SceneGraphNode* Find(GameObject* gameObject);
 
 		void Update(const UpdateArgs& args);
+		void LateUpdate(const UpdateArgs& args);
+
 		bool UpdatePosition(GameObject* go);
 		void Draw(const DrawArgs& args);
 
@@ -39,9 +42,16 @@ namespace TikiEngine
 		RectangleF& Bounds();
 		int Count();
 
-	private:
-		
+		void subdivide();
 
+	private:
+
+		inline bool IsSubdivided()
+		{
+			return childDataCount != 0;
+		}
+		
+		int childDataCount;
 		int layerDepth;
 		bool subdivided;
 		RectangleF bounds;
