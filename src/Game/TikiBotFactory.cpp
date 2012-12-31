@@ -161,8 +161,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 5.0f;
-			botDesc.Radius = 3.0f;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 2.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
@@ -170,7 +170,7 @@ namespace TikiEngine
 			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.5f);
+			bot->SetScale(0.25f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
@@ -259,14 +259,14 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 10.0f;
-			botDesc.Radius = 5.0f;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 2.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			//bot->SetScale(0.01f);
+			bot->SetScale(0.25f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			

@@ -9,24 +9,20 @@ public:
 
 	bool IsReadOnly;
 
-	#pragma region Class
+#pragma region Class
 	List()
-		: IsReadOnly(false), lengthArr(2), lengthData(-1), data(new T[2])
+		: IsReadOnly(false), lengthArr(0), lengthData(0), data(0)
 	{
 	}
 
 	List(const List<T>& copy)
 		: IsReadOnly(copy.IsReadOnly), lengthArr(copy.lengthArr), lengthData(copy.lengthData), data(new T[copy.lengthArr])
 	{
-		memcpy(
-			data,
-			copy.data,
-			sizeof(T) * lengthArr
-		);
+		memcpy(data, copy.data, sizeof(T) * lengthArr);
 	}
 
 	List(T* data, UInt32 count, bool readOnly)
-		: IsReadOnly(readOnly), lengthData(count - 1), lengthArr(2)
+		: IsReadOnly(readOnly), lengthData(count), lengthArr(2)
 	{
 		lengthArr = getNextSize(count);
 
@@ -38,23 +34,18 @@ public:
 	{
 		delete[](this->data);
 	}
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Member
-	inline UInt32 FirstIndex() const
-	{
-		return 0;
-	}
-
+#pragma region Member
 	inline UInt32 Count() const
 	{
-		return this->lengthData + 1;
+		return lengthData;
 	}
 
 	inline int IndexOf(T item) const
 	{
-		int i = 0;
-		while (i < lengthData + 1)
+		UInt32 i = 0;
+		while (i < lengthData)
 		{
 			if (this->data[i] == item) return i;
 			i++;
@@ -70,7 +61,7 @@ public:
 
 	inline void Clear()
 	{
-		this->lengthData = -1;
+		this->lengthData = 0;
 	}
 
 	inline bool Contains(T item) const
@@ -93,32 +84,30 @@ public:
 
 		return arr;
 	}
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Member - Add
+#pragma region Member - Add
 	inline void Add(T item)
 	{
 		if (this->IsReadOnly) return;
 
-		int index = getNewIndex(this->lengthData, true);
+		UInt32 index = lengthData;
+		checkArraySize(lengthData + 1);
 
 		this->data[index] = item;
 	}
 
 	inline void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
-		if(length == 0)
-			return;
+		if(length == 0)	return;
 
-		Int32 badFix = lengthData;
-		getNewIndex(this->lengthData + (length - 1), true);
-		lengthData = badFix;
+		UInt32 index = lengthData;
+		checkArraySize(lengthData + length);
 
 		UInt32 i = 0;
 		while (i < length)
 		{
-			data[lengthData + 1] = src[i];
-			lengthData++;
+			data[index + i] = src[i];
 			i++;
 		}
 	}
@@ -127,17 +116,15 @@ public:
 	{
 		if (this->IsReadOnly) return;
 
-		for (UInt32 i = this->lengthArr; i > index; i--)
-		{
-			bool use = (i < this->Count() + 1);
-			int newIndex = getNewIndex(i - 1, use);
+		UInt32 i = lengthData;
+		checkArraySize(lengthData + 1);
 
-			if (use)
-			{
-				T value = this->data[i - 1];
-			
-				this->data[newIndex] = value;
-			}
+		while (i > index)
+		{
+			T value = data[i - 1];
+			this->data[i] = value;
+
+			i--;
 		}
 
 		this->data[index] = item;
@@ -147,15 +134,14 @@ public:
 	{
 		return data;
 	}
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Member - Remove
+#pragma region Member - Remove
 	inline bool Remove(T item)
 	{
 		if (this->IsReadOnly) return false;
 
 		int index = this->IndexOf(item);
-
 		if (index != -1)
 		{
 			this->RemoveAt(index);
@@ -168,30 +154,22 @@ public:
 	inline void RemoveAt(const UInt32& index)
 	{
 		if (this->IsReadOnly) return;
+		if (index >= lengthData)	return;
 
-		if ((Int32)index > this->lengthData)
+		UInt32 i = index;
+		while (i < lengthData)
 		{
-			return;
+			T value = data[i + 1];
+			data[i] = value;
+
+			i++;
 		}
 
-		for (UInt32 i = index; i < this->Count(); i++)
-		{
-			bool use = (i < (UInt32)(this->lengthData + 1));
-			int newIndex = getNewIndex(i - 1, use);
-
-			if (use)
-			{
-				T value = this->data[i + 1];
-			
-				this->data[newIndex] = value;
-			}
-		}
-
-		this->lengthData--;
+		lengthData--;
 	}  
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Indexer
+#pragma region Indexer
 	inline T Get(const UInt32& index) const
 	{
 		return this->data[index];
@@ -221,9 +199,9 @@ public:
 	{
 		return this->data[index];
 	} 
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Operators
+#pragma region Operators
 	inline void operator=(const List<T>& copy)
 	{
 		delete[](data);
@@ -231,23 +209,25 @@ public:
 		this->IsReadOnly = copy.IsReadOnly;
 		this->lengthArr = copy.lengthArr;
 		this->lengthData = copy.lengthData;
-		
+
 		this->data = new T[copy.lengthArr];
 		memcpy(this->data, copy.data, sizeof(T) * copy.lengthArr);
 	}
-	#pragma endregion
-		
+#pragma endregion
+
 protected:
 
 	T* data;
 	UInt32 lengthArr;
-	Int32 lengthData;
+	UInt32 lengthData;
 
 private:
 
-	#pragma region Private Member
+#pragma region Private Member
 	inline UInt32 getNextSize(UInt32 targetSize)
 	{
+		if (lengthArr == 0) lengthArr = 2;
+
 		while (lengthArr <= targetSize)
 		{
 			lengthArr *= 2;
@@ -256,32 +236,29 @@ private:
 		return lengthArr;
 	}
 
-	inline int getNewIndex(const UInt32& in, bool used)
+	inline void checkArraySize(UInt32 neddedSize)
 	{
-		UInt32 index = in + 1;
-
-		if (index > this->lengthArr - 1)
+		if (lengthArr < neddedSize)
 		{
-			UInt32 size = getNextSize(index);
-			T* newData = new T[size];
+			lengthArr = getNextSize(neddedSize);
+			T* newData = new T[lengthArr];
 
-			for (int i = 0; i <= this->lengthData; i++)
+			UInt32 i = 0;
+			while (i < lengthData)
 			{
-				newData[i] = this->data[i];
+				newData[i] = data[i];
+				i++;
 			}
 
-			delete[](this->data);
-
-			this->data = newData;
+			if (data != 0) delete[](data);
+			data = newData;
 		}
 
-		if ((Int32)index > this->lengthData && used) this->lengthData = index;
-
-		return index;
+		lengthData = neddedSize;
 	}
-	#pragma endregion
+#pragma endregion
 
-	#pragma region Private Member - Sort
+#pragma region Private Member - Sort
 	void sortQuickSort(int left, int right)
 	{
 		int iLeft = left;
@@ -340,5 +317,5 @@ private:
 
 		return i;
 	}
-	#pragma endregion
+#pragma endregion
 };
