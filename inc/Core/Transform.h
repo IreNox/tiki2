@@ -24,12 +24,15 @@ namespace TikiEngine
 		inline const Vector3& GScale() const { return scale; }
 		inline const Quaternion& GRotation() const { return rotation; }
 
-		inline Vector3& SPosition()		{ isDirty = true; return position; }
+		inline Vector3& SPosition()		{ isDirty = true; isSGDirty = true; return position; }
 		inline Vector3& SScale()		{ isDirty = true; return scale; }
 		inline Quaternion& SRotation()	{ isDirty = true; return rotation; }
 
 		inline bool IsDirty() { return isDirty; }
 		void MarkAsClean();
+
+		inline bool IsSGDirty() { return isSGDirty; }
+		inline void MarkAsSGClean() { isSGDirty = false; }
 
 		void FillWorldMatrix(Matrix* worldMatrix);
 		inline const Matrix& GetWorld() { return totalWorld; }
@@ -39,6 +42,7 @@ namespace TikiEngine
 		GameObject* gameObject;
 
 		bool isDirty;
+		bool isSGDirty;
 		Matrix goWorld;
 		Matrix totalWorld;
 

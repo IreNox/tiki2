@@ -10,7 +10,7 @@ namespace TikiEngine
 	}
 
 	Transform::Transform(GameObject* gameObject)
-		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f), isDirty(true), gameObject(gameObject)
+		: position(0.0f), rotation(Quaternion::Identity), scale(1.0f), isDirty(true), isSGDirty(true), gameObject(gameObject)
 	{
 	}
 

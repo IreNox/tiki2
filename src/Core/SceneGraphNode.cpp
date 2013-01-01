@@ -162,11 +162,14 @@ namespace TikiEngine
 
 	void SceneGraphNode::LateUpdate(const UpdateArgs& args)
 	{
-		for(UINT i = 0; i < data.Count(); i++)
+		for(int i = 0; i < data.Count(); i++)
 		{
 			GameObject* go = data[i];
-			if(UpdatePosition(go))
+
+			if(go->PRS.IsSGDirty())
 			{
+				UpdatePosition(go);
+				go->PRS.MarkAsSGClean();
 				this->data.Remove(go);
 				i--;
 			}
@@ -212,22 +215,15 @@ namespace TikiEngine
 
 	bool SceneGraphNode::UpdatePosition(GameObject* go)
 	{
-		if(!this->bounds.Collide(go->Bounds()) == Contain)
+		if(this->bounds.Collide(go->Bounds()) == Contain)
 		{
-			return parent->UpdatePosition(go);
+			return this->Add(go);
 		}
 		else
 		{
-			for(UINT i = 0; i < childs.Count(); i++)
-			{
-				SceneGraphNode* node = childs[i];
-				if(node->Bounds().Collide(go->Bounds()) == Contain)
-				{
-					return node->Add(go);
-				}
-			}
+			this->parent->childDataCount--;
+			return this->parent->UpdatePosition(go);
 		}
-		return false;
 	}
 
 	SceneGraphNode* SceneGraphNode::Find(GameObject* gameObject)

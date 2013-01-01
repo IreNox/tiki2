@@ -8,7 +8,7 @@
 
 namespace TikiEngine
 {
-	bool useSceneGraph = false;
+	bool useSceneGraph = true;
 
 	using namespace Concurrency;
 
