@@ -227,7 +227,7 @@ namespace TikiEngine
 			if (args.Mode != DM_Geometry) return;
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
-			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
+			//DllMain::ModuleGraphics->SetStateDepthEnabled(true);
 
 			decl->Apply();
 
@@ -255,7 +255,7 @@ namespace TikiEngine
 
 			DllMain::Context->Draw(behavior->GParticleUsed(), 0);
 
-			DllMain::ModuleGraphics->SetStateDepthEnabled(true);
+			//DllMain::ModuleGraphics->SetStateDepthEnabled(true);
 			DllMain::ModuleGraphics->SetStateAlphaBlend(false);
 		}
 		#pragma endregion

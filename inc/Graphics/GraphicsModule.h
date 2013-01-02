@@ -86,6 +86,7 @@ namespace TikiEngine
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
 
+			void SetCulling(bool value);
 			void SetStateAlphaBlend(bool value);
 			void SetStateDepthEnabled(bool value);
 

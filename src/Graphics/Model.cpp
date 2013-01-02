@@ -22,6 +22,10 @@ namespace TikiEngine
 			: IModel(engine), rootBone(0), mainInstance(false)
 		{
 			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
+
+			SkinMatrices* mat = constantBufferMatrices->MapTI();
+			ZeroMemory(mat, sizeof(SkinMatrices));
+			constantBufferMatrices->Unmap();
 		}
 
 		Model::~Model()

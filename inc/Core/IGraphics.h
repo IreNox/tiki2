@@ -62,6 +62,7 @@ namespace TikiEngine
 			virtual IRenderTarget* GetUnusedScreenTarget() = 0;
 			virtual IRenderTarget* GetInterfaceTarget() = 0;
 
+			virtual void SetCulling(bool value) = 0;
 			virtual void SetStateAlphaBlend(bool value) = 0;
 			virtual void SetStateDepthEnabled(bool value) = 0;
 

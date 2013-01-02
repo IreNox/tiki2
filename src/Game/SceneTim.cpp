@@ -19,6 +19,8 @@
 
 #include "Game/CameraFly.h"
 
+#include "Game/PEShootMG.h"
+
 #include <sstream>
 using namespace std;
 
@@ -47,15 +49,15 @@ namespace TikiEngine
 		{
 			///////////////////
 			////Particle Effect
-			//GameObject* go = new GameObject(engine);
+			GameObject* go = new GameObject(engine);
 
-			//behavior = new ParticleTest(engine);
+			 auto behavior = new PEShootMG(engine);
 
-			//IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
-			//effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
-			//effect->SetParticleEffect(behavior);
+			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
+			effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
+			effect->SetParticleEffect(behavior);
 
-			//this->AddElement(go);
+			this->AddElement(go);
 
 			//////////
 			////Cloddy
@@ -90,9 +92,9 @@ namespace TikiEngine
 			//target = engine->librarys->CreateResource<IRenderTarget>();
 			//target->CreateScreenSize();
 
-			GameObject* go = new GameObject(engine);
+			//GameObject* go = new GameObject(engine);
 
-			go->SModel(args.Content->LoadModel(L"marine_l"));
+			//go->SModel(args.Content->LoadModel(L"marine_l"));
 			//go->GModel()->SetAnimation(0);
 
 			//renB = engine->librarys->CreateComponent<IMeshRenderer>(go);
@@ -104,21 +106,21 @@ namespace TikiEngine
 			//renB->SetMaterial(mat);
 			//renB->SetMesh(engine->content->LoadMesh(L"marine_l"));
 
-			go->PRS.SScale() = Vector3(0.02f);
-			this->AddElement(go);
+			//go->PRS.SScale() = Vector3(0.02f);
+			//this->AddElement(go);
 
 
-			go = new GameObject(engine);
-			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			//go = new GameObject(engine);
+			//auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
-			Material* mat = engine->content->LoadMaterial(L"os_default");
-			mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_ms1");
-			renP->SetMaterial(mat);
-			renP->SetMesh(engine->content->LoadMesh(L"test"));
-			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			//go->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, 3.14159f, 0);
-			//go->PRS.SScale() = Vector3(1, 1, -1);
-			this->AddElement(go);
+			//Material* mat = engine->content->LoadMaterial(L"os_default");
+			//mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_ms1");
+			//renP->SetMaterial(mat);
+			//renP->SetMesh(engine->content->LoadMesh(L"test"));
+			//go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			////go->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, 3.14159f, 0);
+			////go->PRS.SScale() = Vector3(1, 1, -1);
+			//this->AddElement(go);
 
 			//RenderTarget
 			//targetLight = engine->librarys->CreateResource<IRenderTarget>();
@@ -221,20 +223,20 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			engine->sprites->Draw(
-				engine->graphics->GetLightTarget(),
-				Rectangle(10, 10, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	engine->graphics->GetLightTarget(),
+			//	Rectangle(10, 10, 200, 180)
+			//);
 
-			engine->sprites->Draw(
-				engine->graphics->GetNormalTarget(),
-				Rectangle(10, 200, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	engine->graphics->GetNormalTarget(),
+			//	Rectangle(10, 200, 200, 180)
+			//);
 
-			engine->sprites->Draw(
-				engine->graphics->GetScreenTarget(),
-				Rectangle(10, 390, 200, 180)
-			);
+			//engine->sprites->Draw(
+			//	engine->graphics->GetScreenTarget(),
+			//	Rectangle(10, 390, 200, 180)
+			//);
 
 
 			//Vector2 mouse = Vector2(1.1f - args.Update.Input.MousePosition.X + 0.1f, 1.1f - args.Update.Input.MousePosition.Y + 0.1f);
@@ -262,8 +264,8 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{
-			float b = (float)args.Time.TotalTime / 4;
-			elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
+			//float b = (float)args.Time.TotalTime / 4;
+			//elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
 
 			Vector3 move = Vector3(
 				(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),

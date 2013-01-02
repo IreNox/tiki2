@@ -324,17 +324,22 @@ namespace TikiEngine
 			this->SetRenderTarget(0, target);
 		}
 
+		void GraphicsModule::SetCulling(bool value)
+		{
+
+		}
+
 		void GraphicsModule::SetStateAlphaBlend(bool value)
 		{			
-			static float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
+			//static float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 			if (value)
 			{
-				deviceContext->OMSetBlendState(blendStateAlphaBlend, blendFactor, 0xffffffff);
+				deviceContext->OMSetBlendState(blendStateAlphaBlend, 0, 0xffffffff);
 			}
 			else
 			{
-				deviceContext->OMSetBlendState(0, blendFactor, 0xffffffff);
+				deviceContext->OMSetBlendState(0, 0, 0xffffffff);
 			}
 		}
 
@@ -407,6 +412,8 @@ namespace TikiEngine
 				*matrices = *args.CurrentCamera->GetMatrices();
 				cbufferCamera->Unmap();
 			}
+
+			deviceContext->RSSetState(rasterStateBackfaces);
 
 #if _DEBUG
 			debugLineRenderer->Begin();
@@ -645,14 +652,14 @@ namespace TikiEngine
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
 			// GUT!!
-			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+			blendStateDesc.RenderTarget[0].BlendEnable = true;
 			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
 			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;
+			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
 			//blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
 			//blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA_SAT;
@@ -1228,7 +1235,7 @@ namespace TikiEngine
 			return Vector3(
 				-1.0f + (point.X * pixelSize.X),
 				1.0f - (point.Y * pixelSize.Y),
-				0.0f
+				point.Z
 			);
 		}
 

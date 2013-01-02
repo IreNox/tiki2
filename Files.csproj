@@ -78,6 +78,7 @@
     <None Include="bin\Data\Textures\Marine_L\LP_Soldier_normal.dds" />
     <None Include="bin\Data\Textures\particle\laser.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
+    <None Include="bin\Data\Textures\particle\mg1.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
     <None Include="bin\Data\Textures\random.dds" />
     <None Include="bin\Data\Textures\rock_01\rock_01_diff.dds" />

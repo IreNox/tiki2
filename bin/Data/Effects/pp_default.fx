@@ -55,9 +55,9 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 		color.rgb *= termLight;
 	}
-	//color *= shadowColor;
-	//color *= ambientColor;
-	//color += lightColor;
+	color *= shadowColor;
+	color *= ambientColor;
+	color += lightColor;
 
 	color = (color * (1 - interfaceColor.a)) + interfaceColor;
 	color.a = 1;
