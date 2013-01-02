@@ -35,7 +35,7 @@ namespace TikiEngine
 			timeOfLife = 0;
 			lifeTime = desc.LifeTime;
 
-			sphere->SetMaterial(0);
+			sphere->SetMaterial(gameState->GetDefaultMaterial());
 			sphere->SetCenter(desc.Origin);
 			sphere->SetRadius(desc.Scale);
 			sphere->SetDynamic(true);

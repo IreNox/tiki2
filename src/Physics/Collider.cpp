@@ -8,7 +8,7 @@ namespace TikiEngine
 	{
 		Collider::Collider()
 		{
-			materialIndex = -1;
+			material = 0;
 			actor = 0;
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
@@ -18,15 +18,11 @@ namespace TikiEngine
 
 		Collider::~Collider()
 		{
+			SafeRelease(&material);
 			SafeRelease(&rigidBody);
 		}
 
 		#pragma region ICollider Methods
-		void Collider::SetMaterialIndex(int index)
-		{
-			materialIndex = index;
-		}
-
 		Vector3 Collider::GetCenterPos()
 		{
 			if (actor != 0)
@@ -94,8 +90,7 @@ namespace TikiEngine
 		bool Collider::GetReady()
 		{
 			return  (center != NxVec3(NX_MAX_F32)) && 
-					(state != CS_UNINITIALIZED) &&
-					(materialIndex != -1);
+					(state != CS_UNINITIALIZED);
 		}
 	}
 }

@@ -3,6 +3,23 @@
 #include "Core/TypeInc.h"
 
 template <class T>
+inline void SafeChangeRef(T** ptr, T* newValue)
+{
+	T* oldValue = *ptr;
+
+	if (newValue)
+	{
+		(*ptr) = newValue;
+		newValue->AddRef();
+	}
+
+	if (oldValue)
+	{
+		oldValue->Release();
+	}
+}
+
+template <class T>
 inline void SafeAddRef(T** ptr)
 {
 	if (*ptr)

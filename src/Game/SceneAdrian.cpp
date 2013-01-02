@@ -46,7 +46,9 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
+#if TIKI_USE_SCENEGRAPH
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
+#endif
 
 			GameObject* go = new GameObject(engine);
 
@@ -169,7 +171,9 @@ namespace TikiEngine
 
 			if(args.Input.GetKeyPressed(KEY_RETURN))
 			{
+#if TIKI_USE_SCENEGRAPH
 				SceneGraph.Find(this->selectionRectangle);
+#endif
 			}
 
 
@@ -182,7 +186,9 @@ namespace TikiEngine
 				go->PRS.SPosition() = Vector3(pos.X, 0, pos.Y);
 				go->Update(args);
 
+#if TIKI_USE_SCENEGRAPH
 				SceneGraph.Add(go);
+#endif
 			}
 		}
 	}

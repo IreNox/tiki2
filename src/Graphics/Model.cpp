@@ -26,18 +26,15 @@ namespace TikiEngine
 
 		Model::~Model()
 		{
-			if (mainInstance)
-			{
-				for(UInt32 i = 0; i < animations.Count(); i++)
-					SafeRelease(&animations[i]);
+			SafeDelete(&constantBufferMatrices);
 
-				for(UInt32 i = 0; i < meshes.Count(); i++)
-					SafeRelease(&meshes[i]);
+			for(UInt32 i = 0; i < animations.Count(); i++)
+				SafeRelease(&animations[i]);
 
-				SafeDelete(&constantBufferMatrices);
+			for(UInt32 i = 0; i < meshes.Count(); i++)
+				SafeRelease(&meshes[i]);
 
-				SafeRelease(&rootBone);
-			}
+			SafeRelease(&rootBone);
 		}
 		#pragma endregion
 
@@ -46,12 +43,14 @@ namespace TikiEngine
 		{
 			Model* baseModel = dynamic_cast<Model*>(model);
 
-			rootBone = baseModel->rootBone;
+			SafeAddRef(baseModel->rootBone, &rootBone);
 
 			meshes = baseModel->meshes;
+			FOREACH_PTR_CALL(meshes, AddRef())
+
 			constantBufferElements = baseModel->constantBufferElements;
 
-			UInt32 i = 0;
+			i = 0;
 			while (i < baseModel->animations.Count())
 			{
 				animations.Add(
@@ -217,6 +216,8 @@ namespace TikiEngine
 
 			ModelConverter* convert = new ModelConverter(this, stream);
 			delete(convert);
+			
+			FOREACH_PTR_CALL(meshes, AddRef())
 
 			UpdateArgs args = UpdateArgs();
 			this->Update(args);

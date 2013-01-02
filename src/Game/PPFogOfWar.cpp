@@ -38,6 +38,7 @@ namespace TikiEngine
 
 		PPFogOfWar::~PPFogOfWar()
 		{
+			SafeRelease(&buffer);
 			SafeRelease(&shader);
 		}
 		#pragma endregion

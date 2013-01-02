@@ -18,6 +18,8 @@ namespace TikiEngine
 
 		TriangleMeshCollider::~TriangleMeshCollider()
 		{
+			SafeDeleteArray(&indexData);
+			SafeDeleteArray(&vertexData);
 		}
 		#pragma endregion
 
@@ -25,11 +27,6 @@ namespace TikiEngine
 		IRigidBody* TriangleMeshCollider::GetRigidBody()
 		{
 			return Collider::GetBody();
-		}
-
-		void TriangleMeshCollider::SetMaterial(int index)
-		{
-			Collider::SetMaterialIndex(index);
 		}
 
 		Vector3 TriangleMeshCollider::GetCenter()

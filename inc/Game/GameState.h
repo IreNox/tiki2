@@ -5,6 +5,8 @@
 #include "Game/GamePart.h"
 #include "Game/NavigationMesh.h"
 
+#include "Core/IPhysicsMaterial.h"
+
 #include "Game/EventUnitSelectionChanged.h"
 
 namespace TikiEngine
@@ -12,6 +14,7 @@ namespace TikiEngine
 	namespace Game
 	{
 		using namespace TikiEngine::AI;
+		using namespace TikiEngine::Resources;
 
 		class Level;
 		class GameHud;
@@ -71,6 +74,8 @@ namespace TikiEngine
 			}
 			inline void AddPart(GamePart* part) { gameParts.Add(part); }
 
+			inline IPhysicsMaterial* GetDefaultMaterial() { return defaultMaterial; }
+
 		private:
 			
 			double resource;
@@ -83,6 +88,8 @@ namespace TikiEngine
 			TikiBotFactory* botFactory;
 			UnitSelection* unitSelection;
 			ProjectileManager* projectiles;
+
+			IPhysicsMaterial* defaultMaterial;
 
 		};
 	}

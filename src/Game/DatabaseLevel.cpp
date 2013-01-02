@@ -141,7 +141,7 @@ namespace TikiEngine
 				mat->TexDiffuse = engine->content->LoadTexture(L"terrain/color_" + StringAtoW(name));
 				mat->GetShader()->SetVector2("TerrainSize", Vector2((float)heightmapSize, (float)heightmapSize));
 				terrain->SetMaterial(mat);
-				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation);
+				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation, true);
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
 				material->SetRestitution(0.2f);
@@ -149,7 +149,7 @@ namespace TikiEngine
 				material->SetStaticFriction(0.5f);
 
 				collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(this);
-				collider->SetMaterial(material->GetIndex());
+				collider->SetMaterial(material);
 				collider->SetCenter(Vector3::Zero);
 				collider->SetDynamic(false);
 				collider->SetGroup(CG_Collidable_Non_Pushable);

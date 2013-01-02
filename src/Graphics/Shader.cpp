@@ -406,6 +406,8 @@ namespace TikiEngine
 #if _DEBUG
 			SafeRelease(&oldEffect);
 #endif
+			SafeDelete(&stream);
+			SafeDeleteArray(&data);
 
 			wstring file = engine->HPath.GetFilename(fileName);
 

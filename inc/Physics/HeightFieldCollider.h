@@ -17,7 +17,9 @@ namespace TikiEngine
 			~HeightFieldCollider();
 
 			void SetGroup(CollisionGroups group) { Collider::SetCollisionGroup(group); }
-			void SetMaterial(int index) { Collider::SetMaterialIndex(index); }
+			
+			IPhysicsMaterial* GetMaterial() { return getInternMaterial(); }
+			void SetMaterial(IPhysicsMaterial* mat) { setInternMaterial(mat); }
 
 			Vector3 GetCenter() { return Collider::GetCenterPos(); }
 			void SetCenter(const Vector3& center) { Collider::SetCenterPos(center); }

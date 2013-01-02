@@ -7,7 +7,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs()
+		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs(), userData(0)
 	{
 		this->PRS = Transform(this);
 		this->bounding.X = PRS.GPosition().X;
@@ -18,6 +18,14 @@ namespace TikiEngine
 
 	GameObject::~GameObject()
 	{
+		if (userData != 0)
+		{
+			TikiObject* to1 = (TikiObject*)userData;
+			TikiObject* to2 = dynamic_cast<TikiObject*>(to1);
+
+			if (to2 != 0) to2->Release();
+		}
+
 		SafeRelease(&model);
 
 		for (UInt32 i = 0; i < components.Count(); i++)

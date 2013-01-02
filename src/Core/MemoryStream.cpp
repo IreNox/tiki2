@@ -20,7 +20,7 @@ namespace TikiEngine
 
 		MemoryStream::~MemoryStream()
 		{
-			delete[](dataVoid);
+			SafeDeleteArray(&dataByte);
 		}
 		#pragma endregion
 
@@ -98,7 +98,7 @@ namespace TikiEngine
 				UPInt copySize = size < length ? size : length;
 
 				memcpy(newData, dataByte, copySize);
-				delete[](dataVoid);
+				SafeDeleteArray(&dataByte);
 			}
 
 			length = size;

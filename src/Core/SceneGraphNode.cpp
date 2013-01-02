@@ -162,7 +162,7 @@ namespace TikiEngine
 
 	void SceneGraphNode::LateUpdate(const UpdateArgs& args)
 	{
-		for(int i = 0; i < data.Count(); i++)
+		for(UInt32 i = 0; i < data.Count(); i++)
 		{
 			GameObject* go = data[i];
 

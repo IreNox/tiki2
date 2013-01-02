@@ -167,9 +167,7 @@ namespace TikiEngine
 			shader->AddRef();
 
 			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
-			vertexBuffer = BPoint<DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>>(
-				[=](){ return new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine); }
-			);
+			vertexBuffer = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
 		}
 
 		ParticleRenderer::~ParticleRenderer()
@@ -178,6 +176,7 @@ namespace TikiEngine
 			SafeRelease(&shader);
 			SafeRelease(&texture);
 			SafeRelease(&behavior);
+			SafeRelease(&vertexBuffer);
 		}
 		#pragma endregion
 
@@ -296,7 +295,7 @@ namespace TikiEngine
 			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0),
 			  collisionRegions(0), layout(0)
 #if _DEBUG
-			  , drawCollider(false)
+			  , drawCollider(false), useCloddy(true)
 #endif
 		{
 		}
@@ -325,21 +324,37 @@ namespace TikiEngine
 			indexBuffer = 0;
 			vertexBuffer = 0;
 
-			callback->Dispose();
-			callback = 0;
+			if (callback != 0)
+			{
+				callback->Dispose();
+				callback = 0;
+			}
 
 			terrainDescription = 0;
 		}
 		#pragma endregion
 
 		#pragma region Member - Load
-		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size, float elevation)
+		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size, float elevation
+#if _DEBUG
+			, bool useCloddy
+#endif		
+		)
 		{
 			this->size = size;
 			this->scale = scale;
 			this->elevation = elevation;
 			this->fileName = fileName;
 
+#if _DEBUG
+			this->useCloddy = useCloddy;
+
+			if (useCloddy) {
+#endif
+
+			datasetSample = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			heightmap = datasetSample->GetHeightmap();
+				
 			vertexFormat = cloddy_VertexFormat::P3F()
 				->Append(cloddy_VertexFormat::T2F(1, 1))
 				->Append(cloddy_VertexFormat::N3F())
@@ -347,8 +362,6 @@ namespace TikiEngine
 			//->Append(cloddy_VertexFormat::X4F_12());
 
 			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
-			datasetSample = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
-			heightmap = datasetSample->GetHeightmap();
 
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
@@ -370,7 +383,7 @@ namespace TikiEngine
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(elevation);
-			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1)); // an passen für perfekte aussehen
+			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1)); // anpassen für perfekte aussehen
 			terrainDescription->SetWidth((float)size);
 			terrainDescription->SetHeight((float)size);
 			terrainDescription->SetHandedness(Handedness_RightHanded);
@@ -378,6 +391,9 @@ namespace TikiEngine
 
 			terrain = manager->CreateTerrain(terrainDescription);			
 			terrain->SetTolerance(5.0f);
+#if _DEBUG
+			}
+#endif
 		}
 		#pragma endregion
 
@@ -410,6 +426,11 @@ namespace TikiEngine
 
 		float TerrainRenderer::SampleHeight(const Vector3& position)
 		{
+			double height = 0;
+
+#if _DEBUG
+			if (useCloddy) {
+#endif
 			HeightmapSample sam;
 
 			float s = (float)size;
@@ -425,7 +446,10 @@ namespace TikiEngine
 				&sam
 			);
 
-			double height = ((double)sam.Elevation / 1073741823) * elevation;
+			height = ((double)sam.Elevation / 1073741823) * elevation;
+#if _DEBUG
+			}
+#endif
 
 			return (float)height;
 		}
@@ -492,7 +516,7 @@ namespace TikiEngine
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
 
 #if _DEBUG
-			if (!drawCollider) {
+			if (!drawCollider && useCloddy) {
 #endif
 
 			manager->BeginTriangulation();
@@ -521,7 +545,7 @@ namespace TikiEngine
 
 #if _DEBUG
 			}
-			else if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0)
+			else if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0 && useCloddy)
 			{
 				DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
 
@@ -539,7 +563,13 @@ namespace TikiEngine
 
 		void TerrainRenderer::Update(const UpdateArgs& args)
 		{
+#if _DEBUG
+			if (useCloddy) {
+#endif
 			manager->Update(70.0f, engine->graphics->GetViewPort()->Height);
+#if _DEBUG
+			}
+#endif
 		}
 		#pragma endregion
 

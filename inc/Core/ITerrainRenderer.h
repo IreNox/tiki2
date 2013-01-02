@@ -25,7 +25,11 @@ namespace TikiEngine
 
 			~ITerrainRenderer() {}
 
-			virtual void LoadTerrain(string fileName, int scale, int size, float elevation) = 0;
+			virtual void LoadTerrain(string fileName, int scale, int size, float elevation
+#if _DEBUG
+				, bool useCloddy
+#endif
+			) = 0;
 			
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* mat) = 0;

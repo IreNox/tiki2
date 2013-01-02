@@ -3,12 +3,13 @@
 #include "Core/Component.h"
 #include "Core/IRigidBody.h"
 #include "Core/EventTriggers.h"
+#include "Core/IPhysicsMaterial.h"
 
 namespace TikiEngine
 {
 	namespace Components
 	{
-		//using namespace TikiEngine;
+		using namespace TikiEngine::Resources;
 
 		enum CollisionGroups
 		{
@@ -29,8 +30,8 @@ namespace TikiEngine
 			}
 			virtual ~ICollider() {}
 
-
-			virtual void SetMaterial(int index) = 0;
+			virtual IPhysicsMaterial* GetMaterial() = 0;
+			virtual void SetMaterial(IPhysicsMaterial* mat) = 0;
 
 			/* !@brief This will offset the Capsule Collider in world space. */
 			virtual Vector3 GetCenter() = 0;

@@ -29,14 +29,15 @@ namespace TikiEngine
 			nxDesc.samples = current;
 			nxDesc.sampleStride = sizeof(NxU32);
 			
+			int matInt = (material == 0 ? -1 : material->GetIndex());
 			while (i < c)
 			{
 				NxHeightFieldSample* sam = (NxHeightFieldSample*)current;
 
 				sam->height = height[i];
 				sam->tessFlag = 0;
-				sam->materialIndex0 = materialIndex;
-				sam->materialIndex1 = materialIndex;
+				sam->materialIndex0 = matInt;
+				sam->materialIndex1 = matInt;
 
 				current++;
 				i++;

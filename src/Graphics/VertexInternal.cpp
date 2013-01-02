@@ -196,7 +196,7 @@ namespace TikiEngine
 				&hash
 				);
 
-			delete(elements);
+			delete[](elements);
 		}
 		#pragma endregion
 		#pragma endregion

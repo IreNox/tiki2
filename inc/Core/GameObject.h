@@ -86,6 +86,9 @@ namespace TikiEngine
 
 		RectangleF& Bounds();
 
+		inline void* GetUserData() { return userData; }
+		inline void SetUserData(void* ud) { userData = ud; }
+
 	protected:
 
 		GameObject* parent;
@@ -93,8 +96,10 @@ namespace TikiEngine
 		IModel* model;
 		List<Component*> components;
 
-	private:
+		void* userData;
 
+	private:
+		
 		List<GameObject*> childs;
 		RectangleF bounding;
 

@@ -38,6 +38,12 @@ namespace TikiEngine
 			projectiles = new ProjectileManager(this);
 
 			botFactory = new TikiBotFactory(this);
+
+			defaultMaterial = engine->librarys->CreateResource<IPhysicsMaterial>();
+			defaultMaterial->SetRestitution(0.2f);
+			defaultMaterial->SetDynamicFriction(0.7f);
+			defaultMaterial->SetStaticFriction(0.5f);
+			defaultMaterial->AddRef();
 		}
 
 		GameState::~GameState()
@@ -48,6 +54,8 @@ namespace TikiEngine
 
 			SafeRelease(&hud);
 			SafeRelease(&projectiles);
+
+			SafeRelease(&defaultMaterial);
 
 			FOREACH(gameParts, SafeRelease(&gameParts[i]));
 		}

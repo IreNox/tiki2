@@ -89,7 +89,7 @@ namespace TikiEngine
 			// and raises the flags respectively.
 			go = new GameObject(engine);
 			dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-			dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			dynamicBox->SetMaterial(material); // 0 = default material	
 			dynamicBox->SetCenter(Vector3(40, 10, 20));
 			dynamicBox->SetSize(Vector3(1, 1, 1));
 			dynamicBox->SetDynamic(true);
@@ -102,7 +102,7 @@ namespace TikiEngine
 			// init box plane
 			go = new GameObject(engine);
 			staticBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-			staticBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			staticBox->SetMaterial(material); // 0 = default material	
 			staticBox->SetCenter(Vector3(128, 5, 128));
 			staticBox->SetSize(Vector3(128, 1, 128));
 			staticBox->SetDynamic(false);
@@ -113,7 +113,7 @@ namespace TikiEngine
 			// Init kinematic actor
 			go = new GameObject(engine);
 			kinematicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-			kinematicBox->SetMaterial(material->GetIndex()); // 0 = default material	
+			kinematicBox->SetMaterial(material); // 0 = default material	
 			kinematicBox->SetCenter(Vector3(10, 30, 10));
 			kinematicBox->SetSize(Vector3(1, 1.5, 1));
 			kinematicBox->SetDynamic(true);
@@ -124,7 +124,7 @@ namespace TikiEngine
 			// init static sphere trigger 
 			go = new GameObject(engine);
 			triggerSphere = engine->librarys->CreateComponent<ISphereCollider>(go);
-			triggerSphere->SetMaterial(material->GetIndex()); // 0 = default material	
+			triggerSphere->SetMaterial(material); // 0 = default material	
 			triggerSphere->SetCenter(Vector3(10, 10, 10));
 			triggerSphere->SetRadius(10.0f);
 			triggerSphere->SetDynamic(false);

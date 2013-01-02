@@ -27,12 +27,6 @@ namespace TikiEngine
 			return GetBody();
 		}
 
-		void BoxCollider::SetMaterial(int index)
-		{
-			SetMaterialIndex(index);
-			UpdateData();
-		}
-
 		Vector3 BoxCollider::GetCenter()
 		{
 			return GetCenterPos();
@@ -112,7 +106,7 @@ namespace TikiEngine
 			boxDesc.dimensions = size;
 
 			// Create material from index
-			boxDesc.materialIndex = materialIndex;
+			boxDesc.materialIndex = (material == 0 ? -1 : material->GetIndex());;
 
 			// if we are dynamic, we have a Rigid Body attached
 			if (state == CS_DYNAMIC)

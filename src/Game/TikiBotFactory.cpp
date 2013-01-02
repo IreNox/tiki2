@@ -20,7 +20,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), timerSpawn(60.0f), timerNextUnit(0.75f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
+			: gameState(gameState), timerSpawn(20.0f), timerNextUnit(0.75f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
 			  playerSpawnLeft(0)
 		{
 		}
@@ -61,8 +61,8 @@ namespace TikiEngine
 		{
 			if (timerSpawn.IsReady(args.Time))
 			{
-				enemySpawnLeft = enemySpawnCount;
-				playerSpawnLeft = playerSpawnCount;
+				enemySpawnLeft += enemySpawnCount;
+				playerSpawnLeft += playerSpawnCount;
 
 				timerNextUnit.Reset();
 			}
@@ -135,7 +135,10 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			
+			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			go->GModel()->AnimationHandler.AddHandler(ah);
+			go->SetUserData(ah);
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -204,7 +207,10 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+
+			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			go->GModel()->AnimationHandler.AddHandler(ah);
+			go->SetUserData(ah);
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -229,7 +235,10 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			
+			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			go->GModel()->AnimationHandler.AddHandler(ah);
+			go->SetUserData(ah);
 
 			// Create bot
 			TikiBotDescription botDesc;

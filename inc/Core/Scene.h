@@ -15,6 +15,8 @@
 
 #include <Core/List.h>
 
+#define TIKI_USE_SCENEGRAPH 0
+
 namespace TikiEngine
 {
 	using namespace TikiEngine::Components;
@@ -22,6 +24,10 @@ namespace TikiEngine
 	class Scene : public EngineObject
 	{
 	public:
+
+#if TIKI_USE_SCENEGRAPH
+		SceneGraph SceneGraph;
+#endif
 
 		Scene(Engine* engine);
 		virtual ~Scene();
@@ -42,8 +48,6 @@ namespace TikiEngine
 
 		DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
-
-		SceneGraph SceneGraph;
 
 	protected:
 

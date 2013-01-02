@@ -4,14 +4,8 @@
 #include "Core\IGraphics.h"
 #include "Core\ISpriteBatch.h"
 
-#include <ppl.h>
-
 namespace TikiEngine
 {
-	bool useSceneGraph = true;
-
-	using namespace Concurrency;
-
 	#pragma region Class
 	Scene::Scene(Engine* engine)
 		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false)
@@ -76,15 +70,12 @@ namespace TikiEngine
 	#pragma region Member - Elements
 	GameObject* Scene::AddElement(GameObject* element)
 	{
-		if(useSceneGraph)
-		{
-			this->SceneGraph.Add(element);
-		}
-		else
-		{
-			elements.Add(element);
-			element->AddRef();
-		}
+#if TIKI_USE_SCENEGRAPH
+		SceneGraph.Add(element);
+#endif
+
+		elements.Add(element);
+		element->AddRef();
 
 		UInt32 len = 0;
 		Light** comLights = 0;
@@ -133,43 +124,38 @@ namespace TikiEngine
 				i++;
 			}
 		}
+		
+#if TIKI_USE_SCENEGRAPH
+		SceneGraph.Remove(element);
+#endif
 
-		if(useSceneGraph)
-			return SceneGraph.Remove(element);
-		else
-			return elements.Remove(element);
+		return elements.Remove(element);
 	}
 	#pragma endregion
 
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-		if(useSceneGraph)
-			SceneGraph.Draw(args);
-		else
+#if TIKI_USE_SCENEGRAPH
+		SceneGraph.Draw(args);
+#else
+		for (UInt32 i = 0; i < elements.Count(); i++)
 		{
-			for (UInt32 i = 0; i < elements.Count(); i++)
-			{
-				elements[i]->Draw(args);
-			}
+			elements[i]->Draw(args);
 		}
+#endif
 	}
 
 	void Scene::Update(const UpdateArgs& args)
 	{
-		//parallel_for(
-		//	elements.FirstIndex(), elements.Count(),
-		//	[=](UInt32 i){ elements[i]->Update(args); }
-		//);
-		if(useSceneGraph)
+#if TIKI_USE_SCENEGRAPH
 			SceneGraph.Update(args);
-		else
+#else
+		for (UInt32 i = 0; i < elements.Count(); i++)
 		{
-			for (UInt32 i = 0; i < elements.Count(); i++)
-			{
-				elements[i]->Update(args);
-			}
+			elements[i]->Update(args);
 		}
+#endif
 	}
 	#pragma endregion
 }

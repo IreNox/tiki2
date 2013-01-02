@@ -33,13 +33,6 @@ namespace TikiEngine
 			return GetBody();
 		}
 
-		void CharacterController::SetMaterial(int index)
-		{
-			// not supported
-			//SetMaterialIndex(index);
-			//UpdateData();
-		}
-
 		Vector3 CharacterController::GetCenter()
 		{
 			return GetCenterPos();

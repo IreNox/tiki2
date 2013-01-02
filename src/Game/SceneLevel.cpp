@@ -39,6 +39,8 @@ namespace TikiEngine
 		{
 			this->DisposeLevel();
 
+			FOREACH(points, SafeRelease(&points[i]);)
+
 			SafeRelease(&level);
 			SafeRelease(&gameState);
 		}
@@ -47,7 +49,9 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
+#if TIKI_USE_SCENEGRAPH
 			SceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
+#endif
 
 			//Light
 			LightObject* lo = new LightObject(engine);

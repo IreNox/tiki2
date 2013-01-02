@@ -18,7 +18,9 @@ namespace TikiEngine
 
 			// ICollider Methods
 			IRigidBody* GetRigidBody();
-			void SetMaterial(int index);
+			
+			IPhysicsMaterial* GetMaterial() { return getInternMaterial(); }
+			void SetMaterial(IPhysicsMaterial* mat) { setInternMaterial(mat); updateData(); }
 
 			Vector3 GetCenter();
 			void SetCenter(const Vector3& center);

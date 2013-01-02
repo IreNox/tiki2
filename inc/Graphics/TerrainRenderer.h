@@ -37,7 +37,11 @@ namespace TikiEngine
 			TerrainRenderer(Engine* engine, GameObject* gameObject);
 			~TerrainRenderer();
 
-			void LoadTerrain(string fileName, int scale, int size, float elevation);
+			void LoadTerrain(string fileName, int scale, int size, float elevation
+#if _DEBUG
+				, bool UseCloddy
+#endif
+			);
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -93,6 +97,7 @@ namespace TikiEngine
 
 
 #if _DEBUG
+			bool useCloddy;
 			bool drawCollider;
 #endif
 

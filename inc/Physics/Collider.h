@@ -25,7 +25,9 @@ namespace TikiEngine
 			IRigidBody* GetBody() { return rigidBody; }
 
 		protected:
-			void SetMaterialIndex(int index);
+
+			inline IPhysicsMaterial* getInternMaterial() { return material; }
+			inline void setInternMaterial(IPhysicsMaterial* mat) { SafeChangeRef(&material, mat); }
 
 			Vector3 GetCenterPos();
 			void SetCenterPos(const Vector3& center);
@@ -43,15 +45,18 @@ namespace TikiEngine
 			bool GetReady();
 
 		protected:
+
 			ColliderState state;
 			bool isTrigger;
 			RigidBody* rigidBody;
 			NxActor* actor;
 			NxActorDesc actorDescription;
-			int materialIndex;
 			UInt16 group;
 			
 			NxVec3 center;
+
+			IPhysicsMaterial* material;
+
 		};
 	}
 }

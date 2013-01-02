@@ -27,12 +27,6 @@ namespace TikiEngine
 			return GetBody();
 		}
 
-		void SphereCollider::SetMaterial(int index)
-		{
-			SetMaterialIndex(index);
-			UpdateData();
-		}
-
 		Vector3 SphereCollider::GetCenter()
 		{
 			return GetCenterPos();
@@ -91,7 +85,7 @@ namespace TikiEngine
 			return radius != NX_MAX_F32 && 
 				   center != NxVec3(NX_MAX_F32) && 
 				   state != CS_UNINITIALIZED &&
-				   materialIndex != -1;
+				   material != 0;
 		}
 		#pragma endregion
 
@@ -110,8 +104,8 @@ namespace TikiEngine
 			NxSphereShapeDesc sphereDesc;
 			sphereDesc.radius = radius;
 
-			// Create material from index
-			sphereDesc.materialIndex = materialIndex;
+			// Create material from index			
+			sphereDesc.materialIndex = (material == 0 ? -1 : material->GetIndex());
 
 			// if we are dynamic, we have a Rigid Body attached
 			if (state == CS_DYNAMIC)

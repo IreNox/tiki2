@@ -11,7 +11,7 @@ namespace TikiEngine
 		public:
 
 			Stream() {}
-			~Stream() {}
+			virtual ~Stream() {}
 
 			virtual void Close() = 0;
 

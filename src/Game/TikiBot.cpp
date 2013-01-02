@@ -109,10 +109,12 @@ namespace TikiEngine
 			SafeRelease(&controller);
 			
 			SafeDelete(&brain);
+			SafeDelete(&skillSys);
 			SafeDelete(&steering);
 			SafeDelete(&pathPlanner);
 			SafeDelete(&sensorMem);
 			SafeDelete(&targSys);
+			SafeDelete(&weaponSys);
 			SafeDelete(&visionUpdateRegulator);
 			SafeDelete(&targetSelectionRegulator);
 

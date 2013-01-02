@@ -14,7 +14,7 @@ namespace TikiEngine
 			boxCollider->TriggerExit.AddHandler(this);
 
 			// set default porps
-			boxCollider->SetMaterial(0);
+			boxCollider->SetMaterial(gameState->GetDefaultMaterial());
 			boxCollider->SetDynamic(false);
 			boxCollider->SetCenter(Vector3(0, 0, 0));
 			boxCollider->SetSize(Vector3(1, 1, 1));
