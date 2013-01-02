@@ -47,7 +47,7 @@ namespace TikiEngine
 					wayPoints.push_back(points[i]->GPosition());
 					break;
 				case 3:
-					spawnPoints.Add(getPos(points[i]->GPosition(), 50));
+					spawnPoints.Add(getPos(points[i]->GPosition(), 5));
 					break;
 				}
 
