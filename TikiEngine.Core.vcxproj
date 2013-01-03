@@ -34,7 +34,6 @@
     <ClCompile Include="src\Core\VertexFormats.cpp" />
     <ClCompile Include="src\Core\Component.cpp" />
     <ClCompile Include="src\Core\File.cpp" />
-    <ClCompile Include="src\Core\Frustum.cpp" />
     <ClCompile Include="src\Core\UserInterface.cpp" />
     <ClCompile Include="src\Core\HelperLog.cpp" />
     <ClCompile Include="src\Core\FileStream.cpp" />

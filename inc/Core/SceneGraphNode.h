@@ -5,6 +5,7 @@
 #include "Core/GameObject.h"
 #include "Core/UpdateArgs.h"
 #include "Core/DrawArgs.h"
+#include "Core/Frustum.h"
 
 namespace TikiEngine
 {
@@ -19,8 +20,12 @@ namespace TikiEngine
 
 		bool Add(GameObject* gameObject);
 		bool Remove(GameObject* gameObject);
-		void Find(List<GameObject*>& result, RectangleF& rect);
-		void Find(List<GameObject*>& result, RectangleF& rect, bool(where)(GameObject*));
+
+		void Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where = 0);
+		void Find(List<GameObject*>& result, RectangleF& rect, Vector3& point, float distance, function<bool(GameObject*)> where = 0);
+		void Find(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
+		void Find(List<GameObject*>& result, Frustum& frustum);
+		
 
 		SceneGraphNode* Find(GameObject* gameObject);
 
@@ -32,10 +37,8 @@ namespace TikiEngine
 
 		void Clean();
 
-		void GetContent(List<GameObject*>& content, bool (where)(GameObject*) = 0);
-		void GetSubContent(List<GameObject*>& content, bool (where)(GameObject*) = 0);
-
-		bool Subdivide();
+		void GetContent(List<GameObject*>& content, function<bool(GameObject*)> where = 0);
+		void GetSubContent(List<GameObject*>& content, function<bool(GameObject*)> where = 0);
 
 		bool IsEmpty();
 

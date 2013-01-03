@@ -1,8 +1,11 @@
 
+
 #include "Core\Scene.h"
 
 #include "Core\IGraphics.h"
 #include "Core\ISpriteBatch.h"
+
+
 
 namespace TikiEngine
 {
@@ -137,7 +140,16 @@ namespace TikiEngine
 	void Scene::Draw(const DrawArgs& args)
 	{
 #if TIKI_USE_SCENEGRAPH
+
+		//drawContent.Clear();
+		//SceneGraph.Find(drawContent, GetCameras()->Get(0)->GetFrustum());
+		//for(UINT i = 0; i < drawContent.Count(); i++)
+		//	drawContent[i]->Draw(args);
+
+		//engine->HLog.Write("" + drawContent.Count());
+
 		SceneGraph.Draw(args);
+
 #else
 		for (UInt32 i = 0; i < elements.Count(); i++)
 		{

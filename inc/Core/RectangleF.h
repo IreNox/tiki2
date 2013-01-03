@@ -63,24 +63,24 @@ namespace TikiEngine
 			return (this->X == rhs.X && this->Y == rhs.Y && this->Width == rhs.Width && this->Height == rhs.Height);
 		}
 
-		inline Vector3 TopLeft()
+		inline Vector3 TopLeft(float height = 0)
 		{
-			return Vector3(this->X, 0, this->Y);
+			return Vector3(this->X, height, this->Y);
 		}
 
-		inline Vector3 TopRight()
+		inline Vector3 TopRight(float height = 0)
 		{
-			return Vector3(this->X + this->Width, 0, this->Y);
+			return Vector3(this->X + this->Width, height, this->Y);
 		}
 
-		inline Vector3 BottomLeft()
+		inline Vector3 BottomLeft(float height = 0)
 		{
-			return Vector3(this->X , 0, this->Y + this->Height);
+			return Vector3(this->X , height, this->Y + this->Height);
 		}
 
-		inline Vector3 BottomRight()
+		inline Vector3 BottomRight(float height = 0)
 		{
-			return Vector3(this->X + this->Width, 0, this->Y + this->Height);
+			return Vector3(this->X + this->Width, height, this->Y + this->Height);
 		}
 
 		inline float Left() const

@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 				//engine->SetScene(scene);
 				//((SceneLevel*)scene)->LoadLevel(1);
 			}
-			else if((name == L"adrian.lück" || name == L"Adrian") && true)
+			else if((name == L"adrian.lück" || name == L"Adrian") && false)
 			{
 				scene = new SceneAdrian(engine);
 			}

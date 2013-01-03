@@ -68,12 +68,23 @@ namespace TikiEngine
 		return false;
 	}
 
-	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect)
+	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect, Vector3& point, 
+		float distance, function<bool(GameObject*)> where)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
 		{
-			if(data[i]->Bounds().Collide(rect) == Intersect)
-				result.Add(data[i]);
+			GameObject* go = data[i];
+
+			if(go->Bounds().Collide(rect) == Intersect)
+			{
+				if(Vector3::DistanceSquared(point, go->PRS.GPosition()) < distance * distance)
+				{
+					if(where == 0)
+						result.Add(go);
+					else if(where(go))
+						result.Add(go);
+				}
+			}
 		}
 
 		if(IsSubdivided())
@@ -87,25 +98,25 @@ namespace TikiEngine
 
 				if(node->Bounds().Collide(rect) == Contain)
 				{
-					node->Find(result, rect);
+					node->Find(result, rect, where);
 					break;
 				}
 
 				if(rect.Collide(node->Bounds()) == Contain)
 				{
-					node->GetSubContent(result);
+					node->GetSubContent(result, where);
 					continue;
 				}
 
 				if(node->Bounds().Collide(rect) == Intersect)
 				{
-					node->Find(result, rect);
+					node->Find(result, rect, where);
 				}
 			}
 		}
 	}
 
-	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect, bool(where)(GameObject*))
+	void SceneGraphNode::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
 		{
@@ -113,7 +124,9 @@ namespace TikiEngine
 
 			if(go->Bounds().Collide(rect) == Intersect)
 			{
-				if(where(go))
+				if(where == 0)
+					result.Add(go);
+				else if(where(go))
 					result.Add(go);
 			}
 		}
@@ -147,6 +160,47 @@ namespace TikiEngine
 		}
 	}
 
+	void SceneGraphNode::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			GameObject* go = data[i];
+
+			if(where == 0)
+				result.Add(go);
+			else if(where(go))
+				result.Add(go);
+		}
+
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+			{
+				childs[i]->Find(result, where);
+			}
+		}
+	}
+
+	void SceneGraphNode::Find(List<GameObject*>& result, Frustum& frustum)
+	{
+		GetContent(result);
+
+		//for(UINT i = 0; i < data.Count(); i++)
+		//{
+		//	GameObject* go = data[i];
+		//	if(frustum.RectangleInFrustum(go->Bounds(), go->PRS.GPosition().Y))
+		//		result.Add(go);
+		//}
+
+		if(IsSubdivided())
+		{
+			for(UINT i = 0;  i < childs.Count(); i++)
+			{
+				if(frustum.RectangleInFrustum(childs[i]->Bounds(),32))
+					childs[i]->Find(result, frustum);
+			}
+		}
+	}
 
 	void SceneGraphNode::Update(const UpdateArgs& args)
 	{
@@ -195,21 +249,22 @@ namespace TikiEngine
 		}
 
 #if _DEBUG
-		args.Graphics->DrawLine(bounds.TopLeft(), bounds.TopRight(), Color::Red);
-		args.Graphics->DrawLine(bounds.TopRight(), bounds.BottomRight(), Color::Red);
-		args.Graphics->DrawLine(bounds.BottomRight(), bounds.BottomLeft(), Color::Red);
-		args.Graphics->DrawLine(bounds.BottomLeft(), bounds.TopLeft(), Color::Red);
+		//args.Graphics->DrawLine(bounds.TopLeft(), bounds.TopRight(), Color::Red);
+		//args.Graphics->DrawLine(bounds.TopRight(), bounds.BottomRight(), Color::Red);
+		//args.Graphics->DrawLine(bounds.BottomRight(), bounds.BottomLeft(), Color::Red);
+		//args.Graphics->DrawLine(bounds.BottomLeft(), bounds.TopLeft(), Color::Red);
 
-		for(UINT i = 0; i < data.Count(); i++)
-		{
-			RectangleF rec = data[i]->Bounds();
+		//for(UINT i = 0; i < data.Count(); i++)
+		//{
+		//	RectangleF rec = data[i]->Bounds();
+		//	float h = data[i]->PRS.GPosition().Y;
 
-			args.Graphics->DrawLine(rec.TopLeft(), rec.TopRight(), Color::Green);
-			args.Graphics->DrawLine(rec.TopRight(), rec.BottomRight(), Color::Green);
-			args.Graphics->DrawLine(rec.BottomRight(), rec.BottomLeft(), Color::Green);
-			args.Graphics->DrawLine(rec.BottomLeft(), rec.TopLeft(), Color::Green);
+		//	args.Graphics->DrawLine(rec.TopLeft(h), rec.TopRight(h), Color::Green);
+		//	args.Graphics->DrawLine(rec.TopRight(h), rec.BottomRight(h), Color::Green);
+		//	args.Graphics->DrawLine(rec.BottomRight(h), rec.BottomLeft(h), Color::Green);
+		//	args.Graphics->DrawLine(rec.BottomLeft(h), rec.TopLeft(h), Color::Green);
 
-		}
+		//}
 #endif
 	}
 
@@ -231,15 +286,17 @@ namespace TikiEngine
 		return 0;
 	}
 
-	void SceneGraphNode::GetContent(List<GameObject*>& content, bool (where)(GameObject*))
+	void SceneGraphNode::GetContent(List<GameObject*>& content, function<bool(GameObject*)> where)
 	{
 		if(where != 0)
 		{
 			for(UINT i = 0; i < this->data.Count(); i++)
 			{
-				
 				GameObject* go = data[i];
-				if(where(go))
+
+				if(where == 0)
+					content.Add(go);
+				else if(where(go))
 					content.Add(go);
 			}
 		}
@@ -249,23 +306,15 @@ namespace TikiEngine
 		}
 	}
 
-	void SceneGraphNode::GetSubContent(List<GameObject*>& content, bool (where)(GameObject*))
+	void SceneGraphNode::GetSubContent(List<GameObject*>& content, function<bool(GameObject*)> where)
 	{
 		GetContent(content, where);
 
-		for(UINT i = 0; i < childs.Count(); i++)
-			childs[i]->GetSubContent(content, where);
-	}
-
-	bool SceneGraphNode::Subdivide()
-	{
-		if(subdivided)
-			return true;
-
-		if(!layerDepth)
-			return false;
-
-		return this->subdivided = true;
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+				childs[i]->GetSubContent(content, where);
+		}
 	}
 
 	void SceneGraphNode::subdivide()

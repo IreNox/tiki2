@@ -34,8 +34,7 @@ namespace TikiEngine
 		SceneAdrian::SceneAdrian(Engine* engine)
 			: Scene(engine)
 		{
-			//this->sceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 10);
-			this->selectionRectangle = RectangleF::Create(0,0,50,50);
+
 		}
 
 		SceneAdrian::~SceneAdrian()
@@ -104,21 +103,40 @@ namespace TikiEngine
 				Rectangle(10, 390, 200, 180)
 				);
 
-#if _DEBUG
-			//this->sceneGraph.Draw(args);
+			List<Vector3> pos;
 
-			args.Graphics->DrawLine(selectionRectangle.TopLeft(), selectionRectangle.TopRight(), Color::Black);
-			args.Graphics->DrawLine(selectionRectangle.TopRight(), selectionRectangle.BottomRight(), Color::Black);
-			args.Graphics->DrawLine(selectionRectangle.BottomRight(), selectionRectangle.BottomLeft(), Color::Black);
-			args.Graphics->DrawLine(selectionRectangle.BottomLeft(), selectionRectangle.TopLeft(), Color::Black);
-#endif
+			for(int i = 0;  i < 12; i++)
+			{
+				pos.Add(
+					Vector3::TransformCoordinate(
+					Vector3(0.5f,0,0), 
+					Matrix::CreateRotationY(i * 0.0174532925f * 360 / 12)));
+			}
+
+			for(int i = 0; i < 12; i++)
+				args.Graphics->DrawLine(pos[i%12], pos[(i+1)% 12], Color::Black);
+
+
+			for(UINT i = 0; i < drawBla.Count(); i++)
+			{
+				Vector3 pos = drawBla[i]->PRS.GPosition();
+				args.Graphics->DrawLine(pos, pos + Vector3::UnitX, Color::Green);
+				args.Graphics->DrawLine(pos, pos + Vector3::UnitY, Color::Green);
+				args.Graphics->DrawLine(pos, pos + Vector3::UnitZ, Color::Green);
+			}
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
+
 			Scene::Update(args);
 
-			//this->sceneGraph.Update(args);
+			//this->drawBla.Clear();
+			//this->SceneGraph.Find(drawBla, 
+			//	Vector3(0.0f), 
+			//	0.5f, 
+			//	[](GameObject* go) -> bool { return go->PRS.GPosition().X < 0; } 
+			//);
 			
 			if(args.Input.GetKeyPressed(KEY_ALPHA1))
 			{
@@ -168,14 +186,6 @@ namespace TikiEngine
 				//this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
 				this->spidermine->PRS.SPosition() += Vector3(0,0,1) * (float)args.Time.ElapsedTime;
 			}
-
-			if(args.Input.GetKeyPressed(KEY_RETURN))
-			{
-#if TIKI_USE_SCENEGRAPH
-				SceneGraph.Find(this->selectionRectangle);
-#endif
-			}
-
 
 			if(args.Input.GetMousePressed(MB_Left))
 			{

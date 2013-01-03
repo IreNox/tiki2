@@ -218,9 +218,6 @@
     <ClCompile Include="src\Core\HelperLog.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Frustum.cpp">
-      <Filter>Quelldateien\Core\Math</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\MemoryStream.cpp">
       <Filter>Quelldateien\Core\I/O</Filter>
     </ClCompile>

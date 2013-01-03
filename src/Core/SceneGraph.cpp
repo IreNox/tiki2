@@ -19,9 +19,6 @@ namespace TikiEngine
 		if(this->initialized)
 			return;
 
-		//this->quadtree = Quadtree(rect, layerDepth);
-		//this->quadtree.Create();
-
 		this->rootNode.Initialize(rect, layerDepth);
 
 		this->initialized = true;
@@ -46,13 +43,29 @@ namespace TikiEngine
 		return rootNode.Remove(go);
 	}
 
-	void SceneGraph::Find(RectangleF& rect)
+	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
 		this->selection.Clear();
 
-		this->rootNode.Find(this->selection, rect);
+		this->rootNode.Find(result, rect);
 	}
 
+	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		this->rootNode.Find(result, where);
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
+	{
+		this->rootNode.Find(result, frustum);
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
+	{
+		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
+		return rootNode.Find(result, rect, point, distance, where);
+	}
+	
 	void SceneGraph::Update(const UpdateArgs& args)
 	{
 		if(!this->initialized)

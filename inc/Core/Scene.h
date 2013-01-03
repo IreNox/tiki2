@@ -58,7 +58,6 @@ namespace TikiEngine
 		List<Camera*> cameras;
 		DrawLightArgs lighting;
 
-		
-
+		List<GameObject*> drawContent;
 	};
 }

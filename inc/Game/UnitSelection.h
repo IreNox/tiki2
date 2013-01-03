@@ -35,6 +35,8 @@ namespace TikiEngine
 			
 			bool enabled;
 
+			bool dirty;
+
 			Vector2 selectionStartPoint;
 			RectangleF selectionRect;
 

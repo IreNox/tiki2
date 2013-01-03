@@ -50,7 +50,7 @@ namespace TikiEngine
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
 #if TIKI_USE_SCENEGRAPH
-			SceneGraph.Initialize(RectangleF::Create(-1024,-1024, 2048, 2048), 10);
+			SceneGraph.Initialize(RectangleF::Create(-256,-256, 512, 512), 5);
 #endif
 
 			//Light
@@ -168,7 +168,24 @@ namespace TikiEngine
 		{
 			if (level) level->Draw(args);
 			
+			//Camera* cam = GetCameras()->Get(0);
+			//Vector2 screenSize = args.Graphics->GetViewPort()->GetSize();
+
+			//Ray r1 = cam->ScreenPointToRay(Vector2::Zero);
+			//Ray r2 = cam->ScreenPointToRay(Vector2(0,screenSize.Y));
+			//Ray r3 = cam->ScreenPointToRay(Vector2(screenSize.X, 0));
+			//Ray r4 = cam->ScreenPointToRay(screenSize);
+
+			//Vector3 v1 = r1.Origin - r1.Origin * r1.Origin.Y / r1.Direction.Y;
+			//Vector3 v2 = r2.Origin - r2.Origin * r2.Origin.Y / r2.Direction.Y;
+			//Vector3 v3 = r3.Origin - r3.Origin * r3.Origin.Y / r3.Direction.Y;
+			//Vector3 v4 = r4.Origin - r4.Origin * r4.Origin.Y / r4.Direction.Y;
+
+
+			//SceneGraph.Draw(args);
+
 			Scene::Draw(args);
+
 			gameState->Draw(args);
 		}
 
@@ -176,7 +193,7 @@ namespace TikiEngine
 		{
 			if (level) level->Update(args);
 
-			Scene::Update(args);
+		Scene::Update(args);
 			gameState->Update(args);
 		}
 		#pragma endregion

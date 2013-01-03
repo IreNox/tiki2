@@ -91,9 +91,9 @@ namespace TikiEngine
 		// set the normal vector
 		normal = Vector3(a,b,c);
 		//compute the length of the vector
-		float l = normal.Length();
+		float l = 1 / normal.Length();
 		// normalize the vector
-		normal = Vector3(a/l, b/l, c/l);
+		normal = Vector3(a * l, b * l, c * l);
 		// and divide d by th length as well
 		distance = d/l;
 	}

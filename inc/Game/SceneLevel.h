@@ -42,6 +42,7 @@ namespace TikiEngine
 			GameState* gameState;
 
 			List<LevelPoint*> points;
+			List<GameObject*> drawContent;
 
 		};	
 	}
