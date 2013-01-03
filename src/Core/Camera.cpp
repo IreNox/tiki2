@@ -35,8 +35,7 @@ namespace TikiEngine
 		{
 			Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
-			Matrix vp = Matrix::Transpose(matrices->ViewMatrix) * 
-				Matrix::Transpose(matrices->ProjectionMatrix);
+			Matrix vp = this->WorldToScreen();
 
 			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
@@ -58,19 +57,19 @@ namespace TikiEngine
 			return true;
 		}
 
-		Frustum* Camera::GetFrustum()
+		Frustum& Camera::GetFrustum()
 		{
-			return &((Frustum)frustum);
+			return frustum;
 		}
 
-		CBMatrices* Camera::GetMatrices()
+		CBMatrices& Camera::GetMatrices()
 		{
-			return &((CBMatrices)matrices);
+			return matrices;
 		}
 
 		const Matrix Camera::WorldToScreen()
 		{
-			return Matrix::Transpose(matrices->ViewMatrix) * Matrix::Transpose(matrices->ProjectionMatrix);
+			return Matrix::Transpose(matrices.ViewMatrix) * Matrix::Transpose(matrices.ProjectionMatrix);
 		}
 
 		IRenderTarget* Camera::GetRenderTarget()
@@ -100,12 +99,12 @@ namespace TikiEngine
 					Vector3::Up
 				);
 
-				matrices->ViewMatrix = Matrix::Transpose(view);
-				matrices->ViewInverseMatrix = Matrix::Transpose(Matrix::Invert(view));
+				matrices.ViewMatrix = Matrix::Transpose(view);
+				matrices.ViewInverseMatrix = Matrix::Transpose(Matrix::Invert(view));
 
 				// create frustum from view * re-transposed Proj
-				frustum->Set(
-					view * Matrix::Transpose(matrices->ProjectionMatrix)
+				frustum.Set(
+					view * Matrix::Transpose(matrices.ProjectionMatrix)
 				);
 
 				gameObject->PRS.MarkAsClean();
@@ -116,15 +115,13 @@ namespace TikiEngine
 		#pragma region Member - EventHandler
 		void Camera::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
 		{
-			matrices.ToAll(
-				[=](CBMatrices& cb) {
-					cb.ProjectionMatrix = Matrix::Transpose(Matrix::CreatePerspectiveFieldOfView(
-						MATH_PI / 4,
-						(float)args.CurrentViewPort->Width / args.CurrentViewPort->Height,
-						0.01f,
-						1000.0f
-					));
-				}
+			matrices.ProjectionMatrix = Matrix::Transpose(
+				Matrix::CreatePerspectiveFieldOfView(
+					MATH_PI / 4,
+					(float)args.CurrentViewPort->Width / args.CurrentViewPort->Height,
+					0.01f,
+					1000.0f
+				)
 			);
 		}
 		#pragma endregion

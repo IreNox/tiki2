@@ -25,7 +25,10 @@ namespace TikiEngine
 
 		bool IsReady(const GameTime& time)
 		{
-			elapsed += time.ElapsedTime;
+			if (time.ElapsedTime < 0.25)
+			{
+				elapsed += time.ElapsedTime;
+			}
 
 			if (elapsed >= this->Interval)
 			{

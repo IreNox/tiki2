@@ -11,8 +11,6 @@
 
 #include "Core/IRenderTarget.h"
 
-#include "Core/BufferedVariable.h"
-
 namespace TikiEngine
 {
 	namespace Components
@@ -29,12 +27,12 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 			
-			CBMatrices* GetMatrices();
-			inline const Matrix& GetViewMatrix() { return matrices->ViewMatrix; }
-			inline const Matrix& GetProjectionMatrix() { return matrices->ProjectionMatrix; }
+			CBMatrices& GetMatrices();
+			inline const Matrix& GetViewMatrix() { return matrices.ViewMatrix; }
+			inline const Matrix& GetProjectionMatrix() { return matrices.ProjectionMatrix; }
 			const Matrix WorldToScreen();
 
-			Frustum* GetFrustum();
+			Frustum& GetFrustum();
 			Ray ScreenPointToRay(const Vector2& screenPos);
 			Vector3 GetViewDirection();
 
@@ -47,8 +45,8 @@ namespace TikiEngine
 
 		private:
 
-			BVar<Frustum> frustum;
-			BVar<CBMatrices> matrices;
+			Frustum frustum;
+			CBMatrices matrices;
 
 			IRenderTarget* renderTarget;
 

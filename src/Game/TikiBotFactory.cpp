@@ -47,7 +47,7 @@ namespace TikiEngine
 					wayPoints.push_back(points[i]->GPosition());
 					break;
 				case 3:
-					spawnPoints.Add(getPos(points[i]->GPosition(), 5));
+					spawnPoints.Add(GetPos(points[i]->GPosition(), 5));
 					break;
 				}
 
@@ -77,7 +77,7 @@ namespace TikiEngine
 					if (enemySpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(spawnPoints[i],  3);
+						go->PRS.SPosition() = GetPos(spawnPoints[i],  3);
 						CreateEnemy1(go);						
 					}
 
@@ -85,7 +85,7 @@ namespace TikiEngine
 					if (playerSpawnLeft > 0)
 					{
 						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = getPos(playerBase, 3);
+						go->PRS.SPosition() = GetPos(playerBase, 3);
 						CreatePlayerMop(go, spawnPoints[i]);
 					}
 
@@ -100,7 +100,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F5))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(spawnPoints[0], 3);
+				go->PRS.SPosition() = GetPos(spawnPoints[0], 3);
 				CreateEnemy1(go);
 			}
 
@@ -114,7 +114,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F7))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 3);
+				go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
 				CreatePlayerHero(go);
 			}
 
@@ -122,7 +122,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F8))
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = getPos(Vector2(10, 10), 3);
+				go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
 				CreatePlayerMop(go, spawnPoints[0]);
 			}
 
@@ -170,7 +170,7 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
 
-			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
+			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.25f);
@@ -263,7 +263,7 @@ namespace TikiEngine
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_mg"));
 			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
-			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
+			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -332,7 +332,7 @@ namespace TikiEngine
 		void TikiBotFactory::CreateBuildSlot(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
-			go->PRS.SPosition() = getPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
+			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 			//go->PRS.SScale() = Vector3(0.01f);
 
 			new BuildSlot(gameState, go);
@@ -340,8 +340,8 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Private Member
-		Vector3 TikiBotFactory::getPos(const Vector2& pos, float heightAdjust)
+		#pragma region Member - GetPos
+		Vector3 TikiBotFactory::GetPos(const Vector2& pos, float heightAdjust)
 		{
 			Vector3 outPos;
 			outPos.X = pos.X;
@@ -353,9 +353,9 @@ namespace TikiEngine
 			return outPos;
 		}
 
-		Vector3 TikiBotFactory::getPos(const Vector3& pos, float heightAdjust)
+		Vector3 TikiBotFactory::GetPos(const Vector3& pos, float heightAdjust)
 		{
-			return getPos(pos.XZ(), heightAdjust);
+			return GetPos(pos.XZ(), heightAdjust);
 		}
 		#pragma endregion
 

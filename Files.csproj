@@ -79,7 +79,6 @@
     <None Include="bin\Data\Textures\particle\HealAura.dds" />
     <None Include="bin\Data\Textures\particle\laser.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
-    <None Include="bin\Data\Textures\particle\mg1.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
     <None Include="bin\Data\Textures\random.dds" />
     <None Include="bin\Data\Textures\rock_01\rock_01_diff.dds" />

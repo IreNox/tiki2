@@ -25,7 +25,7 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 		private:
-						
+			
 			GameState* gameState;
 
 			PEShootMG* peAssault;

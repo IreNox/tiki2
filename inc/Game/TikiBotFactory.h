@@ -46,6 +46,9 @@ namespace TikiEngine
 			
 			void Update(const UpdateArgs& args);
 
+			Vector3 GetPos(const Vector2& pos, float heightAdjust);
+			Vector3 GetPos(const Vector3& pos, float heightAdjust);
+
 		private:
 
 			GameState* gameState;
@@ -61,9 +64,6 @@ namespace TikiEngine
 			UInt32 enemySpawnCount;
 			UInt32 playerSpawnLeft;
 			UInt32 playerSpawnCount;
-
-			Vector3 getPos(const Vector2& pos, float heightAdjust);
-			Vector3 getPos(const Vector3& pos, float heightAdjust);
 
 			void loadFromDatabase(sqlite3_stmt* state, GameObject* obj);
 

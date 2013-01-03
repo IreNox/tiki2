@@ -40,6 +40,8 @@ const double HeroNeededXPFirstLevelUp = 100.0;
 #define HERO_XP_CALC_NEXTLEVEL(last_level_needed, level) \
 	(last_level_needed * 1.5784) + (level * 10)
 
+#define HERO_CALC_DEADTIME(level) \
+	10.0 * (level + 1)
 #pragma endregion
 
 #pragma region Rewards

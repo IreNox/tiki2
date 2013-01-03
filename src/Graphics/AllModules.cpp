@@ -409,7 +409,7 @@ namespace TikiEngine
 			if (args.CurrentCamera)
 			{
 				CBMatrices* matrices = cbufferCamera->MapTI();
-				*matrices = *args.CurrentCamera->GetMatrices();
+				*matrices = args.CurrentCamera->GetMatrices();
 				cbufferCamera->Unmap();
 			}
 
