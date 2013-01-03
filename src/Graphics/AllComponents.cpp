@@ -227,7 +227,7 @@ namespace TikiEngine
 			if (args.Mode != DM_Geometry) return;
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
-			//DllMain::ModuleGraphics->SetStateDepthEnabled(true);
+			//DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 
 			decl->Apply();
 

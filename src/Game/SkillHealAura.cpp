@@ -4,6 +4,8 @@
 #include "Game/TikiBot.h"
 #include "Game/GD.h"
 
+#include "Core/IContentManager.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -18,6 +20,10 @@ namespace TikiEngine
 		SkillHealAura::SkillHealAura(TikiBot* owner)
 			: Skill(owner, Desc)
 		{
+            prHeal = engine->librarys->CreateComponent<IParticleRenderer>(owner->GetGameObject());
+            prHeal->SetParticleEffect(new PEHealAura(engine));
+            prHeal->SetTexture(engine->content->LoadTexture(L"particle/HealAura"));
+            prHeal->GetParticleEffect()->SIsAlive(false);
 		}
 
 		SkillHealAura::~SkillHealAura()
@@ -33,5 +39,11 @@ namespace TikiEngine
 				);
 			}
 		}
-	}
+
+        void SkillHealAura::internUpdate(const UpdateArgs& args)
+        {
+            prHeal->GetParticleEffect()->SIsAlive(atWork);
+        }
+
+    }
 }

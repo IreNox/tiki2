@@ -112,6 +112,9 @@ namespace TikiEngine
 			i++;
 		}
 
+
+        if (model) model->Draw(this, args);
+
 		i = 0;
 		while (i < components.Count())
 		{
@@ -119,7 +122,6 @@ namespace TikiEngine
 			i++;
 		}
 
-		if (model) model->Draw(this, args);
 	}
 
 	void GameObject::Update(const UpdateArgs& args)

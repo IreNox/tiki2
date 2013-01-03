@@ -8,7 +8,6 @@ namespace TikiEngine
 		PEShootMG::PEShootMG(Engine* engine)
 			: ParticleEffect(engine), birthTime(0), allocIndex(0)
 		{
-			this->SParticleBudget(1000);
 			lifeTime = 10000000000000000.0;
 			releasePerSecound = 1000;
 			renderType = PRT_LineList;

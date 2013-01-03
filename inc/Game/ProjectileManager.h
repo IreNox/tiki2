@@ -39,6 +39,8 @@ namespace TikiEngine
 			};
 			List<ProjInfo> projectiles;
 
+            // List<GameObject*> explosionObjects;
+
 		};
 	}
 }

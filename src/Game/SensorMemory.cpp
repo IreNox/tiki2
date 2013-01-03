@@ -39,12 +39,6 @@ namespace TikiEngine
 					MemoryRecord& info = memoryMap[curBot];
 
 					// test if there is LOS between bots
-					if (curBot->EntityType() == ET_Building)
-					{
-						float test = 1.0f;
-						float bla = 0;
-					}
-
 					float dist = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange() + (float)curBot->BRadius();
 					float eps = (float)curBot->BRadius();
 					if (owner->HasLOSTo(curBot->Pos3D(), dist, eps))
