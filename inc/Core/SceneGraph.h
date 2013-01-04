@@ -9,6 +9,12 @@
 
 namespace TikiEngine
 {
+	enum GameObjectType
+	{
+		Default,
+		Static,
+		Dynamic
+	};
 
 	class SceneGraph
 	{
@@ -18,7 +24,7 @@ namespace TikiEngine
 
 		void Initialize(RectangleF& rect, int layerDepth);
 		
-		void Add(GameObject* go);
+		void Add(GameObject* go, GameObjectType gt = Default);
 		bool Remove(GameObject* go);
 
 		void Update(const UpdateArgs& args);
@@ -36,5 +42,9 @@ namespace TikiEngine
 		List<GameObject*> selection;
 
 		SceneGraphNode rootNode;
+
+		List<GameObject*> defaultGOs;
+		List<GameObject*> staticGOs;
+		SceneGraphNode dynamicGOs;
 	};
 }

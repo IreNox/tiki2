@@ -71,7 +71,7 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Elements
-	GameObject* Scene::AddElement(GameObject* element)
+	 GameObject* Scene::AddElement(GameObject* element)
 	{
 #if TIKI_USE_SCENEGRAPH
 		SceneGraph.Add(element);

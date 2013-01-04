@@ -196,7 +196,7 @@ namespace TikiEngine
 		{
 			for(UINT i = 0;  i < childs.Count(); i++)
 			{
-				if(frustum.RectangleInFrustum(childs[i]->Bounds(),32))
+				if(frustum.RectangleInFrustum(childs[i]->Bounds(),0) != Frustum::OUTSIDE)
 					childs[i]->Find(result, frustum);
 			}
 		}
@@ -239,8 +239,8 @@ namespace TikiEngine
 	void SceneGraphNode::Draw(const DrawArgs& args)
 	{
 
-		for(UINT i = 0; i < data.Count(); i++)
-			data[i]->Draw(args);
+	/*	for(UINT i = 0; i < data.Count(); i++)
+			data[i]->Draw(args);*/
 
 		if(IsSubdivided())
 		{
@@ -249,22 +249,23 @@ namespace TikiEngine
 		}
 
 #if _DEBUG
-		//args.Graphics->DrawLine(bounds.TopLeft(), bounds.TopRight(), Color::Red);
-		//args.Graphics->DrawLine(bounds.TopRight(), bounds.BottomRight(), Color::Red);
-		//args.Graphics->DrawLine(bounds.BottomRight(), bounds.BottomLeft(), Color::Red);
-		//args.Graphics->DrawLine(bounds.BottomLeft(), bounds.TopLeft(), Color::Red);
+		float height = 32;
+		args.Graphics->DrawLine(bounds.TopLeft(height), bounds.TopRight(height), Color::Red);
+		args.Graphics->DrawLine(bounds.TopRight(height), bounds.BottomRight(height), Color::Red);
+		args.Graphics->DrawLine(bounds.BottomRight(height), bounds.BottomLeft(height), Color::Red);
+		args.Graphics->DrawLine(bounds.BottomLeft(height), bounds.TopLeft(height), Color::Red);
 
-		//for(UINT i = 0; i < data.Count(); i++)
-		//{
-		//	RectangleF rec = data[i]->Bounds();
-		//	float h = data[i]->PRS.GPosition().Y;
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			RectangleF rec = data[i]->Bounds();
+			float h = data[i]->PRS.GPosition().Y;
 
-		//	args.Graphics->DrawLine(rec.TopLeft(h), rec.TopRight(h), Color::Green);
-		//	args.Graphics->DrawLine(rec.TopRight(h), rec.BottomRight(h), Color::Green);
-		//	args.Graphics->DrawLine(rec.BottomRight(h), rec.BottomLeft(h), Color::Green);
-		//	args.Graphics->DrawLine(rec.BottomLeft(h), rec.TopLeft(h), Color::Green);
+			args.Graphics->DrawLine(rec.TopLeft(h), rec.TopRight(h), Color::Green);
+			args.Graphics->DrawLine(rec.TopRight(h), rec.BottomRight(h), Color::Green);
+			args.Graphics->DrawLine(rec.BottomRight(h), rec.BottomLeft(h), Color::Green);
+			args.Graphics->DrawLine(rec.BottomLeft(h), rec.TopLeft(h), Color::Green);
 
-		//}
+		}
 #endif
 	}
 
@@ -346,7 +347,7 @@ namespace TikiEngine
 
 	bool SceneGraphNode::IsEmpty()
 	{
-		return this->data.Count() == 0 && !subdivided;
+		return this->data.Count() == 0 && !IsSubdivided();
 	}
 
 	RectangleF& SceneGraphNode::Bounds()

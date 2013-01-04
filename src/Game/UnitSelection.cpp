@@ -10,9 +10,11 @@
 #include "Game/BuildSlot.h"
 
 #include "Game/TikiBotFactory.h"
+#include "Core/IPhysics.h"
 
 namespace TikiEngine
 {
+
 	namespace Game
 	{
 		#pragma region Class
@@ -48,6 +50,24 @@ namespace TikiEngine
 		{
 			if (enabled && selectionRect.Width != 0 && selectionRect.Height != 0)
 				selectButton->Draw(args);
+
+			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitX, Color::Red);
+			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitY, Color::Green);
+			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitZ, Color::Blue);
+
+			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitX, Color::Red);
+			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitY, Color::Green);
+			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitZ, Color::Blue);
+
+			float height = 32;
+			float a = worldPoint1.Y;
+			float b = worldPoint2.Y;
+			float c = (a + b) / 2;
+
+			args.Graphics->DrawLine(this->blaRect.TopLeft(a), this->blaRect.TopRight(c), Color::Green);
+			args.Graphics->DrawLine(this->blaRect.TopRight(c), this->blaRect.BottomRight(b), Color::Green);
+			args.Graphics->DrawLine(this->blaRect.BottomRight(b), this->blaRect.BottomLeft(c), Color::Green);
+			args.Graphics->DrawLine(this->blaRect.BottomLeft(c), this->blaRect.TopLeft(a), Color::Green);
 		}
 		#pragma endregion
 
@@ -56,69 +76,6 @@ namespace TikiEngine
 		{
 			if (!enabled) return;
 
-
-#if TIKI_USE_SCENEGRAPH
-
-			if (args.Input.GetMousePressed(MB_Left))
-			{
-				if (!args.Input.GetKey(KEY_LSHIFT))
-				{
-					selectedUnits.Clear();
-					selectedSlots.Clear();
-				}
-				selectionStartPoint = args.Input.MousePositionDisplay;
-
-				selectionRect.X = args.Input.MousePositionDisplay.X;
-				selectionRect.Y = args.Input.MousePositionDisplay.Y;
-				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
-
-				dirty = true;
-			}
-
-			if(args.Input.GetMouse(MB_Left))
-			{
-				selectionRect.Width = abs(args.Input.MousePositionDisplay.X - selectionStartPoint.X);
-				selectionRect.Height = abs(args.Input.MousePositionDisplay.Y - selectionStartPoint.Y);
-
-				if (selectionStartPoint.X > args.Input.MousePositionDisplay.X)
-					selectionRect.X = args.Input.MousePositionDisplay.X;
-
-				if (selectionStartPoint.Y > args.Input.MousePositionDisplay.Y)
-					selectionRect.Y = args.Input.MousePositionDisplay.Y;
-
-				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
-				selectButton->SSize() = Vector2(selectionRect.Width, selectionRect.Height);
-				dirty = true;
-			}
-
-			if (args.Input.GetMouseRelease(MB_Left))
-			{
-				selectionRect = RectangleF::Create(0, 0, 0, 0);
-				dirty = true;
-			}
-
-			if(!this->dirty)
-				return;
-
-
-
-			this->dirty = false;
-				
-
-
-			//selectedSlots.Clear();
-			//gameState->GetScene()->SceneGraph.Find(selectedSlots, selectionRect, [](GameObject* go) ->bool {return go->GetComponent<BuildSlot>() != 0;});
-
-			//selectedUnits.Clear();
-			//gameState->GetScene()->SceneGraph.Find(selectedUnits, selectionRect, [](GameObject* go) ->bool {return go->GetComponent<TikiBot>() != 0;});
-
-			//for(UINT i = 0; i < selectedUnits.Count(); i++)
-			//{
-
-			//}
-			
-
-#else
 			bool changed = false;
 
 
@@ -263,7 +220,6 @@ namespace TikiEngine
 
  				i++;
 			}
-#endif
 
 			if (true)//changed
 			{

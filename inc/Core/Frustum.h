@@ -107,16 +107,17 @@ namespace TikiEngine
 			return(result);
 		}
 
-		inline bool RectangleInFrustum(RectangleF& rect, float height = 0)
+		inline int RectangleInFrustum(RectangleF& rect, float height = 0)
 		{
-			if(PointInFrustum(rect.TopLeft(height)) == INSIDE
-			&& PointInFrustum(rect.TopRight(height)) == INSIDE
-			&& PointInFrustum(rect.BottomLeft(height)) == INSIDE
-			&& PointInFrustum(rect.BottomRight(height)) == INSIDE)
-				return true;
-
-			return false;
-
+			int result = INSIDE;
+			for(int i = 0; i < 6; i++) 
+			{
+				if (pl[i].Distance(rect.GetVertexP(pl[i].Normal(), height)) < 0)
+					return OUTSIDE;
+				else if (pl[i].Distance(rect.GetVertexN(pl[i].Normal(), height)) < 0)
+					result = INTERSECT;
+			}
+			return(result);
 		}
 	};
 

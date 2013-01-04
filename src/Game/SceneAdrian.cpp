@@ -116,14 +116,6 @@ namespace TikiEngine
 			for(int i = 0; i < 12; i++)
 				args.Graphics->DrawLine(pos[i%12], pos[(i+1)% 12], Color::Black);
 
-
-			for(UINT i = 0; i < drawBla.Count(); i++)
-			{
-				Vector3 pos = drawBla[i]->PRS.GPosition();
-				args.Graphics->DrawLine(pos, pos + Vector3::UnitX, Color::Green);
-				args.Graphics->DrawLine(pos, pos + Vector3::UnitY, Color::Green);
-				args.Graphics->DrawLine(pos, pos + Vector3::UnitZ, Color::Green);
-			}
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)

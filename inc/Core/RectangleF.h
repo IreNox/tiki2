@@ -83,6 +83,27 @@ namespace TikiEngine
 			return Vector3(this->X + this->Width, height, this->Y + this->Height);
 		}
 
+		inline Vector3 GetVertexP(const Vector3& normal, float height = 0)
+		{						
+			Vector3 p = TopLeft(height);
+
+			if(normal.X >= 0) p.X = BottomRight(height).X;
+			if(normal.Z >= 0) p.Z = BottomRight(height).Z;
+
+			return p;
+		}
+
+		inline Vector3 GetVertexN(const Vector3& normal, float height = 0)
+		{
+			Vector3 p = BottomRight(height);
+
+			if(normal.X >= 0) p.X = TopLeft(height).X;
+			if(normal.Z >= 0) p.Z = TopLeft(height).Z;
+
+			return p;
+		}
+
+
 		inline float Left() const
 		{
 			return this->X;

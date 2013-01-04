@@ -24,15 +24,27 @@ namespace TikiEngine
 		this->initialized = true;
 	}
 
-	void SceneGraph::Add(GameObject* go)
+	void SceneGraph::Add(GameObject* go, GameObjectType gt)
 	{
 		if(!this->initialized)
 			return;
 
+		//switch(gt)
+		//{
+		//case Default:
+		//	this->defaultGOs.Add(go);
+		//	break;
+		//case Static:
+		//	this->staticGOs.Add(go);
+		//	break;
+		//case Dynamic:
+		//	this->dynamicGOs.Add(go);
+		//	break;
+		//}
+
 		//quadtree.Insert(go);
 		if(rootNode.Add(go))
 			go->AddRef();
-
 	}
 
 	bool SceneGraph::Remove(GameObject* go)
@@ -45,9 +57,7 @@ namespace TikiEngine
 
 	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
-		this->selection.Clear();
-
-		this->rootNode.Find(result, rect);
+		this->rootNode.Find(result, rect, where);
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
