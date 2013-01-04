@@ -661,5 +661,8 @@
     <ClInclude Include="inc\Core\TikiEnum.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\Interpolator.h">
+      <Filter>Headerdateien\Core\Math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
