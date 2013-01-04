@@ -23,6 +23,11 @@ namespace TikiEngine
 			elapsed = 0;
 		}
 
+		void ResetToReady()
+		{
+			elapsed = this->Interval;
+		}
+
 		bool IsReady(const GameTime& time)
 		{
 			if (time.ElapsedTime < 0.25)

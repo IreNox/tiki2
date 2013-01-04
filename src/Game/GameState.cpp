@@ -69,7 +69,10 @@ namespace TikiEngine
 				L"navmesh/navmesh_" + StringAtoW(scene->GLevel()->GetName()),
 				Matrix::CreateTranslation(Vector3(0, 0.2f, 0))
 			);
+		}
 
+		void GameState::InitLevel()
+		{
 			botFactory->Init();
 		}
 

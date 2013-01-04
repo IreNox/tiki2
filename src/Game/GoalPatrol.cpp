@@ -10,11 +10,10 @@ namespace TikiEngine
 {
 	namespace AI
 	{
-		GoalPatrol::GoalPatrol(TikiBot* bot, std::list<Vector2> wayPoints)
-			: GoalComposite<TikiBot>(bot, Goal_Patrol),
-			path(wayPoints)
+		GoalPatrol::GoalPatrol(TikiBot* bot, const List<Vector2>& wayPoints)
+			: GoalComposite<TikiBot>(bot, Goal_Patrol), path(wayPoints)
 		{
-			currWp = path.front();
+			currWp = path[0];
             //timeWpLeft = 0;
 			attacking = false;
 		}
@@ -34,8 +33,8 @@ namespace TikiEngine
                 }
                 else
                 {
-                    currWp = path.front();
-                    path.pop_front();
+                    currWp = path[0];
+                    path.RemoveAt(0);
                    // owner->GetEngine()->HLog.Write("GoalPatrol - set currWp and popped front. \n");
                 }
 				
@@ -74,7 +73,7 @@ namespace TikiEngine
 			// completed attacking and we still have a path continue patroling
  			if (owner->GetTargetSys()->IsTargetPresent())
 				Activate(args);
-			else if (status == Completed && !path.empty())
+			else if (status == Completed && path.Count() != 0)
 				Activate(args);
 
 			return status;

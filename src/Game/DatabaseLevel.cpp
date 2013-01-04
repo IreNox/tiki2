@@ -253,16 +253,10 @@ namespace TikiEngine
 			switch (type)
 			{
 			case 2:
-				{
-					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
-					eb->WayPoints.Add(position);
-				}
+				gameState->GetPart<EnemyBase>(assignment)->WayPoints.Add(position);
 				break;
 			case 3:
-				{
-					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
-					eb->SpawnPoint = this;
-				}
+				gameState->GetPart<EnemyBase>(assignment)->SpawnPoint = this;
 				break;
 			}
 		}
@@ -323,14 +317,11 @@ namespace TikiEngine
 				gameState->GetBotFactory()->CreatePlayerMop(this, Vector3::Zero);
 				break;
 			case 2: // enemy
-				gameState->GetBotFactory()->CreateEnemy1(this);
+				gameState->GetBotFactory()->CreateEnemy1(this, List<Vector2>());
 				break;
 			case 3: // Hero
 				gameState->GetBotFactory()->CreatePlayerHero(this);
-				{
-					PlayerBase* pb = gameState->GetPart<PlayerBase>(assignment);
-					pb->Hero = this;
-				}
+				gameState->GetPart<PlayerBase>(assignment)->Hero = this;
 				break;
 			case 4:
 				this->SModel(engine->content->LoadModel(L"building03_05"));
@@ -357,17 +348,11 @@ namespace TikiEngine
 				break;
 			case 10:
 				gameState->GetBotFactory()->CreateEnemyBuilding(this);
-				{
-					EnemyBase* eb = gameState->GetPart<EnemyBase>(assignment);
-					eb->GateControl = this;
-				}
+				gameState->GetPart<EnemyBase>(assignment)->GateControl = this;
 				break;
 			case 11:
 				gameState->GetBotFactory()->CreatePlayerBuilding(this);
-				{
-					PlayerBase* pb = gameState->GetPart<PlayerBase>(assignment);
-					pb->MainBuilding = this;
-				}
+				gameState->GetPart<PlayerBase>(assignment)->MainBuilding = this;
 				break;
 			case 12:
 				this->SModel(engine->content->LoadModel(L"tower_mg"));

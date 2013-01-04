@@ -125,7 +125,7 @@ namespace TikiEngine
 			}
 		}
 
-		void GoalThink::AddGoalPatrol(std::list<Vector2> wps)
+		void GoalThink::AddGoalPatrol(const List<Vector2>& wps)
 		{
 			if (NotPresent(Goal_Patrol))
 			{

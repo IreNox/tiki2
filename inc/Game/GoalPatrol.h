@@ -11,7 +11,7 @@ namespace TikiEngine
 		{
 
 		public:
-			GoalPatrol(TikiBot* bot, std::list<Vector2> wayPoints);
+			GoalPatrol(TikiBot* bot, const List<Vector2>& wayPoints);
 
 			void Activate(const UpdateArgs& args);
 			int  Process(const UpdateArgs& args);
@@ -19,8 +19,9 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 
 		private:
-			std::list<Vector2> path;
+
 			Vector2 currWp;
+			List<Vector2> path;
             //double timeWpLeft;
 			bool attacking;
 

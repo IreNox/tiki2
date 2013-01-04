@@ -20,7 +20,7 @@ cbuffer FogOfWar
 	float UnitCount;
 	float3 MapSize;
 
-	Unit Units[32];
+	Unit Units[128];
 };
 
 Texture2D rtScreen;

@@ -17,7 +17,7 @@ namespace TikiEngine
 	{
 		#pragma region GamePart
 		GamePart::GamePart(GameState* state)
-			: EngineObject(state->GetEngine()), gameState(state)
+			: EngineObject(state->GetEngine()), gameState(state), id(0)
 		{
 		}
 
@@ -43,7 +43,7 @@ namespace TikiEngine
 		void EnemyBase::Init()
 		{
 #if _DEBUG
-			if (this->GateControl == 0 || this->SpawnPoint == 0)
+			if (this->GateControl == 0 || this->SpawnPoint == 0 || WayPoints.Count() == 0)
 			{
 				engine->HLog.Write("Enemy Base Definition failed");
 			}
@@ -72,7 +72,7 @@ namespace TikiEngine
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = pos;
-				gameState->GetBotFactory()->CreateEnemy1(go);
+				gameState->GetBotFactory()->CreateEnemy1(go, this->WayPoints);
 			}
 
 			if (player)
@@ -86,7 +86,7 @@ namespace TikiEngine
 
 		#pragma region PlayerBase
 		PlayerBase::PlayerBase(GameState* state)
-			: GamePart(state), SpawnPoint(0), MainBuilding(0), heroDead(false), heroDeadTimer(10.0f)
+			: GamePart(state), SpawnPoint(0), Hero(0), MainBuilding(0), heroDead(false), heroDeadTimer(10.0f)
 		{
 		}
 

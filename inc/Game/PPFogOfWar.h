@@ -42,7 +42,7 @@ namespace TikiEngine
 				float UnitsCount;
 				Vector3 MapSize;
 
-				CBUnit Units[32];
+				CBUnit Units[128];
 
 			};
 

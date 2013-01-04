@@ -14,14 +14,16 @@
 
 #include "Core/IContentManager.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 	namespace Game
 	{
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
-			: gameState(gameState), timerSpawn(20.0f), timerNextUnit(0.75f), enemySpawnCount(7), enemySpawnLeft(0), playerSpawnCount(5),
-			  playerSpawnLeft(0)
+			: gameState(gameState), timerSpawn(SPAWN_INTERVAL), timerNextUnit(SPAWN_UNIT_INTERVAL), enemySpawnLeft(0), playerSpawnLeft(0),
+			  playerBase(0)
 		{
 		}
 
@@ -33,61 +35,36 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void TikiBotFactory::Init()
 		{
-			const List<LevelPoint*>& points = gameState->GetScene()->GPoints();
+			playerBase = gameState->GetPart<PlayerBase>(0);
+			playerBase->Init();
 
-			UInt32 i = 0;
-			while (i < points.Count())
-			{
-				switch (points[i]->GType())
-				{
-				case 1:
-					playerBase = points[i]->GPosition();
-					break;
-				case 2:
-					wayPoints.push_back(points[i]->GPosition());
-					break;
-				case 3:
-					spawnPoints.Add(GetPos(points[i]->GPosition(), 5));
-					break;
-				}
-
-				i++;
-			}		
+			enemyBases.Clear();
+			gameState->GetParts<EnemyBase>(enemyBases);
+			FOREACH_PTR_CALL(enemyBases, Init())
 		}
 		#pragma endregion
 
 		#pragma region Member - Update
-		void TikiBotFactory::Update( const UpdateArgs& args )
+		void TikiBotFactory::Update(const UpdateArgs& args)
 		{
 			if (timerSpawn.IsReady(args.Time))
 			{
-				enemySpawnLeft += enemySpawnCount;
-				playerSpawnLeft += playerSpawnCount;
+				enemySpawnLeft += SPAWN_ENEMY_COUNT;
+				playerSpawnLeft += SPAWN_PLAYER_COUNT;
 
-				timerNextUnit.Reset();
+				timerNextUnit.ResetToReady();
 			}
 
 			if ((enemySpawnLeft != 0 || playerSpawnLeft != 0) && timerNextUnit.IsReady(args.Time))
 			{
-				// spawn from three sides
 				UInt32 i = 0;
-				while (i < spawnPoints.Count())
+				while (i < enemyBases.Count())
 				{
-					// Spawn Enemy
-					if (enemySpawnLeft > 0)
-					{
-						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = GetPos(spawnPoints[i],  3);
-						CreateEnemy1(go);						
-					}
-
-					// Spawn Player
-					if (playerSpawnLeft > 0)
-					{
-						GameObject* go = new GameObject(gameState->GetEngine());
-						go->PRS.SPosition() = GetPos(playerBase, 3);
-						CreatePlayerMop(go, spawnPoints[i]);
-					}
+					enemyBases[i]->Spawn(
+						enemySpawnLeft > 0,
+						playerSpawnLeft > 0,
+						playerBase->SpawnPoint->GPosition()
+					);
 
 					i++;
 				}
@@ -97,12 +74,12 @@ namespace TikiEngine
 			}
 
 #if _DEBUG
-			if (args.Input.GetKeyPressed(KEY_F5))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = GetPos(spawnPoints[0], 3);
-				CreateEnemy1(go);
-			}
+			//if (args.Input.GetKeyPressed(KEY_F5))
+			//{
+			//	GameObject* go = new GameObject(gameState->GetEngine());
+			//	go->PRS.SPosition() = GetPos(spawnPoints[0], 3);
+			//	CreateEnemy1(go);
+			//}
 
 			//if (args.Input.GetKeyPressed(KEY_F6))
 			//{
@@ -111,27 +88,26 @@ namespace TikiEngine
 			//	CreateEnemyTower(go);
 			//}
 
-			if (args.Input.GetKeyPressed(KEY_F7))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
-				CreatePlayerHero(go);
-			}
+			//if (args.Input.GetKeyPressed(KEY_F7))
+			//{
+			//	GameObject* go = new GameObject(gameState->GetEngine());
+			//	go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
+			//	CreatePlayerHero(go);
+			//}
 
 
-			if (args.Input.GetKeyPressed(KEY_F8))
-			{
-				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
-				CreatePlayerMop(go, spawnPoints[0]);
-			}
-
+			//if (args.Input.GetKeyPressed(KEY_F8))
+			//{
+			//	GameObject* go = new GameObject(gameState->GetEngine());
+			//	go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
+			//	CreatePlayerMop(go, spawnPoints[0]);
+			//}
 #endif
 		}
 		#pragma endregion
 
 		#pragma region Member - Create - Enemy
-		void TikiBotFactory::CreateEnemy1(GameObject* go)
+		void TikiBotFactory::CreateEnemy1(GameObject* go, const List<Vector2>& wayPoints)
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
@@ -151,7 +127,7 @@ namespace TikiEngine
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
-			if (!wayPoints.empty())
+			if (wayPoints.Count() != 0)
 			{
 				bot->GetBrain()->AddGoalPatrol(wayPoints);
 			}
@@ -362,7 +338,7 @@ namespace TikiEngine
 		#pragma region Private Member - Database
 		void TikiBotFactory::loadFromDatabase(sqlite3_stmt* state, GameObject* obj)
 		{
-			TikiBotDescription desc;
+			//TikiBotDescription desc;
 
 			//desc.MaxHealth = sqlite3_column_int(state, fieldId);
 			// nicht impl: desc.HealthReg = sqlite3_column_int(state, fieldId);

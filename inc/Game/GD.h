@@ -55,3 +55,11 @@ const double XPKillMesh = 20.0;
 const double XPKillTower = 25.0;
 const double XPKillBuilding = 35.0;
 #pragma endregion
+
+#pragma region Spawn
+#define SPAWN_PLAYER_COUNT 5
+#define SPAWN_ENEMY_COUNT 7
+
+#define SPAWN_INTERVAL 60.0
+#define SPAWN_UNIT_INTERVAL 0.75
+#pragma endregion

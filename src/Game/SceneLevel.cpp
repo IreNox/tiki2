@@ -17,6 +17,9 @@
 #include "Game/PPFogOfWar.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
+#include "Game/PlayerBase.h"
+#include "Game/EnemyBase.h"
+
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
 using namespace TikiEngine::Graphics;
@@ -127,6 +130,8 @@ namespace TikiEngine
 							32.0f,
 							point->GPosition().Y
 						);
+
+						gameState->GetPart<PlayerBase>(0)->SpawnPoint = point;
 					}
 
 					points.Add(point);
@@ -155,6 +160,7 @@ namespace TikiEngine
 				sqlite3_finalize(state);
 			}
 
+			gameState->InitLevel();
 			return true;
 		}
 
