@@ -195,11 +195,6 @@ namespace TikiEngine
 		{
 			SafeRelease(&this->texture);
 			SafeAddRef(texture, &this->texture);
-
-			if (texture)
-			{
-				shader->SetTexture("tex", texture);
-			}
 		}
 
 		ParticleEffect* ParticleRenderer::GetParticleEffect()
@@ -249,6 +244,9 @@ namespace TikiEngine
 			}
 
 			DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+
+			if (texture)
+				shader->SetTexture("tex", texture);
 
 			shader->Apply();
 			shader->ApplyVars(gameObject, 0);
