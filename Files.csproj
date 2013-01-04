@@ -77,6 +77,7 @@
     <None Include="bin\Data\Textures\Marine_L\LP_Soldier_diff.dds" />
     <None Include="bin\Data\Textures\Marine_L\LP_Soldier_light.dds" />
     <None Include="bin\Data\Textures\Marine_L\LP_Soldier_normal.dds" />
+    <None Include="bin\Data\Textures\particle\explosion.dds" />
     <None Include="bin\Data\Textures\particle\fire.dds" />
     <None Include="bin\Data\Textures\particle\HealAura.dds" />
     <None Include="bin\Data\Textures\particle\laser.dds" />

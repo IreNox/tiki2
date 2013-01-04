@@ -1,17 +1,16 @@
 
 #include "Game/SceneMark.h"
 
-
 #include "Core/IPhysics.h"
 #include "Core/LibraryManager.h"
 #include "Core/IMeshRenderer.h"
 #include "Core/IParticleRenderer.h"
 
-
 #include "Game/CameraFly.h"
 #include "Game/PEHealAura.h"
 #include "Game/PESmoke.h"
 #include "Game/PEFire.h"
+#include "Game/PEExplosion.h"
 
 namespace TikiEngine
 {
@@ -97,6 +96,17 @@ namespace TikiEngine
 			firePR->SetTexture(engine->content->LoadTexture(L"particle/fire"));
 			firePR->SetParticleEffect(fire);
 			this->AddElement(fireEmitter);
+
+			// Explosion
+			explosionEmitter = new GameObject(engine);
+			explosionEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
+			explosionEmitter->PRS.SScale() = Vector3(0.01f);
+			auto explosion = new PEExplosion(engine);
+
+			IParticleRenderer* explosionPR = engine->librarys->CreateComponent<IParticleRenderer>(explosionEmitter);
+			explosionPR->SetTexture(engine->content->LoadTexture(L"particle/fire")); // fix: explosion looks too crappy
+			explosionPR->SetParticleEffect(explosion);
+			this->AddElement(explosionEmitter);
 
 			Scene::Initialize(args);
 		}

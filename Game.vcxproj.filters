@@ -434,6 +434,9 @@
     <ClInclude Include="inc\Game\PEFire.h">
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PEExplosion.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -647,6 +650,9 @@
       <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PEFire.cpp">
+      <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEExplosion.cpp">
       <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>

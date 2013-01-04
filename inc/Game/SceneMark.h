@@ -33,6 +33,8 @@ namespace TikiEngine
 			GameObject* smokeEmitter;
 
 			GameObject* fireEmitter;
+
+			GameObject* explosionEmitter;
 		};
 	}
 }
