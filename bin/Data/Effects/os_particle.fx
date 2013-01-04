@@ -66,10 +66,12 @@ GS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	input.Color.a = 0.5f;
+	//input.Color.a = 0.5f;
 
 	return tex.Sample(sam, input.UV) * input.Color;
 }
+
+
 
 technique11 Particle
 {

@@ -87,7 +87,7 @@ namespace TikiEngine
 			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
 
 			void SetCulling(bool value);
-			void SetStateAlphaBlend(bool value);
+			void SetStateAlphaBlend(BlendStateModes value);
 			void SetStateDepthEnabled(bool value);
 
 			IConstantBuffer* CreateConstantBuffer(UInt32 size);
@@ -114,7 +114,8 @@ namespace TikiEngine
 			ID3D11DepthStencilState* depthStencilStateDisable;
 
 			ViewPort viewPort; 
-			ID3D11BlendState* blendStateAlphaBlend;
+			ID3D11BlendState* blendStateInterface;
+            ID3D11BlendState* blendStateParticle;
 			ID3D11RasterizerState* rasterStateBackfaces;
 
 			Color clearColor;

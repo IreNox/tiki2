@@ -30,5 +30,5 @@ namespace TikiEngine
 				return this->ValueMiddle + ((this->ValueFinal - this->ValueMiddle) * ((age - this->MiddlePosition) / (1.0f - this->MiddlePosition)));
 			}
 		}
-	}
+	};
 }

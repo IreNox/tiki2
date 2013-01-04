@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/ParticleEffect.h"
+#include "Core/Interpolator.h"
 
 namespace TikiEngine
 {
@@ -16,6 +17,8 @@ namespace TikiEngine
             void CreateParticle(Particle* particle);
             void UpdateParticle(Particle* particle);
 
+        private:
+            Interpolator interp;
 
         };
     }

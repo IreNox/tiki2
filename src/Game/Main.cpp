@@ -54,10 +54,16 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			{
 				scene = new SceneAdrian(engine);
 			}
-			else
-			{
+			else if((name == L"mark.reichert" || name == L"Shekk") && false)
+            {
+                scene = new SceneMark(engine);
+            }
+            else
+            {
 				scene = new SceneMenuMain(engine);
 			}
+            
+
 			scene->AddRef();
 
 			engine->SetScene(scene);

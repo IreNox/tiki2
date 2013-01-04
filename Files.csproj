@@ -35,6 +35,7 @@
     <None Include="bin\Data\Meshes\building03_05.obj" />
     <None Include="bin\Data\Meshes\collider\collider_map1.obj" />
     <None Include="bin\Data\Meshes\navmesh\navmesh_map1.obj" />
+    <None Include="bin\Data\Meshes\plane.obj" />
     <None Include="bin\Data\Models\building03_05.tiki" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
     <None Include="bin\Data\Models\building_main.tiki" />

@@ -38,7 +38,7 @@ namespace TikiEngine
 			particle->Position = Vector3::Zero;
 			particle->Color = Color::White;
 			particle->Rotation = 0;
-			particle->Size = Vector2::One / 2;
+			particle->Size = Vector2::One / 20;
 			particle->Velocity = Vector3::Zero;
 			//particle->Velocity = Vector3(100.0f, 0, 0);
 			//particle->BirthTime = birthTime;

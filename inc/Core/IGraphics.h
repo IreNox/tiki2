@@ -22,6 +22,13 @@ namespace TikiEngine
 		using TikiEngine::Resources::IRenderTarget;
 		using TikiEngine::Components::Light;
 
+        enum BlendStateModes
+        {
+            BSM_Interface,
+            BSM_Particles,
+            BSM_Disable
+        };
+
 		class IGraphics : public IModule
 		{
 		public:
@@ -63,7 +70,7 @@ namespace TikiEngine
 			virtual IRenderTarget* GetInterfaceTarget() = 0;
 
 			virtual void SetCulling(bool value) = 0;
-			virtual void SetStateAlphaBlend(bool value) = 0;
+			virtual void SetStateAlphaBlend(BlendStateModes value) = 0;
 			virtual void SetStateDepthEnabled(bool value) = 0;
 
 			virtual IConstantBuffer* CreateConstantBuffer(UInt32 size) = 0;

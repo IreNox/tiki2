@@ -33,7 +33,7 @@ namespace TikiEngine
 		#pragma region GraphicsModule
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
-			: IGraphics(engine), inited(false), rasterStateBackfaces(0), device(0), blendStateAlphaBlend(0),
+			: IGraphics(engine), inited(false), rasterStateBackfaces(0), device(0), blendStateParticle(0),  blendStateInterface(0),
 			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtBackBuffer(0),
 			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
 			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
@@ -102,7 +102,9 @@ namespace TikiEngine
 			SafeDelete(&cbufferCamera);
 			SafeDelete(&cbufferObject);
 
-			SafeRelease(&blendStateAlphaBlend);
+			SafeRelease(&blendStateParticle);
+            SafeRelease(&blendStateInterface);
+
 			SafeRelease(&depthStencilState);
 			SafeRelease(&depthStencilStateDisable);
 			SafeRelease(&rasterStateBackfaces);
@@ -329,18 +331,26 @@ namespace TikiEngine
 
 		}
 
-		void GraphicsModule::SetStateAlphaBlend(bool value)
+		void GraphicsModule::SetStateAlphaBlend(BlendStateModes value)
 		{			
 			//static float blendFactor[4] = { 0.0f, 0.0f, 0.0f, 0.0f };
 
-			if (value)
-			{
-				deviceContext->OMSetBlendState(blendStateAlphaBlend, 0, 0xffffffff);
-			}
-			else
-			{
-				deviceContext->OMSetBlendState(0, 0, 0xffffffff);
-			}
+            switch(value)
+            {
+            case BSM_Interface:
+                deviceContext->OMSetBlendState(blendStateInterface, 0, 0xffffffff);
+                break;
+
+            case BSM_Particles:
+                deviceContext->OMSetBlendState(blendStateParticle, 0, 0xffffffff);
+                break;
+
+            case BSM_Disable:
+                deviceContext->OMSetBlendState(0, 0, 0xffffffff);
+                break;
+
+
+            }
 		}
 
 		void GraphicsModule::SetStateDepthEnabled(bool value)
@@ -428,7 +438,7 @@ namespace TikiEngine
 			debugLineRenderer->End();
 #endif
 
-			this->SetStateAlphaBlend(false);
+			this->SetStateAlphaBlend(BSM_Disable);
 
 			UInt32 i = 0;
 			while (i < postProcesses.Count())
@@ -657,26 +667,39 @@ namespace TikiEngine
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ONE;
-			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ONE; //D3D11_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
 
-			//blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
-			//blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA_SAT;
-			//blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_DEST_ALPHA;
-			//blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-			//blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_ZERO;
-			//blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
-			//blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-			//blendStateDesc.RenderTarget[0].RenderTargetWriteMask = 0x0f;
 
 			r = device->CreateBlendState(
 				&blendStateDesc,
-				&blendStateAlphaBlend
+				&blendStateInterface
 			);
 
 			if (FAILED(r)) { this->Dispose(); return false; }
-			#pragma endregion
+			
+
+            ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
+
+            // GUT!!
+            blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+            blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+            blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+            blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+            blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+            blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+            blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+            blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+
+
+            r = device->CreateBlendState(
+                &blendStateDesc,
+                &blendStateParticle
+                );
+
+            if (FAILED(r)) { this->Dispose(); return false; }
+            #pragma endregion
 
 			if (!initDirectXViewPort(desc)) return false;
 
@@ -969,7 +992,7 @@ namespace TikiEngine
 		{
 			if (sprites.Count() == 0) return;
 
-			DllMain::ModuleGraphics->SetStateAlphaBlend(true);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Interface);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 			DllMain::ModuleGraphics->GetInterfaceTarget()->ApplyFirstAndOnly();
 
@@ -1017,7 +1040,7 @@ namespace TikiEngine
 				i++;
 			}
 			
-			DllMain::ModuleGraphics->SetStateAlphaBlend(false);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Disable);
 		}
 		#pragma endregion
 
