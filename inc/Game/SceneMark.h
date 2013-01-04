@@ -29,6 +29,10 @@ namespace TikiEngine
             LightObject* light;
 
             CameraObject* camera;
+
+			GameObject* smokeEmitter;
+
+			GameObject* fireEmitter;
 		};
 	}
 }

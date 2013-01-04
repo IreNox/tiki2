@@ -428,6 +428,12 @@
     <ClInclude Include="inc\Game\PEHealAura.h">
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PESmoke.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEFire.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -635,6 +641,12 @@
       <Filter>Quelldateien\AI\Attributes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PEHealAura.cpp">
+      <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PESmoke.cpp">
+      <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEFire.cpp">
       <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>

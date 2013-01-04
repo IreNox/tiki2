@@ -10,6 +10,8 @@
 
 #include "Game/CameraFly.h"
 #include "Game/PEHealAura.h"
+#include "Game/PESmoke.h"
+#include "Game/PEFire.h"
 
 namespace TikiEngine
 {
@@ -61,18 +63,40 @@ namespace TikiEngine
             this->AddElement(camera);
 
 
-            // particles
+            // --- Particles ---
+
+			// HealAura
             go = new GameObject(engine);
             go->PRS.SPosition() = Vector3(0, 1, 0);
             go->PRS.SScale() = Vector3(0.01f);
-            auto behavior = new PEHealAura(engine);
+            auto heal = new PEHealAura(engine);
 
-            IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
-            effect->SetTexture(engine->content->LoadTexture(L"particle/HealAura"));
-            effect->SetParticleEffect(behavior);
+            IParticleRenderer* healPR = engine->librarys->CreateComponent<IParticleRenderer>(go);
+            healPR->SetTexture(engine->content->LoadTexture(L"particle/HealAura"));
+            healPR->SetParticleEffect(heal);
             this->AddElement(go);
 
+			// Smoke
+			smokeEmitter = new GameObject(engine);
+			smokeEmitter->PRS.SPosition() = Vector3(3, 1, 0);
+			smokeEmitter->PRS.SScale() = Vector3(0.01f);
+			auto smoke = new PESmoke(engine);
 
+			IParticleRenderer* smokePR = engine->librarys->CreateComponent<IParticleRenderer>(smokeEmitter);
+			smokePR->SetTexture(engine->content->LoadTexture(L"particle/smoke"));
+			smokePR->SetParticleEffect(smoke);
+			this->AddElement(smokeEmitter);
+
+			// Fire
+			fireEmitter = new GameObject(engine);
+			fireEmitter->PRS.SPosition() = Vector3(-3, 1, 0);
+			fireEmitter->PRS.SScale() = Vector3(0.01f);
+			auto fire = new PEFire(engine);
+
+			IParticleRenderer* firePR = engine->librarys->CreateComponent<IParticleRenderer>(fireEmitter);
+			firePR->SetTexture(engine->content->LoadTexture(L"particle/fire"));
+			firePR->SetParticleEffect(fire);
+			this->AddElement(fireEmitter);
 
 			Scene::Initialize(args);
 		}
@@ -92,6 +116,12 @@ namespace TikiEngine
 
 		void SceneMark::Update(const UpdateArgs& args)
 		{
+			if (args.Input.GetKey(KEY_J))
+				smokeEmitter->PRS.SPosition() = smokeEmitter->PRS.GPosition() + Vector3(0.01f, 0, 0);
+			else if (args.Input.GetKey(KEY_L))
+				smokeEmitter->PRS.SPosition() = smokeEmitter->PRS.GPosition() - Vector3(0.01f, 0, 0);
+
+
 
 			// Update base
 			Scene::Update(args);

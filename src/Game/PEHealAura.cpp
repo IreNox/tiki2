@@ -10,9 +10,8 @@ namespace TikiEngine
             :ParticleEffect(engine)
         {
             // 1000 particles, 500 per second -> 2 lifetime
-           // this->SParticleBudget(100000);
             renderType = PRT_PointList;
-            releasePerSecound = 400; //500;
+            releasePerSecound = 400;
             lifeTime = 2.5;
             
             interp.MiddlePosition = 0.3f;
