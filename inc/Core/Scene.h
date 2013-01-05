@@ -15,7 +15,7 @@
 
 #include <Core/List.h>
 
-#define TIKI_USE_SCENEGRAPH 0
+#define TIKI_USE_SCENEGRAPH 1
 
 namespace TikiEngine
 {
@@ -48,6 +48,7 @@ namespace TikiEngine
 
 		DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
+		inline Camera* GCamera() { return mainCamera; }
 
 	protected:
 
@@ -55,9 +56,11 @@ namespace TikiEngine
 
 		List<GameObject*> elements;
 
-		List<Camera*> cameras;
-		DrawLightArgs lighting;
 
+		List<Camera*> cameras;
+		Camera* mainCamera;
+
+		DrawLightArgs lighting;
 		List<GameObject*> drawContent;
 	};
 }

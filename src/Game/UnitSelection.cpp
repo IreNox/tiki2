@@ -50,24 +50,6 @@ namespace TikiEngine
 		{
 			if (enabled && selectionRect.Width != 0 && selectionRect.Height != 0)
 				selectButton->Draw(args);
-
-			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitX, Color::Red);
-			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitY, Color::Green);
-			args.Graphics->DrawLine(this->worldPoint1, this->worldPoint1 + Vector3::UnitZ, Color::Blue);
-
-			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitX, Color::Red);
-			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitY, Color::Green);
-			args.Graphics->DrawLine(this->worldPoint2, this->worldPoint2 + Vector3::UnitZ, Color::Blue);
-
-			float height = 32;
-			float a = worldPoint1.Y;
-			float b = worldPoint2.Y;
-			float c = (a + b) / 2;
-
-			args.Graphics->DrawLine(this->blaRect.TopLeft(a), this->blaRect.TopRight(c), Color::Green);
-			args.Graphics->DrawLine(this->blaRect.TopRight(c), this->blaRect.BottomRight(b), Color::Green);
-			args.Graphics->DrawLine(this->blaRect.BottomRight(b), this->blaRect.BottomLeft(c), Color::Green);
-			args.Graphics->DrawLine(this->blaRect.BottomLeft(c), this->blaRect.TopLeft(a), Color::Green);
 		}
 		#pragma endregion
 
@@ -129,9 +111,9 @@ namespace TikiEngine
 
 			// Check entity intersection
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetElements().Count())
+			while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
 			{
-				GameObject* go = gameState->GetScene()->GetElements()[i];
+				GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
 
 			#pragma region SlotSelection
 				BuildSlot* slot = 0;
@@ -235,9 +217,9 @@ namespace TikiEngine
 		{
 			// loop all bots, check sensor and targeting
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetElements().Count())
+			while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
 			{
-				GameObject* go = gameState->GetScene()->GetElements()[i];
+				GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0 && ent->EntityType() != ET_Building)

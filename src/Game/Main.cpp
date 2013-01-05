@@ -16,7 +16,7 @@ using namespace TikiEngine::Description;
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(2252012);
+	//_CrtSetBreakAlloc(18461);
 
 	{
 		EngineDescription desc;
@@ -50,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 				engine->SetScene(scene);
 				((SceneLevel*)scene)->LoadLevel(1);
 			}
-			else if((name == L"adrian.lück" || name == L"Adrian") && true)
+			else if((name == L"adrian.lück" || name == L"Adrian") && false)
 			{
 				scene = new SceneAdrian(engine);
 			}

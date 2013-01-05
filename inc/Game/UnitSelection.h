@@ -48,9 +48,6 @@ namespace TikiEngine
 
 			GUIButton* selectButton;
 
-			Vector3 worldPoint1;
-			Vector3 worldPoint2;
-			RectangleF blaRect;
 		};
 
 	}

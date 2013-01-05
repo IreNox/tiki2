@@ -31,9 +31,11 @@ namespace TikiEngine
 
 		void Update(const UpdateArgs& args);
 		void LateUpdate(const UpdateArgs& args);
+		void PerformCulling(Frustum& frustum);
 
 		bool UpdatePosition(GameObject* go);
 		void Draw(const DrawArgs& args);
+		void DebugDraw(const DrawArgs& args);
 
 		void Clean();
 

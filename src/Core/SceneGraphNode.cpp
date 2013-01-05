@@ -35,7 +35,7 @@ namespace TikiEngine
 	{
 		for(UINT i = 0; i < childs.Count(); i++)
 		{
-			if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
+			if(childs[i]->Bounds().Collide(gameObject->GetSceneGraphElement().Bounds) == Contain)
 			{
 				childDataCount++;
 				return childs[i]->Add(gameObject);
@@ -52,7 +52,7 @@ namespace TikiEngine
 		{
 			for(UINT i = 0; i < childs.Count(); i++)
 			{
-				if(childs[i]->Bounds().Collide(gameObject->Bounds()) == Contain)
+				if(childs[i]->Bounds().Collide(gameObject->GetSceneGraphElement().Bounds) == Contain)
 				{
 					this->childDataCount--;
 					return childs[i]->Remove(gameObject);
@@ -75,7 +75,7 @@ namespace TikiEngine
 		{
 			GameObject* go = data[i];
 
-			if(go->Bounds().Collide(rect) == Intersect)
+			if(go->GetSceneGraphElement().Bounds.Collide(rect) == Intersect)
 			{
 				if(Vector3::DistanceSquared(point, go->PRS.GPosition()) < distance * distance)
 				{
@@ -122,7 +122,7 @@ namespace TikiEngine
 		{
 			GameObject* go = data[i];
 
-			if(go->Bounds().Collide(rect) == Intersect)
+			if(go->GetSceneGraphElement().Bounds.Collide(rect) == Intersect)
 			{
 				if(where == 0)
 					result.Add(go);
@@ -235,21 +235,33 @@ namespace TikiEngine
 				childs[i]->LateUpdate(args);
 		}
 	}
+	void SceneGraphNode::PerformCulling(Frustum& frustum)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+			data[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+				childs[i]->PerformCulling(frustum);
+		}
+	}
 
 	void SceneGraphNode::Draw(const DrawArgs& args)
 	{
 
-	/*	for(UINT i = 0; i < data.Count(); i++)
-			data[i]->Draw(args);*/
+		for(UINT i = 0; i < data.Count(); i++)
+			data[i]->Draw(args);
 
 		if(IsSubdivided())
 		{
 			for(UINT i = 0; i < childs.Count(); i++)
 				childs[i]->Draw(args);
 		}
-
+	}
+	void SceneGraphNode::DebugDraw(const DrawArgs& args)
+	{
 #if _DEBUG
-		float height = 32;
+		float height = 0;
 		args.Graphics->DrawLine(bounds.TopLeft(height), bounds.TopRight(height), Color::Red);
 		args.Graphics->DrawLine(bounds.TopRight(height), bounds.BottomRight(height), Color::Red);
 		args.Graphics->DrawLine(bounds.BottomRight(height), bounds.BottomLeft(height), Color::Red);
@@ -257,7 +269,7 @@ namespace TikiEngine
 
 		for(UINT i = 0; i < data.Count(); i++)
 		{
-			RectangleF rec = data[i]->Bounds();
+			RectangleF rec = data[i]->GetSceneGraphElement().Bounds;
 			float h = data[i]->PRS.GPosition().Y;
 
 			args.Graphics->DrawLine(rec.TopLeft(h), rec.TopRight(h), Color::Green);
@@ -269,9 +281,10 @@ namespace TikiEngine
 #endif
 	}
 
+
 	bool SceneGraphNode::UpdatePosition(GameObject* go)
 	{
-		if(this->bounds.Collide(go->Bounds()) == Contain)
+		if(this->bounds.Collide(go->GetSceneGraphElement().Bounds) == Contain)
 		{
 			return this->Add(go);
 		}

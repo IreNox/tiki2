@@ -9,12 +9,7 @@
 
 namespace TikiEngine
 {
-	enum GameObjectType
-	{
-		Default,
-		Static,
-		Dynamic
-	};
+
 
 	class SceneGraph
 	{
@@ -24,10 +19,11 @@ namespace TikiEngine
 
 		void Initialize(RectangleF& rect, int layerDepth);
 		
-		void Add(GameObject* go, GameObjectType gt = Default);
+		void Add(GameObject* go);
 		bool Remove(GameObject* go);
 
 		void Update(const UpdateArgs& args);
+		void PerformCulling(Frustum& frustum);
 
 		void Draw(const DrawArgs& args);
 
@@ -36,11 +32,13 @@ namespace TikiEngine
 		void Find(List<GameObject*>& result, Frustum& frustum);
 		void Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where = 0);
 
+		void FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
+
+		List<GameObject*>& GetDefaultGOs();
+		List<GameObject*>& GetStaticGOs();
+
 	private:
 		bool initialized;
-
-		List<GameObject*> selection;
-
 		SceneGraphNode rootNode;
 
 		List<GameObject*> defaultGOs;

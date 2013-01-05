@@ -31,13 +31,12 @@ namespace TikiEngine
 			void Update(const UpdateArgs& args);
 
 			inline Level* GLevel() { return level; }
-			inline Camera* GCamera() { return mainCamera; }
 			inline const List<LevelPoint*>& GPoints() { return points; }
 
 		private:
 
 			Level* level;			
-			Camera* mainCamera;
+			
 
 			GameState* gameState;
 

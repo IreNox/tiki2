@@ -11,7 +11,10 @@ namespace TikiEngine
 
 	SceneGraph::~SceneGraph()
 	{
-		
+		for(UINT i = 0; i < defaultGOs.Count(); i++)
+			SafeRelease(&defaultGOs[i]);
+		for(UINT i = 0; i < staticGOs.Count(); i++)
+			SafeRelease(&staticGOs[i]);
 	}
 
 	void SceneGraph::Initialize(RectangleF& rect , int layerDepth)
@@ -19,32 +22,30 @@ namespace TikiEngine
 		if(this->initialized)
 			return;
 
-		this->rootNode.Initialize(rect, layerDepth);
+		this->dynamicGOs.Initialize(rect, layerDepth);
 
 		this->initialized = true;
 	}
 
-	void SceneGraph::Add(GameObject* go, GameObjectType gt)
+	void SceneGraph::Add(GameObject* go)
 	{
 		if(!this->initialized)
 			return;
 
-		//switch(gt)
-		//{
-		//case Default:
-		//	this->defaultGOs.Add(go);
-		//	break;
-		//case Static:
-		//	this->staticGOs.Add(go);
-		//	break;
-		//case Dynamic:
-		//	this->dynamicGOs.Add(go);
-		//	break;
-		//}
+		switch(go->GetGameObjectType())
+		{
+		case Default:
+			this->defaultGOs.Add(go);
+			break;
+		case Static:
+			this->staticGOs.Add(go);
+			break;
+		case Dynamic:
+			this->dynamicGOs.Add(go);
+			break;
+		}
+		go->AddRef();
 
-		//quadtree.Insert(go);
-		if(rootNode.Add(go))
-			go->AddRef();
 	}
 
 	bool SceneGraph::Remove(GameObject* go)
@@ -52,28 +53,56 @@ namespace TikiEngine
 		if(!this->initialized)
 			return false;
 
-		return rootNode.Remove(go);
+		switch(go->GetGameObjectType())
+		{
+		case Default:
+			return this->defaultGOs.Remove(go);
+			break;
+		case Dynamic:
+			return this->dynamicGOs.Remove(go);
+			break;
+		case Static:
+			return this->staticGOs.Remove(go);
+			break;
+		}
+		return false;
+
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
-		this->rootNode.Find(result, rect, where);
+		this->dynamicGOs.Find(result, rect, where);
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
 	{
-		this->rootNode.Find(result, where);
+		this->dynamicGOs.Find(result, where);
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
 	{
-		this->rootNode.Find(result, frustum);
+		this->dynamicGOs.Find(result, frustum);
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
 	{
 		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
-		return rootNode.Find(result, rect, point, distance, where);
+		return dynamicGOs.Find(result, rect, point, distance, where);
+	}
+
+	void SceneGraph::FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		this->dynamicGOs.Find(result, where);
+	}
+
+	List<GameObject*>& SceneGraph::GetDefaultGOs()
+	{
+		return this->defaultGOs;
+	}
+
+	List<GameObject*>& SceneGraph::GetStaticGOs()
+	{
+		return this->staticGOs;
 	}
 	
 	void SceneGraph::Update(const UpdateArgs& args)
@@ -81,8 +110,27 @@ namespace TikiEngine
 		if(!this->initialized)
 			return;
 
-		this->rootNode.Update(args);
-		this->rootNode.LateUpdate(args);
+		for(UINT i = 0; i < defaultGOs.Count(); i++)
+			defaultGOs[i]->Update(args);
+		for(UINT i = 0; i < staticGOs.Count(); i++)
+			staticGOs[i]->Update(args);
+
+		this->dynamicGOs.Update(args);
+		this->dynamicGOs.LateUpdate(args);
+	}
+
+	void SceneGraph::PerformCulling(Frustum& frustum)
+	{
+		if(!this->initialized)
+			return;
+
+		for(UINT i = 0; i < defaultGOs.Count(); i++)
+			defaultGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+
+		for(UINT i = 0; i < staticGOs.Count(); i++)
+			staticGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+
+		this->dynamicGOs.PerformCulling(frustum);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
@@ -92,17 +140,15 @@ namespace TikiEngine
 
 #if _DEBUG
 		//quadtree.Draw(args);
-		rootNode.Draw(args);
-		
 
-		for(UINT i = 0; i < selection.Count(); i++)
-		{
-			Vector3 pos = selection[i]->PRS.GPosition();
+		for(UINT i = 0; i < defaultGOs.Count(); i++)
+			defaultGOs[i]->Draw(args);
+		for(UINT i = 0; i < staticGOs.Count(); i++)
+			staticGOs[i]->Draw(args);
 
-			args.Graphics->DrawLine(pos - Vector3::UnitX, pos + Vector3::UnitX, Color::Blue);
-			args.Graphics->DrawLine(pos - Vector3::UnitY, pos + Vector3::UnitY, Color::Blue);
-			args.Graphics->DrawLine(pos - Vector3::UnitZ, pos + Vector3::UnitZ, Color::Blue);
-		}
+		this->dynamicGOs.Draw(args);
+		this->dynamicGOs.DebugDraw(args);
+	
 #endif
 	}
 }

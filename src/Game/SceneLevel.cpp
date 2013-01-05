@@ -67,8 +67,8 @@ namespace TikiEngine
 			// Camera
 			CameraObject* go = new CameraObject(engine);
 			(new CameraRTS(go, level->GetTerrain()));
-
-			mainCamera = go->GetCameraComponent();
+			this->mainCamera = go->GetCameraComponent();
+			//mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 
 			// PostProcess

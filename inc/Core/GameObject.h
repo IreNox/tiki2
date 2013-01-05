@@ -10,16 +10,26 @@
 #include "Core/DrawArgs.h"
 #include "Core/UpdateArgs.h"
 #include "Core/RectangleF.h"
+#include "Core/SceneGraphElement.h"
 
 namespace TikiEngine
 {
+
 	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
+
+	enum GameObjectType
+	{
+		Default,
+		Static,
+		Dynamic
+	};
 
 	class GameObject : public EngineObject
 	{
 		friend class Transform;
 		friend class Component;
+		
 
 	public:
 
@@ -84,10 +94,11 @@ namespace TikiEngine
 		bool RemoveChild(GameObject* gameObject);
 		const List<GameObject*>& Childs();
 
-		RectangleF& Bounds();
-
 		inline void* GetUserData() { return userData; }
 		inline void SetUserData(void* ud) { userData = ud; }
+
+		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
+		inline GameObjectType& GetGameObjectType() { return this->objectType; }
 
 	protected:
 
@@ -101,7 +112,9 @@ namespace TikiEngine
 	private:
 		
 		List<GameObject*> childs;
-		RectangleF bounding;
+
+		SceneGraphElement sgElement;
+		GameObjectType objectType;
 
 	};
 }

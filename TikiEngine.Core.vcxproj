@@ -25,6 +25,7 @@
     <ClCompile Include="src\Core\Mutex.cpp" />
     <ClCompile Include="src\Core\ParticleEffect.cpp" />
     <ClCompile Include="src\Core\SceneGraph.cpp" />
+    <ClCompile Include="src\Core\SceneGraphElement.cpp" />
     <ClCompile Include="src\Core\SceneGraphNode.cpp" />
     <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="inc\Core\Particle.h" />
     <ClInclude Include="inc\Core\ParticleEffect.h" />
     <ClInclude Include="inc\Core\SceneGraph.h" />
+    <ClInclude Include="inc\Core\SceneGraphElement.h" />
     <ClInclude Include="inc\Core\SceneGraphNode.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />

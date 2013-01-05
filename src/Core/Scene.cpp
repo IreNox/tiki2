@@ -11,7 +11,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false)
+		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false), mainCamera(0)
 	{
 	}
 
@@ -65,6 +65,12 @@ namespace TikiEngine
 		#if _DEBUG
 		if (initialized) throw "Scene already initialized.";
 		#endif
+
+		if(this->mainCamera == 0)
+		{
+			if(cameras.Count() != 0)
+				mainCamera = cameras[0];
+		}
 
 		initialized = true;
 	}
@@ -141,13 +147,6 @@ namespace TikiEngine
 	{
 #if TIKI_USE_SCENEGRAPH
 
-		//drawContent.Clear();
-		//SceneGraph.Find(drawContent, GetCameras()->Get(0)->GetFrustum());
-		//for(UINT i = 0; i < drawContent.Count(); i++)
-		//	drawContent[i]->Draw(args);
-
-		//engine->HLog.Write("" + drawContent.Count());
-
 		SceneGraph.Draw(args);
 
 #else
@@ -162,6 +161,7 @@ namespace TikiEngine
 	{
 #if TIKI_USE_SCENEGRAPH
 			SceneGraph.Update(args);
+			SceneGraph.PerformCulling(this->mainCamera->GetFrustum());
 #else
 		for (UInt32 i = 0; i < elements.Count(); i++)
 		{

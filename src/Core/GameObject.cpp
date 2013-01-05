@@ -7,13 +7,10 @@ namespace TikiEngine
 {
 	#pragma region Class
 	GameObject::GameObject(Engine* engine)
-		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs(), userData(0)
+		: EngineObject(engine), PRS(), components(), model(0), parent(0), childs(), userData(0), objectType(Default)
 	{
 		this->PRS = Transform(this);
-		this->bounding.X = PRS.GPosition().X;
-		this->bounding.Y = PRS.GPosition().Z;
-		this->bounding.Width = 1;
-		this->bounding.Height = 1;
+		this->sgElement = SceneGraphElement(this);
 	}
 
 	GameObject::~GameObject()
@@ -105,6 +102,9 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void GameObject::Draw(const DrawArgs& args)
 	{
+		if(this->sgElement.IsCulled())
+			return;
+
 		UInt32 i = 0;
 		while (i < childs.Count())
 		{
@@ -144,16 +144,7 @@ namespace TikiEngine
 
 		//TODO anständige bounds
 
-		this->bounding.X = PRS.GPosition().X - bounding.Width * 0.5f;
-		this->bounding.Y = PRS.GPosition().Z - bounding.Height * 0.5f;
+		this->sgElement.Update();
 	}
 	#pragma endregion
-
-	#pragma region SceneGraph
-	RectangleF& GameObject::Bounds()
-	{
-		return this->bounding;
-	}
-	#pragma endregion
-	
 }
