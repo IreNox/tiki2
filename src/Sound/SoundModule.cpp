@@ -182,12 +182,12 @@ namespace TikiEngine
 				
 		void SoundModule::Play(ISound* sound)
 		{
-			system->playSound(
-				FMOD_CHANNEL_FREE,
-				(FMOD::Sound*)sound->GetNativeResource(),
-				false, 
-				0
-			);
+			FMOD::Sound* natSound = (FMOD::Sound*)sound->GetNativeResource();
+			FMOD::Channel* ch = 0;
+			
+			system->playSound(FMOD_CHANNEL_FREE, natSound, false, &ch);
+			//ch->
+			//ch->setVolume()
 		}
 	}
 }

@@ -4,8 +4,9 @@
 #include <Windows.h>
 
 #include "Core/InputDescription.h"
-#include <Core/WindowDescription.h>
-#include <Core/GraphicsDescription.h>
+#include "Core/SoundDescription.h"
+#include "Core/WindowDescription.h"
+#include "Core/GraphicsDescription.h"
 
 namespace TikiEngine
 {
@@ -16,11 +17,12 @@ namespace TikiEngine
 			HINSTANCE hInst;
 
 			InputDescription Input;
+			SoundDescription Sound;
 			WindowDescription Window;
 			GaphicsDescription Graphics;
 
 			EngineDescription()
-				: hInst(0), Input(), Window(), Graphics()
+				: hInst(0), Input(), Sound(), Window(), Graphics()
 			{
 			}
 		};

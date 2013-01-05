@@ -93,6 +93,7 @@
     <ClInclude Include="inc\Core\SceneGraphElement.h" />
     <ClInclude Include="inc\Core\SceneGraphNode.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />
+    <ClInclude Include="inc\Core\SoundDescription.h" />
     <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />

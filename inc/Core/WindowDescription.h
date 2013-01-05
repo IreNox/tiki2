@@ -9,24 +9,16 @@ namespace TikiEngine
 		 */
 		struct WindowDescription
 		{
-			/*!
-			 * @brief The window width.
-			 */
+			/*! @brief The window width. */
 			int Width;
 	
-			/*!
-			 * @brief The window height.
-			 */
+			/*! @brief The window height. */
 			int Height;
 	
-			/*!
-			 * @brief The name of the Window Class.
-			 */
+			/*! @brief The name of the Window Class. */
 			const wchar_t* WindowClass;
 
-			/*!
-			 * @brief The window title.
-			 */
+			/*! @brief The window title. */
 			const wchar_t* WindowTitle;
 
 			/*! @brief Window Icon */

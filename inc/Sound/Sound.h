@@ -16,6 +16,9 @@ namespace TikiEngine
 
 			float GetDuration();
 
+			SoundType GetType() { return type; }
+			void SetType(SoundType type) { this->type = type; }
+
 			void* GetNativeResource();
 			bool GetReady();
 
@@ -27,6 +30,8 @@ namespace TikiEngine
 		private:
 
 			FMOD::Sound* sound;
+
+			SoundType type;
 
 		};
 	}

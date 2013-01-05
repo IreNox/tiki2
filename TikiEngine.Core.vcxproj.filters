@@ -667,6 +667,9 @@
     <ClInclude Include="inc\Core\Interpolator.h">
       <Filter>Headerdateien\Core\Math</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\SoundDescription.h">
+      <Filter>Headerdateien\Core\Descriptions</Filter>
+    </ClInclude>
     <ClInclude Include="inc\Core\SceneGraphElement.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>

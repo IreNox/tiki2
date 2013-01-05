@@ -31,6 +31,10 @@ namespace TikiEngine
 
 			System* system;
 
+			float musicVolume;
+			float voiceVolume;
+			float effectVolume;
+
 		};
 	}
 }
