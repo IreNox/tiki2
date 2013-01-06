@@ -59,8 +59,7 @@ namespace TikiEngine
 			if (!enabled) return;
 
 			bool changed = false;
-
-
+			
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
@@ -106,16 +105,14 @@ namespace TikiEngine
 			{
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
-
-
-
+			
 			// Check entity intersection
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
+			while (i < gameState->GetScene()->GetElements().Count())
 			{
-				GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
+				GameObject* go = gameState->GetScene()->GetElements()[i];
 
-			#pragma region SlotSelection
+				#pragma region SlotSelection
 				BuildSlot* slot = 0;
 				slot = go->GetComponent<BuildSlot>();
 				if(slot != 0)
@@ -152,9 +149,9 @@ namespace TikiEngine
 					}
 
 				}
-			#pragma endregion
+				#pragma endregion
 
-			#pragma region UnitSelection
+				#pragma region UnitSelection
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
 				{
@@ -197,8 +194,7 @@ namespace TikiEngine
 					if (ent->IsDead())
 						RemoveBot(ent, i);
 				}
-			#pragma endregion
-
+				#pragma endregion
 
  				i++;
 			}
@@ -217,9 +213,9 @@ namespace TikiEngine
 		{
 			// loop all bots, check sensor and targeting
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
+			while (i < gameState->GetScene()->GetElements().Count())
 			{
-				GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
+				GameObject* go = gameState->GetScene()->GetElements()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0 && ent->EntityType() != ET_Building)

@@ -15,7 +15,7 @@
 
 #include <Core/List.h>
 
-#define TIKI_USE_SCENEGRAPH 1
+#define TIKI_USE_SCENEGRAPH 0
 
 namespace TikiEngine
 {

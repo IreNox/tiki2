@@ -17,6 +17,9 @@ namespace TikiEngine
 		InputModule::InputModule(Engine* engine)
 			: IInput(engine), input(0), mouse(0), keyboard(0), hWnd(0), hInst(0), mousePos(0, 0), viewPort()
 		{
+			ZeroMemory(&mouseStatePrev, sizeof(mouseStatePrev));
+			ZeroMemory(&mouseStateCurrent, sizeof(mouseStateCurrent));
+
 			ZeroMemory(keyboardStatePrev, sizeof(keyboardStatePrev));
 			ZeroMemory(keyboardStateCurrent, sizeof(keyboardStateCurrent));
 		}

@@ -71,7 +71,7 @@ public:
 
 	inline T* ToArray() const
 	{
-		UInt32 c = lengthData + 1; 
+		UInt32 c = lengthData; 
 		T* arr = new T[c];
 
 		UInt32 i = 0;
