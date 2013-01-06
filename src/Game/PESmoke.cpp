@@ -8,7 +8,7 @@ namespace TikiEngine
 		PESmoke::PESmoke(Engine* engine)
 			: ParticleEffect(engine)
 		{
-			//SParticleBudget(1000);
+			SParticleBudget(2000);
 			renderType = PRT_PointList;
 			releasePerSecound = 100;
 			lifeTime = 10;
@@ -26,7 +26,7 @@ namespace TikiEngine
 
 		void PESmoke::CreateParticle(Particle* particle)
 		{
-			particle->Position = Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
+			particle->Position += Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
 			particle->Color = Color(1.0f, 1.0f, 1.0f, 0);
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);

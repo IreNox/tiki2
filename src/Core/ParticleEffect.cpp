@@ -99,7 +99,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Trigger
-		void ParticleEffect::Trigger(UInt32 count)
+		void ParticleEffect::Trigger(UInt32 count, const Vector3 pos)
 		{
 			if (multiplayReleaseCount) count *= renderType + 1;
 
@@ -108,6 +108,7 @@ namespace TikiEngine
 			{
 				Particle* particle = &particles[particleUsed++];
 				particle->BirthTime = totalTime;
+				particle->Position = pos;
 
 				this->CreateParticle(particle);
 

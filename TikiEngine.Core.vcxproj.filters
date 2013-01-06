@@ -84,9 +84,6 @@
     <Filter Include="Quelldateien\Core\I/O">
       <UniqueIdentifier>{52568701-fac1-47d5-82bf-9060f7a5e09e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Engine\GameObjects\Basic">
-      <UniqueIdentifier>{200d2000-146e-40b6-8320-449acaa72980}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Quelldateien\Engine\GameObjects\Basic">
       <UniqueIdentifier>{525a7a6e-9ebe-4c79-af72-43ca91d6da0a}</UniqueIdentifier>
     </Filter>
@@ -415,12 +412,6 @@
     <ClInclude Include="inc\Core\Light.h">
       <Filter>Headerdateien\Engine\Components</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\CameraObject.h">
-      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Core\LightObject.h">
-      <Filter>Headerdateien\Engine\GameObjects\Basic</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\ColorVertex.h">
       <Filter>Headerdateien\Core\Vertex</Filter>
     </ClInclude>
@@ -672,6 +663,12 @@
     </ClInclude>
     <ClInclude Include="inc\Core\SceneGraphElement.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\LightObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CameraObject.h">
+      <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

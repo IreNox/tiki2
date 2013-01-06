@@ -7,10 +7,6 @@
 #include "Core/IParticleRenderer.h"
 
 #include "Game/CameraFly.h"
-#include "Game/PEHealAura.h"
-#include "Game/PESmoke.h"
-#include "Game/PEFire.h"
-#include "Game/PEExplosion.h"
 
 namespace TikiEngine
 {
@@ -33,18 +29,22 @@ namespace TikiEngine
 		void SceneMark::Initialize(const InitializationArgs& args)
 		{
             GameObject* go = new GameObject(engine);
-            auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			IMeshRenderer* renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
+			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"checker");
+			renP->SetMesh(engine->content->LoadMesh(L"rocket"));
+			go->PRS.SPosition() = Vector3(5, 5, 5);
+			this->AddElement(go);
 
-            Material* mat = engine->content->LoadMaterial(L"os_default");
-            mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_map1");
-            renP->SetMaterial(mat);
+			// Plane
+			go = new GameObject(engine);
+            renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+            renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
+			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
             renP->SetMesh(engine->content->LoadMesh(L"plane"));
             go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-            //go->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, 3.14159f, 0);
-            //go->PRS.SScale() = Vector3(1, 1, -1);
             this->AddElement(go);
-
-
+			
             // Light
             light = new LightObject(engine);
             light->GetLight()->SetColor(Color(1, 1, 1, 1));
@@ -77,13 +77,15 @@ namespace TikiEngine
 
 			// Smoke
 			smokeEmitter = new GameObject(engine);
-			smokeEmitter->PRS.SPosition() = Vector3(3, 1, 0);
+			smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
 			smokeEmitter->PRS.SScale() = Vector3(0.01f);
-			auto smoke = new PESmoke(engine);
+
+			smokeEffect = new PESmoke(engine);
+			smokeEffect->SIsAlive(false);
 
 			IParticleRenderer* smokePR = engine->librarys->CreateComponent<IParticleRenderer>(smokeEmitter);
 			smokePR->SetTexture(engine->content->LoadTexture(L"particle/smoke"));
-			smokePR->SetParticleEffect(smoke);
+			smokePR->SetParticleEffect(smokeEffect);
 			this->AddElement(smokeEmitter);
 
 			// Fire
@@ -131,7 +133,25 @@ namespace TikiEngine
 			else if (args.Input.GetKey(KEY_L))
 				smokeEmitter->PRS.SPosition() = smokeEmitter->PRS.GPosition() - Vector3(0.01f, 0, 0);
 
+			elements[0]->PRS.SPosition() = Vector3(
+				sinf((float)args.Time.TotalTime) * 7.5f,
+				5,
+				cosf((float)args.Time.TotalTime) * 7.5f
+			);
 
+			elements[0]->PRS.SRotation() = Quaternion::CreateFromAxisAngle(
+				Vector3::Normalize(Vector3(sinf((float)args.Time.TotalTime / 2), 0, cosf((float)args.Time.TotalTime / 2))),
+				3.15149f
+			);
+
+			smokeEffect->Trigger(
+				(UInt32)(200 * args.Time.ElapsedTime),
+				//Vector3(0,5,0)
+				Vector3::TransformCoordinate(
+					Vector3(0.8f, 0, 0),
+					Matrix::Transpose(elements[0]->PRS.GetWorld())
+				) * 100.0f
+			);
 
 			// Update base
 			Scene::Update(args);
