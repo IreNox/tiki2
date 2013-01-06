@@ -31,7 +31,12 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			
 		private:
-			void RemoveBot(TikiBot* bot, UInt32 index);
+			void HandleTikiBot(GameObject* go);
+			void HandleBuildSlot(GameObject* go);
+
+			bool IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps = 15);
+
+			void RemoveBot(TikiBot* bot/*, UInt32 index*/);
 			
 			bool enabled;
 
@@ -41,10 +46,12 @@ namespace TikiEngine
 			RectangleF selectionRect;
 
 			GameState* gameState;
-			List<GameObject*> search;
 			List<GameObject*> selectedUnits;
-
 			List<GameObject*> selectedSlots;
+
+			Matrix worldToScreen;
+			bool mouseButton;
+			bool changed;
 
 			GUIButton* selectButton;
 

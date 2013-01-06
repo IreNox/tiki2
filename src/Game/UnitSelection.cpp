@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		UnitSelection::UnitSelection(GameState* gameState)
-			: EngineObject(gameState->GetEngine()), gameState(gameState), enabled(true), dirty(true)
+			: EngineObject(gameState->GetEngine()), gameState(gameState), enabled(true), dirty(true), mouseButton(false), changed(false)
 		{
 			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
@@ -58,8 +58,9 @@ namespace TikiEngine
 		{
 			if (!enabled) return;
 
-			bool changed = false;
-			
+			this->changed = false;
+
+
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
@@ -105,111 +106,165 @@ namespace TikiEngine
 			{
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
+
+			this->mouseButton = args.Input.GetMouse(MB_Left);
+			this->worldToScreen = gameState->GetScene()->GCamera()->WorldToScreen();
+
+			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleBuildSlot(go); });
+			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleTikiBot(go); });
 			
+
 			// Check entity intersection
-			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetElements().Count())
-			{
-				GameObject* go = gameState->GetScene()->GetElements()[i];
+			//UInt32 i = 0;
+			//while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
+			//{
+			//	GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
 
-				#pragma region SlotSelection
-				BuildSlot* slot = 0;
-				slot = go->GetComponent<BuildSlot>();
-				if(slot != 0)
-				{
-					Camera* cam = gameState->GetScene()->GCamera();
-					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+			//#pragma region SlotSelection
+			//	BuildSlot* slot = 0;
+			//	slot = go->GetComponent<BuildSlot>();
+			//	if(slot != 0)
+			//	{
+			//		Camera* cam = gameState->GetScene()->GCamera();
+			//		Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
-					Matrix vp = cam->WorldToScreen();
-					Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+			//		Matrix vp = cam->WorldToScreen();
+			//		Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
-					{
-						engine->HLog.Write("Rect-Select slot.");
-						selectedSlots.Add(go);
-						changed = true;
-					}
+			//		if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
+			//		{
+			//			engine->HLog.Write("Rect-Select slot.");
+			//			selectedSlots.Add(go);
+			//			changed = true;
+			//		}
 
-					float eps = 15.0f;
-					if (args.Input.GetMousePressed(MB_Left))
-					{
-						if(screenPos.X <= selectionRect.X + eps && 
-							screenPos.X >= selectionRect.X - eps &&
-							screenPos.Y <= selectionRect.Y + eps && 
-							screenPos.Y >= selectionRect.Y - eps)
-						{
-							if (!selectedSlots.Contains(go))
-							{
-								engine->HLog.Write("click-Select slot.\n");
-								selectedSlots.Add(go);
-								changed = true;
-							}
-						}
+			//		float eps = 15.0f;
+			//		if (args.Input.GetMousePressed(MB_Left))
+			//		{
+			//			if(screenPos.X <= selectionRect.X + eps && 
+			//				screenPos.X >= selectionRect.X - eps &&
+			//				screenPos.Y <= selectionRect.Y + eps && 
+			//				screenPos.Y >= selectionRect.Y - eps)
+			//			{
+			//				if (!selectedSlots.Contains(go))
+			//				{
+			//					engine->HLog.Write("click-Select slot.\n");
+			//					selectedSlots.Add(go);
+			//					changed = true;
+			//				}
+			//			}
 
-					}
+			//		}
 
-				}
-				#pragma endregion
+			//	}
+			//#pragma endregion
 
-				#pragma region UnitSelection
-				TikiBot* ent = go->GetComponent<TikiBot>();
-				if(ent != 0)
-				{
-					// select player units only
-					if (ent->GetFaction() == 0)
-					{
-						Camera* cam = gameState->GetScene()->GCamera();
-						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+			//#pragma region UnitSelection
+			//	TikiBot* ent = go->GetComponent<TikiBot>();
+			//	if(ent != 0)
+			//	{
+			//		// select player units only
+			//		if (ent->GetFaction() == 0)
+			//		{
+			//			Camera* cam = gameState->GetScene()->GCamera();
+			//			Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
-						Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
-						//Matrix::Transpose(cam->GetViewMatrix()) * 
-						//Matrix::Transpose(cam->GetProjectionMatrix());
+			//			Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
+			//			//Matrix::Transpose(cam->GetViewMatrix()) * 
+			//			//Matrix::Transpose(cam->GetProjectionMatrix());
 
-						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+			//			Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
-						{
-							//engine->HLog.Write("Rect-Select unit.");
-							selectedUnits.Add(go);
-							changed = true;
-						}
+			//			if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
+			//			{
+			//				//engine->HLog.Write("Rect-Select unit.");
+			//				selectedUnits.Add(go);
+			//				changed = true;
+			//			}
 
-						float eps = 15.0f;
-						if (args.Input.GetMousePressed(MB_Left))
-						{
-							if(screenPos.X <= selectionRect.X + eps && 
-								screenPos.X >= selectionRect.X - eps &&
-								screenPos.Y <= selectionRect.Y + eps && 
-								screenPos.Y >= selectionRect.Y - eps)
-							{
-								//engine->HLog.Write("click-Select unit.\n");
-								selectedUnits.Add(go);
-								changed = true;
-							}
+			//			float eps = 15.0f;
+			//			if (args.Input.GetMousePressed(MB_Left))
+			//			{
+			//				if(screenPos.X <= selectionRect.X + eps && 
+			//					screenPos.X >= selectionRect.X - eps &&
+			//					screenPos.Y <= selectionRect.Y + eps && 
+			//					screenPos.Y >= selectionRect.Y - eps)
+			//				{
+			//					//engine->HLog.Write("click-Select unit.\n");
+			//					selectedUnits.Add(go);
+			//					changed = true;
+			//				}
 
-						}
-					}
+			//			}
+			//		}
 
-					// check if dead and clear from list
-					if (ent->IsDead())
-						RemoveBot(ent, i);
-				}
-				#pragma endregion
+			//		// check if dead and clear from list
+			//		if (ent->IsDead())
+			//			RemoveBot(ent/*, i*/);
+			//	}
+			//#pragma endregion
 
- 				i++;
-			}
 
-			if (true)//changed
-			{
+ 		//		i++;
+			//}
+
+			if (changed)
 				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(&selectedUnits));
-			}
 
 			selectButton->Update(args);
 		}
 		#pragma endregion
 
+#pragma region helper
+
+		void UnitSelection::HandleTikiBot(GameObject* go)
+		{
+			TikiBot* ent = go->GetComponent<TikiBot>();
+			if(ent == 0)
+				return;
+
+			if(ent->GetFaction() == 0)
+			{
+				if(IsUnderMouse(go, this->worldToScreen) && !selectedUnits.Contains(go))
+				{
+					selectedUnits.Add(go);
+					changed = true;
+				}
+			}
+			if(ent->IsDead())
+				RemoveBot(ent);
+		}
+
+		void UnitSelection::HandleBuildSlot(GameObject* go)
+		{
+			BuildSlot* slot = go->GetComponent<BuildSlot>();
+			if(slot == 0)
+				return;
+		}
+
+		bool UnitSelection::IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps)
+		{
+			Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+			Vector3 screenPos = Vector3::Project(go->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, worldToScreen);
+			if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)))
+				return true;
+			
+			if(mouseButton)
+			{
+				if(screenPos.X <= selectionRect.X + eps && 
+					screenPos.X >= selectionRect.X - eps &&
+					screenPos.Y <= selectionRect.Y + eps && 
+					screenPos.Y >= selectionRect.Y - eps)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+#pragma endregion
+
 		#pragma region Member - RemoveBot
-		void UnitSelection::RemoveBot(TikiBot* bot, UInt32 index)
+		void UnitSelection::RemoveBot(TikiBot* bot/*, UInt32 index*/)
 		{
 			// loop all bots, check sensor and targeting
 			UInt32 i = 0;

@@ -4,7 +4,7 @@
 namespace TikiEngine
 {
 	SceneGraph::SceneGraph()
-		:initialized(false)
+		:initialized(false), locked(false)
 	{
 
 	}
@@ -59,6 +59,11 @@ namespace TikiEngine
 			return this->defaultGOs.Remove(go);
 			break;
 		case Dynamic:
+			if(IsLocked())
+			{
+				removeList.Add(go);
+				return true;
+			}
 			return this->dynamicGOs.Remove(go);
 			break;
 		case Static:
@@ -69,30 +74,60 @@ namespace TikiEngine
 
 	}
 
+	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
+	{
+		if(!this->initialized)
+			return;
+
+		this->Lock();
+		this->dynamicGOs.Do(whatIWant);
+		this->Unlock();
+	}
+
 	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
+		if(!this->initialized)
+			return;
+
+		this->Lock();
 		this->dynamicGOs.Find(result, rect, where);
+		this->Unlock();
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
 	{
+		if(!this->initialized)
+			return;
+
+		this->Lock();
 		this->dynamicGOs.Find(result, where);
+		this->Unlock();
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
 	{
+		if(!this->initialized)
+			return;
+
 		this->dynamicGOs.Find(result, frustum);
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
 	{
+		if(!this->initialized)
+			return;
+
+		this->Lock();
 		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
 		return dynamicGOs.Find(result, rect, point, distance, where);
+		this->Unlock();
 	}
 
 	void SceneGraph::FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where)
 	{
+		this->Lock();
 		this->dynamicGOs.Find(result, where);
+		this->Unlock();
 	}
 
 	List<GameObject*>& SceneGraph::GetDefaultGOs()
@@ -150,5 +185,16 @@ namespace TikiEngine
 		this->dynamicGOs.DebugDraw(args);
 	
 #endif
+	}
+
+	void SceneGraph::Unlock()
+	{
+		this->locked = false;
+		if(removeList.Count() != 0)
+		{
+			for(UINT i = 0; i < removeList.Count(); i++)
+				this->dynamicGOs.Remove(removeList[i]);
+			removeList.Clear();
+		}
 	}
 }

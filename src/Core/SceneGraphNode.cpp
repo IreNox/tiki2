@@ -181,6 +181,18 @@ namespace TikiEngine
 		}
 	}
 
+	void SceneGraphNode::Do(function<void(GameObject*)> whatIWant)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+			whatIWant(data[i]);
+		
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+				childs[i]->Do(whatIWant);
+		}
+	}
+
 	void SceneGraphNode::Find(List<GameObject*>& result, Frustum& frustum)
 	{
 		GetContent(result);
@@ -277,6 +289,12 @@ namespace TikiEngine
 			args.Graphics->DrawLine(rec.BottomRight(h), rec.BottomLeft(h), Color::Green);
 			args.Graphics->DrawLine(rec.BottomLeft(h), rec.TopLeft(h), Color::Green);
 
+		}
+
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+				childs[i]->DebugDraw(args);
 		}
 #endif
 	}

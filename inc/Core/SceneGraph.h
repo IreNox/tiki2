@@ -27,6 +27,8 @@ namespace TikiEngine
 
 		void Draw(const DrawArgs& args);
 
+		void Do(function<void(GameObject*)> whatIWant);
+
 		void Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where = 0);
 		void Find(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
 		void Find(List<GameObject*>& result, Frustum& frustum);
@@ -38,11 +40,19 @@ namespace TikiEngine
 		List<GameObject*>& GetStaticGOs();
 
 	private:
+		inline void Lock(){ this->locked = true; }
+		void Unlock();
+		inline bool IsLocked(){ return this->locked; }
+
+
 		bool initialized;
 		SceneGraphNode rootNode;
 
 		List<GameObject*> defaultGOs;
 		List<GameObject*> staticGOs;
 		SceneGraphNode dynamicGOs;
+
+		bool locked;
+		List<GameObject*> removeList;
 	};
 }
