@@ -95,7 +95,10 @@
     <None Include="bin\Data\Textures\rock_03\rock_03_diff.dds" />
     <None Include="bin\Data\Textures\rock_03\rock_03_normal.dds" />
     <None Include="bin\Data\Textures\rock_03\rock_03_spec.dds" />
-    <None Include="bin\Data\Textures\SpiderMine\checker.dds" />
+    <None Include="bin\Data\Textures\SpiderMine\spidermine001_diff.dds" />
+    <None Include="bin\Data\Textures\SpiderMine\spidermine001_light.dds" />
+    <None Include="bin\Data\Textures\SpiderMine\spidermine001_normal.dds" />
+    <None Include="bin\Data\Textures\SpiderMine\spidermine001_spec.dds" />
     <None Include="bin\Data\Textures\terrain\color_map1.dds" />
     <None Include="bin\Data\TikiData.sqlite" />
   </ItemGroup>
