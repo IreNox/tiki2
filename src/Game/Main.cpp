@@ -55,7 +55,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			{
 				scene = new SceneAdrian(engine);
 			}
-			else if((name == L"mark.reichert" || name == L"Shekk") && true)
+			else if((name == L"Mark.Reichert" || name == L"mark.reichert" || name == L"Shekk") && true)
             {
                 scene = new SceneMark(engine);
             }

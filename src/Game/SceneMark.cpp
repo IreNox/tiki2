@@ -75,6 +75,19 @@ namespace TikiEngine
             healPR->SetParticleEffect(heal);
             this->AddElement(go);
 
+            // Fire
+            fireEmitter = new GameObject(engine);
+            fireEmitter->PRS.SPosition() = Vector3(0, 0, 0);
+            fireEmitter->PRS.SScale() = Vector3(0.01f);
+
+            fireEffect = new PEFire(engine);
+            fireEffect->SIsAlive(false);
+
+            IParticleRenderer* firePR = engine->librarys->CreateComponent<IParticleRenderer>(fireEmitter);
+            firePR->SetTexture(engine->content->LoadTexture(L"particle/fire"));
+            firePR->SetParticleEffect(fireEffect);
+            this->AddElement(fireEmitter);
+
 			// Smoke
 			smokeEmitter = new GameObject(engine);
 			smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
@@ -88,16 +101,6 @@ namespace TikiEngine
 			smokePR->SetParticleEffect(smokeEffect);
 			this->AddElement(smokeEmitter);
 
-			// Fire
-			fireEmitter = new GameObject(engine);
-			fireEmitter->PRS.SPosition() = Vector3(-3, 1, 0);
-			fireEmitter->PRS.SScale() = Vector3(0.01f);
-			auto fire = new PEFire(engine);
-
-			IParticleRenderer* firePR = engine->librarys->CreateComponent<IParticleRenderer>(fireEmitter);
-			firePR->SetTexture(engine->content->LoadTexture(L"particle/fire"));
-			firePR->SetParticleEffect(fire);
-			this->AddElement(fireEmitter);
 
 			// Explosion
 			explosionEmitter = new GameObject(engine);
@@ -152,6 +155,15 @@ namespace TikiEngine
 					Matrix::Transpose(elements[0]->PRS.GetWorld())
 				) * 100.0f
 			);
+
+            fireEffect->Trigger(
+                (UInt32)(200 * args.Time.ElapsedTime),
+                //Vector3(0,5,0)
+                Vector3::TransformCoordinate(
+                Vector3(0.8f, 0, 0),
+                Matrix::Transpose(elements[0]->PRS.GetWorld())
+                ) * 100.0f
+             );
 
 			// Update base
 			Scene::Update(args);

@@ -51,7 +51,7 @@ namespace TikiEngine
 
 			particle->Velocity += windDirection;
 
-			particle->Velocity.Y = 50;// * particle->Age;
+			particle->Velocity.Y = 10;// * particle->Age;
 		}
 
 	}

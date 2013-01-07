@@ -40,6 +40,7 @@ namespace TikiEngine
 			GameObject* explosionEmitter;
 
 			PESmoke* smokeEffect;
+            PEFire* fireEffect;
 
 		};
 	}

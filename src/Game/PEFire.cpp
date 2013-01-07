@@ -8,14 +8,15 @@ namespace TikiEngine
 		PEFire::PEFire(Engine* engine)
 			: ParticleEffect(engine)
 		{
+            SParticleBudget(2000);
 			renderType = PRT_PointList;
 			releasePerSecound = 2000;
-			lifeTime = 0.5;
+			lifeTime = 1;
 
 			initialSpeed = 10;
 
-			minScale = 20;
-			maxScale = 30;
+			minScale = 5;
+			maxScale = 10;
 
 			interp.MiddlePosition = 0.1f;
 
@@ -23,7 +24,7 @@ namespace TikiEngine
 
 		void PEFire::CreateParticle(Particle* particle)
 		{
-			particle->Position = Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
+			particle->Position += Vector3(Random(-10, 10), Random(-10, 10), Random(-10, 10));
 			particle->Color = Color(1.0f, 1.0f, 1.0f, 0);
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);
@@ -41,7 +42,7 @@ namespace TikiEngine
 		void PEFire::UpdateParticle(Particle* particle)
 		{
 			particle->Color.A = interp.GetValue(particle->Age);
-			particle->Velocity.Y += 10 * (1 - particle->Age);
+			//particle->Velocity.Y += 10 * (1 - particle->Age);
 		}
 	}
 }
