@@ -59,6 +59,43 @@ namespace TikiEngine
 
 			CBFogOfWar* fow = buffer->MapT<CBFogOfWar>();
 
+#if TIKI_USE_SCENEGRAPH
+			UInt32 count = 0;
+			state->GetScene()->SceneGraph.Do([&](GameObject* go)
+			{
+				TikiBot* bot = go->GetComponent<TikiBot>();
+
+				if (bot != 0 && bot->GetFaction() == 0)
+				{
+					fow->Units[count].Position = bot->Pos();
+					fow->Units[count].Range = bot->GetSightRadius();
+					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
+					count++;
+
+					if (bot->GetSkillSys() != 0)
+					{
+						List<Skill*>& skills = bot->GetSkillSys()->GetSkills();
+
+						UInt32 i = 0;
+						while (i < skills.Count())
+						{
+							if (skills[i]->GetOnActivation() && skills[i]->GetHasAOE())
+							{
+								shader->SetTexture("SkillCrosshair", skills[i]->GetCrosshairTexture());
+
+								fow->Units[count].Position = args.Update.Input.MousePosition;
+								fow->Units[count].Range = skills[i]->GetDesc().AOERange;
+								fow->Units[count].Type = (skills[i]->GetInRange() ? 3.0f : 4.0f );
+								count++;
+							}
+
+							i++;
+						}
+					}
+				}
+
+			});
+#else
 			UInt32 i = 0;
 			UInt32 count = 0;
 			while (i < state->GetScene()->GetElements().Count() && count < 32)
@@ -96,6 +133,7 @@ namespace TikiEngine
 
 				i++;
 			}
+#endif
 
 			float size = (float)state->GetScene()->GLevel()->GetTerrain()->GSize();
 

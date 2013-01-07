@@ -84,6 +84,17 @@ namespace TikiEngine
 		this->Unlock();
 	}
 
+	void SceneGraph::DoWithinRange(Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+	{
+		if(!initialized)
+			return;
+
+		Lock();
+		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
+		dynamicGOs.DoWithinRange(rect, point, distance, whatIWant);
+		Unlock();
+	}
+
 	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
 	{
 		if(!this->initialized)
@@ -182,7 +193,7 @@ namespace TikiEngine
 			staticGOs[i]->Draw(args);
 
 		this->dynamicGOs.Draw(args);
-		this->dynamicGOs.DebugDraw(args);
+		//this->dynamicGOs.DebugDraw(args);
 	
 #endif
 	}

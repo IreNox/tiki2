@@ -88,6 +88,18 @@ namespace TikiEngine
 
 		void Rocket::InflictAoEDamage()
 		{
+#if TIKI_USE_SCENEGRAPH
+			gameState->GetScene()->SceneGraph.DoWithinRange(GetCollider()->GetCenter(), aoeRadius, [&](GameObject* go)
+			{
+				TikiBot* bot = go->GetComponent<TikiBot>();
+				if(bot != 0 && bot->GetFaction() != shooter->GetFaction())
+				{
+					bot->ReduceHealth(damage);
+					if(bot->IsDead())
+						shooter->KilledBot(bot);
+				}
+			});
+#else
 			// loop all bots and make distance check
 			for (UInt32 i = 0; i < gameState->GetScene()->GetElements().Count(); i++)
 			{
@@ -105,10 +117,22 @@ namespace TikiEngine
 					}
 				}
 			}
+#endif
 		}
 
 		void Rocket::InflictAoeHeal()
 		{
+#if TIKI_USE_SCENEGRAPH
+			gameState->GetScene()->SceneGraph.DoWithinRange(GetCollider()->GetCenter(), aoeRadius, [&](GameObject* go)
+			{
+				TikiBot* bot = go->GetComponent<TikiBot>();
+				if(bot != 0 && bot->GetFaction() != shooter->GetFaction())
+				{
+					bot->IncreaseHealth(damage);
+				}
+			});
+#else
+
 			// loop all bots and make distance check
 			for (UInt32 i = 0; i < gameState->GetScene()->GetElements().Count(); i++)
 			{
@@ -125,8 +149,7 @@ namespace TikiEngine
 					}
 				}
 			}
+#endif
 		}
-
-
 	}
 }

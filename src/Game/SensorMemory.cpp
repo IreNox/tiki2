@@ -26,6 +26,37 @@ namespace TikiEngine
 
 		void SensorMemory::UpdateVision(const UpdateArgs& args)
 		{
+
+#if TIKI_USE_SCENEGRAPH
+			owner->GetGameState()->GetScene()->SceneGraph.Do([&](GameObject* go)
+			{
+				TikiBot* curBot = go->GetComponent<TikiBot>();
+				if(!(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction()))
+					return;
+
+				MakeNewRecordIfNotAlreadyPresent(curBot);
+
+				MemoryRecord& info = memoryMap[curBot];
+
+				float dist = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange() + (float)curBot->BRadius();
+				float eps = (float)curBot->BRadius();
+				if (owner->HasLOSTo(curBot->Pos3D(), dist, eps))
+				{
+					info.Shootable = true;
+					info.TimeLastSensed = args.Time.TotalTime;
+					info.lastSensedPosition = curBot->Pos3D();
+					info.TimeLastVisible = args.Time.TotalTime;
+					info.WithinFOV = true;
+
+				}
+				else
+				{
+					info.Shootable = false;
+					info.WithinFOV = false;
+				}
+			});
+#else
+
 			UInt32 i = 0;
 			
 			while (i < owner->GetGameState()->GetScene()->GetElements().Count())
@@ -74,6 +105,7 @@ namespace TikiEngine
 				} // if(ent != 0 && curBot != owner)
 				i++;
 			} // next bot
+#endif
 		}
 
 		bool SensorMemory::IsOpponentShootable(TikiBot* opponent) const

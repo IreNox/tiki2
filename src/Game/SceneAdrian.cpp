@@ -105,19 +105,6 @@ namespace TikiEngine
 				Rectangle(10, 390, 200, 180)
 				);
 
-			List<Vector3> pos;
-
-			for(int i = 0;  i < 12; i++)
-			{
-				pos.Add(
-					Vector3::TransformCoordinate(
-					Vector3(0.5f,0,0), 
-					Matrix::CreateRotationY(i * 0.0174532925f * 360 / 12)));
-			}
-
-			for(int i = 0; i < 12; i++)
-				args.Graphics->DrawLine(pos[i%12], pos[(i+1)% 12], Color::Black);
-
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)

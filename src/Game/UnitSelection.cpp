@@ -107,106 +107,109 @@ namespace TikiEngine
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
 
+
+#if TIKI_USE_SCENEGRAPH
 			this->mouseButton = args.Input.GetMouse(MB_Left);
 			this->worldToScreen = gameState->GetScene()->GCamera()->WorldToScreen();
 
 			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleBuildSlot(go); });
 			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleTikiBot(go); });
+#else
+			UInt32 i = 0;
+			while (i < gameState->GetScene()->GetElements().Count())
+			{
+				GameObject* go = gameState->GetScene()->GetElements()[i];
+
+#pragma region SlotSelection
+				BuildSlot* slot = 0;
+				slot = go->GetComponent<BuildSlot>();
+				if(slot != 0)
+				{
+					Camera* cam = gameState->GetScene()->GCamera();
+					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+
+					Matrix vp = cam->WorldToScreen();
+					Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+
+					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
+					{
+						engine->HLog.Write("Rect-Select slot.");
+						selectedSlots.Add(go);
+						changed = true;
+					}
+
+					float eps = 15.0f;
+					if (args.Input.GetMousePressed(MB_Left))
+					{
+						if(screenPos.X <= selectionRect.X + eps && 
+							screenPos.X >= selectionRect.X - eps &&
+							screenPos.Y <= selectionRect.Y + eps && 
+							screenPos.Y >= selectionRect.Y - eps)
+						{
+							if (!selectedSlots.Contains(go))
+							{
+								engine->HLog.Write("click-Select slot.\n");
+								selectedSlots.Add(go);
+								changed = true;
+							}
+						}
+
+					}
+
+				}
+#pragma endregion
+
+#pragma region UnitSelection
+				TikiBot* ent = go->GetComponent<TikiBot>();
+				if(ent != 0)
+				{
+					// select player units only
+					if (ent->GetFaction() == 0)
+					{
+						Camera* cam = gameState->GetScene()->GCamera();
+						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
+
+						Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
+						//Matrix::Transpose(cam->GetViewMatrix()) * 
+						//Matrix::Transpose(cam->GetProjectionMatrix());
+
+						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+
+						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
+						{
+							//engine->HLog.Write("Rect-Select unit.");
+							selectedUnits.Add(go);
+							changed = true;
+						}
+
+						float eps = 15.0f;
+						if (args.Input.GetMousePressed(MB_Left))
+						{
+							if(screenPos.X <= selectionRect.X + eps && 
+								screenPos.X >= selectionRect.X - eps &&
+								screenPos.Y <= selectionRect.Y + eps && 
+								screenPos.Y >= selectionRect.Y - eps)
+							{
+								//engine->HLog.Write("click-Select unit.\n");
+								selectedUnits.Add(go);
+								changed = true;
+							}
+
+						}
+					}
+
+					// check if dead and clear from list
+					if (ent->IsDead())
+						RemoveBot(ent);
+				}
+#pragma endregion
+
+
+				i++;
+			}
+#endif
+
 			
-
-			// Check entity intersection
-			//UInt32 i = 0;
-			//while (i < gameState->GetScene()->SceneGraph.GetDefaultGOs().Count())
-			//{
-			//	GameObject* go = gameState->GetScene()->SceneGraph.GetDefaultGOs()[i];
-
-			//#pragma region SlotSelection
-			//	BuildSlot* slot = 0;
-			//	slot = go->GetComponent<BuildSlot>();
-			//	if(slot != 0)
-			//	{
-			//		Camera* cam = gameState->GetScene()->GCamera();
-			//		Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
-
-			//		Matrix vp = cam->WorldToScreen();
-			//		Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-
-			//		if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
-			//		{
-			//			engine->HLog.Write("Rect-Select slot.");
-			//			selectedSlots.Add(go);
-			//			changed = true;
-			//		}
-
-			//		float eps = 15.0f;
-			//		if (args.Input.GetMousePressed(MB_Left))
-			//		{
-			//			if(screenPos.X <= selectionRect.X + eps && 
-			//				screenPos.X >= selectionRect.X - eps &&
-			//				screenPos.Y <= selectionRect.Y + eps && 
-			//				screenPos.Y >= selectionRect.Y - eps)
-			//			{
-			//				if (!selectedSlots.Contains(go))
-			//				{
-			//					engine->HLog.Write("click-Select slot.\n");
-			//					selectedSlots.Add(go);
-			//					changed = true;
-			//				}
-			//			}
-
-			//		}
-
-			//	}
-			//#pragma endregion
-
-			//#pragma region UnitSelection
-			//	TikiBot* ent = go->GetComponent<TikiBot>();
-			//	if(ent != 0)
-			//	{
-			//		// select player units only
-			//		if (ent->GetFaction() == 0)
-			//		{
-			//			Camera* cam = gameState->GetScene()->GCamera();
-			//			Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
-
-			//			Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
-			//			//Matrix::Transpose(cam->GetViewMatrix()) * 
-			//			//Matrix::Transpose(cam->GetProjectionMatrix());
-
-			//			Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-
-			//			if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
-			//			{
-			//				//engine->HLog.Write("Rect-Select unit.");
-			//				selectedUnits.Add(go);
-			//				changed = true;
-			//			}
-
-			//			float eps = 15.0f;
-			//			if (args.Input.GetMousePressed(MB_Left))
-			//			{
-			//				if(screenPos.X <= selectionRect.X + eps && 
-			//					screenPos.X >= selectionRect.X - eps &&
-			//					screenPos.Y <= selectionRect.Y + eps && 
-			//					screenPos.Y >= selectionRect.Y - eps)
-			//				{
-			//					//engine->HLog.Write("click-Select unit.\n");
-			//					selectedUnits.Add(go);
-			//					changed = true;
-			//				}
-
-			//			}
-			//		}
-
-			//		// check if dead and clear from list
-			//		if (ent->IsDead())
-			//			RemoveBot(ent/*, i*/);
-			//	}
-			//#pragma endregion
-
-
- 		//		i++;
-			//}
 
 			if (changed)
 				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(&selectedUnits));
@@ -266,7 +269,62 @@ namespace TikiEngine
 		#pragma region Member - RemoveBot
 		void UnitSelection::RemoveBot(TikiBot* bot/*, UInt32 index*/)
 		{
-			// loop all bots, check sensor and targeting
+
+#if TIKI_USE_SCENEGRAPH
+			GameObject* tmpGO = gameState->GetScene()->RemoveElement(bot->GetGameObject());
+
+			gameState->GetScene()->SceneGraph.Do(
+				[&](GameObject* go)
+			{
+				TikiBot* ent = go->GetComponent<TikiBot>();
+				if(ent == 0)
+					return;
+
+				if(ent->EntityType() != ET_Building)
+				{
+					ent->GetSensorMem()->RemoveBotFromMemory(bot);
+
+					if (ent->GetTargetSys()->GetTarget() == bot)
+						ent->GetTargetSys()->ClearTarget();
+
+					if (ent->GetTargetSys()->GetGlobalTarget() == bot)
+						ent->GetTargetSys()->ClearGlobalTarget();
+				}
+			});
+
+
+			if (selectedUnits.Contains(tmpGO))
+			{
+				//engine->HLog.Write("Removed dead bot from selction.");
+				selectedUnits.Remove(tmpGO);
+			}
+
+			if (bot->EntityType() == ET_Tower)
+			{
+				//engine->HLog.Write("Dead tower, Adding Player BuiltSlot");
+
+				// Save old tower position
+				Vector3 towerPos = bot->GetController()->GetCenter();
+				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
+
+				// Clear old GameObject
+				bot->GetGameObject()->Release();
+
+				// Create new GameObject and BuildSlot
+				GameObject* go = new GameObject(engine);
+				gameState->GetBotFactory()->CreateBuildSlot(go);
+				go->PRS.SPosition() = towerPos;
+
+				BuildSlot* slot = go->GetComponent<BuildSlot>();
+				slot->Enable();
+			}
+			else 
+			{
+				//engine->HLog.Write("Released bot go");
+				bot->GetGameObject()->Release();
+			}
+#else
+
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetElements().Count())
 			{
@@ -323,6 +381,8 @@ namespace TikiEngine
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
 			}
+
+#endif
 
 		}
 		#pragma endregion 

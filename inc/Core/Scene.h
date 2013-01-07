@@ -24,16 +24,15 @@ namespace TikiEngine
 	class Scene : public EngineObject
 	{
 	public:
+		Scene(Engine* engine);
+		virtual ~Scene();
 
 #if TIKI_USE_SCENEGRAPH
 		SceneGraph SceneGraph;
 #endif
 
-		Scene(Engine* engine);
-		virtual ~Scene();
-
 		GameObject* AddElement(GameObject* element);
-		bool RemoveElement(GameObject* element);
+		GameObject* RemoveElement(GameObject* element);
 		/*void RemoveElementAt(UInt32 index);*/
 		inline const List<GameObject*>& GetElements() const
 		{
@@ -51,6 +50,8 @@ namespace TikiEngine
 		inline Camera* GCamera() { return mainCamera; }
 
 	protected:
+
+
 
 		bool initialized;
 

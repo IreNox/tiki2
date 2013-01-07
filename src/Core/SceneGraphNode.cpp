@@ -193,6 +193,50 @@ namespace TikiEngine
 		}
 	}
 
+	void SceneGraphNode::DoWithinRange(RectangleF& rect, Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+	{
+		for(UINT i = 0; i < data.Count(); i++)
+		{
+			GameObject* go = data[i];
+
+			if(go->GetSceneGraphElement().Bounds.Collide(rect) == Intersect)
+			{
+				if(Vector3::DistanceSquared(point, go->PRS.GPosition()) < distance * distance)
+				{
+					whatIWant(go);
+				}
+			}
+		}
+
+		if(IsSubdivided())
+		{
+			for(UINT i = 0; i < childs.Count(); i++)
+			{
+				SceneGraphNode* node = childs[i];
+
+				if(node->IsEmpty())
+					continue;
+
+				if(node->Bounds().Collide(rect) == Contain)
+				{
+					node->DoWithinRange(rect, point, distance, whatIWant);
+					break;
+				}
+
+				if(rect.Collide(node->Bounds()) == Contain)
+				{
+					node->Do(whatIWant);
+					continue;
+				}
+
+				if(node->Bounds().Collide(rect) == Intersect)
+				{
+					node->DoWithinRange(rect, point, distance, whatIWant);
+				}
+			}
+		}
+	}
+
 	void SceneGraphNode::Find(List<GameObject*>& result, Frustum& frustum)
 	{
 		GetContent(result);
@@ -247,6 +291,7 @@ namespace TikiEngine
 				childs[i]->LateUpdate(args);
 		}
 	}
+
 	void SceneGraphNode::PerformCulling(Frustum& frustum)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
@@ -260,7 +305,6 @@ namespace TikiEngine
 
 	void SceneGraphNode::Draw(const DrawArgs& args)
 	{
-
 		for(UINT i = 0; i < data.Count(); i++)
 			data[i]->Draw(args);
 
@@ -270,6 +314,7 @@ namespace TikiEngine
 				childs[i]->Draw(args);
 		}
 	}
+
 	void SceneGraphNode::DebugDraw(const DrawArgs& args)
 	{
 #if _DEBUG
@@ -298,7 +343,6 @@ namespace TikiEngine
 		}
 #endif
 	}
-
 
 	bool SceneGraphNode::UpdatePosition(GameObject* go)
 	{

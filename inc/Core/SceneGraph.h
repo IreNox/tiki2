@@ -28,6 +28,7 @@ namespace TikiEngine
 		void Draw(const DrawArgs& args);
 
 		void Do(function<void(GameObject*)> whatIWant);
+		void DoWithinRange(Vector3& point, float distance, function<void(GameObject*)> whatIWant);
 
 		void Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where = 0);
 		void Find(List<GameObject*>& result, function<bool(GameObject*)> where = 0);

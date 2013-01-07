@@ -22,6 +22,7 @@ namespace TikiEngine
 		bool Remove(GameObject* gameObject);
 
 		void Do(function<void(GameObject*)> whatIWant);
+		void DoWithinRange(RectangleF& rect, Vector3& point, float distance, function<void(GameObject*)> whatIWant);
 
 		void Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where = 0);
 		void Find(List<GameObject*>& result, RectangleF& rect, Vector3& point, float distance, function<bool(GameObject*)> where = 0);
