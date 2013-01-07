@@ -103,9 +103,15 @@ namespace TikiEngine
 				matrices.ViewInverseMatrix = Matrix::Transpose(Matrix::Invert(view));
 
 				// create frustum from view * re-transposed Proj
-				frustum.Set(
-					view * Matrix::Transpose(matrices.ProjectionMatrix)
-				);
+				//frustum.Set(
+				//	view * Matrix::Transpose(matrices.ProjectionMatrix)
+				//);
+
+				//frustum.Set(
+				//	view * Matrix::Transpose(matrices.ProjectionMatrix)
+				//	);
+
+				frustum.CreatePlanes(view * Matrix::Transpose(matrices.ProjectionMatrix));
 
 				gameObject->PRS.MarkAsClean();
 			}

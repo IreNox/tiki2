@@ -171,13 +171,13 @@ namespace TikiEngine
 		if(!this->initialized)
 			return;
 
-		for(UINT i = 0; i < defaultGOs.Count(); i++)
-			defaultGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+		//for(UINT i = 0; i < defaultGOs.Count(); i++)
+		//	defaultGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
 
 		for(UINT i = 0; i < staticGOs.Count(); i++)
 			staticGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
 
-		this->dynamicGOs.PerformCulling(frustum);
+		//this->dynamicGOs.PerformCulling(frustum);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
@@ -194,7 +194,7 @@ namespace TikiEngine
 			staticGOs[i]->Draw(args);
 
 		this->dynamicGOs.Draw(args);
-		//this->dynamicGOs.DebugDraw(args);
+		this->dynamicGOs.DebugDraw(args);
 	
 #endif
 	}

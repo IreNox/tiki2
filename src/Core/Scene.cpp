@@ -150,6 +150,7 @@ namespace TikiEngine
 #if TIKI_USE_SCENEGRAPH
 
 		SceneGraph.Draw(args);
+		mainCamera->GetFrustum().Draw(args);
 
 #else
 		for (UInt32 i = 0; i < elements.Count(); i++)

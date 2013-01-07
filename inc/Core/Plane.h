@@ -27,6 +27,7 @@ namespace TikiEngine
 		// setters
 		void Set(const Vector3& point0, const Vector3& point1, const Vector3& point2); 
 		void SetCoeff(float a, float b, float c, float d);
+		void SetParameter(float a, float b, float c, float d);
 
 
 		float SolveForX(float y, float t) const;
@@ -37,7 +38,7 @@ namespace TikiEngine
 		// accessors
 		const Vector3& Normal() const;
 		const Vector3& Point() const;
-		const float& Distance() const;
+		float Distance() const;
 
 		float Distance(const Vector3& point);
 		//float SignedDistance(const Vector3& point) const;

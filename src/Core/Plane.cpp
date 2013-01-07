@@ -98,6 +98,14 @@ namespace TikiEngine
 		distance = d/l;
 	}
 
+	void Plane::SetParameter(float a, float b, float c, float d)
+	{
+		this->normal = Vector3(a,b,c);
+		distance = d;
+		float factor = 1.0f / normal.Length();
+		normal *= factor;
+		d *= factor;
+	}
 
 	float Plane::Distance(const Vector3& point)
 	{
@@ -115,7 +123,7 @@ namespace TikiEngine
 		return(point);
 	}
 
-	const float& Plane::Distance() const
+	float Plane::Distance() const
 	{
 		return(distance);
 	}

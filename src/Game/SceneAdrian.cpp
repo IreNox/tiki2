@@ -74,6 +74,7 @@ namespace TikiEngine
 			this->AddElement(light);
 
 			go = new CameraObject(engine);
+			go->GetGameObjectType() = Dynamic;
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
