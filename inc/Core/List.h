@@ -154,12 +154,12 @@ public:
 	inline void RemoveAt(const UInt32& index)
 	{
 		if (this->IsReadOnly) return;
-		if (index >= lengthData)	return;
+		if (index >= lengthData) return;
 
 		UInt32 i = index;
-		while (i < lengthData)
+		while (i < lengthData - 1)
 		{
-			T value = data[i];
+			T value = data[i + 1];
 			data[i] = value;
 
 			i++;
