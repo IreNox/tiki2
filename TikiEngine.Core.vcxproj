@@ -144,6 +144,7 @@
     <ClInclude Include="inc\Core\SyncBarrier.h" />
     <ClInclude Include="inc\Core\Thread.h" />
     <ClInclude Include="inc\Core\TikiEnum.h" />
+    <ClInclude Include="inc\Core\TikiIOContext.h" />
     <ClInclude Include="inc\Core\TikiReflect.h" />
     <ClInclude Include="inc\Core\TikiTimer.h" />
     <ClInclude Include="inc\Core\TikiType.h" />

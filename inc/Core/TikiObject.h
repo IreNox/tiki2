@@ -6,10 +6,6 @@ class TikiObject
 {
 public:
 
-#if _DEBUG
-	static List<void*> WatchPointer;
-#endif
-
 	TikiObject();
 	virtual ~TikiObject();
 

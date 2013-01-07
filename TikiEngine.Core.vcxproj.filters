@@ -670,5 +670,8 @@
     <ClInclude Include="inc\Core\CameraObject.h">
       <Filter>Headerdateien\Engine\GameObjects</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\TikiIOContext.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

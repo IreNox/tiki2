@@ -35,18 +35,6 @@ namespace TikiEngine
 			UInt32 AnimationArrayId;
 		};
 
-		struct BinaryPart
-		{
-			UInt32 Id;
-
-			PartType Type;
-			PartType ArrayOf;
-			UInt32 ArrayCount;
-
-			UInt32 Start;
-			UInt32 Length;
-		};
-
 		struct BinaryTikiAnimation
 		{
 			UInt32 NameId;

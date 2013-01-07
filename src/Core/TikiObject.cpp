@@ -16,10 +16,6 @@ TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCD;
 
 #define TIKIOUT(str) OutputDebugStringA(str);
 
-#if _DEBUG
-List<void*> TikiObject::WatchPointer = List<void*>();
-#endif
-
 TikiObject::TikiObject()
 	: refCount(0)
 {	
@@ -46,13 +42,6 @@ Int32 TikiObject::AddRef()
 		return -1;
 	}
 
-	//if (TikiObject::WatchPointer.Contains(this))
-	//{
-	//	std::ostringstream s;
-	//	s << "AddRef: " << this << " to " << refCount;
-	//	TIKIOUT(s.str().c_str());
-	//}
-
 	return refCount;
 #else
 	return ++refCount;
@@ -75,13 +64,6 @@ Int32 TikiObject::Release()
 		TIKIOUT( "Release wrong Pointer.");
 		return -1;
 	}
-
-	//if (TikiObject::WatchPointer.Contains(this))
-	//{
-	//	std::ostringstream s;
-	//	s << "Release: " << this << " to " << refCount;
-	//	TIKIOUT(s.str().c_str());
-	//}
 #endif
 
 	if (refCount < 1)

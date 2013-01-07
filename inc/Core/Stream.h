@@ -1,12 +1,13 @@
 #pragma once
 
 #include "Core/TypeDef.h"
+#include "Core/TikiObject.h"
 
 namespace TikiEngine
 {
 	namespace IO
 	{
-		class Stream
+		class Stream : public TikiObject
 		{
 		public:
 

@@ -19,7 +19,7 @@ namespace TikiEditor.Objects
         #region Member
         public void LoadFromFile(string fileName)
         {
-            _name = fileName.Replace(GI.DataPath, "");
+            _name = fileName.Replace(GI.DataPath, "").Substring(1);
             _data = File.ReadAllBytes(fileName);
         }
         #endregion

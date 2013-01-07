@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="inc\ContentManager\ContentManagerModule.h" />
     <ClInclude Include="inc\ContentManager\DllMain.h" />
+    <ClInclude Include="inc\ContentManager\ResourceBinaryData.h" />
     <ClInclude Include="inc\ContentManager\ResourceInfo.h" />
   </ItemGroup>
   <ItemGroup>

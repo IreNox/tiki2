@@ -21,30 +21,34 @@ namespace TikiEditor
         private void _threadWork()
         {
             _threadWorkDir(GI.DataPath, null);
+
+
         }
 
         private void _threadWorkDir(string dir, TreeNode node)
         {
-            if (node == null)
+            if (node != null)
+            {
+                foreach (string file in Directory.GetFiles(dir))
+                {
+                    ResData res = new ResData();
+                    res.LoadFromFile(file);
+
+                    _threadAddNode(file, node);
+
+                    GI.DB.Insert(res);
+                }
+            }
+            else
             {
                 node = _threadAddNode(dir, null);
-            }
-
-            foreach (string file in Directory.GetFiles(dir))
-            {
-                ResData res = new ResData();
-                res.LoadFromFile(file);
-
-                _threadAddNode(file, node);
-
-                GI.DB.Insert(res);
             }
 
             foreach (string dir2 in Directory.GetDirectories(dir))
             {
                 _threadWorkDir(
                     dir2,
-                    _threadAddNode(dir, node)
+                    _threadAddNode(dir2, node)
                 );
             }
         }
@@ -56,9 +60,34 @@ namespace TikiEditor
                 return (TreeNode)treeView1.Invoke(new Func<string, TreeNode, TreeNode>(_threadAddNode), fileName, parent);
             }
 
-            return parent.Nodes.Add(
-                Path.GetFileNameWithoutExtension(fileName)
-            );
+            TreeNode node;
+
+            if (parent == null)
+            {
+                node = treeView1.Nodes.Add(
+                    Path.GetFileNameWithoutExtension(fileName)
+                );
+            }
+            else
+            {
+                node = parent.Nodes.Add(
+                    Path.GetFileNameWithoutExtension(fileName)
+                );
+            }
+
+            treeView1.ExpandAll();
+            return node;
+        }
+
+        private void _threadFinish()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke(new Action(_threadFinish));
+                return;
+            }
+
+            MessageBox.Show(this, "Resource Convert finish!", "TikiEditor 2.0", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         #endregion
 

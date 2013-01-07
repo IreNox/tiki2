@@ -102,6 +102,9 @@ namespace Database.GDB
                     case "DateTime":
                         str = ((DateTime)value).ToString("s");
                         break;
+                    case "Byte[]":
+                        str = BitConverter.ToString((byte[])value).Replace("-", "");
+                        break;
                     default:
                         str = value.ToString();
                         break;
