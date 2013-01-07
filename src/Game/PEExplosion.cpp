@@ -13,7 +13,7 @@ namespace TikiEngine
 			releasePerSecound = 100000;
 			lifeTime = 0.6;
 
-			minInitialSpeed = 300;
+			minInitialSpeed = 200;
 			maxInitialSpeed = 600;
 
 			minScale = 2;
@@ -35,7 +35,7 @@ namespace TikiEngine
 
 		void PEExplosion::CreateParticle(Particle* particle)
 		{
-			particle->Position = Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
+			particle->Position += Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
 			particle->Color = Color::White;
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);
@@ -57,7 +57,6 @@ namespace TikiEngine
 		{
 			particle->Color.A = 1 - particle->Age;
 			particle->Velocity *=  (1-particle->Age)* 1.25;
-           // particle->Velocity.Y = 0;
             particle->Velocity.Y -= 25.0f;
 		}
 

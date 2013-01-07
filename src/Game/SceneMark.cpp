@@ -104,13 +104,14 @@ namespace TikiEngine
 
 			// Explosion
 			explosionEmitter = new GameObject(engine);
-			explosionEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
+			explosionEmitter->PRS.SPosition() = Vector3(0, 0, 0);
 			explosionEmitter->PRS.SScale() = Vector3(0.01f);
-			auto explosion = new PEExplosion(engine);
+			expEffect = new PEExplosion(engine);
+            expEffect->SIsAlive(false);
 
 			IParticleRenderer* explosionPR = engine->librarys->CreateComponent<IParticleRenderer>(explosionEmitter);
 			explosionPR->SetTexture(engine->content->LoadTexture(L"particle/fire")); // fix: explosion looks too crappy
-			explosionPR->SetParticleEffect(explosion);
+			explosionPR->SetParticleEffect(expEffect);
 			this->AddElement(explosionEmitter);
 
 			Scene::Initialize(args);
@@ -147,14 +148,16 @@ namespace TikiEngine
 				3.15149f
 			);
 
-			smokeEffect->Trigger(
-				(UInt32)(200 * args.Time.ElapsedTime),
-				//Vector3(0,5,0)
-				Vector3::TransformCoordinate(
-					Vector3(0.8f, 0, 0),
-					Matrix::Transpose(elements[0]->PRS.GetWorld())
-				) * 100.0f
-			);
+
+            if (args.Input.GetKeyPressed(KEY_SPACE))
+                expEffect->Trigger(
+                    (UInt32)(500),
+                    Vector3::TransformCoordinate(
+                    Vector3(-0.8f, 0, 0),
+                    Matrix::Transpose(elements[0]->PRS.GetWorld())
+                    ) * 100.0f
+                );
+
 
             fireEffect->Trigger(
                 (UInt32)(200 * args.Time.ElapsedTime),
@@ -163,7 +166,17 @@ namespace TikiEngine
                 Vector3(0.8f, 0, 0),
                 Matrix::Transpose(elements[0]->PRS.GetWorld())
                 ) * 100.0f
-             );
+                );
+
+
+			smokeEffect->Trigger(
+				(UInt32)(200 * args.Time.ElapsedTime),
+				//Vector3(0,5,0)
+				Vector3::TransformCoordinate(
+					Vector3(0.8f, 0, 0),
+					Matrix::Transpose(elements[0]->PRS.GetWorld())
+				) * 100.0f
+			);
 
 			// Update base
 			Scene::Update(args);

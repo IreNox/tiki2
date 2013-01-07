@@ -41,6 +41,7 @@ namespace TikiEngine
 
 			PESmoke* smokeEffect;
             PEFire* fireEffect;
+            PEExplosion* expEffect;
 
 		};
 	}

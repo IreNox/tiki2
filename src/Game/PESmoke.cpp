@@ -10,8 +10,8 @@ namespace TikiEngine
 		{
 			SParticleBudget(2000);
 			renderType = PRT_PointList;
-			releasePerSecound = 100;
-			lifeTime = 10;
+			releasePerSecound = 400;
+			lifeTime = 5;
 
 			initialSpeed = 20;
 
@@ -43,15 +43,9 @@ namespace TikiEngine
 		void PESmoke::UpdateParticle(Particle* particle)
 		{
 			particle->Color.A = interp.GetValue(particle->Age); //particle->Color.A = 1 - particle->Age;
-			particle->Rotation = Random(0, 0.1f);
-
-			// fake some gravity
-			//particle->Velocity.X = 0;
-			//particle->Velocity.Z = 0;
 
 			particle->Velocity += windDirection;
-
-			particle->Velocity.Y = 10;// * particle->Age;
+			particle->Velocity.Y = 2;// * particle->Age;
 		}
 
 	}
