@@ -9,8 +9,7 @@
 
 namespace TikiEngine
 {
-
-
+#if TIKI_USE_SCENEGRAPH
 	class SceneGraph
 	{
 	public:
@@ -56,4 +55,5 @@ namespace TikiEngine
 		bool locked;
 		List<GameObject*> removeList;
 	};
+#endif
 }

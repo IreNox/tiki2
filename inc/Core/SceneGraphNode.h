@@ -9,6 +9,7 @@
 
 namespace TikiEngine
 {
+#if TIKI_USE_SCENEGRAPH
 	class SceneGraphNode
 	{
 	public:
@@ -69,4 +70,5 @@ namespace TikiEngine
 		SceneGraphNode* parent;
 		List<SceneGraphNode*> childs;
 	};
+#endif
 }

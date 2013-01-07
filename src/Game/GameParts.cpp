@@ -73,7 +73,6 @@ namespace TikiEngine
 			if (enemy)
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->GetGameObjectType() = Dynamic;
 				go->PRS.SPosition() = pos;
 				gameState->GetBotFactory()->CreateEnemy1(go, this->WayPoints);
 			}
@@ -81,7 +80,6 @@ namespace TikiEngine
 			if (player)
 			{
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->GetGameObjectType() = Dynamic;
 				go->PRS.SPosition() = gameState->GetBotFactory()->GetPos(playerPos, 3);
 				gameState->GetBotFactory()->CreatePlayerMop(go, pos);
 			}

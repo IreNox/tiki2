@@ -3,6 +3,7 @@
 
 namespace TikiEngine
 {
+#if TIKI_USE_SCENEGRAPH
 	SceneGraph::SceneGraph()
 		:initialized(false), locked(false)
 	{
@@ -208,4 +209,5 @@ namespace TikiEngine
 			removeList.Clear();
 		}
 	}
+#endif
 }

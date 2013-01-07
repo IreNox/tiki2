@@ -102,17 +102,18 @@
     <Compile Include="Editor\Form\ucDesignModel.Designer.cs">
       <DependentUpon>ucDesignModel.cs</DependentUpon>
     </Compile>
-    <Compile Include="Editor\Form\ucDesignTest.cs">
+    <Compile Include="Editor\Form\ucDesignRes.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Editor\Form\ucDesignTest.Designer.cs">
-      <DependentUpon>ucDesignTest.cs</DependentUpon>
+    <Compile Include="Editor\Form\ucDesignRes.Designer.cs">
+      <DependentUpon>ucDesignRes.cs</DependentUpon>
     </Compile>
     <Compile Include="Editor\ModeGUI.cs" />
     <Compile Include="Editor\ModeModel.cs" />
-    <Compile Include="Editor\ModeTest.cs" />
+    <Compile Include="Editor\ModeRes.cs" />
     <Compile Include="Editor\Objects\GUI\GUIRect.cs" />
     <Compile Include="Editor\Objects\Level\LevelPoint.cs" />
+    <Compile Include="Editor\Objects\Res\ResData.cs" />
     <Compile Include="Engine\EditorMode.cs" />
     <Compile Include="Editor\ModeLevel.cs" />
     <Compile Include="Engine\CameraComponent.cs" />
@@ -235,8 +236,8 @@
     <EmbeddedResource Include="Editor\Form\ucDesignModel.resx">
       <DependentUpon>ucDesignModel.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Editor\Form\ucDesignTest.resx">
-      <DependentUpon>ucDesignTest.cs</DependentUpon>
+    <EmbeddedResource Include="Editor\Form\ucDesignRes.resx">
+      <DependentUpon>ucDesignRes.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Engine\Form\formMain.resx">
       <DependentUpon>formMain.cs</DependentUpon>

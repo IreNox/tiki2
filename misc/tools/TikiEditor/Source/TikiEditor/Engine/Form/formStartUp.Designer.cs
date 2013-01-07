@@ -66,7 +66,7 @@
             this.buttonTest.Name = "buttonTest";
             this.buttonTest.Size = new System.Drawing.Size(237, 36);
             this.buttonTest.TabIndex = 2;
-            this.buttonTest.Text = "Test Area";
+            this.buttonTest.Text = "Resource Converter";
             this.buttonTest.UseVisualStyleBackColor = true;
             this.buttonTest.Click += new System.EventHandler(this.buttonTest_Click);
             // 

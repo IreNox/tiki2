@@ -19,7 +19,7 @@ namespace TikiEditor
         private static EditorMode _mode;
 
         private static ModeGUI _modeGUI;
-        private static ModeTest _modeTest;
+        private static ModeRes _modeRes;
         private static ModeLevel _modeLevel;
         private static ModeModel _modeModel;
 
@@ -125,10 +125,10 @@ namespace TikiEditor
             set { _mode = _modeGUI = value; }
         }
 
-        public static ModeTest ModeTest
+        public static ModeRes ModeRes
         {
-            get { return _modeTest; }
-            set { _mode = _modeTest = value; }
+            get { return _modeRes; }
+            set { _mode = _modeRes = value; }
         }
 
         public static ModeLevel ModeLevel

@@ -1,20 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 using Database.GDB;
 using Microsoft.Xna.Framework;
 
 namespace TikiEditor.Objects
 {
     [DataTable("tiki_res")]
-    public class GUIRect : DataBaseObject
+    public class ResData : DataBaseObject
     {
         #region Vars
         private string _name;
         private byte[] _data;
+        #endregion    
+
+        #region Member
+        public void LoadFromFile(string fileName)
+        {
+            _name = fileName.Replace(GI.DataPath, "");
+            _data = File.ReadAllBytes(fileName);
+        }
         #endregion
-               
 
         #region Properties
         [DataField("Name")]

@@ -47,7 +47,6 @@ namespace TikiEngine
 		{
 #if TIKI_USE_SCENEGRAPH
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
-#endif
 
 			GameObject* go = new GameObject(engine);
 			go->GetGameObjectType() = Dynamic;
@@ -84,6 +83,7 @@ namespace TikiEngine
 			//go->Release();
 
 			Scene::Initialize(args);
+#endif
 		}
 
 		void SceneAdrian::Draw(const DrawArgs& args)

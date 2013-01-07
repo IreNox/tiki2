@@ -45,7 +45,7 @@ namespace TikiEditor
 
         private void buttonTest_Click(object sender, EventArgs e)
         {
-            GI.ModeTest = new ModeTest(GI.Game);
+            GI.ModeRes = new ModeRes(GI.Game);
             closeThis();
         }
 

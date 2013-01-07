@@ -314,59 +314,65 @@ namespace TikiEngine
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 1: // player
-				this->GetGameObjectType() = Dynamic;
 				gameState->GetBotFactory()->CreatePlayerMop(this, Vector3::Zero);
 				break;
 			case 2: // enemy
-				this->GetGameObjectType() = Dynamic;
 				gameState->GetBotFactory()->CreateEnemy1(this, List<Vector2>());
 				break;
 			case 3: // Hero
-				this->GetGameObjectType() = Dynamic;
 				gameState->GetBotFactory()->CreatePlayerHero(this);
 				gameState->GetPart<PlayerBase>(assignment)->Hero = this;
 				break;
 			case 4:
-				this->GetGameObjectType() = Static;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				this->SModel(engine->content->LoadModel(L"building03_05"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 5:
-				this->GetGameObjectType() = Static;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				this->SModel(engine->content->LoadModel(L"env_pipe_01"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 6:
-				this->GetGameObjectType() = Static;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				this->SModel(engine->content->LoadModel(L"rock_01"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 7:
-				this->GetGameObjectType() = Static;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				this->SModel(engine->content->LoadModel(L"rock_02"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 8:
-				this->GetGameObjectType() = Static;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				this->SModel(engine->content->LoadModel(L"rock_03"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 9: // Tower Build slot
-				this->GetGameObjectType() = Dynamic;
+#if TIKI_USE_SCENEGRAPH
+				this->GetGameObjectType() = GOT_Static;
+#endif
 				gameState->GetBotFactory()->CreateBuildSlot(this);
 				break;
 			case 10:
-				this->GetGameObjectType() = Dynamic;
 				gameState->GetBotFactory()->CreateEnemyBuilding(this);
 				gameState->GetPart<EnemyBase>(assignment)->GateControl = this;
 				break;
 			case 11:
-				this->GetGameObjectType() = Dynamic;
 				gameState->GetBotFactory()->CreatePlayerBuilding(this);
 				gameState->GetPart<PlayerBase>(assignment)->MainBuilding = this;
 				break;
 			case 12:
-				this->GetGameObjectType() = Dynamic;
 				this->SModel(engine->content->LoadModel(L"tower_mg"));
 				gameState->GetBotFactory()->CreateEnemyTower(this);
 				break;

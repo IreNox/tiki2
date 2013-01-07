@@ -18,12 +18,14 @@ namespace TikiEngine
 	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
 
+#if TIKI_USE_SCENEGRAPH
 	enum GameObjectType
 	{
-		Default,
-		Static,
-		Dynamic
+		GOT_Default,
+		GOT_Static,
+		GOT_Dynamic
 	};
+#endif
 
 	class GameObject : public EngineObject
 	{
@@ -97,8 +99,10 @@ namespace TikiEngine
 		inline void* GetUserData() { return userData; }
 		inline void SetUserData(void* ud) { userData = ud; }
 
+#if TIKI_USE_SCENEGRAPH
 		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
 		inline GameObjectType& GetGameObjectType() { return this->objectType; }
+#endif
 
 	protected:
 
@@ -113,8 +117,10 @@ namespace TikiEngine
 		
 		List<GameObject*> childs;
 
+#if TIKI_USE_SCENEGRAPH
 		SceneGraphElement sgElement;
 		GameObjectType objectType;
+#endif
 
 	};
 }
