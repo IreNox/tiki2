@@ -37,6 +37,7 @@ namespace TikiEngine
 		{
 			playerBase = gameState->GetPart<PlayerBase>(0);
 			playerBase->Init();
+            playerBase->Hero->AddRef();
 
 			enemyBases.Clear();
 			gameState->GetParts<EnemyBase>(enemyBases);
@@ -72,37 +73,6 @@ namespace TikiEngine
 				if (enemySpawnLeft > 0) enemySpawnLeft--;
 				if (playerSpawnLeft > 0) playerSpawnLeft--;
 			}
-
-#if _DEBUG
-			//if (args.Input.GetKeyPressed(KEY_F5))
-			//{
-			//	GameObject* go = new GameObject(gameState->GetEngine());
-			//	go->PRS.SPosition() = GetPos(spawnPoints[0], 3);
-			//	CreateEnemy1(go);
-			//}
-
-			//if (args.Input.GetKeyPressed(KEY_F6))
-			//{
-			//	GameObject* go = new GameObject(gameState->GetEngine());
-			//	go->PRS.SPosition() = getPos(Vector2(100, 100));
-			//	CreateEnemyTower(go);
-			//}
-
-			//if (args.Input.GetKeyPressed(KEY_F7))
-			//{
-			//	GameObject* go = new GameObject(gameState->GetEngine());
-			//	go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
-			//	CreatePlayerHero(go);
-			//}
-
-
-			//if (args.Input.GetKeyPressed(KEY_F8))
-			//{
-			//	GameObject* go = new GameObject(gameState->GetEngine());
-			//	go->PRS.SPosition() = GetPos(Vector2(10, 10), 3);
-			//	CreatePlayerMop(go, spawnPoints[0]);
-			//}
-#endif
 		}
 		#pragma endregion
 

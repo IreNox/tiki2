@@ -50,13 +50,10 @@ namespace TikiEngine
 
 		}
 
-
-
-
 		void PEExplosion::UpdateParticle(Particle* particle)
 		{
 			particle->Color.A = 1 - particle->Age;
-			particle->Velocity *=  (1-particle->Age)* 1.25;
+			particle->Velocity *=  (1-particle->Age) * 1.25f;
             particle->Velocity.Y -= 25.0f;
 		}
 

@@ -10,6 +10,8 @@
 #include "Game/TikiBotFactory.h"
 
 #include "Game/GD.h"
+#include "Game/SceneLevel.h"
+#include "Game/GoalThink.h"
 
 namespace TikiEngine
 {
@@ -105,7 +107,7 @@ namespace TikiEngine
 			}
 #endif
 
-			heroStartPos = Hero->PRS.GPosition();
+			heroStartPos = Hero->PRS.GPosition() + Vector3(0, 0.2f, 0);
 
 			this->Hero->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
 			this->MainBuilding->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
@@ -113,10 +115,17 @@ namespace TikiEngine
 
 		void PlayerBase::Update(const UpdateArgs& args)
 		{
+            if (args.Input.GetKey(KEY_SPACE))
+                Hero->GetComponent<TikiBot>()->ReduceHealth(1000);
+
 			if (heroDead && heroDeadTimer.IsReady(args.Time))
 			{
-				Hero->GetComponent<TikiBot>()->Teleport(heroStartPos);
-				//TODO: Hero->EnableTikiBot();
+                TikiBot* hero = Hero->GetComponent<TikiBot>();
+                hero->GetBrain()->RemoveAllSubgoals();
+				hero->Teleport(heroStartPos);
+                hero->SetAlive();
+                hero->RestoreHealthToMaximum();
+				gameState->GetScene()->AddElement(Hero);
 				heroDead = false;
 			}
 		}

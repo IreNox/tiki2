@@ -43,11 +43,13 @@ namespace TikiEngine
 			}
 		};
 
+        enum ProjectileType {PT_Bullet, PT_Rocket };
 
 		class Projectile : public MovingEntity, public TriggerEnterEventHandler
 		{
 
 		public:
+            
 			Projectile(GameState* gameState, GameObject* gameObject);
 			virtual ~Projectile();
 
@@ -71,6 +73,8 @@ namespace TikiEngine
 			// may be exploding outwards from the point of impact for example)
 			bool HasImpacted() const { return impacted; }
 
+           void SetProjectileType(ProjectileType pType);
+           ProjectileType GetProjectileType();
 
 		protected:
 
@@ -87,6 +91,8 @@ namespace TikiEngine
 			double timeOfLife;
 			
 			ISphereCollider* sphere;
+
+            ProjectileType projectileType;
 
 			void Init(ProjectileDescription desc);
 

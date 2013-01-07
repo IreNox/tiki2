@@ -137,6 +137,8 @@ namespace TikiEngine
 			projectiles->Update(args);
 			unitSelection->Update(args);
 
+            FOREACH_PTR_CALL(gameParts, Update(args))
+
 			#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;

@@ -13,6 +13,7 @@ namespace TikiEngine
 		{
 			aoeRadius = 20.0f;
 			heal = false;
+            projectileType = PT_Rocket;
 		}
 
 		Rocket::~Rocket()

@@ -55,6 +55,18 @@ namespace TikiEngine
 
   		}
 
+        void Projectile::SetProjectileType(ProjectileType pType)
+        {
+            projectileType = pType;
+        }
+
+
+        ProjectileType Projectile::GetProjectileType()
+        {
+            return projectileType;
+        }
+
+
 		void Projectile::Update(const UpdateArgs& args)
 		{
 			// remove if older than lifeTime

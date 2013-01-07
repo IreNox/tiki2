@@ -9,6 +9,7 @@ namespace TikiEngine
         Bullet::Bullet(GameState* gameState, GameObject* gameObject)
             : Projectile(gameState, gameObject)
         {
+            projectileType = PT_Bullet;
         }
 
         Bullet::~Bullet()

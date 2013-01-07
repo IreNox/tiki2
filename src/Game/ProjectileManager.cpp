@@ -19,6 +19,26 @@ namespace TikiEngine
 			prAssault->SetParticleEffect(peAssault);
 			prAssault->SetTexture(engine->content->LoadTexture(L"particle/mg"));
 			prAssault->AddRef();
+
+            // Fire
+            peFire = new PEFire(engine);
+            peFire->SIsAlive(false);
+            peFire->AddRef();
+
+            prFire = engine->librarys->CreateComponent<IParticleRenderer>(this);
+            prFire->SetTexture(engine->content->LoadTexture(L"particle/fire"));
+            prFire->SetParticleEffect(peFire);
+            prFire->AddRef();
+
+            bool test = true;
+            // Smoke
+//             smokeEmitter = new GameObject(engine);
+//             smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
+//             smokeEmitter->PRS.SScale() = Vector3(0.01f);
+// 
+//             smokeEffect = new PESmoke(engine);
+//             smokeEffect->SIsAlive(false);
+
 		}
 
 		ProjectileManager::~ProjectileManager()
@@ -32,6 +52,9 @@ namespace TikiEngine
 
 			SafeRelease(&peAssault);
 			SafeRelease(&prAssault);
+
+            //SafeRelease(&peFire);
+            //SafeRelease(&prFire);
 		}
 		#pragma endregion
 
@@ -40,7 +63,16 @@ namespace TikiEngine
 		{
 			ProjInfo i;
 			i.proj = proj;
-			peAssault->Allocate(&i.p1, &i.p2);
+
+            if (proj->GetProjectileType() == PT_Bullet)
+            {
+                peAssault->Allocate(&i.p1, &i.p2);
+            }
+            else if (proj->GetProjectileType() == PT_Rocket)
+            {
+                i.p1 = 0;
+                i.p2 = 0;
+            }
 
 			projectiles.Add(i);
 		}
@@ -54,21 +86,44 @@ namespace TikiEngine
 			{
 				ProjInfo& pi = projectiles[i];
 
-				pi.proj->Update(args);
+                pi.proj->Update(args);
 
 				if (pi.proj->IsDead())
 				{
-					pi.p1->Position = Vector3::Zero;
-					pi.p2->Position = Vector3::Zero;
+                    if (pi.proj->GetProjectileType() == PT_Bullet)
+                    {
+                        pi.p1->Position = Vector3::Zero;
+                        pi.p2->Position = Vector3::Zero;
+                    }
+                    else if (pi.proj->GetProjectileType() == PT_Rocket)
+                    {
+                        // explosion
+                    }
+
 					pi.proj->GetGameObject()->Release();
 					projectiles.RemoveAt(i);
 				}
 				else
 				{
-					Vector3 pos = pi.proj->GetCollider()->GetCenter();
-					Vector3 velo = Vector3::Normalize(pi.proj->GetCollider()->GetRigidBody()->GetVelocity()) * 1.75f;
-					pi.p1->Position = pos - velo;
-					pi.p2->Position = pos + velo;
+                    if (pi.proj->GetProjectileType() == PT_Bullet)
+                    {
+                        Vector3 pos = pi.proj->GetCollider()->GetCenter();
+                        Vector3 velo = Vector3::Normalize(pi.proj->GetCollider()->GetRigidBody()->GetVelocity()) * 1.75f;
+                        pi.p1->Position = pos - velo;
+                        pi.p2->Position = pos + velo;
+                    }
+                    else if (pi.proj->GetProjectileType() == PT_Rocket)
+                    {
+                        // Fire
+//                         peFire->Trigger(
+//                             (UInt32)(200 * args.Time.ElapsedTime),
+//                             Vector3::TransformCoordinate( 
+//                             Vector3(0.8f, 0, 0),
+//                             Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+//                             ) * 100.0f
+//                        );
+
+                    }
 
 					i++;
 				}
