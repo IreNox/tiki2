@@ -10,15 +10,15 @@ namespace TikiEngine
 		{
 			SParticleBudget(2000);
 			renderType = PRT_PointList;
-			releasePerSecound = 400;
-			lifeTime = 5;
+			releasePerSecound = 1000;
+			lifeTime = 2;
 
-			initialSpeed = 20;
+			initialSpeed = 0.1f;
 
-			minScale = 1;
-			maxScale = 3;
+			minScale = 0.5f;
+			maxScale = 1.0f;
 
-			interp.MiddlePosition = 0.5f;
+			interp.MiddlePosition = 0.3f;
 
 			windDirection = Vector3(0.1f, 0, 0);
 		}
@@ -26,7 +26,7 @@ namespace TikiEngine
 
 		void PESmoke::CreateParticle(Particle* particle)
 		{
-			particle->Position += Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
+			particle->Position += Vector3(Random(-0.1f, 0.1f), Random(-0.1f, 0.1f), Random(-0.1f, 0.1f));
 			particle->Color = Color(1.0f, 1.0f, 1.0f, 0);
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);
@@ -44,8 +44,8 @@ namespace TikiEngine
 		{
 			particle->Color.A = interp.GetValue(particle->Age); //particle->Color.A = 1 - particle->Age;
 
-			particle->Velocity += windDirection;
-			particle->Velocity.Y = 2;// * particle->Age;
+			//particle->Velocity += windDirection;
+			//particle->Velocity.Y = 2;// * particle->Age;
 		}
 
 	}

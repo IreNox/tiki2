@@ -10,13 +10,13 @@ namespace TikiEngine
 		{
             SParticleBudget(2000);
 			renderType = PRT_PointList;
-			releasePerSecound = 2000;
-			lifeTime = 1;
+			releasePerSecound = 4000;
+			lifeTime = 0.5;
 
-			initialSpeed = 10;
+			initialSpeed = 2;
 
-			minScale = 5;
-			maxScale = 10;
+			minScale = 1;
+			maxScale = 3;
 
 			interp.MiddlePosition = 0.1f;
 
@@ -24,7 +24,8 @@ namespace TikiEngine
 
 		void PEFire::CreateParticle(Particle* particle)
 		{
-			particle->Position += Vector3(Random(-10, 10), Random(-10, 10), Random(-10, 10));
+
+			//particle->Position += Vector3(Random(-0.2f, 0.2f), Random(-0.2f, 0.2f), Random(-0.2f, 0.2f));
 			particle->Color = Color(1.0f, 1.0f, 1.0f, 0);
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);

@@ -38,10 +38,10 @@ namespace TikiEngine
             PEFire* peFire;
             IParticleRenderer* prFire;
 
-			PEFire* peSmoke;
+			PESmoke* peSmoke;
 			IParticleRenderer* prSmoke;
 
-			PEFire* peExplosion;
+			PEExplosion* peExplosion;
 			IParticleRenderer* prExplosion;
 
 			struct ProjInfo

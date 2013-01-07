@@ -78,7 +78,7 @@ namespace TikiEngine
             // Fire
             fireEmitter = new GameObject(engine);
             fireEmitter->PRS.SPosition() = Vector3(0, 0, 0);
-            fireEmitter->PRS.SScale() = Vector3(0.01f);
+            //fireEmitter->PRS.SScale() = Vector3(0.01f);
 
             fireEffect = new PEFire(engine);
             fireEffect->SIsAlive(false);

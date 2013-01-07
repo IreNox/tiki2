@@ -35,7 +35,7 @@ namespace TikiEngine
 		inline void MarkAsSGClean() { isSGDirty = false; }
 
 		void FillWorldMatrix(Matrix* worldMatrix);
-		inline const Matrix& GetWorld() { return totalWorld; }
+		inline const Matrix& GetWorld() { checkWorldMatrix(); return totalWorld; }
 
 	private:
 

@@ -38,6 +38,8 @@ namespace TikiEngine
 			desc.Heading = owner->Heading();
 			desc.Damage = SkillRocketDamage[currentLevel - 1]; 
 			desc.LifeTime = 10.0f;
+            desc.MaxSpeed = 70.0f;
+            desc.Mass = 1.0f;
 
 			GameObject* go = new GameObject(engine);
 			Rocket* proj = new Rocket(gameState, go);

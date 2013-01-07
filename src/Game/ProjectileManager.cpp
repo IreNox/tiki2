@@ -12,6 +12,7 @@ namespace TikiEngine
 		ProjectileManager::ProjectileManager(GameState* state)
 			: GameObject(state->GetEngine()), gameState(state)
 		{
+            // assault
 			peAssault = new PEShootMG(engine);
 			peAssault->AddRef();
 
@@ -31,12 +32,24 @@ namespace TikiEngine
             prFire->AddRef();
 
             // Smoke
-//             smokeEmitter = new GameObject(engine);
-//             smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
-//             smokeEmitter->PRS.SScale() = Vector3(0.01f);
-// 
-//             smokeEffect = new PESmoke(engine);
-//             smokeEffect->SIsAlive(false);
+            peSmoke = new PESmoke(engine);
+            peSmoke->SIsAlive(false);
+            peSmoke->AddRef();
+
+            prSmoke = engine->librarys->CreateComponent<IParticleRenderer>(this);
+            prSmoke->SetTexture(engine->content->LoadTexture(L"particle/smoke"));
+            prSmoke->SetParticleEffect(peSmoke);
+            prSmoke->AddRef();
+
+            // explosion
+            peExplosion = new PEExplosion(engine);
+            peExplosion->SIsAlive(false);
+            peExplosion->AddRef();
+
+            prExplosion = engine->librarys->CreateComponent<IParticleRenderer>(this);
+            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/fire")); // fix: explosion looks too crappy
+            prExplosion->SetParticleEffect(peExplosion);
+            prExplosion->AddRef();
 
 		}
 
@@ -54,6 +67,13 @@ namespace TikiEngine
 
             SafeRelease(&peFire);
             SafeRelease(&prFire);
+
+            SafeRelease(&peSmoke);
+            SafeRelease(&prSmoke);
+
+            SafeRelease(&peExplosion);
+            SafeRelease(&prExplosion);
+
 		}
 		#pragma endregion
 
@@ -85,7 +105,8 @@ namespace TikiEngine
 			{
 				ProjInfo& pi = projectiles[i];
 
-                pi.proj->Update(args);
+                //pi.proj->Update(args);
+                pi.proj->GetGameObject()->Update(args);
 
 				if (pi.proj->IsDead())
 				{
@@ -97,6 +118,13 @@ namespace TikiEngine
                     else if (pi.proj->GetProjectileType() == PT_Rocket)
                     {
                         // explosion
+                        peExplosion->Trigger(
+                            peExplosion->GParticleBudget(),
+                            Vector3::TransformCoordinate(
+                            Vector3(0, 0, 0),
+                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            )
+                        );
                     }
 
 					pi.proj->GetGameObject()->Release();
@@ -114,13 +142,23 @@ namespace TikiEngine
                     else if (pi.proj->GetProjectileType() == PT_Rocket)
                     {
                         // Fire
-						peFire->Trigger(
-							(UInt32)(200.0 * args.Time.ElapsedTime),
-							Vector3::TransformCoordinate( 
-							Vector3(0.8f, 0, 0),
-							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
-							) * 100.0f
-						);
+                        peFire->Trigger(
+                            (UInt32)(200 * args.Time.ElapsedTime),
+                            Vector3::TransformCoordinate( 
+                            Vector3(0, 0, 0),
+                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            )
+                        );
+
+                        // smoke
+                        peSmoke->Trigger(
+                            (UInt32)(200 * args.Time.ElapsedTime),
+                            Vector3::TransformCoordinate(
+                            Vector3(0, 0, 0),
+                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            )
+                        );
+
                     }
 
 					i++;
