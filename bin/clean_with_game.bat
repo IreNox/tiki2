@@ -8,6 +8,8 @@ del *.exp
 del *.ilk
 del *.lib
 del *.pdb
+del Game32.exe
+del TikiEngine.*.dll
 
 del TikiEditor*
 del *.matagen
@@ -20,6 +22,8 @@ del *.exp
 del *.ilk
 del *.lib
 del *.pdb
+del Game64.exe
+del TikiEngine.*.dll
 
 cd ../Data
 

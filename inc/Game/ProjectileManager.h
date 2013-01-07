@@ -5,8 +5,11 @@
 
 #include "Game/Projectile.h"
 
-#include "Game/PEShootMG.h"
 #include "Game/PEFire.h"
+#include "Game/PESmoke.h"
+#include "Game/PEShootMG.h"
+#include "Game/PEExplosion.h"
+
 #include "Core/IParticleRenderer.h"
 
 namespace TikiEngine
@@ -34,6 +37,12 @@ namespace TikiEngine
 
             PEFire* peFire;
             IParticleRenderer* prFire;
+
+			PEFire* peSmoke;
+			IParticleRenderer* prSmoke;
+
+			PEFire* peExplosion;
+			IParticleRenderer* prExplosion;
 
 			struct ProjInfo
 			{

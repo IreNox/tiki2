@@ -159,7 +159,7 @@ public:
 		UInt32 i = index;
 		while (i < lengthData)
 		{
-			T value = data[i + 1];
+			T value = data[i];
 			data[i] = value;
 
 			i++;

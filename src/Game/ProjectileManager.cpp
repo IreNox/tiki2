@@ -30,7 +30,6 @@ namespace TikiEngine
             prFire->SetParticleEffect(peFire);
             prFire->AddRef();
 
-            bool test = true;
             // Smoke
 //             smokeEmitter = new GameObject(engine);
 //             smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
@@ -53,8 +52,8 @@ namespace TikiEngine
 			SafeRelease(&peAssault);
 			SafeRelease(&prAssault);
 
-            //SafeRelease(&peFire);
-            //SafeRelease(&prFire);
+            SafeRelease(&peFire);
+            SafeRelease(&prFire);
 		}
 		#pragma endregion
 
@@ -115,14 +114,13 @@ namespace TikiEngine
                     else if (pi.proj->GetProjectileType() == PT_Rocket)
                     {
                         // Fire
-//                         peFire->Trigger(
-//                             (UInt32)(200 * args.Time.ElapsedTime),
-//                             Vector3::TransformCoordinate( 
-//                             Vector3(0.8f, 0, 0),
-//                             Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
-//                             ) * 100.0f
-//                        );
-
+						peFire->Trigger(
+							(UInt32)(200.0 * args.Time.ElapsedTime),
+							Vector3::TransformCoordinate( 
+							Vector3(0.8f, 0, 0),
+							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+							) * 100.0f
+						);
                     }
 
 					i++;
