@@ -20,15 +20,15 @@
 #include "Core/HelperLog.h"
 #include "Core/HelperThreading.h"
 
-#include "Core/sqlite3.h"
+#include "Core/TikiPerformanceCounter.h"
 
 #include <math.h>
-#include <time.h>
-#include <ppl.h>
+//#include <time.h>
+//#include <ppl.h>
 
 namespace TikiEngine
 {
-	using namespace Concurrency;
+	//using namespace Concurrency;
 
 	#pragma region Class
 	Engine::Engine()
@@ -37,7 +37,6 @@ namespace TikiEngine
 		, fpsMin(1000000000), fpsMax(0), fpsIndex(0), fpsAve(0)
 #endif
 	{
-		srand((UInt32)time(0));
 	}
 
 	Engine::~Engine()
@@ -179,7 +178,9 @@ namespace TikiEngine
 			return;
 		}
 		QueryPerformanceCounter(&last);
-				
+		
+		srand((UInt32)(last.QuadPart / freq.QuadPart));
+
 		//threadUpdate->Start(this, 0);
 		//threadDraw->Start(this, 0);
 
@@ -272,8 +273,22 @@ namespace TikiEngine
 
 		if (!scene->IsInitialized())
 		{
+#if _DEBUG
+			TikiPerformanceCounter time;
+			time.Start();
+#endif
+
 			InitializationArgs initArgs = InitializationArgs(content);
 			scene->Initialize(initArgs);
+
+#if _DEBUG
+			double el = time.Stop();
+
+			ostringstream s;
+			s << "LoadScene: " << typeid(*scene).name() << " - ElapsedTime: " << el;
+
+			HLog.Write(s.str(), false);
+#endif
 		}
 	}
 	#pragma endregion
@@ -281,7 +296,7 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Engine::Draw(void*)
 	{		
-		HelperThreading::InitThread(state.DrawIndex);
+		//HelperThreading::InitThread(state.DrawIndex);
 
 		//while (state.Running)
 		//{
@@ -343,7 +358,7 @@ namespace TikiEngine
 
 	void Engine::Update(void*)
 	{
-		HelperThreading::InitThread(state.UpdateIndex);
+		//HelperThreading::InitThread(state.UpdateIndex);
 
 		//while (state.Running)
 		//{

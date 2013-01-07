@@ -14,6 +14,7 @@
 
 #include "..\src\Core\TikiObject.cpp"
 #include "..\src\Core\FileStream.cpp"
+#include "..\src\Core\CompressedStream.cpp"
 #include "..\src\Core\IResource.cpp"
 #include "..\src\Core\Material.cpp"
 #include "..\src\Core\GameObject.cpp"

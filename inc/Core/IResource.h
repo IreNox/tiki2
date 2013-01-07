@@ -17,7 +17,10 @@ namespace TikiEngine
 			virtual ~IResource();
 
 			virtual void LoadFromFile(wcstring fileName);
+			virtual void LoadFromStream(wcstring fileName, Stream* stream);
+
 			virtual void SaveToFile(wcstring fileName);
+			virtual void SaveToStream(wcstring fileName, Stream* stream);
 
 			virtual wstring GetFileName();
 

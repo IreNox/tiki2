@@ -30,17 +30,19 @@ namespace TikiEngine
 
 			#pragma region Class
 			TikiIOContext()
-				: binaryPartPointer(), binaryParts(), data(0)
+				: binaryPartPointer(), binaryParts(), data(0), stream(0)
 			{
 			}
 
 			TikiIOContext(Stream* stream, bool readFullFile = true)
 				: binaryParts(), binaryPartPointer(), data(0)
 			{
-				UInt32 len = (UInt32)stream->GetLength();
+				SafeAddRef(stream, &this->stream);
 
 				if (readFullFile)
 				{
+					UInt32 len = (UInt32)stream->GetLength();
+
 					data = new Byte[len];
 					stream->Read(data, 0, len);
 					stream->SetPosition(0);
@@ -52,7 +54,30 @@ namespace TikiEngine
 
 			~TikiIOContext()
 			{
-				SafeDeleteArray(&data);
+				if (data == 0)
+				{
+					UInt32 i = 0;
+					while (i < binaryPartPointer.Count())
+					{
+						Byte* ptr = (Byte*)binaryPartPointer[i];
+
+						if (ptr != 0)
+						{
+							delete[](ptr);
+						}
+
+						i++;
+					}
+				}
+				else
+				{
+					if (data != 0)
+					{
+						delete[](data);
+					}
+				}
+
+				SafeRelease(&stream);
 			}
 			#pragma endregion
 
@@ -68,7 +93,20 @@ namespace TikiEngine
 			{
 				if (data == 0)
 				{
-									
+					if (binaryPartPointer[id] == 0)
+					{
+						stream->SetPosition(binaryParts[id].Start);
+
+						UInt32 len = binaryParts[id].Length * binaryParts[id].ArrayCount;
+						Byte* partData = new Byte[len];
+						stream->Read(partData, 0, len);
+
+						binaryPartPointer[id] = partData;
+
+						return partData;
+					}
+
+					return binaryPartPointer[id];
 				}
 				else
 				{
@@ -134,14 +172,19 @@ namespace TikiEngine
 				TikiBinaryPart<TPartType>* parts = new TikiBinaryPart<TPartType>[binaryHeader.PartCount];
 				stream->Read(parts, 0, sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount);
 
-				if (readFullFile)
+				UInt32 i = 0;
+				while (i < binaryHeader.PartCount)
 				{
-					UInt32 i = 0;
-					while (i < binaryHeader.PartCount)
+					if (readFullFile)
 					{
 						binaryPartPointer.Add(data + parts[i].Start);
-						i++;
 					}
+					else
+					{
+						binaryPartPointer.Add(0);
+					}
+
+					i++;
 				}
 
 				binaryParts = List<TikiBinaryPart<TPartType>>(parts, binaryHeader.PartCount, false);

@@ -97,9 +97,11 @@
     <ClInclude Include="FbxLoader.h" />
     <ClInclude Include="MeshMaterial.h" />
     <ClInclude Include="ModelEditor.h" />
+    <ClInclude Include="ResConverter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="CompileBzip.cpp" />
     <ClCompile Include="CompileHeader.cpp" />
     <ClCompile Include="D3DX10MeshLoader.cpp" />
     <ClCompile Include="FBXConverter.cpp" />
@@ -107,6 +109,7 @@
     <ClCompile Include="FBXImport.cpp" />
     <ClCompile Include="FbxLoader.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ResConverter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

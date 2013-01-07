@@ -6,7 +6,6 @@
 #include "Game/TikiBot.h"
 
 #include "Core/GameObject.h"
-#include "Core/sqlite3.h"
 #include "Core/TikiTimer.h"
 
 #include "Game/PlayerBase.h"

@@ -113,7 +113,6 @@
     <Compile Include="Editor\ModeRes.cs" />
     <Compile Include="Editor\Objects\GUI\GUIRect.cs" />
     <Compile Include="Editor\Objects\Level\LevelPoint.cs" />
-    <Compile Include="Editor\Objects\Res\ResData.cs" />
     <Compile Include="Engine\EditorMode.cs" />
     <Compile Include="Editor\ModeLevel.cs" />
     <Compile Include="Engine\CameraComponent.cs" />

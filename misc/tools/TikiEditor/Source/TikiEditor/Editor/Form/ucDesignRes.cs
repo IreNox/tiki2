@@ -20,23 +20,26 @@ namespace TikiEditor
         #region Private Member - Thread
         private void _threadWork()
         {
-            _threadWorkDir(GI.DataPath, null);
+            ResConverter conv = new ResConverter(Path.GetDirectoryName(GI.DataPath));
 
+            _threadWorkDir(GI.DataPath, null, conv);
 
+            conv.WriteToFile(
+                Path.Combine(GI.DataPath, "TikiRes.tikipak")
+            );
+
+            _threadFinish();
         }
 
-        private void _threadWorkDir(string dir, TreeNode node)
+        private void _threadWorkDir(string dir, TreeNode node, ResConverter conv)
         {
             if (node != null)
             {
                 foreach (string file in Directory.GetFiles(dir))
                 {
-                    ResData res = new ResData();
-                    res.LoadFromFile(file);
+                    conv.AddFile(file);
 
                     _threadAddNode(file, node);
-
-                    GI.DB.Insert(res);
                 }
             }
             else
@@ -48,7 +51,8 @@ namespace TikiEditor
             {
                 _threadWorkDir(
                     dir2,
-                    _threadAddNode(dir2, node)
+                    _threadAddNode(dir2, node),
+                    conv
                 );
             }
         }
@@ -88,12 +92,15 @@ namespace TikiEditor
             }
 
             MessageBox.Show(this, "Resource Convert finish!", "TikiEditor 2.0", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            buttonDoit.Enabled = true;
         }
         #endregion
 
         #region Member - EventHandler
         private void buttonDoit_Click(object sender, EventArgs e)
         {
+            buttonDoit.Enabled = false;
+
             Thread thread = new Thread(_threadWork);
             thread.Start();
         }

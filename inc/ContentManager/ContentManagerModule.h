@@ -3,6 +3,7 @@
 #include "Core/IContentManager.h"
 
 #include "ContentManager/ResourceInfo.h"
+#include "ContentManager/ResourceBinaryData.h"
 
 namespace TikiEngine
 {
@@ -42,6 +43,9 @@ namespace TikiEngine
 			
 			bool disposing;
 			List<ResourceInfo> loadedResources;
+
+			ResIOContext* resourceContext;
+			Dictionary<wstring, UInt32> resourcePackage;
 
 			#if _DEBUG
 			DWORD threadId;

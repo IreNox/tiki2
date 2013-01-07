@@ -162,9 +162,9 @@ namespace TikiEngine
 		}
 
 		return HelperPath::Combine(
-			HelperPath::GetWorkingPath() + L"/Data/" + typeName,
+			/* HelperPath::GetWorkingPath() + */ L"Data/" + typeName,
 			fileName + L"." + typeExt
-			);
+		);
 	}
 	#pragma endregion
 
@@ -183,13 +183,18 @@ namespace TikiEngine
 	#pragma region Private Member
 	void HelperPath::checkSlashes(wstring& path) const
 	{
+		static wchar_t mi = L'Z' - L'z';
+
 		UInt32 i = 0;
 		while (i < path.length())
 		{
-			if (path[i] == '\\') path[i] = '/';
+			wchar_t c = path[i];
+
+			if (c == '\\') path[i] = '/';
+			if(c <= 'Z' && c >= 'A') path[i] -= mi;
 
 			i++;
-		}
+		}		
 	}
 	#pragma endregion
 }

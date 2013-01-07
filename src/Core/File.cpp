@@ -4,7 +4,6 @@
 #include "Core/FileStream.h"
 #include "Core/MemoryStream.h"
 
-#include "Core/sqlite3.h"
 #include "Core/HelperPath.h"
 
 namespace TikiEngine

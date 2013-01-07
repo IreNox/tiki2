@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\CompressedStream.cpp" />
     <ClCompile Include="src\Core\DatabaseState.cpp" />
     <ClCompile Include="src\Core\HelperHash.cpp" />
     <ClCompile Include="src\Core\HelperThreading.cpp" />
@@ -27,7 +28,6 @@
     <ClCompile Include="src\Core\SceneGraph.cpp" />
     <ClCompile Include="src\Core\SceneGraphElement.cpp" />
     <ClCompile Include="src\Core\SceneGraphNode.cpp" />
-    <ClCompile Include="src\Core\sqlite3.c" />
     <ClCompile Include="src\Core\AllArgs.cpp" />
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\CameraObject.cpp" />
@@ -65,15 +65,25 @@
     <ClCompile Include="src\Core\Vector3.cpp" />
     <ClCompile Include="src\Core\Vector4.cpp" />
     <ClCompile Include="src\Core\WindowModule.cpp" />
+    <ClCompile Include="src\extern\blocksort.c" />
+    <ClCompile Include="src\extern\bzlib.c" />
+    <ClCompile Include="src\extern\compress.c" />
+    <ClCompile Include="src\extern\crctable.c" />
+    <ClCompile Include="src\extern\decompress.c" />
+    <ClCompile Include="src\extern\huffman.c" />
+    <ClCompile Include="src\extern\randtable.c" />
+    <ClCompile Include="src\extern\sqlite3.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\BufferState.h" />
     <ClInclude Include="inc\Core\BufferedVariable.h" />
     <ClInclude Include="inc\Core\CBMatrices.h" />
+    <ClInclude Include="inc\Core\CompressedStream.h" />
     <ClInclude Include="inc\Core\DatabaseState.h" />
     <ClInclude Include="inc\Core\EventAnimation.h" />
     <ClInclude Include="inc\Core\EventLog.h" />
     <ClInclude Include="inc\Core\EventTriggers.h" />
+    <ClInclude Include="inc\Core\Exception.h" />
     <ClInclude Include="inc\Core\HelperThreading.h" />
     <ClInclude Include="inc\Core\IAnimation.h" />
     <ClInclude Include="inc\Core\IBone.h" />
@@ -87,6 +97,7 @@
     <ClInclude Include="inc\Core\EventScreenSizeChanged.h" />
     <ClInclude Include="inc\Core\GUIControlRectangles.h" />
     <ClInclude Include="inc\Core\IParticleRenderer.h" />
+    <ClInclude Include="inc\Core\NotSupportedException.h" />
     <ClInclude Include="inc\Core\Particle.h" />
     <ClInclude Include="inc\Core\ParticleEffect.h" />
     <ClInclude Include="inc\Core\SceneGraph.h" />
@@ -94,7 +105,6 @@
     <ClInclude Include="inc\Core\SceneGraphNode.h" />
     <ClInclude Include="inc\Core\SkinningVertex.h" />
     <ClInclude Include="inc\Core\SoundDescription.h" />
-    <ClInclude Include="inc\Core\sqlite3.h" />
     <ClInclude Include="inc\Core\CameraObject.h" />
     <ClInclude Include="inc\core\Camera.h" />
     <ClInclude Include="inc\Core\Color.h" />
@@ -145,6 +155,7 @@
     <ClInclude Include="inc\Core\Thread.h" />
     <ClInclude Include="inc\Core\TikiEnum.h" />
     <ClInclude Include="inc\Core\TikiIOContext.h" />
+    <ClInclude Include="inc\Core\TikiPerformanceCounter.h" />
     <ClInclude Include="inc\Core\TikiReflect.h" />
     <ClInclude Include="inc\Core\TikiTimer.h" />
     <ClInclude Include="inc\Core\TikiType.h" />
@@ -201,6 +212,9 @@
     <ClInclude Include="inc\Core\WindowModule.h" />
     <ClInclude Include="inc\Core\WindowDescription.h" />
     <ClCompile Include="src\Core\HelperPath.cpp" />
+    <ClInclude Include="inc\extern\bzlib.h" />
+    <ClInclude Include="inc\extern\bzlib_private.h" />
+    <ClInclude Include="inc\extern\sqlite3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>

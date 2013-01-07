@@ -1,5 +1,6 @@
 
 #include "Core/LibraryManager.h"
+#include "Core/TikiPerformanceCounter.h"
 
 namespace TikiEngine
 {
@@ -83,6 +84,11 @@ namespace TikiEngine
 				return loadedLibrarys.Get(libraryName);
 			}
 
+#if _DEBUG
+			TikiPerformanceCounter time;
+			time.Start();
+#endif
+
 			HMODULE libraryHandle = LoadLibrary(libraryName.c_str());
 			if (libraryHandle == 0) return 0;
 
@@ -137,6 +143,15 @@ namespace TikiEngine
 			}
 
 			loadedLibrarys.Add(libraryName, info);
+
+#if _DEBUG
+			double el = time.Stop();
+
+			ostringstream s;
+			s << "LoadLibrary: " << StringWtoA(engine->HPath.GetFilename(libraryName)) << " - ElapsedTime: " << el;
+
+			engine->HLog.Write(s.str());
+#endif
 
 			return info;
 		}

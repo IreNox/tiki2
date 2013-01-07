@@ -7,7 +7,6 @@
 #include "Core/GUILabel.h"
 #include "Core/GUIWindow.h"
 
-#include "Core/sqlite3.h"
 #include "Core/ISpriteBatch.h"
 #include "Core/LibraryManager.h"
 #include "Core/IContentManager.h"

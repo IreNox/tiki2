@@ -9,7 +9,7 @@
 #include "Core/BufferState.h"
 #include "Core/EngineDescription.h"
 
-struct sqlite3;
+#include "extern/sqlite3.h"
 
 namespace TikiEngine
 {

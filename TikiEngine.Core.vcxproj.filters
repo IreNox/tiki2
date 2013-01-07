@@ -129,6 +129,9 @@
     <Filter Include="Quelldateien\Core\SceneGraph">
       <UniqueIdentifier>{38399b81-c9cb-49f2-b1ad-3188ffd30e3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Headerdateien\Core\Exceptions">
+      <UniqueIdentifier>{c8a84f74-f1ce-4346-8453-89bf0d45a744}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -248,9 +251,6 @@
     <ClCompile Include="src\Core\Mesh.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\sqlite3.c">
-      <Filter>Extern</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\HelperHash.cpp">
       <Filter>Quelldateien\Engine\Static</Filter>
     </ClCompile>
@@ -271,6 +271,33 @@
     </ClCompile>
     <ClCompile Include="src\Core\SceneGraphElement.cpp">
       <Filter>Quelldateien\Core\SceneGraph</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\CompressedStream.cpp">
+      <Filter>Quelldateien\Core\I/O</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\blocksort.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\bzlib.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\compress.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\crctable.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\decompress.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\huffman.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\randtable.c">
+      <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\sqlite3.c">
+      <Filter>Extern</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,9 +643,6 @@
     <ClInclude Include="inc\Core\EventLog.h">
       <Filter>Headerdateien\Core\Args/States\Events</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Core\sqlite3.h">
-      <Filter>Extern</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Core\IBone.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
@@ -672,6 +696,27 @@
     </ClInclude>
     <ClInclude Include="inc\Core\TikiIOContext.h">
       <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\CompressedStream.h">
+      <Filter>Headerdateien\Core\I/O</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\extern\bzlib.h">
+      <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\extern\bzlib_private.h">
+      <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\extern\sqlite3.h">
+      <Filter>Extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\Exception.h">
+      <Filter>Headerdateien\Core\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\NotSupportedException.h">
+      <Filter>Headerdateien\Core\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\TikiPerformanceCounter.h">
+      <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

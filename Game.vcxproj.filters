@@ -111,9 +111,6 @@
     <Filter Include="Headerdateien\AI\WeaponSystem\Weapons">
       <UniqueIdentifier>{432e7abc-45ba-4bf8-ac36-c085a2215ec3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Events">
-      <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Headerdateien\AI\Triggers">
       <UniqueIdentifier>{4a62173d-18e2-4ebd-b1ad-ed654939ffb5}</UniqueIdentifier>
     </Filter>
@@ -155,6 +152,9 @@
     </Filter>
     <Filter Include="Quelldateien\AI\Attributes">
       <UniqueIdentifier>{1918e6f0-25d4-490d-a337-b1cb434052c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headerdateien\Events">
+      <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

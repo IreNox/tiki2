@@ -16,6 +16,9 @@
     <Filter Include="Model\MeshMaterial">
       <UniqueIdentifier>{78908c81-a691-4920-ac4d-e128d15a1376}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{22b0443a-d0ea-478e-b0ee-51786ec80275}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FBXImport.h">
@@ -42,6 +45,9 @@
     <ClInclude Include="D3DX10MeshLoader.h">
       <Filter>Model\Load</Filter>
     </ClInclude>
+    <ClInclude Include="ResConverter.h">
+      <Filter>Res</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp">
@@ -67,6 +73,12 @@
     </ClCompile>
     <ClCompile Include="D3DX10MeshLoader.cpp">
       <Filter>Model\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="ResConverter.cpp">
+      <Filter>Res</Filter>
+    </ClCompile>
+    <ClCompile Include="CompileBzip.cpp">
+      <Filter>Res</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

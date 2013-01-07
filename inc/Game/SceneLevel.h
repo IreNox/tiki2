@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/Scene.h"
-#include "Core/sqlite3.h"
 
 #include "Game/Level.h"
 #include "Game/LevelPoint.h"

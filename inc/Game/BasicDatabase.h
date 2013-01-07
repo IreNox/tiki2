@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Core/TypeGlobals.h"
-#include "Core/sqlite3.h"
 
 #include "Game/GameState.h"
 

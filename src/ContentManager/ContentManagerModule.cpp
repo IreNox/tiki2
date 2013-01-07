@@ -6,6 +6,10 @@
 #include "Core/Engine.h"
 #include "Core/LibraryManager.h"
 
+#include "Core/FileStream.h"
+#include "Core/MemoryStream.h"
+#include "Core/CompressedStream.h"
+
 #include "ContentManager/ContentManagerModule.h"
 #include "ContentManager/DllMain.h"
 
@@ -17,13 +21,12 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		ContentManagerModule::ContentManagerModule(Engine* engine)
-			: IContentManager(engine), loadedResources(), disposing(false)
+			: IContentManager(engine), loadedResources(), disposing(false), resourceContext(0)
 		{
 		}
 
 		ContentManagerModule::~ContentManagerModule()
 		{
-			//there is always this fucking dispose method u overlook
 		}
 		#pragma endregion
 
@@ -63,6 +66,27 @@ namespace TikiEngine
 				&threadId
 			);
 			#endif
+
+			if (engine->HPath.FileExists(L"Data/TikiRes.tikipak"))
+			{
+				FileStream* stream = new FileStream(L"Data/TikiRes.tikipak", FM_Read);
+				//CompressedStream* stream = new CompressedStream(L"Data/TikiRes.tikipak", COM_Read);
+				resourceContext = new ResIOContext(stream, false);
+
+				wchar_t* filelist = (wchar_t*)resourceContext->ReadPartPointer(resourceContext->GetHeader()->FilelistId);
+				UInt32* datalist = (UInt32*)resourceContext->ReadPartPointer(resourceContext->GetHeader()->DatalistId);
+
+				UInt32 i = 0;
+				UInt32 pos = 0;
+				while (i < resourceContext->GetHeader()->FileCount)
+				{
+					resourcePackage.Add(filelist + pos, datalist[i]);
+
+					pos += wcslen(filelist + pos) + 1;
+					i++;
+				}
+				//resourcePackage.Optimize();
+			}
 
 			return true;
 		}
@@ -135,6 +159,8 @@ namespace TikiEngine
 				i++;
 			}
 			loadedResources.Clear();
+
+			SafeDelete(&resourceContext);
 		}
 		#pragma endregion
 
@@ -147,7 +173,7 @@ namespace TikiEngine
 			if (value == 0)
 			{
 				bool loadFile = true;
-
+				
 				if (hash == typeid(ITexture).hash_code())
 				{
 					value = engine->librarys->CreateResource<ITexture>();
@@ -172,7 +198,6 @@ namespace TikiEngine
 				{
 					value = engine->librarys->CreateResource<IPhysicsMaterial>();
 				}
-
 				else if (hash == typeid(IBoundingBox).hash_code())
 				{
 					value = engine->librarys->CreateResource<IBoundingBox>();
@@ -197,7 +222,24 @@ namespace TikiEngine
 							return 0;
 						}
 
-						value->LoadFromFile(name.c_str());
+						UInt32 id;
+						Stream* stream;
+						if (resourcePackage.TryGetValue(name, &id))
+						{
+							stream = new MemoryStream(
+								resourceContext->ReadPartPointer(id),
+								resourceContext->ReadPart(id).ArrayCount
+							);
+						}
+						else
+						{
+							stream = new FileStream(name, FM_Read);
+						}
+						stream->AddRef();
+
+						value->LoadFromStream(name.c_str(), stream);
+
+						SafeRelease(&stream);
 					}
 				}
 			}

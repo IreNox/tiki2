@@ -15,6 +15,7 @@ namespace TikiEngine
 			PT_Array,
 			PT_NoArray,
 			PT_Byte,
+			PT_Widechar,
 			PT_UInt
 		};
 
@@ -24,12 +25,10 @@ namespace TikiEngine
 
 			UInt32 FileLength;
 			UInt32 PartCount;
-		};
 
-		struct ResBinaryTikiResource
-		{
-			UInt32 NameId;
-			UInt32 DataId;
+			UInt32 FileCount;
+			UInt32 FilelistId;
+			UInt32 DatalistId;
 		};
 
 		typedef TikiBinaryPart<ResPartType> ResBinaryPart;
