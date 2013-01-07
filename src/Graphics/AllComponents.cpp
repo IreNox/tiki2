@@ -221,6 +221,9 @@ namespace TikiEngine
 		{
 			if (args.Mode != DM_Geometry) return;
 
+			UInt32 count = behavior->GParticleUsed();
+			if (count == 0) return;
+
 			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Particles);
 			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 
@@ -251,7 +254,7 @@ namespace TikiEngine
 			shader->Apply();
 			shader->ApplyVars(gameObject, 0);
 
-			DllMain::Context->Draw(behavior->GParticleUsed(), 0);
+			DllMain::Context->Draw(count, 0);
 
 			DllMain::ModuleGraphics->SetStateDepthEnabled(true);
 			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Disable);
