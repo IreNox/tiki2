@@ -1,5 +1,7 @@
 #pragma once
 
+
+
 #include "Core/TypeInc.h"
 #include "Core/GameObject.h"
 #include "Core/EngineObject.h"
@@ -15,7 +17,7 @@
 
 #include <Core/List.h>
 
-#define TIKI_USE_SCENEGRAPH 0
+
 
 namespace TikiEngine
 {

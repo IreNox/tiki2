@@ -150,7 +150,12 @@ namespace TikiEngine
 #if TIKI_USE_SCENEGRAPH
 
 		SceneGraph.Draw(args);
-		mainCamera->GetFrustum().Draw(args);
+		//mainCamera->GetFrustum().Draw(args);
+		//Vector3 pos = mainCamera->GetGameObject()->PRS.GPosition();
+		//args.Graphics->DrawLine(pos, pos + Vector3::UnitX, Color::Red);
+		//args.Graphics->DrawLine(pos, pos + Vector3::UnitY, Color::Red);
+		//args.Graphics->DrawLine(pos, pos + Vector3::UnitZ, Color::Red);
+
 
 #else
 		for (UInt32 i = 0; i < elements.Count(); i++)

@@ -107,9 +107,10 @@ namespace TikiEngine
 				//	view * Matrix::Transpose(matrices.ProjectionMatrix)
 				//);
 
-				//frustum.Set(
-				//	view * Matrix::Transpose(matrices.ProjectionMatrix)
-				//	);
+	/*			frustum.Set(
+					view * Matrix::Transpose(matrices.ProjectionMatrix)
+					);*/
+
 
 				frustum.CreatePlanes(view * Matrix::Transpose(matrices.ProjectionMatrix));
 

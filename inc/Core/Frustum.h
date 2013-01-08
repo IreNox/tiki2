@@ -35,57 +35,20 @@ namespace TikiEngine
 
 
 		// performs the plane extraction assuming that the matriz m = View * Projection 
-		void Set(const Matrix& m)
-		{
-				pl[NEARP].SetCoeff(m.M13 + m.M14,  
-								   m.M23 + m.M24,  
-								   m.M33 + m.M34,  
-								   m.M43 + m.M44); 	   
-										   
-				pl[FARP].SetCoeff(-m.M13 + m.M14,  
-								  -m.M23 + m.M24,  
-								  -m.M33 + m.M34,  
-								  -m.M43 + m.M44); 
-
-				pl[BOTTOM].SetCoeff(m.M12 + m.M14,	
-									m.M22 + m.M24, 
-									m.M32 + m.M34, 
-									m.M42 + m.M44);
- 
-				pl[TOP].SetCoeff(-m.M12 + m.M14,  
-								 -m.M22 + m.M24,  
-								 -m.M32 + m.M34,  
-								 -m.M42 + m.M44); 
-
-				pl[LEFT].SetCoeff(m.M11 + m.M14,	
-								  m.M21 + m.M24,	
-								  m.M31 + m.M34,	
-								  m.M41 + m.M44);	
-
-				pl[RIGHT].SetCoeff(-m.M11 + m.M14,	
-								   -m.M21 + m.M24,	
-								   -m.M31 + m.M34,	
-								   -m.M41 + m.M44);	
-		}
-
 		void CreatePlanes(const Matrix& m)
 		{
-			pl[LEFT].SetParameter(-m.M14 - m.M11, -m.M24 - m.M21,
-				-m.M34 - m.M31, -m.M44 - m.M41);
 
-			pl[RIGHT].SetParameter(m.M11 - m.M14, m.M21 - m.M24,
-				m.M31 - m.M34, m.M41 - m.M44);
+			pl[LEFT].SetParameter(m.M14 + m.M11, m.M24 + m.M21, m.M34 + m.M31, m.M44 + m.M41);
 
-			pl[TOP].SetParameter(m.M12 - m.M14, m.M22 - m.M24,
-				m.M32 - m.M34, m.M42 - m.M44);
+			pl[RIGHT].SetParameter(m.M14 - m.M11, m.M24 - m.M21, m.M34 - m.M31, m.M44 - m.M41);
 
-			pl[BOTTOM].SetParameter(-m.M14 - m.M12, -m.M24 - m.M22,
-				-m.M34 - m.M32, -m.M44 - m.M42);
+			pl[BOTTOM].SetParameter(m.M14 + m.M12, m.M24 + m.M22, m.M34 + m.M32, m.M44 + m.M42);
 
-			pl[NEARP].SetParameter(-m.M13, -m.M23, -m.M33, -m.M43);
+			pl[TOP].SetParameter(m.M14 - m.M12, m.M24 - m.M22, m.M34 - m.M32, m.M44 - m.M42);
 
-			pl[FARP].SetParameter(m.M13 - m.M14, m.M23 - m.M24,
-				m.M33 - m.M34, m.M43 - m.M44);
+			pl[NEARP].SetParameter(m.M13, m.M23, m.M33, m.M43);
+
+			pl[FARP].SetParameter(m.M14 - m.M13, m.M24 - m.M23, m.M34 - m.M33, m.M44 - m.M43);
 		}
 
 		void Draw(const DrawArgs& args)
@@ -111,12 +74,6 @@ namespace TikiEngine
 			args.Graphics->DrawLine(v7, v8, Color::Green);
 			args.Graphics->DrawLine(v8, v5, Color::Green);
 
-			args.Graphics->DrawLine(v5 / scale, v6 / scale, Color::Red); //oben
-			args.Graphics->DrawLine(v6 / scale, v7 / scale, Color::Green); //rechts
-			args.Graphics->DrawLine(v7 / scale, v8 / scale, Color::Blue); //unten
-			args.Graphics->DrawLine(v8 / scale, v5 / scale, Color::Black); // links
-
-
 			args.Graphics->DrawLine(v1, v5, Color::Blue);
 			args.Graphics->DrawLine(v2, v6, Color::Blue);
 			args.Graphics->DrawLine(v3, v7, Color::Blue);
@@ -140,20 +97,27 @@ namespace TikiEngine
 
 		int PointInFrustum(const Vector3& p)
 		{
-			for(int i=0; i < 6; i++) 
+			for(int i = 0; i < 6; i++) 
 			{
-				if(ClassifyPoint(pl[i], p) > 0)
+				if(ClassifyPoint(pl[i], p) < 0)
 					return OUTSIDE;
 			}
 			return INSIDE;
+		}
 
-			//int result = INSIDE;
-			//for(int i=0; i < 6; i++) {
+		static Matrix ProjectionRectangle(RectangleF& source, Vector2& viewport, const Matrix& proj)
+		{
 
-			//	if (pl[i].Distance(p) < 0)
-			//		return OUTSIDE;
-			//}
-			//return(result);
+			Vector2 region = source.Center();
+			Matrix result = proj;
+
+			result.M11 /= source.Width / viewport.X;
+			result.M22 /= source.Height / viewport.Y;
+
+			result.M31 = (region.X - (viewport.X * 0.5f)) / (source.Width * 0.5f);
+			result.M32 = -(region.Y - (viewport.Y * 0.5f)) / (source.Height * 0.5f);
+
+			return result;
 		}
 
 		int SphereInFrustum(const Vector3& p, float radius)
@@ -209,9 +173,5 @@ namespace TikiEngine
 				return point.X * plane.Normal().X + point.Y * plane.Normal().Y + point.Z * plane.Normal().Z + plane.Distance();
 			}
 	};
-
-
-
-
 }
 

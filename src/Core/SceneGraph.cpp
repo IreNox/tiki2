@@ -35,13 +35,13 @@ namespace TikiEngine
 
 		switch(go->GetGameObjectType())
 		{
-		case Default:
+		case GOT_Default:
 			this->defaultGOs.Add(go);
 			break;
-		case Static:
+		case GOT_Static:
 			this->staticGOs.Add(go);
 			break;
-		case Dynamic:
+		case GOT_Dynamic:
 			this->dynamicGOs.Add(go);
 			break;
 		}
@@ -56,10 +56,10 @@ namespace TikiEngine
 
 		switch(go->GetGameObjectType())
 		{
-		case Default:
+		case GOT_Default:
 			return this->defaultGOs.Remove(go);
 			break;
-		case Dynamic:
+		case GOT_Dynamic:
 			if(IsLocked())
 			{
 				removeList.Add(go);
@@ -67,7 +67,7 @@ namespace TikiEngine
 			}
 			return this->dynamicGOs.Remove(go);
 			break;
-		case Static:
+		case GOT_Static:
 			return this->staticGOs.Remove(go);
 			break;
 		}

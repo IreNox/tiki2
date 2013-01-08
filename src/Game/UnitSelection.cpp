@@ -48,8 +48,15 @@ namespace TikiEngine
 
 		void UnitSelection::Draw(const DrawArgs& args)
 		{
-			if (enabled && selectionRect.Width != 0 && selectionRect.Height != 0)
+#if TIKI_USE_SCENEGRAPH
+			if (enabled && mouseButton)
 				selectButton->Draw(args);
+
+			this->selectionFrustum.Draw(args);
+#else
+			if(enabled & selectionRect.Width != 0 && selectionRect.Height != 0)
+				selectButton->Draw(args);
+#endif
 		}
 		#pragma endregion
 
@@ -59,8 +66,102 @@ namespace TikiEngine
 			if (!enabled) return;
 
 			this->changed = false;
+			this->dirty = false;
+
+#if TIKI_USE_SCENEGRAPH
+			// Handle Rectangle
+			// Mouse left button has just been pressed down
+			if (args.Input.GetMousePressed(MB_Left))
+			{
+				if (selectedUnits.Count() != 0) changed = true;
+
+				// clear list from last selection
+				if (!args.Input.GetKey(KEY_LSHIFT))
+				{
+					selectedUnits.Clear();
+					selectedSlots.Clear();
+				}
+				selectionStartPoint = args.Input.MousePositionDisplay;
+
+				// Set the selection box starting point
+				selectionRect.X = args.Input.MousePositionDisplay.X;
+				selectionRect.Y = args.Input.MousePositionDisplay.Y;
+				selectionRect.Width = 0;
+				selectionRect.Height = 0;
+				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
+				this->dirty = true;
+			}
+
+			if(args.Input.GetMouse(MB_Left))
+			{
+				// Mouse left button is being held down ( dragging )
+				// Calculate new width,height
+				selectionRect.Width = abs(args.Input.MousePositionDisplay.X - selectionStartPoint.X);
+				selectionRect.Height = abs(args.Input.MousePositionDisplay.Y - selectionStartPoint.Y);
+
+				if (selectionStartPoint.X > args.Input.MousePositionDisplay.X)
+				{
+					selectionRect.X = args.Input.MousePositionDisplay.X;
+				}
+
+				if (selectionStartPoint.Y > args.Input.MousePositionDisplay.Y)
+				{
+					selectionRect.Y = args.Input.MousePositionDisplay.Y;
+				}
+
+				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
+				selectButton->SSize() = Vector2(selectionRect.Width, selectionRect.Height);
+				this->dirty = true;
+			}
+
+			if (args.Input.GetMouseRelease(MB_Left))
+			{
+				//selectionRect = RectangleF::Create(0, 0, 0, 0);
+				this->dirty = true;
+				
+			}
+
+			this->mouseButton = args.Input.GetMouse(MB_Left);
+
+			if(!dirty)
+				return;
+
+			//this->worldToScreen = gameState->GetScene()->GCamera()->WorldToScreen();
+
+			Matrix view = Matrix::Transpose(gameState->GetScene()->GCamera()->GetViewMatrix());
+			Matrix proj = Matrix::Transpose(gameState->GetScene()->GCamera()->GetProjectionMatrix());
+
+			proj = Frustum::ProjectionRectangle(
+				selectionRect,
+				engine->graphics->GetViewPort()->GetSize(),
+				proj);
 
 
+			this->selectionFrustum.CreatePlanes(view * proj);
+
+			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){
+				
+				if(this->selectionFrustum.PointInFrustum(go->PRS.GPosition()))
+				{
+					//BuildSlot* slot = go->GetComponent<BuildSlot>();
+					//if(slot != 0)
+					//{
+					//	HandleBuildSlot(go);
+					//	return;
+					//}
+
+					TikiBot* bot = go->GetComponent<TikiBot>();
+					if(bot != 0)
+					{
+						HandleTikiBot(go);
+						return;
+					}
+				}
+			});
+
+			//this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleBuildSlot(go); });
+			//this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleTikiBot(go); });
+#else
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
@@ -107,14 +208,6 @@ namespace TikiEngine
 				selectionRect = RectangleF::Create(0, 0, 0, 0);
 			}
 
-
-#if TIKI_USE_SCENEGRAPH
-			this->mouseButton = args.Input.GetMouse(MB_Left);
-			this->worldToScreen = gameState->GetScene()->GCamera()->WorldToScreen();
-
-			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleBuildSlot(go); });
-			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleTikiBot(go); });
-#else
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetElements().Count())
 			{
@@ -223,12 +316,10 @@ namespace TikiEngine
 		void UnitSelection::HandleTikiBot(GameObject* go)
 		{
 			TikiBot* ent = go->GetComponent<TikiBot>();
-			if(ent == 0)
-				return;
 
 			if(ent->GetFaction() == 0)
 			{
-				if(IsUnderMouse(go, this->worldToScreen) && !selectedUnits.Contains(go))
+				if(!selectedUnits.Contains(go))
 				{
 					selectedUnits.Add(go);
 					changed = true;
@@ -236,6 +327,22 @@ namespace TikiEngine
 			}
 			if(ent->IsDead())
 				RemoveBot(ent);
+
+
+			//TikiBot* ent = go->GetComponent<TikiBot>();
+			//if(ent == 0)
+			//	return;
+
+			//if(ent->GetFaction() == 0)
+			//{
+			//	if(IsUnderMouse(go, this->worldToScreen) && !selectedUnits.Contains(go))
+			//	{
+			//		selectedUnits.Add(go);
+			//		changed = true;
+			//	}
+			//}
+			//if(ent->IsDead())
+			//	RemoveBot(ent);
 		}
 
 		void UnitSelection::HandleBuildSlot(GameObject* go)

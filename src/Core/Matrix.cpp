@@ -1,7 +1,6 @@
 
 #include <math.h>
 
-#include "Core/Matrix3x3.h"
 #include "Core/Matrix.h"
 #include "Core/Vector3.h"
 #include "Core/Quaternion.h"
@@ -205,19 +204,16 @@ Matrix Matrix::CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio
 	if (nearPlaneDistance >= farPlaneDistance)
 		throw "IllegalArgument nearPlaneDistance";
 
-	float num = 1 / tan(fieldOfView * 0.5f);
-	float m = num / aspectRatio;
+	float yscale = 1.0f / tanf(fieldOfView * 0.5f);
+	float xscale = yscale / aspectRatio;
 
 	Matrix result;
-	result.M11 = m;
-	result.M12 = (result.M13 = (result.M14 = 0));
-	result.M22 = num;
-	result.M21 = (result.M23 = (result.M24 = 0));
-	result.M31 = (result.M32 = 0);
+	result.M11 = xscale;
+	result.M22 = yscale;
 	result.M33 = farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
 	result.M34 = -1;
-	result.M41 = (result.M42 = (result.M44 = 0));
 	result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
+
 	return result;
 }
 /// <summary>Builds a perspective projection matrix and returns the result by value.</summary>
@@ -246,6 +242,7 @@ Matrix Matrix::CreatePerspective(float width, float height, float nearPlaneDista
 	result.M43 = nearPlaneDistance * farPlaneDistance / (nearPlaneDistance - farPlaneDistance);
 	return result;
 }
+
 #pragma endregion 
 
 #pragma region Orthographic

@@ -83,6 +83,11 @@ namespace TikiEngine
 			return Vector3(this->X + this->Width, height, this->Y + this->Height);
 		}
 
+		inline Vector2 Center()
+		{
+			return Vector2(this->X + this->Width * 0.5f, this->Y + this->Height * 0.5f);
+		}
+
 		inline Vector3 GetVertexP(const Vector3& normal, float height = 0)
 		{						
 			Vector3 p = TopLeft(height);

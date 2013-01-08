@@ -49,6 +49,9 @@ namespace TikiEngine
 			GameObject* spidermine;
 
 			List<GameObject*> drawBla;
+
+			IRenderTarget* blabla;
+			Camera* cam2;
 		};
 	}
 }

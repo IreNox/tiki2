@@ -31,8 +31,10 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			
 		private:
+
 			void HandleTikiBot(GameObject* go);
 			void HandleBuildSlot(GameObject* go);
+			void HandleSelection(GameObject* go);
 
 			bool IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps = 15);
 
@@ -54,7 +56,11 @@ namespace TikiEngine
 			bool changed;
 
 			GUIButton* selectButton;
+			
 
+#if TIKI_USE_SCENEGRAPH
+			Frustum selectionFrustum;
+#endif
 		};
 
 	}

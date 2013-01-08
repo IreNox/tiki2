@@ -49,7 +49,7 @@ namespace TikiEngine
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
 
 			GameObject* go = new GameObject(engine);
-			go->GetGameObjectType() = Dynamic;
+			go->GetGameObjectType() = GOT_Dynamic;
 
 			go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 
@@ -64,17 +64,27 @@ namespace TikiEngine
 			//sceneGraph.Add(go);
 			this->AddElement(go);
 
+			blabla = engine->librarys->CreateResource<IRenderTarget>();
+			blabla->CreateScreenSize();
+			blabla->AddRef();
+			CameraObject* cam = new CameraObject(engine);
+			cam->GetCameraComponent()->SetRenderTarget(blabla);
+			cam2 = cam->GetCameraComponent();
+			this->AddElement(cam);
+			cam->PRS.SPosition() = Vector3(0, 0, 5.0f);
+
+
 			light = new LightObject(engine);
 			light->AddRef();
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
-			light->GetGameObjectType() = Dynamic;
+			light->GetGameObjectType() = GOT_Dynamic;
 			this->AddElement(light);
 
 			go = new CameraObject(engine);
-			go->GetGameObjectType() = Dynamic;
+			go->GetGameObjectType() = GOT_Dynamic;
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
@@ -96,15 +106,20 @@ namespace TikiEngine
 				Rectangle(10, 10, 200, 180)
 			);
 
-			engine->sprites->Draw(
-				engine->graphics->GetNormalTarget(),
-				Rectangle(10, 200, 200, 180)
-			);
+			if(args.CurrentCamera != cam2)
+			{
+				engine->sprites->Draw(
+					blabla,
+					Rectangle(10, 200, 200, 180)
+					);
+			}
 
 			engine->sprites->Draw(
 				engine->graphics->GetScreenTarget(),
 				Rectangle(10, 390, 200, 180)
 				);
+
+
 
 		}
 
@@ -120,25 +135,29 @@ namespace TikiEngine
 			//	[](GameObject* go) -> bool { return go->PRS.GPosition().X < 0; } 
 			//);
 			
-			if(args.Input.GetKeyPressed(KEY_ALPHA1))
+			if(args.Input.GetKey(KEY_ALPHA1))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
+				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(0.01f,0,0);
+				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
 			}
-			if(args.Input.GetKeyPressed(KEY_ALPHA2))
+			if(args.Input.GetKey(KEY_ALPHA2))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
+				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(-0.01f,0,0);
+				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
 			}
-			if(args.Input.GetKeyPressed(KEY_ALPHA3))
+			if(args.Input.GetKey(KEY_ALPHA3))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
+				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),-0.01f);
+				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
 			}
-			if(args.Input.GetKeyPressed(KEY_ALPHA4))
+			if(args.Input.GetKey(KEY_ALPHA4))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
+				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),0.01f);
+				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
+				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
 			}
 
 			//links
