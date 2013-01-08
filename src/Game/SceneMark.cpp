@@ -114,6 +114,21 @@ namespace TikiEngine
 			explosionPR->SetParticleEffect(expEffect);
 			this->AddElement(explosionEmitter);
 
+
+			// Blood
+			bloodEmitter = new GameObject(engine);
+			bloodEmitter->PRS.SPosition() = Vector3(3, 2, 0);
+			//bloodEmitter->PRS.SScale() = Vector3(0.01f);
+
+			bloodEffect = new PEBlood(engine);
+			//bloodEffect->SIsAlive(false);
+
+			IParticleRenderer* bloodPR = engine->librarys->CreateComponent<IParticleRenderer>(bloodEmitter);
+			bloodPR->SetTexture(engine->content->LoadTexture(L"particle/Blood")); 
+			bloodPR->SetParticleEffect(bloodEffect);
+			this->AddElement(bloodEmitter);
+
+
 			Scene::Initialize(args);
 		}
 
@@ -151,11 +166,11 @@ namespace TikiEngine
 
             if (args.Input.GetKeyPressed(KEY_SPACE))
                 expEffect->Trigger(
-                    (UInt32)(500),
+                    (UInt32)(200 * args.Time.ElapsedTime),
                     Vector3::TransformCoordinate(
                     Vector3(-0.8f, 0, 0),
                     Matrix::Transpose(elements[0]->PRS.GetWorld())
-                    ) * 100.0f
+                    ) * 100
                 );
 
 
