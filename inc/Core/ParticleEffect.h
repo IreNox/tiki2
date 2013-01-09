@@ -53,7 +53,7 @@ namespace TikiEngine
 			UInt32 GParticleUsed();
 			const Particle* GParticles() const;
 
-			void Trigger(UInt32 count, const Vector3 pos = Vector3::Zero);
+			void Trigger(double elapsedTime, double releasePerSecound, const Vector3 pos = Vector3::Zero);
 			virtual void Update(const UpdateArgs& args);
 
 

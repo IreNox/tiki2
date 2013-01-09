@@ -99,8 +99,17 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Trigger
-		void ParticleEffect::Trigger(UInt32 count, const Vector3 pos)
+		void ParticleEffect::Trigger(double elapsedTime, double releasePerSecound, const Vector3 pos)
 		{
+			deltaTime -= elapsedTime;
+
+			UInt32 count = 0;
+			while (deltaTime < 0)
+			{
+				deltaTime += 1.0f / releasePerSecound;
+				count++;
+			}
+
 			if (multiplayReleaseCount) count *= renderType + 1;
 
 			UInt32 i = 0;
@@ -124,16 +133,7 @@ namespace TikiEngine
 
 			if (isAlive)
 			{
-				deltaTime -= args.Time.ElapsedTime;
-
-				UInt32 count = 0;
-				while (deltaTime < 0)
-				{
-					deltaTime += 1.0f / releasePerSecound;
-					count++;
-				}
-
-				this->Trigger(count);
+				this->Trigger(args.Time.ElapsedTime, releasePerSecound);
 			}
 
 			UInt32 i = 0;

@@ -119,6 +119,7 @@ namespace TikiEngine
                     {
                         // explosion
                         peExplosion->Trigger(
+							args.Time.ElapsedTime,
                             peExplosion->GParticleBudget(),
                             Vector3::TransformCoordinate(
                             Vector3(0, 0, 0),
@@ -143,7 +144,8 @@ namespace TikiEngine
                     {
                         // Fire
                         peFire->Trigger(
-                            (UInt32)(200 * args.Time.ElapsedTime),
+							args.Time.ElapsedTime,
+                            200,
                             Vector3::TransformCoordinate( 
                             Vector3(0, 0, 0),
                             Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
@@ -152,7 +154,8 @@ namespace TikiEngine
 
                         // smoke
                         peSmoke->Trigger(
-                            (UInt32)(200 * args.Time.ElapsedTime),
+							args.Time.ElapsedTime,
+                            200,
                             Vector3::TransformCoordinate(
                             Vector3(0, 0, 0),
                             Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
