@@ -20,6 +20,9 @@ namespace TikiEngine
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* material) = 0;
 
+			virtual Matrix& GetLocalMatrix() = 0;
+			virtual void SetLocalMatrix(const Matrix& matrix) = 0;
+
 			virtual const string& GetName() = 0;
 
 		};

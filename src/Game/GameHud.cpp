@@ -144,7 +144,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 		
-		#pragma region Member - Draw/Update
+		#pragma region Member - Draw
 		void GameHud::Draw(const DrawArgs& args)
 		{
 			UInt32 i = 0;
@@ -174,14 +174,15 @@ namespace TikiEngine
 					0.0f,
 					Vector2::Zero,
 					0.35f,
-					1.0f
+					0.9f
 				);
 
 				args.SpriteBatch->DrawString(
 					GUIControl::GetDefaultFont(),
 					skill->GetCurrentLevelString(),
 					cont->GetBoundingBox().Position() + Vector2(13.0f),
-					Color::White
+					Color::White,
+					0.8f
 				);
 
 				i++;

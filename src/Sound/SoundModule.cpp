@@ -160,7 +160,7 @@ namespace TikiEngine
 			FMOD_CREATESOUNDEXINFO info;
 			ZeroMemory(&info, sizeof(info));
 			info.cbsize = sizeof(info);
-			info.length = stream->GetLength();
+			info.length = (UInt32)stream->GetLength();
 
 			system->createStream(data, FMOD_OPENMEMORY, &info, &sound);
 			//system->createStream(fileName, FMOD_DEFAULT, 0, &sound);

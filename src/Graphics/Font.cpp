@@ -97,7 +97,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Draw
-		float Font::DrawChar(wchar_t c, const Vector2& pos, const ::Color& color)
+		float Font::DrawChar(wchar_t c, const Vector2& pos, const ::Color& color, float layerDepth)
 		{
 			RectangleF r;
 
@@ -112,7 +112,8 @@ namespace TikiEngine
 						r.Height
 					),
 					r,
-					color
+					color,
+					layerDepth
 				);
 			}
 

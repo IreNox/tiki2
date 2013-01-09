@@ -411,7 +411,7 @@ namespace TikiEngine
 		#pragma region Class
 #ifdef TIKI_ENGINE
 		TikiMesh::TikiMesh(Engine* engine)
-			: IModelMesh(engine), indexBuffer(0), vertexBuffer(0), decl(0), visible(true),
+			: IModelMesh(engine), indexBuffer(0), vertexBuffer(0), decl(0), visible(true), localMatrix(Matrix::Identity),
 #else
 		TikiMesh::TikiMesh()
 			: IModelMesh(0),
@@ -442,7 +442,7 @@ namespace TikiEngine
 			if (!this->GetReady() || !visible) return;
 
 			material->GetShader()->SelectSubByIndex(args.Mode);
-			material->UpdateDrawArgs(args, gameObject);
+			material->UpdateDrawArgs(args, gameObject, localMatrix);
 			material->Apply();
 
 			if (hasDeformation)
@@ -452,9 +452,9 @@ namespace TikiEngine
 
 			decl->Apply();
 			vertexBuffer->Apply();
-			(args.Mode == DM_Shadows || true ? indexAdjacencyBuffer : indexBuffer)->Apply();
+			(args.Mode == DM_Shadows ? indexAdjacencyBuffer : indexBuffer)->Apply();
 
-			if (args.Mode == DM_Shadows || true)
+			if (args.Mode == DM_Shadows)
 			{
 				if (!hasAdjacencyIndices) return;
 				

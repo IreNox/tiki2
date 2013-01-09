@@ -18,7 +18,7 @@ namespace TikiEngine
 
 			void Create(wcstring fontName, float fontSize);
 
-			float DrawChar(wchar_t c, const Vector2& pos, const Color& color);
+			float DrawChar(wchar_t c, const Vector2& pos, const Color& color, float layerDepth);
 
 			float GetHeight();
 			bool ContainsChar(wchar_t cChar);

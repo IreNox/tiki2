@@ -9,7 +9,7 @@ class Matrix
 {
 public:
 
-	#pragma region struct
+	#pragma region Vars
 	union 
 	{
 		struct
@@ -50,8 +50,7 @@ public:
 		float m[4][4];
 		float n[16];
 	};
-	#pragma endregion struct
-	
+	#pragma endregion	
 
 	inline Matrix(void):
 		M11(0.0f), M12(0.0f), M13(0.0f), M14(0.0f), 
@@ -352,6 +351,7 @@ public:
 	static Matrix CreatePerspectiveFieldOfView(float fieldOfView, float aspectRatio, float nearPlaneDistance, float farPlaneDistance);
 	static Matrix CreatePerspective(float width, float height, float nearPlaneDistance, float farPlaneDistance);
 	static Matrix CreateOrthographic(float width, float height, float zNearPlane, float zFarPlane);
+	static Matrix CreateOrthographicOffCenter(float width, float height, float zNearPlane, float zFarPlane);
 	static Matrix CreateLookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector);
 	static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
 	static Matrix CreateFromQuaternion(const Quaternion& quaternion);
@@ -422,7 +422,7 @@ public:
 			this->M44 - matrix.M44);
 	}
 
-	inline Matrix operator* (const Matrix& matrix)
+	inline Matrix operator* (const Matrix& matrix) const
 	{
 		return Matrix(
 			this->M11 * matrix.M11 + this->M12 * matrix.M21 + this->M13 * matrix.M31 + this->M14 * matrix.M41,

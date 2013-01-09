@@ -21,7 +21,7 @@ namespace TikiEngine
 			void SelectSubByName(cstring name);
 
 			void Apply();
-			void ApplyVars(GameObject* gameObject, Material* material);
+			void ApplyVars(GameObject* gameObject, Material* material, const Matrix& localMatrix);
 
 			void SetConstantBuffer(cstring key, IConstantBuffer* constantBuffer);
 

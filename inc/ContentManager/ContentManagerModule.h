@@ -22,6 +22,7 @@ namespace TikiEngine
 
 			void Dispose();
 
+			Stream* LoadData(wstring name);
 			IResource* Load(PInt hash, wstring name);
 
 			Mesh* LoadMesh(const wstring& name);

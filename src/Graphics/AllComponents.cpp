@@ -252,7 +252,7 @@ namespace TikiEngine
 				shader->SetTexture("tex", texture);
 
 			shader->Apply();
-			shader->ApplyVars(gameObject, 0);
+			shader->ApplyVars(gameObject, 0, Matrix::Identity);
 
 			DllMain::Context->Draw(count, 0);
 
@@ -363,7 +363,7 @@ namespace TikiEngine
 			//->Append(cloddy_VertexFormat::X4F_12());
 
 			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
-
+			
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
 			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 3);
@@ -375,11 +375,24 @@ namespace TikiEngine
 			description->SetIndexBuffer(indexBuffer);
 			description->SetVertexFormat(vertexFormat);
 			description->SetTriangulationCallback(callback);
-			description->EnableLogging();
+			//description->EnableLogging();
+
+			Stream* stream = engine->content->LoadData(L"Data/Cloddy/Licence/licence.dat");
+
+			UInt32 len = (UInt32)stream->GetLength();
+			Byte* data = new Byte[len];
+
+			stream->Read(data, 0, len);
+			SafeRelease(&stream);
+
+			CodeX::Ptr<ByteBuffer> licBuffer = ByteBuffer::Raw(len);
+			licBuffer->SetRawPointer(data);
 
 			manager = new cloddy_CloddyManager(description);
-			manager->SetLicence("Data/Cloddy/Licence/licence.dat");
+			manager->SetLicence(licBuffer);
 			manager->Initialize();
+
+			delete[](data);
 			
 			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
@@ -391,7 +404,7 @@ namespace TikiEngine
 			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
-			terrain->SetTolerance(5.0f);
+			terrain->SetTolerance(2.5f);
 #if _DEBUG
 			}
 #endif

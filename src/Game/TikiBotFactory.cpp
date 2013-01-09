@@ -112,6 +112,8 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreateEnemyTower(GameObject* go)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_enemy"));
+
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
@@ -124,7 +126,7 @@ namespace TikiEngine
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.25f);
+			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
@@ -231,12 +233,12 @@ namespace TikiEngine
 			botDesc.Faction = 0;
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 2.0f;
-			botDesc.MaxHealth = 100;	
+			botDesc.MaxHealth = 100;
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(0.25f);
+			bot->SetScale(2.0f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			

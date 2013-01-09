@@ -23,7 +23,7 @@ namespace TikiEngine
 
 			virtual void Apply();
 
-			virtual void UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject);
+			virtual void UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject, const Matrix& localMatrix = Matrix::Identity);
 
 			IShader* GetShader();
 			void SetShader(IShader* shader);

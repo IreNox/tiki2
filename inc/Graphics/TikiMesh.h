@@ -50,6 +50,9 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* material);
 
+			Matrix& GetLocalMatrix() { return localMatrix; }
+			void SetLocalMatrix(const Matrix& matrix) { localMatrix = matrix; }
+
 			bool GetVisible() { return visible; }
 			void SetVisible(bool vis) { visible = vis; }
 
@@ -61,16 +64,11 @@ namespace TikiEngine
 
 			bool visible;
 
+			Matrix localMatrix;
 			Material* material;
 
 			bool hasDeformation;
 			bool hasAdjacencyIndices;
-
-			//void* vertexData;
-			//UInt32 vertexLength;
-
-			//UInt32* indexData;
-			//UInt32 indexCount;
 
 			UInt32* adjacencyIndexData;
 			UInt32 adjacencyIndexCount;

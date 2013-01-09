@@ -14,7 +14,7 @@ using namespace TikiEngine;
 using namespace TikiEngine::Game;
 using namespace TikiEngine::Description;
 
-Scene* GetStartScene(Engine* engine)
+inline Scene* GetStartScene(Engine* engine)
 {
 #if _DEBUG
 	DWORD buffer;
@@ -24,7 +24,7 @@ Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && false)
+	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
 		//scene = new SceneTim(engine);
 		//scene = new SceneMark(engine);

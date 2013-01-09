@@ -21,6 +21,7 @@ namespace TikiEngine
 
 #if _DEBUG
 			bool useMouse;
+			bool useRealCamera;
 #endif
 
 			float zoom;

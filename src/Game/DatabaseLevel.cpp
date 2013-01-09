@@ -378,7 +378,6 @@ namespace TikiEngine
 				gameState->GetPart<PlayerBase>(assignment)->MainBuilding = this;
 				break;
 			case 12:
-				this->SModel(engine->content->LoadModel(L"tower_mg"));
 				gameState->GetBotFactory()->CreateEnemyTower(this);
 				break;
 			}

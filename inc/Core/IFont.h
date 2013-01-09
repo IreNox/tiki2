@@ -18,7 +18,7 @@ namespace TikiEngine
 
 			virtual void Create(wcstring fontName, float fontSize) = 0;
 
-			virtual float DrawChar(wchar_t c, const Vector2& pos, const Color& color) = 0;
+			virtual float DrawChar(wchar_t c, const Vector2& pos, const Color& color, float layerDepth) = 0;
 
 			virtual ITexture* GetTexture() = 0;
 

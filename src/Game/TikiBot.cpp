@@ -350,6 +350,13 @@ namespace TikiEngine
 			if (EntityType() == ET_Building)
 				return;
 
+			// Update Hero Skills
+			if (EntityType() == ET_Hero)
+				skillSys->Update(args);
+
+			if (EntityType() == ET_Tower)
+				gameObject->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromQuaternion(gameObject->PRS.GRotation()));
+
 			// process the currently active goal. Note this is required even if the bot
 			// is under user control. This is because a goal is created whenever a user 
 			// clicks on an area of the map that necessitates a path planning request.
@@ -370,10 +377,6 @@ namespace TikiEngine
 			
             // aim the current weapon at the current target and takes a shot if possible
             weaponSys->TakeAimAndShoot(args);
-
-			// Update Hero Skills
-			if (EntityType() == ET_Hero)
-				skillSys->Update(args);
 		}
 
 

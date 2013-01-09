@@ -48,10 +48,11 @@ namespace TikiEngine
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
 			GameObject* go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"marine_l"));
+			go->SModel(engine->content->LoadModel(L"tower_enemy"));
 			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(5, 0, 5);
 
-			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			//go->GModel()->GetMesh("MG")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(1, 0, 0));
 
 			this->AddElement(go);
 
@@ -220,12 +221,12 @@ namespace TikiEngine
 			Scene::Draw(args);
 
 			//engine->sprites->Draw(
-			//	engine->graphics->GetLightTarget(),
+			//	engine->graphics->GetNormalTarget(),
 			//	Rectangle(10, 10, 200, 180)
 			//);
 
 			//engine->sprites->Draw(
-			//	engine->graphics->GetNormalTarget(),
+			//	engine->graphics->GetLightTarget(),
 			//	Rectangle(10, 200, 200, 180)
 			//);
 
@@ -233,8 +234,7 @@ namespace TikiEngine
 			//	engine->graphics->GetScreenTarget(),
 			//	Rectangle(10, 390, 200, 180)
 			//);
-
-
+			
 			//Vector2 mouse = Vector2(1.1f - args.Update.Input.MousePosition.X + 0.1f, 1.1f - args.Update.Input.MousePosition.Y + 0.1f);
 			//Vector2 rot = Vector2(0.3f * mouse.X, 0.4f * mouse.Y);
 
@@ -260,8 +260,12 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{
-			//float b = (float)args.Time.TotalTime / 4;
-			//elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
+			
+			float b = (float)args.Time.TotalTime / 4.0f;
+			b = fmodf(b, 6.28318f);
+			elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
+			elements[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));
+			//elements[0]->GModel()->GetMesh("MG")->SetLocalMatrix(Matrix::CreateFromAxisAngle(Vector3::Up, b));
 
 			Vector3 move = Vector3(
 				(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),

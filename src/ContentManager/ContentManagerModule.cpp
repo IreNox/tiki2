@@ -213,19 +213,7 @@ namespace TikiEngine
 
 					if (loadFile)
 					{
-						UInt32 id;
-						Stream* stream;
-						if (resourcePackage.TryGetValue(name, &id))
-						{
-							stream = new MemoryStream(
-								resourceContext->ReadPartPointer(id),
-								resourceContext->ReadPart(id).ArrayCount
-							);
-						}
-						else
-						{
-							stream = new FileStream(name, FM_Read);
-						}
+						Stream* stream = this->LoadData(name);
 						stream->AddRef();
 
 						if (stream == 0)
@@ -245,6 +233,29 @@ namespace TikiEngine
 			}
 			
 			return value;
+		}
+		#pragma endregion
+
+		#pragma region Member - LoadData
+		Stream* ContentManagerModule::LoadData(wstring name)
+		{
+			engine->HPath.CheckPath(name);
+
+			UInt32 id;
+			Stream* stream;
+			if (resourcePackage.TryGetValue(name, &id))
+			{
+				stream = new MemoryStream(
+					resourceContext->ReadPartPointer(id),
+					resourceContext->ReadPart(id).ArrayCount
+					);
+			}
+			else
+			{
+				stream = new FileStream(name, FM_Read);
+			}
+
+			return stream;
 		}
 		#pragma endregion
 

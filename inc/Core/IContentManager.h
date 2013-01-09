@@ -27,6 +27,7 @@ namespace TikiEngine
 			}
 			virtual ~IContentManager() {}
 
+			virtual Stream* LoadData(wstring name) = 0;
 			virtual IResource* Load(PInt hash, wstring name) = 0;
 
 			virtual Mesh* LoadMesh(const wstring& name) = 0;

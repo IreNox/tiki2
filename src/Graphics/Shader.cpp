@@ -62,13 +62,14 @@ namespace TikiEngine
 			pass->Apply(0, context);
 		}
 
-		void Shader::ApplyVars(GameObject* gameObject, Material* material)
+		void Shader::ApplyVars(GameObject* gameObject, Material* material, const Matrix& localMatrix)
 		{
 			if (type == ST_Object)
 			{
 				CBObjectData* objData = DllMain::ModuleGraphics->GetCBufferObject()->MapTI();
 
 				gameObject->PRS.FillWorldMatrix(&objData->WorldM);
+				objData->WorldM = Matrix::Multiply(objData->WorldM, localMatrix);
 
 				objData->WorldMIT = Matrix::Transpose(
 					Matrix::Invert(objData->WorldM)

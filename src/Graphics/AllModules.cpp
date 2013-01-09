@@ -922,7 +922,7 @@ namespace TikiEngine
 		#pragma region SpriteBatchModule
 		#pragma region Class
 		SpriteBatchModule::SpriteBatchModule(Engine* engine)
-			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0), sprites()
+			: ISpriteBatch(engine), shader(0), declaration(0), buffer(0)
 		{
 		}
 
@@ -935,31 +935,17 @@ namespace TikiEngine
 		#pragma region Member - Init/Dispose
 		bool SpriteBatchModule::Initialize(EngineDescription& desc)
 		{
-			UInt32 temp = 0;
-
 			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
 			shader->AddRef();
-
-			//shader->SetMatrix("spViewM", Matrix::Identity);
-			//shader->SetMatrix("spProjM", Matrix::Identity);
-			//shader->SetMatrix("spLocalM", Matrix::Identity);
-			//shader->SetMatrix("spWorldM", Matrix::Identity);
-
-			List<InputElement> elements = List<InputElement>(SpriteBatchVertex::Declaration, SpriteBatchVertex::DeclarationCount, true);
 
 			declaration = new VertexDeclaration(
 				engine,
 				shader,
-				&elements
+				SpriteBatchVertex::Declaration,
+				SpriteBatchVertex::DeclarationCount
 			);
 
 			buffer = new DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
-
-			//viewMatrix = Matrix::CreateLookAt(
-			//	Vector3(0, 0, 10),
-			//	Vector3::Zero,
-			//	Vector3::Up
-			//);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));
@@ -978,68 +964,54 @@ namespace TikiEngine
 		#pragma region Member - Begin/End
 		void SpriteBatchModule::Begin()
 		{			
-			UInt32 i = 0;
-			while (i < sprites.Count())
-			{
-				sprites.GetKVPRef(i).GetValueRef().Clear();
-				i++;
-			}
-
-			//matrices.Clear();
+			spriteInfos.Clear();
+			spriteVertices.Clear();
 		}
 
 		void SpriteBatchModule::End()
 		{
-			if (sprites.Count() == 0) return;
+			if (spriteInfos.Count() == 0) return;
+			spriteInfos.Sort();
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Interface);
-			DllMain::ModuleGraphics->SetStateDepthEnabled(false);
 			DllMain::ModuleGraphics->GetInterfaceTarget()->ApplyFirstAndOnly();
+
+			SpriteBatchVertex* vertices = buffer->Map(spriteVertices.Count());
+			memcpy(vertices, spriteVertices.GetInternalData(), sizeof(SpriteBatchVertex) * spriteVertices.Count());
+			buffer->Unmap();
 
 			UINT offset = 0;
 			UINT stride = declaration->GetElementSize();
 
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
+			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 			declaration->Apply();
 
+			ID3D11Buffer* vertexBuffer = this->buffer->GetBuffer();
+			DllMain::Context->IASetVertexBuffers(
+				0,
+				1,
+				&vertexBuffer,
+				&stride,
+				&offset
+			);
+
 			UInt32 i = 0;
-			while (i < sprites.Count())
+			Sprite& info = Sprite();
+			while (i < spriteInfos.Count())
 			{
-				List<SpriteBatchVertex>& vertices = sprites.GetKVPRef(i).GetValueRef();
+				info = spriteInfos.GetRef(i);
 
-				if (vertices.Count() != 0)
-				{
-					DllMain::Context->IASetVertexBuffers(0, 0, 0, 0, 0);
+				shader->SetTexture(
+					"tex",
+					spriteTextures[info.TextureIndex]
+				);
+				shader->Apply();
 
-					SpriteBatchVertex* bufferData = this->buffer->Map(vertices.Count());
-
-					memcpy(
-						bufferData,
-						vertices.GetInternalData(),
-						sizeof(SpriteBatchVertex) * vertices.Count()
-					);
-
-					this->buffer->Unmap();
-
-					ID3D11Buffer* buffer = this->buffer->GetBuffer();
-					DllMain::Context->IASetVertexBuffers(
-						0,
-						1,
-						&buffer,
-						&stride,
-						&offset
-					);
-
-					shader->SetTexture("tex", sprites.GetKVP(i).GetKey());
-					shader->Apply();
-
-					DllMain::Context->Draw(vertices.Count(), 0);
-				}
+				DllMain::Context->Draw(4, info.BufferIndex);
 
 				i++;
 			}
-			
+
 			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Disable);
 		}
 		#pragma endregion
@@ -1052,8 +1024,8 @@ namespace TikiEngine
 			);
 
 			Vector2 br = Vector2(
-				tl.X + (pixelSize.X * texture->GetWidth()),
-				tl.Y - (pixelSize.Y * texture->GetHeight())
+				tl.X + texture->GetWidth(),
+				tl.Y - texture->GetHeight()
 			);
 
 			drawInternal(
@@ -1078,8 +1050,8 @@ namespace TikiEngine
 			); 
 
 			Vector3 br = Vector3(
-				tl.X + (pixelSize.X * destRect.Width),
-				tl.Y - (pixelSize.Y * destRect.Height),
+				tl.X + destRect.Width,
+				tl.Y - destRect.Height,
 				0.0f
 			);
 
@@ -1098,16 +1070,16 @@ namespace TikiEngine
 		{
 			Vector3 tl = transformPoint(
 				Vector3(
-				(float)destRect.X,
-				(float)destRect.Y,
-				0.0f
+					(float)destRect.X,
+					(float)destRect.Y,
+					1.0f
 				)
 			); 
 
 			Vector3 br = Vector3(
-				tl.X + (pixelSize.X * destRect.Width),
-				tl.Y - (pixelSize.Y * destRect.Height),
-				0.0f
+				tl.X + destRect.Width,
+				tl.Y - destRect.Height,
+				-1.0f
 			);
 
 			Vector2 size = texture->GetSize();
@@ -1122,8 +1094,8 @@ namespace TikiEngine
 			drawInternal(
 				texture,
 				tl,
-				Vector3(br.X, tl.Y, 0.0f),
-				Vector3(tl.X, br.Y, 0.0f),
+				Vector3(br.X, tl.Y, -1.0f),
+				Vector3(tl.X, br.Y, -1.0f),
 				br,
 				texCorrd,
 				Color::White
@@ -1132,24 +1104,29 @@ namespace TikiEngine
 
 		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const Color& color)
 		{
-			this->Draw(
-				texture,
-				destRect,
-				texture->GetRectangle(),
-				color
-				);
+			this->Draw(texture, destRect, texture->GetRectangle(), color, 1.0f);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const Color& color, float layerDepth)
+		{
+			this->Draw(texture, destRect, texture->GetRectangle(), color, layerDepth);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const RectangleF& srcRect, const Color& color)
 		{
+			this->Draw(texture, destRect, srcRect, color, 1.0f);			
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const RectangleF& srcRect, const Color& color, float layerDepth)
+		{
 			Vector3 tl = transformPoint(
-				Vector3(destRect.X, destRect.Y, 0.0f)
-				); 
+				Vector3(destRect.X, destRect.Y, layerDepth)
+			); 
 
 			Vector3 br = Vector3(
-				tl.X + (pixelSize.X * destRect.Width),
-				tl.Y - (pixelSize.Y * destRect.Height),
-				0.0f
+				tl.X + destRect.Width,
+				tl.Y - destRect.Height,
+				-layerDepth
 			);
 
 			Vector2 size = texture->GetSize();
@@ -1164,8 +1141,8 @@ namespace TikiEngine
 			drawInternal(
 				texture,
 				tl,
-				Vector3(br.X, tl.Y, 0.0f),
-				Vector3(tl.X, br.Y, 0.0f),
+				Vector3(br.X, tl.Y, -layerDepth),
+				Vector3(tl.X, br.Y, -layerDepth),
 				br,
 				texCorrd,
 				color
@@ -1219,14 +1196,14 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - DrawString
-		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position, const Color& color)
+		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position, const Color& color, float layerDepth)
 		{
 			UInt32 i = 0;
 			float width = 0;
 			Vector2 pos = position;
 			while (i < text.length())
 			{
-				width = font->DrawChar(text[i], pos, color);
+				width = font->DrawChar(text[i], pos, color, layerDepth);
 
 				pos.X += width;
 				i++;
@@ -1238,55 +1215,45 @@ namespace TikiEngine
 		void SpriteBatchModule::Handle(IGraphics* graphics, const ScreenSizeChangedArgs& args)
 		{
 			screenSize = args.CurrentViewPort->GetSize();
-			pixelSize = Vector2(
-				2.0f / screenSize.X,
-				2.0f / screenSize.Y
-			);
+			projMatrix = Matrix::CreateOrthographicOffCenter(screenSize.X,	screenSize.Y, 0.001f, 10.0f);
 
-			//projMatrix = Matrix::CreateOrthographic(
-			//	screenSize.X,
-			//	screenSize.Y,
-			//	1.0f,
-			//	10000.0f
-			//);
+			shader->SetMatrix("SBProjM", projMatrix);
 		}
 		#pragma endregion
 
 		#pragma region Private Member
-		Vector3 SpriteBatchModule::transformPoint(Vector3 point)
+		Vector3 SpriteBatchModule::transformPoint(const Vector3& point)
 		{
 			return Vector3(
-				-1.0f + (point.X * pixelSize.X),
-				1.0f - (point.Y * pixelSize.Y),
-				point.Z
+				point.X,
+				(screenSize.Y - point.Y),
+				-point.Z
 			);
 		}
 
 		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCoord, const Color& color)
 		{
-			if (!sprites.ContainsKey(texture))
-			{
-				sprites.Add(
-					texture,
-					List<SpriteBatchVertex>()
-				);
-				//sprites.Optimize();
-			}
-						
-			SpriteBatchVertex vertex[6] = {
-				{ tl.X, tl.Y, tl.Z, texCoord.X, texCoord.Y, color.R, color.G, color.B, color.A }, // TL
-				{ tr.X, tr.Y, tr.Z, texCoord.Z, texCoord.Y, color.R, color.G, color.B, color.A }, // TR
-				{ bl.X, bl.Y, bl.Z, texCoord.X, texCoord.W, color.R, color.G, color.B, color.A }, // BL
-				{ bl.X, bl.Y, bl.Z, texCoord.X, texCoord.W, color.R, color.G, color.B, color.A }, // BL
-				{ tr.X, tr.Y, tr.Z, texCoord.Z, texCoord.Y, color.R, color.G, color.B, color.A }, // TR
-				{ br.X, br.Y, br.Z, texCoord.Z, texCoord.W, color.R, color.G, color.B, color.A }, // BR
-			};
+			Int32 texIndex = spriteTextures.IndexOf(texture);
 
-			sprites.GetRef(texture).AddRange(
-				vertex,
-				0,
-				6
-			);
+			if (texIndex == -1)
+			{
+				texIndex = spriteTextures.Count();
+				spriteTextures.Add(texture);
+			}
+
+			Sprite info;
+			info.TextureIndex = texIndex;
+			info.BufferIndex = spriteVertices.Count();
+			info.LayerDepth = tl.Z;
+			spriteInfos.Add(info);
+
+			SpriteBatchVertex vertex[4] = {
+				{ bl.X, bl.Y, bl.Z, texCoord.X, texCoord.W, color.R, color.G, color.B, color.A }, // BL
+				{ tl.X, tl.Y, tl.Z, texCoord.X, texCoord.Y, color.R, color.G, color.B, color.A }, // TL
+				{ br.X, br.Y, br.Z, texCoord.Z, texCoord.W, color.R, color.G, color.B, color.A }, // BR
+				{ tr.X, tr.Y, tr.Z, texCoord.Z, texCoord.Y, color.R, color.G, color.B, color.A }  // TR
+			};
+			spriteVertices.AddRange(vertex, 0, 4);
 		}
 		#pragma endregion
 		#pragma endregion

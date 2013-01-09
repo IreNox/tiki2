@@ -261,6 +261,15 @@ Matrix Matrix::CreateOrthographic(float width, float height, float zNearPlane, f
 	return result;
 }
 
+Matrix Matrix::CreateOrthographicOffCenter(float w, float h, float zn, float zf)
+{
+	return Matrix(
+		 2.0f/w, 0.0f,		0.0f,			0.0f,
+		 0.0f,	 2.0f/h,	0.0f,			0.0f,
+		 0.0f,	 0.0f,		1.0f/(zn-zf),	0.0f,
+		-1.0f,	-1.0f,		zn/(zn-zf),		1.0f
+	);
+}
 #pragma endregion 
 
 #pragma region LookAt

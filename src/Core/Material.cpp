@@ -21,11 +21,11 @@ namespace TikiEngine
 			shader->Apply();
 		}
 
-		void Material::UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject)
+		void Material::UpdateDrawArgs(const DrawArgs& args, GameObject* gameObject, const Matrix& localMatrix)
 		{
 			if (!this->GetReady()) return;
 
-			shader->ApplyVars(gameObject, this);
+			shader->ApplyVars(gameObject, this, localMatrix);
 		}
 
 		IShader* Material::GetShader()
@@ -42,7 +42,7 @@ namespace TikiEngine
 
 		bool Material::GetReady()
 		{
-			return shader->GetReady();
+			return shader != 0 && shader->GetReady();
 		}
 	}
 }
