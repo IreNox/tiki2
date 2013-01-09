@@ -1001,10 +1001,8 @@ namespace TikiEngine
 			{
 				info = spriteInfos.GetRef(i);
 
-				shader->SetTexture(
-					"tex",
-					spriteTextures[info.TextureIndex]
-				);
+				shader->SetSingle("value", info.Value);
+				shader->SetTexture("tex", spriteTextures[info.TextureIndex]);
 				shader->Apply();
 
 				DllMain::Context->Draw(4, info.BufferIndex);
@@ -1166,6 +1164,11 @@ namespace TikiEngine
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color)
 		{
+			this->Draw(texture, position, rotation, origin, scale,layerDepth, color, 0.0f);
+		}
+
+		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color, float value)
+		{
 			Vector3 origin3 = Vector3(origin, 0);
 			Vector3 size = Vector3(texture->GetSize(), 0);
 
@@ -1191,7 +1194,7 @@ namespace TikiEngine
 			bl = transformPoint(bl + position3);
 			br = transformPoint(br + position3);
 
-			drawInternal(texture, tl, tr, bl, br, Vector4(0.0f, 0.0f, 1.0f, 1.0f), color);
+			drawInternal(texture, tl, tr, bl, br, Vector4(0.0f, 0.0f, 1.0f, 1.0f), color, value);
 		}
 		#pragma endregion
 
@@ -1231,7 +1234,7 @@ namespace TikiEngine
 			);
 		}
 
-		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCoord, const Color& color)
+		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCoord, const Color& color, float value)
 		{
 			Int32 texIndex = spriteTextures.IndexOf(texture);
 
@@ -1244,6 +1247,7 @@ namespace TikiEngine
 			Sprite info;
 			info.TextureIndex = texIndex;
 			info.BufferIndex = spriteVertices.Count();
+			info.Value = value;
 			info.LayerDepth = tl.Z;
 			spriteInfos.Add(info);
 

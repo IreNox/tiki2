@@ -18,14 +18,19 @@ namespace TikiEngine
 
 		~TikiTimer() {}
 
-		void Reset()
+		inline void Reset()
 		{
 			elapsed = 0;
 		}
 
-		void ResetToReady()
+		inline void ResetToReady()
 		{
 			elapsed = this->Interval;
+		}
+
+		inline double GetCurrentState() const
+		{
+			return elapsed / Interval;
 		}
 
 		bool IsReady(const GameTime& time)

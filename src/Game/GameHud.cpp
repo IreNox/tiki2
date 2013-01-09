@@ -173,8 +173,10 @@ namespace TikiEngine
 					cont->GetBoundingBox().Position() + Vector2(13.0f),
 					0.0f,
 					Vector2::Zero,
-					0.35f,
-					0.9f
+					Vector2(0.35f),
+					0.9f,
+					Color::White,
+					skill->GetCooldownState()
 				);
 
 				args.SpriteBatch->DrawString(

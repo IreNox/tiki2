@@ -30,6 +30,8 @@ matrix SBProjM;
 /////////////
 #include "Data/Effects/IncOS/is_input.fx"
 
+float value;
+
 Texture2D tex;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +57,17 @@ PS_INPUT VS_Main(VS_INPUT input)
 ////////////////////////////////////////////////////////////////////////////////
 float4 PS_Main(PS_INPUT input) : SV_TARGET
 {
-	return tex.Sample(sam, input.UV.xy) * input.Color;
+	float4 color = input.Color;
+
+	float val = (value * 6.28318f) - 3.14159f;
+	float angle = atan2(input.UV.y - 0.5f, input.UV.x - 0.5f);
+	
+	if (val != 0 && angle <= val)
+	{
+		color.rgb -= 0.4;
+	}
+	
+	return saturate(tex.Sample(sam, input.UV.xy) * color);
 }
 
 

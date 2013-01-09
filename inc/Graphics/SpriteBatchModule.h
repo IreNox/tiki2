@@ -42,6 +42,7 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth, const Color& color);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color);
+			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color, float value);
 			
 			void DrawString(IFont* font, wstring text, const Vector2& position, const Color& color, float layerDepth = 1.0f);
 
@@ -54,6 +55,7 @@ namespace TikiEngine
 				UInt32 BufferIndex;
 				UInt32 TextureIndex;
 
+				float Value;
 				float LayerDepth;
 
 				inline bool operator>(const Sprite& rhs) const { return LayerDepth > rhs.LayerDepth; }
@@ -77,7 +79,7 @@ namespace TikiEngine
 
 			Vector3 transformPoint(const Vector3& point);
 
-			void drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCorrd, const Color& color);
+			void drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCorrd, const Color& color, float value = 0);
 
 		};
 	}
