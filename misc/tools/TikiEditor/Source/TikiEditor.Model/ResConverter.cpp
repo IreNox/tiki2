@@ -31,6 +31,8 @@ namespace TikiEditor
 		UInt32 len = 0;
 		UInt32 count = files->Count;
 
+		files->Sort();
+
 		System::Collections::Generic::List<int>^ fileLen = gcnew System::Collections::Generic::List<int>();
 		System::Collections::Generic::List<System::String^>^ filesP = gcnew System::Collections::Generic::List<System::String^>();
 

@@ -81,6 +81,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 			
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
@@ -157,6 +158,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
@@ -173,6 +175,7 @@ namespace TikiEngine
 			botDesc.Radius = 1.2f;
 			botDesc.MaxHealth = 300;
 			botDesc.EntityType = ET_Hero;
+			botDesc.MaxSpeed = 7.0f;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -189,6 +192,7 @@ namespace TikiEngine
 		{
 			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 			
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);

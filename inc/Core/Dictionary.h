@@ -34,6 +34,8 @@ public:
 			optimized = true;
 		}
 	}
+
+	inline void MarkAsOptimized() { optimized = true; }
 	#pragma endregion
 	
 	#pragma region Member - Add/Remove

@@ -54,7 +54,7 @@ namespace TikiEngine
 
 			this->selectionFrustum.Draw(args);
 #else
-			if(enabled & selectionRect.Width != 0 && selectionRect.Height != 0)
+			if(enabled && selectionRect.Width != 0 && selectionRect.Height != 0)
 				selectButton->Draw(args);
 #endif
 		}

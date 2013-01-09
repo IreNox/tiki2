@@ -12,6 +12,7 @@
 #include "..\src\Core\Transform.cpp"
 #include "..\src\Core\Quaternion.cpp"
 
+#include "..\src\Core\Mesh.cpp"
 #include "..\src\Core\TikiObject.cpp"
 #include "..\src\Core\FileStream.cpp"
 #include "..\src\Core\CompressedStream.cpp"

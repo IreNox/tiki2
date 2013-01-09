@@ -8,8 +8,10 @@
 
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
-#include "Core/IAnimation.h"
+
 #include "Core/IBone.h"
+#include "Core/IAnimation.h"
+#include "Core/IModelMesh.h"
 
 #include "Core/EventAnimation.h"
 
@@ -46,6 +48,7 @@ namespace TikiEngine
 			virtual void BlendToAnimation(IAnimation* animation, double time = 0.5) = 0;
 
 			virtual IBone* GetBone(string name) = 0;
+			virtual IModelMesh* GetMesh(string name) = 0;
 
 		};
 	}

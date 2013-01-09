@@ -13,6 +13,11 @@ public:
 	{
 	}
 
+	KeyValuePair(const KeyValuePair<TKey, TValue>& kvp)
+		: key(kvp.key), value(kvp.value)
+	{
+	}
+
 	~KeyValuePair()
 	{
 	}
@@ -35,6 +40,12 @@ public:
 	inline const TValue& GetValueCRef() const
 	{
 		return value;
+	}
+
+	inline void operator=(const KeyValuePair<TKey, TValue>& kvp)
+	{
+		this->key = kvp.key;
+		this->value = kvp.value;
 	}
 
 	inline bool operator<(const TKey& rhs) const

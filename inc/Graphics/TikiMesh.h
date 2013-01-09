@@ -4,7 +4,7 @@
 
 #include "Core/DefaultVertex.h"
 #include "Core/SkinningVertex.h"
-#include "Graphics/TikiBone.h"
+#include "Core/IModelMesh.h"
 
 #ifdef TIKI_ENGINE
 #include "Graphics/StaticBuffer.h"
@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		class Model;
 
-		class TikiMesh : public EngineObject
+		class TikiMesh : public IModelMesh
 		{
 		public:
 
@@ -32,16 +32,13 @@ namespace TikiEngine
 
 			void Draw(const DrawArgs& args, Model* model, GameObject* gameObject);
 
-			void GetIndexData(UInt32** data, UInt32* count);
 			void SetIndexData(const UInt32* data, UInt32 count);
+			void SetVertexData(const void* data, UInt32 dataLength);
 
 			void GetAdjacencyIndexData(UInt32** data, UInt32* count);
 			void SetAdjacencyIndexData(const UInt32* data, UInt32 count);
 
-			void GetVertexData(void** data, UInt32* length);
-			void SetVertexData(const void* data, UInt32 length);
-
-			inline const string& GetName() { return name; }
+			const string& GetName() { return name; }
 			inline void SetName(const string& name) { this->name = name; }
 
 			inline void SetDeformation(bool b) { hasDeformation = b; }
@@ -53,22 +50,27 @@ namespace TikiEngine
 			Material* GetMaterial();
 			void SetMaterial(Material* material);
 
+			bool GetVisible() { return visible; }
+			void SetVisible(bool vis) { visible = vis; }
+
 			bool GetReady();
 
 		private:
-
+						
 			string name;
+
+			bool visible;
 
 			Material* material;
 
 			bool hasDeformation;
 			bool hasAdjacencyIndices;
 
-			void* vertexData;
-			UInt32 vertexLength;
+			//void* vertexData;
+			//UInt32 vertexLength;
 
-			UInt32* indexData;
-			UInt32 indexCount;
+			//UInt32* indexData;
+			//UInt32 indexCount;
 
 			UInt32* adjacencyIndexData;
 			UInt32 adjacencyIndexCount;

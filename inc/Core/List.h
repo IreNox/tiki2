@@ -54,9 +54,9 @@ public:
 		return -1;
 	}
 
-	void Sort()
+	inline void Sort()
 	{
-		sortQuickSort(0, lengthData);	
+		sortQuickSort(0, lengthData - 1);	
 	}
 
 	inline void Clear()
@@ -259,7 +259,7 @@ private:
 #pragma endregion
 
 #pragma region Private Member - Sort
-	void sortQuickSort(int left, int right)
+	inline void sortQuickSort(int left, int right)
 	{
 		int iLeft = left;
 		int iRight = right;
@@ -281,7 +281,7 @@ private:
 		}
 	}
 
-	UInt32 sortQuickSeperate(int start, int end, int& i, int& j)
+	inline UInt32 sortQuickSeperate(int start, int end, int& i, int& j)
 	{
 		i = start;
 		j = end - 1;

@@ -15,7 +15,7 @@ namespace TikiEngine
 			if (mode == COM_Write)
 			{
 				int r;				
-				_wfopen_s(&file, fileName.c_str(), L"w");
+				_wfopen_s(&file, fileName.c_str(), L"wb");
 
 				bzipFile = BZ2_bzWriteOpen(&r, file, 9, 0, 30);
 
@@ -61,11 +61,11 @@ namespace TikiEngine
 			ptr += offset;
 
 			int r;				
-			_wfopen_s(&file, fileName.c_str(), L"r");
+			_wfopen_s(&file, fileName.c_str(), L"rb");
 
 			bzipFile = BZ2_bzReadOpen(&r, file, 0, 0, 0, (int)pos);
 
-			BZ2_bzRead(&r, bzipFile, ptr, bytesCount);
+			BZ2_bzRead(&r, bzipFile, ptr, (int)bytesCount);
 
 			if (r != BZ_OK)
 			{
@@ -74,6 +74,8 @@ namespace TikiEngine
 
 			BZ2_bzReadClose(&r, bzipFile);
 			fclose(file);
+
+			pos += bytesCount;
 		}
 		#pragma endregion
 
@@ -89,7 +91,7 @@ namespace TikiEngine
 			ptr += offset;
 
 			int r;
-			BZ2_bzWrite(&r, bzipFile, ptr, bytesCount);
+			BZ2_bzWrite(&r, bzipFile, ptr, (int)bytesCount);
 
 			if (r != BZ_OK)
 			{

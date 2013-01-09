@@ -1,9 +1,9 @@
 #include "Core/SceneGraphNode.h"
 #include "Core/IGraphics.h"
 
+#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
-#if TIKI_USE_SCENEGRAPH
 	SceneGraphNode::SceneGraphNode()
 		:bounds(), subdivided(false), layerDepth(0), parent(0), childDataCount(0)
 	{
@@ -443,5 +443,7 @@ namespace TikiEngine
 
 		return count + this->data.Count();	
 	}
-#endif
 }
+#else
+bool SceneGraphNodeEmpty = true;
+#endif

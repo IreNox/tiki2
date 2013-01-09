@@ -45,7 +45,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Get/Set
-		void Mesh::SetVertexData(void* data, UInt32 dataLength)
+		void Mesh::SetVertexData(const void* data, UInt32 dataLength)
 		{
 			SafeDeleteArray(&vertexData);
 
@@ -61,7 +61,7 @@ namespace TikiEngine
 			*dataLength = vertexDataLength;
 		}
 
-		void Mesh::SetIndexData(UInt32* data, UInt32 count)
+		void Mesh::SetIndexData(const UInt32* data, UInt32 count)
 		{
 			SafeDeleteArray(&indexData);
 
@@ -112,6 +112,7 @@ namespace TikiEngine
 		#pragma region Protected Member
 		void Mesh::loadFromStream(wcstring fileName, Stream* stream)
 		{
+#ifdef TIKI_ENGINE
 			UInt32 bufferIndex = 0;
 			char buffer[256];
 			ZeroMemory(buffer, 256);
@@ -362,6 +363,7 @@ namespace TikiEngine
 			);
 
 			delete[](file);
+#endif
 		}
 
 		void Mesh::saveToStream(wcstring fileName, Stream* stream)

@@ -411,20 +411,18 @@ namespace TikiEngine
 		#pragma region Class
 #ifdef TIKI_ENGINE
 		TikiMesh::TikiMesh(Engine* engine)
-			: EngineObject(engine), indexBuffer(0), vertexBuffer(0), decl(0),
+			: IModelMesh(engine), indexBuffer(0), vertexBuffer(0), decl(0), visible(true),
 #else
 		TikiMesh::TikiMesh()
-			: EngineObject(0),
+			: IModelMesh(0),
 #endif
-			  material(0), hasDeformation(false), indexData(0), vertexData(0), indexCount(0), vertexLength(0), adjacencyIndexData(0), adjacencyIndexCount(0)
+			  material(0), hasDeformation(false), adjacencyIndexData(0), adjacencyIndexCount(0)
 		{
 		}
 
 		TikiMesh::~TikiMesh()
 		{
-			SafeDeleteArray(&indexData);
 			SafeDeleteArray(&adjacencyIndexData);
-			SafeDeleteArray(&vertexData);
 
 #ifdef TIKI_ENGINE
 			SafeRelease(&decl);
@@ -441,7 +439,7 @@ namespace TikiEngine
 		void TikiMesh::Draw(const DrawArgs& args, Model* model, GameObject* gameObject)
 		{
 #ifdef TIKI_ENGINE
-			if (!this->GetReady()) return;
+			if (!this->GetReady() || !visible) return;
 
 			material->GetShader()->SelectSubByIndex(args.Mode);
 			material->UpdateDrawArgs(args, gameObject);
@@ -499,19 +497,9 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Get/Set - Indices/Vertices
-		void TikiMesh::GetIndexData(UInt32** data, UInt32* count)
-		{
-			*data = indexData;
-			*count = indexCount;
-		}
-
 		void TikiMesh::SetIndexData(const UInt32* data, UInt32 count)
 		{
-			SafeDeleteArray(&indexData);
-			indexData = new UInt32[count];
-			indexCount = count;
-
-			memcpy(indexData, data, sizeof(UInt32) * count);
+			Mesh::SetIndexData(data, count);
 
 #ifdef TIKI_ENGINE
 			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
@@ -537,19 +525,9 @@ namespace TikiEngine
 #endif
 		}
 
-		void TikiMesh::GetVertexData(void** data, UInt32* length)
-		{
-			*data = vertexData;
-			*length = vertexLength;
-		}
-
 		void TikiMesh::SetVertexData(const void* data, UInt32 length)
 		{
-			SafeDeleteArray(&vertexData);
-			vertexData = new Byte[length];
-			vertexLength = length;
-
-			memcpy(vertexData, data, length);
+			Mesh::SetVertexData(data, length);
 
 #ifdef TIKI_ENGINE
 			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);

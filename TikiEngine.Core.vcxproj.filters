@@ -718,5 +718,8 @@
     <ClInclude Include="inc\Core\TikiPerformanceCounter.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\IModelMesh.h">
+      <Filter>Headerdateien\Interfaces\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

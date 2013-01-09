@@ -82,10 +82,10 @@ namespace TikiEngine
 				{
 					resourcePackage.Add(filelist + pos, datalist[i]);
 
-					pos += wcslen(filelist + pos) + 1;
+					pos += (UInt32)wcslen(filelist + pos) + 1;
 					i++;
 				}
-				//resourcePackage.Optimize();
+				resourcePackage.MarkAsOptimized();
 			}
 
 			return true;

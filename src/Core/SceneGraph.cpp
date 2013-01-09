@@ -1,9 +1,9 @@
 #include "Core/SceneGraph.h"
 #include "Core/IGraphics.h"
 
+#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
-#if TIKI_USE_SCENEGRAPH
 	SceneGraph::SceneGraph()
 		:initialized(false), locked(false)
 	{
@@ -209,5 +209,7 @@ namespace TikiEngine
 			removeList.Clear();
 		}
 	}
-#endif
 }
+#else
+bool SceneGraphEmpty = true;
+#endif

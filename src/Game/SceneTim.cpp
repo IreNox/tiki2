@@ -47,25 +47,23 @@ namespace TikiEngine
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
-			///////////////////
-			////Particle Effect
 			GameObject* go = new GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"marine_l"));
+			go->PRS.SScale() = 0.01f;
 
-			 auto behavior = new PEShootMG(engine);
-
-			IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
-			effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
-			effect->SetParticleEffect(behavior);
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 
 			this->AddElement(go);
 
-			//////////
-			////Cloddy
-			//go = new GameObject(engine);
-			//Material* mat = engine->content->LoadMaterial(L"os_cloddy");
-			//ITerrainRenderer* terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			//terrain->LoadTerrain("Data/Cloddy/Datasets/pitch.E16C24.rect.dat", 8192, 512);
-			//terrain->SetMaterial(mat);
+			/////////////////
+			//Particle Effect
+			//GameObject* go = new GameObject(engine);
+
+			// auto behavior = new PEShootMG(engine);
+
+			//IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
+			//effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
+			//effect->SetParticleEffect(behavior);
 
 			//this->AddElement(go);
 
@@ -110,17 +108,15 @@ namespace TikiEngine
 			//this->AddElement(go);
 
 
-			//go = new GameObject(engine);
-			//auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			go = new GameObject(engine);
+			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
-			//Material* mat = engine->content->LoadMaterial(L"os_default");
-			//mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_ms1");
-			//renP->SetMaterial(mat);
-			//renP->SetMesh(engine->content->LoadMesh(L"test"));
-			//go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			////go->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, 3.14159f, 0);
-			////go->PRS.SScale() = Vector3(1, 1, -1);
-			//this->AddElement(go);
+			Material* mat = engine->content->LoadMaterial(L"os_default");
+			mat->TexDiffuse		= engine->content->LoadTexture(L"terrain/color_map1");
+			renP->SetMaterial(mat);
+			renP->SetMesh(engine->content->LoadMesh(L"plane"));
+			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			this->AddElement(go);
 
 			//RenderTarget
 			//targetLight = engine->librarys->CreateResource<IRenderTarget>();

@@ -107,6 +107,18 @@ namespace TikiEngine
 			this->animationStack.BlendAnimation(animation, time);
 		}
 
+		IModelMesh* Model::GetMesh(string name)
+		{
+			UInt32 i = 0;
+			while (i < meshes.Count())
+			{
+				if (meshes[i]->GetName() == name) return meshes[i];
+				i++;
+			}
+
+			return 0;
+		}
+
 		IBone* Model::GetBone(string name)
 		{
 			if(rootBone != 0)

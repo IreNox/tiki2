@@ -41,6 +41,7 @@ namespace TikiEngine
 			TikiBone* GetRootBone();
 			void SetRootBone(TikiBone* bone);
 
+			IModelMesh* GetMesh(string name);
 			List<TikiMesh*>* GetMeshes();
 			void SetMeshes(List<TikiMesh*>& meshes);
 

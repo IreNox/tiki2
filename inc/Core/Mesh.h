@@ -19,11 +19,11 @@ namespace TikiEngine
 			Mesh(Engine* engine);
 			~Mesh();
 
-			void SetIndexData(UInt32* data, UInt32 count);
 			void GetIndexData(UInt32** data, UInt32* count);
+			virtual void SetIndexData(const UInt32* data, UInt32 count);
 
 			void GetVertexData(void** data, UInt32* dataLength);
-			void SetVertexData(void* data, UInt32 dataLength);
+			virtual void SetVertexData(const void* data, UInt32 dataLength);
 
 			/*! @brief Get the Primitive Topology. Default value is PT_TriangleList. */ 
 			PrimitiveTopologies GetPrimitiveTopology();
@@ -39,7 +39,7 @@ namespace TikiEngine
 			bool GetReady();
 			bool UseIndices();
 
-		private:
+		protected:
 
 			void* vertexData;
 			UInt32 vertexDataLength;
