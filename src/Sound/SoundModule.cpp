@@ -150,10 +150,20 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		FMOD::Sound* SoundModule::LoadSound(cstring fileName)
+		FMOD::Sound* SoundModule::LoadSound(Stream* stream)
 		{
 			Sound* sound = 0;
-			system->createStream(fileName, FMOD_DEFAULT, 0, &sound);
+			
+			char* data = new char[stream->GetLength()];
+			stream->Read(data, 0, stream->GetLength());
+
+			FMOD_CREATESOUNDEXINFO info;
+			ZeroMemory(&info, sizeof(info));
+			info.cbsize = sizeof(info);
+			info.length = stream->GetLength();
+
+			system->createStream(data, FMOD_OPENMEMORY, &info, &sound);
+			//system->createStream(fileName, FMOD_DEFAULT, 0, &sound);
 
 			return sound;
 		}

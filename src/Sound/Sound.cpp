@@ -46,9 +46,9 @@ namespace TikiEngine
 			char* data = new char[len];
 			stream->Read(data, 0, len);*/
 
-			string str = StringWtoA(fileName);
+			//string str = StringWtoA(fileName);
 
-			sound = DllMain::Module->LoadSound(str.c_str());
+			sound = DllMain::Module->LoadSound(stream); //str.c_str()
 
 			//delete(sound);
 		}

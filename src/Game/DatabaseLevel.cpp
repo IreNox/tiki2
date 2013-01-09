@@ -141,7 +141,12 @@ namespace TikiEngine
 				mat->TexDiffuse = engine->content->LoadTexture(L"terrain/color_" + StringAtoW(name));
 				mat->GetShader()->SetVector2("TerrainSize", Vector2((float)heightmapSize, (float)heightmapSize));
 				terrain->SetMaterial(mat);
-				terrain->LoadTerrain(heightmapFilename, heightmapScale, heightmapSize, heightmapElevation, true);
+				terrain->LoadTerrain(
+					heightmapFilename, heightmapScale, heightmapSize, heightmapElevation
+#if _DEBUG
+					, true
+#endif					
+				);
 
 				IPhysicsMaterial* material = engine->librarys->CreateResource<IPhysicsMaterial>();
 				material->SetRestitution(0.2f);

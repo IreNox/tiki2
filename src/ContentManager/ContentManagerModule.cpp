@@ -213,15 +213,6 @@ namespace TikiEngine
 
 					if (loadFile)
 					{
-						if (!engine->HPath.FileExists(name))
-						{
-#if _DEBUG
-							engine->HLog.Write("Can't Load Resource: " + StringWtoA(name));
-#endif
-
-							return 0;
-						}
-
 						UInt32 id;
 						Stream* stream;
 						if (resourcePackage.TryGetValue(name, &id))
@@ -236,6 +227,15 @@ namespace TikiEngine
 							stream = new FileStream(name, FM_Read);
 						}
 						stream->AddRef();
+
+						if (stream == 0)
+						{
+#if _DEBUG
+							engine->HLog.Write("Can't Load Resource: " + StringWtoA(name));
+#endif
+
+							return 0;
+						}
 
 						value->LoadFromStream(name.c_str(), stream);
 

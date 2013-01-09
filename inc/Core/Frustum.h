@@ -53,6 +53,7 @@ namespace TikiEngine
 
 		void Draw(const DrawArgs& args)
 		{
+#if _DEBUG
 			float scale = 0.1f;
 
 			Vector3 v1 = IntersectionPoint(pl[NEARP], pl[LEFT], pl[TOP]) * scale;
@@ -78,7 +79,7 @@ namespace TikiEngine
 			args.Graphics->DrawLine(v2, v6, Color::Blue);
 			args.Graphics->DrawLine(v3, v7, Color::Blue);
 			args.Graphics->DrawLine(v4, v8, Color::Blue);
-
+#endif
 		}
 
 		Vector3 IntersectionPoint(Plane& a, Plane& b, Plane& c)
