@@ -8,46 +8,30 @@ namespace TikiEngine
 		PEExplosion::PEExplosion(Engine* engine)
 			: ParticleEffect(engine)
 		{
-			SParticleBudget(2000);
+			SParticleBudget(5000);
 			renderType = PRT_PointList;
-			releasePerSecound = 100000;
-			lifeTime = 0.5;
+			releasePerSecound = 10000;
+			lifeTime = 1;
 
-			minInitialSpeed = 10; //200;
-			maxInitialSpeed = 30; //600;
+			minInitialSpeed = 5; //200;
+			maxInitialSpeed = 10; //600;
 
 			minScale = 2;
 			maxScale = 5;
 
-			explosionRadius = 5;
+			explosionRadius = 10;
 		}
 
-
-		inline Vector3 RandomPointOnSphere(const Vector3& origin, float radius)
-		{
-			float phi = Random(0, -Pi); //Random(0, TwoPi); // azimuth
-			float theta = Random(0, Pi);  // elevation
-
-			return Vector3(radius * cosf(phi) * sinf(theta) + origin.X,
-						   radius * sinf(phi) * sinf(theta) + origin.Y,
-						   radius             * cosf(theta) + origin.Z);
-		}
 
 		void PEExplosion::CreateParticle(Particle* particle)
 		{
-			//particle->Position += Vector3(Random(-5, 5), Random(-5, 5), Random(-5, 5));
 			particle->Color = Color::White;
 			particle->Rotation = Random(0, 1);
 			particle->Size = Vector2::One / Random(minScale, maxScale);
 
-			Vector3 direction = particle->Position - RandomPointOnSphere(particle->Position, explosionRadius);
-			direction = Vector3::Normalize(direction);
-
-            float randSpeed = Random(minInitialSpeed, maxInitialSpeed); 
-
-			particle->Velocity = direction * randSpeed;
-            particle->Velocity.Y *= 1.7f;
-
+ 			Vector3 direction = Vector3(Random(-1, 1), Random(-1, 1), Random(-1, 1));
+ 			direction = Vector3::Normalize(direction);
+ 			particle->Velocity = direction *  Random(minInitialSpeed, maxInitialSpeed);
 		}
 
 		void PEExplosion::UpdateParticle(Particle* particle)

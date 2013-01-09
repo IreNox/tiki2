@@ -19,7 +19,9 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		UnitSelection::UnitSelection(GameState* gameState)
-			: EngineObject(gameState->GetEngine()), gameState(gameState), enabled(true), dirty(true), mouseButton(false), changed(false)
+			: EngineObject(gameState->GetEngine()), gameState(gameState), 
+			enabled(true), dirty(true), mouseButton(false), changed(false),
+			newDragging(false)
 		{
 			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
@@ -168,18 +170,14 @@ namespace TikiEngine
 			{
 				if (selectedUnits.Count() != 0) changed = true;
 
-				// clear list from last selection
-				if (!args.Input.GetKey(KEY_LSHIFT))
-				{
-					selectedUnits.Clear();
-					selectedSlots.Clear();
-				}
 				selectionStartPoint = args.Input.MousePositionDisplay;
 
 				// Set the selection box starting point
 				selectionRect.X = args.Input.MousePositionDisplay.X;
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
 				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
+			
+				newDragging = true;
 			}
 
 			if(args.Input.GetMouse(MB_Left))
@@ -211,6 +209,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->GetElements().Count())
 			{
+				int found = 0;
 				GameObject* go = gameState->GetScene()->GetElements()[i];
 
 #pragma region SlotSelection
@@ -224,11 +223,12 @@ namespace TikiEngine
 					Matrix vp = cam->WorldToScreen();
 					Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedSlots.Contains(go))
+					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedSlots.Contains(go) || newDragging))
 					{
 						engine->HLog.Write("Rect-Select slot.");
 						selectedSlots.Add(go);
 						changed = true;
+						found = 1;
 					}
 
 					float eps = 15.0f;
@@ -239,12 +239,10 @@ namespace TikiEngine
 							screenPos.Y <= selectionRect.Y + eps && 
 							screenPos.Y >= selectionRect.Y - eps)
 						{
-							if (!selectedSlots.Contains(go))
-							{
-								engine->HLog.Write("click-Select slot.\n");
-								selectedSlots.Add(go);
-								changed = true;
-							}
+							engine->HLog.Write("click-Select slot.\n");
+							selectedSlots.Add(go);
+							changed = true;
+							found = 1;
 						}
 
 					}
@@ -255,10 +253,11 @@ namespace TikiEngine
 #pragma region UnitSelection
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
-				{
+				{				
 					// select player units only
 					if (ent->GetFaction() == 0)
 					{
+
 						Camera* cam = gameState->GetScene()->GCamera();
 						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
@@ -268,11 +267,12 @@ namespace TikiEngine
 
 						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && !selectedUnits.Contains(go))
+						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedUnits.Contains(go) || newDragging))
 						{
 							//engine->HLog.Write("Rect-Select unit.");
 							selectedUnits.Add(go);
 							changed = true;
+							found = 2;
 						}
 
 						float eps = 15.0f;
@@ -284,8 +284,10 @@ namespace TikiEngine
 								screenPos.Y >= selectionRect.Y - eps)
 							{
 								//engine->HLog.Write("click-Select unit.\n");
+								// clear list from last selection								
 								selectedUnits.Add(go);
 								changed = true;
+								found = 2;
 							}
 
 						}
@@ -297,12 +299,17 @@ namespace TikiEngine
 				}
 #pragma endregion
 
+				if (found && newDragging && !args.Input.GetKey(KEY_LSHIFT))
+				{
+					selectedUnits.Clear();
+					selectedSlots.Clear();
+					(found == 1 ? selectedSlots : selectedUnits).Add(go);
+					newDragging = false;
+				}
 
 				i++;
 			}
 #endif
-
-			
 
 			if (changed)
 				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(&selectedUnits));

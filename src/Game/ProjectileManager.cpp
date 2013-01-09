@@ -119,7 +119,7 @@ namespace TikiEngine
                     {
                         // explosion
                         peExplosion->Trigger(
-							args.Time.ElapsedTime,
+							1,
                             peExplosion->GParticleBudget(),
                             Vector3::TransformCoordinate(
                             Vector3(0, 0, 0),

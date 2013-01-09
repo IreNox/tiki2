@@ -56,6 +56,8 @@ namespace TikiEngine
 			bool changed;
 
 			GUIButton* selectButton;
+
+			bool newDragging;
 			
 
 #if TIKI_USE_SCENEGRAPH

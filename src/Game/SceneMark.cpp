@@ -91,7 +91,7 @@ namespace TikiEngine
 			// Smoke
 			smokeEmitter = new GameObject(engine);
 			smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
-			smokeEmitter->PRS.SScale() = Vector3(0.01f);
+			//smokeEmitter->PRS.SScale() = Vector3(0.01f);
 
 			smokeEffect = new PESmoke(engine);
 			smokeEffect->SIsAlive(false);
@@ -105,7 +105,7 @@ namespace TikiEngine
 			// Explosion
 			explosionEmitter = new GameObject(engine);
 			explosionEmitter->PRS.SPosition() = Vector3(0, 0, 0);
-			explosionEmitter->PRS.SScale() = Vector3(0.01f);
+			//explosionEmitter->PRS.SScale() = Vector3(0.01f);
 			expEffect = new PEExplosion(engine);
             expEffect->SIsAlive(false);
 
@@ -177,34 +177,35 @@ namespace TikiEngine
 			);
 
 
-            if (args.Input.GetKeyPressed(KEY_SPACE))
-                expEffect->Trigger(
-                    (UInt32)(200 * args.Time.ElapsedTime),
-                    Vector3::TransformCoordinate(
-                    Vector3(-0.8f, 0, 0),
-                    Matrix::Transpose(elements[0]->PRS.GetWorld())
-                    ) * 100
-                );
-
-
-            fireEffect->Trigger(
-                (UInt32)(200 * args.Time.ElapsedTime),
-                //Vector3(0,5,0)
-                Vector3::TransformCoordinate(
-                Vector3(0.8f, 0, 0),
-                Matrix::Transpose(elements[0]->PRS.GetWorld())
-                ) * 100.0f
-                );
-
-
-			smokeEffect->Trigger(
-				(UInt32)(200 * args.Time.ElapsedTime),
-				//Vector3(0,5,0)
+			if (args.Input.GetKeyPressed(KEY_SPACE))
+				expEffect->Trigger(
+				1, expEffect->GParticleBudget(),
 				Vector3::TransformCoordinate(
-					Vector3(0.8f, 0, 0),
-					Matrix::Transpose(elements[0]->PRS.GetWorld())
-				) * 100.0f
-			);
+				Vector3(-0.8f, 0, 0),
+				Matrix::Transpose(elements[0]->PRS.GetWorld())
+				) 
+				);
+
+
+//             fireEffect->Trigger(
+//                 args.Time.ElapsedTime, 200,
+//                 //Vector3(0,5,0)
+//                 Vector3::TransformCoordinate(
+//                 Vector3(0.8f, 0, 0),
+//                 Matrix::Transpose(elements[0]->PRS.GetWorld())
+//                 ) 
+//                 );
+
+
+// 			smokeEffect->Trigger(
+// 				args.Time.ElapsedTime, 200,
+// 				//Vector3(0,5,0)
+// 				Vector3::TransformCoordinate(
+// 					Vector3(0.8f, 0, 0),
+// 					Matrix::Transpose(elements[0]->PRS.GetWorld())
+// 				)
+// 			);
+
 
 			// Update base
 			Scene::Update(args);
