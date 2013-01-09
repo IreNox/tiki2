@@ -32,7 +32,7 @@ namespace TikiEngine
 
 			sphere->SetCenter(desc.Origin);
 			sphere->GetRigidBody()->SetMass(desc.Mass);
-			sphere->GetRigidBody()->SetVelocity(Vector3(toTarget.X, 0, toTarget.Z));
+			sphere->GetRigidBody()->SetVelocity(toTarget);
 		}
 
 

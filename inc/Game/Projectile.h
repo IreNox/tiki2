@@ -36,7 +36,7 @@ namespace TikiEngine
 				MaxSpeed = 150;
 				Mass = 1;
 				MaxForce = 150;
-				Scale = 0.7f;
+				Scale = 0.2f;
 				Damage = 5.0;
                 LifeTime = 3.0f;
                 Shooter = 0;

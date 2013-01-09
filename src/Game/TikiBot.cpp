@@ -212,7 +212,7 @@ namespace TikiEngine
 
 			Ray ray(Vector3::Zero, Vector3::Zero);
 			ray.Origin = Pos3D() + (Vector3::Normalize(pos - Pos3D()) * controller->GetRadius() * 2.0f);
-			ray.Origin.Y += (controller->GetHeight() * 0.6f) + (controller->GetRadius() + 1.0f);
+			//ray.Origin.Y += (controller->GetHeight() * 0.6f) + (controller->GetRadius() + 1.0f);
 			//ray.Origin = Pos3D() + (dir * controller->GetRadius() * 2.0f);
 			//ray.Origin.Y += controller->GetHeight() * 2.1f; // * 0.6f + controller->GetRadius();
             
