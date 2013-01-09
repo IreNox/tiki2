@@ -269,6 +269,8 @@ namespace TikiEngine
 			behavior->Update(args);
 
 			int count = behavior->GParticleUsed();
+			if (count == 0) return;
+
 			const Particle* particles = behavior->GParticles();
 			ParticleVertex* vertices = vertexBuffer->Map(count);
 
