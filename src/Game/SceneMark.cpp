@@ -128,6 +128,19 @@ namespace TikiEngine
 			bloodPR->SetParticleEffect(bloodEffect);
 			this->AddElement(bloodEmitter);
 
+			// Flash
+			flashEmitter = new GameObject(engine);
+			flashEmitter->PRS.SPosition() = Vector3(-3, 1, 0);
+			//bloodEmitter->PRS.SScale() = Vector3(0.01f);
+
+			flashEffect = new PEFlash(engine);
+			//bloodEffect->SIsAlive(false);
+
+			IParticleRenderer* flashPR = engine->librarys->CreateComponent<IParticleRenderer>(flashEmitter);
+			flashPR->SetTexture(engine->content->LoadTexture(L"particle/star")); 
+			flashPR->SetParticleEffect(flashEffect);
+			this->AddElement(flashEmitter);
+
 
 			Scene::Initialize(args);
 		}

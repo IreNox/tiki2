@@ -9,6 +9,7 @@
 #include "Game/PEFire.h"
 #include "Game/PEExplosion.h"
 #include "Game/PEBlood.h"
+#include "Game/PEFlash.h"
 
 namespace TikiEngine
 {
@@ -40,12 +41,15 @@ namespace TikiEngine
 			GameObject* fireEmitter;
 			GameObject* explosionEmitter;
 			GameObject* bloodEmitter;
+			GameObject* flashEmitter;
 
 			PESmoke* smokeEffect;
             PEFire* fireEffect;
             PEExplosion* expEffect;
-
 			PEBlood* bloodEffect;
+			PEFlash* flashEffect;
+
+
 
 		};
 	}

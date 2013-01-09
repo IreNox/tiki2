@@ -91,6 +91,7 @@
     <None Include="bin\Data\Textures\particle\mg.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
     <None Include="bin\Data\Textures\particle\smoke.dds" />
+    <None Include="bin\Data\Textures\particle\star.dds" />
     <None Include="bin\Data\Textures\random.dds" />
     <None Include="bin\Data\Textures\rock_01\rock_01_diff.dds" />
     <None Include="bin\Data\Textures\rock_01\rock_01_normal.dds" />

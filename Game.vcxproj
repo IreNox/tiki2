@@ -28,6 +28,7 @@
     <ClInclude Include="inc\Game\PEBlood.h" />
     <ClInclude Include="inc\Game\PEExplosion.h" />
     <ClInclude Include="inc\Game\PEFire.h" />
+    <ClInclude Include="inc\Game\PEFlash.h" />
     <ClInclude Include="inc\Game\PEHealAura.h" />
     <ClInclude Include="inc\Game\PESmoke.h" />
     <ClInclude Include="inc\Game\TikiAtt.h" />
@@ -155,6 +156,7 @@
     <ClCompile Include="src\Game\PEBlood.cpp" />
     <ClCompile Include="src\Game\PEExplosion.cpp" />
     <ClCompile Include="src\Game\PEFire.cpp" />
+    <ClCompile Include="src\Game\PEFlash.cpp" />
     <ClCompile Include="src\Game\PEHealAura.cpp" />
     <ClCompile Include="src\Game\PEShootMG.cpp" />
     <ClCompile Include="src\Game\PathPlanner.cpp" />
