@@ -10,8 +10,8 @@ namespace TikiEngine
 		{
 			SParticleBudget(500);
 			renderType = PRT_PointList;
-			releasePerSecound = 1000;
-			lifeTime = 0.5;
+			releasePerSecound = 2000;
+			lifeTime = 1;
 		}
 
 		static float inc = 0;
@@ -21,18 +21,18 @@ namespace TikiEngine
 		inline Vector3 RandomPointOnSpiral()
 		{
 
-			if (radius > 6 * TwoPi)
+			if (radius > 8 * TwoPi)
 			{
 				inc = 0.0f;
 				radius = 0.0f;
 			}
 
-			Vector3 ret = Vector3(cosf(radius)  * inc,
-								  radius / 20,
+			Vector3 ret = Vector3(cosf(radius) * inc,
+								  radius / 0.15f,
 								  sinf(radius) * inc);
 
-			inc += 0.001f;
-			radius += 0.05f;
+			inc += 1.2f;//Random(0.8f, 1.5f);  //1.0f;
+			radius += 0.8f;//Random(0.3f, 0.8f); //0.8f;
 
 			return ret;
 		}
@@ -42,7 +42,7 @@ namespace TikiEngine
 			particle->Position += RandomPointOnSpiral();
 			particle->Color = Color(1.0f, 1.0f, 1.0f, 0);
 			particle->Rotation = Random(0, 1);
-			particle->Size = Vector2::One / Random(10, 20);
+			particle->Size = Vector2::One / Random(3, 7);
 			particle->Velocity = Vector3::Zero;
 
 		}
@@ -51,8 +51,8 @@ namespace TikiEngine
 		{
 			particle->Color.A = (1 - particle->Age);
 			
-			if (particle->Velocity.Y > -5)
-				particle->Velocity.Y -= Random(0.1f, particle->Rotation); //0.1f * particle->Rotation;
+			if (particle->Velocity.X > -5 || particle->Velocity.Y > -5 || particle->Velocity.Z > -5)
+				particle->Velocity -= (Vector3(Random(-1, 1), Random(-1, 1), Random(-1, 1)) * Random(10, 20)); //0.1f * particle->Rotation;
 		}
 
 	}

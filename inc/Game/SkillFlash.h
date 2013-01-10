@@ -2,6 +2,10 @@
 
 #include "Game/Skill.h"
 
+#include "Core/IContentManager.h"
+#include "Core/IParticleRenderer.h"
+#include "Game/PEFlash.h"
+
 namespace TikiEngine
 {
 	namespace Game
@@ -20,7 +24,7 @@ namespace TikiEngine
 			void internUpgrade();
 
 		private:
-
+			IParticleRenderer* prFlash;
 			static SkillDescription Desc;
 
 		};
