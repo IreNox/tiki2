@@ -1,6 +1,7 @@
 #include "Game/Bullet.h"
 #include "Game/TikiBot.h"
 #include "Core/ITriangleMeshCollider.h"
+#include "Game/ProjectileManager.h"
 
 namespace TikiEngine
 {
@@ -41,6 +42,12 @@ namespace TikiEngine
                     dead = true;
 
                     bot->ReduceHealth(damage);
+
+					if (bot->EntityType() != ET_Building && bot->EntityType() != ET_Tower)
+					{
+						gameState->GetProjectiles()->AddBloodEffect(1, 100, bot->Pos3D());
+					}
+
 					if (bot->IsDead())
 					{
 						shooter->KilledBot(bot);

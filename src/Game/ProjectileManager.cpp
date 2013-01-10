@@ -51,6 +51,14 @@ namespace TikiEngine
             prExplosion->SetParticleEffect(peExplosion);
             prExplosion->AddRef();
 
+			peBlood = new PEBlood(engine);
+			peBlood->SIsAlive(false);
+			peBlood->AddRef();
+
+			prBlood = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prBlood->SetTexture(engine->content->LoadTexture(L"particle/blood")); 
+			prBlood->SetParticleEffect(peBlood);
+			prBlood->AddRef();
 		}
 
 		ProjectileManager::~ProjectileManager()
@@ -74,6 +82,9 @@ namespace TikiEngine
             SafeRelease(&peExplosion);
             SafeRelease(&prExplosion);
 
+			SafeRelease(&peBlood);
+			SafeRelease(&prBlood);
+
 		}
 		#pragma endregion
 
@@ -95,6 +106,12 @@ namespace TikiEngine
 
 			projectiles.Add(i);
 		}
+
+		void ProjectileManager::AddBloodEffect(double elapsedTime, double releasePerSecound, const Vector3& pos)
+		{
+			peBlood->Trigger(elapsedTime, releasePerSecound, pos);
+		}
+
 		#pragma endregion
 		
 		#pragma region Member - Update
