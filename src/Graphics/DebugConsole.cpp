@@ -62,7 +62,8 @@ namespace TikiEngine
 						font,
 						lines.GetKVP(i).GetKey(),
 						Vector2(5, 14.0f * c),
-						Color::White
+						Color::White,
+						0.8f
 					);
 
 					lines[lines.GetKVP(i).GetKey()] -= args.Time.ElapsedTime;
@@ -78,7 +79,8 @@ namespace TikiEngine
 					font,
 					s.str(),
 					Vector2(5, 14.0f * c),
-					Color::White
+					Color::White,
+					0.8f
 				);
 			}
 			else
@@ -114,7 +116,7 @@ namespace TikiEngine
 				enabled = !enabled;
 			}
 
-			if (enabled && args.Time.TotalTime - lastTime > 0.1)
+			if (enabled && args.Time.TotalTime - lastTime > 0.075)
 			{
 				List<Key> keys = args.Input.GetKeys();
 				
@@ -182,6 +184,10 @@ namespace TikiEngine
 			else if (cmdEnter == L"")
 			{
 				return false;
+			}
+			else
+			{
+				engine->HLog.ConsoleCommand.RaiseEvent(&engine->HLog, cmdEnter);
 			}
 
 			return true;

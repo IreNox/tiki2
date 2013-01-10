@@ -23,7 +23,7 @@ namespace TikiEngine
 		class TikiBotFactory;
 		class ProjectileManager;
 
-		class GameState : public EngineObject
+		class GameState : public EngineObject, public ConsoleCommandEventHandler
 		{
 		public:
 
@@ -94,6 +94,8 @@ namespace TikiEngine
 			inline void AddPart(GamePart* part) { gameParts.Add(part); }
 
 			inline IPhysicsMaterial* GetDefaultMaterial() { return defaultMaterial; }
+
+			void Handle(const HelperLog* sender, const wstring& args);
 
 		private:
 			

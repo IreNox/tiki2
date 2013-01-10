@@ -32,6 +32,8 @@ namespace TikiEngine
 			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false)
 #endif
 		{
+			engine->HLog.ConsoleCommand.AddHandler(this);
+
 			hud = new GameHud(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
@@ -266,6 +268,16 @@ namespace TikiEngine
 			}
 			#pragma endregion
 
+		}
+		#pragma endregion
+
+		#pragma region Member - Console
+		void GameState::Handle(const HelperLog* sender, const wstring& args)
+		{
+			if (args == L"exit")
+			{
+				engine->Exit();
+			}
 		}
 		#pragma endregion
 	}

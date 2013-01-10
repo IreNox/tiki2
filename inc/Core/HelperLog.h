@@ -8,6 +8,7 @@ namespace TikiEngine
 	{
 	public:
 		
+		ConsoleCommandEvent ConsoleCommand;
 		MessageReceivedEvent MessageReceived;
 
 		HelperLog();

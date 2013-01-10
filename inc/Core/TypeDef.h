@@ -47,6 +47,12 @@ typedef const wchar_t* wcstring;
 
 #define FOREACH_CALL(list, code) UInt32 i = 0; while (i < list.Count()) { list[i].code;  i++; }
 #define FOREACH_PTR_CALL(list, code) UInt32 i = 0; while (i < list.Count()) { list[i]->code;  i++; }
+
+#if _DEBUG
+#define TIKI_LOG(msg) engine->HLog.Write(msg)
+#else
+#define TIKI_LOG(msg) 
+#endif
 #pragma endregion
 
 #define TIKI_USE_SCENEGRAPH 0

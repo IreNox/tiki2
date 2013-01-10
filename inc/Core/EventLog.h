@@ -15,4 +15,8 @@ namespace TikiEngine
 
 	typedef Event<const HelperLog, MessageReceivedArgs> MessageReceivedEvent;
 	typedef EventHandler<const HelperLog, MessageReceivedArgs> MessageReceivedEventHandler;
+
+	typedef Event<const HelperLog, wstring> ConsoleCommandEvent;
+	typedef EventHandler<const HelperLog, wstring> ConsoleCommandEventHandler;
+
 }

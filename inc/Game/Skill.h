@@ -71,7 +71,7 @@ namespace TikiEngine
 
 			inline bool GetInRange() const { return inRange; }
 			inline bool GetHasAOE() const { return flags.HasFlag(SF_TargetAOE); }
-			inline bool GetOnActivation() const { return onActivation; }
+			inline bool GetOnActivation() const { return onActivation && !activateInRange; }
 
 			inline ITexture* GetIconTexture() const { return icon; }
 			inline ITexture* GetCrosshairTexture() const { return crosshair; }
@@ -88,6 +88,10 @@ namespace TikiEngine
 			bool atWork;
 			bool isReady;
 			bool onActivation;
+			bool activateInRange;
+
+			Vector3 targetPos;
+			TikiBot* targetBot;
 
 			UInt32 currentLevel;
 			wstring currentLevelString;
