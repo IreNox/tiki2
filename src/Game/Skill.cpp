@@ -177,10 +177,8 @@ namespace TikiEngine
 					Vector2 pos = owner->GetController()->GetCenter().XZ();
 
 					UInt32 i = 0;
-					while (i < gameState->GetScene()->GetElements().Count())
-					{
-						GameObject* current = gameState->GetScene()->GetElements()[i];
-						TikiBot* bot = current->GetComponent<TikiBot>();
+					gameState->GetScene()->SceneGraph.Do([&](GameObject* go) {
+						TikiBot* bot = go->GetComponent<TikiBot>();
 
 						if (bot != 0 && bot->GetFaction() == owner->GetFaction())
 						{
@@ -193,8 +191,8 @@ namespace TikiEngine
 							}
 						}
 
-						i++;
-					}
+						i++;					
+					});
 				}
 			}
 			else if (!isReady)

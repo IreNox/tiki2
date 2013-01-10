@@ -8,15 +8,49 @@ namespace TikiEngine
 	{
 	public:
 
-		SceneGraph() {}
-		~SceneGraph() {}
+		#pragma region Class
+		SceneGraph()
+		{
 
+		}
+
+		~SceneGraph()
+		{
+			FOREACH_PTR_CALL(gameObjects, Release());
+		}
+		#pragma endregion
+
+		#pragma region Member - Add/Remove/Draw/Update
+		void Add(GameObject* go)
+		{
+			gameObjects.Add(go);
+			go->AddRef();
+		}
+
+		bool Remove(GameObject* go)
+		{
+			go->Release();
+			return gameObjects.Remove(go);
+		}
+
+		void Draw(const DrawArgs& args)
+		{
+			FOREACH_PTR_CALL(gameObjects, Draw(args))
+		}
+
+		void Update(const UpdateArgs& args)
+		{
+			FOREACH_PTR_CALL(gameObjects, Update(args))
+		}
+		#pragma endregion
+
+		#pragma region Member - Do
 		void Do(function<void(GameObject*)> whatIWant)
 		{
 			FOREACH(gameObjects, whatIWant(gameObjects[i]))
 		}
 
-		void DoWithinRange(Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+		void DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
 		{
 			UInt32 i = 0;
 			while (i < gameObjects.Count())
@@ -27,7 +61,9 @@ namespace TikiEngine
 				i++;
 			}
 		}
+		#pragma endregion
 
+		#pragma region Member - Find
 		void Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where = 0)
 		{
 			UInt32 i = 0;
@@ -86,9 +122,11 @@ namespace TikiEngine
 				i++;
 			}
 		}
-
+		#pragma endregion
+		
 		inline List<GameObject*>& GetDefaultGOs() { return gameObjects; }
 		inline List<GameObject*>& GetStaticGOs() { return gameObjects; }
+		inline List<GameObject*>& GetAllGameObjects() { return gameObjects; }
 
 	private:
 

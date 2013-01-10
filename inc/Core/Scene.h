@@ -33,11 +33,6 @@ namespace TikiEngine
 		GameObject* AddElement(GameObject* element);
 		GameObject* RemoveElement(GameObject* element);
 
-		inline const List<GameObject*>& GetElements() const
-		{
-			return elements;
-		}
-
 		bool IsInitialized();
 		virtual void Initialize(const InitializationArgs& args);
 
@@ -51,9 +46,6 @@ namespace TikiEngine
 	protected:
 		
 		bool initialized;
-
-		List<GameObject*> elements;
-
 
 		List<Camera*> cameras;
 		Camera* mainCamera;

@@ -99,9 +99,12 @@ namespace TikiEngine
 #else
 			UInt32 i = 0;
 			UInt32 count = 0;
-			while (i < state->GetScene()->GetElements().Count() && count < FOW_CBSIZE)
+			List<GameObject*> gos;
+			state->GetScene()->SceneGraph.Find(gos);
+
+			while (i <gos.Count() && count < FOW_CBSIZE)
 			{
-				TikiBot* bot = state->GetScene()->GetElements()[i]->GetComponent<TikiBot>();
+				TikiBot* bot = gos[i]->GetComponent<TikiBot>();
 
 				if (bot != 0 && bot->GetFaction() == 0)
 				{

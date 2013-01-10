@@ -70,19 +70,13 @@ namespace TikiEngine
 			this->changed = false;
 			this->dirty = false;
 
-#if TIKI_USE_SCENEGRAPH
+#if TIKI_USE_SCENEGRAPH && 0
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
 			{
 				if (selectedUnits.Count() != 0) changed = true;
 
-				// clear list from last selection
-				if (!args.Input.GetKey(KEY_LSHIFT))
-				{
-					selectedUnits.Clear();
-					selectedSlots.Clear();
-				}
 				selectionStartPoint = args.Input.MousePositionDisplay;
 
 				// Set the selection box starting point
@@ -139,18 +133,18 @@ namespace TikiEngine
 				proj);
 
 
-			this->selectionFrustum.CreatePlanes(view * proj);
+			selectionFrustum.CreatePlanes(view * proj);
 
 			this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){
 				
-				if(this->selectionFrustum.PointInFrustum(go->PRS.GPosition()))
+				if(selectionFrustum.PointInFrustum(go->PRS.GPosition()))
 				{
-					//BuildSlot* slot = go->GetComponent<BuildSlot>();
-					//if(slot != 0)
-					//{
-					//	HandleBuildSlot(go);
-					//	return;
-					//}
+					BuildSlot* slot = go->GetComponent<BuildSlot>();
+					if(slot != 0)
+					{
+						HandleBuildSlot(go);
+						return;
+					}
 
 					TikiBot* bot = go->GetComponent<TikiBot>();
 					if(bot != 0)
@@ -207,12 +201,15 @@ namespace TikiEngine
 			}
 
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetElements().Count())
+			List<GameObject*> gos;
+			gameState->GetScene()->SceneGraph.FindInFrustum(gos);
+
+			while (i < gos.Count())
 			{
 				int found = 0;
-				GameObject* go = gameState->GetScene()->GetElements()[i];
+				GameObject* go = gos[i];
 
-#pragma region SlotSelection
+				#pragma region SlotSelection
 				BuildSlot* slot = 0;
 				slot = go->GetComponent<BuildSlot>();
 				if(slot != 0)
@@ -248,16 +245,15 @@ namespace TikiEngine
 					}
 
 				}
-#pragma endregion
+				#pragma endregion
 
-#pragma region UnitSelection
+				#pragma region UnitSelection
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0)
 				{				
 					// select player units only
 					if (ent->GetFaction() == 0)
 					{
-
 						Camera* cam = gameState->GetScene()->GCamera();
 						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
@@ -300,7 +296,7 @@ namespace TikiEngine
 						changed = true;
 					}
 				}
-#pragma endregion
+				#pragma endregion
 
 				if (found && newDragging && !args.Input.GetKey(KEY_LSHIFT))
 				{
@@ -380,71 +376,15 @@ namespace TikiEngine
 			}
 			return false;
 		}
-#pragma endregion
+		#pragma endregion
 
 		#pragma region Member - RemoveBot
 		void UnitSelection::RemoveBot(TikiBot* bot/*, UInt32 index*/)
 		{
-
-#if TIKI_USE_SCENEGRAPH
-			GameObject* tmpGO = gameState->GetScene()->RemoveElement(bot->GetGameObject());
-
-			gameState->GetScene()->SceneGraph.Do(
-				[&](GameObject* go)
-			{
-				TikiBot* ent = go->GetComponent<TikiBot>();
-				if(ent == 0)
-					return;
-
-				if(ent->EntityType() != ET_Building)
-				{
-					ent->GetSensorMem()->RemoveBotFromMemory(bot);
-
-					if (ent->GetTargetSys()->GetTarget() == bot)
-						ent->GetTargetSys()->ClearTarget();
-
-					if (ent->GetTargetSys()->GetGlobalTarget() == bot)
-						ent->GetTargetSys()->ClearGlobalTarget();
-				}
-			});
-
-
-			if (selectedUnits.Contains(tmpGO))
-			{
-				//engine->HLog.Write("Removed dead bot from selction.");
-				selectedUnits.Remove(tmpGO);
-			}
-
-			if (bot->EntityType() == ET_Tower)
-			{
-				//engine->HLog.Write("Dead tower, Adding Player BuiltSlot");
-
-				// Save old tower position
-				Vector3 towerPos = bot->GetController()->GetCenter();
-				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
-
-				// Clear old GameObject
-				bot->GetGameObject()->Release();
-
-				// Create new GameObject and BuildSlot
-				GameObject* go = new GameObject(engine);
-				gameState->GetBotFactory()->CreateBuildSlot(go);
-				go->PRS.SPosition() = towerPos;
-
-				BuildSlot* slot = go->GetComponent<BuildSlot>();
-				slot->Enable();
-			}
-			else 
-			{
-				//engine->HLog.Write("Released bot go");
-				bot->GetGameObject()->Release();
-			}
-#else
-
 			UInt32 i = 0;
-			while (i < gameState->GetScene()->GetElements().Count())
+			while (i < gameState->GetScene()->SceneGraph.GetAllGameObjects().Count())
 			{
-				GameObject* go = gameState->GetScene()->GetElements()[i];
+				GameObject* go = gameState->GetScene()->SceneGraph.GetAllGameObjects()[i];
 
 				TikiBot* ent = go->GetComponent<TikiBot>();
 				if(ent != 0 && ent->EntityType() != ET_Building)
@@ -497,7 +437,6 @@ namespace TikiEngine
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
 			}
-#endif
 		}
 		#pragma endregion 
 	}

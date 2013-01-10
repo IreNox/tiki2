@@ -165,13 +165,13 @@ namespace TikiEngine
 			else if (args.Input.GetKey(KEY_L))
 				smokeEmitter->PRS.SPosition() = smokeEmitter->PRS.GPosition() - Vector3(0.01f, 0, 0);
 
-			elements[0]->PRS.SPosition() = Vector3(
+			SceneGraph.GetAllGameObjects()[0]->PRS.SPosition() = Vector3(
 				sinf((float)args.Time.TotalTime) * 7.5f,
 				5,
 				cosf((float)args.Time.TotalTime) * 7.5f
 			);
 
-			elements[0]->PRS.SRotation() = Quaternion::CreateFromAxisAngle(
+			SceneGraph.GetAllGameObjects()[0]->PRS.SRotation() = Quaternion::CreateFromAxisAngle(
 				Vector3::Normalize(Vector3(sinf((float)args.Time.TotalTime / 2), 0, cosf((float)args.Time.TotalTime / 2))),
 				3.15149f
 			);
@@ -182,7 +182,7 @@ namespace TikiEngine
 				1, expEffect->GParticleBudget(),
 				Vector3::TransformCoordinate(
 				Vector3(-0.8f, 0, 0),
-				Matrix::Transpose(elements[0]->PRS.GetWorld())
+				Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
 				) 
 				);
 

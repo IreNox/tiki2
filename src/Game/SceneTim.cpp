@@ -259,12 +259,12 @@ namespace TikiEngine
 
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
-		{
-			
+		{			
 			float b = (float)args.Time.TotalTime / 4.0f;
 			b = fmodf(b, 6.28318f);
-			elements[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
-			elements[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));
+
+			this->SceneGraph.GetDefaultGOs()[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
+			this->SceneGraph.GetDefaultGOs()[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));
 			//elements[0]->GModel()->GetMesh("MG")->SetLocalMatrix(Matrix::CreateFromAxisAngle(Vector3::Up, b));
 
 			Vector3 move = Vector3(

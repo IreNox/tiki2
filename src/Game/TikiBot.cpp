@@ -360,7 +360,7 @@ namespace TikiEngine
 				gameObject->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromQuaternion(gameObject->PRS.GRotation()));
 
 			double addHealth = attSys[TA_HealthRegValue] * args.Time.ElapsedTime;
-			addHealth += attSys[TA_HealthRegPercent] * attSys[TA_MaxHealth] * args.Time.ElapsedTime;
+			addHealth += attSys[TA_HealthRegPercent] * attSys[TA_MaxHealth] * 0.01 * args.Time.ElapsedTime;
 
 			if (addHealth != 0.0)
 				this->IncreaseHealth(addHealth);

@@ -5,8 +5,6 @@
 #include "Core\IGraphics.h"
 #include "Core\ISpriteBatch.h"
 
-
-
 namespace TikiEngine
 {
 	#pragma region Class
@@ -17,11 +15,6 @@ namespace TikiEngine
 
 	Scene::~Scene()
 	{
-		for (UInt32 i = 0; i< elements.Count(); i++)
-		{
-			elements[i]->Release();
-		}
-
 		SafeDelete(&lighting.SceneLights);
 	}
 	#pragma endregion
@@ -77,14 +70,9 @@ namespace TikiEngine
 	#pragma endregion
 
 	#pragma region Member - Elements
-	 GameObject* Scene::AddElement(GameObject* element)
+	GameObject* Scene::AddElement(GameObject* element)
 	{
-#if TIKI_USE_SCENEGRAPH
 		SceneGraph.Add(element);
-#endif
-
-		elements.Add(element);
-		element->AddRef();
 
 		UInt32 len = 0;
 		Light** comLights = 0;
@@ -134,11 +122,7 @@ namespace TikiEngine
 			}
 		}
 		
-#if TIKI_USE_SCENEGRAPH
 		SceneGraph.Remove(element);
-#endif
-
-		elements.Remove(element);
 
 		return element;
 	}
@@ -147,34 +131,23 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-#if TIKI_USE_SCENEGRAPH
-
 		SceneGraph.Draw(args);
+
+#if TIKI_USE_SCENEGRAPH
 		//mainCamera->GetFrustum().Draw(args);
 		//Vector3 pos = mainCamera->GetGameObject()->PRS.GPosition();
 		//args.Graphics->DrawLine(pos, pos + Vector3::UnitX, Color::Red);
 		//args.Graphics->DrawLine(pos, pos + Vector3::UnitY, Color::Red);
 		//args.Graphics->DrawLine(pos, pos + Vector3::UnitZ, Color::Red);
-
-
-#else
-		for (UInt32 i = 0; i < elements.Count(); i++)
-		{
-			elements[i]->Draw(args);
-		}
 #endif
 	}
 
 	void Scene::Update(const UpdateArgs& args)
 	{
+		SceneGraph.Update(args);
+
 #if TIKI_USE_SCENEGRAPH
-			SceneGraph.Update(args);
-			SceneGraph.PerformCulling(this->mainCamera->GetFrustum());
-#else
-		for (UInt32 i = 0; i < elements.Count(); i++)
-		{
-			elements[i]->Update(args);
-		}
+		SceneGraph.PerformCulling(this->mainCamera->GetFrustum());
 #endif
 	}
 	#pragma endregion

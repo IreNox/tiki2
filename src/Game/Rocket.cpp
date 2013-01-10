@@ -89,68 +89,42 @@ namespace TikiEngine
 
 		void Rocket::InflictAoEDamage()
 		{
-#if TIKI_USE_SCENEGRAPH
-			gameState->GetScene()->SceneGraph.DoWithinRange(GetCollider()->GetCenter(), aoeRadius, [&](GameObject* go)
-			{
-				TikiBot* bot = go->GetComponent<TikiBot>();
-				if(bot != 0 && bot->GetFaction() != shooter->GetFaction())
-				{
-					bot->ReduceHealth(damage);
-					if(bot->IsDead())
-						shooter->KilledBot(bot);
-				}
-			});
-#else
-			// loop all bots and make distance check
-			for (UInt32 i = 0; i < gameState->GetScene()->GetElements().Count(); i++)
-			{
-				GameObject* current = gameState->GetScene()->GetElements().Get(i);
-				TikiBot* curBot = current->GetComponent<TikiBot>();
+			// loop all bots and make distance check			
+			Vector2 projPos = this->GetCollider()->GetCenter().XZ();
+
+			gameState->GetScene()->SceneGraph.Do([&](GameObject* go) {
+				TikiBot* curBot = go->GetComponent<TikiBot>();
+
 				if (curBot != 0 && curBot->GetFaction() != shooter->GetFaction())
 				{
 					float rad = aoeRadius + (float)curBot->BRadius();
-					Vector2 projPos = Vector2(GetCollider()->GetCenter().X, GetCollider()->GetCenter().Z);
-					float dist = Vector2::Distance(projPos, curBot->Pos());
-					if (dist < rad)
+
+					if (Vector2::Distance(projPos, curBot->Pos()) < rad)
 					{
 						curBot->ReduceHealth(damage);
 						if (curBot->IsDead()) shooter->KilledBot(curBot);
 					}
 				}
-			}
-#endif
+			});
 		}
 
 		void Rocket::InflictAoeHeal()
 		{
-#if TIKI_USE_SCENEGRAPH
-			gameState->GetScene()->SceneGraph.DoWithinRange(GetCollider()->GetCenter(), aoeRadius, [&](GameObject* go)
-			{
-				TikiBot* bot = go->GetComponent<TikiBot>();
-				if(bot != 0 && bot->GetFaction() != shooter->GetFaction())
-				{
-					bot->IncreaseHealth(damage);
-				}
-			});
-#else
+			Vector2 projPos = this->GetCollider()->GetCenter().XZ();
 
-			// loop all bots and make distance check
-			for (UInt32 i = 0; i < gameState->GetScene()->GetElements().Count(); i++)
-			{
-				GameObject* current = gameState->GetScene()->GetElements().Get(i);
-				TikiBot* curBot = current->GetComponent<TikiBot>();
-				if (curBot != 0 && curBot->GetFaction() == shooter->GetFaction())
+			gameState->GetScene()->SceneGraph.Do([&](GameObject* go) {
+				TikiBot* curBot = go->GetComponent<TikiBot>();
+
+				if (curBot != 0 && curBot->GetFaction() != shooter->GetFaction())
 				{
 					float rad = aoeRadius + (float)curBot->BRadius();
-					Vector2 projPos = Vector2(GetCollider()->GetCenter().X, GetCollider()->GetCenter().Z);
-					float dist = Vector2::Distance(projPos, curBot->Pos());
-					if (dist < rad)
+
+					if (Vector2::Distance(projPos, curBot->Pos()) < rad)
 					{
 						curBot->IncreaseHealth(damage);
 					}
 				}
-			}
-#endif
+			});
 		}
 	}
 }

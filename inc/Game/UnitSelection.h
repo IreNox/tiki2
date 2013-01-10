@@ -59,10 +59,7 @@ namespace TikiEngine
 
 			bool newDragging;
 			
-
-#if TIKI_USE_SCENEGRAPH
 			Frustum selectionFrustum;
-#endif
 		};
 
 	}
