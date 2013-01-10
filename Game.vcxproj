@@ -31,6 +31,7 @@
     <ClInclude Include="inc\Game\PEFlash.h" />
     <ClInclude Include="inc\Game\PEHealAura.h" />
     <ClInclude Include="inc\Game\PESmoke.h" />
+    <ClInclude Include="inc\Game\PPDepthOfField.h" />
     <ClInclude Include="inc\Game\TikiAtt.h" />
     <ClInclude Include="inc\Game\TikiAttModifier.h" />
     <ClInclude Include="inc\Game\AttributeSystem.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="src\Game\PathPlanner.cpp" />
     <ClCompile Include="src\Game\PESmoke.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
+    <ClCompile Include="src\Game\PPDepthOfField.cpp" />
     <ClCompile Include="src\Game\PPFogOfWar.cpp" />
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp" />
     <ClCompile Include="src\Game\Projectile.cpp" />

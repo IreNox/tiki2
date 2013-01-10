@@ -225,7 +225,14 @@ namespace TikiEngine
 							return 0;
 						}
 
-						value->LoadFromStream(name.c_str(), stream);
+						try
+						{
+							value->LoadFromStream(name.c_str(), stream);
+						}
+						catch (string e)
+						{							
+							MessageBoxA(0, e.c_str(), "TikiEngine 2.0", MB_OK | MB_ICONERROR);
+						}
 
 						SafeRelease(&stream);
 					}
@@ -394,6 +401,9 @@ namespace TikiEngine
 						filePath,
 						wstring(dataInfo->FileName, dataInfo->FileNameLength / sizeof(wchar_t))
 					);
+
+					UInt32 len = (UInt32)engine->HPath.GetWorkingPath().size() + 1;
+					fileName = fileName.substr(len, fileName.size() - len);
 
 					if (engine->HPath.FileExists(fileName))
 					{

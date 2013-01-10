@@ -34,8 +34,6 @@ float2 TerrainSize;
 PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 {
 	PS_OUTPUT output = PS_Main(input);
-	
-	//output.Screen = input.Color;
 
 	float2 halfSize = TerrainSize / 2;
 

@@ -443,6 +443,9 @@
     <ClInclude Include="inc\Game\PEFlash.h">
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PPDepthOfField.h">
+      <Filter>Headerdateien\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -666,6 +669,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\PEFlash.cpp">
       <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PPDepthOfField.cpp">
+      <Filter>Quelldateien\Effects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

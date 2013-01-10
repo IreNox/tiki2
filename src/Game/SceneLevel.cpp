@@ -15,6 +15,7 @@
 
 #include "Game/PPBlur.h"
 #include "Game/PPFogOfWar.h"
+#include "Game/PPDepthOfField.h"
 #include "Game/PPScreenSpaceAmbientOcclusion.h"
 
 #include "Game/PlayerBase.h"
@@ -78,10 +79,8 @@ namespace TikiEngine
 			//temp = ssao->GetAO();
 			//engine->graphics->AddPostProcess(ssao);
 
-			//auto blur = new PPBlur(engine);
-			//blur->GetPasses()[0]->SetInput("tex", temp);
-			//blur->GetPasses()[1]->SetOutput(0, temp);
-			//engine->graphics->AddPostProcess(blur);
+			//auto dof = new PPDepthOfField(engine);
+			//engine->graphics->AddPostProcess(dof);
 
 			Scene::Initialize(args);
 		}

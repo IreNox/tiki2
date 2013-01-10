@@ -162,6 +162,7 @@
     <Content Include="bin\Data\Effects\Inc\is_input_light.fx" />
     <Content Include="bin\Data\Effects\Inc\is_struct_light.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_technique.fx" />
+    <Content Include="bin\Data\Effects\pp_depth_of_field.fx" />
     <Content Include="bin\Data\Effects\pp_shadow.fx" />
     <Content Include="bin\Data\Effects\os_cloddy.fx" />
     <Content Include="bin\Data\Effects\os_color.fx" />

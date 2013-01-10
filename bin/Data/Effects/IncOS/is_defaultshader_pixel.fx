@@ -34,7 +34,7 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 
 	output.Screen = termDiffuse;
 	output.Depth.rgb = input.WorldPos;
-	output.Depth.a = 1 - (input.Pos.z / 1000.0f);
+	output.Depth.a = input.Pos.z / input.Pos.w; // / 1000.0f);
 	output.Normal = float4(bumpedNormal, 1.0f);
 	
 	return output;
