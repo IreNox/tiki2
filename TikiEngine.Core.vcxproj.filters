@@ -721,5 +721,8 @@
     <ClInclude Include="inc\Core\IModelMesh.h">
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\FakeSceneGraph.h">
+      <Filter>Headerdateien\Core\SceneGraph</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

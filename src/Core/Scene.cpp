@@ -11,7 +11,7 @@ namespace TikiEngine
 {
 	#pragma region Class
 	Scene::Scene(Engine* engine)
-		: EngineObject(engine), elements(), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false), mainCamera(0)
+		: EngineObject(engine), lighting(true, new List<Light*>(), -1, LightProperties()), cameras(), initialized(false), mainCamera(0)
 	{
 	}
 

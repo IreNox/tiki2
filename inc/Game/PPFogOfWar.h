@@ -4,6 +4,8 @@
 #include "Game/GameState.h"
 #include "Game/EventUnitSelectionChanged.h"
 
+#define FOW_CBSIZE 128
+
 namespace TikiEngine
 {
 	namespace Graphics
@@ -42,7 +44,7 @@ namespace TikiEngine
 				float UnitsCount;
 				Vector3 MapSize;
 
-				CBUnit Units[128];
+				CBUnit Units[FOW_CBSIZE];
 
 			};
 

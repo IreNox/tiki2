@@ -31,7 +31,6 @@ namespace TikiEngine
 			SafeRelease(&boxCollider);
 		}
 
-
 		void Trigger::Handle(ICollider* sender, const TriggerEnterArgs& args)
 		{
 			engine->HLog.Write("Trigger Enter");
@@ -45,7 +44,7 @@ namespace TikiEngine
 		void Trigger::Update(const UpdateArgs& args)
 		{
 			// only do this once
-			if (needUpdate)
+			if (gameObject->PRS.IsDirty() || needUpdate)
 			{
 				needUpdate = false;
 				boxCollider->SetCenter(gameObject->PRS.GPosition());

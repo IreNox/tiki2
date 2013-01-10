@@ -7,23 +7,30 @@
 #include "Core/GUIButton.h"
 #include "Core/GUIWindow.h"
 
+#include "Game/TikiBot.h"
+#include "Game/BuildSlot.h"
+
 #include "Core/EventControls.h"
 #include "Core/EventScreenSizeChanged.h"
+#include "Game/EventUnitSelectionChanged.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
+		using namespace TikiEngine::AI;
 		using namespace TikiEngine::UserInterface;
 
 		class GameState;
 
-		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler, public ClickEventHandler
+		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler, public ClickEventHandler, public UnitSelectionChangedEventHandler
 		{
 		public:
 
 			GameHud(GameState* state);
 			~GameHud();
+
+			void Init();
 
 			void ResetScreen();
 
@@ -32,6 +39,7 @@ namespace TikiEngine
 
 			void Handle(IGraphics* sender, const ScreenSizeChangedArgs& args);
 			void Handle(GUIControl* sender, const ClickEventArgs& args);
+			void Handle(GameState* sender, const UnitSelectionChangedArgs& args);
 
 		private:
 
@@ -45,7 +53,12 @@ namespace TikiEngine
 			GUIWindow* windowSkills;
 			GUIWindow* windowSkillUpgrades;
 
+			GUIImage* imgMinimap;
+
 			List<GUIControl*> enabledControls;
+
+			TikiBot* selectedBot;
+			BuildSlot* selectedSlot;
 
 		};
 	}

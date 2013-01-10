@@ -324,9 +324,8 @@ namespace TikiEngine
 			case 2: // enemy
 				gameState->GetBotFactory()->CreateEnemy1(this, List<Vector2>());
 				break;
-			case 3: // Hero
-				gameState->GetBotFactory()->CreatePlayerHero(this);
-				gameState->GetPart<PlayerBase>(assignment)->Hero = this;
+			case 3: // Hero Platform
+				gameState->GetBotFactory()->CreatePlayerHeroPlatform(this);
 				break;
 			case 4:
 #if TIKI_USE_SCENEGRAPH
@@ -374,8 +373,7 @@ namespace TikiEngine
 				gameState->GetPart<EnemyBase>(assignment)->GateControl = this;
 				break;
 			case 11:
-				gameState->GetBotFactory()->CreatePlayerBuilding(this);
-				gameState->GetPart<PlayerBase>(assignment)->MainBuilding = this;
+				gameState->GetBotFactory()->CreatePlayerMainBuilding(this);
 				break;
 			case 12:
 				gameState->GetBotFactory()->CreateEnemyTower(this);

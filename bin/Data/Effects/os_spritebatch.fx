@@ -42,9 +42,6 @@ PS_INPUT VS_Main(VS_INPUT input)
     PS_INPUT output = (PS_INPUT)0;    
 
 	output.Pos = float4(input.Pos, 1.0f);
-	//output.Pos = mul(output.Pos, spLocalM);
-	//output.Pos = mul(output.Pos, spWorldM);
-	//output.Pos = mul(output.Pos, spViewM);
 	output.Pos = mul(output.Pos, SBProjM);
 	output.UV = input.UV;
 	output.Color = input.Color;
@@ -61,10 +58,24 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	float val = (value * 6.28318f) - 3.14159f;
 	float angle = atan2(input.UV.y - 0.5f, input.UV.x - 0.5f);
-	
-	if (val != 0 && angle <= val)
+
+	if (value > 0)
 	{
-		color.rgb -= 0.4;
+		if (angle >= val)
+		{
+			color.rgb -= 0.4;
+		}
+	}
+	else if (value < 0)
+	{
+		float a = 0;
+		angle += val;
+	
+		a += clamp(cos(angle) - 0.25f, 0, 1) / 1.5f;
+		a += clamp(cos(angle + 2.0943f) - 0.25f, 0, 1) / 1.5f;
+		a += clamp(cos(angle + 4.1888f) - 0.25f, 0, 1) / 1.5f;
+		
+		color.rgb -= a;
 	}
 	
 	return saturate(tex.Sample(sam, input.UV.xy) * color);

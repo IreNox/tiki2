@@ -17,8 +17,6 @@
 
 #include <Core/List.h>
 
-
-
 namespace TikiEngine
 {
 	using namespace TikiEngine::Components;
@@ -26,16 +24,15 @@ namespace TikiEngine
 	class Scene : public EngineObject
 	{
 	public:
-		Scene(Engine* engine);
-		virtual ~Scene();
 
-#if TIKI_USE_SCENEGRAPH
-		SceneGraph SceneGraph;
-#endif
+		TikiEngine::SceneGraph SceneGraph;
+
+		Scene(Engine* engine);
+		~Scene();
 
 		GameObject* AddElement(GameObject* element);
 		GameObject* RemoveElement(GameObject* element);
-		/*void RemoveElementAt(UInt32 index);*/
+
 		inline const List<GameObject*>& GetElements() const
 		{
 			return elements;
@@ -52,9 +49,7 @@ namespace TikiEngine
 		inline Camera* GCamera() { return mainCamera; }
 
 	protected:
-
-
-
+		
 		bool initialized;
 
 		List<GameObject*> elements;

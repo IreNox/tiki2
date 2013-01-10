@@ -1,5 +1,6 @@
 
 #include "Game/SkillSystem.h"
+#include "Game/TikiBot.h"
 
 #include "Game/GD.h"
 
@@ -9,7 +10,8 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SkillSystem::SkillSystem(TikiBot* owner)
-			: owner(owner), heroLevel(1), skillUpgrades(1), currentXp(0), nextLevelXp(HeroNeededXPFirstLevelUp), lastLevelXp(0)
+			: owner(owner), heroLevel(1), skillUpgrades(1), currentXp(0), nextLevelXp(HeroNeededXPFirstLevelUp), lastLevelXp(0),
+			  attmodMaxHealth(TA_MaxHealth, AMT_PerPercent, HeroMaxHealthIncement, 0)
 		{
 		}
 
@@ -57,6 +59,9 @@ namespace TikiEngine
 			{
 				heroLevel++;
 				skillUpgrades++;
+				
+				owner->GetAttSys().AddModifier(&attmodMaxHealth);
+				owner->RestoreHealthToMaximum();
 
 				lastLevelXp = nextLevelXp;
 				nextLevelXp = HERO_XP_CALC_NEXTLEVEL(lastLevelXp, heroLevel);

@@ -169,6 +169,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
+		#pragma region Member - Misc
 		bool TikiBot::RotateFacingTowardPosition(Vector2 target)
 		{
 			Vector2 toTarget = Vector2::Normalize(target - Pos());
@@ -264,6 +265,7 @@ namespace TikiEngine
 
 			controller->SetCenter(sp);
 		}
+		#pragma endregion
 
 		#pragma region Member - Draw
 		void TikiBot::Draw(const DrawArgs& args)
@@ -356,6 +358,12 @@ namespace TikiEngine
 
 			if (EntityType() == ET_Tower)
 				gameObject->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromQuaternion(gameObject->PRS.GRotation()));
+
+			double addHealth = attSys[TA_HealthRegValue] * args.Time.ElapsedTime;
+			addHealth += attSys[TA_HealthRegPercent] * attSys[TA_MaxHealth] * args.Time.ElapsedTime;
+
+			if (addHealth != 0.0)
+				this->IncreaseHealth(addHealth);
 
 			// process the currently active goal. Note this is required even if the bot
 			// is under user control. This is because a goal is created whenever a user 

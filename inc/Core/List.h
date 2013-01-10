@@ -97,6 +97,11 @@ public:
 		this->data[index] = item;
 	}
 
+	inline void AddRange(const List<T>& list)
+	{
+		this->AddRange(list.data, 0, list.lengthData);
+	}
+
 	inline void AddRange(const T* src, Int32 offset, UInt32 length)
 	{
 		if(length == 0)	return;

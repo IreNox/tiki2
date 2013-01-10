@@ -295,7 +295,10 @@ namespace TikiEngine
 
 					// check if dead and clear from list
 					if (ent->IsDead())
+					{
 						RemoveBot(ent);
+						changed = true;
+					}
 				}
 #pragma endregion
 
@@ -312,14 +315,13 @@ namespace TikiEngine
 #endif
 
 			if (changed)
-				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(&selectedUnits));
+				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(selectedUnits, selectedSlots));
 
 			selectButton->Update(args);
 		}
 		#pragma endregion
 
-#pragma region helper
-
+		#pragma region Member - Helper
 		void UnitSelection::HandleTikiBot(GameObject* go)
 		{
 			TikiBot* ent = go->GetComponent<TikiBot>();
@@ -495,9 +497,7 @@ namespace TikiEngine
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 				bot->GetGameObject()->Release();
 			}
-
 #endif
-
 		}
 		#pragma endregion 
 	}

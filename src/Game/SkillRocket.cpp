@@ -2,7 +2,6 @@
 #include "Game/SkillRocket.h"
 
 #include "Game/Projectile.h"
-#include "Game/Rocket.h"
 #include "Game/GameState.h"
 #include "Game/ProjectileManager.h"
 
@@ -20,12 +19,21 @@ namespace TikiEngine
 		);
 
 		SkillRocket::SkillRocket(TikiBot* owner)
-			: Skill(owner, Desc)
+			: Skill(owner, Desc), rocket(0)
 		{
 		}
 
 		SkillRocket::~SkillRocket()
 		{
+		}
+
+		void SkillRocket::internUpdate(const UpdateArgs& args)
+		{
+			if (rocket != 0 && rocket->IsDead())
+			{
+				atWork = false;
+				rocket = 0;
+			}
 		}
 
 		void SkillRocket::internActivationPoint(const Vector3& target)
@@ -44,6 +52,8 @@ namespace TikiEngine
 			GameObject* go = new GameObject(engine);
 			Rocket* proj = new Rocket(gameState, go);
 			proj->Init(desc, 30, false);
+
+			rocket = proj;
 
 			gameState->GetProjectiles()->AddProjectile(proj);
 		}

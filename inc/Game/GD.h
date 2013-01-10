@@ -21,7 +21,7 @@ const double SkillHealAuraHealPerSecound[] = { 4.0f, 6.0f, 8.0f, 10.0f };
 	4.5, 	/* Cooldown */ \
 	25.0f, 	/* Range */ \
 	20.0f, 	/* AOERange */ \
-	2.0,  	/* Duration */ \
+	2000.0,	/* Duration */ \
 	4		/* MaxLevel */
 const double SkillRocketDamage[] = { 10.0f, 15.0f, 20.0f, 25.0f };
 
@@ -35,6 +35,7 @@ const double SkillSpiderMineDamage[] = { 4.0f, 6.0f };
 #pragma endregion
 
 #pragma region Hero
+const double HeroMaxHealthIncement = 10.0;
 const double HeroNeededXPFirstLevelUp = 100.0;
 
 #define HERO_XP_CALC_NEXTLEVEL(last_level_needed, level) \

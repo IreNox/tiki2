@@ -33,7 +33,7 @@ namespace TikiEngine
 		{
 		}
 
-		void AttributeSystem::AddModifiert(TikiAttModifier* mod)
+		void AttributeSystem::AddModifier(TikiAttModifier* mod)
 		{
 			attributes[mod->GetAttributeType()].addModifier(mod);
 		}
@@ -41,6 +41,11 @@ namespace TikiEngine
 		void AttributeSystem::RemoveModifier(TikiAttModifier* mod)
 		{
 			attributes[mod->GetAttributeType()].removeModifier(mod);
+		}
+
+		void AttributeSystem::UpdateModifier(TikiAttModifier* mod)
+		{
+			attributes[mod->GetAttributeType()].update();
 		}
 	}
 }

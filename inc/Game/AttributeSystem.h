@@ -17,8 +17,9 @@ namespace TikiEngine
 			AttributeSystem(Engine* engine);
 			~AttributeSystem();
 
-			void AddModifiert(TikiAttModifier* mod);
+			void AddModifier(TikiAttModifier* mod);
 			void RemoveModifier(TikiAttModifier* mod);
+			void UpdateModifier(TikiAttModifier* mod);
 
 			inline TikiAtt& operator[](Attributes att) { return attributes.GetRef(att); }
 			inline const TikiAtt& operator[](Attributes att) const { return attributes.GetCRef(att); }

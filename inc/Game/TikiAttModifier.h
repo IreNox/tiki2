@@ -44,8 +44,10 @@ namespace TikiEngine
 
 			inline Attributes GetAttributeType() { return att; }
 			inline AttributeModifierType GetType() { return type; }
-			inline double GetValue() { return value; }
 
+			inline double GetValue() { return value; }
+			inline void SetValue(double val) { value = val; }
+			
 			inline UInt32 GetPriority() { return priority; }
 
 		private:

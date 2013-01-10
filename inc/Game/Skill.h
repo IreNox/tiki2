@@ -79,7 +79,8 @@ namespace TikiEngine
 			inline const SkillDescription& GetDesc() const { return description; }
 
 			inline UInt32 GetCurrentLevel() const { return currentLevel; }
-			inline double GetCooldownState() const { return cooldownTimer.GetCurrentState(); }
+			inline double GetAtWorkState() const { return atWork; }
+			inline double GetCooldownState() const { return (!isReady ? cooldownTimer.GetCurrentState() : 0.0); }
 			inline const wstring& GetCurrentLevelString() const { return currentLevelString; }
 
 		protected:

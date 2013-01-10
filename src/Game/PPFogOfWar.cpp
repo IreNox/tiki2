@@ -7,6 +7,7 @@
 
 #include "Game/SceneLevel.h"
 #include "Game/TikiBot.h"
+#include "Game/BuildSlot.h"
 #include "Game/Weapon.h"
 #include "Game/WeaponSystem.h"
 #include "Game/SkillSystem.h"
@@ -98,7 +99,7 @@ namespace TikiEngine
 #else
 			UInt32 i = 0;
 			UInt32 count = 0;
-			while (i < state->GetScene()->GetElements().Count() && count < 32)
+			while (i < state->GetScene()->GetElements().Count() && count < FOW_CBSIZE)
 			{
 				TikiBot* bot = state->GetScene()->GetElements()[i]->GetComponent<TikiBot>();
 
@@ -133,6 +134,22 @@ namespace TikiEngine
 
 				i++;
 			}
+
+			i = 0;
+			while (i < selected.Count() && count < FOW_CBSIZE)
+			{
+				BuildSlot* slot = selected[i]->GetComponent<BuildSlot>();
+
+				if (slot != 0)
+				{
+					fow->Units[count].Position = selected[i]->PRS.GPosition().XZ();
+					fow->Units[count].Range = 0;
+					fow->Units[count].Type = 1.0f;
+					count++;
+				}
+
+				i++;
+			}
 #endif
 
 			float size = (float)state->GetScene()->GLevel()->GetTerrain()->GSize();
@@ -148,13 +165,8 @@ namespace TikiEngine
 		void PPFogOfWar::Handle(GameState* sender, const UnitSelectionChangedArgs& args)
 		{
 			selected.Clear();
-
-			UInt32 i = 0;
-			while (i < args.SelectedUnits->Count())
-			{
-				selected.Add(args.SelectedUnits->Get(i));
-				i++;
-			}
+			selected.AddRange(args.SelectedUnits);
+			selected.AddRange(args.SelectedSlots);
 		}
 		#pragma endregion
 

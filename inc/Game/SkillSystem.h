@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Game/Skill.h"
+#include "Game/TikiAttModifier.h"
 #include "Game/EventHeroEvents.h"
 
 namespace TikiEngine
@@ -51,6 +52,8 @@ namespace TikiEngine
 			UInt32 skillUpgrades;
 						
 			List<Skill*> skills;
+
+			TikiAttModifier attmodMaxHealth;
 
 		};
 	}

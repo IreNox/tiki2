@@ -1,6 +1,7 @@
 
 #include "Game/GameHud.h"
 #include "Game/GameState.h"
+#include "Game/SceneLevel.h"
 
 #include "Game/TikiBot.h"
 #include "Game/PlayerBase.h"
@@ -32,6 +33,9 @@ namespace TikiEngine
 			windowResources->SSize() = Vector2(180, 55);
 			windowResources->AddRef();
 			enabledControls.Add(windowResources);
+
+			imgMinimap = new GUIImage(engine);
+			enabledControls.Add(imgMinimap);
 
 			GUIImage* image = new GUIImage(engine);
 			image->SetTexture(engine->content->LoadTexture(L"hud/mass"));
@@ -93,38 +97,13 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Click
-		void GameHud::Handle(GUIControl* sender, const ClickEventArgs& args)
+		#pragma region Init
+		void GameHud::Init()
 		{
-			if (sender == buttonMenu)
-			{
-				//engine->SetScene()
-			}
-			else if (sender->GetParent() == windowSkills)
-			{
-				Int32 index = windowSkills->ChildControls().IndexOf(sender);
-
-				if (index != -1)
-				{
-					gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys()->GetSkills().Get(index)->Aktivate();
-				}
-			}
-			else if (sender->GetParent() == windowSkillUpgrades)
-			{
-				Int32 index = windowSkillUpgrades->ChildControls().IndexOf(sender);
-				
-				if (index != -1)
-				{
-					SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
-					sys->UpgradeSkill(index);
-
-					Skill* skill = sys->GetSkills().Get(index);
-					if (skill->GetCurrentLevel() == skill->GetDesc().MaxLevel)
-					{
-						windowSkillUpgrades->RemoveChild(sender);
-					}
-				}
-			}
+			imgMinimap->SetTexture(engine->content->LoadTexture(
+				L"terrain/minimap_" + StringAtoW(gameState->GetScene()->GLevel()->GetName())
+			));
+			imgMinimap->SSize() = Vector2(196, 196);
 		}
 		#pragma endregion
 
@@ -133,14 +112,10 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
+			imgMinimap->SPosition() = Vector2((float)vp->Width - 200, (float)vp->Height - 200);
 			windowSkills->SPosition() = Vector2(100, (float)vp->Height - 90);
 			windowSkillUpgrades->SPosition() = Vector2(140, (float)vp->Height - 150);
 			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15.0f);
-		}
-
-		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
-		{
-			this->ResetScreen();
 		}
 		#pragma endregion
 		
@@ -155,6 +130,7 @@ namespace TikiEngine
 				i++;
 			}
 
+			#pragma region SkillSystem
 			SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
 
 			if (sys->GetSkillUpgrades() > 0)
@@ -176,7 +152,7 @@ namespace TikiEngine
 					Vector2(0.35f),
 					0.9f,
 					Color::White,
-					skill->GetCooldownState()
+					(skill->GetAtWorkState() ? -(float)args.Time.TotalTime : (float)skill->GetCooldownState())
 				);
 
 				args.SpriteBatch->DrawString(
@@ -189,6 +165,11 @@ namespace TikiEngine
 
 				i++;
 			}
+			#pragma endregion
+
+			#pragma region Minimap
+			//UInt32
+			#pragma endregion
 		}
 		#pragma endregion
 
@@ -212,6 +193,63 @@ namespace TikiEngine
 			if (sys->GetSkillUpgrades() > 0)
 			{
 				windowSkillUpgrades->Update(args);
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - EventHandler
+		void GameHud::Handle(GameState* sender, const UnitSelectionChangedArgs& args)
+		{
+			selectedBot = 0;
+			selectedSlot = 0;
+
+			if (args.SelectedUnits.Count() != 0)
+			{
+				selectedBot = args.SelectedUnits[0]->GetComponent<TikiBot>();
+			}
+			else if (args.SelectedSlots.Count() != 0)
+			{
+				selectedSlot = args.SelectedSlots[0]->GetComponent<BuildSlot>();
+			}
+		}
+
+		void GameHud::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
+		{
+			this->ResetScreen();
+		}
+		#pragma endregion
+
+		#pragma region Member - EventHandler - Click
+		void GameHud::Handle(GUIControl* sender, const ClickEventArgs& args)
+		{
+			if (sender == buttonMenu)
+			{
+				//engine->SetScene()
+			}
+			else if (sender->GetParent() == windowSkills)
+			{
+				Int32 index = windowSkills->ChildControls().IndexOf(sender);
+
+				if (index != -1)
+				{
+					gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys()->GetSkills().Get(index)->Aktivate();
+				}
+			}
+			else if (sender->GetParent() == windowSkillUpgrades)
+			{
+				Int32 index = windowSkillUpgrades->ChildControls().IndexOf(sender);
+
+				if (index != -1)
+				{
+					SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
+					sys->UpgradeSkill(index);
+
+					Skill* skill = sys->GetSkills().Get(index);
+					if (skill->GetCurrentLevel() == skill->GetDesc().MaxLevel)
+					{
+						windowSkillUpgrades->RemoveChild(sender);
+					}
+				}
 			}
 		}
 		#pragma endregion

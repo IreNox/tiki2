@@ -12,6 +12,7 @@
 #include "Game/SkillSpiderMine.h"
 #include "Game/SkillSystem.h"
 
+#include "Game/Trigger.h"
 #include "Core/IContentManager.h"
 
 #include "Game/GD.h"
@@ -25,6 +26,7 @@ namespace TikiEngine
 			: gameState(gameState), timerSpawn(SPAWN_INTERVAL), timerNextUnit(SPAWN_UNIT_INTERVAL), enemySpawnLeft(0), playerSpawnLeft(0),
 			  playerBase(0)
 		{
+			playerBase = gameState->GetPart<PlayerBase>(0);
 		}
 
 		TikiBotFactory::~TikiBotFactory()
@@ -35,7 +37,6 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void TikiBotFactory::Init()
 		{
-			playerBase = gameState->GetPart<PlayerBase>(0);
 			playerBase->Init();
             playerBase->Hero->AddRef();
 
@@ -245,9 +246,11 @@ namespace TikiEngine
 			gameState->GetScene()->AddElement(go);
 		}
 
-		void TikiBotFactory::CreatePlayerBuilding(GameObject* go)
+		void TikiBotFactory::CreatePlayerMainBuilding(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"building_main"));
+
+			playerBase->MainBuilding = go;
 
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
@@ -260,6 +263,15 @@ namespace TikiEngine
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(10.0f);
+
+			gameState->GetScene()->AddElement(go);
+		}
+
+		void TikiBotFactory::CreatePlayerHeroPlatform(GameObject* go)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"hero_platform"));
+
+			playerBase->HeroPlatform = go;
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -319,32 +331,6 @@ namespace TikiEngine
 		Vector3 TikiBotFactory::GetPos(const Vector3& pos, float heightAdjust)
 		{
 			return GetPos(pos.XZ(), heightAdjust);
-		}
-		#pragma endregion
-
-		#pragma region Private Member - Database
-		void TikiBotFactory::loadFromDatabase(sqlite3_stmt* state, GameObject* obj)
-		{
-			//TikiBotDescription desc;
-
-			//desc.MaxHealth = sqlite3_column_int(state, fieldId);
-			// nicht impl: desc.HealthReg = sqlite3_column_int(state, fieldId);
-			//desc.SightRadius = sqlite3_column_int(state, fieldId);
-			//desc.Loot = sqlite3_column_int(state, fieldId);
-			//desc.Armor = sqlite3_column_int(state, fieldId);
-			//desc.weapon = load weapon from database;
-
-			//TikiBot* bot = createBot(desc);
-			//bot->GetWeaponSys()->Init(desc);
-
-			/////////////////////////////////////////////////////////////////////////////////
-
-			//obj->SModel(***);
-
-			//foreach (AttributeModificator am in Db.GetAttributes())
-			//{
-				//bot->GetAttributes()->add(am);
-			//}
 		}
 		#pragma endregion
 	}

@@ -265,6 +265,7 @@ namespace TikiEngine
 			ITexture* texInfo;
 			ITexture* texHealth;
 			ITexture* texShield;
+			ITexture* texMinimap;
 
 			float sightRadius;
 			int loot;

@@ -12,9 +12,13 @@ namespace TikiEngine
 
 		struct UnitSelectionChangedArgs 
 		{
-			List<GameObject*>* SelectedUnits;
+			const List<GameObject*>& SelectedUnits;
+			const List<GameObject*>& SelectedSlots;
 
-			UnitSelectionChangedArgs(List<GameObject*>* selectedUnits) : SelectedUnits(selectedUnits) {}
+			UnitSelectionChangedArgs(const List<GameObject*>& selectedUnits, const List<GameObject*>& selectedSlots)
+				: SelectedUnits(selectedUnits), SelectedSlots(selectedSlots)
+			{
+			}
 		};
 
 		typedef Event<GameState, UnitSelectionChangedArgs> UnitSelectionChangedEvent;

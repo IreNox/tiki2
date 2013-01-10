@@ -41,6 +41,7 @@
     <None Include="bin\Data\Models\building03_05.tiki" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
     <None Include="bin\Data\Models\building_main.tiki" />
+    <None Include="bin\Data\Models\hero_platform.tiki" />
     <None Include="bin\Data\Models\marine_l.tiki" />
     <None Include="bin\Data\Models\replaceme_cube.tiki" />
     <None Include="bin\Data\Models\rock_01.tiki" />
@@ -118,6 +119,7 @@
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_normal.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_spec.dds" />
     <None Include="bin\Data\Textures\terrain\color_map1.dds" />
+    <None Include="bin\Data\Textures\terrain\minimap_map1.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_diff.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_normal.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_spec.dds" />
