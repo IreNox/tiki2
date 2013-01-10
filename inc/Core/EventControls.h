@@ -12,9 +12,10 @@ namespace TikiEngine
 
 	struct ClickEventArgs 
 	{
-		GUIControl* Control;
+		MouseButtons Button;
+		Vector2 ClickPosition;
 
-		ClickEventArgs(GUIControl* control) : Control(control) {}
+		ClickEventArgs(MouseButtons button, Vector2 clickPos) : Button(button), ClickPosition(clickPos) {}
 	};
 
 	typedef Event<GUIControl, ClickEventArgs> ClickEvent;

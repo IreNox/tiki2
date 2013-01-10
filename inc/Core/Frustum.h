@@ -82,6 +82,30 @@ namespace TikiEngine
 #endif
 		}
 
+		void Get2DVertices(List<Vector2>& vertices)
+		{
+			Vector2 v[] = {
+				IntersectionPoint(pl[FARP], pl[LEFT], pl[BOTTOM]).XZ(),
+				IntersectionPoint(pl[FARP], pl[RIGHT], pl[BOTTOM]).XZ(),
+				IntersectionPoint(pl[NEARP], pl[RIGHT], pl[BOTTOM]).XZ(),
+				IntersectionPoint(pl[NEARP], pl[LEFT], pl[BOTTOM]).XZ(),
+			};
+			
+			vertices.AddRange(v, 0, 4);
+
+			//Vector2 nTL = IntersectionPoint(pl[NEARP], pl[LEFT], pl[TOP]).XZ();
+			//Vector2 nBL = IntersectionPoint(pl[NEARP], pl[LEFT], pl[BOTTOM]).XZ();
+
+			//Vector2 nTR = IntersectionPoint(pl[NEARP], pl[RIGHT], pl[TOP]).XZ();
+			//Vector2 nBR = IntersectionPoint(pl[NEARP], pl[RIGHT], pl[BOTTOM]).XZ();
+
+			//Vector2 fTL = IntersectionPoint(pl[FARP], pl[LEFT], pl[TOP]).XZ();
+			//Vector2 fBL = IntersectionPoint(pl[FARP], pl[LEFT], pl[BOTTOM]).XZ();
+
+			//Vector2 fTR = IntersectionPoint(pl[FARP], pl[RIGHT], pl[TOP]).XZ();
+			//Vector2 fBR = IntersectionPoint(pl[FARP], pl[RIGHT], pl[BOTTOM]).XZ();			
+		}
+
 		Vector3 IntersectionPoint(Plane& a, Plane& b, Plane& c)
 		{
 			Vector3 v1, v2, v3;

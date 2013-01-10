@@ -166,65 +166,10 @@ namespace TikiEngine
 							coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
 						}
 					}
-					
-					UInt32 i = 0;
-					while (i < unitSelection->GetSelectedUnits()->Count())
-					{
-						TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
 
-						if (bot != 0 && bot->GetBrain() != 0)
-						{
-							//bot->TakePossession();
-
-							// if the shift key is pressed down at the same time as clicking then the
-							// movement command will be queued
-							if (args.Input.GetKey(KEY_LSHIFT))
-							{
-								if (bot->EntityType() != ET_Tower)
-								{
-									if (args.Input.GetKey(KEY_T))
-										bot->GetBrain()->QueueGoalAttackMove(info.Point);
-									else
-										bot->GetBrain()->QueueGoalMoveToPosition(info.Point);
-								}
-
-							}
-							else if (args.Input.GetKey(KEY_T))
-							{
-								bot->GetBrain()->RemoveAllSubgoals();
-								bot->GetBrain()->AddGoalAttackMove(info.Point);
-							}
-							else
-							{
-								if (target != 0)
-								{
-									// don't attack yourself dude
-									if (target->ID() != bot->ID())
-									{
-										bot->GetBrain()->RemoveAllSubgoals();
-										//engine->HLog.Write("Target found.");
-										bot->GetBrain()->AddGoalAttackGlobalTarget(target);
-
-									}
-								}
-								else
-								{
-									if (bot->EntityType() != ET_Tower)
-									{
-										bot->GetBrain()->RemoveAllSubgoals();
-										bot->GetBrain()->AddGoalMoveToPosition(info.Point);
-									}
-								}
-
-							}
-
-						}
-
-						i++;
-					}
+					unitSelection->MoveCommand(target, info.Point, args.Input.GetKey(KEY_T), args.Input.GetKey(KEY_LSHIFT));
 				}
 			}
-
 
 			// Handle tower 
 			if (args.Input.GetKeyPressed(KEY_F9))

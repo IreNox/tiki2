@@ -37,6 +37,7 @@ namespace TikiEngine
 			virtual void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color) = 0;
 			virtual void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color, float value) = 0;
 
+			virtual void DrawLine(const List<Vector2>& vertices, const Color& color, float layerDepth = 1.0f, bool loop = false) = 0;
 			virtual void DrawString(IFont* font, wstring text, const Vector2& position, const Color& color, float layerDepth = 1.0f) = 0;
 
 		};

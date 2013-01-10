@@ -131,9 +131,14 @@ namespace TikiEngine
 			}
 
 			mouseOver = boundingBox.Contains(args.Input.MousePositionDisplay);
+			
+			MouseButtons mb = MB_None;
+			if (args.Input.GetMouseRelease(MB_Left)) mb = MB_Left;
+			if (args.Input.GetMouseRelease(MB_Middle)) mb = MB_Middle;
+			if (args.Input.GetMouseRelease(MB_Right)) mb = MB_Right;
 
-			mouseClicked = (args.Input.GetMouseRelease(MB_Left) && mouseOver);
-			if (mouseClicked) this->Click.RaiseEvent(this, ClickEventArgs(this));
+			mouseClicked = (mb != MB_None && mouseOver);
+			if (mouseClicked) this->Click.RaiseEvent(this, ClickEventArgs(mb, args.Input.MousePositionDisplay));
 
 			UInt32 i = 0;
 			while (i < childs.Count())

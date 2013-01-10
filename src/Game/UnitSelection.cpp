@@ -5,12 +5,14 @@
 
 #include "Game/SensorMemory.h"
 #include "Game/SceneLevel.h"
-
-#include "Core/IGraphics.h"
-#include "Game/BuildSlot.h"
-
 #include "Game/TikiBotFactory.h"
+
+#include "Game/TikiBot.h"
+#include "Game/BuildSlot.h"
+#include "Game/GoalThink.h"
+
 #include "Core/IPhysics.h"
+#include "Core/IGraphics.h"
 
 namespace TikiEngine
 {
@@ -34,6 +36,67 @@ namespace TikiEngine
 			selectedUnits.Clear();
 			selectedSlots.Clear();
 			SafeRelease(&selectButton);
+		}
+		#pragma endregion
+
+		#pragma region Member - MoveCommand
+		void UnitSelection::MoveCommand(TikiBot* target, const Vector3& pos, bool attackMove, bool addWaypoint)
+		{
+			UInt32 i = 0;
+			while (i < selectedUnits.Count())
+			{
+				TikiBot* bot = selectedUnits[i]->GetComponent<TikiBot>();
+
+				if (bot != 0 && bot->GetBrain() != 0)
+				{
+					//bot->TakePossession();
+
+					// if the shift key is pressed down at the same time as clicking then the
+					// movement command will be queued
+					if (addWaypoint)
+					{
+						if (bot->EntityType() != ET_Tower)
+						{
+							if (attackMove)
+								bot->GetBrain()->QueueGoalAttackMove(pos);
+							else
+								bot->GetBrain()->QueueGoalMoveToPosition(pos);
+						}
+
+					}
+					else if (attackMove)
+					{
+						bot->GetBrain()->RemoveAllSubgoals();
+						bot->GetBrain()->AddGoalAttackMove(pos);
+					}
+					else
+					{
+						if (target != 0)
+						{
+							// don't attack yourself dude
+							if (target->ID() != bot->ID())
+							{
+								bot->GetBrain()->RemoveAllSubgoals();
+								//engine->HLog.Write("Target found.");
+								bot->GetBrain()->AddGoalAttackGlobalTarget(target);
+
+							}
+						}
+						else
+						{
+							if (bot->EntityType() != ET_Tower)
+							{
+								bot->GetBrain()->RemoveAllSubgoals();
+								bot->GetBrain()->AddGoalMoveToPosition(pos);
+							}
+						}
+
+					}
+
+				}
+
+				i++;
+			}
 		}
 		#pragma endregion
 
@@ -214,7 +277,7 @@ namespace TikiEngine
 				slot = go->GetComponent<BuildSlot>();
 				if(slot != 0)
 				{
-					Camera* cam = gameState->GetScene()->GCamera();
+					Camera* cam = gameState->GetScene()->GetMainCamera();
 					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
 					Matrix vp = cam->WorldToScreen();
@@ -254,7 +317,7 @@ namespace TikiEngine
 					// select player units only
 					if (ent->GetFaction() == 0)
 					{
-						Camera* cam = gameState->GetScene()->GCamera();
+						Camera* cam = gameState->GetScene()->GetMainCamera();
 						Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
 						Matrix vp = cam->WorldToScreen(); //Matrix::CreateTranslation(cam->GetGameObject()->PRS.GPosition()) *
@@ -421,7 +484,6 @@ namespace TikiEngine
 
 				// Clear old GameObject
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
-				bot->GetGameObject()->Release();
 
 				// Create new GameObject and BuildSlot
 				GameObject* go = new GameObject(engine);
@@ -435,7 +497,6 @@ namespace TikiEngine
 			{
 				//engine->HLog.Write("Released bot go");
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
-				bot->GetGameObject()->Release();
 			}
 		}
 		#pragma endregion 

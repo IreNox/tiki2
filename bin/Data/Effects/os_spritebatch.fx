@@ -78,7 +78,12 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 		color.rgb -= a;
 	}
 	
-	return saturate(tex.Sample(sam, input.UV.xy) * color);
+	if (!(input.UV.x == -1.0f && input.UV.y == -1.0f))
+	{
+		color = tex.Sample(sam, input.UV.xy) * color;
+	}
+
+	return color;
 }
 
 

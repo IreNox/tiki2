@@ -47,6 +47,7 @@ namespace TikiEngine
 			inline NavigationMesh* GetNavMesh() { return navMesh; }
 			inline List<GamePart*>& GetGameParts() { return gameParts; }
 			inline TikiBotFactory* GetBotFactory() { return botFactory; }
+			inline UnitSelection* GetUnitSelection() { return unitSelection; }
 			inline ProjectileManager* GetProjectiles() { return projectiles; }
 
 			inline double GetResource() { return resource; }

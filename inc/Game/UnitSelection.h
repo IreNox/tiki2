@@ -21,6 +21,8 @@ namespace TikiEngine
 			UnitSelection(GameState* gameState);
 			~UnitSelection();
 
+			void MoveCommand(TikiBot* target, const Vector3& pos, bool attackMove, bool addWaypoint);
+
 			inline bool GetEnabled() { return enabled; }
 			inline void SetEnabled(bool val) { enabled = val; }
 

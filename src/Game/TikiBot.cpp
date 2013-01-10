@@ -95,10 +95,6 @@ namespace TikiEngine
 				skillSys = 0;
 			}
 
-			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
-			texHealth = engine->content->LoadTexture(L"hud/unit_health");
-			texShield = engine->content->LoadTexture(L"hud/unit_shield");
-
 			pathPlanner->Create(
 				gameState->GetNavMesh()
 			);			
@@ -269,53 +265,7 @@ namespace TikiEngine
 
 		#pragma region Member - Draw
 		void TikiBot::Draw(const DrawArgs& args)
-		{
-			Matrix vp = args.CurrentCamera->WorldToScreen();
-
-			Vector2 ss = args.Graphics->GetViewPort()->GetSize();
-
-			Vector3 pos = gameObject->PRS.GPosition();
-			pos.Y += controller->GetHeight() + 1.0f;
-			pos = Vector3::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
-			pos *= 0.5f;
-			pos = Vector3(pos.X * ss.X, (1 - pos.Y) * ss.Y, 0);
-
-			if (EntityType() == ET_Hero)
-			{
-				args.SpriteBatch->Draw(
-					texInfo,
-					RectangleF::Create(pos.X - 40, pos.Y - 20, 80, 16),
-					Color::White
-				);
-
-				args.SpriteBatch->Draw(
-					texHealth,
-					RectangleF::Create(pos.X - 39, pos.Y - 19, (float)(health / attSys[TA_MaxHealth]) * 78.0f, 11),
-					Color::White
-				);
-
-				float xp = (float)((skillSys->GetXP() - skillSys->GetXPLastLevel()) / (skillSys->GetXPNextLevel() - skillSys->GetXPLastLevel()));
-				args.SpriteBatch->Draw(
-					texShield,
-					RectangleF::Create(pos.X - 39, pos.Y - 8, xp * 78.0f, 4),
-					Color::White
-				);
-			}
-			else
-			{
-				args.SpriteBatch->Draw(
-					texInfo,
-					RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 9),
-					Color::White
-				);
-
-				args.SpriteBatch->Draw(
-					texHealth,
-					RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(health / attSys[TA_MaxHealth]) * 38.0f, 7),
-					Color::White
-				);
-			}
-			
+		{		
 			// Draw Hero Skills
 			if (EntityType() == ET_Hero)
 				skillSys->Draw(args);
@@ -324,6 +274,8 @@ namespace TikiEngine
 			#if _DEBUG
 			if (gameState->DrawNavMesh && EntityType() != ET_Building)
 			{
+				Matrix vp = args.CurrentCamera->WorldToScreen();
+
 				pathPlanner->Draw(args);
 				brain->Draw(args);
 
@@ -334,7 +286,7 @@ namespace TikiEngine
 				sensorMem->Draw(args);
 
 				// Draw Goals
-				Camera* cam = gameState->GetScene()->GCamera();
+				Camera* cam = gameState->GetScene()->GetMainCamera();
 				Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
 				Vector3 screenPos = Vector3::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);

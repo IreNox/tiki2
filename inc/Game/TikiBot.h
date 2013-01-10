@@ -262,11 +262,6 @@ namespace TikiEngine
 			Vector3 orig;
 			Vector3 dir;
 
-			ITexture* texInfo;
-			ITexture* texHealth;
-			ITexture* texShield;
-			ITexture* texMinimap;
-
 			float sightRadius;
 			int loot;
 			int armor;

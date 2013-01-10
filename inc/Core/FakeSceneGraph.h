@@ -50,6 +50,17 @@ namespace TikiEngine
 			FOREACH(gameObjects, whatIWant(gameObjects[i]))
 		}
 
+		void DoInFrustum(function<void(GameObject*)> whatIWant)
+		{
+			UInt32 i = 0;
+			while (i < gameObjects.Count())
+			{
+				whatIWant(gameObjects[i]);
+
+				i++;
+			}
+		}
+
 		void DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
 		{
 			UInt32 i = 0;

@@ -60,6 +60,13 @@ namespace TikiEngine
 			TikiBot* selectedBot;
 			BuildSlot* selectedSlot;
 
+			ITexture* texInfo;
+			ITexture* texHealth;
+			ITexture* texShield;
+			
+			ITexture* texMinimapMop;
+			ITexture* texMinimapHero;
+
 		};
 	}
 }

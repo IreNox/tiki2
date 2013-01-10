@@ -78,7 +78,7 @@ namespace TikiEngine
 					targetZoom = Clamp(targetZoom, -600.0f, 100.0f);
 				}
 
-				if (abs(zoom - targetZoom) > 0.01f || move != Vector2::Zero)
+				if (abs(zoom - targetZoom) > 0.01f || move != Vector2::Zero || gameObject->PRS.IsDirty())
 				{
 					zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime * 2);
 

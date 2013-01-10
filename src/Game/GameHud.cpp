@@ -6,7 +6,9 @@
 #include "Game/TikiBot.h"
 #include "Game/PlayerBase.h"
 #include "Game/SkillSystem.h"
+#include "Game/UnitSelection.h"
 
+#include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
 #include "Core/IContentManager.h"
 
@@ -35,6 +37,7 @@ namespace TikiEngine
 			enabledControls.Add(windowResources);
 
 			imgMinimap = new GUIImage(engine);
+			imgMinimap->Click.AddHandler(this);
 			enabledControls.Add(imgMinimap);
 
 			GUIImage* image = new GUIImage(engine);
@@ -81,6 +84,13 @@ namespace TikiEngine
 
 				i++;
 			}
+
+			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
+			texHealth = engine->content->LoadTexture(L"hud/unit_health");
+			texShield = engine->content->LoadTexture(L"hud/unit_shield");
+
+			texMinimapMop = engine->content->LoadTexture(L"hud/minimap_mop");
+			texMinimapHero = engine->content->LoadTexture(L"hud/minimap_hero");
 			
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->ResetScreen();
@@ -167,8 +177,114 @@ namespace TikiEngine
 			}
 			#pragma endregion
 
-			#pragma region Minimap
-			//UInt32
+			#pragma region Minimap/Healthbars
+			Matrix vp = args.CurrentCamera->WorldToScreen();
+			Vector2 ss = args.Graphics->GetViewPort()->GetSize();
+
+			Vector2 mmCenter = imgMinimap->GPosition() + (imgMinimap->GSize() / 2);
+			float levelSize = gameState->GetScene()->GLevel()->GetTerrain()->GSize() * 0.75f;
+
+			Vector2 screenPoints[] = {
+				Vector2(0, 0),
+				Vector2(ss.X, 0),
+				Vector2(ss.X, ss.Y),
+				Vector2(0, ss.Y)
+			};
+
+			List<Vector2> frustum;
+
+			i = 0;
+			while (i < 4)
+			{
+				Ray ray = gameState->GetScene()->GetMainCamera()->ScreenPointToRay(screenPoints[i]);
+				RaycastHit hit;
+				Vector2 point = Vector2::Zero;
+
+				if (engine->physics->RayCast(ray, &hit))
+				{
+					point = hit.Point.XZ();
+				}
+
+				point /= levelSize;
+				point *= imgMinimap->GSize().X;
+				point += mmCenter;
+
+				frustum.Add(point);
+				
+				i++;
+			}
+
+			args.SpriteBatch->DrawLine(frustum, Color::White, 0.8f, true);
+
+			gameState->GetScene()->SceneGraph.Do([&](GameObject* go){
+				TikiBot* bot = go->GetComponent<TikiBot>();
+
+				if (bot != 0)
+				{
+					Vector3 pos = go->PRS.GPosition();					
+					pos.Y += bot->GetController()->GetHeight() + 1.0f;
+
+					if (gameState->GetScene()->GetMainCamera()->GetFrustum().PointInFrustum(pos))
+					{
+						pos = Vector3::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
+						pos *= 0.5f;
+						pos = Vector3(pos.X * ss.X, (1 - pos.Y) * ss.Y, 0);
+
+						if (bot->EntityType() == ET_Hero)
+						{
+							args.SpriteBatch->Draw(
+								texInfo,
+								RectangleF::Create(pos.X - 40, pos.Y - 20, 80, 16),
+								Color::White,
+								1.2f
+							);
+
+							args.SpriteBatch->Draw(
+								texHealth,
+								RectangleF::Create(pos.X - 39, pos.Y - 19, (float)(bot->Health() / bot->MaxHealth()) * 78.0f, 11),
+								Color::White,
+								1.1f
+							);
+
+							float xp = (float)((bot->GetSkillSys()->GetXP() - bot->GetSkillSys()->GetXPLastLevel()) / (bot->GetSkillSys()->GetXPNextLevel() - bot->GetSkillSys()->GetXPLastLevel()));
+							args.SpriteBatch->Draw(
+								texShield,
+								RectangleF::Create(pos.X - 39, pos.Y - 8, xp * 78.0f, 4),
+								Color::White,
+								1.1f
+							);
+						}
+						else
+						{
+							args.SpriteBatch->Draw(
+								texInfo,
+								RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 9),
+								Color::White,
+								1.2f
+							);
+
+							args.SpriteBatch->Draw(
+								texHealth,
+								RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(bot->Health() / bot->MaxHealth()) * 38.0f, 7),
+								Color::White,
+								1.1f
+							);
+						}
+					}
+
+					ITexture* tex = (bot->EntityType() == ET_Hero ? texMinimapHero : texMinimapMop);
+
+					args.SpriteBatch->Draw(
+						tex,
+						mmCenter + ((go->PRS.GPosition().XZ() / levelSize) * imgMinimap->GSize().X),
+						0.0f,
+						tex->GetCenter(),
+						1.0f,
+						0.8f,
+						(bot->GetFaction() == 0 ? Color::Green : Color::Red)
+					);
+				}
+			});
 			#pragma endregion
 		}
 		#pragma endregion
@@ -225,6 +341,31 @@ namespace TikiEngine
 			if (sender == buttonMenu)
 			{
 				//engine->SetScene()
+			}
+			else if (sender == imgMinimap)
+			{
+				Vector2 clickPos = args.ClickPosition;
+				clickPos -= imgMinimap->GPosition() + (imgMinimap->GSize() / 2);
+				clickPos /= imgMinimap->GSize().X;
+				clickPos *= gameState->GetScene()->GLevel()->GetTerrain()->GSize() * 0.75f;
+
+				if (args.Button == MB_Left)
+				{
+					Vector3& pos = gameState->GetScene()->GetMainCamera()->GetGameObject()->PRS.SPosition();
+					pos.X = clickPos.X;
+					pos.Z = clickPos.Y;
+				}
+				else if (args.Button == MB_Right)
+				{
+					Vector3 pos = Vector3(
+						clickPos.X,
+						0,
+						clickPos.Y
+					);
+					pos.Y = gameState->GetScene()->GLevel()->GetTerrain()->SampleHeight(pos);
+
+					gameState->GetUnitSelection()->MoveCommand(0, pos, false, false);
+				}
 			}
 			else if (sender->GetParent() == windowSkills)
 			{

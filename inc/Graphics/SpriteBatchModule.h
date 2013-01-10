@@ -44,6 +44,7 @@ namespace TikiEngine
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color);
 			void Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, const Vector2& scale, float layerDepth, const Color& color, float value);
 			
+			void DrawLine(const List<Vector2>& vertices, const Color& color, float layerDepth = 1.0f, bool loop = false);
 			void DrawString(IFont* font, wstring text, const Vector2& position, const Color& color, float layerDepth = 1.0f);
 
 			void Handle(IGraphics* graphics, const ScreenSizeChangedArgs& args);
@@ -52,11 +53,15 @@ namespace TikiEngine
 
 			struct Sprite
 			{
+				bool Lines;
+
 				UInt32 BufferIndex;
-				UInt32 TextureIndex;
+				UInt32 VertexCount;
 
 				float Value;
 				float LayerDepth;
+
+				ITexture* Texture;
 
 				inline bool operator>(const Sprite& rhs) const { return LayerDepth > rhs.LayerDepth; }
 				inline bool operator<(const Sprite& rhs) const { return LayerDepth < rhs.LayerDepth; }
@@ -71,7 +76,6 @@ namespace TikiEngine
 			DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>* buffer;
 
 			List<Sprite> spriteInfos;
-			List<ITexture*> spriteTextures;
 			List<SpriteBatchVertex> spriteVertices;
 						
 			Vector2 screenSize;

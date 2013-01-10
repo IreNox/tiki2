@@ -70,6 +70,8 @@
     <None Include="bin\Data\Textures\Hud\icons\spider_mine.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
     <None Include="bin\Data\Textures\Hud\crosshair\pointer.dds" />
+    <None Include="bin\Data\Textures\Hud\minimap_hero.dds" />
+    <None Include="bin\Data\Textures\Hud\minimap_mop.dds" />
     <None Include="bin\Data\Textures\Hud\unit_bg.dds" />
     <None Include="bin\Data\Textures\Hud\unit_health.dds" />
     <None Include="bin\Data\Textures\Hud\unit_shield.dds" />

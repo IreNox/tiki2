@@ -41,7 +41,7 @@ namespace TikiEngine
 
 		DrawLightArgs& GetLighting();
 		List<Camera*>* GetCameras();
-		inline Camera* GCamera() { return mainCamera; }
+		inline Camera* GetMainCamera() { return mainCamera; }
 
 	protected:
 		

@@ -983,7 +983,6 @@ namespace TikiEngine
 			UINT offset = 0;
 			UINT stride = declaration->GetElementSize();
 
-			DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 			declaration->Apply();
 
 			ID3D11Buffer* vertexBuffer = this->buffer->GetBuffer();
@@ -1001,11 +1000,15 @@ namespace TikiEngine
 			{
 				info = spriteInfos.GetRef(i);
 
+				DllMain::Context->IASetPrimitiveTopology(
+					(info.Lines ? D3D11_PRIMITIVE_TOPOLOGY_LINELIST : D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP)				
+				);
+
 				shader->SetSingle("value", info.Value);
-				shader->SetTexture("tex", spriteTextures[info.TextureIndex]);
+				if (info.Texture != 0) shader->SetTexture("tex", info.Texture);
 				shader->Apply();
 
-				DllMain::Context->Draw(4, info.BufferIndex);
+				DllMain::Context->Draw(info.VertexCount, info.BufferIndex);
 
 				i++;
 			}
@@ -1198,7 +1201,38 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - DrawString
+		#pragma region Member - DrawLine/DrawString
+		void SpriteBatchModule::DrawLine(const List<Vector2>& vertices, const Color& color, float layerDepth /* = 1.0f */, bool loop /* = false */)
+		{
+			Sprite info;
+			info.Lines = true;
+			info.Texture = 0;
+			info.BufferIndex = spriteVertices.Count();
+			info.VertexCount = 0;
+			info.Value = 0;
+			info.LayerDepth = layerDepth;
+
+			UInt32 i = 0;
+			UInt32 c = vertices.Count() - (loop ? 0 : 1);
+			while (i < c)
+			{
+				Vector2 v1 = vertices[i];
+				Vector2 v2 = vertices[(i < c - 1 ? i + 1 : 0)];
+
+				SpriteBatchVertex vertex[2] = {
+					{ v1.X, screenSize.Y - v1.Y, -layerDepth, -1.0f, -1.0f, color.R, color.G, color.B, color.A },
+					{ v2.X, screenSize.Y - v2.Y, -layerDepth, -1.0f, -1.0f, color.R, color.G, color.B, color.A }
+				};
+
+				spriteVertices.AddRange(vertex, 0, 2);
+				info.VertexCount += 2;
+
+				i++;
+			}
+
+			spriteInfos.Add(info);
+		}
+
 		void SpriteBatchModule::DrawString(IFont* font, wstring text, const Vector2& position, const Color& color, float layerDepth)
 		{
 			UInt32 i = 0;
@@ -1236,17 +1270,11 @@ namespace TikiEngine
 
 		void SpriteBatchModule::drawInternal(ITexture* texture, const Vector3& tl, const Vector3& tr, const Vector3& bl, const Vector3& br, const Vector4& texCoord, const Color& color, float value)
 		{
-			Int32 texIndex = spriteTextures.IndexOf(texture);
-
-			if (texIndex == -1)
-			{
-				texIndex = spriteTextures.Count();
-				spriteTextures.Add(texture);
-			}
-
 			Sprite info;
-			info.TextureIndex = texIndex;
+			info.Lines = false;
+			info.Texture = texture;
 			info.BufferIndex = spriteVertices.Count();
+			info.VertexCount = 4;
 			info.Value = value;
 			info.LayerDepth = tl.Z;
 			spriteInfos.Add(info);

@@ -7,6 +7,7 @@ namespace TikiEngine
 {
 	enum MouseButtons
 	{
+		MB_None = 0xFF,
 		MB_Left = 0,
 		MB_Right = 1,
 		MB_Middle = 2
