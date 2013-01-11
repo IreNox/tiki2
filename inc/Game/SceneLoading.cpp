@@ -34,7 +34,7 @@ namespace TikiEngine
 				Vector2::One,
 				1.0f,
 				Color::White,
-				-(float)args.Time.TotalTime
+				-(float)args.Time.TotalTime / 4
 			);
 
 			Scene::Draw(args);
