@@ -21,7 +21,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GameHud::GameHud(GameState* state)
-			: EngineObject(state->GetEngine()), gameState(state)
+			: EngineObject(state->GetEngine()), gameState(state), selectedBot(0), selectedSlot(0)
 		{
 			buttonMenu = new GUIButton(engine);
 			buttonMenu->SPosition() = Vector2(20, -15);
@@ -53,7 +53,6 @@ namespace TikiEngine
 
 			windowSkills = new GUIWindow(engine);
 			windowSkills->SSize() = Vector2(295, 90);
-			enabledControls.Add(windowSkills);
 
 			UInt32 i = 0;
 			while (i < 4)
@@ -85,6 +84,17 @@ namespace TikiEngine
 				i++;
 			}
 
+			windowBuildSlot = new GUIWindow(engine);
+			windowBuildSlot->SSize() = Vector2(90, 90);
+
+			GUIButton* cmd = new GUIButton(engine);
+			cmd->SSize() = Vector2(70, 70);
+			cmd->SPosition() = Vector2(10.0f, 10.0f);
+			cmd->Text() = L"Build";
+			cmd->Click.AddHandler(this);
+
+			windowBuildSlot->AddChild(cmd);
+
 			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
 			texHealth = engine->content->LoadTexture(L"hud/unit_health");
 			texShield = engine->content->LoadTexture(L"hud/unit_shield");
@@ -92,7 +102,9 @@ namespace TikiEngine
 			texMinimapMop = engine->content->LoadTexture(L"hud/minimap_mop");
 			texMinimapHero = engine->content->LoadTexture(L"hud/minimap_hero");
 			
+			gameState->UnitSelectionChanged.AddHandler(this);
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
+
 			this->ResetScreen();
 		}
 
@@ -104,6 +116,8 @@ namespace TikiEngine
 			SafeRelease(&windowSkillUpgrades);
 
 			SafeRelease(&windowResources);
+
+			SafeRelease(&windowBuildSlot);
 		}
 		#pragma endregion
 
@@ -123,8 +137,11 @@ namespace TikiEngine
 			ViewPort* vp = engine->graphics->GetViewPort();
 
 			imgMinimap->SPosition() = Vector2((float)vp->Width - 200, (float)vp->Height - 200);
+
 			windowSkills->SPosition() = Vector2(100, (float)vp->Height - 90);
 			windowSkillUpgrades->SPosition() = Vector2(140, (float)vp->Height - 150);
+			windowBuildSlot->SPosition() = Vector2(100, (float)vp->Height - 90);
+
 			windowResources->SPosition() = Vector2((float)vp->Width - 200, -15.0f);
 		}
 		#pragma endregion
@@ -141,39 +158,42 @@ namespace TikiEngine
 			}
 
 			#pragma region SkillSystem
-			SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
-
-			if (sys->GetSkillUpgrades() > 0)
+			if (selectedBot != 0 && selectedBot->EntityType() == ET_Hero)
 			{
-				windowSkillUpgrades->Draw(args);
-			}
+				SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
 
-			i = 0;
-			while (i < 4)
-			{
-				Skill* skill = sys->GetSkills()[i];
-				GUIControl* cont = windowSkills->ChildControls()[i];
+				if (sys->GetSkillUpgrades() > 0)
+				{
+					windowSkillUpgrades->Draw(args);
+				}
 
-				args.SpriteBatch->Draw(
-					skill->GetIconTexture(),
-					cont->GetBoundingBox().Position() + Vector2(13.0f),
-					0.0f,
-					Vector2::Zero,
-					Vector2(0.35f),
-					0.9f,
-					Color::White,
-					(skill->GetAtWorkState() ? -(float)args.Time.TotalTime : (float)skill->GetCooldownState())
-				);
+				i = 0;
+				while (i < 4)
+				{
+					Skill* skill = sys->GetSkills()[i];
+					GUIControl* cont = windowSkills->ChildControls()[i];
 
-				args.SpriteBatch->DrawString(
-					GUIControl::GetDefaultFont(),
-					skill->GetCurrentLevelString(),
-					cont->GetBoundingBox().Position() + Vector2(13.0f),
-					Color::White,
-					0.8f
-				);
+					args.SpriteBatch->Draw(
+						skill->GetIconTexture(),
+						cont->GetBoundingBox().Position() + Vector2(13.0f),
+						0.0f,
+						Vector2::Zero,
+						Vector2(0.35f),
+						0.9f,
+						Color::White,
+						(skill->GetAtWorkState() ? -(float)args.Time.TotalTime : (float)skill->GetCooldownState())
+						);
 
-				i++;
+					args.SpriteBatch->DrawString(
+						GUIControl::GetDefaultFont(),
+						skill->GetCurrentLevelString(),
+						cont->GetBoundingBox().Position() + Vector2(13.0f),
+						Color::White,
+						0.8f
+						);
+
+					i++;
+				}
 			}
 			#pragma endregion
 
@@ -319,6 +339,9 @@ namespace TikiEngine
 			selectedBot = 0;
 			selectedSlot = 0;
 
+			enabledControls.Remove(windowSkills);
+			enabledControls.Remove(windowBuildSlot);
+
 			if (args.SelectedUnits.Count() != 0)
 			{
 				selectedBot = args.SelectedUnits[0]->GetComponent<TikiBot>();
@@ -326,6 +349,15 @@ namespace TikiEngine
 			else if (args.SelectedSlots.Count() != 0)
 			{
 				selectedSlot = args.SelectedSlots[0]->GetComponent<BuildSlot>();
+			}
+
+			if (selectedBot != 0 && selectedBot->EntityType() == ET_Hero)
+			{
+				enabledControls.Add(windowSkills);
+			}
+			else if (selectedSlot != 0)
+			{
+				enabledControls.Add(windowBuildSlot);
 			}
 		}
 
@@ -393,6 +425,9 @@ namespace TikiEngine
 				}
 			}
 		}
+		#pragma endregion
+
+		#pragma region Private Member - Init
 		#pragma endregion
 	}
 }

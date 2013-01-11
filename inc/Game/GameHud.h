@@ -53,6 +53,8 @@ namespace TikiEngine
 			GUIWindow* windowSkills;
 			GUIWindow* windowSkillUpgrades;
 
+			GUIWindow* windowBuildSlot;
+
 			GUIImage* imgMinimap;
 
 			List<GUIControl*> enabledControls;
@@ -66,6 +68,10 @@ namespace TikiEngine
 			
 			ITexture* texMinimapMop;
 			ITexture* texMinimapHero;
+
+			//void initRes();
+			//void initSkills();
+			//void initMinimapBot();
 
 		};
 	}
