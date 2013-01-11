@@ -32,6 +32,7 @@
     <ClInclude Include="inc\Game\PEHealAura.h" />
     <ClInclude Include="inc\Game\PESmoke.h" />
     <ClInclude Include="inc\Game\PPDepthOfField.h" />
+    <ClInclude Include="inc\Game\SceneLoading.h" />
     <ClInclude Include="inc\Game\TikiAtt.h" />
     <ClInclude Include="inc\Game\TikiAttModifier.h" />
     <ClInclude Include="inc\Game\AttributeSystem.h" />
@@ -118,6 +119,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp" />
+    <ClCompile Include="inc\Game\SceneLoading.cpp" />
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\AttributeSystem.cpp" />

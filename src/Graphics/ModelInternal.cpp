@@ -663,7 +663,7 @@ namespace TikiEngine
 
 		Vector3 TikiBone::Position()
 		{
-			return Vector3::TransformCoordinate(Vector3(), this->boneCurrent);
+			return Matrix::TransformCoordinate(Vector3(), this->boneCurrent);
 		}
 
 		Vector3 TikiBone::Forward()

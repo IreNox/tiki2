@@ -400,7 +400,7 @@ namespace TikiEngine
 
 			defaultPostProcessPass->SetOutput(
 				0,
-				(args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
+				(args.CurrentCamera != 0 && args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
 			);
 
 			rtInterface->Clear(Color::TransparentBlack);

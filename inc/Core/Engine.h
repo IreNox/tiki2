@@ -6,8 +6,10 @@
 #include "Core/HelperLog.h"
 #include "Core/HelperPath.h"
 
-#include "Core/BufferState.h"
 #include "Core/EngineDescription.h"
+
+#include "Core/CriticalSection.h"
+#include "Core/Thread.h"
 
 #include "extern/sqlite3.h"
 
@@ -15,10 +17,6 @@ namespace TikiEngine
 {
 	class Scene;
 	
-	class Mutex;
-	template <typename T>
-	class Thread;
-
 	struct DrawArgs;
 	struct UpdateArgs;
 
@@ -79,14 +77,14 @@ namespace TikiEngine
 		/*! @brief Set and initialize a new Scene */
 		void SetScene(Scene* scene);
 
+		/*! @brief Get the Scene there was showing at loading */
+		Scene* GetLoadingScene() const;
+		/*! @brief Set and initialize a new Scene */
+		void SetLoadingScene(Scene* scene);
+
+
 		/*! @brief Destroy Engine-Object and unload all Modules */
 		void Dispose();
-
-		/*! @brief Get the BufferState for multi threading. */
-		inline BufferState& GetState()
-		{
-			return state;
-		}
 
 		/*! @brief Get the Description of this Engine instance. */
 		inline EngineDescription& GetEngineDescription()
@@ -102,12 +100,18 @@ namespace TikiEngine
 
 	protected:
 
-		void Draw(void*);
-		void Update(void*);
+		void Draw(UpdateArgs& args);
+		void Update(UpdateArgs& args);
 
 	private:
 
 		Scene* scene;
+
+		bool isLoading;
+		bool isLoadingFinish;
+		Scene* loadingScene;
+		CriticalSection critLoading;
+		Thread<Engine, Scene>* loadingThread;
 
 		sqlite3* dataBase;
 
@@ -116,6 +120,7 @@ namespace TikiEngine
 		//Mutex* csDraw;
 		//Mutex* csUpdate;
 		//Mutex* csEngine;
+		//BufferState state;
 
 #if _DEBUG
 		UInt32 fpsIndex;
@@ -125,11 +130,10 @@ namespace TikiEngine
 		double fpsCache[5];
 #endif
 
-		BufferState state;
 		EngineDescription desc;
-
 		List<IModule*> loadedModules;
 
+		void initScene(Scene* scene);
 		bool initModule(IModule* module);
 
 	};

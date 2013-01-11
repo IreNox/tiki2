@@ -1,8 +1,9 @@
 #pragma once
 
+#include "Core/Vector2.h"
+#include "Core/Vector3.h"
 #include "Core/Vector4.h"
 
-class Vector3;
 class Quaternion;
 
 class Matrix
@@ -82,7 +83,7 @@ public:
 	{
 
 	}
-	Matrix(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4);
+	//Matrix(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4);
 
 	inline ~Matrix(void) {}
 
@@ -220,6 +221,7 @@ public:
 			matrix.M34,
 			matrix.M44);
 	}
+
 	inline Matrix Transpose()
 	{
 		return Matrix(		
@@ -337,6 +339,60 @@ public:
 			(M23 * temp4)) + (M24 * temp5)))) + (M13 * (((M21 * temp2) - (M22 * temp4)) + (M24 * temp6)))) - 
 			(M14 * (((M21 * temp3) - (M22 * temp5)) + (M23 * temp6))));
 	}
+
+	#pragma region Member - Transform
+	/*! @brief Transforms a 3D vector by a given matrix, projecting the result back into w = 1. */
+	inline static Vector3 TransformCoordinate(const Vector3& coord, const Matrix& transform) // rework maybe? // is this ok?
+	{
+		float w = 1 / ((((coord.X * transform.M14) + (coord.Y * transform.M24)) + (coord.Z * transform.M34)) + transform.M44);
+
+		return Vector3(
+			((((coord.X * transform.M11) + (coord.Y * transform.M21)) + (coord.Z * transform.M31)) + transform.M41) * w,
+			((((coord.X * transform.M12) + (coord.Y * transform.M22)) + (coord.Z * transform.M32)) + transform.M42) * w,
+			((((coord.X * transform.M13) + (coord.Y * transform.M23)) + (coord.Z * transform.M33)) + transform.M43) * w
+		);
+	}
+
+	/*! @brief Transforms a 4D vector by a given matrix. */
+	inline static Vector4 Transform(const Vector4& vector, const Matrix& matrix)
+	{
+		return Vector4(
+			(((vector.X * matrix.M11) + (vector.Y * matrix.M21)) + (vector.Z * matrix.M31)) + (vector.W * matrix.M41),
+			(((vector.X * matrix.M12) + (vector.Y * matrix.M22)) + (vector.Z * matrix.M32)) + (vector.W * matrix.M42),
+			(((vector.X * matrix.M13) + (vector.Y * matrix.M23)) + (vector.Z * matrix.M33)) + (vector.W * matrix.M43),
+			(((vector.X * matrix.M14) + (vector.Y * matrix.M24)) + (vector.Z * matrix.M34)) + (vector.W * matrix.M44)
+		);
+	}
+	#pragma endregion
+
+	#pragma region Member - Project
+	/*! @brief Projects a 3D vector from object space into screen space. */
+	inline static Vector3 Project(const Vector3& vec, float x, float y, float width, float height, float minZ, float maxZ, const Matrix& worldViewProjection )
+	{
+		Vector3 vector = Matrix::TransformCoordinate(vec, worldViewProjection);
+
+		return Vector3(
+			((1.0f + vector.X) * 0.5f * width) + x, 
+			((1.0f - vector.Y) * 0.5f * height) + y, 
+			(vector.Z * (maxZ - minZ)) + minZ
+		);
+	}
+	#pragma endregion
+
+	#pragma region Member - Unproject
+	/*! @brief Projects a vector from screen space into object space. */
+	inline static Vector3 Unproject(const Vector3& vector, float x, float y, float width, float height, float minZ, float maxZ, const Matrix& worldViewProjection)
+	{
+		Vector3 v;
+		Matrix matrix =  Matrix::Invert(worldViewProjection);
+
+		v.X = ( ( ( vector.X - x ) / width ) * 2.0f ) - 1.0f;
+		v.Y = -( ( ( ( vector.Y - y ) / height ) * 2.0f ) - 1.0f );
+		v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
+
+		return Matrix::TransformCoordinate(v, matrix);
+	}
+	#pragma endregion
 
 	static Matrix CreateTranslation(const Vector3& vector);
 

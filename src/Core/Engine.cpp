@@ -2,9 +2,6 @@
 #include "Core/Engine.h"
 #include "Core/Scene.h"
 
-#include "Core/Mutex.h"
-#include "Core/Thread.h"
-
 #include "Core/WindowModule.h"
 #include "Core/LibraryManager.h"
 
@@ -23,16 +20,13 @@
 #include "Core/TikiPerformanceCounter.h"
 
 #include <math.h>
-//#include <time.h>
-//#include <ppl.h>
 
 namespace TikiEngine
 {
-	//using namespace Concurrency;
-
 	#pragma region Class
 	Engine::Engine()
-		: scene(0), loadedModules(), state(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0)
+		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
+		  isLoading(false), isLoadingFinish(true)
 #if _DEBUG
 		, fpsMin(1000000000), fpsMax(0), fpsIndex(0), fpsAve(0)
 #endif
@@ -126,6 +120,8 @@ namespace TikiEngine
 		//csEngine = new Mutex();
 		#pragma endregion
 
+		loadingScene = new Scene(this);
+
 		return true;
 	}
 	#pragma endregion
@@ -134,6 +130,7 @@ namespace TikiEngine
 	void Engine::Dispose()
 	{
 		SafeRelease(&scene);
+		SafeRelease(&loadingScene);
 
 		//SafeRelease(&threadDraw);
 		//SafeRelease(&threadUpdate);
@@ -181,30 +178,18 @@ namespace TikiEngine
 		
 		srand((UInt32)(last.QuadPart / freq.QuadPart));
 
-		//threadUpdate->Start(this, 0);
-		//threadDraw->Start(this, 0);
-
-		state.UpdateState = UpdateArgs(state.CurrentTime);
-
-#ifdef TIKI_MULTITHREADING
-		state.UpdateState = UpdateArgs(state.CurrentTime);
-
-		auto funcDraw = make_task([=]{ this->Draw(0); });
-		auto funcUpdate = make_task([=]{ this->Update(0); });
-#endif
+		UpdateArgs updateArgs = UpdateArgs();
 
 		while (window->GetReady())
 		{
 			window->Begin();
-
-			//Mutex::WaitForMultiple(csDraw, 2);
 
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
 			elapsedTime = (elapsedTime > 1 ? 1 : elapsedTime);
 			gameTime += elapsedTime;
 
-			GameTime time = GameTime(elapsedTime, gameTime);
+			updateArgs.Time = GameTime(elapsedTime, gameTime);
 			last = current;
 
 #if _DEBUG
@@ -226,22 +211,8 @@ namespace TikiEngine
 			SetWindowText(window->GetHWND(), s.str().c_str());
 #endif
 
-			state.Swap(time);
-
-#ifdef TIKI_MULTITHREADING
-			HelperThreading::Swap();
-
-			structured_task_group tg;
-			tg.run(funcUpdate);
-			tg.run_and_wait(funcDraw);
-#else
-			this->Update(0);
-			this->Draw(0);
-#endif
-
-			//csEngine->Unlock();
-			//csUpdate->Unlock();
-			//csDraw->Unlock();
+			this->Update(updateArgs);
+			this->Draw(updateArgs);
 
 			// TODO: Fullscreen
 			//if (args.Input.GetKeyPressed(KEY_F11))
@@ -268,146 +239,137 @@ namespace TikiEngine
 
 	void Engine::SetScene(Scene* scene)
 	{
-		SafeRelease(&this->scene);
-		SafeAddRef(scene, &this->scene);
+		SafeChangeRef(&this->scene, scene);
 
 		if (!scene->IsInitialized())
 		{
-#if _DEBUG
-			TikiPerformanceCounter time;
-			time.Start();
-#endif
+			isLoading = true;
+			isLoadingFinish = false;
+			
+			loadingThread = new Thread<Engine, Scene>(&Engine::initScene);
+			loadingThread->Start(this, scene);
+		}
+	}
 
+	Scene* Engine::GetLoadingScene() const
+	{
+		return loadingScene;
+	}
+
+	void Engine::SetLoadingScene(Scene* scene)
+	{
+		SafeChangeRef(&loadingScene, scene);
+
+		if (!loadingScene->IsInitialized())
+		{
 			InitializationArgs initArgs = InitializationArgs(content);
-			scene->Initialize(initArgs);
-
-#if _DEBUG
-			double el = time.Stop();
-
-			ostringstream s;
-			s << "LoadScene: " << typeid(*scene).name() << " - ElapsedTime: " << el;
-
-			HLog.Write(s.str(), false);
-#endif
+			loadingScene->Initialize(initArgs);
 		}
 	}
 	#pragma endregion
 
-	#pragma region Member - Draw/Update
-	void Engine::Draw(void*)
-	{		
-		//HelperThreading::InitThread(state.DrawIndex);
+	#pragma region Member - Draw
+	void Engine::Draw(UpdateArgs& args)
+	{
+		Scene* curScene = scene;
 
-		//while (state.Running)
-		//{
-			//csEngine->Wait();
+		if (isLoading)
+		{
+			curScene = loadingScene;
+		}
 
-			//ostringstream s;
-			//s << "Camera Count: " << scene->GetCameras()->Count();
+		UInt32 i = 0;
+		UInt32 c = TIKI_MAX(1, curScene->GetCameras()->Count());
+		while (i < c)
+		{
+			DrawArgs drawArgs = DrawArgs(
+				args.Time,
+				DM_Geometry,
+				(i < curScene->GetCameras()->Count() ? curScene->GetCameras()->Get(i) : 0),
+				graphics,
+				sprites,
+				args,
+				curScene->GetLighting()
+			);
 
-			//HelperLog::Write(s.str());
+			graphics->Begin(drawArgs);
+			sprites->Begin();
 
-			UInt32 i = 0;
-			while (i < scene->GetCameras()->Count())
+			UInt32 bi = 0;
+			UInt32 bc = 1 + (TIKI_SHADOWS_ENABLED ? 1 : 0);
+			while (bi < bc)
 			{
-				DrawArgs drawArgs = DrawArgs(
-					state.CurrentTime,
-					DM_Geometry,
-					scene->GetCameras()->Get(i),
-					graphics,
-					sprites,
-					state.UpdateState,
-					scene->GetLighting()
-				);
-
-				graphics->Begin(drawArgs);
-				sprites->Begin();
-
-				UInt32 b = 0;
-				while (b < 1)
+				if (bi != 0)
 				{
-					if (b != 0)
-					{
-						drawArgs.Mode = (DrawMode)b;
-						graphics->GetUnusedScreenTarget()->ApplyFirstAndOnly();
-					}
-
-					if (scene)
-					{
-						scene->Draw(drawArgs);
-					}
-
-					b++;
+					drawArgs.Mode = (DrawMode)bi;
+					graphics->GetUnusedScreenTarget()->ApplyFirstAndOnly();
 				}
 
-#if _DEBUG
-				graphics->DrawConsole(drawArgs);
-#endif
+				curScene->Draw(drawArgs);
 
-				sprites->End();
-				graphics->End();
-
-				i++;
+				bi++;
 			}
 
-			//csEngine->Wait();
-			//csDraw->Unlock();
-			//threadDraw->Suspend();
-		//}
+#if _DEBUG
+			graphics->DrawConsole(drawArgs);
+#endif
+
+			sprites->End();
+			graphics->End();
+
+			i++;
+		}
 	}
+	#pragma endregion
 
-	void Engine::Update(void*)
+	#pragma region Member - Update
+	void Engine::Update(UpdateArgs& args)
 	{
-		//HelperThreading::InitThread(state.UpdateIndex);
-
-		//while (state.Running)
-		//{
-			//csEngine->Wait();
-
-			//wostringstream s;
-			//s << L"Update: " << HelperThreading::GIndex();
-
-			//HLog(s.str().c_str());
-
-			state.UpdateState = UpdateArgs(state.CurrentTime);
-
+		if (!isLoading)
+		{
 			input->Begin();
-			input->FillInputState(&state.UpdateState.Input);
+			input->FillInputState(&args.Input);
 			content->Begin();
 			physics->Begin();
 
-			if (scene)
-			{
-				scene->Update(state.UpdateState);
-			}
+			scene->Update(args);
 
-			physics->End(state.UpdateState);
+			physics->End(args);
 			content->End();
 			input->End();
 
-			if (state.UpdateState.Input.GetKeyPressed(KEY_F12))
+			if (args.Input.GetKeyPressed(KEY_F12))
 			{
 				graphics->MakeScreenshot();
 			}
 
-			if (state.UpdateState.Input.GetKeyPressed(KEY_ESCAPE)) 
+			if (args.Input.GetKeyPressed(KEY_ESCAPE)) 
 			{
 				this->Exit();
 			}
+		}
+		else
+		{
+			critLoading.Lock();
 
-			double wait = (1.0 / 60.0) - state.CurrentTime.ElapsedTime;
-
-			if (wait > 0.0)
+			if (isLoadingFinish)
 			{
-				int milli = (int)(wait * 1000.0);
-				//Sleep(milli);
+				isLoading = false;
+				SafeRelease(&loadingThread);
 			}
 
-			//state.UpdateState = args;
+			critLoading.Unlock();
 
-			//csUpdate->Unlock();
-			//threadUpdate->Suspend();
-		//}
+			loadingScene->Update(args);
+		}
+
+		double wait = (1.0 / 60.0) - args.Time.ElapsedTime;
+
+		if (wait > 0.0)
+		{
+			int milli = (int)(wait * 1000.0);
+			//Sleep(milli);
+		}
 	}
 	#pragma endregion
 
@@ -443,6 +405,30 @@ namespace TikiEngine
 		}
 
 		return false;
+	}
+
+	void Engine::initScene(Scene* scene)
+	{
+#if _DEBUG
+		TikiPerformanceCounter time;
+		time.Start();
+#endif
+
+		InitializationArgs initArgs = InitializationArgs(content);
+		scene->Initialize(initArgs);
+
+#if _DEBUG
+		double el = time.Stop();
+
+		ostringstream s;
+		s << "LoadScene: " << typeid(*scene).name() << " - ElapsedTime: " << el;
+
+		HLog.Write(s.str(), false);
+#endif
+
+		critLoading.Lock();
+		isLoadingFinish = true;
+		critLoading.Unlock();
 	}
 	#pragma endregion
 }

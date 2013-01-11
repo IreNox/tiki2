@@ -34,9 +34,9 @@ namespace TikiEngine
 		{
 			prFlash->GetParticleEffect()->Trigger(
 				1, prFlash->GetParticleEffect()->GParticleBudget(),
-				Vector3::TransformCoordinate(
-				Vector3(0, 0, 0),
-				Matrix::Transpose(Matrix::CreateTranslation(target))
+				Matrix::TransformCoordinate(
+					Vector3(0, 0, 0),
+					Matrix::Transpose(Matrix::CreateTranslation(target))
 				)
 			);
 

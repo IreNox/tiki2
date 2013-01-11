@@ -1,42 +1,15 @@
 
-#pragma region Init
 #include "Core/Vector2.h"
-#include <Math.h>
-#include <limits>
 
-const float MinFloat = (std::numeric_limits<float>::min)();
+//#include <Math.h>
+//#include <limits>
+//
+//const float MinFloat = (std::numeric_limits<float>::min)();
 
-int Vector2::Dimensions = 2;
-
-Vector2::Vector2(void)
-	: X(0), Y(0)
-{
-}
-
-Vector2::Vector2(float all)
-	: X(all), Y(all)
-{
-}
-
-Vector2::Vector2(float x, float y)
-	: X(x), Y(y)
-{
-}
-
-Vector2::Vector2(float* arr)
-	: X(arr[0]), Y(arr[1])
-{
-}
-
-Vector2::~Vector2(void)
-{
-}
-#pragma endregion
-
-bool Vector2::IsZero() const
-{
-	return (X*X + Y*Y) < MinFloat;
-}
+//bool Vector2::IsZero() const
+//{
+//	return (X*X + Y*Y) < MinFloat;
+//}
 
 void Vector2::Truncate(float maximum)
 {
@@ -48,22 +21,7 @@ void Vector2::Truncate(float maximum)
 	}
 }
 
-#pragma region Dot, Cross, Negate, Reflect, Sign
-float Vector2::Dot(const Vector2& vector1, const Vector2& vector2)
-{
-	return vector1.X * vector2.X + vector1.Y * vector2.Y;
-}
-
-void Vector2::Negate()
-{
-	this->X = -this->X;
-	this->Y = -this->Y;
-}
-Vector2 Vector2::Negate(const Vector2& vector)
-{
-	return Vector2(-vector.X, -vector.Y);
-}
-
+#pragma region Cross, Negate, Reflect, Sign
 Vector2 Vector2::Reflect(const Vector2& vector, const Vector2& normal)
 {
 	float num = vector.X * normal.X + vector.Y * normal.Y;
@@ -92,28 +50,16 @@ int Vector2::Sign(const Vector2& v2) const
 	else 
 		return 1;   // clockwise
 }
-
 #pragma endregion
 
 #pragma region Length, Distance, Normalize Angle, Cross, Normalize, Perp
-float Vector2::Length() const
-{
-	return sqrt(
-		(this->X * this->X) +
-		(this->Y * this->Y)
-	);
-}
-float Vector2::LengthSquared() const
-{
-	return (this->X * this->X) + (this->Y * this->Y);
-}
-
 float Vector2::Distance(const Vector2& vector1, const Vector2& vector2)
 {
 	float num =  vector2.X - vector1.X;
 	float num2 = vector2.Y - vector1.Y;
 	return sqrt(num * num + num2 * num2);
 }
+
 float Vector2::DistanceSquared(const Vector2& vector1, const Vector2& vector2)
 {
 	float num =  vector2.X - vector1.X;
@@ -127,6 +73,7 @@ void Vector2::Normalize()
 	this->X = this->X * num;
 	this->Y = this->Y * num;
 }
+
 Vector2 Vector2::Normalize(const Vector2& vector)
 {
 	float num = 1 / sqrtf(vector.X * vector.X + vector.Y * vector.Y);
@@ -145,71 +92,9 @@ float Vector2::Angle(const Vector2& vector1, const Vector2& vector2)
 }
 #pragma endregion
 
-#pragma region Operators
-#pragma region bool operations
-bool Vector2::operator== (const Vector2& rhs) const
-{
-	return	(this->X == rhs.X) &&
-		(this->Y == rhs.Y);
-}
-
-bool Vector2::operator!= (const Vector2& rhs) const
-{
-	return this->X != rhs.X || this->Y != rhs.Y;
-}
-#pragma endregion bool operations
-
-#pragma region arithmetic operations
-Vector2 Vector2::operator+ (const Vector2& rhs) const
-{
-	return Vector2(this->X + rhs.X, this->Y + rhs.Y);
-}
-Vector2 Vector2::operator- () const
-{
-	return Vector2(-this->X,-this->Y);
-}
-Vector2 Vector2::operator- (const Vector2& rhs) const
-{
-	return Vector2(this->X - rhs.X , this->Y - rhs.Y);
-}
-Vector2 Vector2::operator* (const float& rhs) const
-{
-	return Vector2(this->X * rhs, this->Y * rhs);
-}
-Vector2 Vector2::operator/ (const float& rhs) const
-{
-	return Vector2(this->X / rhs, this->Y / rhs);
-}
-#pragma endregion arithmetic operations
-
-#pragma region arithmetic updates
-Vector2& Vector2::operator+= (const Vector2& rhs)
-{
-	return *this = *this + rhs;
-}
-Vector2& Vector2::operator-= (const Vector2& rhs)
-{
-	return *this = *this - rhs;
-}
-
-Vector2& Vector2::operator*= (const float& rhs)
-{
-	return *this = *this * rhs;
-}
-
-Vector2& Vector2::operator/= (const float& rhs)
-{
-	return *this = *this / rhs;
-}
-
-#pragma endregion arithmetic updates
-
-#pragma endregion
-
-#pragma region static attributes
-Vector2	Vector2::Zero = Vector2(0.0);
-Vector2 Vector2::One = Vector2(1.0);
-Vector2 Vector2::UnitX = Vector2(1.0,0.0);
-Vector2 Vector2::UnitY = Vector2(0.0,1.0);
-
+#pragma region Static
+Vector2	Vector2::Zero  = Vector2(0.0f);
+Vector2 Vector2::One   = Vector2(1.0f);
+Vector2 Vector2::UnitX = Vector2(1.0f, 0.0f);
+Vector2 Vector2::UnitY = Vector2(0.0f, 1.0f);
 #pragma endregion

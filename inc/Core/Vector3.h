@@ -1,12 +1,10 @@
 #pragma once
 
-#include "Core/Matrix.h"
 #include "Core/Vector2.h"
 
-#include <Math.h>
+#include <math.h>
 
 //TODO INLINE
-
 class Vector3
 {
 public:
@@ -30,6 +28,7 @@ public:
 	Vector3(float* arr) : X(arr[0]), Y(arr[1]), Z(arr[2]) {}
 	Vector3(Vector2 v, float z) : X(v.X), Y(v.Y), Z(z) {}
 	Vector3(float x, float y, float z) : X(x), Y(y), Z(z) {}
+
 	~Vector3() {}
 	#pragma endregion
 	
@@ -44,17 +43,6 @@ public:
 
 	void Normalize();
 	static Vector3 Normalize(const Vector3& vector);
-
-	// Projects a 3D vector from object space into screen space. 
-	static Vector3 Project(const Vector3& vec, float x, float y, float width, float height, 
-						   float minZ, float maxZ, const Matrix& worldViewProjection);
-
-	// Projects a 3D vector from screen space into object space. 
-	static Vector3 Unproject(const Vector3& vector, float x, float y, float width, float height, 
-							 float minZ, float maxZ, const Matrix& worldViewProjection);
-
-	//  Performs a coordinate transformation using the given transform matrix
-	static Vector3 TransformCoordinate(const Vector3& coord, const Matrix& transform); // rework maybe? // is this ok?
 
 	static float Dot(const Vector3& vector1, const Vector3& vector2);
 	static Vector3 Cross(const Vector3& vector1, const Vector3& vector2);

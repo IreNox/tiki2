@@ -32,7 +32,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 
 		SceneTim::SceneTim(Engine* engine)
-			: Scene(engine) //, lastTime(0), dynamicBox(0)
+			: Scene(engine)
 		{
 		}
 
@@ -48,13 +48,29 @@ namespace TikiEngine
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
 			GameObject* go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"tower_enemy"));
+			go->SModel(engine->content->LoadModel(L"marine_l"));
 			go->PRS.SScale() = 0.01f;
-			go->PRS.SPosition() = Vector3(5, 0, 5);
-
-			//go->GModel()->GetMesh("MG")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(1, 0, 0));
+			go->PRS.SPosition() = Vector3(0, 0, 0);
 
 			this->AddElement(go);
+
+			go = new GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"marine_l"));
+			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(3, 0, 3);
+
+			this->AddElement(go);
+
+			go = new GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"marine_l"));
+			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(-3, 0, -3);
+
+			this->AddElement(go);
+
+			dof = new PPDepthOfField(engine);
+			engine->graphics->AddPostProcess(dof);
+
 
 			/////////////////
 			//Particle Effect
@@ -260,22 +276,32 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void SceneTim::Update(const UpdateArgs& args)
 		{			
-			float b = (float)args.Time.TotalTime / 4.0f;
-			b = fmodf(b, 6.28318f);
+			//float b = (float)args.Time.TotalTime / 4.0f;
+			//b = fmodf(b, 6.28318f);
 
-			this->SceneGraph.GetDefaultGOs()[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
-			this->SceneGraph.GetDefaultGOs()[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));
+			Matrix vp = this->GetMainCamera()->WorldToScreen();
+			Vector3 pos = this->SceneGraph.GetAllGameObjects()[1]->PRS.GPosition();
+			
+			Vector4 pos2 = Matrix::Transform(
+				Vector4(pos.X, pos.Y, pos.Z, 1.0f),
+				vp
+			);
+
+			dof->GetPasses()[0]->GetShader()->SetVector4("value", pos2);
+
+			//this->SceneGraph.GetDefaultGOs()[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
+			//this->SceneGraph.GetDefaultGOs()[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));
 			//elements[0]->GModel()->GetMesh("MG")->SetLocalMatrix(Matrix::CreateFromAxisAngle(Vector3::Up, b));
 
-			Vector3 move = Vector3(
-				(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
-				(args.Input.GetKey(KEY_I) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_K) ? -1.0f : 0.0f),
-				(args.Input.GetKey(KEY_O) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_U) ? -1.0f : 0.0f)
-			) * (float)args.Time.ElapsedTime;
+			//Vector3 move = Vector3(
+			//	(args.Input.GetKey(KEY_L) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_J) ? -1.0f : 0.0f),
+			//	(args.Input.GetKey(KEY_I) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_K) ? -1.0f : 0.0f),
+			//	(args.Input.GetKey(KEY_O) ? 1.0f : 0.0f) + (args.Input.GetKey(KEY_U) ? -1.0f : 0.0f)
+			//) * (float)args.Time.ElapsedTime;
 
-			tmp += move;
+			//tmp += move;
 
-			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z);
+			//light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(tmp.X, tmp.Y, tmp.Z);
 
 			//if (args.Input.GetKey(KEY_F12))
 			//{

@@ -19,12 +19,12 @@ namespace TikiEngine
 		TS_Terminated
 	};
 
-	template<typename T>
+	template<typename TInst, typename TArgs>
 	class Thread : public TikiObject
 	{
 	public:
 
-		Thread(function<void(T*, void*)> func)
+		Thread(function<void(TInst*, TArgs*)> func)
 			: func(func), state(TS_New)
 		{
 		}
@@ -34,7 +34,7 @@ namespace TikiEngine
 			this->Abort();
 		}
 
-		void Start(T* instance, void* arg)
+		void Start(TInst* instance, TArgs* arg)
 		{
 			this->args = arg;
 			this->instance = instance;
@@ -86,9 +86,9 @@ namespace TikiEngine
 
 		ThreadState state;
 
-		void* args;
-		T* instance;
-		function<void(T*, void*)> func;
+		TArgs* args;
+		TInst* instance;
+		function<void(TInst*, TArgs*)> func;
 
 		static DWORD WINAPI startThread(void* voidThread)
 		{

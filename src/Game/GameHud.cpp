@@ -226,7 +226,7 @@ namespace TikiEngine
 
 					if (gameState->GetScene()->GetMainCamera()->GetFrustum().PointInFrustum(pos))
 					{
-						pos = Vector3::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
+						pos = Matrix::TransformCoordinate(pos, vp) + Vector3(1, 1, 0);
 						pos *= 0.5f;
 						pos = Vector3(pos.X * ss.X, (1 - pos.Y) * ss.Y, 0);
 

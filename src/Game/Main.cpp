@@ -7,6 +7,7 @@
 #include "Game/SceneMark.h"
 #include "Game/SceneTim.h"
 #include "Game/SceneLevel.h"
+#include "Game/SceneLoading.h"
 
 #include "../misc/res/resource.h"
 
@@ -24,14 +25,14 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && true)
+	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
-		//scene = new SceneTim(engine);
+		scene = new SceneTim(engine);
 		//scene = new SceneMark(engine);
 
-		scene = new SceneLevel(engine);
-		engine->SetScene(scene);
-		((SceneLevel*)scene)->LoadLevel(1);
+		//scene = new SceneLevel(engine);
+		//engine->SetScene(scene);
+		//((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
@@ -80,6 +81,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			Scene* scene = GetStartScene(engine);
 			scene->AddRef();
 
+			engine->SetLoadingScene(new SceneLoading(engine));
 			engine->SetScene(scene);
 
 #if _DEBUG

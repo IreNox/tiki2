@@ -724,5 +724,8 @@
     <ClInclude Include="inc\Core\FakeSceneGraph.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\CriticalSection.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

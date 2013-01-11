@@ -2,6 +2,9 @@
 
 #include "Core/TypeInc.h"
 
+#include <functional>
+using namespace std;
+
 namespace TikiEngine
 {
 	class SceneGraph

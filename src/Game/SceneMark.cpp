@@ -179,11 +179,11 @@ namespace TikiEngine
 
 			if (args.Input.GetKeyPressed(KEY_SPACE))
 				expEffect->Trigger(
-				1, expEffect->GParticleBudget(),
-				Vector3::TransformCoordinate(
-				Vector3(-0.8f, 0, 0),
-				Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
-				) 
+					1, expEffect->GParticleBudget(),
+					Matrix::TransformCoordinate(
+						Vector3(-0.8f, 0, 0),
+						Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
+					) 
 				);
 
 

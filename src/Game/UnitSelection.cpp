@@ -281,7 +281,7 @@ namespace TikiEngine
 					Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
 
 					Matrix vp = cam->WorldToScreen();
-					Vector3 screenPos = Vector3::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+					Vector3 screenPos = Matrix::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedSlots.Contains(go) || newDragging))
 					{
@@ -324,7 +324,7 @@ namespace TikiEngine
 						//Matrix::Transpose(cam->GetViewMatrix()) * 
 						//Matrix::Transpose(cam->GetProjectionMatrix());
 
-						Vector3 screenPos = Vector3::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+						Vector3 screenPos = Matrix::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedUnits.Contains(go) || newDragging))
 						{
@@ -423,7 +423,7 @@ namespace TikiEngine
 		bool UnitSelection::IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps)
 		{
 			Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
-			Vector3 screenPos = Vector3::Project(go->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, worldToScreen);
+			Vector3 screenPos = Matrix::Project(go->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, worldToScreen);
 			if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)))
 				return true;
 			

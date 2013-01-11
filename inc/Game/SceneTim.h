@@ -16,6 +16,8 @@
 
 #include "Core/GUIButton.h"
 #include "Game/PEShootMG.h"
+#include "Game/PPDepthOfField.h"
+
 
 namespace TikiEngine
 {
@@ -57,7 +59,8 @@ namespace TikiEngine
 			//ITerrainRenderer* terrain;
 			//ITriangleMeshCollider* collider;
 
-			PPScreenSpaceAmbientOcclusion* ssao;
+			PPDepthOfField* dof;
+			//PPScreenSpaceAmbientOcclusion* ssao;
 
 		};
 	}

@@ -107,41 +107,6 @@ Vector3 Vector3::Reflect(const Vector3& vector, const Vector3& normal)
 }
 #pragma endregion
 
-#pragma region Transform, Project, Unproject
-Vector3 Vector3::Project(const Vector3& vec, float x, float y, float width, float height, 
-						 float minZ, float maxZ, const Matrix& worldViewProjection )
-{
-	Vector3 vector = TransformCoordinate(vec, worldViewProjection);
-	return Vector3(((1.0f + vector.X) * 0.5f * width) + x, 
-				   ((1.0f - vector.Y) * 0.5f * height) + y, 
-				   (vector.Z * (maxZ - minZ)) + minZ);
-}
-
-Vector3 Vector3::Unproject(const Vector3& vector, float x, float y, float width, float height, 
-						   float minZ, float maxZ, const Matrix& worldViewProjection)
-{
-	Vector3 v;
-	Matrix matrix =  Matrix::Invert(worldViewProjection);
-
-	v.X = ( ( ( vector.X - x ) / width ) * 2.0f ) - 1.0f;
-	v.Y = -( ( ( ( vector.Y - y ) / height ) * 2.0f ) - 1.0f );
-	v.Z = ( vector.Z - minZ ) / ( maxZ - minZ );
-
-	v = TransformCoordinate(v, matrix);
-	return v;
-}
-
-Vector3 Vector3::TransformCoordinate(const Vector3& coord, const Matrix& transform)
-{
-	float xVal = (((coord.X * transform.M11) + (coord.Y * transform.M21)) + (coord.Z * transform.M31)) + transform.M41;
-	float yVal = (((coord.X * transform.M12) + (coord.Y * transform.M22)) + (coord.Z * transform.M32)) + transform.M42;
-	float zVal = (((coord.X * transform.M13) + (coord.Y * transform.M23)) + (coord.Z * transform.M33)) + transform.M43;
-	float wVal = 1 / ((((coord.X * transform.M14) + (coord.Y * transform.M24)) + (coord.Z * transform.M34)) + transform.M44);
-
-	return Vector3( xVal * wVal, yVal * wVal, zVal * wVal );
-}
-#pragma endregion
-
 #pragma region statics
 const Vector3 Vector3::Zero = Vector3(0.0);
 const Vector3 Vector3::One = Vector3(1.0);

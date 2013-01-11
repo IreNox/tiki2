@@ -1,7 +1,8 @@
 #pragma once
 
-//TODO INLINE
+#include <math.h>
 
+//TODO INLINE
 class Vector4
 {
 public:
@@ -17,13 +18,12 @@ public:
 		float arr[4];
 	};
 
-	Vector4(void);
+	Vector4();
 	Vector4(float all);
 	Vector4(float* arr);
 	Vector4(float x, float y, float z, float w);
 
-	virtual ~Vector4(void);
-
+	virtual ~Vector4();
 	
 	float Angle(Vector4 vector);
 
@@ -40,7 +40,6 @@ public:
 	static Vector4 Normalize(const Vector4& vector);
 	static Vector4 Clamp(Vector4& value1, const Vector4& min, const Vector4& max);
 	static Vector4 Lerp(const Vector4& value1, const Vector4& value2, float amount);
-
 
 	//boolean operators
 	bool Vector4::operator== (const Vector4& rhs) const;

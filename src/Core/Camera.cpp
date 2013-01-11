@@ -37,8 +37,8 @@ namespace TikiEngine
 
 			Matrix vp = this->WorldToScreen();
 
-			Vector3 orig = Vector3::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
-			Vector3 dir = Vector3::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+			Vector3 orig = Matrix::Unproject(Vector3(screenPos, 0), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+			Vector3 dir = Matrix::Unproject(Vector3(screenPos, 1), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 			dir -= orig;
 			dir = Vector3::Normalize(dir);

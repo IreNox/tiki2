@@ -289,7 +289,7 @@ namespace TikiEngine
 				Camera* cam = gameState->GetScene()->GetMainCamera();
 				Vector2 bbDim = engine->graphics->GetViewPort()->GetSize();
 
-				Vector3 screenPos = Vector3::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
+				Vector3 screenPos = Matrix::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
 				brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y), ttsInstance);
 			}

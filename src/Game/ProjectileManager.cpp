@@ -138,9 +138,9 @@ namespace TikiEngine
                         peExplosion->Trigger(
 							1,
                             peExplosion->GParticleBudget(),
-                            Vector3::TransformCoordinate(
-                            Vector3(0, 0, 0),
-                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            Matrix::TransformCoordinate(
+								Vector3(0, 0, 0),
+								Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
                             )
                         );
                     }
@@ -163,9 +163,9 @@ namespace TikiEngine
                         peFire->Trigger(
 							args.Time.ElapsedTime,
                             200,
-                            Vector3::TransformCoordinate( 
-                            Vector3(0, 0, 0),
-                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            Matrix::TransformCoordinate( 
+								Vector3(0, 0, 0),
+								Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
                             )
                         );
 
@@ -173,9 +173,9 @@ namespace TikiEngine
                         peSmoke->Trigger(
 							args.Time.ElapsedTime,
                             200,
-                            Vector3::TransformCoordinate(
-                            Vector3(0, 0, 0),
-                            Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+                            Matrix::TransformCoordinate(
+								Vector3(0, 0, 0),
+								Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
                             )
                         );
 

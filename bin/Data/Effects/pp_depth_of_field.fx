@@ -11,6 +11,7 @@
 Texture2D rtScene;
 Texture2D rtDepth;
 
+float4 value;
 float BlurIntensity = 1.5f;
 
 float2 ScreenSize = float2(400, 300);
@@ -26,6 +27,27 @@ float2 ScreenSize = float2(400, 300);
 ////////////////////////////////////////////////////////////////////////////////
 // Pixel Shader
 ////////////////////////////////////////////////////////////////////////////////
+
+float test (float depth)
+{
+	float f;
+
+	float z = 0.05f; //value.z; // / value.w;
+	float4 dofVal = float4(z - 0.2f, z, z + 0.2f, 10);
+
+	if (depth < dofVal.y)
+	{
+		f = (depth - dofVal.y) / (dofVal.y - dofVal.x);
+	}
+	else
+	{
+		f = (depth - dofVal.y) / (dofVal.z / dofVal.x);
+
+		f = clamp(f, 0, dofVal.w);
+	}
+
+	return f * 0.5f + 0.5f;
+}
 
 float4 PSPP_Blur(PS_INPUT input, float2 pixel)
 {
@@ -51,6 +73,20 @@ float4 PSPP_Blur(PS_INPUT input, float2 pixel)
 		color += rtScene.Sample(sam, input.UV + (pixel * (i - h))) * weight;
 	}
 	color /= w;
+	
+	//float a1 = value.z / value.w;
+	//float a2 = depth;
+	//float a3 = clamp((d2 - a1) * 10, 0, 3.14159f);
+
+	//float a1 = value - depth;
+
+	//if (a1 - 0.1 < a2 && a1 + 0.1 > a2)
+	//{
+		//color.r = 1;
+	//}
+
+	//color.g = test(depth);
+	//color.b = a1 - a2;
 	
     return color;
 }

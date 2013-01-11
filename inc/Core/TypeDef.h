@@ -35,11 +35,11 @@ typedef const wchar_t* wcstring;
 #pragma region Define
 #define MATH_PI 3.1415926535f
 
-//#define TIKI_MULTITHREADING
-
 #ifndef TIKI_EDITOR
 #define TIKI_ENGINE
 #endif
+
+#define TIKI_SHADOWS_ENABLED 0
 #pragma endregion
 
 #pragma region Macros
@@ -53,6 +53,9 @@ typedef const wchar_t* wcstring;
 #else
 #define TIKI_LOG(msg) 
 #endif
+
+#define TIKI_MIN(a, b) (a < b ? a : b);
+#define TIKI_MAX(a, b) (a > b ? a : b);
 #pragma endregion
 
 #define TIKI_USE_SCENEGRAPH 0

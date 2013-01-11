@@ -9,8 +9,6 @@
 #include "Core/Vector4.h"
 #include "Core/Quaternion.h"
 
-#include "Core/Matrix2x2.h"
-#include "Core/Matrix3x3.h"
 #include "Core/Matrix.h"
 
 #include "Core/Color.h"

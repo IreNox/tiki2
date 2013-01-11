@@ -446,6 +446,9 @@
     <ClInclude Include="inc\Game\PPDepthOfField.h">
       <Filter>Headerdateien\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SceneLoading.h">
+      <Filter>Headerdateien\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -672,6 +675,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\PPDepthOfField.cpp">
       <Filter>Quelldateien\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="inc\Game\SceneLoading.cpp">
+      <Filter>Quelldateien\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
