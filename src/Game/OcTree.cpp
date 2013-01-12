@@ -290,7 +290,7 @@ namespace TikiEngine
 				if (octreeTable[i].BBox->Contains(pos))
 					ret = i;
 
-			return ret;
+			return ret; // ret may be uninitialised
 		}
 
 		//Vector3
