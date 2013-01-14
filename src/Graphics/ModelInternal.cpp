@@ -443,12 +443,12 @@ namespace TikiEngine
 
 			material->GetShader()->SelectSubByIndex(args.Mode);
 			material->UpdateDrawArgs(args, gameObject, localMatrix);
-			material->Apply();
 
 			if (hasDeformation)
 			{
 				material->GetShader()->SetConstantBuffer("SkinMatrices", model->GetConstantBuffer());
 			}
+			material->Apply();
 
 			decl->Apply();
 			vertexBuffer->Apply();

@@ -2,14 +2,9 @@
 
 #pragma region TypeDef
 #ifdef _WIN64
-//typedef __int64 IntPtr;
-
 typedef __int64 PInt;
 typedef unsigned __int64 UPInt;
-
 #else
-//typedef __int32 IntPtr;
-
 typedef __int32 PInt;
 typedef unsigned __int32 UPInt;
 #endif
@@ -33,12 +28,16 @@ typedef const wchar_t* wcstring;
 #pragma endregion
 
 #pragma region Define
-#define MATH_PI 3.1415926535f
+#define MATH_PIOVER4	0.785398163
+#define MATH_PIOVER2	1.570796327
+#define MATH_PI			3.141592654
+#define MATH_TWOPI		6.283185307
 
 #ifndef TIKI_EDITOR
 #define TIKI_ENGINE
 #endif
 
+#define TIKI_USE_SCENEGRAPH 0
 #define TIKI_SHADOWS_ENABLED 0
 #pragma endregion
 
@@ -58,4 +57,3 @@ typedef const wchar_t* wcstring;
 #define TIKI_MAX(a, b) (a > b ? a : b);
 #pragma endregion
 
-#define TIKI_USE_SCENEGRAPH 0
