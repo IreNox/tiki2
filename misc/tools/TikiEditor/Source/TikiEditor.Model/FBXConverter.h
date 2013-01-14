@@ -7,6 +7,7 @@
 #include "Core/Vector3.h"
 #include "Core/Vector4.h"
 #include "Core/Quaternion.h"
+#include "Core/Matrix.h"
 
 namespace TikiEditor
 {
