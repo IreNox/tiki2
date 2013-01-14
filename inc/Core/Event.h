@@ -8,6 +8,17 @@ namespace TikiEngine
 	class Event
 	{
 	public:
+
+		Event()
+			: eventHandler()
+		{	
+		}
+
+		~Event()
+		{
+			FOREACH_PTR_CALL(eventHandler, handled.Remove(this));
+		}
+
 		void RaiseEvent(T* sender, const TArgs& args) const
 		{
 			UInt32 i = 0;
@@ -16,16 +27,6 @@ namespace TikiEngine
 				eventHandler[i]->Handle(sender, args);
 				i++;
 			}
-		}
-
-		void SetHandlerOnly(EventHandler<T, TArgs>* handler)
-		{
-			for(UInt32 i = 0; i < eventHandler.Count(); i++)
-			{
-				SafeDelete(&eventHandler[i]);
-			}
-			eventHandler.Clear();
-			eventHandler.Add(handler);
 		}
 
 		void AddHandler(EventHandler<T, TArgs>* handler)

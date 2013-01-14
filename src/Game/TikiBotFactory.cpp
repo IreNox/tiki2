@@ -95,8 +95,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 3.0f;
-			botDesc.Radius = 1.2f;
+			botDesc.Height = 1.5f;
+			botDesc.Radius = 0.6f;
 			botDesc.MaxHealth = 30;			
 			botDesc.EntityType = ET_Bot;
 
@@ -174,8 +174,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 3.0f;
-			botDesc.Radius = 1.2f;
+			botDesc.Height = 1.5f;
+			botDesc.Radius = 0.6f;
 			botDesc.MaxHealth = 300;
 			botDesc.EntityType = ET_Hero;
 			botDesc.MaxSpeed = 7.0f;

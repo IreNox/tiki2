@@ -167,7 +167,6 @@ namespace TikiEngine
 		LARGE_INTEGER freq;
 		LARGE_INTEGER last;
 		LARGE_INTEGER current;
-		double gameTime = 0;
 
 		if (!QueryPerformanceFrequency(&freq))
 		{
@@ -187,9 +186,9 @@ namespace TikiEngine
 			QueryPerformanceCounter(&current);
 			double elapsedTime = (double)(current.QuadPart - last.QuadPart) / freq.QuadPart;
 			elapsedTime = (elapsedTime > 1 ? 1 : elapsedTime);
-			gameTime += elapsedTime;
 
-			updateArgs.Time = GameTime(elapsedTime, gameTime);
+			updateArgs.Time.TotalTime += elapsedTime;
+			updateArgs.Time.ElapsedTime = elapsedTime;
 			last = current;
 
 #if _DEBUG

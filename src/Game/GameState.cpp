@@ -68,7 +68,7 @@ namespace TikiEngine
 			navMesh->Clear();
 			navMesh->Load(
 				L"navmesh/navmesh_" + StringAtoW(scene->GLevel()->GetName()),
-				Matrix::CreateTranslation(Vector3(0, 0.2f, 0))
+				Matrix::CreateTranslation(0, 0.2f, 0)
 			);
 		}
 
