@@ -50,8 +50,10 @@ namespace TikiEngine
 
 			List<GameObject*> drawBla;
 
+#if TIKI_USE_SCENEGRAPH
 			IRenderTarget* blabla;
 			Camera* cam2;
+#endif
 		};
 	}
 }

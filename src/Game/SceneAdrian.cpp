@@ -47,15 +47,19 @@ namespace TikiEngine
 		{
 #if TIKI_USE_SCENEGRAPH
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
+#endif
 
 			GameObject* go = new GameObject(engine);
+#if TIKI_USE_SCENEGRAPH
 			go->GetGameObjectType() = GOT_Dynamic;
+#endif
 
-			go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
+			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
+			go->SModel(args.Content->LoadModel(L"marine_l"));
 
 			this->model = go->GModel();
 			this->spidermine = go;
-			//this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
+			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
 			//this->bone = this->model->GetBone("weapon_MgTip_bn");
 
@@ -64,14 +68,40 @@ namespace TikiEngine
 			//sceneGraph.Add(go);
 			this->AddElement(go);
 
+			go = new GameObject(engine);
+			go->SModel(args.Content->LoadModel(L"marine_l"));
+			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SPosition() = Vector3(2,0,0);
+			this->AddElement(go);
+
+			
+
+			go = new GameObject(engine);
+			go->SModel(args.Content->LoadModel(L"marine_l"));
+			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SPosition() = Vector3(4,0,0);
+			this->AddElement(go);
+			this->model = go->GModel();
+			
+
+
+#if TIKI_USE_SCENEGRAPH
 			blabla = engine->librarys->CreateResource<IRenderTarget>();
 			blabla->CreateScreenSize();
 			blabla->AddRef();
+#endif
+#if TIKI_USE_SCENEGRAPH
 			CameraObject* cam = new CameraObject(engine);
+
 			cam->GetCameraComponent()->SetRenderTarget(blabla);
 			cam2 = cam->GetCameraComponent();
+
 			this->AddElement(cam);
 			cam->PRS.SPosition() = Vector3(0, 0, 5.0f);
+
+#endif
 
 
 			light = new LightObject(engine);
@@ -80,11 +110,15 @@ namespace TikiEngine
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
+#if TIKI_USE_SCENEGRAPH
 			light->GetGameObjectType() = GOT_Dynamic;
+#endif
 			this->AddElement(light);
 
 			go = new CameraObject(engine);
+#if TIKI_USE_SCENEGRAPH
 			go->GetGameObjectType() = GOT_Dynamic;
+#endif
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
@@ -94,7 +128,6 @@ namespace TikiEngine
 			//go->Release();
 
 			Scene::Initialize(args);
-#endif
 		}
 
 		void SceneAdrian::Draw(const DrawArgs& args)
@@ -106,6 +139,7 @@ namespace TikiEngine
 				Rectangle(10, 10, 200, 180)
 			);
 
+#if TIKI_USE_SCENEGRAPH
 			if(args.CurrentCamera != cam2)
 			{
 				engine->sprites->Draw(
@@ -113,6 +147,12 @@ namespace TikiEngine
 					Rectangle(10, 200, 200, 180)
 					);
 			}
+#else
+			engine->sprites->Draw(
+				engine->graphics->GetLightTarget(),
+				Rectangle(10, 200, 200, 180)
+			);
+#endif
 
 			engine->sprites->Draw(
 				engine->graphics->GetScreenTarget(),
@@ -120,6 +160,9 @@ namespace TikiEngine
 				);
 
 
+			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitX, Color::Red);
+			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitY, Color::Green);
+			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitZ, Color::Blue);
 
 		}
 
@@ -128,36 +171,37 @@ namespace TikiEngine
 
 			Scene::Update(args);
 
-			//this->drawBla.Clear();
-			//this->SceneGraph.Find(drawBla, 
-			//	Vector3(0.0f), 
-			//	0.5f, 
-			//	[](GameObject* go) -> bool { return go->PRS.GPosition().X < 0; } 
-			//);
-			
 			if(args.Input.GetKey(KEY_ALPHA1))
 			{
+#if TIKI_USE_SCENEGRAPH
 				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(0.01f,0,0);
-				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
+#endif
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
 			}
 			if(args.Input.GetKey(KEY_ALPHA2))
 			{
+#if TIKI_USE_SCENEGRAPH
 				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(-0.01f,0,0);
-				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
+#endif
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
 			}
 			if(args.Input.GetKey(KEY_ALPHA3))
 			{
+#if TIKI_USE_SCENEGRAPH
 				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),-0.01f);
-				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
+#endif
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
 			}
 			if(args.Input.GetKey(KEY_ALPHA4))
 			{
+#if TIKI_USE_SCENEGRAPH
 				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),0.01f);
-				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
+#endif
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
-				//this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
+				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
 			}
 
 			//links
