@@ -150,10 +150,12 @@ namespace TikiEngine
 
 	void GameObject::LateUpdate(const UpdateArgs& args)
 	{
+#if !TIKI_EDITOR
 		if(!sgElement.IsCulled && model)
 		{
 			model->LateUpdate(args);
 		}
+#endif
 	}
 	#pragma endregion
 }
