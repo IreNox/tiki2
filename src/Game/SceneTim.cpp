@@ -47,6 +47,8 @@ namespace TikiEngine
 
 		void SceneTim::Initialize(const InitializationArgs& args)
 		{
+			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
+
 			GameObject* go = new GameObject(engine);
 			go->SModel(engine->content->LoadModel(L"marine_l"));
 			go->PRS.SScale() = 0.01f;
