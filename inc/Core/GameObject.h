@@ -18,21 +18,11 @@ namespace TikiEngine
 	using namespace TikiEngine::Resources;
 	using namespace TikiEngine::Components;
 
-#if TIKI_USE_SCENEGRAPH
-	enum GameObjectType
-	{
-		GOT_Default,
-		GOT_Static,
-		GOT_Dynamic
-	};
-#endif
-
 	class GameObject : public EngineObject
 	{
 		friend class Transform;
 		friend class Component;
 		
-
 	public:
 
 		Transform PRS;
@@ -99,8 +89,12 @@ namespace TikiEngine
 		inline void* GetUserData() { return userData; }
 		inline void SetUserData(void* ud) { userData = ud; }
 
-#if TIKI_USE_SCENEGRAPH
+#if !TIKI_EDITOR
 		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
+#endif
+
+#if TIKI_USE_SCENEGRAPH
+		
 		inline GameObjectType& GetGameObjectType() { return this->objectType; }
 #endif
 
@@ -117,8 +111,10 @@ namespace TikiEngine
 		
 		List<GameObject*> childs;
 
-#if TIKI_USE_SCENEGRAPH
+#if !TIKI_EDITOR
 		SceneGraphElement sgElement;
+#endif
+#if TIKI_USE_SCENEGRAPH
 		GameObjectType objectType;
 #endif
 

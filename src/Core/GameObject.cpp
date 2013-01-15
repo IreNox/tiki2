@@ -11,10 +11,10 @@ namespace TikiEngine
 	{
 		this->PRS = Transform(this);
 
-#if TIKI_USE_SCENEGRAPH
+#if !TIKI_EDITOR
 		this->sgElement = SceneGraphElement(this);
-		this->objectType = GOT_Default;
 #endif
+
 	}
 
 	GameObject::~GameObject()
@@ -106,11 +106,6 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void GameObject::Draw(const DrawArgs& args)
 	{
-#if TIKI_USE_SCENEGRAPH
-		if(this->sgElement.IsCulled())
-			return;
-#endif
-
 		UInt32 i = 0;
 		while (i < childs.Count())
 		{
@@ -148,8 +143,7 @@ namespace TikiEngine
 
 		if (model) model->Update(args);
 
-#if TIKI_USE_SCENEGRAPH
-		//TODO anständige bounds
+#if !TIKI_EDITOR
 		this->sgElement.Update();
 #endif
 	}

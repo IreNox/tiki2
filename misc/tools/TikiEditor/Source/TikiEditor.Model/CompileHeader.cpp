@@ -1,5 +1,5 @@
 
-#define TIKI_EDITOR
+#define TIKI_EDITOR 1
 
 #include "FBXImport.h"
 

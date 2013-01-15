@@ -19,6 +19,9 @@ namespace TikiEngine
 		{
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 
+			matrices.ViewMatrix = Matrix::Identity;
+			matrices.ViewInverseMatrix = Matrix::Identity;
+
 			this->Handle(
 				engine->graphics,
 				ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort())

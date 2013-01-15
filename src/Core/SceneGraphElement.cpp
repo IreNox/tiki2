@@ -10,7 +10,7 @@ namespace TikiEngine
 	}
 
 	SceneGraphElement::SceneGraphElement(GameObject* go)
-		:go(go), width(1.0f), height(1.0f), culled(false)
+		:go(go), width(1.0f), height(1.0f), isDynamic(false)
 	{
 		Vector3 pos = go->PRS.GPosition();
 		this->Bounds = RectangleF::Create(pos.X - width * 0.5f, pos.Z - height * 0.5f, width, height);
@@ -28,9 +28,9 @@ namespace TikiEngine
 		this->Bounds.Y = pos.Z - height * 0.5f;
 	}
 
-	void SceneGraphElement::PerformFrustumCulling(Frustum& frustum)
+	bool SceneGraphElement::IsInsideFrustum(Frustum& frustum)
 	{
-		this->culled = !frustum.PointInFrustum(go->PRS.GPosition());
+		return !frustum.PointInFrustum(go->PRS.GPosition());
 	}
 	
 }

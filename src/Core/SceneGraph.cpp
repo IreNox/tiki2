@@ -211,5 +211,159 @@ namespace TikiEngine
 	}
 }
 #else
-bool SceneGraphEmpty = true;
+
+namespace TikiEngine
+{
+#pragma region class
+	SceneGraph::SceneGraph()
+		:initialized(false)
+	{
+
+	}
+
+	SceneGraph::~SceneGraph()
+	{
+		FOREACH_PTR_CALL(gameObjects, Release());
+	}
+
+	void SceneGraph::Initialize(RectangleF& bounds, int layerDepth)
+	{
+		if(initialized)
+			return;
+
+		this->dynamicObjects.Initialize(bounds, layerDepth);
+
+		this->initialized = true;
+	}
+#pragma endregion
+
+#pragma region Add/Remove/Draw/Update
+	void SceneGraph::Add(GameObject* go)
+	{
+		if(go->GetSceneGraphElement().IsDynamic())
+			dynamicObjects.Add(go);
+
+		gameObjects.Add(go);
+		go->AddRef();
+	}
+
+	bool SceneGraph::Remove(GameObject* go)
+	{
+		if(go->GetSceneGraphElement().IsDynamic())
+			dynamicObjects.Remove(go);
+
+		go->Release();
+		return gameObjects.Remove(go);
+	}
+
+	void SceneGraph::Draw(const DrawArgs& args)
+	{
+		FOREACH_PTR_CALL(gameObjects, Draw(args))
+	}
+
+	void SceneGraph::Update(const UpdateArgs& args)
+	{
+		FOREACH_PTR_CALL(gameObjects, Update(args))
+
+		dynamicObjects.LateUpdate(args);
+
+	}
+#pragma endregion
+
+#pragma region DO
+	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
+	{
+		FOREACH(gameObjects, whatIWant(gameObjects[i]))
+	}
+
+	void SceneGraph::DoInFrustum(function<void(GameObject*)> whatIWant)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			whatIWant(gameObjects[i]);
+
+			i++;
+		}
+	}
+
+	void SceneGraph::DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()))
+				whatIWant(gameObjects[i]);
+
+			i++;
+		}
+	}
+#pragma endregion
+
+#pragma region find
+	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (rect.Contains(gameObjects[i]->PRS.GPosition().XZ()))
+			{
+				if (where == 0 || where(gameObjects[i]))
+					result.Add(gameObjects[i]);
+			}
+
+			i++;
+		}
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (where == 0 || where(gameObjects[i]))
+				result.Add(gameObjects[i]);
+
+			i++;
+		}
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
+	{
+		result.AddRange(gameObjects);
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()))
+			{
+				if (where == 0 || where(gameObjects[i]))
+					result.Add(gameObjects[i]);
+			}
+
+			i++;
+		}
+	}
+
+	void SceneGraph::FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (where == 0 || where(gameObjects[i]))
+				result.Add(gameObjects[i]);
+
+			i++;
+		}
+	}
+
+#pragma endregion
+
+}
+
+
+//bool SceneGraphEmpty = true;
 #endif

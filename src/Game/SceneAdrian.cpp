@@ -55,36 +55,24 @@ namespace TikiEngine
 #endif
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
-			go->SModel(args.Content->LoadModel(L"marine_l"));
+			go->SModel(args.Content->LoadModel(L"soldier"));
 
 			this->model = go->GModel();
 			this->spidermine = go;
-			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 
-			//this->bone = this->model->GetBone("weapon_MgTip_bn");
+			
+			//this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
+
+			//this->model->GetBone("bn_spB01")->IgnoreUpdate(true);
+			//this->model->GetBone("bn_l_thigh01")->IgnoreUpdate(true);
+			//this->model->GetBone("bn_r_thigh01")->IgnoreUpdate(true);
+			//this->model->GetBone("bn_l_scarf_a01")->IgnoreUpdate(true);
+			//this->model->GetBone("bn_r_scarf_a01")->IgnoreUpdate(true);
 
 			go->PRS.SScale() = Vector3(0.01f);
 
 			//sceneGraph.Add(go);
 			this->AddElement(go);
-
-			go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"marine_l"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
-			go->PRS.SScale() = Vector3(0.01f);
-			go->PRS.SPosition() = Vector3(2,0,0);
-			this->AddElement(go);
-
-			
-
-			go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"marine_l"));
-			go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
-			go->PRS.SScale() = Vector3(0.01f);
-			go->PRS.SPosition() = Vector3(4,0,0);
-			this->AddElement(go);
-			this->model = go->GModel();
-			
 
 
 #if TIKI_USE_SCENEGRAPH

@@ -1,7 +1,6 @@
 #include "Core/SceneGraphNode.h"
 #include "Core/IGraphics.h"
 
-#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
 	SceneGraphNode::SceneGraphNode()
@@ -21,10 +20,10 @@ namespace TikiEngine
 
 	SceneGraphNode::~SceneGraphNode()
 	{
-		for(UINT i = 0; i < data.Count(); i++)
-		{
-			SafeRelease(&data[i]);
-		}
+		//for(UINT i = 0; i < data.Count(); i++)
+		//{
+		//	SafeRelease(&data[i]);
+		//}
 
 		for(UINT i = 0; i < childs.Count(); i++)
 		{
@@ -295,25 +294,25 @@ namespace TikiEngine
 
 	void SceneGraphNode::PerformCulling(Frustum& frustum)
 	{
-		for(UINT i = 0; i < data.Count(); i++)
-			data[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
-		if(IsSubdivided())
-		{
-			for(UINT i = 0; i < childs.Count(); i++)
-				childs[i]->PerformCulling(frustum);
-		}
+		//for(UINT i = 0; i < data.Count(); i++)
+		//	data[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+		//if(IsSubdivided())
+		//{
+		//	for(UINT i = 0; i < childs.Count(); i++)
+		//		childs[i]->PerformCulling(frustum);
+		//}
 	}
 
 	void SceneGraphNode::Draw(const DrawArgs& args)
 	{
-		for(UINT i = 0; i < data.Count(); i++)
-			data[i]->Draw(args);
+		//for(UINT i = 0; i < data.Count(); i++)
+		//	data[i]->Draw(args);
 
-		if(IsSubdivided())
-		{
-			for(UINT i = 0; i < childs.Count(); i++)
-				childs[i]->Draw(args);
-		}
+		//if(IsSubdivided())
+		//{
+		//	for(UINT i = 0; i < childs.Count(); i++)
+		//		childs[i]->Draw(args);
+		//}
 	}
 
 	void SceneGraphNode::DebugDraw(const DrawArgs& args)
@@ -444,6 +443,6 @@ namespace TikiEngine
 		return count + this->data.Count();	
 	}
 }
-#else
-bool SceneGraphNodeEmpty = true;
-#endif
+
+
+

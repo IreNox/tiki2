@@ -35,7 +35,7 @@ inline Scene* GetStartScene(Engine* engine)
 		engine->SetScene(scene);
 		((SceneLevel*)scene)->LoadLevel(2);
 	}
-	else if((name == L"adrian.lück" || name == L"Adrian") && true)
+	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
 		scene = new SceneAdrian(engine);
 	}

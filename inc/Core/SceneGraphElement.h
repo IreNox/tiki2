@@ -14,9 +14,8 @@ namespace TikiEngine
 		~SceneGraphElement();
 
 		void Update();
-		void PerformFrustumCulling(Frustum& frustum);
-
-		inline bool IsCulled() { return this->culled; }
+		bool IsInsideFrustum(Frustum& frustum);
+		inline bool IsDynamic(){ return this->isDynamic; }
 
 		RectangleF Bounds;
 
@@ -25,7 +24,7 @@ namespace TikiEngine
 
 		float width;
 		float height;
+		bool isDynamic;
 
-		bool culled;
 	};
 }

@@ -219,6 +219,7 @@ namespace TikiEngine
 			int matrixCount = this->constantBufferElements.Count();
 			for(int i = 0; i < matrixCount; i++)
 			{
+				TikiBone* b = constantBufferElements[i];
 				matrices->bones[i] = this->constantBufferElements[i]->ShiftMatrix();
 			}
 			constantBufferMatrices->Unmap();
