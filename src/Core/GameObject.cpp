@@ -147,5 +147,13 @@ namespace TikiEngine
 		this->sgElement.Update();
 #endif
 	}
+
+	void GameObject::LateUpdate(const UpdateArgs& args)
+	{
+		if(!sgElement.IsCulled && model)
+		{
+			model->LateUpdate(args);
+		}
+	}
 	#pragma endregion
 }

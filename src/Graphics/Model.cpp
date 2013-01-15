@@ -211,7 +211,10 @@ namespace TikiEngine
 #endif
 
 			this->animationStack.Update(args);
+		}
 
+		void Model::LateUpdate(const UpdateArgs& args)
+		{
 			if(this->rootBone != 0)
 				rootBone->Update(this->animationStack.GetStack());
 

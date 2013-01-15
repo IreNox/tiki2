@@ -38,6 +38,7 @@ namespace TikiEngine
 
 			virtual void Draw(GameObject* gameObject, const DrawArgs& args) = 0;
 			virtual void Update(const UpdateArgs& args) = 0;
+			virtual void LateUpdate(const UpdateArgs& args) = 0;
 
 			virtual int AnimationCount() = 0;
 

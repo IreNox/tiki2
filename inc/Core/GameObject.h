@@ -32,6 +32,7 @@ namespace TikiEngine
 		
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
+		virtual void LateUpdate(const UpdateArgs& args);
 
 		Component* GetComponent(PInt hash);
 

@@ -34,6 +34,7 @@ namespace TikiEngine
 
 			void Draw(GameObject* gameObject, const DrawArgs& args);
 			void Update(const UpdateArgs& args);
+			void LateUpdate(const UpdateArgs& args);
 
 			void SetConstantBufferIndices(List<TikiBone*>& list);
 			

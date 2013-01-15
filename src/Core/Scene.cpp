@@ -134,14 +134,6 @@ namespace TikiEngine
 		for(UINT i = 0; i < drawContent.Count(); i++)
 			drawContent[i]->Draw(args);
 		//SceneGraph.Draw(args);
-
-#if TIKI_USE_SCENEGRAPH
-		//mainCamera->GetFrustum().Draw(args);
-		//Vector3 pos = mainCamera->GetGameObject()->PRS.GPosition();
-		//args.Graphics->DrawLine(pos, pos + Vector3::UnitX, Color::Red);
-		//args.Graphics->DrawLine(pos, pos + Vector3::UnitY, Color::Red);
-		//args.Graphics->DrawLine(pos, pos + Vector3::UnitZ, Color::Red);
-#endif
 	}
 
 	void Scene::Update(const UpdateArgs& args)
@@ -149,6 +141,7 @@ namespace TikiEngine
 		SceneGraph.Update(args);
 		drawContent.Clear();
 		SceneGraph.Find(drawContent, mainCamera->GetFrustum());
+		SceneGraph.LateUpdate(args);
 
 #if TIKI_USE_SCENEGRAPH
 		SceneGraph.PerformCulling(this->mainCamera->GetFrustum());

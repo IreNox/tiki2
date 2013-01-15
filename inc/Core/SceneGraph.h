@@ -29,6 +29,7 @@ namespace TikiEngine
 
 		void Draw(const DrawArgs& args);
 		void Update(const UpdateArgs& args);
+		void LateUpdate(const UpdateArgs& args);
 
 #pragma endregion
 

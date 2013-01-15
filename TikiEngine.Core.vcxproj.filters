@@ -266,9 +266,6 @@
     <ClCompile Include="src\Core\DatabaseState.cpp">
       <Filter>Quelldateien\Core\System</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\SceneGraphNode.cpp">
-      <Filter>Quelldateien\Core\SceneGraph</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\SceneGraphElement.cpp">
       <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
@@ -298,6 +295,9 @@
     </ClCompile>
     <ClCompile Include="src\extern\sqlite3.c">
       <Filter>Extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\SceneGraphNode.cpp">
+      <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

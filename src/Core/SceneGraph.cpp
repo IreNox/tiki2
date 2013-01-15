@@ -274,6 +274,11 @@ namespace TikiEngine
 		dynamicObjects.LateUpdate(args);
 
 	}
+
+	void SceneGraph::LateUpdate(const UpdateArgs& args)
+	{
+		FOREACH_PTR_CALL(gameObjects, LateUpdate(args))
+	}
 #pragma endregion
 
 #pragma region DO
