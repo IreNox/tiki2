@@ -50,12 +50,15 @@ namespace TikiEngine
 		inline List<GameObject*>& GetAllGameObjects() { return gameObjects; }
 
 	private:
+		inline void Lock() { this->locked = true; }
+		void Unlock();
 
+		bool locked;
 		bool initialized;
 
+		List<GameObject*> removeList;
 		List<GameObject*> gameObjects;
 		SceneGraphNode dynamicObjects;
-
 	};
 }
 

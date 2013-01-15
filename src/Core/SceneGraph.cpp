@@ -216,7 +216,7 @@ namespace TikiEngine
 {
 #pragma region class
 	SceneGraph::SceneGraph()
-		:initialized(false)
+		:initialized(false), locked(false)
 	{
 
 	}
@@ -249,6 +249,12 @@ namespace TikiEngine
 
 	bool SceneGraph::Remove(GameObject* go)
 	{
+		if(locked)
+		{
+			removeList.Add(go);
+			return true;
+		}
+
 		if(go->GetSceneGraphElement().IsDynamic())
 			dynamicObjects.Remove(go);
 
@@ -273,7 +279,9 @@ namespace TikiEngine
 #pragma region DO
 	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
 	{
+		Lock();
 		FOREACH(gameObjects, whatIWant(gameObjects[i]))
+		Unlock();
 	}
 
 	void SceneGraph::DoInFrustum(function<void(GameObject*)> whatIWant)
@@ -330,7 +338,14 @@ namespace TikiEngine
 
 	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
 	{
-		result.AddRange(gameObjects);
+		for(UINT i = 0; i < gameObjects.Count(); i++)
+		{
+			GameObject* go = gameObjects[i];
+			if(go->GetSceneGraphElement().IsInsideFrustum(frustum))
+			{
+				result.Add(go);
+			}
+		}
 	}
 
 	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
@@ -362,8 +377,18 @@ namespace TikiEngine
 
 #pragma endregion
 
+#pragma region private methods
+	void SceneGraph::Unlock()
+	{
+		for(UINT i = 0; i < removeList.Count(); i++)
+		{
+			this->Remove(removeList[i]);
+		}
+		removeList.Clear();
+		locked = false;
+	}
+#pragma endregion
+
 }
 
-
-//bool SceneGraphEmpty = true;
 #endif

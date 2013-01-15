@@ -91,19 +91,7 @@ namespace TikiEngine
 				IntersectionPoint(pl[NEARP], pl[LEFT], pl[BOTTOM]).XZ(),
 			};
 			
-			vertices.AddRange(v, 0, 4);
-
-			//Vector2 nTL = IntersectionPoint(pl[NEARP], pl[LEFT], pl[TOP]).XZ();
-			//Vector2 nBL = IntersectionPoint(pl[NEARP], pl[LEFT], pl[BOTTOM]).XZ();
-
-			//Vector2 nTR = IntersectionPoint(pl[NEARP], pl[RIGHT], pl[TOP]).XZ();
-			//Vector2 nBR = IntersectionPoint(pl[NEARP], pl[RIGHT], pl[BOTTOM]).XZ();
-
-			//Vector2 fTL = IntersectionPoint(pl[FARP], pl[LEFT], pl[TOP]).XZ();
-			//Vector2 fBL = IntersectionPoint(pl[FARP], pl[LEFT], pl[BOTTOM]).XZ();
-
-			//Vector2 fTR = IntersectionPoint(pl[FARP], pl[RIGHT], pl[TOP]).XZ();
-			//Vector2 fBR = IntersectionPoint(pl[FARP], pl[RIGHT], pl[BOTTOM]).XZ();			
+			vertices.AddRange(v, 0, 4);			
 		}
 
 		Vector3 IntersectionPoint(Plane& a, Plane& b, Plane& c)

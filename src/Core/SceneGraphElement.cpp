@@ -30,7 +30,7 @@ namespace TikiEngine
 
 	bool SceneGraphElement::IsInsideFrustum(Frustum& frustum)
 	{
-		return !frustum.PointInFrustum(go->PRS.GPosition());
+		return frustum.PointInFrustum(go->PRS.GPosition());
 	}
 	
 }
