@@ -105,7 +105,7 @@ namespace TikiEngine
 
 			if (wayPoints.Count() != 0)
 			{
-				bot->GetBrain()->AddGoalPatrol(wayPoints);
+				FOREACH(wayPoints, bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[i], 0.05f)))
 			}
 
 			gameState->GetScene()->AddElement(go);
