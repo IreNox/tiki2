@@ -15,6 +15,7 @@ namespace TikiEngine
 
 		void Update();
 		bool IsInsideFrustum(Frustum& frustum);
+		inline void SetDynamic(){ this->isDynamic = true; }
 		inline bool IsDynamic(){ return this->isDynamic; }
 		bool IsCulled;
 
@@ -26,7 +27,5 @@ namespace TikiEngine
 		float width;
 		float height;
 		bool isDynamic;
-		
-
 	};
 }

@@ -88,9 +88,8 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
-#if TIKI_USE_SCENEGRAPH
-			go->GetGameObjectType() = GOT_Dynamic;
-#endif
+			go->GetSceneGraphElement().IsDynamic();
+
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -167,9 +166,7 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
-#if TIKI_USE_SCENEGRAPH
-			go->GetGameObjectType() = GOT_Dynamic;
-#endif
+			go->GetSceneGraphElement().SetDynamic();
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -200,9 +197,7 @@ namespace TikiEngine
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
-#if TIKI_USE_SCENEGRAPH
-			go->GetGameObjectType() = GOT_Dynamic;
-#endif
+			go->GetSceneGraphElement().SetDynamic();
 
 			// Create bot
 			TikiBotDescription botDesc;

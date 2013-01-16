@@ -50,9 +50,6 @@ namespace TikiEngine
 #endif
 
 			GameObject* go = new GameObject(engine);
-#if TIKI_USE_SCENEGRAPH
-			go->GetGameObjectType() = GOT_Dynamic;
-#endif
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 			go->SModel(args.Content->LoadModel(L"soldier"));
@@ -98,9 +95,7 @@ namespace TikiEngine
 			light->GetLight()->SetRange(750.0f);
 			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
-#if TIKI_USE_SCENEGRAPH
-			light->GetGameObjectType() = GOT_Dynamic;
-#endif
+
 			this->AddElement(light);
 
 			go = new CameraObject(engine);

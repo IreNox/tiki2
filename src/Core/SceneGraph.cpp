@@ -240,35 +240,29 @@ namespace TikiEngine
 #pragma region Add/Remove/Draw/Update
 	void SceneGraph::Add(GameObject* go)
 	{
-		if(go->GetSceneGraphElement().IsDynamic())
-			dynamicObjects.Add(go);
+		//if(go->GetSceneGraphElement().IsDynamic())
+		//	dynamicObjects.Add(go);
 
 		gameObjects.Add(go);
 		go->AddRef();
 	}
 
-	bool SceneGraph::Remove(GameObject* go)
+	void SceneGraph::Remove(GameObject* go)
 	{
-		if(locked)
-		{
+		if(gameObjects.Contains(go))
 			removeList.Add(go);
-			return true;
-		}
-
-		if(go->GetSceneGraphElement().IsDynamic())
-			dynamicObjects.Remove(go);
-
-		go->Release();
-		return gameObjects.Remove(go);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
 	{
-		FOREACH_PTR_CALL(gameObjects, Draw(args))
+		//FOREACH_PTR_CALL(gameObjects, Draw(args))
+		dynamicObjects.DebugDraw(args);
 	}
 
 	void SceneGraph::Update(const UpdateArgs& args)
 	{
+		this->RemoveGameObjects();
+
 		FOREACH_PTR_CALL(gameObjects, Update(args))
 
 		dynamicObjects.LateUpdate(args);
@@ -284,9 +278,7 @@ namespace TikiEngine
 #pragma region DO
 	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
 	{
-		Lock();
 		FOREACH(gameObjects, whatIWant(gameObjects[i]))
-		Unlock();
 	}
 
 	void SceneGraph::DoInFrustum(function<void(GameObject*)> whatIWant)
@@ -383,14 +375,18 @@ namespace TikiEngine
 #pragma endregion
 
 #pragma region private methods
-	void SceneGraph::Unlock()
+	void SceneGraph::RemoveGameObjects()
 	{
 		for(UINT i = 0; i < removeList.Count(); i++)
 		{
-			this->Remove(removeList[i]);
+			GameObject* go = removeList[i];
+			if(go->GetSceneGraphElement().IsDynamic())
+				dynamicObjects.Remove(go);
+
+			go->Release();
+			gameObjects.Remove(go);
 		}
 		removeList.Clear();
-		locked = false;
 	}
 #pragma endregion
 
