@@ -541,9 +541,6 @@
     <ClCompile Include="src\Game\GoalSeekToPosition.cpp">
       <Filter>Quelldateien\AI\Goals\Atomic</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\PathPlanner.cpp">
-      <Filter>Quelldateien\AI\Movement</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\GoalTraverseEdge.cpp">
       <Filter>Quelldateien\AI\Goals\Atomic</Filter>
     </ClCompile>
@@ -678,6 +675,9 @@
     </ClCompile>
     <ClCompile Include="inc\Game\SceneLoading.cpp">
       <Filter>Quelldateien\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PathPlanner.cpp">
+      <Filter>Quelldateien\AI\Movement</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

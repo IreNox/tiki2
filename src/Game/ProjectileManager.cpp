@@ -47,7 +47,7 @@ namespace TikiEngine
             peExplosion->AddRef();
 
             prExplosion = engine->librarys->CreateComponent<IParticleRenderer>(this);
-            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/fire")); // fix: explosion looks too crappy
+            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/explosion")); // fix: explosion looks too crappy
             prExplosion->SetParticleEffect(peExplosion);
             prExplosion->AddRef();
 
