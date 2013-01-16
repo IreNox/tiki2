@@ -18,6 +18,9 @@ namespace TikiEngine
 			minScale = 0.5f;
 			maxScale = 1.0f;
 
+			interp.ValueInit = 0.0f;
+			interp.ValueMiddle = 1.0f;
+			interp.ValueFinal = 0.0f;
 			interp.MiddlePosition = 0.3f;
 
 			windDirection = Vector3(0.1f, 0, 0);

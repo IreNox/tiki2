@@ -20,6 +20,11 @@ namespace TikiEngine
 			maxScale = 1.2f;//5;
 
 			explosionRadius = 10;
+
+			interp.ValueInit = Vector4(1, 0.8f, 0.8f, 0);
+			interp.ValueMiddle = Vector4(1, 0.2f, 0.2f, 0);
+			interp.ValueFinal = Vector4(0.8f, 0.7f, 0.7f, 0);
+			interp.MiddlePosition = 0.3f;
 		}
 
 
@@ -37,8 +42,13 @@ namespace TikiEngine
 
 		void PEExplosion::UpdateParticle(Particle* particle)
 		{
+			Vector4 c = interp.GetValue(particle->Age);
+
+			particle->Color.R = c.X;
+			particle->Color.G = c.Y;
+			particle->Color.B = c.Z;
 			particle->Color.A = 1 - particle->Age;
-			particle->Size *= Random(1.01f, 1.015f);
+			particle->Size = 1.05f + (particle->Age * 0.5f);
 			particle->Velocity *=  (1-particle->Age) * Random(1.1f, 1.25f);
             //particle->Velocity.Y -= 25.0f;
 		}

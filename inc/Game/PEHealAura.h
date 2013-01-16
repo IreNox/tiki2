@@ -15,7 +15,7 @@ namespace TikiEngine
             void UpdateParticle(Particle* particle);
 
         private:
-            Interpolator interp;
+            Interpolator<float> interp;
 
         };
     }

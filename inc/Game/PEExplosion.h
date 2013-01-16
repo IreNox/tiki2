@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/ParticleEffect.h"
+#include "Core/Interpolator.h"
 
 namespace TikiEngine
 {
@@ -20,6 +21,9 @@ namespace TikiEngine
 			float maxScale;
 
 			float explosionRadius;
+
+			Interpolator<Vector4> interp;
+
 		};
 	}
 }

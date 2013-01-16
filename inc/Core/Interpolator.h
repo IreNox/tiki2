@@ -4,22 +4,23 @@
 
 namespace TikiEngine
 {
+	template <typename T>
 	class Interpolator
 	{
 	public:
 
-		float ValueInit;
-		float ValueMiddle;
-		float ValueFinal;
+		T ValueInit;
+		T ValueMiddle;
+		T ValueFinal;
 
 		float MiddlePosition;
 
 		Interpolator()
-			: ValueInit(0.0f), ValueMiddle(1.0f), ValueFinal(0.0f), MiddlePosition(0.5f)
+			: MiddlePosition(0.5f)
 		{ 
 		}
 
-		float GetValue(float age)
+		T GetValue(float age)
 		{
 			if (age < this->MiddlePosition)
 			{
@@ -30,5 +31,5 @@ namespace TikiEngine
 				return this->ValueMiddle + ((this->ValueFinal - this->ValueMiddle) * ((age - this->MiddlePosition) / (1.0f - this->MiddlePosition)));
 			}
 		}
-	};
+	};	
 }

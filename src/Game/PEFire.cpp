@@ -18,6 +18,9 @@ namespace TikiEngine
 			minScale = 1;
 			maxScale = 3;
 
+			interp.ValueInit = 0.0f;
+			interp.ValueMiddle = 1.0f;
+			interp.ValueFinal = 0.0f;
 			interp.MiddlePosition = 0.1f;
 
 		}

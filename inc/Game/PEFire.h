@@ -18,7 +18,7 @@ namespace TikiEngine
 			float initialSpeed;
 			float minScale;
 			float maxScale;
-			Interpolator interp;
+			Interpolator<float> interp;
 		};
 	}
 }

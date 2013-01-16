@@ -14,6 +14,9 @@ namespace TikiEngine
             releasePerSecound = 400;
             lifeTime = 2.5;
             
+			interp.ValueInit = 0.0f;
+			interp.ValueMiddle = 1.0f;
+			interp.ValueFinal = 0.0f;
             interp.MiddlePosition = 0.3f;
         }
 

@@ -20,7 +20,7 @@ namespace TikiEngine
 			float minScale;
 			float maxScale;
 
-			Interpolator interp;
+			Interpolator<float> interp;
 
 
 		};
