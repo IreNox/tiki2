@@ -20,15 +20,21 @@
 
 #include "Game/PlayerBase.h"
 #include "Game/EnemyBase.h"
+#include "Game/TikiBot.h"
 
 using namespace TikiEngine::Objects;
 using namespace TikiEngine::Scripts;
 using namespace TikiEngine::Graphics;
+using namespace TikiEngine::AI;
 
 namespace TikiEngine
 {
+	
+
 	namespace Game
 	{
+		
+
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
 			: Scene(engine)
@@ -173,24 +179,9 @@ namespace TikiEngine
 		void SceneLevel::Draw(const DrawArgs& args)
 		{
 			if (level) level->Draw(args);
-			
-			//Camera* cam = GetCameras()->Get(0);
-			//Vector2 screenSize = args.Graphics->GetViewPort()->GetSize();
 
-			//Ray r1 = cam->ScreenPointToRay(Vector2::Zero);
-			//Ray r2 = cam->ScreenPointToRay(Vector2(0,screenSize.Y));
-			//Ray r3 = cam->ScreenPointToRay(Vector2(screenSize.X, 0));
-			//Ray r4 = cam->ScreenPointToRay(screenSize);
-
-			//Vector3 v1 = r1.Origin - r1.Origin * r1.Origin.Y / r1.Direction.Y;
-			//Vector3 v2 = r2.Origin - r2.Origin * r2.Origin.Y / r2.Direction.Y;
-			//Vector3 v3 = r3.Origin - r3.Origin * r3.Origin.Y / r3.Direction.Y;
-			//Vector3 v4 = r4.Origin - r4.Origin * r4.Origin.Y / r4.Direction.Y;
-
-
-			//SceneGraph.Draw(args);
-
-			Scene::Draw(args);
+			for(UINT i = 0; i < drawContent.Count(); i++)
+				drawContent[i]->Draw(args);
 
 			gameState->Draw(args);
 		}
@@ -199,9 +190,20 @@ namespace TikiEngine
 		{
 			if (level) level->Update(args);
 
-		Scene::Update(args);
+			SceneGraph.Update(args);
+			DoFoWCulling();
+			SceneGraph.LateUpdate(args);
+
 			gameState->Update(args);
 		}
 		#pragma endregion
+
+#pragma region Culling
+		void SceneLevel::DoFoWCulling()
+		{
+			drawContent.Clear();
+			SceneGraph.Find(drawContent, mainCamera->GetFrustum());
+		}
+#pragma  endregion
 	}
 }

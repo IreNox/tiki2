@@ -34,6 +34,8 @@ namespace TikiEngine
 
 		private:
 
+			void DoFoWCulling();
+
 			Level* level;			
 			
 

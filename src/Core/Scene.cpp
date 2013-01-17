@@ -131,10 +131,10 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-		//for(UINT i = 0; i < drawContent.Count(); i++)
-		//	drawContent[i]->Draw(args);
+		for(UINT i = 0; i < drawContent.Count(); i++)
+			drawContent[i]->Draw(args);
 #if _DEBUG
-		SceneGraph.Draw(args);
+		//SceneGraph.Draw(args);
 #endif
 	}
 

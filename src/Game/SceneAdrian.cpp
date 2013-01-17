@@ -55,6 +55,7 @@ namespace TikiEngine
 			go->SModel(args.Content->LoadModel(L"soldier"));
 
 			this->model = go->GModel();
+			int count = this->model->AnimationCount();
 			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 			this->spidermine = go;
 
