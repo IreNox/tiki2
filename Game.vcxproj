@@ -30,7 +30,9 @@
     <ClInclude Include="inc\Game\PEFire.h" />
     <ClInclude Include="inc\Game\PEFlash.h" />
     <ClInclude Include="inc\Game\PEHealAura.h" />
+    <ClInclude Include="inc\Game\PEShockWave.h" />
     <ClInclude Include="inc\Game\PESmoke.h" />
+    <ClInclude Include="inc\Game\PESparks.h" />
     <ClInclude Include="inc\Game\PPDepthOfField.h" />
     <ClInclude Include="inc\Game\SceneLoading.h" />
     <ClInclude Include="inc\Game\TikiAtt.h" />
@@ -161,9 +163,11 @@
     <ClCompile Include="src\Game\PEFire.cpp" />
     <ClCompile Include="src\Game\PEFlash.cpp" />
     <ClCompile Include="src\Game\PEHealAura.cpp" />
+    <ClCompile Include="src\Game\PEShockWave.cpp" />
     <ClCompile Include="src\Game\PEShootMG.cpp" />
     <ClCompile Include="src\Game\PathPlanner.cpp" />
     <ClCompile Include="src\Game\PESmoke.cpp" />
+    <ClCompile Include="src\Game\PESparks.cpp" />
     <ClCompile Include="src\Game\PPBlur.cpp" />
     <ClCompile Include="src\Game\PPDepthOfField.cpp" />
     <ClCompile Include="src\Game\PPFogOfWar.cpp" />

@@ -110,7 +110,7 @@ namespace TikiEngine
             expEffect->SIsAlive(false);
 
 			IParticleRenderer* explosionPR = engine->librarys->CreateComponent<IParticleRenderer>(explosionEmitter);
-			explosionPR->SetTexture(engine->content->LoadTexture(L"particle/fire")); // fix: explosion looks too crappy
+			explosionPR->SetTexture(engine->content->LoadTexture(L"particle/explosion")); // fix: explosion looks too crappy
 			explosionPR->SetParticleEffect(expEffect);
 			this->AddElement(explosionEmitter);
 
@@ -141,6 +141,30 @@ namespace TikiEngine
 			flashPR->SetParticleEffect(flashEffect);
 			this->AddElement(flashEmitter);
 
+			// Sparks
+			sparksEmitter = new GameObject(engine);
+			sparksEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
+
+			sparksEffect = new PESparks(engine);
+			sparksEffect->SIsAlive(false);
+
+			IParticleRenderer* sparksPR = engine->librarys->CreateComponent<IParticleRenderer>(sparksEmitter);
+			sparksPR->SetTexture(engine->content->LoadTexture(L"particle/plasma")); 
+			sparksPR->SetParticleEffect(sparksEffect);
+			this->AddElement(sparksEmitter);
+
+
+			// Shockwave
+			shockwaveEmitter = new GameObject(engine);
+			shockwaveEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
+
+			shockwaveEffect = new PEShockWave(engine);
+			shockwaveEffect->SIsAlive(false);
+
+			IParticleRenderer* shockPR = engine->librarys->CreateComponent<IParticleRenderer>(shockwaveEmitter);
+			shockPR->SetTexture(engine->content->LoadTexture(L"particle/Shockwave")); 
+			shockPR->SetParticleEffect(shockwaveEffect);
+			this->AddElement(shockwaveEmitter);
 
 			Scene::Initialize(args);
 		}
@@ -186,25 +210,41 @@ namespace TikiEngine
 					) 
 				);
 
+ 			if (args.Input.GetKeyPressed(KEY_N))
+ 			{
+ 				sparksEffect->Trigger(1, sparksEffect->GParticleBudget(), 
+					Matrix::TransformCoordinate(
+					Vector3(0, 0, 0),
+					Matrix::Transpose(sparksEmitter->PRS.GetWorld())
+					)
+				);
 
-//             fireEffect->Trigger(
-//                 args.Time.ElapsedTime, 200,
-//                 //Vector3(0,5,0)
-//                 Vector3::TransformCoordinate(
-//                 Vector3(0.8f, 0, 0),
-//                 Matrix::Transpose(elements[0]->PRS.GetWorld())
-//                 ) 
-//                 );
+				shockwaveEffect->Trigger(1, shockwaveEffect->GParticleBudget(), 
+					Matrix::TransformCoordinate(
+					Vector3(0, 0, 0),
+					Matrix::Transpose(shockwaveEmitter->PRS.GetWorld())
+					)
+				);
+
+ 			}
 
 
-// 			smokeEffect->Trigger(
-// 				args.Time.ElapsedTime, 200,
-// 				//Vector3(0,5,0)
-// 				Vector3::TransformCoordinate(
-// 					Vector3(0.8f, 0, 0),
-// 					Matrix::Transpose(elements[0]->PRS.GetWorld())
-// 				)
-// 			);
+            fireEffect->Trigger(
+                args.Time.ElapsedTime, 200,
+                Matrix::TransformCoordinate(
+                Vector3(0.8f, 0, 0),
+                Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
+                ) 
+            );
+
+
+			smokeEffect->Trigger(
+				args.Time.ElapsedTime, 200,
+				Matrix::TransformCoordinate(
+					Vector3(0.8f, 0, 0),
+					Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
+				)
+			);
 
 
 			// Update base

@@ -99,6 +99,7 @@
     <None Include="bin\Data\Textures\particle\laser.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
+    <None Include="bin\Data\Textures\particle\Shockwave.dds" />
     <None Include="bin\Data\Textures\particle\smoke.dds" />
     <None Include="bin\Data\Textures\particle\star.dds" />
     <None Include="bin\Data\Textures\random.dds" />

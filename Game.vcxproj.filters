@@ -449,6 +449,12 @@
     <ClInclude Include="inc\Game\SceneLoading.h">
       <Filter>Headerdateien\Scenes</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PESparks.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEShockWave.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -678,6 +684,12 @@
     </ClCompile>
     <ClCompile Include="src\Game\PathPlanner.cpp">
       <Filter>Quelldateien\AI\Movement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PESparks.cpp">
+      <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEShockWave.cpp">
+      <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
