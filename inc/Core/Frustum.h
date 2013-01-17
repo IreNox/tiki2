@@ -152,7 +152,6 @@ namespace TikiEngine
 
 		int BoxInFrustum(IBoundingBox* b)
 		{
-			_CrtDbgBreak(); //NYI
 			int result = INSIDE;
 			for(int i = 0; i < 6; i++) 
 			{

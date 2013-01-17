@@ -12,7 +12,7 @@ namespace TikiEngine
 		this->PRS = Transform(this);
 
 #if !TIKI_EDITOR
-		this->sgElement = SceneGraphElement(this);
+		this->sgElement.SetGameObject(this);
 #endif
 
 	}
@@ -123,6 +123,9 @@ namespace TikiEngine
 			i++;
 		}
 
+//#if !TIKI_EDITOR
+//		sgElement.boundingBox->DrawDebug(Color::Red);
+//#endif
 	}
 
 	void GameObject::Update(const UpdateArgs& args)

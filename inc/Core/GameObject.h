@@ -99,6 +99,7 @@ namespace TikiEngine
 		inline GameObjectType& GetGameObjectType() { return this->objectType; }
 #endif
 
+
 	protected:
 
 		GameObject* parent;

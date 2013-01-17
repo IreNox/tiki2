@@ -55,21 +55,14 @@ namespace TikiEngine
 			go->SModel(args.Content->LoadModel(L"soldier"));
 
 			this->model = go->GModel();
+			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
 			this->spidermine = go;
-
-			
-			//this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
-
-			//this->model->GetBone("bn_spB01")->IgnoreUpdate(true);
-			//this->model->GetBone("bn_l_thigh01")->IgnoreUpdate(true);
-			//this->model->GetBone("bn_r_thigh01")->IgnoreUpdate(true);
-			//this->model->GetBone("bn_l_scarf_a01")->IgnoreUpdate(true);
-			//this->model->GetBone("bn_r_scarf_a01")->IgnoreUpdate(true);
 
 			go->PRS.SScale() = Vector3(0.01f);
 
 			//sceneGraph.Add(go);
 			this->AddElement(go);
+
 
 
 #if TIKI_USE_SCENEGRAPH

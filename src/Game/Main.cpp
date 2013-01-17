@@ -56,7 +56,7 @@ inline Scene* GetStartScene(Engine* engine)
 
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(18461);
+	//_CrtSetBreakAlloc(241532);
 
 	{
 #if _DEBUG

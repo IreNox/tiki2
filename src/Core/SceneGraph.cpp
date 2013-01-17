@@ -251,12 +251,13 @@ namespace TikiEngine
 	{
 		if(gameObjects.Contains(go))
 			removeList.Add(go);
+
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
 	{
-		//FOREACH_PTR_CALL(gameObjects, Draw(args))
-		dynamicObjects.DebugDraw(args);
+		FOREACH_PTR_CALL(gameObjects, Draw(args))
+		//dynamicObjects.DebugDraw(args);
 	}
 
 	void SceneGraph::Update(const UpdateArgs& args)
