@@ -56,7 +56,7 @@ namespace TikiEngine
             steering = new TikiSteering(this);
 			if (type != ET_Building && type != ET_Tower)
 			{
-				//steering->SeparationOn();
+				steering->SeparationOn();
 			}
 
             // init CharacterController

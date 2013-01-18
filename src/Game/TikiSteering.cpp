@@ -89,8 +89,8 @@ namespace TikiEngine
 		{
 			Vector2 separationForce = Vector2::Zero;
 
-			tikiBot->GetGameState()->GetScene()->SceneGraph.DoWithinRange(tikiBot->Pos3D(), tikiBot->BRadius() + 1, [&](GameObject* go) 
-			{ 
+			tikiBot->GetGameState()->GetScene()->SceneGraph.DoWithinRange(tikiBot->Pos3D(), (float)(tikiBot->BRadius() + 1.0), [&](GameObject* go) 
+			{
 
  				if (go != 0)
  				{

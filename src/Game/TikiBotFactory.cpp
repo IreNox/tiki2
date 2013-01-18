@@ -94,8 +94,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 1.5f;
-			botDesc.Radius = 0.6f;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 30;			
 			botDesc.EntityType = ET_Bot;
 
@@ -117,8 +117,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
-			botDesc.Height = 2.0f;
-			botDesc.Radius = 2.0f;
+			botDesc.Height = 5.0f;
+			botDesc.Radius = 3.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
@@ -173,8 +173,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 1.5f;
-			botDesc.Radius = 0.6f;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 300;
 			botDesc.EntityType = ET_Hero;
 			botDesc.MaxSpeed = 7.0f;
@@ -206,8 +206,8 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 3.0f;
-			botDesc.Radius = 1.2f;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 30;
 			botDesc.EntityType = ET_Bot;
 
@@ -231,7 +231,7 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 2.0f;
+			botDesc.Height = 5.0f;
 			botDesc.Radius = 2.0f;
 			botDesc.MaxHealth = 100;
 			botDesc.MaxSpeed = 0.000001f;
@@ -253,7 +253,7 @@ namespace TikiEngine
 
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 5.0f;
+			botDesc.Height = 10.0f;
 			botDesc.Radius = 5.0f;
 			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;

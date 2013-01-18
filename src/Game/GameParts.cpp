@@ -79,8 +79,10 @@ namespace TikiEngine
 
 			if (player)
 			{
+				Vector2 pos2 = playerPos + Vector2(Random(-2, 2), Random(-2, 2));
+
 				GameObject* go = new GameObject(gameState->GetEngine());
-				go->PRS.SPosition() = gameState->GetBotFactory()->GetPos(playerPos, 3);
+				go->PRS.SPosition() = gameState->GetBotFactory()->GetPos(pos2, 3);
 				gameState->GetBotFactory()->CreatePlayerMop(go, pos);
 			}
 		}
