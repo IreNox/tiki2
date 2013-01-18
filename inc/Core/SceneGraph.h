@@ -24,6 +24,8 @@ namespace TikiEngine
 		bool Remove(GameObject* go);
 
 		void Update(const UpdateArgs& args);
+		void LateUpdate(const UpdateArgs& args);
+
 		void PerformCulling(Frustum& frustum);
 
 		void Draw(const DrawArgs& args);
@@ -38,8 +40,9 @@ namespace TikiEngine
 
 		void FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
 
-		List<GameObject*>& GetDefaultGOs();
-		List<GameObject*>& GetStaticGOs();
+		inline List<GameObject*>& GetDefaultGOs() { return defaultGOs; }
+		inline List<GameObject*>& GetStaticGOs() { return staticGOs; }
+		inline List<GameObject*>& GetAllGameObjects() { return allGOs; }
 
 	private:
 		inline void Lock(){ this->locked = true; }
@@ -52,6 +55,8 @@ namespace TikiEngine
 
 		List<GameObject*> defaultGOs;
 		List<GameObject*> staticGOs;
+		List<GameObject*> allGOs;
+
 		SceneGraphNode dynamicGOs;
 
 		bool locked;

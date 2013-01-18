@@ -28,6 +28,8 @@ namespace TikiEngine
 
 		void SceneMark::Initialize(const InitializationArgs& args)
 		{
+			SceneGraph.Initialize(RectangleF::Create(0, 0, 512, 512), 3);
+
             GameObject* go = new GameObject(engine);
 			IMeshRenderer* renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));

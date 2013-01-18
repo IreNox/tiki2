@@ -34,15 +34,16 @@ namespace TikiEngine
 
 		private:
 
-			void DoFoWCulling();
-
 			Level* level;			
 			
-
 			GameState* gameState;
 
 			List<LevelPoint*> points;
+
+#if TIKI_USE_SCENEGRAPH
+			void DoFoWCulling();
 			List<GameObject*> drawContent;
+#endif
 
 		};	
 	}

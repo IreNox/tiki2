@@ -25,7 +25,7 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && true)
+	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
 		//scene = new SceneTim(engine);
 		scene = new SceneMark(engine);

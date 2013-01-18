@@ -146,9 +146,9 @@ namespace TikiEngine
 #if TIKI_USE_SCENEGRAPH
 		drawContent.Clear();
 		SceneGraph.Find(drawContent, mainCamera->GetFrustum());
-#endif
-
+#else
 		SceneGraph.LateUpdate(args);
+#endif
 
 #if TIKI_USE_SCENEGRAPH
 		SceneGraph.PerformCulling(this->mainCamera->GetFrustum());

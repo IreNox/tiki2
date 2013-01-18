@@ -33,6 +33,8 @@ namespace TikiEngine
 		if(!this->initialized)
 			return;
 
+		allGOs.Add(go);
+
 		switch(go->GetGameObjectType())
 		{
 		case GOT_Default:
@@ -45,14 +47,16 @@ namespace TikiEngine
 			this->dynamicGOs.Add(go);
 			break;
 		}
-		go->AddRef();
 
+		go->AddRef();
 	}
 
 	bool SceneGraph::Remove(GameObject* go)
 	{
 		if(!this->initialized)
 			return false;
+
+		allGOs.Remove(go);
 
 		switch(go->GetGameObjectType())
 		{
@@ -141,16 +145,6 @@ namespace TikiEngine
 		this->dynamicGOs.Find(result, where);
 		this->Unlock();
 	}
-
-	List<GameObject*>& SceneGraph::GetDefaultGOs()
-	{
-		return this->defaultGOs;
-	}
-
-	List<GameObject*>& SceneGraph::GetStaticGOs()
-	{
-		return this->staticGOs;
-	}
 	
 	void SceneGraph::Update(const UpdateArgs& args)
 	{
@@ -174,10 +168,10 @@ namespace TikiEngine
 		//for(UINT i = 0; i < defaultGOs.Count(); i++)
 		//	defaultGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
 
-		for(UINT i = 0; i < staticGOs.Count(); i++)
-			staticGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
+		//for(UINT i = 0; i < staticGOs.Count(); i++)
+		//	staticGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
 
-		//this->dynamicGOs.PerformCulling(frustum);
+		this->dynamicGOs.PerformCulling(frustum);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
@@ -197,6 +191,11 @@ namespace TikiEngine
 		this->dynamicGOs.DebugDraw(args);
 	
 #endif
+	}
+
+	void SceneGraph::LateUpdate(const UpdateArgs& args)
+	{
+		FOREACH_PTR_CALL(allGOs, LateUpdate(args))
 	}
 
 	void SceneGraph::Unlock()

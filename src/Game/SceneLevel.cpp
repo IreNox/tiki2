@@ -59,9 +59,6 @@ namespace TikiEngine
 		#pragma region Member - Init
 		void SceneLevel::Initialize(const InitializationArgs& args)
 		{
-#if TIKI_USE_SCENEGRAPH
-			
-#endif
 			SceneGraph.Initialize(RectangleF::Create(-256,-256, 512, 512), 6);
 
 			//Light
@@ -180,8 +177,12 @@ namespace TikiEngine
 		{
 			if (level) level->Draw(args);
 
+#if TIKI_USE_SCENEGRAPH
 			for(UINT i = 0; i < drawContent.Count(); i++)
 				drawContent[i]->Draw(args);
+#else
+			Scene::Draw(args);
+#endif
 
 			gameState->Draw(args);
 		}
@@ -191,7 +192,11 @@ namespace TikiEngine
 			if (level) level->Update(args);
 
 			SceneGraph.Update(args);
+
+#if TIKI_USE_SCENEGRAPH
 			DoFoWCulling();
+#endif
+
 			SceneGraph.LateUpdate(args);
 
 			gameState->Update(args);
@@ -199,11 +204,13 @@ namespace TikiEngine
 		#pragma endregion
 
 #pragma region Culling
+#if TIKI_USE_SCENEGRAPH
 		void SceneLevel::DoFoWCulling()
 		{
 			drawContent.Clear();
 			SceneGraph.Find(drawContent, mainCamera->GetFrustum());
 		}
+#endif
 #pragma  endregion
 	}
 }
