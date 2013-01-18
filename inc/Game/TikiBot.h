@@ -99,7 +99,7 @@ namespace TikiEngine
 				StepOffset = 0.5f;
 
 				// MovingEntity
-				Heading = Vector2::Zero;
+				Heading = Vector2(0.0001f);
 				MaxSpeed = 5.0f;
 				MaxTurnRate = 0.5f;
 				MaxForce = 1.0f;

@@ -1,6 +1,9 @@
 #pragma once
 
 #include <math.h>
+#include <limits>
+
+const float MinFloat = (std::numeric_limits<float>::min)();
 
 //TODO INLINE
 class Vector2
@@ -29,8 +32,8 @@ public:
 	inline ~Vector2() {}
 	#pragma endregion
 
-	// returns true if both x and y are zero
-	inline bool IsZero() const { return X == 0 && Y == 0; }
+	/*! @brief returns true if both x and y are near zero */
+	inline bool IsZero() const { return (X*X + Y*Y) < MinFloat; }
 
 	// adjusts x and y so that the length of the vector does not exceed max
 	void Truncate(float maximum);

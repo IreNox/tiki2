@@ -339,9 +339,6 @@ namespace TikiEngine
 
 		void TikiBot::UpdateMovement(const UpdateArgs& args)
 		{
-			if (velocity.X != velocity.X || velocity.Y != velocity.Y)
-				velocity = Vector2::Zero;
-
 			// calculate the combined steering force
 			Vector2 force = steering->Calculate();
 
