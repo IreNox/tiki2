@@ -104,7 +104,7 @@ namespace TikiEngine
 
 			if (wayPoints.Count() != 0)
 			{
-				bot->GetBrain()->AddGoalAttackMove(GetPos(wayPoints[0], 0.05f));
+				bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[0], 0.05f));
 			}
 
 			gameState->GetScene()->AddElement(go);

@@ -54,6 +54,10 @@ namespace TikiEngine
 
             // Create steering behavior
             steering = new TikiSteering(this);
+			if (type != ET_Building && type != ET_Tower)
+			{
+				//steering->SeparationOn();
+			}
 
             // init CharacterController
             controller = engine->librarys->CreateComponent<ICharacterController>(gameObject);

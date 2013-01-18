@@ -56,14 +56,17 @@ namespace TikiEngine
 			void SeekOn()   { flags |= seek;   }
 			void ArriveOn() { flags |= arrive; }
 			void WanderOn() { flags |= wander; }
+			void SeparationOn() { flags |= separation; }
 
-			void SeekOff()   { if(On(seek))   flags ^=seek;   }
-			void ArriveOff() { if(On(arrive)) flags ^=arrive; }
-			void WanderOff() { if(On(wander)) flags ^=wander; }
+			void SeekOff()   { if(On(seek))   flags ^= seek;   }
+			void ArriveOff() { if(On(arrive)) flags ^= arrive; }
+			void WanderOff() { if(On(wander)) flags ^= wander; }
+		    void SeparationOff() { if(On(separation)) flags ^= separation; }
 
 			bool SeekIsOn()	  { return On(seek);   }
 			bool ArriveIsOn() { return On(arrive); }
 			bool WanderIsOn() { return On(wander); }
+			bool SeparationIsOn() { return On(separation); }
 
 		private:
 			//this function tests if a specific bit of m_iFlags is set
@@ -82,6 +85,9 @@ namespace TikiEngine
 
 			// this behavior makes the agent wander about randomly
 			Vector2 Wander();
+
+			// this calculates a force repelling from the other neighbors
+			Vector2 Separation();
 
 
 
@@ -111,7 +117,7 @@ namespace TikiEngine
 
 
 			// multipliers. These can be adjusted to effect strength of the appropriate behavior.
-			double weightSeparation;
+			float weightSeparation;
 			float weightWander;
 			double weightWallAvoidance;
 			float weightSeek;
@@ -119,7 +125,7 @@ namespace TikiEngine
 
 
 			// how far the agent can "see"
-			double viewDistance;
+			float viewDistance;
 
 			// binary flags to indicate whether or not a behavior should be active
 			int flags;

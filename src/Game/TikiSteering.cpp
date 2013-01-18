@@ -1,5 +1,7 @@
 #include "Game/TikiSteering.h"
 #include "Game/TikiBot.h"
+#include "Game/SceneLevel.h"
+#include "Game/GameState.h"
 
 namespace TikiEngine
 {
@@ -8,12 +10,10 @@ namespace TikiEngine
 		TikiSteering::TikiSteering(TikiBot* agent) :
 			tikiBot(agent),
 			flags(0),
-			weightSeparation(10.0),
+			weightSeparation(2.0f),
 			weightWander(1.0f),
 			weightWallAvoidance(10.0),
-			viewDistance(15.0),
-			//wallDetectionFeelerLength(25.0), // * bot scale
-			//feelers(3),
+			viewDistance(10.0f),
 			deceleration(normal),
 			targetAgent1(0),
 			targetAgent2(0),
@@ -48,6 +48,14 @@ namespace TikiEngine
 		{
 			Vector2 force = Vector2::Zero;
 
+ 			if (On(separation))
+ 			{
+ 				force = Separation() * weightSeparation;
+ 
+ 				if (!AccumulateForce(steeringForce, force))
+ 					return steeringForce;
+ 			}
+
 			if(On(seek))
 			{
 				force = Seek(target) * weightSeek;
@@ -75,6 +83,36 @@ namespace TikiEngine
 
 			return steeringForce;
 		}
+
+		// calculates a force repelling from the other neighbors
+		Vector2 TikiSteering::Separation()
+		{
+			Vector2 separationForce = Vector2::Zero;
+
+			tikiBot->GetGameState()->GetScene()->SceneGraph.DoWithinRange(tikiBot->Pos3D(), tikiBot->BRadius() + 1, [&](GameObject* go) 
+			{ 
+
+ 				if (go != 0)
+ 				{
+ 					TikiBot *owner = tikiBot;
+ 
+ 					TikiBot* bot = 0;
+ 					bot = go->GetComponent<TikiBot>();
+ 
+ 					if (bot != 0 && bot->ID() != owner->ID())
+ 					{
+ 						Vector2 toBot = owner->Pos() - bot->Pos();
+ 
+ 						// scale the force inversely proportional to the agents distance from its neighbor.
+ 						separationForce += Vector2::Normalize(toBot) / toBot.Length();
+ 					}
+ 				}
+
+			});
+
+			return separationForce;
+		}
+
 
 		// Given a target, this behavior returns a steering force which will direct the agent towards the target
 		Vector2 TikiSteering::Seek(const Vector2& targetPos)
