@@ -26,13 +26,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="bin\Data\Cloddy\Datasets\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
-    <None Include="bin\Data\Cloddy\Datasets\map1.E16C24.rect.dat" />
-    <None Include="bin\Data\Cloddy\Datasets\map2.E16C24.rect.dat" />
+    <None Include="bin\Data\Cloddy\map1.E16C24.rect.dat" />
+    <None Include="bin\Data\Cloddy\map2.E16C24.rect.dat" />
     <None Include="bin\Data\Cloddy\Licence\licence.dat" />
     <None Include="bin\Data\Meshes\building03_05.obj" />
     <None Include="bin\Data\Meshes\collider\collider_map1.obj" />

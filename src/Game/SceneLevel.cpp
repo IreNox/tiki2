@@ -29,12 +29,8 @@ using namespace TikiEngine::AI;
 
 namespace TikiEngine
 {
-	
-
 	namespace Game
 	{
-		
-
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
 			: Scene(engine)
