@@ -51,6 +51,9 @@ namespace TikiEngine
 		Camera* mainCamera;
 
 		DrawLightArgs lighting;
+
+#if TIKI_USE_SCENEGRAPH
 		List<GameObject*> drawContent;
+#endif
 	};
 }

@@ -3,6 +3,7 @@
 #include "Core/Scene.h"
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
+#include "Core/TikiTimer.h"
 
 #include "Game/PEHealAura.h"
 #include "Game/PESmoke.h"
@@ -58,6 +59,9 @@ namespace TikiEngine
 
 			PESparks* sparksEffect;
 			PEShockWave* shockwaveEffect;
+
+			bool explo;
+			TikiTimer timerExplo;
 
 		};
 	}

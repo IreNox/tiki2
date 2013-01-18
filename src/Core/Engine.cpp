@@ -367,7 +367,7 @@ namespace TikiEngine
 		if (wait > 0.0)
 		{
 			int milli = (int)(wait * 1000.0);
-			//Sleep(milli);
+			Sleep(milli);
 		}
 	}
 	#pragma endregion

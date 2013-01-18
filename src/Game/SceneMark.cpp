@@ -15,7 +15,7 @@ namespace TikiEngine
         using namespace TikiEngine::Scripts;
 
 		SceneMark::SceneMark(Engine* engine)
-			: Scene(engine)
+			: Scene(engine), timerExplo(1.0), explo(false)
 		{
 
 		}
@@ -149,7 +149,7 @@ namespace TikiEngine
 			sparksEffect->SIsAlive(false);
 
 			IParticleRenderer* sparksPR = engine->librarys->CreateComponent<IParticleRenderer>(sparksEmitter);
-			sparksPR->SetTexture(engine->content->LoadTexture(L"particle/plasma")); 
+			sparksPR->SetTexture(engine->content->LoadTexture(L"particle/line_sparks")); 
 			sparksPR->SetParticleEffect(sparksEffect);
 			this->AddElement(sparksEmitter);
 
@@ -210,14 +210,22 @@ namespace TikiEngine
 					) 
 				);
 
- 			if (args.Input.GetKeyPressed(KEY_N))
- 			{
- 				sparksEffect->Trigger(1, sparksEffect->GParticleBudget(), 
+			if (explo)
+			{
+				sparksEffect->Trigger(
+					args.Time.ElapsedTime, 
+					20,
 					Matrix::TransformCoordinate(
 					Vector3(0, 0, 0),
 					Matrix::Transpose(sparksEmitter->PRS.GetWorld())
 					)
-				);
+					);
+
+				explo = !timerExplo.IsReady(args.Time);
+			}
+
+ 			if (args.Input.GetKeyPressed(KEY_N))
+ 			{
 
 				shockwaveEffect->Trigger(1, shockwaveEffect->GParticleBudget(), 
 					Matrix::TransformCoordinate(
@@ -226,6 +234,15 @@ namespace TikiEngine
 					)
 				);
 
+				sparksEffect->Trigger2(
+					0, 
+					Matrix::TransformCoordinate(
+					Vector3(0, 0, 0),
+					Matrix::Transpose(sparksEmitter->PRS.GetWorld())
+					)
+				);
+
+				explo = true;
  			}
 
 

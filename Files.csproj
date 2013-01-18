@@ -97,6 +97,7 @@
     <None Include="bin\Data\Textures\particle\fire.dds" />
     <None Include="bin\Data\Textures\particle\HealAura.dds" />
     <None Include="bin\Data\Textures\particle\laser.dds" />
+    <None Include="bin\Data\Textures\particle\line_sparks.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
     <None Include="bin\Data\Textures\particle\Shockwave.dds" />

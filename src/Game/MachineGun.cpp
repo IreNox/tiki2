@@ -20,16 +20,22 @@ namespace TikiEngine
 		{
 			if (IsReadyForNextShot(args))
 			{
-				Vector3 start;
+				Vector3 start = owner->Pos3D();
+
 				if (owner->EntityType() != ET_Tower)
 				{
 					IBone* bone = owner->GetGameObject()->GModel()->GetBone("weapon_standard_bn");				
+
+					if (bone == 0)
+						_CrtDbgBreak();
+
 					start = Matrix::TransformCoordinate(bone->Position(), Matrix::Transpose(owner->GetGameObject()->PRS.GetWorld()));
+
+					//if (start.X )
 				}
-				else //if (owner->EntityType() == )
+				else
 				{
 					// TODO: Tower bone
-					start = owner->Pos3D();
 				}
 				
 				ProjectileDescription desc;

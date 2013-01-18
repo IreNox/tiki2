@@ -51,6 +51,11 @@ namespace TikiEngine
 		{
 			FOREACH_PTR_CALL(gameObjects, Update(args))
 		}
+
+		void LateUpdate(const UpdateArgs& args)
+		{
+			FOREACH_PTR_CALL(gameObjects, LateUpdate(args))
+		}
 		#pragma endregion
 
 		#pragma region Member - Do

@@ -14,7 +14,23 @@ namespace TikiEngine
 			void CreateParticle(Particle* particle);
 			void UpdateParticle(Particle* particle);
 
+			void Trigger2(UInt32 count, const Vector3& pos);
+
+			void Update(const UpdateArgs& args);
+
 		private:
+
+			struct Spark
+			{
+				Particle* p1;
+				Particle* p2;
+			};
+
+			UInt64 counter;
+			Vector3 direction;
+
+			List<Spark> sparks;
+
 			Interpolator<float> interp;
 		};
 	}

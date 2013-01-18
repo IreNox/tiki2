@@ -204,15 +204,7 @@ namespace TikiEngine
 
 		void ParticleRenderer::SetParticleEffect(ParticleEffect* behavior)
 		{
-			SafeRelease(&this->behavior);
-			SafeAddRef(behavior, &this->behavior);
-
-			if (behavior != 0)
-			{
-				shader->SelectSubByIndex(
-					behavior->GRenderType()
-					);
-			}
+			SafeChangeRef(&this->behavior, behavior);
 		}
 		#pragma endregion
 
@@ -251,6 +243,9 @@ namespace TikiEngine
 			if (texture)
 				shader->SetTexture("tex", texture);
 
+			shader->SelectSubByIndex(
+				behavior->GRenderType()
+			);
 			shader->Apply();
 			shader->ApplyVars(gameObject, 0, Matrix::Identity);
 
