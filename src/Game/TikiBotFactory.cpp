@@ -104,6 +104,7 @@ namespace TikiEngine
 
 			if (wayPoints.Count() != 0)
 			{
+				bot->GetBrain()->RemoveAllSubgoals();
 				bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[0], 0.05f));
 			}
 

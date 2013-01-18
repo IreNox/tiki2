@@ -71,6 +71,48 @@ namespace TikiEditor
 		len = 0;
 		for each (System::String^ file in files)
 		{		
+			bool deleteMe = false;
+			if (System::IO::Path::GetExtension(file) == ".fx")
+			{
+				if (System::IO::Path::GetFileName(file)->StartsWith("is"))
+				{
+					continue;
+				}
+
+				System::String^ content = System::IO::File::ReadAllText(file);
+
+				System::Text::RegularExpressions::Regex^ regex = gcnew System::Text::RegularExpressions::Regex("#include \"([a-zA-Z0-9_/.]+)\"");
+																											   
+				System::Text::RegularExpressions::MatchCollection^ matches;
+				
+				while ((matches = regex->Matches(content, 0))->Count != 0)
+				{
+					System::Collections::Generic::Dictionary<System::String^, System::String^>^ dict = gcnew System::Collections::Generic::Dictionary<System::String^, System::String^>();
+
+					for each (System::Text::RegularExpressions::Match^ match in matches)
+					{
+						dict->Add(
+							content->Substring(match->Index, match->Length),
+							System::IO::File::ReadAllText(
+								System::IO::Path::Combine(
+									dataPath,
+									match->Groups[1]->Value
+								)
+							)
+						);
+					}
+
+					for each (System::Collections::Generic::KeyValuePair<System::String^, System::String^>^ kvp in dict)
+					{
+						content = content->Replace(kvp->Key, kvp->Value);
+					}
+				}
+
+				file = System::IO::Path::GetTempFileName();
+				System::IO::File::WriteAllText(file, content);
+				deleteMe = true;
+			}
+
 			wcstring cFile = (wcstring)Marshal::StringToHGlobalUni(file).ToPointer();
 			FileStream* stream = new FileStream(cFile, FM_Read);
 			UInt32 fLen = stream->GetLength();
@@ -86,6 +128,9 @@ namespace TikiEditor
 
 			pos += fileLen[i];
 			i++;
+
+			if (deleteMe)
+				System::IO::File::Delete(file);
 		}
 
 		context->GetHeader()->DatalistId = context->AddPart(dataIds, sizeof(int), PT_Array, PT_UInt, count);
