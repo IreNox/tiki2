@@ -98,14 +98,10 @@ namespace TikiEngine
 		inline void* GetUserData() { return userData; }
 		inline void SetUserData(void* ud) { userData = ud; }
 
-#if !TIKI_EDITOR
-		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
-#endif
-
 #if TIKI_USE_SCENEGRAPH		
+		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
 		inline GameObjectType& GetGameObjectType() { return this->objectType; }
 #endif
-
 
 	protected:
 
@@ -120,11 +116,9 @@ namespace TikiEngine
 		
 		List<GameObject*> childs;
 
-#if !TIKI_EDITOR
-		SceneGraphElement sgElement;
-#endif
 #if TIKI_USE_SCENEGRAPH
 		GameObjectType objectType;
+		SceneGraphElement sgElement;
 #endif
 
 	};

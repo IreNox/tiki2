@@ -7,6 +7,7 @@
 #include "Core/DrawArgs.h"
 #include "Core/Frustum.h"
 
+#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
 	class SceneGraphNode
@@ -70,3 +71,4 @@ namespace TikiEngine
 		List<SceneGraphNode*> childs;
 	};
 }
+#endif

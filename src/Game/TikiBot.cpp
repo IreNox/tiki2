@@ -308,17 +308,6 @@ namespace TikiEngine
 			if (EntityType() == ET_Hero)
 				skillSys->Update(args);
 			
-			if (EntityType() == ET_Tower)
-			{
-				Quaternion rot = gameObject->PRS.GRotation();
-
-				if (rot != Quaternion::Identity)
-				{
-					gameObject->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromQuaternion(rot));
-					gameObject->PRS.SRotation() = Quaternion::Identity;
-				}
-			}
-
 			double addHealth = attSys[TA_HealthRegValue] * args.Time.ElapsedTime;
 			addHealth += attSys[TA_HealthRegPercent] * attSys[TA_MaxHealth] * 0.01 * args.Time.ElapsedTime;
 
@@ -350,6 +339,9 @@ namespace TikiEngine
 
 		void TikiBot::UpdateMovement(const UpdateArgs& args)
 		{
+			if (velocity.X != velocity.X || velocity.Y != velocity.Y)
+				velocity = Vector2::Zero;
+
 			// calculate the combined steering force
 			Vector2 force = steering->Calculate();
 
@@ -397,9 +389,22 @@ namespace TikiEngine
 			}
 
 			// always update rotation
-			gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
-				(3.14159f - atan2(heading.Y, heading.X)) - (3.14159f / 2), 0, 0
+			if (EntityType() == ET_Tower)
+			{
+				gameObject->GModel()->GetMesh("MG")->SetLocalMatrix(
+					Matrix::CreateFromQuaternion(
+						Quaternion::CreateFromYawPitchRoll(
+							((float)MATH_PIOVER2 - atan2(heading.Y, heading.X)) - (3.14159f / 2), 0, 0
+						)
+					)
 				);
+			}
+			else
+			{
+				gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(
+					((float)MATH_PI - atan2(heading.Y, heading.X)) - (3.14159f / 2), 0, 0
+				);
+			}
 
 			//velocity[bufferState.UpdateIndex] = new value;
 		}

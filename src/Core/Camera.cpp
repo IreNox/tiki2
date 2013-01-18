@@ -127,7 +127,7 @@ namespace TikiEngine
 		{
 			matrices.ProjectionMatrix = Matrix::Transpose(
 				Matrix::CreatePerspectiveFieldOfView(
-					MATH_PI / 4,
+					(float)(MATH_PI / 4.0),
 					(float)args.CurrentViewPort->Width / args.CurrentViewPort->Height,
 					0.01f,
 					1000.0f

@@ -26,33 +26,37 @@ namespace TikiEngine
 
 		void SensorMemory::UpdateVision(const UpdateArgs& args)
 		{
-			owner->GetGameState()->GetScene()->SceneGraph.Do([&](GameObject* go)
-			{
-				TikiBot* curBot = go->GetComponent<TikiBot>();
-				if(!(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction()))
-					return;
-
-				MakeNewRecordIfNotAlreadyPresent(curBot);
-
-				MemoryRecord& info = memoryMap[curBot];
-
-				float dist = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange() + (float)curBot->BRadius();
-				float eps = (float)curBot->BRadius();
-				if (owner->HasLOSTo(curBot->Pos3D(), dist, eps))
+			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
+				owner->Pos3D(),
+				25.0f,
+				[&](GameObject* go)
 				{
-					info.Shootable = true;
-					info.TimeLastSensed = args.Time.TotalTime;
-					info.lastSensedPosition = curBot->Pos3D();
-					info.TimeLastVisible = args.Time.TotalTime;
-					info.WithinFOV = true;
+					TikiBot* curBot = go->GetComponent<TikiBot>();
+					if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
+					{
+						MakeNewRecordIfNotAlreadyPresent(curBot);
 
+						MemoryRecord& info = memoryMap[curBot];
+
+						float dist = owner->GetWeaponSys()->GetCurrentWeapon()->GetIdealRange() + (float)curBot->BRadius();
+						float eps = (float)curBot->BRadius();
+						if (owner->HasLOSTo(curBot->Pos3D(), dist, eps))
+						{
+							info.Shootable = true;
+							info.TimeLastSensed = args.Time.TotalTime;
+							info.lastSensedPosition = curBot->Pos3D();
+							info.TimeLastVisible = args.Time.TotalTime;
+							info.WithinFOV = true;
+
+						}
+						else
+						{
+							info.Shootable = false;
+							info.WithinFOV = false;
+						}
+					}
 				}
-				else
-				{
-					info.Shootable = false;
-					info.WithinFOV = false;
-				}
-			});
+			);
 		}
 
 		bool SensorMemory::IsOpponentShootable(TikiBot* opponent) const

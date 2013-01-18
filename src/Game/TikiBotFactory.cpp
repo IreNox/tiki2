@@ -87,8 +87,8 @@ namespace TikiEngine
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
-
-			go->GetSceneGraphElement().IsDynamic();
+			
+			//go->GetSceneGraphElement().IsDynamic();
 
 
 			// Create bot
@@ -104,7 +104,7 @@ namespace TikiEngine
 
 			if (wayPoints.Count() != 0)
 			{
-				FOREACH(wayPoints, bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[i], 0.05f)))
+				bot->GetBrain()->AddGoalAttackMove(GetPos(wayPoints[0], 0.05f));
 			}
 
 			gameState->GetScene()->AddElement(go);
@@ -166,7 +166,9 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -197,7 +199,9 @@ namespace TikiEngine
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;

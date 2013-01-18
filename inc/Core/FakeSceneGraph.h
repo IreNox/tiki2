@@ -29,7 +29,7 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Add/Remove/Draw/Update
+		#pragma region Member - Add/Remove/Draw/Update/LateUpdate
 		void Add(GameObject* go)
 		{
 			gameObjects.Add(go);
@@ -80,7 +80,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < gameObjects.Count())
 			{
-				if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()))
+				if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()) < distance)
 					whatIWant(gameObjects[i]);
 
 				i++;
