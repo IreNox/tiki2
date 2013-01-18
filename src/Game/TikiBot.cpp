@@ -394,7 +394,7 @@ namespace TikiEngine
 				gameObject->GModel()->GetMesh("MG")->SetLocalMatrix(
 					Matrix::CreateFromQuaternion(
 						Quaternion::CreateFromYawPitchRoll(
-							((float)MATH_PIOVER2 - atan2(heading.Y, heading.X)) - (3.14159f / 2), 0, 0
+							atan2(heading.Y, heading.X) - (3.14159f / 2), 0, 0
 						)
 					)
 				);

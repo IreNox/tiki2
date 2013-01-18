@@ -25,15 +25,15 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && false)
+	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
 		//scene = new SceneTim(engine);
-		scene = new SceneMark(engine);
+		//scene = new SceneMark(engine);
 		//scene = new SceneAdrian(engine);
 
-		//scene = new SceneLevel(engine);
-		//engine->SetScene(scene);
-		//((SceneLevel*)scene)->LoadLevel(2);
+		scene = new SceneLevel(engine);
+		engine->SetScene(scene);
+		((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
