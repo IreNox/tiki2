@@ -10,7 +10,7 @@ namespace TikiEngine
 		TikiSteering::TikiSteering(TikiBot* agent) :
 			tikiBot(agent),
 			flags(0),
-			weightSeparation(2.0f),
+			weightSeparation(15.0f),
 			weightWander(1.0f),
 			weightWallAvoidance(10.0),
 			viewDistance(10.0f),
@@ -89,7 +89,7 @@ namespace TikiEngine
 		{
 			Vector2 separationForce = Vector2::Zero;
 
-			tikiBot->GetGameState()->GetScene()->SceneGraph.DoWithinRange(tikiBot->Pos3D(), (float)(tikiBot->BRadius() + 1.0), [&](GameObject* go) 
+			tikiBot->GetGameState()->GetScene()->SceneGraph.DoWithinRange(tikiBot->Pos3D(), (float)tikiBot->BRadius() + 0.1f, [&](GameObject* go) 
 			{
 
  				if (go != 0)
