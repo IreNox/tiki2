@@ -10,7 +10,7 @@ namespace TikiEngine
 		TikiSteering::TikiSteering(TikiBot* agent) :
 			tikiBot(agent),
 			flags(0),
-			weightSeparation(15.0f),
+			weightSeparation(2.0f),
 			weightWander(1.0f),
 			weightWallAvoidance(10.0),
 			viewDistance(10.0f),
