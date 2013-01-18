@@ -331,7 +331,7 @@ namespace TikiEngine
 #if TIKI_USE_SCENEGRAPH
 				this->GetGameObjectType() = GOT_Static;
 #endif
-				this->SModel(engine->content->LoadModel(L"building03_05"));
+				this->SModel(engine->content->LoadModel(L"building_03_05"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 5:

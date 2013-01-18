@@ -374,7 +374,7 @@ namespace TikiEngine
 			description->SetTriangulationCallback(callback);
 			//description->EnableLogging();
 
-			Stream* stream = engine->content->LoadData(L"Data/Cloddy/Licence/licence.dat");
+			Stream* stream = engine->content->LoadData(L"Data/terrain/Licence/licence.dat");
 
 			UInt32 len = (UInt32)stream->GetLength();
 			Byte* data = new Byte[len];

@@ -214,7 +214,6 @@ namespace TikiEngine
 					if (loadFile)
 					{
 						Stream* stream = this->LoadData(name);
-						stream->AddRef();
 
 						if (stream == 0)
 						{
@@ -224,6 +223,7 @@ namespace TikiEngine
 
 							return 0;
 						}
+						stream->AddRef();
 
 						try
 						{
@@ -246,20 +246,23 @@ namespace TikiEngine
 		#pragma region Member - LoadData
 		Stream* ContentManagerModule::LoadData(wstring name)
 		{
-			engine->HPath.CheckPath(name);
+			engine->HPath.CheckSlashes(name);
 
-			UInt32 id;
-			Stream* stream;
+			UInt32 id = 0;
+			Stream* stream = 0;
 			if (resourcePackage.TryGetValue(name, &id))
 			{
 				stream = new MemoryStream(
 					resourceContext->ReadPartPointer(id),
 					resourceContext->ReadPart(id).ArrayCount
-					);
+				);
 			}
 			else
 			{
-				stream = new FileStream(name, FM_Read);
+				FileStream* fileStream = new FileStream(name, FM_Read);
+
+				if (fileStream->IsOpen())
+					stream = fileStream;
 			}
 
 			return stream;

@@ -29,7 +29,7 @@ namespace TikiEditor
 	void ResConverter::WriteToFile(System::String^ fileName)
 	{
 		UInt32 len = 0;
-		UInt32 count = files->Count;
+		UInt32 count = 0;
 
 		files->Sort();
 
@@ -38,12 +38,18 @@ namespace TikiEditor
 
 		for each (System::String^ file in files)
 		{
+			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			{
+				continue;
+			}
+
 			System::String^ mFile = file->Replace(dataPath, "")->Substring(1);
 
 			filesP->Add(mFile);
 
 			fileLen->Add(mFile->Length + 1);
-			len += mFile->Length + 1;						
+			len += mFile->Length + 1;	
+			count++;
 		}
 			
 		UInt32 pos = 0;
@@ -52,6 +58,11 @@ namespace TikiEditor
 		int i = 0;	
 		for each (System::String^ file in files)
 		{
+			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			{
+				continue;
+			}
+
 			wcstring cFile = (wcstring)Marshal::StringToHGlobalUni(filesP[i]).ToPointer();
 			memcpy(filelist + pos, cFile, sizeof(wchar_t) * fileLen[i]);
 
@@ -61,7 +72,7 @@ namespace TikiEditor
 			i++;
 		}
 
-		context->GetHeader()->FileCount = files->Count;
+		context->GetHeader()->FileCount = count;
 		context->GetHeader()->FilelistId = context->AddPart(filelist, sizeof(wchar_t), PT_Array, PT_Widechar, len);
 
 		UInt32* dataIds = new UInt32[count];
@@ -70,15 +81,15 @@ namespace TikiEditor
 		pos = 0;
 		len = 0;
 		for each (System::String^ file in files)
-		{		
+		{
+			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			{
+				continue;
+			}
+
 			bool deleteMe = false;
 			if (System::IO::Path::GetExtension(file) == ".fx")
 			{
-				if (System::IO::Path::GetFileName(file)->StartsWith("is"))
-				{
-					continue;
-				}
-
 				System::String^ content = System::IO::File::ReadAllText(file);
 
 				System::Text::RegularExpressions::Regex^ regex = gcnew System::Text::RegularExpressions::Regex("#include \"([a-zA-Z0-9_/.]+)\"");

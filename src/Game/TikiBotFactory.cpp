@@ -137,7 +137,7 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreateEnemyBuilding( GameObject* go )
 		{
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"building03_05"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"building_03_05"));
 
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;

@@ -34,13 +34,12 @@ namespace TikiEngine
 		wstring GetResourcePath(PInt typeHash, const wstring& fileName) const;
 
 		void CheckPath(const wstring& path) const;
+		void CheckSlashes(wstring& path) const;
 
 	private:
 
 		wstring binaryPath;
 		wstring workingPath;
-
-		void checkSlashes(wstring& path) const;
 
 	};
 }

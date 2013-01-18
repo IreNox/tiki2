@@ -24,6 +24,8 @@ namespace TikiEngine
 			FileStream(wstring fileName, FileMode mode);
 			~FileStream();
 
+			inline bool IsOpen() { return handle != 0; }
+
 			void Close();
 
 			Byte ReadByte();
