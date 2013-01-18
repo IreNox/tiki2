@@ -26,6 +26,7 @@ namespace TikiEngine
 
 			float aoeRadius;
 			bool heal;
+			Vector2 projTarget;
 		};
 
 

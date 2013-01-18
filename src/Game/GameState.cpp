@@ -160,12 +160,6 @@ namespace TikiEngine
 					if (coll)
 					{
 						target = coll->GetGameObject()->GetComponent<TikiBot>();
-
-						if(coll->GetDynamic())
-						{
-							coll->GetRigidBody()->SetVelocity(Vector3(0, 10, 0));
-							coll->GetRigidBody()->SetAngularVelocity(Vector3(5, 10, 0));
-						}
 					}
 
 					unitSelection->MoveCommand(target, info.Point, args.Input.GetKey(KEY_T), args.Input.GetKey(KEY_LSHIFT));
