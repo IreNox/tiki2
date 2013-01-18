@@ -21,25 +21,28 @@ namespace TikiEngine
 			prAssault->SetTexture(engine->content->LoadTexture(L"particle/mg"));
 			prAssault->AddRef();
 
-            // Fire
-            peFire = new PEFire(engine);
-            peFire->SIsAlive(false);
-            peFire->AddRef();
 
-            prFire = engine->librarys->CreateComponent<IParticleRenderer>(this);
-            prFire->SetTexture(engine->content->LoadTexture(L"particle/fire"));
-            prFire->SetParticleEffect(peFire);
-            prFire->AddRef();
+			// Smoke
+			peSmoke = new PESmoke(engine);
+			peSmoke->SIsAlive(false);
+			peSmoke->AddRef();
 
-            // Smoke
-            peSmoke = new PESmoke(engine);
-            peSmoke->SIsAlive(false);
-            peSmoke->AddRef();
+			prSmoke = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prSmoke->SetTexture(engine->content->LoadTexture(L"particle/smoke"));
+			prSmoke->SetParticleEffect(peSmoke);
+			prSmoke->AddRef();
 
-            prSmoke = engine->librarys->CreateComponent<IParticleRenderer>(this);
-            prSmoke->SetTexture(engine->content->LoadTexture(L"particle/smoke"));
-            prSmoke->SetParticleEffect(peSmoke);
-            prSmoke->AddRef();
+
+			// Fire
+			peFire = new PEFire(engine);
+			peFire->SIsAlive(false);
+			peFire->AddRef();
+
+			prFire = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prFire->SetTexture(engine->content->LoadTexture(L"particle/fire"));
+			prFire->SetParticleEffect(peFire);
+			prFire->AddRef();
+
 
             // explosion
             peExplosion = new PEExplosion(engine);
@@ -47,10 +50,23 @@ namespace TikiEngine
             peExplosion->AddRef();
 
             prExplosion = engine->librarys->CreateComponent<IParticleRenderer>(this);
-            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/explosion")); // fix: explosion looks too crappy
+            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/explosion")); 
             prExplosion->SetParticleEffect(peExplosion);
             prExplosion->AddRef();
 
+
+			// Shockwave
+			peShockwave = new PEShockWave(engine);
+			peShockwave->SIsAlive(false);
+			peShockwave->AddRef();
+
+			prShockWave = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prShockWave->SetTexture(engine->content->LoadTexture(L"particle/Shockwave")); 
+			prShockWave->SetParticleEffect(peShockwave);
+			prShockWave->AddRef();
+
+
+			// Blood
 			peBlood = new PEBlood(engine);
 			peBlood->SIsAlive(false);
 			peBlood->AddRef();
@@ -84,6 +100,9 @@ namespace TikiEngine
 
 			SafeRelease(&peBlood);
 			SafeRelease(&prBlood);
+
+			SafeRelease(&peShockwave);
+			SafeRelease(&prShockWave);
 
 		}
 		#pragma endregion
@@ -134,15 +153,29 @@ namespace TikiEngine
                     }
                     else if (pi.proj->GetProjectileType() == PT_Rocket)
                     {
+
                         // explosion
                         peExplosion->Trigger(
 							1,
-                            peExplosion->GParticleBudget(),
+                            2000,
                             Matrix::TransformCoordinate(
 								Vector3(0, 0, 0),
 								Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
                             )
                         );
+
+						peShockwave->Trigger(
+							1,
+							1,
+							Matrix::TransformCoordinate(
+							Vector3(0, 0, 0),
+							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+							)
+						);
+
+
+
+
                     }
 
 					pi.proj->GetGameObject()->Release();

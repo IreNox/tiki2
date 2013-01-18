@@ -10,6 +10,7 @@
 #include "Game/PEShootMG.h"
 #include "Game/PEExplosion.h"
 #include "Game/PEBlood.h"
+#include "Game/PEShockWave.h"
 
 #include "Core/IParticleRenderer.h"
 
@@ -49,6 +50,9 @@ namespace TikiEngine
 
 			PEBlood* peBlood;
 			IParticleRenderer* prBlood;
+
+			PEShockWave* peShockwave;
+			IParticleRenderer* prShockWave;
 
 			struct ProjInfo
 			{
