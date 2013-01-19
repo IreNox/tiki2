@@ -131,28 +131,13 @@ namespace TikiEngine
 	#pragma region Member - Draw/Update
 	void Scene::Draw(const DrawArgs& args)
 	{
-#if TIKI_USE_SCENEGRAPH
-		for(UINT i = 0; i < drawContent.Count(); i++)
-			drawContent[i]->Draw(args);
-#else
 		SceneGraph.Draw(args);
-#endif
 	}
 
 	void Scene::Update(const UpdateArgs& args)
 	{
 		SceneGraph.Update(args);
-
-#if TIKI_USE_SCENEGRAPH
-		drawContent.Clear();
-		SceneGraph.Find(drawContent, mainCamera->GetFrustum());
-#else
 		SceneGraph.LateUpdate(args);
-#endif
-
-#if TIKI_USE_SCENEGRAPH
-		SceneGraph.PerformCulling(this->mainCamera->GetFrustum());
-#endif
 	}
 	#pragma endregion
 }
