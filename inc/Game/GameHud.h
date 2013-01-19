@@ -23,6 +23,16 @@ namespace TikiEngine
 
 		class GameState;
 
+		class GameHudContent
+		{
+		public:
+			GameHudContent();
+			~GameHudContent();
+
+
+		private:
+		};
+
 		class GameHud : public EngineObject, public ScreenSizeChangedEventHandler, public ClickEventHandler, public UnitSelectionChangedEventHandler
 		{
 		public:

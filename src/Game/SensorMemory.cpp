@@ -26,12 +26,18 @@ namespace TikiEngine
 
 		void SensorMemory::UpdateVision(const UpdateArgs& args)
 		{
+			if(owner->GetFaction() == 0)
+			{
+				owner->GetGameObject()->GetSceneGraphElement().MarkVisible();
+			}
+
 			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
 				owner->Pos3D(),
 				25.0f,
 				[&](GameObject* go)
 				{
 					TikiBot* curBot = go->GetComponent<TikiBot>();
+
 					if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
 					{
 						MakeNewRecordIfNotAlreadyPresent(curBot);
@@ -48,6 +54,8 @@ namespace TikiEngine
 							info.TimeLastVisible = args.Time.TotalTime;
 							info.WithinFOV = true;
 
+							go->GetSceneGraphElement().MarkVisible();
+							owner->GetGameObject()->GetSceneGraphElement().MarkVisible();
 						}
 						else
 						{

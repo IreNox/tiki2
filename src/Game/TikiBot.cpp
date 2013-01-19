@@ -101,7 +101,10 @@ namespace TikiEngine
 
 			pathPlanner->Create(
 				gameState->GetNavMesh()
-			);			
+			);	
+
+			gameObject->GetSceneGraphElement().SetBounds( desc.Radius * 2, desc.Height );
+
 		}
 
 		TikiBot::~TikiBot()

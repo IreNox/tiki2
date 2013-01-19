@@ -10,19 +10,28 @@ namespace TikiEngine
 		: model(model)
 	{
 		this->walk = model->GetAnimation("walk");
+		this->attack = model->GetAnimation("attack");
+		this->run = model->GetAnimation("run");
+		this->death1 = model->GetAnimation("death01");
+		this->death2 = model->GetAnimation("death02");
+		this->idle = model->GetAnimation("idle01");
+
 		this->walk->SetDuration(1.0);
 		//this->walk->SetDuration(2.0); // 2sekunden
 		//this->walk->SetAnimationSpeed(2.0); //zweimal so schnell wie normal
-		this->attack = model->GetAnimation("attack");
+
 		this->attack->SetDuration(0.21);
-		this->run = model->GetAnimation("run");
+		//this->attack->SetLoop(false);
+		//this->attack->SetNextAnimation(this->idle);
+
 		this->run->SetDuration(0.75); 
-		this->death1 = model->GetAnimation("death01");
+
 		this->death1->SetDuration(1.0);
-		this->death2 = model->GetAnimation("death02");
+
 		this->death2->SetDuration(1.5);
-		this->idle = model->GetAnimation("idle01");
+
 		this->idle->SetDuration(2.0);
+
 
 	}
 	AnimationHandlerDefaultUnit::~AnimationHandlerDefaultUnit()

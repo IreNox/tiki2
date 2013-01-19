@@ -82,12 +82,15 @@ namespace TikiEngine
 		void SetGameObject( GameObject* go );
 		void SetBounds( float width, float height );
 
-		void Update();
+		void Update(const UpdateArgs& args);
 
 		bool IsInsideFrustum( Frustum& frustum );
 
 		inline void SetDynamic(){ this->isDynamic = true; }
 		inline bool IsDynamic(){ return this->isDynamic; }
+		inline float Radius(){ return this->radius; }
+		inline bool IsVisible(){ return visibleTimer <= 1.0; }
+		inline void MarkVisible(){ visibleTimer = 0.0; }
 
 		bool IsCulled;
 
@@ -101,7 +104,9 @@ namespace TikiEngine
 
 		float width;
 		float height;
+		float radius;
 		bool isDynamic;
+		double visibleTimer;
 
 		Vector3 min;
 		Vector3 max;

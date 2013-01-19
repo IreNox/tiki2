@@ -29,8 +29,8 @@ namespace TikiEngine
 #pragma region Add/Remove/Draw/Update
 	void SceneGraph::Add(GameObject* go)
 	{
-		//if(go->GetSceneGraphElement().IsDynamic())
-		//	dynamicObjects.Add(go);
+		if(go->GetSceneGraphElement().IsDynamic())
+			dynamicObjects.Add(go);
 
 		gameObjects.Add(go);
 		go->AddRef();
@@ -47,7 +47,7 @@ namespace TikiEngine
 	{
 		FOREACH_PTR_CALL(gameObjects, Draw(args))
 #if _DEBUG
-			//dynamicObjects.DebugDraw(args);
+		//dynamicObjects.DebugDraw(args);
 #endif
 	}
 
@@ -57,7 +57,7 @@ namespace TikiEngine
 
 		FOREACH_PTR_CALL(gameObjects, Update(args))
 
-			dynamicObjects.LateUpdate(args);
+		dynamicObjects.LateUpdate(args);
 
 	}
 
@@ -86,14 +86,20 @@ namespace TikiEngine
 
 	void SceneGraph::DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
 	{
-		UInt32 i = 0;
-		while (i < gameObjects.Count())
-		{
-			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()) < distance)
-				whatIWant(gameObjects[i]);
+		Vector2 tmp = Vector2(distance) ;
+		RectangleF rect = RectangleF::Create(point.XZ() - tmp * 0.5f, tmp);
 
-			i++;
-		}
+		this->dynamicObjects.DoWithinRange( rect, point, distance, whatIWant);
+
+		//UInt32 i = 0;
+		//while (i < gameObjects.Count())
+		//{
+		//	if (Vector3::DistanceSquared(point, gameObjects[i]->PRS.GPosition()) < distance * distance)
+		//	{
+		//		whatIWant(gameObjects[i]);
+		//	}
+		//	i++;
+		//}
 	}
 #pragma endregion
 

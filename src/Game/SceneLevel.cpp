@@ -174,12 +174,10 @@ namespace TikiEngine
 			if (level) level->Draw(args);
 
 #if TIKI_CULLING
-			for(UINT i = 0; i < drawContent.Count(); i++)
-				drawContent[i]->Draw(args);
+			FOREACH_PTR_CALL(drawContent, Draw(args))
 #else
-			Scene::Draw(args);
+			SceneGraph.Draw(args);
 #endif
-
 			gameState->Draw(args);
 		}
 
@@ -191,6 +189,9 @@ namespace TikiEngine
 
 #if TIKI_CULLING
 			DoFoWCulling();
+#else
+			drawContent.Clear();
+			drawContent.AddRange(SceneGraph.GetAllGameObjects());
 #endif
 
 			SceneGraph.LateUpdate(args);
@@ -202,8 +203,47 @@ namespace TikiEngine
 #pragma region Culling
 		void SceneLevel::DoFoWCulling()
 		{
+			hudContent.Clear();
 			drawContent.Clear();
-			SceneGraph.Find(drawContent, mainCamera->GetFrustum());
+
+			Frustum frustum = mainCamera->GetFrustum();
+			SceneGraph.Do([&](GameObject* go)
+			{
+				TikiBot* bot = go->GetComponent<TikiBot>();
+				if(bot)
+				{
+					if(bot->GetFaction() == 0)
+					{
+						hudContent.Add(go);
+						if(go->GetSceneGraphElement().IsInsideFrustum(frustum))
+						{
+							drawContent.Add(go);
+						}
+					}
+					else
+					{
+						if(go->GetSceneGraphElement().IsVisible())
+						{
+							hudContent.Add(go);
+							if(go->GetSceneGraphElement().IsInsideFrustum(frustum))
+							{
+								drawContent.Add(go);
+							}
+						}
+						else
+						{
+							go->GetSceneGraphElement().IsCulled = true;
+						}
+					}
+				}
+				else
+				{
+					if(go->GetSceneGraphElement().IsInsideFrustum(frustum))
+					{
+						drawContent.Add(go);
+					}
+				}
+			});
 		}
 #pragma  endregion
 	}

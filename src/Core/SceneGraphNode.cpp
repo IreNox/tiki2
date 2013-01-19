@@ -125,10 +125,10 @@ namespace TikiEngine
 
 			if(go->GetSceneGraphElement().Bounds.Collide(rect) == Intersect)
 			{
-				if(where == 0)
+				if(where == 0 || where(go))
+				{
 					result.Add(go);
-				else if(where(go))
-					result.Add(go);
+				}
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace TikiEngine
 		}
 	}
 
-	void SceneGraphNode::DoWithinRange(RectangleF& rect, Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+	void SceneGraphNode::DoWithinRange(RectangleF& rect, const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
 	{
 		for(UINT i = 0; i < data.Count(); i++)
 		{
@@ -328,7 +328,7 @@ namespace TikiEngine
 		for(UINT i = 0; i < data.Count(); i++)
 		{
 			RectangleF rec = data[i]->GetSceneGraphElement().Bounds;
-			float h = data[i]->PRS.GPosition().Y;
+			float h = 0;//data[i]->PRS.GPosition().Y;
 
 			args.Graphics->DrawLine(rec.TopLeft(h), rec.TopRight(h), Color::Green);
 			args.Graphics->DrawLine(rec.TopRight(h), rec.BottomRight(h), Color::Green);
@@ -444,5 +444,3 @@ namespace TikiEngine
 		return count + this->data.Count();	
 	}
 }
-
-bool emptySceneGraphNode = true;

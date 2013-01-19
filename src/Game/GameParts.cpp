@@ -125,6 +125,8 @@ namespace TikiEngine
 			platformTrigger->SetGroup(CG_Collidable_Non_Pushable);
 			platformTrigger->SetTrigger(true);
 
+			HeroPlatform->GetSceneGraphElement().SetBounds( 12.0f * 2, 12.0f);
+
 			Hero = new GameObject(engine);
 			Hero->PRS.SPosition() = heroStartPos;
 			gameState->GetBotFactory()->CreatePlayerHero(Hero);

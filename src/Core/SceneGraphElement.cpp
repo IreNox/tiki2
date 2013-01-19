@@ -5,8 +5,8 @@
 namespace TikiEngine
 {
 	SceneGraphElement::SceneGraphElement()
-		:go(0), width(1.0f), height(1.0f), isDynamic(false),
-		IsCulled(false), boundingBox(0)
+		:go(0), width(1.0f), height(1.0f), radius(0.5f), isDynamic(false),
+		IsCulled(false), boundingBox(0), visibleTimer(1.5)
 	{
 
 	}
@@ -33,14 +33,23 @@ namespace TikiEngine
 	{
 		this->min = Vector3( -width * 0.5f, 0, -width * 0.5f );
 		this->max = Vector3( width * 0.5f, height, width * 0.5f );
+		this->width = width;
+		this->height = width;
+		this->radius = width * 0.5f;
 	}
 
-	void SceneGraphElement::Update()
+	void SceneGraphElement::Update(const UpdateArgs& args)
 	{
 		Vector3 pos = go->PRS.GPosition();
 		this->Bounds.X = pos.X - width * 0.5f;
 		this->Bounds.Y = pos.Z - height * 0.5f;
 		this->boundingBox->Set(pos + this->min, pos + this->max);
+		this->IsCulled = false;
+
+		if(isDynamic)
+		{
+			this->visibleTimer += args.Time.ElapsedTime;
+		}
 	}
 
 	bool SceneGraphElement::IsInsideFrustum(Frustum& frustum)

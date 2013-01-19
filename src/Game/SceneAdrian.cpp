@@ -49,6 +49,7 @@ namespace TikiEngine
 
 
 			GameObject* go = new GameObject(engine);
+			go->GetSceneGraphElement().SetDynamic();
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 			go->SModel(args.Content->LoadModel(L"soldier"));

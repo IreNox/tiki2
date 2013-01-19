@@ -1062,7 +1062,13 @@ namespace TikiEngine
 					continue;
 
 				anim->Update(args.Time.ElapsedTime);
+				if(anim->IsFinished())
+				{
+					BlendAnimation(anim->GetNextAnimation());
+					break;
+				}
 			}
+
 		}
 
 		void AnimationStack::SetAnimation(IAnimation* animation)
@@ -1083,6 +1089,7 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
+
 			if(blendTarget == animation)
 				return;
 

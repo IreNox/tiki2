@@ -88,7 +88,7 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 			
-			//go->GetSceneGraphElement().IsDynamic();
+			go->GetSceneGraphElement().SetDynamic();
 
 
 			// Create bot
@@ -125,6 +125,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Tower;
 
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
+			go->GetSceneGraphElement().SetDynamic();
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -150,6 +151,7 @@ namespace TikiEngine
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(1.0f);
+			go->GetSceneGraphElement().SetDynamic();
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -225,6 +227,8 @@ namespace TikiEngine
 			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 
+			go->GetSceneGraphElement().SetDynamic();
+
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
@@ -260,6 +264,8 @@ namespace TikiEngine
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(10.0f);
 
+			go->GetSceneGraphElement().SetDynamic();
+
 			gameState->GetScene()->AddElement(go);
 		}
 
@@ -280,6 +286,8 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
 			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
 
+			go->GetSceneGraphElement().SetDynamic();
+
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
@@ -296,6 +304,7 @@ namespace TikiEngine
 			bot->GetBrain()->AddGoalAttackTarget();
 
 			gameState->GetScene()->AddElement(go);
+			
 		}
 		#pragma endregion
 
@@ -305,6 +314,8 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 			//go->PRS.SScale() = Vector3(0.01f);
+
+			go->GetSceneGraphElement().SetDynamic();
 
 			new BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);

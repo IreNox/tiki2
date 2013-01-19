@@ -141,7 +141,7 @@ namespace TikiEngine
 
 		if (model) model->Update(args);
 
-		this->sgElement.Update();
+		this->sgElement.Update(args);
 	}
 
 	void GameObject::LateUpdate(const UpdateArgs& args)

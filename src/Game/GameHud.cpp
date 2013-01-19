@@ -236,7 +236,22 @@ namespace TikiEngine
 
 			args.SpriteBatch->DrawLine(frustum, Color::White, 0.8f, true);
 
-			gameState->GetScene()->SceneGraph.Do([&](GameObject* go){
+
+#if TIKI_CULLING
+
+			UINT gameObjectCount = gameState->GetScene()->GetHudContent().Count();
+
+			for(UINT i = 0; i < gameObjectCount; i++)
+			{
+				GameObject* go = gameState->GetScene()->GetHudContent()[i];
+
+#else
+			UINT gameObjectCount = gameState->GetScene()->GetDrawContent().Count();
+
+			for(UINT i = 0; i < gameObjectCount; i++)
+			{
+				GameObject* go = gameState->GetScene()->GetDrawContent()[i];
+#endif
 				TikiBot* bot = go->GetComponent<TikiBot>();
 
 				if (bot != 0)
@@ -304,7 +319,7 @@ namespace TikiEngine
 						(bot->GetFaction() == 0 ? Color::Green : Color::Red)
 					);
 				}
-			});
+			}
 			#pragma endregion
 		}
 		#pragma endregion

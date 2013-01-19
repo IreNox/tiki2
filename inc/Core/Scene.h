@@ -30,8 +30,8 @@ namespace TikiEngine
 		Scene(Engine* engine);
 		~Scene();
 
-		GameObject* AddElement(GameObject* element);
-		GameObject* RemoveElement(GameObject* element);
+		virtual GameObject* AddElement(GameObject* element);
+		virtual GameObject* RemoveElement(GameObject* element);
 
 		bool IsInitialized();
 		virtual void Initialize(const InitializationArgs& args);

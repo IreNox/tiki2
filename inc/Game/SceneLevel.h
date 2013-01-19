@@ -31,6 +31,8 @@ namespace TikiEngine
 
 			inline Level* GLevel() { return level; }
 			inline const List<LevelPoint*>& GPoints() { return points; }
+			inline List<GameObject*> GetDrawContent() { return drawContent; }
+			inline List<GameObject*> GetHudContent() { return hudContent; }
 
 		private:
 
@@ -42,6 +44,7 @@ namespace TikiEngine
 
 			void DoFoWCulling();
 			List<GameObject*> drawContent;
+			List<GameObject*> hudContent;
 		};	
 	}
 }
