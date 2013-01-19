@@ -11,9 +11,7 @@ namespace TikiEngine
 	{
 		this->PRS = Transform(this);
 
-#if TIKI_USE_SCENEGRAPH
 		this->sgElement.SetGameObject(this);
-#endif
 
 	}
 
@@ -122,9 +120,7 @@ namespace TikiEngine
 			i++;
 		}
 
-//#if !TIKI_EDITOR
-//		sgElement.boundingBox->DrawDebug(Color::Red);
-//#endif
+		//sgElement.boundingBox->DrawDebug(Color::Red);
 	}
 
 	void GameObject::Update(const UpdateArgs& args)
@@ -145,21 +141,15 @@ namespace TikiEngine
 
 		if (model) model->Update(args);
 
-#if TIKI_USE_SCENEGRAPH
 		this->sgElement.Update();
-#endif
 	}
 
 	void GameObject::LateUpdate(const UpdateArgs& args)
 	{
-#if TIKI_USE_SCENEGRAPH
 		if(!sgElement.IsCulled && model)
 		{
 			model->LateUpdate(args);
 		}
-#else
-		if (model) model->LateUpdate(args);
-#endif
 	}
 	#pragma endregion
 }

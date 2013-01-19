@@ -3,7 +3,6 @@
 #include "Core/Frustum.h"
 #include "Core/IBoundingBox.h"
 
-#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
 	class GameObject;
@@ -108,4 +107,3 @@ namespace TikiEngine
 		Vector3 max;
 	};
 }
-#endif

@@ -1,214 +1,185 @@
 #include "Core/SceneGraph.h"
 #include "Core/IGraphics.h"
 
-#if TIKI_USE_SCENEGRAPH
 namespace TikiEngine
 {
+#pragma region class
 	SceneGraph::SceneGraph()
-		:initialized(false), locked(false)
+		:initialized(false)
 	{
 
 	}
 
 	SceneGraph::~SceneGraph()
 	{
-		for(UINT i = 0; i < defaultGOs.Count(); i++)
-			SafeRelease(&defaultGOs[i]);
-		for(UINT i = 0; i < staticGOs.Count(); i++)
-			SafeRelease(&staticGOs[i]);
+		FOREACH_PTR_CALL(gameObjects, Release());
 	}
 
-	void SceneGraph::Initialize(RectangleF& rect , int layerDepth)
+	void SceneGraph::Initialize(RectangleF& bounds, int layerDepth)
 	{
-		if(this->initialized)
+		if(initialized)
 			return;
 
-		this->dynamicGOs.Initialize(rect, layerDepth);
+		this->dynamicObjects.Initialize(bounds, layerDepth);
 
 		this->initialized = true;
 	}
+#pragma endregion
 
+#pragma region Add/Remove/Draw/Update
 	void SceneGraph::Add(GameObject* go)
 	{
-		if(!this->initialized)
-			return;
+		//if(go->GetSceneGraphElement().IsDynamic())
+		//	dynamicObjects.Add(go);
 
-		allGOs.Add(go);
-
-		switch(go->GetGameObjectType())
-		{
-		case GOT_Default:
-			this->defaultGOs.Add(go);
-			break;
-		case GOT_Static:
-			this->staticGOs.Add(go);
-			break;
-		case GOT_Dynamic:
-			this->dynamicGOs.Add(go);
-			break;
-		}
-
+		gameObjects.Add(go);
 		go->AddRef();
 	}
 
-	bool SceneGraph::Remove(GameObject* go)
+	void SceneGraph::Remove(GameObject* go)
 	{
-		if(!this->initialized)
-			return false;
+		if(gameObjects.Contains(go))
+			removeList.Add(go);
 
-		allGOs.Remove(go);
-
-		switch(go->GetGameObjectType())
-		{
-		case GOT_Default:
-			return this->defaultGOs.Remove(go);
-			break;
-		case GOT_Dynamic:
-			if(IsLocked())
-			{
-				removeList.Add(go);
-				return true;
-			}
-			return this->dynamicGOs.Remove(go);
-			break;
-		case GOT_Static:
-			return this->staticGOs.Remove(go);
-			break;
-		}
-		return false;
-
-	}
-
-	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
-	{
-		if(!this->initialized)
-			return;
-
-		this->Lock();
-		this->dynamicGOs.Do(whatIWant);
-		this->Unlock();
-	}
-
-	void SceneGraph::DoWithinRange(Vector3& point, float distance, function<void(GameObject*)> whatIWant)
-	{
-		if(!initialized)
-			return;
-
-		Lock();
-		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
-		dynamicGOs.DoWithinRange(rect, point, distance, whatIWant);
-		Unlock();
-	}
-
-	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where)
-	{
-		if(!this->initialized)
-			return;
-
-		this->Lock();
-		this->dynamicGOs.Find(result, rect, where);
-		this->Unlock();
-	}
-
-	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
-	{
-		if(!this->initialized)
-			return;
-
-		this->Lock();
-		this->dynamicGOs.Find(result, where);
-		this->Unlock();
-	}
-
-	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
-	{
-		if(!this->initialized)
-			return;
-
-		this->dynamicGOs.Find(result, frustum);
-	}
-
-	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
-	{
-		if(!this->initialized)
-			return;
-
-		this->Lock();
-		RectangleF rect = RectangleF::Create(point.X - distance, point.Y - distance, distance * 2, distance * 2);
-		return dynamicGOs.Find(result, rect, point, distance, where);
-		this->Unlock();
-	}
-
-	void SceneGraph::FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where)
-	{
-		this->Lock();
-		this->dynamicGOs.Find(result, where);
-		this->Unlock();
-	}
-	
-	void SceneGraph::Update(const UpdateArgs& args)
-	{
-		if(!this->initialized)
-			return;
-
-		for(UINT i = 0; i < defaultGOs.Count(); i++)
-			defaultGOs[i]->Update(args);
-		for(UINT i = 0; i < staticGOs.Count(); i++)
-			staticGOs[i]->Update(args);
-
-		this->dynamicGOs.Update(args);
-		this->dynamicGOs.LateUpdate(args);
-	}
-
-	void SceneGraph::PerformCulling(Frustum& frustum)
-	{
-		if(!this->initialized)
-			return;
-
-		//for(UINT i = 0; i < defaultGOs.Count(); i++)
-		//	defaultGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
-
-		//for(UINT i = 0; i < staticGOs.Count(); i++)
-		//	staticGOs[i]->GetSceneGraphElement().PerformFrustumCulling(frustum);
-
-		this->dynamicGOs.PerformCulling(frustum);
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
 	{
-		if(!this->initialized)
-			return;
-
+		FOREACH_PTR_CALL(gameObjects, Draw(args))
 #if _DEBUG
-		//quadtree.Draw(args);
-
-		for(UINT i = 0; i < defaultGOs.Count(); i++)
-			defaultGOs[i]->Draw(args);
-		for(UINT i = 0; i < staticGOs.Count(); i++)
-			staticGOs[i]->Draw(args);
-
-		this->dynamicGOs.Draw(args);
-		this->dynamicGOs.DebugDraw(args);
-	
+			//dynamicObjects.DebugDraw(args);
 #endif
+	}
+
+	void SceneGraph::Update(const UpdateArgs& args)
+	{
+		this->RemoveGameObjects();
+
+		FOREACH_PTR_CALL(gameObjects, Update(args))
+
+			dynamicObjects.LateUpdate(args);
+
 	}
 
 	void SceneGraph::LateUpdate(const UpdateArgs& args)
 	{
-		FOREACH_PTR_CALL(allGOs, LateUpdate(args))
+		FOREACH_PTR_CALL(gameObjects, LateUpdate(args))
+	}
+#pragma endregion
+
+#pragma region DO
+	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
+	{
+		FOREACH(gameObjects, whatIWant(gameObjects[i]))
 	}
 
-	void SceneGraph::Unlock()
+	void SceneGraph::DoInFrustum(function<void(GameObject*)> whatIWant)
 	{
-		this->locked = false;
-		if(removeList.Count() != 0)
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
 		{
-			for(UINT i = 0; i < removeList.Count(); i++)
-				this->dynamicGOs.Remove(removeList[i]);
-			removeList.Clear();
+			whatIWant(gameObjects[i]);
+
+			i++;
 		}
 	}
+
+	void SceneGraph::DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()) < distance)
+				whatIWant(gameObjects[i]);
+
+			i++;
+		}
+	}
+#pragma endregion
+
+#pragma region find
+	void SceneGraph::Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (rect.Contains(gameObjects[i]->PRS.GPosition().XZ()))
+			{
+				if (where == 0 || where(gameObjects[i]))
+					result.Add(gameObjects[i]);
+			}
+
+			i++;
+		}
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (where == 0 || where(gameObjects[i]))
+				result.Add(gameObjects[i]);
+
+			i++;
+		}
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Frustum& frustum)
+	{
+		for(UINT i = 0; i < gameObjects.Count(); i++)
+		{
+			GameObject* go = gameObjects[i];
+			if(go->GetSceneGraphElement().IsInsideFrustum(frustum))
+			{
+				result.Add(go);
+			}
+		}
+	}
+
+	void SceneGraph::Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()))
+			{
+				if (where == 0 || where(gameObjects[i]))
+					result.Add(gameObjects[i]);
+			}
+
+			i++;
+		}
+	}
+
+	void SceneGraph::FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where)
+	{
+		UInt32 i = 0;
+		while (i < gameObjects.Count())
+		{
+			if (where == 0 || where(gameObjects[i]))
+				result.Add(gameObjects[i]);
+
+			i++;
+		}
+	}
+
+#pragma endregion
+
+#pragma region private methods
+	void SceneGraph::RemoveGameObjects()
+	{
+		for(UINT i = 0; i < removeList.Count(); i++)
+		{
+			GameObject* go = removeList[i];
+			if(go->GetSceneGraphElement().IsDynamic())
+				dynamicObjects.Remove(go);
+
+			go->Release();
+			gameObjects.Remove(go);
+		}
+		removeList.Clear();
+	}
+#pragma endregion
+
 }
-#else
-bool emptySceneGraph = true;
-#endif
