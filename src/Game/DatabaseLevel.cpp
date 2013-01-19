@@ -328,44 +328,31 @@ namespace TikiEngine
 				gameState->GetBotFactory()->CreatePlayerHeroPlatform(this);
 				break;
 			case 4:
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
+
 				this->SModel(engine->content->LoadModel(L"building_03_05"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 5:
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
+
 				this->SModel(engine->content->LoadModel(L"env_pipe_01"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 6:
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
+
 				this->SModel(engine->content->LoadModel(L"rock_01"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 7:
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
 				this->SModel(engine->content->LoadModel(L"rock_02"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 8:
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
+
 				this->SModel(engine->content->LoadModel(L"rock_03"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 9: // Tower Build slot
-#if TIKI_USE_SCENEGRAPH
-				this->GetGameObjectType() = GOT_Static;
-#endif
+
 				gameState->GetBotFactory()->CreateBuildSlot(this);
 				break;
 			case 10:
