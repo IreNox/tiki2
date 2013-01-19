@@ -45,9 +45,8 @@ namespace TikiEngine
 
 		void SceneAdrian::Initialize(const InitializationArgs& args)
 		{
-#if TIKI_USE_SCENEGRAPH
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
-#endif
+
 
 			GameObject* go = new GameObject(engine);
 
@@ -64,25 +63,6 @@ namespace TikiEngine
 			//sceneGraph.Add(go);
 			this->AddElement(go);
 
-
-
-#if TIKI_USE_SCENEGRAPH
-			blabla = engine->librarys->CreateResource<IRenderTarget>();
-			blabla->CreateScreenSize();
-			blabla->AddRef();
-#endif
-#if TIKI_USE_SCENEGRAPH
-			CameraObject* cam = new CameraObject(engine);
-
-			cam->GetCameraComponent()->SetRenderTarget(blabla);
-			cam2 = cam->GetCameraComponent();
-
-			this->AddElement(cam);
-			cam->PRS.SPosition() = Vector3(0, 0, 5.0f);
-
-#endif
-
-
 			light = new LightObject(engine);
 			light->AddRef();
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
@@ -93,9 +73,7 @@ namespace TikiEngine
 			this->AddElement(light);
 
 			go = new CameraObject(engine);
-#if TIKI_USE_SCENEGRAPH
-			go->GetGameObjectType() = GOT_Dynamic;
-#endif
+
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
 			CameraFly* fly = new CameraFly(engine, go);
@@ -109,27 +87,24 @@ namespace TikiEngine
 
 		void SceneAdrian::Draw(const DrawArgs& args)
 		{
+#if TIKI_CULLING
+			for(UINT i = 0; i < drawContent.Count(); i++)
+				drawContent[i]->Draw(args);
+#else
 			Scene::Draw(args);
+#endif
+
+			
 
 			engine->sprites->Draw(
 				engine->graphics->GetDepthTarget(),
 				Rectangle(10, 10, 200, 180)
 			);
 
-#if TIKI_USE_SCENEGRAPH
-			if(args.CurrentCamera != cam2)
-			{
-				engine->sprites->Draw(
-					blabla,
-					Rectangle(10, 200, 200, 180)
-					);
-			}
-#else
 			engine->sprites->Draw(
 				engine->graphics->GetLightTarget(),
 				Rectangle(10, 200, 200, 180)
 			);
-#endif
 
 			engine->sprites->Draw(
 				engine->graphics->GetScreenTarget(),
@@ -145,35 +120,29 @@ namespace TikiEngine
 
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
-
+#if TIKI_CULLING
+			SceneGraph.Update(args);
+			drawContent.Clear();
+			SceneGraph.Find(drawContent, mainCamera->GetFrustum());
+			SceneGraph.LateUpdate(args);
+#else
 			Scene::Update(args);
+#endif
 
 			if(args.Input.GetKey(KEY_ALPHA1))
 			{
-#if TIKI_USE_SCENEGRAPH
-				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(0.01f,0,0);
-#endif
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Idle));
 			}
 			if(args.Input.GetKey(KEY_ALPHA2))
 			{
-#if TIKI_USE_SCENEGRAPH
-				this->cam2->GetGameObject()->PRS.SPosition() += Vector3(-0.01f,0,0);
-#endif
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Walk));
 			}
 			if(args.Input.GetKey(KEY_ALPHA3))
 			{
-#if TIKI_USE_SCENEGRAPH
-				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),-0.01f);
-#endif
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Run));
 			}
 			if(args.Input.GetKey(KEY_ALPHA4))
 			{
-#if TIKI_USE_SCENEGRAPH
-				this->cam2->GetGameObject()->PRS.SRotation() *= Quaternion::CreateFromAxisAngle(Vector3(0,1,0),0.01f);
-#endif
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
@@ -207,20 +176,6 @@ namespace TikiEngine
 			{
 				//this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
 				this->spidermine->PRS.SPosition() += Vector3(0,0,1) * (float)args.Time.ElapsedTime;
-			}
-
-			if(args.Input.GetMousePressed(MB_Left))
-			{
-				GameObject* go = new GameObject(this->engine);
-				Vector2 pos = args.Input.MousePosition;
-				pos *= 100;
-				pos += Vector2(-50);
-				go->PRS.SPosition() = Vector3(pos.X, 0, pos.Y);
-				go->Update(args);
-
-#if TIKI_USE_SCENEGRAPH
-				SceneGraph.Add(go);
-#endif
 			}
 		}
 	}

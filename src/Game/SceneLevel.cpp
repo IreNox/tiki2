@@ -173,7 +173,7 @@ namespace TikiEngine
 		{
 			if (level) level->Draw(args);
 
-#if TIKI_USE_SCENEGRAPH
+#if TIKI_CULLING
 			for(UINT i = 0; i < drawContent.Count(); i++)
 				drawContent[i]->Draw(args);
 #else
@@ -189,7 +189,7 @@ namespace TikiEngine
 
 			SceneGraph.Update(args);
 
-#if TIKI_USE_SCENEGRAPH
+#if TIKI_CULLING
 			DoFoWCulling();
 #endif
 
@@ -200,13 +200,11 @@ namespace TikiEngine
 		#pragma endregion
 
 #pragma region Culling
-#if TIKI_USE_SCENEGRAPH
 		void SceneLevel::DoFoWCulling()
 		{
 			drawContent.Clear();
 			SceneGraph.Find(drawContent, mainCamera->GetFrustum());
 		}
-#endif
 #pragma  endregion
 	}
 }

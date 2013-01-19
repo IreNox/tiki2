@@ -1,7 +1,7 @@
 #include "Core/SceneGraphNode.h"
 #include "Core/IGraphics.h"
 
-#if TIKI_USE_SCENEGRAPH
+
 namespace TikiEngine
 {
 	SceneGraphNode::SceneGraphNode()
@@ -444,6 +444,5 @@ namespace TikiEngine
 		return count + this->data.Count();	
 	}
 }
-#else
+
 bool emptySceneGraphNode = true;
-#endif

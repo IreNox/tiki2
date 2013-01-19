@@ -40,11 +40,8 @@ namespace TikiEngine
 
 			List<LevelPoint*> points;
 
-#if TIKI_USE_SCENEGRAPH
 			void DoFoWCulling();
 			List<GameObject*> drawContent;
-#endif
-
 		};	
 	}
 }
