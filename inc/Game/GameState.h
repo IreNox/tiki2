@@ -17,6 +17,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Resources;
 
 		class Level;
+		class Cheater;
 		class GameHud;
 		class SceneLevel;
 		class UnitSelection;
@@ -102,6 +103,7 @@ namespace TikiEngine
 			double resource;
 
 			GameHud* hud;
+			Cheater* cheater;
 			SceneLevel* scene;
 			List<GamePart*> gameParts;
 

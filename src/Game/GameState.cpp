@@ -2,6 +2,7 @@
 #include "Game/GameState.h"
 #include "Game/TikiBot.h"
 
+#include "Game/Cheater.h"
 #include "Game/GameHud.h"
 #include "Game/SceneLevel.h"
 #include "Game/UnitSelection.h"
@@ -34,6 +35,7 @@ namespace TikiEngine
 			engine->HLog.ConsoleCommand.AddHandler(this);
 
 			hud = new GameHud(this);
+			cheater = new Cheater(this);
 			navMesh = new NavigationMesh(engine);
 			unitSelection = new UnitSelection(this);
 			projectiles = new ProjectileManager(this);
@@ -54,6 +56,7 @@ namespace TikiEngine
 			SafeDelete(&unitSelection);
 
 			SafeRelease(&hud);
+			SafeRelease(&cheater);
 			SafeRelease(&projectiles);
 
 			SafeRelease(&defaultMaterial);
@@ -166,27 +169,6 @@ namespace TikiEngine
 				}
 			}
 
-			// Handle tower 
-			if (args.Input.GetKeyPressed(KEY_F9))
-			{
-				UInt32 i = 0;
-				while (i < unitSelection->GetSelectedSlots()->Count())
-				{
-					GameObject* go = unitSelection->GetSelectedSlots()->Get(i);
-					BuildSlot* slot = go->GetComponent<BuildSlot>();
-					
-					// only create once
-					if (slot->Enabled())
-					{
-						slot->Disable();
-						botFactory->CreatePlayerTower(go);
-					}
-
-					i++;
-				}
-			}
-
-
 			if (args.Input.GetKeyPressed(KEY_F6))
 			{
 				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
@@ -267,6 +249,8 @@ namespace TikiEngine
 		#pragma region Member - Console
 		void GameState::Handle(const HelperLog* sender, const wstring& args)
 		{
+			cheater->DoCheat(args);
+
 			if (args == L"exit")
 			{
 				engine->Exit();

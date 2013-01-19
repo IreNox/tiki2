@@ -36,6 +36,7 @@ namespace TikiEngine
 			void CreatePlayerTower(GameObject* go);
 			void CreatePlayerMainBuilding(GameObject* go);
 			void CreatePlayerHeroPlatform(GameObject* go);
+			void CreatePlayerSpawnBuilding(GameObject* go);
 			
 			void CreateBuildSlot(GameObject* go);
 			

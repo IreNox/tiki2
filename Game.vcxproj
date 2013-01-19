@@ -20,8 +20,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h" />
+    <ClInclude Include="inc\Game\AnimationHandlerHero.h" />
+    <ClInclude Include="inc\Game\Announcer.h" />
     <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h" />
     <ClInclude Include="inc\Game\Attributes.h" />
+    <ClInclude Include="inc\Game\Cheater.h" />
     <ClInclude Include="inc\Game\EventBotDead.h" />
     <ClInclude Include="inc\Game\EventHeroEvents.h" />
     <ClInclude Include="inc\Game\GD.h" />
@@ -123,10 +126,13 @@
     <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp" />
     <ClCompile Include="inc\Game\SceneLoading.cpp" />
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
+    <ClCompile Include="src\Game\AnimationHandlerHero.cpp" />
+    <ClCompile Include="src\Game\Announcer.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\AttributeSystem.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
     <ClCompile Include="src\Game\BuildSlot.cpp" />
+    <ClCompile Include="src\Game\Cheater.cpp" />
     <ClCompile Include="src\Game\DatabaseLevel.cpp" />
     <ClCompile Include="src\Game\BoxSide.cpp" />
     <ClCompile Include="src\Game\Bullet.cpp" />

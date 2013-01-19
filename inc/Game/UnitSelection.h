@@ -7,6 +7,7 @@
 #include "Game/GameState.h"
 
 #include "Game/TikiBot.h"
+#include "Game/BuildSlot.h"
 
 namespace TikiEngine
 {
@@ -21,6 +22,7 @@ namespace TikiEngine
 			UnitSelection(GameState* gameState);
 			~UnitSelection();
 
+			void BuildCommand(BuildSlot* slot);
 			void MoveCommand(TikiBot* target, const Vector3& pos, bool attackMove, bool addWaypoint);
 
 			inline bool GetEnabled() { return enabled; }

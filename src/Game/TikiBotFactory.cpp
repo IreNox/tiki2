@@ -2,9 +2,10 @@
 
 #include "Game/TikiBot.h"
 #include "Game/GoalThink.h"
-#include "Game/AnimationHandlerDefaultUnit.h"
 #include "Game/SceneLevel.h"
 #include "Game/BuildSlot.h"
+#include "Game/AnimationHandlerHero.h"
+#include "Game/AnimationHandlerDefaultUnit.h"
 
 #include "Game/SkillRocket.h"
 #include "Game/SkillFlash.h"
@@ -81,7 +82,7 @@ namespace TikiEngine
 		void TikiBotFactory::CreateEnemy1(GameObject* go, const List<Vector2>& wayPoints)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"soldier"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 			
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
@@ -162,10 +163,10 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerHero(GameObject* go)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
-			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_hero"));
+			go->GModel()->GetMesh("Laser")->SetVisible(false);
 
-			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			auto ah = new AnimationHandlerHero(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
@@ -194,9 +195,9 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerMop(GameObject* go, const Vector3& dest)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"marine_l"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_marine"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
-			
+
 			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
@@ -223,8 +224,7 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerTower(GameObject* go)
 		{
 			// Set Model
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_mg"));
-			//go->GModel()->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(go->GModel()));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_player"));
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
 
 			go->GetSceneGraphElement().SetDynamic();
@@ -277,6 +277,25 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+
+		void TikiBotFactory::CreatePlayerSpawnBuilding(GameObject* go)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"base_spawn"));
+			
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 10.0f;
+			botDesc.Radius = 5.0f;
+			botDesc.MaxHealth = 100;	
+			botDesc.MaxSpeed = 0.000001f;
+			botDesc.EntityType = ET_Building;
+
+			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->SetScale(0.01f);
+
+			gameState->GetScene()->AddElement(go);
+		}
 		#pragma endregion
 
 		#pragma region Member - Create - Player - Misc
@@ -311,9 +330,9 @@ namespace TikiEngine
 		#pragma region Member - Create - BuildSlot
 		void TikiBotFactory::CreateBuildSlot(GameObject* go)
 		{
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"replaceme_cube"));
-			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 10);
-			//go->PRS.SScale() = Vector3(0.01f);
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"buildpoint"));
+			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 0.13f);
+			go->PRS.SScale() = Vector3(0.01f);
 
 			go->GetSceneGraphElement().SetDynamic();
 

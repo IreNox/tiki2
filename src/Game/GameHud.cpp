@@ -439,6 +439,10 @@ namespace TikiEngine
 					}
 				}
 			}
+			else if (sender->GetParent() == windowBuildSlot)
+			{
+				gameState->GetUnitSelection()->BuildCommand(selectedSlot);
+			}
 		}
 		#pragma endregion
 

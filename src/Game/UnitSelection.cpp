@@ -14,6 +14,8 @@
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
 
+#include "Game/GD.h"
+
 namespace TikiEngine
 {
 
@@ -39,7 +41,30 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - MoveCommand
+		#pragma region Member - Commands
+		void UnitSelection::BuildCommand(BuildSlot* slot)
+		{
+			// only create once
+			if (slot->Enabled())
+			{
+				if (gameState->GetResource() >= TOWER_BUILD_PRICE)
+				{
+					slot->Disable();
+					gameState->GetBotFactory()->CreatePlayerTower(
+						slot->GetGameObject()
+					);
+
+					gameState->DecrementResource(TOWER_BUILD_PRICE);
+				}
+				else
+				{
+					//engine->sound->Play(
+					//	engine->content->LoadSound(L"no money")
+					//);
+				}
+			}
+		}
+
 		void UnitSelection::MoveCommand(TikiBot* target, const Vector3& pos, bool attackMove, bool addWaypoint)
 		{
 			UInt32 i = 0;
