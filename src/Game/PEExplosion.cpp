@@ -21,17 +21,8 @@ namespace TikiEngine
 
 			explosionRadius = 10;
 
-			interp.ValueInit = Vector4(156.0f / 255.0f, 
-				74.0f / 255.0f, 
-				8.0f / 255.0f,
-				0);
-
-
-			interp.ValueMiddle = Vector4(204.0f / 255.0f, 
-				24.0f / 255.0f, 
-				24.0f / 255.0f, 
-				0); 
-
+			interp.ValueInit = Vector4(1, 0.7f, 0.35f, 0);
+			interp.ValueMiddle = Vector4(1, 0.54f, 0, 0); 
 			interp.ValueFinal = Vector4(1, 1, 1, 0);
 
 			interp.MiddlePosition = 0.3f;
@@ -70,34 +61,6 @@ namespace TikiEngine
 			particle->Color.B = c.Z;
 			particle->Color.A = 1 - particle->Age;
 			particle->Size = 1.0f + (particle->Age * 1.5f);
-			
-			//particle->Velocity.Y *= particle->Age;
-
-// 			if (particle->Age > 0.25f)
-// 			{
-// 				if (Random(0, 1) < 0.2f)
-// 				{
-// 					particle->Velocity.X *= -((1 - particle->Age ) * 0.01f);
-// 					particle->Velocity.Z *= -((1 - particle->Age ) * 0.01f);
-// 				}
-// 			}
-
-// 			particle->Velocity *= (1-particle->Age) * Random(1.04f, 1.06f);
-// 
-// 
-// 			if (particle->Velocity.Y < 9.81f)
-// 			{
-// 				if (particle->Age > 0.5f)
-// 					particle->Velocity.Y += particle->Age * Random(3.5f, 5.5f);
-// 				else
-// 					particle->Velocity.Y += particle->Age * Random(0.5f, 1.5f);
-// 
-// 			}
-// 			else if (particle->Velocity.Y >= 9.81f)
-// 			{
-// 				particle->Velocity.X += (1-particle->Age) * Random(-1, 1) * 10.0f;
-// 				particle->Velocity.Z += (1-particle->Age) * Random(-1, 1) * 10.0f;
-// 			}
 		}
 
 	}
