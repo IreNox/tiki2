@@ -106,6 +106,7 @@
     <None Include="bin\Data\Textures\particle\smoke.dds" />
     <None Include="bin\Data\Textures\particle\star.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_diff.dds" />
+    <None Include="bin\Data\Textures\Playerbase\playerbase_light.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_normal.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_spec.dds" />
     <None Include="bin\Data\Textures\random.dds" />
