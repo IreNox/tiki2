@@ -1119,8 +1119,7 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
-
-			if(blendTarget == animation)
+			if(blendTarget != 0 && blendTarget == animation)
 				return;
 
 #if _DEBUG

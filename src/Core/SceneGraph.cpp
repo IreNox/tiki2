@@ -87,7 +87,7 @@ namespace TikiEngine
 	void SceneGraph::DoWithinRange(const Vector3& point, float distance, function<void(GameObject*)> whatIWant)
 	{
 		Vector2 tmp = Vector2(distance) ;
-		RectangleF rect = RectangleF::Create(point.XZ() - tmp * 0.5f, tmp);
+		RectangleF rect = RectangleF::Create(point.XZ() - tmp , tmp * 2);
 
 		this->dynamicObjects.DoWithinRange( rect, point, distance, whatIWant);
 

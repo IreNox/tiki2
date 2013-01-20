@@ -31,10 +31,16 @@ namespace TikiEngine
 				owner->GetGameObject()->GetSceneGraphElement().MarkVisible();
 			}
 
-			owner->GetGameState()->GetScene()->SceneGraph.Do(
-				// fix and test...
-				//owner->Pos3D(),
-				//owner->GetSightRadius(),
+
+
+			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
+				owner->Pos3D(),
+				owner->GetSightRadius(),
+
+			//owner->GetGameState()->GetScene()->SceneGraph.Do(
+			//	// fix and test...
+			//	//owner->Pos3D(),
+			//	//owner->GetSightRadius(),
 				[&](GameObject* go)
 				{
 					TikiBot* curBot = go->GetComponent<TikiBot>();

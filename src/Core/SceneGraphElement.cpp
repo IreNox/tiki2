@@ -33,8 +33,8 @@ namespace TikiEngine
 	{		
 		this->min = Vector3( -size.X * 0.5f, 0, -size.X * 0.5f );
 		this->max = Vector3( size.X * 0.5f, size.Y, size.X * 0.5f );
-		this->width = size.X;
-		this->height = size.Y;
+		this->Bounds.Width = this->width = size.X;
+		this->Bounds.Height = this->height = size.X;
 		this->radius = size.X * 0.5f;
 	}
 

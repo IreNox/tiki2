@@ -125,6 +125,8 @@ namespace TikiEngine
 			platformTrigger->SetGroup(CG_Collidable_Non_Pushable);
 			platformTrigger->SetTrigger(true);
 
+			
+			HeroPlatform->GetSceneGraphElement().SetBounds(Vector2( platformTrigger->GetRadius() * 2, platformTrigger->GetRadius()));
 			//HeroPlatform->GetSceneGraphElement().SetBounds( 12.0f * 2, 12.0f);
 
 			Hero = new GameObject(engine);
