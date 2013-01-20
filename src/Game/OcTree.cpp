@@ -285,12 +285,12 @@ namespace TikiEngine
 
 		int OcTree::PositionToIndex(const Vector3& pos)
 		{
-			int ret; 
+			int ret = 0; 
 			for (int i = 1; i < octreeCount - 1; i++)
 				if (octreeTable[i].BBox->Contains(pos))
 					ret = i;
 
-			return ret; // ret may be uninitialised
+			return ret;
 		}
 
 		//Vector3
