@@ -37,7 +37,7 @@ typedef const wchar_t* wcstring;
 #define TIKI_ENGINE
 #endif
 
-#define TIKI_CULLING 1
+#define TIKI_CULLING 0
 #define TIKI_SHADOWS_ENABLED 0
 #pragma endregion
 

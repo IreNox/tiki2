@@ -81,6 +81,12 @@ namespace TikiEngine
 		#pragma region Member - Create - Enemy
 		void TikiBotFactory::CreateEnemy1(GameObject* go, const List<Vector2>& wayPoints)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);			
+			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			go->GModel()->AnimationHandler.AddHandler(ah);
+			go->SetUserData(ah);
+
 			go->GetSceneGraphElement().SetDynamic();
 			
 			// Create bot
@@ -100,17 +106,13 @@ namespace TikiEngine
 				bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[0], 0.05f));
 			}
 
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
-			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);			
-			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
-			go->GModel()->AnimationHandler.AddHandler(ah);
-			go->SetUserData(ah);
-
 			gameState->GetScene()->AddElement(go);
 		}
 
 		void TikiBotFactory::CreateEnemyTower(GameObject* go)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_enemy"));
+
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
@@ -128,14 +130,14 @@ namespace TikiEngine
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_enemy"));
-
 			gameState->GetScene()->AddElement(go);
 		}
 
 
 		void TikiBotFactory::CreateEnemyBuilding( GameObject* go )
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"gatecontrol"));
+
 			TikiBotDescription botDesc;
 			botDesc.Faction = 1;
 			botDesc.Height = 8.0f;
@@ -149,8 +151,6 @@ namespace TikiEngine
 			bot->SetScale(1.0f);
 			go->GetSceneGraphElement().SetDynamic();
 
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"building_03_05"));
-
 			gameState->GetScene()->AddElement(go);
 		}
 
@@ -159,6 +159,12 @@ namespace TikiEngine
 		#pragma region Member - Create - Player - Units
 		void TikiBotFactory::CreatePlayerHero(GameObject* go)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_hero"));
+			go->GModel()->GetMesh("Laser")->SetVisible(false);
+			auto ah = new AnimationHandlerHero(go->GModel());
+			go->GModel()->AnimationHandler.AddHandler(ah);
+			go->SetUserData(ah);
+
 			go->GetSceneGraphElement().SetDynamic();
 
 			// Create bot
@@ -178,19 +184,11 @@ namespace TikiEngine
 			bot->GetSkillSys()->AddSkill(new SkillHealAura(bot));
 			bot->GetSkillSys()->AddSkill(new SkillSpiderMine(bot));
 
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_hero"));
-			go->GModel()->GetMesh("Laser")->SetVisible(false);
-
-			auto ah = new AnimationHandlerHero(go->GModel());
-			go->GModel()->AnimationHandler.AddHandler(ah);
-			go->SetUserData(ah);
-
 			gameState->GetScene()->AddElement(go);
 		}
 
 		void TikiBotFactory::CreatePlayerMop(GameObject* go, const Vector3& dest)
 		{
-			// Set Model
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_marine"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 
@@ -219,7 +217,8 @@ namespace TikiEngine
 		#pragma region Member - Create - Player - Buildings
 		void TikiBotFactory::CreatePlayerTower(GameObject* go)
 		{
-			// Set Model
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_player"));
+
 			go->GetSceneGraphElement().SetDynamic();
 
 			// Create bot
@@ -236,7 +235,7 @@ namespace TikiEngine
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_player"));
+			
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -296,6 +295,8 @@ namespace TikiEngine
 		#pragma region Member - Create - Player - Misc
 		void TikiBotFactory::CreatePlayerSpiderMine(GameObject* go, TikiBot* target)
 		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
+
 			go->GetSceneGraphElement().SetDynamic();
 
 			// Create bot
@@ -312,8 +313,6 @@ namespace TikiEngine
 
 			bot->GetTargetSys()->SetGlobalTarget(target);
 			bot->GetBrain()->AddGoalAttackTarget();
-
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
 
 			gameState->GetScene()->AddElement(go);
 			
