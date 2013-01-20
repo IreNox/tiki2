@@ -38,7 +38,6 @@ namespace TikiEngine
 			UInt32 lineIndex;
 			Dictionary<wstring, double> lines;
 
-			double lastTime;
 			wstring cmdEnter;
 
 			bool executeCommand();

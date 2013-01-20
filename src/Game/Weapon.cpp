@@ -10,7 +10,9 @@ namespace TikiEngine
 			   double       RateOfFire,
 			   float		Idealrange,
 			   float		ProjectileSpeed,
+			   double		damage,
 			   TikiBot*		OwnerOfGun)
+			   : damage(damage)
 		{
 			this->wType = TypeOfGun;
 			this->numRoundsLeft = DefaultNumRounds;

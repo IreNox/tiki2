@@ -41,6 +41,7 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 	uv /= TerrainSize;
 
 	output.Screen = TexDiffuse.Sample(sam, uv);
+	output.Screen.a = 0.0f;
 
 	return output;
 }

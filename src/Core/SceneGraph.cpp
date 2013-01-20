@@ -148,7 +148,7 @@ namespace TikiEngine
 		UInt32 i = 0;
 		while (i < gameObjects.Count())
 		{
-			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()))
+			if (Vector3::Distance(point, gameObjects[i]->PRS.GPosition()) < distance)
 			{
 				if (where == 0 || where(gameObjects[i]))
 					result.Add(gameObjects[i]);

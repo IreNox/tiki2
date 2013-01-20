@@ -34,6 +34,13 @@
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
     <None Include="bin\Data\Models\tower_player.tiki" />
+    <None Include="bin\Data\Models\tree01.tiki" />
+    <None Include="bin\Data\Models\tree02.tiki" />
+    <None Include="bin\Data\Models\tree03.tiki" />
+    <None Include="bin\Data\Models\tree04.tiki" />
+    <None Include="bin\Data\Models\tree05.tiki" />
+    <None Include="bin\Data\Models\tree06.tiki" />
+    <None Include="bin\Data\Models\tree08.tiki" />
     <None Include="bin\Data\Models\unit_hero.tiki" />
     <None Include="bin\Data\Models\unit_marine.tiki" />
     <None Include="bin\Data\Models\unit_soldier.tiki" />
@@ -122,6 +129,12 @@
     <None Include="bin\Data\Textures\tower_player\tower_diff.dds" />
     <None Include="bin\Data\Textures\tower_player\tower_normal.dds" />
     <None Include="bin\Data\Textures\tower_player\tower_spec.dds" />
+    <None Include="bin\Data\Textures\Tree\Bark_diff.dds" />
+    <None Include="bin\Data\Textures\Tree\Bark_normal.dds" />
+    <None Include="bin\Data\Textures\Tree\Bark_spec.dds" />
+    <None Include="bin\Data\Textures\Tree\Cut_diff.dds" />
+    <None Include="bin\Data\Textures\Tree\Cut_normal.dds" />
+    <None Include="bin\Data\Textures\Tree\Cut_spec.dds" />
     <None Include="bin\Data\Textures\unit_hero\Hero_Mech_Weapon_diff.dds" />
     <None Include="bin\Data\Textures\unit_hero\Hero_Mech_Weapon_light.dds" />
     <None Include="bin\Data\Textures\unit_hero\Hero_Mech_Weapon_normal.dds" />

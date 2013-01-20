@@ -7,16 +7,13 @@
 
 #include "Core/IInput.h"
 
-#include <sstream>
-using namespace std;
-
 namespace TikiEngine
 {
 	namespace Graphics
 	{
 		#pragma region Class
 		DebugConsole::DebugConsole(Engine* engine)
-			: GameObject(engine), bgTexture(0), font(0), enabled(false), lastTime(0)
+			: GameObject(engine), bgTexture(0), font(0), enabled(false)
 		{
 			UInt32 color = 0x99000000;
 
@@ -116,9 +113,9 @@ namespace TikiEngine
 				enabled = !enabled;
 			}
 
-			if (enabled && args.Time.TotalTime - lastTime > 0.075)
+			if (enabled)
 			{
-				List<Key> keys = args.Input.GetKeys();
+				List<Key> keys = args.Input.GetKeysPressed();
 				
 				UInt32 i = 0;
 				while (i < keys.Count())
@@ -140,7 +137,7 @@ namespace TikiEngine
 					}
 
 					wchar_t c = engine->input->KeyCodeToChar(keys[i]);
-
+					
 					if (font->ContainsChar(c))
 					{
 						cmdEnter += c;
@@ -148,8 +145,6 @@ namespace TikiEngine
 
 					i++;
 				}
-
-				lastTime = args.Time.TotalTime;
 			}
 		}
 		#pragma endregion

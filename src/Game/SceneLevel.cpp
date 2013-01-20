@@ -33,12 +33,8 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SceneLevel::SceneLevel(Engine* engine)
-			: Scene(engine)
+			: Scene(engine), levelId(0), gameState(0), level(0)
 		{
-			gameState = new GameState(engine, this);
-			gameState->AddRef();
-
-			level = new Level(gameState);
 		}
 
 		SceneLevel::~SceneLevel()
@@ -57,6 +53,11 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(-256,-256, 512, 512), 6);
 
+			gameState = new GameState(engine, this);
+			gameState->AddRef();
+
+			level = new Level(gameState);
+
 			//Light
 			LightObject* lo = new LightObject(engine);
 			lo->PRS.SPosition() = Vector3(0, 256, 0);
@@ -69,7 +70,6 @@ namespace TikiEngine
 			CameraObject* go = new CameraObject(engine);
 			(new CameraRTS(go, level->GetTerrain()));
 			this->mainCamera = go->GetCameraComponent();
-			//mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 
 			// PostProcess
@@ -82,13 +82,31 @@ namespace TikiEngine
 			//auto dof = new PPDepthOfField(engine);
 			//engine->graphics->AddPostProcess(dof);
 
+			engine->content->LoadModel(L"unit_marine");
+			engine->content->LoadModel(L"unit_soldier");
+
+			engine->content->LoadModel(L"tower_enemy");
+			engine->content->LoadModel(L"tower_player");
+
 			Scene::Initialize(args);
+
+			if (levelId)
+			{
+				this->LoadLevel(levelId);
+			}
 		}
 		#pragma endregion
 
 		#pragma region Member - Level
 		bool SceneLevel::LoadLevel(Int64 id)
 		{
+			if (!initialized)
+			{
+				levelId = id;
+				return true;
+			}
+			levelId = 0;
+
 			if (level->GetId() != 0) DisposeLevel();
 
 			const char* tmp = 0;

@@ -22,6 +22,7 @@ namespace TikiEngine
 				   double        RateOfFire,
 				   float		Idealrange,
 				   float		ProjectileSpeed,
+				   double		damage,
 				   TikiBot*		OwnerOfGun);
 
 			virtual ~Weapon() { }
@@ -44,6 +45,9 @@ namespace TikiEngine
 			void IncrementRounds(int num);
 			unsigned int GetType() const { return wType; }
 			float GetIdealRange() const { return idealRange; }
+
+			inline double GetDamage() { return damage; }
+			inline void SetDamage(double val) { damage = val; }
 
 		protected:
 			// The number of times a weapon can be discharges depends on its rate of fire.
@@ -78,6 +82,8 @@ namespace TikiEngine
 
 			// the max speed of the projectile this weapon fires
 			float maxProjectileSpeed;
+
+			double damage;
 
 		};
 

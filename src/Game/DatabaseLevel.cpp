@@ -328,31 +328,40 @@ namespace TikiEngine
 				gameState->GetBotFactory()->CreatePlayerHeroPlatform(this);
 				break;
 			case 4:
-
 				this->SModel(engine->content->LoadModel(L"building_03_05"));
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 5:
-
 				this->SModel(engine->content->LoadModel(L"env_pipe_01"));
 				gameState->GetScene()->AddElement(this);
 				break;
-			case 6:
-
-				this->SModel(engine->content->LoadModel(L"rock_01"));
-				gameState->GetScene()->AddElement(this);
-				break;
+			case 6: // Rocks
 			case 7:
-				this->SModel(engine->content->LoadModel(L"rock_02"));
-				gameState->GetScene()->AddElement(this);
-				break;
 			case 8:
-
-				this->SModel(engine->content->LoadModel(L"rock_03"));
-				gameState->GetScene()->AddElement(this);
+				{
+					wostringstream s;
+					s << L"rock_0" << (type - 5);
+					this->SModel(engine->content->LoadModel(s.str()));
+					gameState->GetScene()->AddElement(this);
+				}
+				break;
+			case 14: // Trees
+			case 15:
+			case 16:
+			case 17:
+			case 18:
+			case 19:
+			case 20:
+			case 21:
+			case 22:
+				{
+					wostringstream s;
+					s << L"tree0" << (type - 13);
+					this->SModel(engine->content->LoadModel(s.str()));
+					gameState->GetScene()->AddElement(this);
+				}
 				break;
 			case 9: // Tower Build slot
-
 				gameState->GetBotFactory()->CreateBuildSlot(this);
 				break;
 			case 10:
@@ -364,6 +373,9 @@ namespace TikiEngine
 				break;
 			case 12:
 				gameState->GetBotFactory()->CreateEnemyTower(this);
+				break;
+			case 13:
+				gameState->GetBotFactory()->CreatePlayerTower(this);
 				break;
 			}
 		}

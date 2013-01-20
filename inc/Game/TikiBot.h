@@ -22,14 +22,6 @@ namespace TikiEngine
         class WeaponSystem;
 		class SkillSystem;
 
-		enum EntityTypes
-		{
-			ET_Bot,
-			ET_Tower,
-			ET_Building,
-			ET_Hero
-		};
-
 		#pragma region TikiBotDescription
 		struct TikiBotDescription
 		{
@@ -75,6 +67,8 @@ namespace TikiEngine
 
 			// New fields Added: Loot, Armor, SightRadius, EntityType
 			Weapon* StartWeapon;
+			double StartMGDamage;
+
 			EntityTypes EntityType;
 			float SightRadius;
 
@@ -105,13 +99,14 @@ namespace TikiEngine
 				MaxForce = 1.0f;
 				Radius = 2.0f;
 
-				SightRadius = 15;
+				SightRadius = 30;
 				Loot = 0;
 				Armor = 0;
 
 				// Darf NICHT Bearbeitet werden!
 				EntityType = ET_Bot;
 				StartWeapon = 0;
+				StartMGDamage = 5;
 				Faction = 0;
 			}
 

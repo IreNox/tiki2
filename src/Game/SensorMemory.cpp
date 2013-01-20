@@ -33,7 +33,7 @@ namespace TikiEngine
 
 			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
 				owner->Pos3D(),
-				25.0f,
+				owner->GetSightRadius(),
 				[&](GameObject* go)
 				{
 					TikiBot* curBot = go->GetComponent<TikiBot>();

@@ -72,7 +72,7 @@ namespace TikiEngine
 				if (bot != 0 && bot->GetFaction() == 0)
 				{
 					fow->Units[count].Position = bot->Pos();
-					fow->Units[count].Range = bot->GetSightRadius();
+					fow->Units[count].Range = bot->GetSightRadius() / 2;
 					fow->Units[count].Type = (selected.Contains(bot->GetGameObject()) ? 1.0f : 0.0f);
 					count++;
 

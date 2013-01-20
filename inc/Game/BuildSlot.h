@@ -18,13 +18,17 @@ namespace TikiEngine
 			BuildSlot(GameState* gameState, GameObject* gameObject);
 			~BuildSlot();
 
-			void Draw(const DrawArgs& args) {}
-			void Update(const UpdateArgs& args) {}
-			bool GetReady() { return true; }
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
 
 			void Disable(); 
 			void Enable();
-			bool Enabled();
+
+			void BuildTower();
+
+			inline bool Enabled() { return enabled; }
+
+			bool GetReady() { return true; }
 
 		private:
 			GameState* gameState;

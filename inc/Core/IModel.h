@@ -51,6 +51,9 @@ namespace TikiEngine
 			virtual IBone* GetBone(string name) = 0;
 			virtual IModelMesh* GetMesh(string name) = 0;
 
+			virtual Vector3 GetBounds() = 0;
+			virtual void SetBounds(const Vector3& size) = 0;
+
 		};
 	}
 }

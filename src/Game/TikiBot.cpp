@@ -103,7 +103,7 @@ namespace TikiEngine
 				gameState->GetNavMesh()
 			);	
 
-			gameObject->GetSceneGraphElement().SetBounds( desc.Radius * 2, desc.Height );
+			//gameObject->GetSceneGraphElement().SetBounds( desc.Radius * 2, desc.Height );
 
 		}
 

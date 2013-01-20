@@ -1,6 +1,12 @@
 
 #include "Game/Cheater.h"
 
+#include "Game/Weapon.h"
+#include "Game/TikiBot.h"
+#include "Game/PlayerBase.h"
+#include "Game/WeaponSystem.h"
+
+
 namespace TikiEngine
 {
 	namespace Game
@@ -16,13 +22,13 @@ namespace TikiEngine
 
 		void Cheater::DoCheat(const wstring& cheat)
 		{
-			if (cheat == L"show me the money")
+			if (cheat == L"give me the money")
 			{
 				gameState->IncrementResource(10000.0);
 			}
-			else if (cheat == L"if bleeds we can kill it")
+			else if (cheat == L"if bleeds i can kill it")
 			{
-				//this->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetWeaponSys()->GetWeapon
+				gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetWeaponSys()->GetCurrentWeapon()->SetDamage(100000);
 			}
 		}
 	}

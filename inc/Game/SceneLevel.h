@@ -36,6 +36,8 @@ namespace TikiEngine
 
 		private:
 
+			UInt64 levelId;
+
 			Level* level;			
 			
 			GameState* gameState;

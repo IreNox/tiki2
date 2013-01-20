@@ -14,6 +14,7 @@ namespace TikiEngine
 			float FiringFrequency;
 			float IdealRange;
 			float MaxSpeed;
+			double Damage;
 
 			MachineGunDescription()
 			{
@@ -22,6 +23,7 @@ namespace TikiEngine
 				FiringFrequency = 3;
 				IdealRange = 20;
 				MaxSpeed = 5;
+				Damage = 5;
 			}
 		};
 

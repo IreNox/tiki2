@@ -238,6 +238,8 @@ namespace TikiEngine
 
 	void Engine::SetScene(Scene* scene)
 	{
+		if (isLoading) return;
+
 		SafeChangeRef(&this->scene, scene);
 
 		if (!scene->IsInitialized())

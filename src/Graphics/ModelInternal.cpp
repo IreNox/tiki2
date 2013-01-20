@@ -56,17 +56,49 @@ namespace TikiEngine
 			meshIds = List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->MeshArrayId), context->ReadPart(context->GetHeader()->MeshArrayId).ArrayCount, false);
 			animationIds = List<UInt32>((UInt32*)context->ReadPartPointer(context->GetHeader()->AnimationArrayId), context->ReadPart(context->GetHeader()->AnimationArrayId).ArrayCount, false);
 
+			Vector3 min;
+			Vector3 max;
+
 			UInt32 i = 0;
 			UInt32 id = 0;
 			while (i < meshIds.Count())
 			{
 				id = meshIds[i];
 
-				model->GetMeshes()->Add(
-					readTikiMesh(context->ReadPart(id), (BinaryTikiMesh*)context->ReadPartPointer(id))
-				);
+				TikiMesh* mesh = readTikiMesh(context->ReadPart(id), (BinaryTikiMesh*)context->ReadPartPointer(id));
+
+				UInt32 count;
+				SkinningVertex* vertices;
+				mesh->GetVertexData((void**)&vertices, &count);
+				count /= sizeof(SkinningVertex);
+
+				UInt32 a = 0;
+				while (a < count)
+				{
+					UInt32 b = 0;
+					while (b < 3)
+					{
+						if (vertices[a].Position[b] < min.arr[b]) min.arr[b] = vertices[a].Position[b];
+						if (vertices[a].Position[b] > max.arr[b]) max.arr[b] = vertices[a].Position[b];
+
+						b++;
+					}
+
+					a++;
+				}
+
+				model->GetMeshes()->Add(mesh);
 				i++;
 			}
+
+			Vector3 bounds;
+			i = 0;
+			while (i < 3)
+			{
+				bounds.arr[i] = abs(min.arr[i] - max.arr[i]);
+				i++;
+			}
+			model->SetBounds(bounds);
 
 			i = 0;
 			while (i < animationIds.Count())

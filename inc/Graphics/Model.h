@@ -52,12 +52,12 @@ namespace TikiEngine
 			IAnimation* GetAnimation(string name);
 			IAnimation* GetAnimation(UInt32 index);
 			void SetAnimation(IAnimation* animation);
-			
-			inline ConstantBuffer<SkinMatrices>* GetConstantBuffer()
-			{
-				return constantBufferMatrices;
-			}
 			void BlendToAnimation(IAnimation* animation, double time = 0.5);
+
+			Vector3 GetBounds();
+			void SetBounds(const Vector3& bounds);
+
+			inline ConstantBuffer<SkinMatrices>* GetConstantBuffer() { return constantBufferMatrices; }
 
 			void* GetNativeResource();
 			bool GetReady();
@@ -73,8 +73,10 @@ namespace TikiEngine
 
 			bool mainInstance;
 
+			Vector3 bounds;
+
 			TikiBone* rootBone;
-			
+
 			List<TikiMesh*> meshes;
 			List<TikiAnimation*> animations;
 			List<TikiBone*> constantBufferElements;

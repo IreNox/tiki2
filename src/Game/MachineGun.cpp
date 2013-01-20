@@ -10,10 +10,8 @@ namespace TikiEngine
 	{
 
 		MachineGun::MachineGun(TikiBot* owner, MachineGunDescription desc)
-			: Weapon(WT_MachineGun, desc.DefaultRounds, desc.MaxRoundsCarried, 
-					 desc.FiringFrequency, desc.IdealRange, desc.MaxSpeed, owner)
+			: Weapon(WT_MachineGun, desc.DefaultRounds, desc.MaxRoundsCarried, desc.FiringFrequency, desc.IdealRange, desc.MaxSpeed, desc.Damage, owner)
 		{
-
 		}
 
 		inline void MachineGun::ShootAt(const UpdateArgs& args, Vector3 pos)
@@ -44,7 +42,7 @@ namespace TikiEngine
 				desc.Origin = start;
 				desc.Heading = owner->Heading();
 				desc.ShooterID = owner->ID();
-				desc.Damage = owner->MaxHealth() / 20.0f;
+				desc.Damage = damage;
 				GameObject* go = new GameObject(owner->GetGameState()->GetEngine());
 				Bullet* proj = new Bullet(owner->GetGameState(), go);
 				proj->Init(desc, args);

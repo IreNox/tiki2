@@ -50,28 +50,28 @@ namespace TikiEngine
 			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
 
 			GameObject* go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"marine_l"));
+			go->SModel(engine->content->LoadModel(L"tower_player"));
 			go->PRS.SScale() = 0.01f;
 			go->PRS.SPosition() = Vector3(0, 0, 0);
 
 			this->AddElement(go);
 
-			go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"marine_l"));
-			go->PRS.SScale() = 0.01f;
-			go->PRS.SPosition() = Vector3(3, 0, 3);
+			//go = new GameObject(engine);
+			//go->SModel(engine->content->LoadModel(L"marine_l"));
+			//go->PRS.SScale() = 0.01f;
+			//go->PRS.SPosition() = Vector3(3, 0, 3);
 
-			this->AddElement(go);
+			//this->AddElement(go);
 
-			go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"marine_l"));
-			go->PRS.SScale() = 0.01f;
-			go->PRS.SPosition() = Vector3(-3, 0, -3);
+			//go = new GameObject(engine);
+			//go->SModel(engine->content->LoadModel(L"marine_l"));
+			//go->PRS.SScale() = 0.01f;
+			//go->PRS.SPosition() = Vector3(-3, 0, -3);
 
-			this->AddElement(go);
+			//this->AddElement(go);
 
-			dof = new PPDepthOfField(engine);
-			engine->graphics->AddPostProcess(dof);
+			//dof = new PPDepthOfField(engine);
+			//engine->graphics->AddPostProcess(dof);
 
 
 			/////////////////
@@ -281,15 +281,15 @@ namespace TikiEngine
 			//float b = (float)args.Time.TotalTime / 4.0f;
 			//b = fmodf(b, 6.28318f);
 
-			Matrix vp = this->GetMainCamera()->WorldToScreen();
-			Vector3 pos = this->SceneGraph.GetAllGameObjects()[1]->PRS.GPosition();
-			
-			Vector4 pos2 = Matrix::Transform(
-				Vector4(pos.X, pos.Y, pos.Z, 1.0f),
-				vp
-			);
+			//Matrix vp = this->GetMainCamera()->WorldToScreen();
+			//Vector3 pos = this->SceneGraph.GetAllGameObjects()[1]->PRS.GPosition();
+			//
+			//Vector4 pos2 = Matrix::Transform(
+			//	Vector4(pos.X, pos.Y, pos.Z, 1.0f),
+			//	vp
+			//);
 
-			dof->GetPasses()[0]->GetShader()->SetVector4("value", pos2);
+			//dof->GetPasses()[0]->GetShader()->SetVector4("value", pos2);
 
 			//this->SceneGraph.GetDefaultGOs()[0]->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(b, 0, 0);
 			//this->SceneGraph.GetDefaultGOs()[0]->GModel()->GetMesh("tower")->SetLocalMatrix(Matrix::CreateFromYawPitchRollRadians(b, 0, 0));

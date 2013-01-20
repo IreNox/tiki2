@@ -14,7 +14,7 @@ namespace TikiEngine
 			id = nextValidID++;
 
 			boundingRadius = 2.0;
-            type = default_entity_type;
+            type = ET_Default;
             tag = false;
 		}
 	}

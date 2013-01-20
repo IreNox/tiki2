@@ -53,8 +53,9 @@ public:
 	};
 	#pragma endregion	
 
+	#pragma region Class
 	inline Matrix(void):
-		M11(1.0f), M12(0.0f), M13(0.0f), M14(0.0f), 
+	M11(1.0f), M12(0.0f), M13(0.0f), M14(0.0f), 
 		M21(0.0f), M22(1.0f), M23(0.0f), M24(0.0f), 
 		M31(0.0f), M32(0.0f), M33(1.0f), M34(0.0f), 
 		M41(0.0f), M42(0.0f), M43(0.0f), M44(1.0f)
@@ -66,8 +67,8 @@ public:
 		float m21, float m22, float m23, float m24,
 		float m31, float m32, float m33, float m34,
 		float m41, float m42, float m43, float m44
-	): 
-		M11(m11), M12(m12), M13(m13), M14(m14), 
+		): 
+	M11(m11), M12(m12), M13(m13), M14(m14), 
 		M21(m21), M22(m22), M23(m23), M24(m24), 
 		M31(m31), M32(m32), M33(m33), M34(m34), 
 		M41(m41), M42(m42), M43(m43), M44(m44)
@@ -76,18 +77,18 @@ public:
 
 	inline Matrix(float* arr)
 		: 
-		M11(arr[0]), M12(arr[1]), M13(arr[2]), M14(arr[3]),
+	M11(arr[0]), M12(arr[1]), M13(arr[2]), M14(arr[3]),
 		M21(arr[4]), M22(arr[5]), M23(arr[6]), M24(arr[7]),
 		M31(arr[8]), M32(arr[9]), M33(arr[10]), M34(arr[11]),
 		M41(arr[12]), M42(arr[13]), M43(arr[14]), M44(arr[15])
 	{
 
 	}
-	//Matrix(Vector4 v1, Vector4 v2, Vector4 v3, Vector4 v4);
 
 	inline ~Matrix(void) {}
-
-
+	#pragma endregion
+	
+	#pragma region Member - Add/Substract
 	static inline Matrix Add(const Matrix& left, const Matrix& right)
 	{
 		return Matrix(
@@ -108,6 +109,7 @@ public:
 			left.M43 + right.M43,
 			left.M44 + right.M44);
 	}
+
 	static inline Matrix Subtract(const Matrix& left, const Matrix& right)
 	{
 		return Matrix(
@@ -128,7 +130,9 @@ public:
 			left.M43 - right.M43,
 			left.M44 - right.M44);
 	}
+	#pragma endregion
 
+	#pragma region Member - Invert/Transpose/Multiply/Divide/Determinant
 	static inline Matrix Invert(const Matrix& matrix)
 	{
 		float m = matrix.M11;
@@ -196,6 +200,7 @@ public:
 
 		return result;
 	}
+
 	inline Matrix Invert()
 	{
 		return Invert(*this);
@@ -263,6 +268,7 @@ public:
 			matrix1.M41 * matrix2.M13 + matrix1.M42 * matrix2.M23 + matrix1.M43 * matrix2.M33 + matrix1.M44 * matrix2.M43,
 			matrix1.M41 * matrix2.M14 + matrix1.M42 * matrix2.M24 + matrix1.M43 * matrix2.M34 + matrix1.M44 * matrix2.M44);
 	}
+
 	static inline Matrix Multiply(const Matrix& matrix1, float scaleFactor)
 	{
 		return Matrix(
@@ -304,6 +310,7 @@ public:
 			matrix1.M43 / matrix2.M43,
 			matrix1.M44 / matrix2.M44);
 	}
+
 	static inline Matrix Divide(const Matrix& matrix1, float divider)
 	{
 		float num = 1 / divider;
@@ -339,7 +346,8 @@ public:
 			(M23 * temp4)) + (M24 * temp5)))) + (M13 * (((M21 * temp2) - (M22 * temp4)) + (M24 * temp6)))) - 
 			(M14 * (((M21 * temp3) - (M22 * temp5)) + (M23 * temp6))));
 	}
-
+	#pragma endregion
+	
 	#pragma region Member - Transform
 	/*! @brief Transforms a 3D vector by a given matrix, projecting the result back into w = 1. */
 	inline static Vector3 TransformCoordinate(const Vector3& coord, const Matrix& transform) // rework maybe? // is this ok?
@@ -394,6 +402,18 @@ public:
 	}
 	#pragma endregion
 
+	#pragma region Member - Kernel
+	Matrix RotationKernel()
+	{
+		return Matrix(
+			M11,  M12,  M13,  0.0f, 
+			M21,  M22,  M23,  0.0f, 
+			M31,  M32,  M33,  0.0f, 
+			0.0f, 0.0f, 0.0f, 1.0f
+		);
+	}
+	#pragma endregion
+
 	static Matrix CreateTranslation(const Vector3& vector);
 
 	static Matrix CreateTranslation(float x, float y, float z);
@@ -411,9 +431,7 @@ public:
 	static Matrix CreateLookAt(const Vector3& cameraPosition, const Vector3& cameraTarget, const Vector3& cameraUpVector);
 	static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
 	static Matrix CreateFromQuaternion(const Quaternion& quaternion);
-
-
-
+	
 	/// <summary>Creates a new rotation matrix from a specified yaw, pitch, and roll.</summary>
 	/// <param name="yaw">Angle of rotation, in radians, around the y-axis.</param>
 	/// <param name="pitch">Angle of rotation, in radians, around the x-axis.</param>
@@ -427,12 +445,13 @@ public:
 
 	inline bool operator== (const Matrix& value)
 	{
-		return ( M11 == value.M11 && M12 == value.M12 && M13 == value.M13 && M14 == value.M14 &&
-			M21 == value.M21 && M22 == value.M22 && M23 == value.M23 && M24 == value.M24 &&
-			M31 == value.M31 && M32 == value.M32 && M33 == value.M33 && M34 == value.M34 &&
-			M41 == value.M41 && M42 == value.M42 && M43 == value.M43 && M44 == value.M44 );
+		return M11 == value.M11 && M12 == value.M12 && M13 == value.M13 && M14 == value.M14 &&
+			   M21 == value.M21 && M22 == value.M22 && M23 == value.M23 && M24 == value.M24 &&
+			   M31 == value.M31 && M32 == value.M32 && M33 == value.M33 && M34 == value.M34 &&
+			   M41 == value.M41 && M42 == value.M42 && M43 == value.M43 && M44 == value.M44;
 	}
-	bool operator!= (const Matrix& matrix)
+
+	inline bool operator!= (const Matrix& matrix)
 	{
 		return	!(*this == matrix);
 	}
@@ -457,6 +476,7 @@ public:
 			this->M43 + matrix.M43,
 			this->M44 + matrix.M44);
 	}
+
 	inline Matrix operator- (const Matrix& matrix)
 	{
 		return Matrix(
@@ -498,6 +518,7 @@ public:
 			this->M41 * matrix.M13 + this->M42 * matrix.M23 + this->M43 * matrix.M33 + this->M44 * matrix.M43,
 			this->M41 * matrix.M14 + this->M42 * matrix.M24 + this->M43 * matrix.M34 + this->M44 * matrix.M44);
 	}
+
 	inline Matrix operator* (float scaleFactor)
 	{
 		return Matrix(

@@ -125,7 +125,7 @@ namespace TikiEngine
 			platformTrigger->SetGroup(CG_Collidable_Non_Pushable);
 			platformTrigger->SetTrigger(true);
 
-			HeroPlatform->GetSceneGraphElement().SetBounds( 12.0f * 2, 12.0f);
+			//HeroPlatform->GetSceneGraphElement().SetBounds( 12.0f * 2, 12.0f);
 
 			Hero = new GameObject(engine);
 			Hero->PRS.SPosition() = heroStartPos;
@@ -139,9 +139,6 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void PlayerBase::Update(const UpdateArgs& args)
 		{
-            if (args.Input.GetKey(KEY_SPACE))
-                Hero->GetComponent<TikiBot>()->ReduceHealth(1000);
-
 			if (heroDead && heroDeadTimer.IsReady(args.Time))
 			{
                 TikiBot* hero = Hero->GetComponent<TikiBot>();

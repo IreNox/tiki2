@@ -77,7 +77,6 @@
     <ClInclude Include="inc\Game\LevelObject.h" />
     <ClInclude Include="inc\Game\LevelPoint.h" />
     <ClInclude Include="inc\Game\MachineGun.h" />
-    <ClInclude Include="inc\Game\MessageDispatcher.h" />
     <ClInclude Include="inc\Game\MovingEntity.h" />
     <ClInclude Include="inc\Game\NavigationCell.h" />
     <ClInclude Include="inc\Game\NavigationHeap.h" />
@@ -109,7 +108,6 @@
     <ClInclude Include="inc\Game\SkillSystem.h" />
     <ClInclude Include="inc\Game\Skill.h" />
     <ClInclude Include="inc\Game\TargetingSystem.h" />
-    <ClInclude Include="inc\Game\Telegram.h" />
     <ClInclude Include="inc\Game\TikiBot.h" />
     <ClInclude Include="inc\Game\TikiBotFactory.h" />
     <ClInclude Include="inc\Game\TikiSteering.h" />
@@ -156,7 +154,6 @@
     <ClCompile Include="src\Game\GoalWander.cpp" />
     <ClCompile Include="src\Game\MachineGun.cpp" />
     <ClCompile Include="src\Game\Main.cpp" />
-    <ClCompile Include="src\Game\MessageDispatcher.cpp" />
     <ClCompile Include="src\Game\MovingEntity.cpp" />
     <ClCompile Include="src\Game\NavigationCell.cpp" />
     <ClCompile Include="src\Game\NavigationHeap.cpp" />

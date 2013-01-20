@@ -43,8 +43,28 @@ namespace TikiEngine
 
 	void GameObject::SModel(IModel* model)
 	{
-		SafeRelease(&this->model);
-		SafeAddRef(model, &this->model);
+		SafeChangeRef(&this->model, model);
+
+		if (model)
+		{
+			Matrix mat;
+			Vector3 bound = model->GetBounds();
+			//this->PRS.FillWorldMatrix(&mat);
+			//mat = mat.RotationKernel();
+
+			mat = Matrix::CreateScaleMatrix(this->PRS.scale);
+			bound = Matrix::TransformCoordinate(bound, mat);
+
+			if (bound.X > 50 || bound.Z > 50)
+			{
+				mat = Matrix::CreateScaleMatrix(Vector3(0.01f));
+				bound = Matrix::TransformCoordinate(model->GetBounds(), mat);
+			}
+
+			sgElement.SetBounds(
+				bound.XZ()
+			);
+		}
 	}
 	#pragma endregion
 

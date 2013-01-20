@@ -5,7 +5,6 @@
 #include "Core/GameObject.h"
 
 #include "Game/Utils.h"
-#include "Game/Telegram.h"
 #include "Game/GameState.h"
 
 namespace TikiEngine
@@ -15,20 +14,21 @@ namespace TikiEngine
 		using namespace TikiEngine::Game;
 		using namespace TikiEngine::Components;
 
+		enum EntityTypes
+		{
+			ET_Default	= -1,
+			ET_Bot		= 0,
+			ET_Tower	= 1,
+			ET_Building	= 2,
+			ET_Hero		= 3
+		};
+
 		class BaseGameEntity : public Component
 		{
-
 		public:
-			enum {default_entity_type = -1};
+
 			BaseGameEntity(GameState* gameState, GameObject* gameObject);
 			virtual ~BaseGameEntity() { }
-
-			// TODO:
-			virtual bool HandleMessage(const Telegram& msg){return false;}
-  
-		    //entities should be able to read/write their data to a stream
-			virtual void Write(std::ostream& os) const { }
-			virtual void Read(std::ifstream& is) { }
 
 			//use this to grab the next valid ID
 			static int GetNextValidID() {return nextValidID;}
@@ -52,7 +52,7 @@ namespace TikiEngine
 			void SetScale(Vector3 val) { gameObject->PRS.SScale() = val; }
 			void SetScale(float val) { gameObject->PRS.SScale() = Vector3(val); }
 
-			int EntityType() const { return type; }
+			EntityTypes EntityType() const { return type; }
 			//void SetEntityType(int newType) { type = newType; }
 
 			bool GetReady() { return true; }
@@ -67,7 +67,7 @@ namespace TikiEngine
 
 		protected:
 			
-			int type;			      // every entity has a type associated with it (health, troll, ammo etc)
+			EntityTypes type;			      // every entity has a type associated with it (health, troll, ammo etc)
 			bool tag;				  // generic flag. 
 
 		private:

@@ -81,7 +81,41 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < 256)
 			{
-				if (keyboardStateCurrent[i] & 0x80) keys.Add((Key)i);
+				if (keyboardStateCurrent[i] & 0x80)
+					keys.Add((Key)i);
+
+				i++;
+			}
+
+			return keys;
+		}
+
+		inline List<Key> GetKeysPressed() const
+		{
+			List<Key> keys;
+
+			UInt32 i = 0;
+			while (i < 256)
+			{
+				if (this->GetKeyPressed((Key)i))
+					keys.Add((Key)i);
+
+				i++;
+			}
+
+			return keys;
+		}
+
+		inline List<Key> GetKeysReleased() const
+		{
+			List<Key> keys;
+
+			UInt32 i = 0;
+			while (i < 256)
+			{
+				if (this->GetKeyReleased((Key)i))
+					keys.Add((Key)i);
+
 				i++;
 			}
 

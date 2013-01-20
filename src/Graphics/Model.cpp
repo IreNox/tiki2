@@ -49,6 +49,8 @@ namespace TikiEngine
 
 			SafeAddRef(baseModel->rootBone, &rootBone);
 
+			bounds = baseModel->bounds;
+
 			meshes = baseModel->meshes;
 			FOREACH_PTR_CALL(meshes, AddRef())
 
@@ -172,6 +174,16 @@ namespace TikiEngine
 		void Model::SetMeshes(List<TikiMesh*>& meshes)
 		{
 			this->meshes = meshes;
+		}
+
+		Vector3 Model::GetBounds()
+		{
+			return bounds;
+		}
+
+		void Model::SetBounds(const Vector3& bounds)
+		{
+			this->bounds = bounds;
 		}
 		#pragma endregion
 

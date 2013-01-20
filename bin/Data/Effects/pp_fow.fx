@@ -52,6 +52,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 	float3 addc = float3(0, 0, 0);
 	float4 diff = rtScreen.Sample(sam, input.UV);
+	float4 srcDiff = diff;
 
 	for (float i = 0; i < UnitCount; i++)
 	{
@@ -98,8 +99,15 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	fog = clamp(fog, 0, 1);
 	fog = lerp(0.2f, 1, fog);
 
+	if (diff.a != 0)
+	{
+		diff = srcDiff;
+	}
+
 	diff.rgb *= fog;
 	diff.rgb += addc;
+	diff.a = 1;
+
 	return diff;
 }
 

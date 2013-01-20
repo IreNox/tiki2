@@ -52,7 +52,7 @@ namespace TikiEngine
 			go->GetSceneGraphElement().SetDynamic();
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
-			go->SModel(args.Content->LoadModel(L"soldier"));
+			go->SModel(args.Content->LoadModel(L"unit_soldier"));
 
 			this->model = go->GModel();
 			int count = this->model->AnimationCount();

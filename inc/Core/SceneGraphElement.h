@@ -80,7 +80,7 @@ namespace TikiEngine
 		~SceneGraphElement();
 
 		void SetGameObject( GameObject* go );
-		void SetBounds( float width, float height );
+		void SetBounds(const Vector2& size);
 
 		void Update(const UpdateArgs& args);
 
@@ -99,8 +99,8 @@ namespace TikiEngine
 		IBoundingBox* boundingBox;
 
 	private:
-		GameObject* go;
-		
+
+		GameObject* go;		
 
 		float width;
 		float height;

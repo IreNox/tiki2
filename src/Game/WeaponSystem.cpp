@@ -32,6 +32,7 @@ namespace TikiEngine
 			if (desc.StartWeapon == 0)
 			{
 				MachineGunDescription mgDesc;
+				mgDesc.Damage = desc.StartMGDamage;
 				currentWeapon = new MachineGun(owner, mgDesc);
 			}
 			else
