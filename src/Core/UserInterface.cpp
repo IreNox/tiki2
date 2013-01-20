@@ -74,9 +74,9 @@ namespace TikiEngine
 		{
 			if (child->parent == this)
 			{
-				child->parent = 0;
-				child->Release();
-				return childs.Remove(child);
+				childsToRemove.Add(child);
+
+				return true;
 			}
 
 			return false;
@@ -145,6 +145,21 @@ namespace TikiEngine
 			{
 				childs[i]->Update(args);
 				i++;
+			}
+
+			if (childsToRemove.Count() > 0)
+			{
+				i = 0;
+				while (i < childsToRemove.Count())
+				{
+					childsToRemove[i]->parent = 0;
+					childsToRemove[i]->Release();
+					childs.Remove(childsToRemove[i]);
+
+					i++;
+				}
+
+				childsToRemove.Clear();
 			}
 
 			isDirty = false;

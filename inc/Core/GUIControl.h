@@ -69,6 +69,7 @@ namespace TikiEngine
 
 			GUIControl* parent;
 			List<GUIControl*> childs;
+			List<GUIControl*> childsToRemove;
 
 		};
 	}

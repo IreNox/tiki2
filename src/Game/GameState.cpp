@@ -29,7 +29,7 @@ namespace TikiEngine
 		GameState::GameState(Engine* engine, SceneLevel* scene)
 			: EngineObject(engine), scene(scene), resource(0.0)
 #if _DEBUG
-			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false)
+			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false), DrawHud(true)
 #endif
 		{
 			engine->HLog.ConsoleCommand.AddHandler(this);
@@ -89,7 +89,12 @@ namespace TikiEngine
 		#pragma region Member - Draw
 		void GameState::Draw(const DrawArgs& args)
 		{
+#if _DEBUG
+			if (DrawHud) hud->Draw(args);
+#else
 			hud->Draw(args);
+#endif
+
 			projectiles->Draw(args);
 			unitSelection->Draw(args);
 
@@ -137,7 +142,12 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void GameState::Update(const UpdateArgs& args)
 		{
-			hud->Update(args);
+#if _DEBUG
+			if (DrawHud) hud->Update(args);
+#else
+			hud->Draw(args);
+#endif
+
 			botFactory->Update(args);
 			projectiles->Update(args);
 			unitSelection->Update(args);
@@ -148,6 +158,7 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F2)) DrawNavMesh = !DrawNavMesh;
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
 			if (args.Input.GetKeyPressed(KEY_F4)) DrawPhysX = !DrawPhysX;
+			if (args.Input.GetKeyPressed(KEY_F6)) DrawHud = !DrawHud;
 			#endif
 
 			if(args.Input.GetMousePressed(MB_Right))

@@ -27,6 +27,7 @@ namespace TikiEngine
 
 			/* !@brief The Character's Capsule Collider height. Changing this will scale the collider along the Y axis in both positive and negative directions. */
 			virtual Single GetHeight() = 0;
+			virtual Single GetRealHeight() = 0;
 			virtual void SetHeight(Single height) = 0; 
 
 			/* !@brief Limits the collider to only climb slopes that are equal to or less than the indicated value in degrees  */

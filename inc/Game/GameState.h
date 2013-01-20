@@ -34,6 +34,7 @@ namespace TikiEngine
 			bool DrawNavMesh;
 			bool DrawRenderTarget;
 			bool DrawPhysX;
+			bool DrawHud;
 			#endif
 
 			GameState(Engine* engine, SceneLevel* scene);

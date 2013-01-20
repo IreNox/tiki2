@@ -102,9 +102,6 @@ namespace TikiEngine
 			pathPlanner->Create(
 				gameState->GetNavMesh()
 			);	
-
-
-			gameObject->GetSceneGraphElement().SetBounds(Vector2(desc.Radius * 2, desc.Height));
 		}
 
 		TikiBot::~TikiBot()
@@ -239,8 +236,7 @@ namespace TikiEngine
 #if _DEBUG
 				if (info.Collider == controller)
 				{
-					//_CrtDbgBreak();
-					// RayCast ist falsch und trifft sich selbst
+					engine->HLog.Write("Line of Sight raycast failed.", true);
 				}
 #endif
 				// check the intersection points for nearly equal
@@ -253,23 +249,10 @@ namespace TikiEngine
 			return los;
 		}
 
-//		void TikiBot::TakePossession()
-//		{
-//// 			// TODO: Player + enemy bots check
-//// 			if ( !(IsSpawning() || IsDead()) )
-//// 				possessed = true;
-//		}
-//
-//		void TikiBot::Exorcise()
-//		{
-//			//possessed = false;
-//			//brain->AddGoalExplore();
-//		}
-
 		void TikiBot::Teleport(const Vector3& pos)
 		{
 			Vector3 sp = pos;
-			sp.Y += controller->GetHeight();
+			sp.Y += controller->GetRealHeight();
 
 			controller->SetCenter(sp);
 		}

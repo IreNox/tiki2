@@ -55,13 +55,13 @@ namespace TikiEngine
 		{
 			currentXp += xp;
 
-			if (currentXp > nextLevelXp)
+			while (currentXp > nextLevelXp)
 			{
 				heroLevel++;
 				skillUpgrades++;
+				attmodMaxHealth.SetValue(10 + (2.1458 * heroLevel));
 				
-				owner->GetAttSys().AddModifier(&attmodMaxHealth);
-				owner->RestoreHealthToMaximum();
+				owner->GetAttSys().UpdateModifier(&attmodMaxHealth);
 
 				lastLevelXp = nextLevelXp;
 				nextLevelXp = HERO_XP_CALC_NEXTLEVEL(lastLevelXp, heroLevel);

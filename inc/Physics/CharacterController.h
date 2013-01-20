@@ -40,6 +40,7 @@ namespace TikiEngine
 			void SetRadius(Single radius); 
 
 			Single GetHeight();
+			Single GetRealHeight() { return height + radius; }
 			void SetHeight(Single height); 
 
 			Single GetSlopeLimit();
