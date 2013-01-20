@@ -277,7 +277,7 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreatePlayerHeroPlatform(GameObject* go)
 		{
-			go->PRS.SScale() = 0.01f;
+			go->PRS.SScale() = 0.02f;
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"heroplatform"));
 
 			playerBase->HeroPlatform = go;
