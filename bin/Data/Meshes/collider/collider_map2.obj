@@ -1,7 +1,5 @@
 # 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
-# File Created: 19.01.2013 20:54:03
-
-mtllib collider_map2.mtl
+# File Created: 19.01.2013 20:37:54
 
 #
 # object collider
@@ -1511,7 +1509,6 @@ vt 0.2317 0.2948 0.8251
 # 499 texture coords
 
 g collider
-usemtl default
 s 1
 f 1/1/1 2/2/2 3/3/3 
 f 4/4/4 5/5/5 6/6/6 
@@ -2463,5 +2460,5 @@ f 207/207/207 403/403/403 351/351/351
 f 207/207/207 86/86/86 403/403/403 
 f 47/47/47 434/434/434 368/368/368 
 f 368/368/368 434/434/434 50/50/50 
-# 950 faces
+# 0 polygons - 950 triangles
 

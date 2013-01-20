@@ -53,7 +53,7 @@ namespace TikiEngine
 
 			inline double GetResource() { return resource; }
 			inline void IncrementResource(double toIncrement) { resource += toIncrement; }
-			inline void DecrementResource(double toDecrement) { resource -= toDecrement; }
+			inline void DecrementResource(double toDecrement) { resource -= toDecrement; if (resource < 0) resource = 0; }
 
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);

@@ -140,8 +140,13 @@ namespace TikiEngine
 		void PlayerBase::Update(const UpdateArgs& args)
 		{
 			if (heroDead && heroDeadTimer.IsReady(args.Time))
-			{
-                TikiBot* hero = Hero->GetComponent<TikiBot>();
+			{				
+				TikiBot* hero = Hero->GetComponent<TikiBot>();
+
+				gameState->DecrementResource(
+					HERO_CALC_DEADPRICE(gameState->GetResource(), hero->GetSkillSys()->GetLevel())
+				);
+
                 hero->GetBrain()->RemoveAllSubgoals();
 				hero->Teleport(heroStartPos);
                 hero->SetAlive();

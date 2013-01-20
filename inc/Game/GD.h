@@ -43,6 +43,9 @@ const double HeroNeededXPFirstLevelUp = 100.0;
 
 #define HERO_CALC_DEADTIME(level) \
 	10.0 * (level + 1)
+
+#define HERO_CALC_DEADPRICE(money, level) \
+	(money / 100.0) * (10.0 + level + 1)
 #pragma endregion
 
 #pragma region Rewards
