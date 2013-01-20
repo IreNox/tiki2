@@ -68,6 +68,7 @@ namespace TikiEngine
 			// New fields Added: Loot, Armor, SightRadius, EntityType
 			Weapon* StartWeapon;
 			double StartMGDamage;
+			double StartMGFireRate;
 
 			EntityTypes EntityType;
 			float SightRadius;
@@ -103,10 +104,12 @@ namespace TikiEngine
 				Loot = 0;
 				Armor = 0;
 
+				StartMGDamage = 5;
+				StartMGFireRate = 5;
+
 				// Darf NICHT Bearbeitet werden!
 				EntityType = ET_Bot;
 				StartWeapon = 0;
-				StartMGDamage = 5;
 				Faction = 0;
 			}
 
@@ -126,16 +129,11 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 			
-			// TODO?: Messaging
-			//bool HandleMessage(const Telegram& msg);
-			//void Write(std::ostream&  os)const { }
-		    //void Read(std::ifstream& is) { }
-			
 			#pragma region Accessing attribute data
 			inline double Health() const { return health; }
 			inline double MaxHealth() const { return attSys[TA_MaxHealth]; }
 			inline void RestoreHealthToMaximum() { health = attSys[TA_MaxHealth]; }
-			void ReduceHealth(double val);
+			void ReduceHealth(double val, bool useArmor);
 			void IncreaseHealth(double val);
 				 
 			//Vector2 Facing() const {return facing;}

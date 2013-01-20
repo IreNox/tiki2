@@ -15,6 +15,7 @@ using namespace TikiEngine;
 using namespace TikiEngine::Game;
 using namespace TikiEngine::Description;
 
+#pragma region GetStartScene
 inline Scene* GetStartScene(Engine* engine)
 {
 #if _DEBUG
@@ -27,12 +28,12 @@ inline Scene* GetStartScene(Engine* engine)
 
 	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
-		scene = new SceneTim(engine);
+		//scene = new SceneTim(engine);
 		//scene = new SceneMark(engine);
 		//scene = new SceneAdrian(engine);
 
-		//scene = new SceneLevel(engine);
-		//((SceneLevel*)scene)->LoadLevel(1);
+		scene = new SceneLevel(engine);
+		((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
@@ -52,10 +53,12 @@ inline Scene* GetStartScene(Engine* engine)
 	return new SceneMenuMain(engine);
 #endif
 }
+#pragma endregion
 
+#pragma region WinMain
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(1433);
+	//_CrtSetBreakAlloc(24614);
 
 	{
 #if _DEBUG
@@ -107,3 +110,4 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 
 	return 0;
 }
+#pragma endregion

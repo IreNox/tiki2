@@ -114,7 +114,7 @@ namespace TikiEngine
 
 					if (Vector2::Distance(projPos, curBot->Pos()) < rad)
 					{
-						curBot->ReduceHealth(damage);
+						curBot->ReduceHealth(damage, true);
 						if (curBot->IsDead()) shooter->KilledBot(curBot);
 					}
 				}

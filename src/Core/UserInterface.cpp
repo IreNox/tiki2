@@ -521,8 +521,7 @@ namespace TikiEngine
 
 		void GUIImage::SetTexture(ITexture* texture)
 		{
-			SafeRelease(&this->texture);
-			SafeAddRef(texture, &this->texture);
+			SafeChangeRef(&this->texture, texture);
 
 			if (texture)
 			{

@@ -41,7 +41,7 @@ namespace TikiEngine
                     impacted = true;
                     dead = true;
 
-                    bot->ReduceHealth(damage);
+                    bot->ReduceHealth(damage, true);
 
 					if (bot->EntityType() != ET_Building && bot->EntityType() != ET_Tower)
 					{

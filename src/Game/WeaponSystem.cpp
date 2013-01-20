@@ -33,6 +33,7 @@ namespace TikiEngine
 			{
 				MachineGunDescription mgDesc;
 				mgDesc.Damage = desc.StartMGDamage;
+				mgDesc.FiringFrequency = (float)desc.StartMGFireRate;
 				currentWeapon = new MachineGun(owner, mgDesc);
 			}
 			else

@@ -125,8 +125,13 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Health
-		void TikiBot::ReduceHealth(double val)
+		void TikiBot::ReduceHealth(double val, bool useArmor)
 		{
+			if (useArmor)
+			{
+				val -= armor;
+			}
+
 			health -= val;
 
 			if (health <= 0)

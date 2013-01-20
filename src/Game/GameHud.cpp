@@ -114,10 +114,17 @@ namespace TikiEngine
 
 			SafeRelease(&windowSkills);
 			SafeRelease(&windowSkillUpgrades);
+			SafeRelease(&windowBuildSlot);
 
 			SafeRelease(&windowResources);
 
-			SafeRelease(&windowBuildSlot);
+			SafeRelease(&imgMinimap);
+
+			SafeRelease(&texInfo);
+			SafeRelease(&texHealth);
+			SafeRelease(&texShield);
+			SafeRelease(&texMinimapMop);
+			SafeRelease(&texMinimapHero);
 		}
 		#pragma endregion
 

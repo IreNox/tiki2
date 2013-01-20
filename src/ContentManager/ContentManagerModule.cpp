@@ -155,6 +155,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{
+				loadedResources[i].fileName.erase();
 				loadedResources[i].resource->Release();
 				i++;
 			}

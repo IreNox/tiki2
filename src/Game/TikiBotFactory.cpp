@@ -96,6 +96,8 @@ namespace TikiEngine
 			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 30;			
 			botDesc.EntityType = ET_Bot;
+			botDesc.StartMGDamage = 5;
+			botDesc.StartMGFireRate = 5;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -115,12 +117,15 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
+			botDesc.Armor = 2;
 			botDesc.Faction = 1;
 			botDesc.Height = 5.0f;
 			botDesc.Radius = 3.0f;
-			botDesc.MaxHealth = 100;	
+			botDesc.MaxHealth = 300;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
+			botDesc.StartMGDamage = 20;
+			botDesc.StartMGFireRate = 3;
 
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 			go->GetSceneGraphElement().SetDynamic();
@@ -139,10 +144,11 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"gatecontrol"));
 
 			TikiBotDescription botDesc;
+			botDesc.Armor = 3;
 			botDesc.Faction = 1;
 			botDesc.Height = 8.0f;
 			botDesc.Radius = 8.0f; //5.0f;
-			botDesc.MaxHealth = 100;	
+			botDesc.MaxHealth = 900;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
 
@@ -169,12 +175,15 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
+			botDesc.Armor = 3;
 			botDesc.Faction = 0;
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 300;
 			botDesc.EntityType = ET_Hero;
 			botDesc.MaxSpeed = 7.0f;
+			botDesc.StartMGDamage = 6;
+			botDesc.StartMGFireRate = 6;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -203,7 +212,9 @@ namespace TikiEngine
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 1.8f;
 			botDesc.MaxHealth = 30;
+			botDesc.StartMGDamage = 5;
 			botDesc.EntityType = ET_Bot;
+			botDesc.StartMGFireRate = 5;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -223,12 +234,14 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
+			botDesc.Armor = 2;
 			botDesc.Faction = 0;
 			botDesc.Height = 5.0f;
 			botDesc.Radius = 2.0f;
-			botDesc.MaxHealth = 100;
+			botDesc.MaxHealth = 300;
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
+			botDesc.StartMGFireRate = 3;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -245,10 +258,11 @@ namespace TikiEngine
 			playerBase->MainBuilding = go;
 
 			TikiBotDescription botDesc;
+			botDesc.Armor = 5;
 			botDesc.Faction = 0;
 			botDesc.Height = 10.0f;
 			botDesc.Radius = 5.0f;
-			botDesc.MaxHealth = 100;	
+			botDesc.MaxHealth = 2000;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
 

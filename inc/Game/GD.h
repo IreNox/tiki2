@@ -46,9 +46,9 @@ const double HeroNeededXPFirstLevelUp = 100.0;
 #pragma endregion
 
 #pragma region Rewards
-const float ResKillBot = 10.0f;
+const float ResKillBot = 1.0f;
 const float ResKillMesh = 10.0f;
-const float ResKillTower = 100.0f;
+const float ResKillTower = 150.0f;
 const float ResKillBuilding = 250.0f;
 
 const double XPKillBot = 15.0;
