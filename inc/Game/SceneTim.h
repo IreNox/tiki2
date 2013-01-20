@@ -62,6 +62,8 @@ namespace TikiEngine
 			PPDepthOfField* dof;
 			//PPScreenSpaceAmbientOcclusion* ssao;
 
+			bool showRenderTargets;
+
 		};
 	}
 }

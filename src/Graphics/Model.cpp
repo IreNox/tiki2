@@ -56,13 +56,27 @@ namespace TikiEngine
 
 			constantBufferElements = baseModel->constantBufferElements;
 
+			Dictionary<IAnimation*, IAnimation*> dict;
+
 			i = 0;
 			while (i < baseModel->animations.Count())
 			{
-				animations.Add(
-					new TikiAnimation(baseModel->animations[i])
-				);
+				TikiAnimation* ani = new TikiAnimation(baseModel->animations[i]);
 
+				dict.Add(baseModel->animations[i], ani);
+				animations.Add(ani);
+				i++;
+			}
+
+			i = 0;
+			while (i < baseModel->animations.Count())
+			{
+				if (animations[i]->GetNextAnimation())
+				{
+					animations[i]->SetNextAnimation(
+						dict[animations[i]->GetNextAnimation()]
+					);
+				}
 				i++;
 			}
 

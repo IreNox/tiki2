@@ -34,6 +34,8 @@
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
     <None Include="bin\Data\Models\gatecontrol.tiki" />
+    <None Include="bin\Data\Models\heroplatform.tiki" />
+    <None Include="bin\Data\Models\mainbuilding.tiki" />
     <None Include="bin\Data\Models\tower_player.tiki" />
     <None Include="bin\Data\Models\tree01.tiki" />
     <None Include="bin\Data\Models\tree02.tiki" />
@@ -56,8 +58,6 @@
     <None Include="bin\Data\Meshes\rocket.obj" />
     <None Include="bin\Data\Models\base_spawn.tiki" />
     <None Include="bin\Data\Models\env_pipe_01.tiki" />
-    <None Include="bin\Data\Models\building_main.tiki" />
-    <None Include="bin\Data\Models\hero_platform.tiki" />
     <None Include="bin\Data\Models\replaceme_cube.tiki" />
     <None Include="bin\Data\Models\rock_01.tiki" />
     <None Include="bin\Data\Models\rock_02.tiki" />
@@ -106,7 +106,6 @@
     <None Include="bin\Data\Textures\particle\smoke.dds" />
     <None Include="bin\Data\Textures\particle\star.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_diff.dds" />
-    <None Include="bin\Data\Textures\Playerbase\playerbase_light.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_normal.dds" />
     <None Include="bin\Data\Textures\Playerbase\playerbase_spec.dds" />
     <None Include="bin\Data\Textures\random.dds" />

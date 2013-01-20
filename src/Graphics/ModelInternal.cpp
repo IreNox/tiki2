@@ -867,10 +867,8 @@ namespace TikiEngine
 		{
 			timeStamps = copy->timeStamps;
 
-#if _DEBUG
-			if (nextAnimation != 0)
-				throw "Not implemented Exception";
-#endif
+			// See Model::CreateInstance for mapping
+			nextAnimation = copy->nextAnimation;
 		}
 
 		TikiAnimation::~TikiAnimation()

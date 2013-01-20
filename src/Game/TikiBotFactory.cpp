@@ -148,7 +148,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
-			bot->SetScale(1.0f);
+			bot->SetScale(0.01f);
 			go->GetSceneGraphElement().SetDynamic();
 
 			gameState->GetScene()->AddElement(go);
@@ -231,18 +231,16 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Tower;
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
-			bot->SetScale(2.0f);
+			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
 			
-			
-
 			gameState->GetScene()->AddElement(go);
 		}
 
 		void TikiBotFactory::CreatePlayerMainBuilding(GameObject* go)
 		{
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"building_main"));
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"mainbuilding"));
 
 			playerBase->MainBuilding = go;
 
@@ -256,7 +254,7 @@ namespace TikiEngine
 
 			TikiBot* bot = new TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
-			bot->SetScale(10.0f);
+			bot->SetScale(0.01f);
 
 			go->GetSceneGraphElement().SetDynamic();
 
@@ -265,7 +263,8 @@ namespace TikiEngine
 
 		void TikiBotFactory::CreatePlayerHeroPlatform(GameObject* go)
 		{
-			go->SModel(gameState->GetEngine()->content->LoadModel(L"hero_platform"));
+			go->PRS.SScale() = 0.01f;
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"heroplatform"));
 
 			playerBase->HeroPlatform = go;
 

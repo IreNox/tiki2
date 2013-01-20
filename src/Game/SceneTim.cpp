@@ -32,7 +32,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 
 		SceneTim::SceneTim(Engine* engine)
-			: Scene(engine)
+			: Scene(engine), showRenderTargets(true)
 		{
 		}
 
@@ -50,7 +50,7 @@ namespace TikiEngine
 			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
 
 			GameObject* go = new GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"tower_player"));
+			go->SModel(engine->content->LoadModel(L"mainbuilding"));
 			go->PRS.SScale() = 0.01f;
 			go->PRS.SPosition() = Vector3(0, 0, 0);
 
@@ -238,20 +238,23 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetNormalTarget(),
-			//	Rectangle(10, 10, 200, 180)
-			//);
+			if (showRenderTargets)
+			{
+				engine->sprites->Draw(
+					engine->graphics->GetNormalTarget(),
+					Rectangle(500, 10, 200, 180)
+				);
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetLightTarget(),
-			//	Rectangle(10, 200, 200, 180)
-			//);
+				engine->sprites->Draw(
+					engine->graphics->GetLightTarget(),
+					Rectangle(500, 200, 200, 180)
+				);
 
-			//engine->sprites->Draw(
-			//	engine->graphics->GetScreenTarget(),
-			//	Rectangle(10, 390, 200, 180)
-			//);
+				engine->sprites->Draw(
+					engine->graphics->GetScreenTarget(),
+					Rectangle(500, 390, 200, 180)
+				);
+			}
 			
 			//Vector2 mouse = Vector2(1.1f - args.Update.Input.MousePosition.X + 0.1f, 1.1f - args.Update.Input.MousePosition.Y + 0.1f);
 			//Vector2 rot = Vector2(0.3f * mouse.X, 0.4f * mouse.Y);
@@ -288,6 +291,8 @@ namespace TikiEngine
 			//	Vector4(pos.X, pos.Y, pos.Z, 1.0f),
 			//	vp
 			//);
+
+			if (args.Input.GetKeyReleased(KEY_F3)) showRenderTargets = !showRenderTargets;
 
 			//dof->GetPasses()[0]->GetShader()->SetVector4("value", pos2);
 
