@@ -44,17 +44,6 @@ namespace TikiEngine
 			prFire->AddRef();
 
 
-            // explosion
-            peExplosion = new PEExplosion(engine);
-            peExplosion->SIsAlive(false);
-            peExplosion->AddRef();
-
-            prExplosion = engine->librarys->CreateComponent<IParticleRenderer>(this);
-            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/explosion")); 
-            prExplosion->SetParticleEffect(peExplosion);
-            prExplosion->AddRef();
-
-
 			// Shockwave
 			peShockwave = new PEShockWave(engine);
 			peShockwave->SIsAlive(false);
@@ -64,6 +53,17 @@ namespace TikiEngine
 			prShockWave->SetTexture(engine->content->LoadTexture(L"particle/Shockwave")); 
 			prShockWave->SetParticleEffect(peShockwave);
 			prShockWave->AddRef();
+
+
+            // explosion
+            peExplosion = new PEExplosion(engine);
+            peExplosion->SIsAlive(false);
+            peExplosion->AddRef();
+
+            prExplosion = engine->librarys->CreateComponent<IParticleRenderer>(this);
+            prExplosion->SetTexture(engine->content->LoadTexture(L"particle/explosion")); 
+            prExplosion->SetParticleEffect(peExplosion);
+            prExplosion->AddRef();
 
 
 			// Blood

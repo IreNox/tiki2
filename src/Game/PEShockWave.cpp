@@ -22,7 +22,7 @@ namespace TikiEngine
 		void PEShockWave::CreateParticle(Particle* particle)
 		{
 			particle->Color = Color(1, 0.8f, 0.5f, 0);
-			particle->Size = Vector2(1, 1); //Vector2::One / 1.0f;
+			particle->Size = Vector2(0.2f, 0.2f); //Vector2::One / 1.0f;
 			particle->Velocity = Vector3::Zero; 
 			particle->Rotation = 0;
 		}
@@ -30,7 +30,7 @@ namespace TikiEngine
 		void PEShockWave::UpdateParticle(Particle* particle)
 		{
 			particle->Color.A = (1 - particle->Age);
-			particle->Size += (1 - particle->Age) * 0.4f;
+			particle->Size += ((1-particle->Age) * 0.4f);
 
 		}
 

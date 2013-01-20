@@ -168,6 +168,36 @@ namespace TikiEngine
 					unitSelection->MoveCommand(target, info.Point, args.Input.GetKey(KEY_T), args.Input.GetKey(KEY_LSHIFT));
 				}
 			}
+
+			if (args.Input.GetKeyPressed(KEY_R))
+			{
+				Vector3 target = Vector3::Zero;
+				Ray ray = scene->mainCamera->ScreenPointToRay(args.Input.MousePositionDisplay);
+				RaycastHit info;
+				if (engine->physics->RayCast(ray, &info))
+					target = info.Point;
+
+				for (UInt32 i = 0; i < unitSelection->GetSelectedUnits()->Count(); i++)
+				{
+					TikiBot* bot = unitSelection->GetSelectedUnits()->Get(i)->GetComponent<TikiBot>();
+					if (bot != 0 && bot->EntityType() == ET_Hero)
+					{
+						ProjectileDescription desc;
+						desc.Target = target; 
+						desc.Shooter = bot;
+						desc.Origin = bot->Pos3D();
+						desc.Heading = bot->Heading();
+						desc.ShooterID = bot->ID();
+						desc.Damage = 20; 
+						desc.LifeTime = 10.0f;
+						GameObject* go = new GameObject(engine);
+						Rocket* proj = new Rocket(this, go);
+						proj->Init(desc, 30, false);
+						projectiles->AddProjectile(proj);
+					}
+				}
+			}
+
 		}
 		#pragma endregion
 
