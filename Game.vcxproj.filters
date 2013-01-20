@@ -452,6 +452,9 @@
     <ClInclude Include="inc\Game\Cheater.h">
       <Filter>Headerdateien\Gameplay</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PERoundSparks.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -693,6 +696,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\Cheater.cpp">
       <Filter>Quelldateien\Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PERoundSparks.cpp">
+      <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

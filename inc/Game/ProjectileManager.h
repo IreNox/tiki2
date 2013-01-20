@@ -11,6 +11,7 @@
 #include "Game/PEExplosion.h"
 #include "Game/PEBlood.h"
 #include "Game/PEShockWave.h"
+#include "Game/PERoundSparks.h"
 
 #include "Core/IParticleRenderer.h"
 
@@ -53,6 +54,9 @@ namespace TikiEngine
 
 			PEShockWave* peShockwave;
 			IParticleRenderer* prShockWave;
+
+			PERoundSparks* peRoundSparks;
+			IParticleRenderer* prRoundSparks;
 
 			struct ProjInfo
 			{

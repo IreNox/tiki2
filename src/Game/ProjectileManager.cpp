@@ -65,6 +65,16 @@ namespace TikiEngine
             prExplosion->SetParticleEffect(peExplosion);
             prExplosion->AddRef();
 
+			// round sparks
+			peRoundSparks = new PERoundSparks(engine);
+			peRoundSparks->SIsAlive(false);
+			peRoundSparks->AddRef();
+
+			prRoundSparks = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prRoundSparks->SetTexture(engine->content->LoadTexture(L"particle/roundsparks")); 
+			prRoundSparks->SetParticleEffect(peRoundSparks);
+			prRoundSparks->AddRef();
+
 
 			// Blood
 			peBlood = new PEBlood(engine);
@@ -103,6 +113,9 @@ namespace TikiEngine
 
 			SafeRelease(&peShockwave);
 			SafeRelease(&prShockWave);
+
+			SafeRelease(&peRoundSparks);
+			SafeRelease(&prRoundSparks);
 
 		}
 		#pragma endregion
@@ -173,8 +186,14 @@ namespace TikiEngine
 							)
 						);
 
-
-
+						peRoundSparks->Trigger(
+							1,
+							5,
+							Matrix::TransformCoordinate(
+							Vector3(0, 0, 0),
+							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
+							)
+						);
 
                     }
 

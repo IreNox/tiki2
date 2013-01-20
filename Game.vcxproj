@@ -33,6 +33,7 @@
     <ClInclude Include="inc\Game\PEFire.h" />
     <ClInclude Include="inc\Game\PEFlash.h" />
     <ClInclude Include="inc\Game\PEHealAura.h" />
+    <ClInclude Include="inc\Game\PERoundSparks.h" />
     <ClInclude Include="inc\Game\PEShockWave.h" />
     <ClInclude Include="inc\Game\PESmoke.h" />
     <ClInclude Include="inc\Game\PESparks.h" />
@@ -166,6 +167,7 @@
     <ClCompile Include="src\Game\PEFire.cpp" />
     <ClCompile Include="src\Game\PEFlash.cpp" />
     <ClCompile Include="src\Game\PEHealAura.cpp" />
+    <ClCompile Include="src\Game\PERoundSparks.cpp" />
     <ClCompile Include="src\Game\PEShockWave.cpp" />
     <ClCompile Include="src\Game\PEShootMG.cpp" />
     <ClCompile Include="src\Game\PathPlanner.cpp" />

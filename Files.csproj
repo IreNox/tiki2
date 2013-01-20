@@ -102,6 +102,7 @@
     <None Include="bin\Data\Textures\particle\line_sparks.dds" />
     <None Include="bin\Data\Textures\particle\mg.dds" />
     <None Include="bin\Data\Textures\particle\plasma.dds" />
+    <None Include="bin\Data\Textures\particle\roundsparks.dds" />
     <None Include="bin\Data\Textures\particle\Shockwave.dds" />
     <None Include="bin\Data\Textures\particle\smoke.dds" />
     <None Include="bin\Data\Textures\particle\star.dds" />
