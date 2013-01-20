@@ -91,7 +91,7 @@ namespace TikiEngine
 				i++;
 			}
 
-#if TIKI_ENGINE
+#ifdef TIKI_ENGINE
 			Vector3 bounds;
 			i = 0;
 			while (i < 3)

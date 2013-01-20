@@ -33,8 +33,8 @@ typedef const wchar_t* wcstring;
 #define MATH_PI			3.141592654
 #define MATH_TWOPI		6.283185307
 
-#ifndef TIKI_EDITOR
-#define TIKI_ENGINE
+#ifndef TIKI_EDITOR 
+#define TIKI_ENGINE 
 #endif
 
 #define TIKI_CULLING 0

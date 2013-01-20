@@ -61,7 +61,7 @@ namespace TikiEngine
 				bound = Matrix::TransformCoordinate(model->GetBounds(), mat);
 			}
 
-#if TIKI_ENGINE
+#ifdef TIKI_ENGINE
 			sgElement.SetBounds(
 				bound.XZ()
 			);
