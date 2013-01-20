@@ -91,6 +91,7 @@ namespace TikiEngine
 				i++;
 			}
 
+#if TIKI_ENGINE
 			Vector3 bounds;
 			i = 0;
 			while (i < 3)
@@ -99,6 +100,7 @@ namespace TikiEngine
 				i++;
 			}
 			model->SetBounds(bounds);
+#endif
 
 			i = 0;
 			while (i < animationIds.Count())
