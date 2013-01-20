@@ -64,10 +64,10 @@ const double XPKillBuilding = 35.0;
 #define SPAWN_PLAYER_COUNT 5
 #define SPAWN_ENEMY_COUNT 7
 
-#define SPAWN_INTERVAL 60.0
-#define SPAWN_UNIT_INTERVAL 0.75
+#define SPAWN_INTERVAL 20.0
+#define SPAWN_UNIT_INTERVAL 0.5
 #pragma endregion
 
 #pragma region Charges
-#define TOWER_BUILD_PRICE 150.0
+#define TOWER_BUILD_PRICE 100.0
 #pragma endregion
