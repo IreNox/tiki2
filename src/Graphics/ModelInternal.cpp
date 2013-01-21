@@ -99,6 +99,7 @@ namespace TikiEngine
 				bounds.arr[i] = abs(min.arr[i] - max.arr[i]);
 				i++;
 			}
+
 			model->SetBounds(bounds);
 #endif
 
@@ -1094,7 +1095,7 @@ namespace TikiEngine
 					continue;
 
 				anim->Update(args.Time.ElapsedTime);
-				if(anim->IsFinished())
+				if(anim->IsFinished() && blendTarget == 0)
 				{
 					BlendAnimation(anim->GetNextAnimation());
 					break;

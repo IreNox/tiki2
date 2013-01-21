@@ -21,8 +21,8 @@ namespace TikiEngine
 		//this->walk->SetAnimationSpeed(2.0); //zweimal so schnell wie normal
 
 		this->attack->SetDuration(0.21);
-		//this->attack->SetLoop(false);
-		//this->attack->SetNextAnimation(this->idle);
+		this->attack->SetLoop(false);
+		this->attack->SetNextAnimation(this->idle);
 
 		this->run->SetDuration(0.75); 
 

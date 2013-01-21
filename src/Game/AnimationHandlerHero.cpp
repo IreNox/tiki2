@@ -15,6 +15,9 @@ namespace TikiEngine
 		this->idle = model->GetAnimation("idle01");
 		this->idle->SetDuration(2.0);
 
+		this->attack->SetLoop(false);
+		this->attack->SetNextAnimation(this->idle);
+
 	}
 	AnimationHandlerHero::~AnimationHandlerHero()
 	{
