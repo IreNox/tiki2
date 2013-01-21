@@ -34,6 +34,10 @@ namespace TikiEngine
 			{
 				gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys()->IncementXP(1000000);
 			}
+			else if (cheat == L"krumnovovov")
+			{
+				throw "dead";
+			}
 		}
 	}
 }

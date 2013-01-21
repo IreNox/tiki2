@@ -103,6 +103,8 @@ namespace TikiEngine
 			
 			double resource;
 
+			bool followHero;
+
 			GameHud* hud;
 			Cheater* cheater;
 			SceneLevel* scene;

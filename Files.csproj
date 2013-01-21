@@ -43,6 +43,7 @@
     <None Include="bin\Data\Models\tree04.tiki" />
     <None Include="bin\Data\Models\tree05.tiki" />
     <None Include="bin\Data\Models\tree06.tiki" />
+    <None Include="bin\Data\Models\tree07.tiki" />
     <None Include="bin\Data\Models\tree08.tiki" />
     <None Include="bin\Data\Models\unit_hero.tiki" />
     <None Include="bin\Data\Models\unit_marine.tiki" />

@@ -126,8 +126,8 @@ namespace TikiEngine
 			platformTrigger->SetTrigger(true);
 
 			Hero = new GameObject(engine);
-			Hero->PRS.SPosition() = heroStartPos;
 			gameState->GetBotFactory()->CreatePlayerHero(Hero);
+			Hero->GetComponent<TikiBot>()->GetController()->SetCenter(gameState->GetBotFactory()->GetPos(heroStartPos, 10.0f));
 
 			this->Hero->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
 			this->MainBuilding->GetComponent<TikiBot>()->OnDeath.AddHandler(this);

@@ -30,7 +30,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		GameState::GameState(Engine* engine, SceneLevel* scene)
-			: EngineObject(engine), scene(scene), resource(0.0)
+			: EngineObject(engine), scene(scene), resource(0.0), followHero(false)
 #if _DEBUG
 			, DrawNavMesh(false), DrawRenderTarget(false), DrawPhysX(false), DrawHud(true)
 #endif
@@ -148,7 +148,7 @@ namespace TikiEngine
 #if _DEBUG
 			if (DrawHud) hud->Update(args);
 #else
-			hud->Draw(args);
+			hud->Update(args);
 #endif
 
 			botFactory->Update(args);
@@ -164,9 +164,11 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F6)) DrawHud = !DrawHud;
 			#endif
 
+			if (args.Input.GetKeyPressed(KEY_Z)) followHero = !followHero;
+
 			CameraRTS* rtsCam = scene->GetMainCamera()->GetGameObject()->GetComponent<CameraRTS>();	
 			TikiBot* heroBot = GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>();
-			if(heroBot->IsAlive() && args.Input.GetKey(KEY_SPACE))
+			if(heroBot->IsAlive() && (args.Input.GetKey(KEY_SPACE) || followHero))
 				rtsCam->SetCameraTarget(heroBot->GetGameObject());
 			else
 				rtsCam->ClearCameraTarget();

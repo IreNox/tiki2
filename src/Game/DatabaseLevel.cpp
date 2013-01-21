@@ -353,7 +353,6 @@ namespace TikiEngine
 			case 19:
 			case 20:
 			case 21:
-			case 22:
 				{
 					wostringstream s;
 					s << L"tree0" << (type - 13);

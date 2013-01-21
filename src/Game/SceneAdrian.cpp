@@ -112,10 +112,11 @@ namespace TikiEngine
 				Rectangle(10, 390, 200, 180)
 				);
 
-
+#if _DEBUG
 			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitX, Color::Red);
 			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitY, Color::Green);
 			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitZ, Color::Blue);
+#endif
 
 		}
 
