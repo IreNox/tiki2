@@ -24,12 +24,12 @@ namespace TikiEngine
         void PEHealAura::CreateParticle(Particle* particle)
         {
             float r = Random(0, TwoPi);
-            float circleSize = Random(0, 50);
+            float circleSize = Random(0, 200);
             particle->Position = Vector3(sinf(r) * circleSize, 0, cosf(r) * circleSize);
             particle->Color = Color::White;
             particle->Color.A = 0;
             particle->Rotation = 0;
-            particle->Size = Vector2::One / 15;
+            particle->Size = Vector2::One / 4;
             particle->Velocity = Vector3::UnitY * 50;
 
         }

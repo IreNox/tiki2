@@ -21,7 +21,7 @@ namespace TikiEngine
 		inline Vector3 RandomPointOnSpiral()
 		{
 
-			if (radius > 8 * TwoPi)
+			if (radius > 16 * TwoPi)
 			{
 				inc = 0.0f;
 				radius = 0.0f;
