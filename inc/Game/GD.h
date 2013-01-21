@@ -20,7 +20,7 @@ const double SkillHealAuraHealPerSecound[] = { 4.0f, 6.0f, 8.0f, 10.0f };
 #define SKILL_ROCKET_DESC \
 	4.5, 	/* Cooldown */ \
 	25.0f, 	/* Range */ \
-	20.0f, 	/* AOERange */ \
+	10.0f, 	/* AOERange */ \
 	2000.0,	/* Duration */ \
 	4		/* MaxLevel */
 const double SkillRocketDamage[] = { 10.0f, 15.0f, 20.0f, 25.0f };
@@ -46,6 +46,7 @@ const double HeroNeededXPFirstLevelUp = 100.0;
 
 #define HERO_CALC_DEADPRICE(money, level) \
 	(money / 100.0) * (10.0 + level + 1)
+	
 #pragma endregion
 
 #pragma region Rewards
@@ -75,7 +76,7 @@ const float CameraMinAngle = 0.788f; // 45°
 #define SPAWN_PLAYER_COUNT 5
 #define SPAWN_ENEMY_COUNT 7
 
-#define SPAWN_INTERVAL 20.0
+#define SPAWN_INTERVAL 25.0
 #define SPAWN_UNIT_INTERVAL 0.5
 #pragma endregion
 
