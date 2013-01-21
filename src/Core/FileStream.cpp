@@ -70,7 +70,7 @@ namespace TikiEngine
 			fwrite(&byte, 1, 1, handle);
 		}
 
-		void FileStream::Write(void* data, Int32 offset, UPInt bytesCount)
+		void FileStream::Write(const void* data, Int32 offset, UPInt bytesCount)
 		{
 			Byte* ptr = (Byte*)data;
 			ptr += offset;

@@ -54,7 +54,7 @@ namespace TikiEngine
 			dataByte[position] = byte;
 		}
 
-		void MemoryStream::Write(void* data, Int32 offset, UPInt bytesCount)
+		void MemoryStream::Write(const void* data, Int32 offset, UPInt bytesCount)
 		{
 			UPInt index = position + offset;
 			UPInt indexEnd = index + bytesCount;

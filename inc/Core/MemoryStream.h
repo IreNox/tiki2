@@ -20,7 +20,7 @@ namespace TikiEngine
 			void Read(void* data, Int32 offset, UPInt bytesCount);
 
 			void WriteByte(Byte byte);
-			void Write(void* data, Int32 offset, UPInt bytesCount);
+			void Write(const void* data, Int32 offset, UPInt bytesCount);
 
 			UPInt GetLength();
 			void SetLength(UPInt len);

@@ -145,9 +145,9 @@ namespace TikiEngine
 			void WriteToStream(Stream* stream)
 			{
 				writeInitData();
-				writeToData();
+				writeToData(stream);
 
-				stream->Write(data, 0, binaryHeader.FileLength);
+				//stream->Write(data, 0, binaryHeader.FileLength);
 			}
 			#pragma endregion
 
@@ -217,20 +217,24 @@ namespace TikiEngine
 				binaryHeader.FileLength = pos;
 			}
 
-			void writeToData()
+			void writeToData(Stream* stream)
 			{
-				data = new Byte[binaryHeader.FileLength];
-				Byte* writeTo = data;
+				stream->Write(&binaryHeader, 0, sizeof(THeaderType));
+				stream->Write(binaryParts.GetInternalData(), 0, sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount);
 
-				UInt32 i = sizeof(THeaderType);
-				memcpy(writeTo, &binaryHeader, i);
-				writeTo += i;
+				//data = new Byte[binaryHeader.FileLength];
+				//Byte* writeTo = data;
 
-				i = sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount;
-				memcpy(writeTo, binaryParts.GetInternalData(), i);
-				writeTo += i;
 
-				i = 0;
+				//UInt32 i = sizeof(THeaderType);
+				//memcpy(writeTo, &binaryHeader, i);
+				//writeTo += i;
+
+				//i = sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount;
+				//memcpy(writeTo, binaryParts.GetInternalData(), i);
+				//writeTo += i;
+
+				UInt32 i = 0;
 				while (i < binaryParts.Count())
 				{				
 					TikiBinaryPart<TPartType>& bp = binaryParts.GetRef(i);
@@ -238,10 +242,11 @@ namespace TikiEngine
 
 					if (len > 0)
 					{
-						memcpy(writeTo, binaryPartPointer.Get(i), len);
+						//memcpy(writeTo, binaryPartPointer.Get(i), len);
+						stream->Write(binaryPartPointer.Get(i), 0, len);
 					}
 
-					writeTo += len;
+					//writeTo += len;
 					i++;
 				}		
 			}
