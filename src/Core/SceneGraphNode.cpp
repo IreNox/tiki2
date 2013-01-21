@@ -353,8 +353,20 @@ namespace TikiEngine
 		}
 		else
 		{
-			this->parent->childDataCount--;
-			return this->parent->UpdatePosition(go);
+#if _DEBUG
+			if(parent == 0)
+			{
+				_CrtDbgBreak();
+			}
+			else
+			{		
+#endif
+
+				this->parent->childDataCount--;
+				return this->parent->UpdatePosition(go);
+#if _DEBUG
+			}	
+#endif
 		}
 	}
 

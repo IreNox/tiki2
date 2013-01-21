@@ -186,7 +186,7 @@
             this.buttonAddPointWaypoint.Name = "buttonAddPointWaypoint";
             this.buttonAddPointWaypoint.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPointWaypoint.TabIndex = 19;
-            this.buttonAddPointWaypoint.Text = "Enemy: Waypoint";
+            this.buttonAddPointWaypoint.Text = "Enemy: Waypoint (2)";
             this.buttonAddPointWaypoint.UseVisualStyleBackColor = true;
             this.buttonAddPointWaypoint.Click += new System.EventHandler(this.buttonAddPointWaypoint_Click);
             // 
@@ -198,7 +198,7 @@
             this.buttonAddPointSpawnpoint.Name = "buttonAddPointSpawnpoint";
             this.buttonAddPointSpawnpoint.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPointSpawnpoint.TabIndex = 18;
-            this.buttonAddPointSpawnpoint.Text = "Enemy: Spawnpoint";
+            this.buttonAddPointSpawnpoint.Text = "Enemy: Spawnpoint (3)";
             this.buttonAddPointSpawnpoint.UseVisualStyleBackColor = true;
             this.buttonAddPointSpawnpoint.Click += new System.EventHandler(this.buttonAddPointSpawnpoint_Click);
             // 
@@ -219,7 +219,7 @@
             this.buttonAddPlayerBuilding.Name = "buttonAddPlayerBuilding";
             this.buttonAddPlayerBuilding.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPlayerBuilding.TabIndex = 16;
-            this.buttonAddPlayerBuilding.Text = "Player: Main Building";
+            this.buttonAddPlayerBuilding.Text = "Player: Main Building (11)";
             this.buttonAddPlayerBuilding.UseVisualStyleBackColor = true;
             this.buttonAddPlayerBuilding.Click += new System.EventHandler(this.buttonAddPlayerBuilding_Click);
             // 
@@ -231,7 +231,7 @@
             this.buttonAddEnemyBuilding.Name = "buttonAddEnemyBuilding";
             this.buttonAddEnemyBuilding.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnemyBuilding.TabIndex = 15;
-            this.buttonAddEnemyBuilding.Text = "Enemy: Gate Control";
+            this.buttonAddEnemyBuilding.Text = "Enemy: Gate Control (10)";
             this.buttonAddEnemyBuilding.UseVisualStyleBackColor = true;
             this.buttonAddEnemyBuilding.Click += new System.EventHandler(this.buttonAddEnemyBuilding_Click);
             // 
@@ -252,7 +252,7 @@
             this.buttonAddPlayerMop.Name = "buttonAddPlayerMop";
             this.buttonAddPlayerMop.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPlayerMop.TabIndex = 12;
-            this.buttonAddPlayerMop.Text = "Player: Mop";
+            this.buttonAddPlayerMop.Text = "Player: Mop (1)";
             this.buttonAddPlayerMop.UseVisualStyleBackColor = true;
             this.buttonAddPlayerMop.Click += new System.EventHandler(this.buttonAddPlayerMop_Click);
             // 
@@ -264,7 +264,7 @@
             this.buttonAddEnvRock03.Name = "buttonAddEnvRock03";
             this.buttonAddEnvRock03.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnvRock03.TabIndex = 11;
-            this.buttonAddEnvRock03.Text = "Environment: Rock 03";
+            this.buttonAddEnvRock03.Text = "Environment: Rock 03 (8)";
             this.buttonAddEnvRock03.UseVisualStyleBackColor = true;
             this.buttonAddEnvRock03.Click += new System.EventHandler(this.buttonAddEnvRock03_Click);
             // 
@@ -276,7 +276,7 @@
             this.buttonAddEnvRock02.Name = "buttonAddEnvRock02";
             this.buttonAddEnvRock02.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnvRock02.TabIndex = 10;
-            this.buttonAddEnvRock02.Text = "Environment: Rock 02";
+            this.buttonAddEnvRock02.Text = "Environment: Rock 02 (7)";
             this.buttonAddEnvRock02.UseVisualStyleBackColor = true;
             this.buttonAddEnvRock02.Click += new System.EventHandler(this.buttonAddEnvRock02_Click);
             // 
@@ -288,7 +288,7 @@
             this.buttonAddEnvRock01.Name = "buttonAddEnvRock01";
             this.buttonAddEnvRock01.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnvRock01.TabIndex = 9;
-            this.buttonAddEnvRock01.Text = "Environment: Rock 01";
+            this.buttonAddEnvRock01.Text = "Environment: Rock 01 (6)";
             this.buttonAddEnvRock01.UseVisualStyleBackColor = true;
             this.buttonAddEnvRock01.Click += new System.EventHandler(this.buttonAddEnvRock01_Click);
             // 
@@ -300,7 +300,7 @@
             this.buttonAddEnvPipes.Name = "buttonAddEnvPipes";
             this.buttonAddEnvPipes.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnvPipes.TabIndex = 8;
-            this.buttonAddEnvPipes.Text = "Environment: Pipes";
+            this.buttonAddEnvPipes.Text = "Environment: Pipes (5)";
             this.buttonAddEnvPipes.UseVisualStyleBackColor = true;
             this.buttonAddEnvPipes.Click += new System.EventHandler(this.buttonAddEnvPipes_Click);
             // 
@@ -312,7 +312,7 @@
             this.buttonAddEnvBuilding.Name = "buttonAddEnvBuilding";
             this.buttonAddEnvBuilding.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnvBuilding.TabIndex = 7;
-            this.buttonAddEnvBuilding.Text = "Environment: Building";
+            this.buttonAddEnvBuilding.Text = "Environment: Building (4)";
             this.buttonAddEnvBuilding.UseVisualStyleBackColor = true;
             this.buttonAddEnvBuilding.Click += new System.EventHandler(this.buttonAddEnvBuilding_Click);
             // 
@@ -324,7 +324,7 @@
             this.buttonAddEnemyMop.Name = "buttonAddEnemyMop";
             this.buttonAddEnemyMop.Size = new System.Drawing.Size(219, 23);
             this.buttonAddEnemyMop.TabIndex = 3;
-            this.buttonAddEnemyMop.Text = "Enemy: Mop";
+            this.buttonAddEnemyMop.Text = "Enemy: Mop (2)";
             this.buttonAddEnemyMop.UseVisualStyleBackColor = true;
             this.buttonAddEnemyMop.Click += new System.EventHandler(this.buttonAddEnemyMop_Click);
             // 
@@ -336,7 +336,7 @@
             this.buttonAddPointCamera.Name = "buttonAddPointCamera";
             this.buttonAddPointCamera.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPointCamera.TabIndex = 2;
-            this.buttonAddPointCamera.Text = "Camera Start";
+            this.buttonAddPointCamera.Text = "Camera Start (1)";
             this.buttonAddPointCamera.UseVisualStyleBackColor = true;
             this.buttonAddPointCamera.Click += new System.EventHandler(this.buttonAddPoint_Click);
             // 
@@ -348,7 +348,7 @@
             this.buttonAddPlayerHero.Name = "buttonAddPlayerHero";
             this.buttonAddPlayerHero.Size = new System.Drawing.Size(219, 23);
             this.buttonAddPlayerHero.TabIndex = 1;
-            this.buttonAddPlayerHero.Text = "Player: Hero";
+            this.buttonAddPlayerHero.Text = "Player: Hero (3)";
             this.buttonAddPlayerHero.UseVisualStyleBackColor = true;
             this.buttonAddPlayerHero.Click += new System.EventHandler(this.buttonAddPlayerHero_Click);
             // 
@@ -360,7 +360,7 @@
             this.buttonAddObject.Name = "buttonAddObject";
             this.buttonAddObject.Size = new System.Drawing.Size(219, 23);
             this.buttonAddObject.TabIndex = 0;
-            this.buttonAddObject.Text = "Replace Me Cube";
+            this.buttonAddObject.Text = "Replace Me Cube (0)";
             this.buttonAddObject.UseVisualStyleBackColor = true;
             this.buttonAddObject.Click += new System.EventHandler(this.buttonAddObject_Click);
             // 
@@ -398,7 +398,7 @@
             this.trackBar1.Maximum = 10000;
             this.trackBar1.Minimum = 100;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(223, 45);
+            this.trackBar1.Size = new System.Drawing.Size(223, 42);
             this.trackBar1.TabIndex = 3;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar1.Value = 100;

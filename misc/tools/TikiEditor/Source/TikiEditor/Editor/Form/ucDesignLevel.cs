@@ -30,6 +30,7 @@ namespace TikiEditor.Designer
 
             labelType.Text = obj.GetType().Name;
             labelName.Text = "ID: " + obj.ID.ToString();
+            
         }
 
         private void _addObjectByType(int type)
