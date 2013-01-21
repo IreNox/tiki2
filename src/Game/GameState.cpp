@@ -20,9 +20,12 @@
 #include "Game/TikiBotFactory.h"
 
 #include "Game/Rocket.h"
+#include "Game/CameraRTS.h"
 
 namespace TikiEngine
 {
+	using namespace TikiEngine::Scripts;
+
 	namespace Game
 	{
 		#pragma region Class
@@ -160,6 +163,13 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F4)) DrawPhysX = !DrawPhysX;
 			if (args.Input.GetKeyPressed(KEY_F6)) DrawHud = !DrawHud;
 			#endif
+
+			CameraRTS* rtsCam = scene->GetMainCamera()->GetGameObject()->GetComponent<CameraRTS>();	
+			TikiBot* heroBot = GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>();
+			if(heroBot->IsAlive() && args.Input.GetKey(KEY_SPACE))
+				rtsCam->SetCameraTarget(heroBot->GetGameObject());
+			else
+				rtsCam->ClearCameraTarget();
 
 			if(args.Input.GetMousePressed(MB_Right))
 			{

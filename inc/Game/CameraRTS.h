@@ -17,6 +17,11 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
 
+			void SetCameraTarget(GameObject* go);
+			void ClearCameraTarget();
+
+			void SetDistanceToTarget(float distanceToTarget);
+
 		private:
 
 #if _DEBUG
@@ -29,6 +34,11 @@ namespace TikiEngine
 			float height;
 
 			ITerrainRenderer* terrain;
+
+			GameObject* cameraTarget;
+			Vector3 ownTargetPosition;
+
+			float distanceToTarget;
 
 		};
 	}

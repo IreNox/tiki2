@@ -401,7 +401,7 @@ namespace TikiEngine
 			//terrainDescription->set
 
 			terrain = manager->CreateTerrain(terrainDescription);			
-			terrain->SetTolerance(0.5f);
+			terrain->SetTolerance(2.5f);
 #if _DEBUG
 			}
 #endif

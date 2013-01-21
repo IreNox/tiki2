@@ -1,19 +1,23 @@
 
 #include "Game/CameraRTS.h"
-
 #include "Core/GameObject.h"
-
 #include "Core/HelperLog.h"
 #include <math.h>
+#include "Game/GD.h"
+#include "Core/Ray.h"
+#include "Core/IPhysics.h"
 
 namespace TikiEngine
 {
+	using namespace TikiEngine::Modules;
+
 	namespace Scripts
 	{
 		CameraRTS::CameraRTS(GameObject* gameObject, ITerrainRenderer* terrain)
-			: IScript(gameObject->GetEngine(), gameObject), zoom(1.0f), targetZoom(1.1f)
+			: IScript(gameObject->GetEngine(), gameObject), zoom(1.0f), targetZoom(1.1f), 
+			cameraTarget(0), distanceToTarget(50.0)
 #if _DEBUG
-			, useMouse(false), useRealCamera(true)
+			, useMouse(true), useRealCamera(true)
 #endif
 		{
 			SafeAddRef(terrain, &this->terrain);
@@ -29,13 +33,13 @@ namespace TikiEngine
 		}
 
 		void CameraRTS::Update(const UpdateArgs& args)
-		{
-			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? 60.0f : 30.0f);
+		{           
+			float speed = (args.Input.GetKey(KEY_LSHIFT) || args.Input.GetKey(KEY_RSHIFT) ? CameraSpeedFast : CameraSpeed);
 
 			Vector2 move = Vector2(
 				(args.Input.GetKey(KEY_LEFT) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_RIGHT) ? 1.0f : 0.0f),
 				(args.Input.GetKey(KEY_UP) ?   -1.0f : 0.0f) + (args.Input.GetKey(KEY_DOWN) ?  1.0f : 0.0f)
-			) * speed;
+				) * speed;
 
 #if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_F10)) useMouse = !useMouse;
@@ -49,10 +53,10 @@ namespace TikiEngine
 			if (useMouse)
 			{
 #endif
-			move += Vector2(
-				(args.Input.MousePosition.X < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.X > 0.99f ? 1.0f : 0.0f),
-				(args.Input.MousePosition.Y < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.Y > 0.99f ? 1.0f : 0.0f)
-			) * speed;
+				move += Vector2(
+					(args.Input.MousePosition.X < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.X > 0.99f ? 1.0f : 0.0f),
+					(args.Input.MousePosition.Y < 0.01f ? -1.0f : 0.0f) + (args.Input.MousePosition.Y > 0.99f ? 1.0f : 0.0f)
+					) * speed;
 #if _DEBUG
 			}
 #endif
@@ -87,13 +91,6 @@ namespace TikiEngine
 					gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
 
 					gameObject->PRS.SPosition().Y = height + (32.0f - zoom);
-
-					//if (args.Input.MouseWheel != 0)
-					//{
-					//	ostringstream s;
-					//	s << "Sample: " << sample << ", Zoom: " << zoom << "Rot: " << rot;
-					//	engine->HLog.Write(s.str());
-					//}
 				}
 			}
 			else
@@ -103,10 +100,6 @@ namespace TikiEngine
 				{
 					targetZoom -= args.Input.MouseWheel / 14.157f;
 					targetZoom = Clamp(targetZoom, 0.0f, 50.0f);
-
-					//ostringstream s;
-					//s << "Sample: " << sample << ", Zoom: " << zoom << ", TargetZoom: " << targetZoom;
-					//engine->HLog.Write(s.str());
 				}
 
 				if (abs(zoom - targetZoom) > 0.1f || move != Vector2::Zero)
@@ -114,7 +107,7 @@ namespace TikiEngine
 					zoom = Lerp(zoom, targetZoom, (float)args.Time.ElapsedTime * 2);
 
 					float rot = (zoom / 200) + 0.5f;
-					rot = Lerp(0.2f, 1.57f, rot);
+					rot = Lerp(CameraMinAngle, CameraMaxAngle, rot);
 					gameObject->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(0, -rot, 0);
 
 					gameObject->PRS.SPosition().Y = height + 12.0f + zoom;
@@ -122,6 +115,27 @@ namespace TikiEngine
 #if _DEBUG
 			}
 #endif
+		}
+
+		void CameraRTS::SetCameraTarget(GameObject* go)
+		{
+			this->cameraTarget = go;
+			
+			float koeff = (gameObject->PRS.GPosition().Y - cameraTarget->PRS.GPosition().Y) / gameObject->PRS.GetForward().Y;
+			Vector3 pos = go->PRS.GPosition() + gameObject->PRS.GetForward() * koeff;
+
+			gameObject->PRS.SPosition() = pos;
+
+		}
+
+		void CameraRTS::ClearCameraTarget()
+		{
+			this->cameraTarget = 0;
+		}
+
+		void CameraRTS::SetDistanceToTarget(float distanceToTarget)
+		{
+			this->distanceToTarget = distanceToTarget;
 		}
 	}
 }

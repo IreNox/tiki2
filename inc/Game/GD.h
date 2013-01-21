@@ -60,6 +60,17 @@ const double XPKillTower = 25.0;
 const double XPKillBuilding = 35.0;
 #pragma endregion
 
+#pragma region camera
+const float CameraSpeed = 30.0f;
+const float CameraSpeedFast = 60.0f;
+const float CameraMinDist = 20.0f;
+const float CameraMaxDist = 50.0f;
+
+//1 degree = 0.0175 radians
+const float CameraMaxAngle = 1.225f; // 70°
+const float CameraMinAngle = 0.788f; // 45°
+#pragma endregion
+
 #pragma region Spawn
 #define SPAWN_PLAYER_COUNT 5
 #define SPAWN_ENEMY_COUNT 7

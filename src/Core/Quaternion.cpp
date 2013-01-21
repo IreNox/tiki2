@@ -101,9 +101,9 @@ Quaternion Quaternion::Concatenate(const Quaternion& quaternion1, const Quaterni
 }
 
 
-Quaternion Quaternion::Slerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount)
+Quaternion Quaternion::Slerp(const Quaternion& from, const Quaternion& to, float amount)
 {
-	float num = quaternion1.X * quaternion2.X + quaternion1.Y * quaternion2.Y + quaternion1.Z * quaternion2.Z + quaternion1.W * quaternion2.W;
+	float num = from.X * to.X + from.Y * to.Y + from.Z * to.Z + from.W * to.W;
 	bool flag = false;
 	if (num < 0)
 	{
@@ -125,10 +125,10 @@ Quaternion Quaternion::Slerp(const Quaternion& quaternion1, const Quaternion& qu
 		num3 = (flag ? ((float)(-(float)sin((double)(amount * num4))) * num5) : ((float)sin((double)(amount * num4)) * num5));
 	}
 	Quaternion result;
-	result.X = num2 * quaternion1.X + num3 * quaternion2.X;
-	result.Y = num2 * quaternion1.Y + num3 * quaternion2.Y;
-	result.Z = num2 * quaternion1.Z + num3 * quaternion2.Z;
-	result.W = num2 * quaternion1.W + num3 * quaternion2.W;
+	result.X = num2 * from.X + num3 * to.X;
+	result.Y = num2 * from.Y + num3 * to.Y;
+	result.Z = num2 * from.Z + num3 * to.Z;
+	result.W = num2 * from.W + num3 * to.W;
 	return result;
 }
 Quaternion Quaternion::Lerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount)

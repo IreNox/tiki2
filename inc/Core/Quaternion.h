@@ -40,7 +40,7 @@ public:
 	static float Dot(const Quaternion& quaternion1, const Quaternion& quaternion2);
 	static Quaternion Concatenate(const Quaternion& quaternion1, const Quaternion& quaternion2);
 
-	static Quaternion Slerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount);
+	static Quaternion Slerp(const Quaternion& from, const Quaternion& to, float amount);
 	static Quaternion Lerp(const Quaternion& quaternion1, const Quaternion& quaternion2, float amount);
 
 	static Quaternion CreateFromAxisAngle(const Vector3& axis, float angle);
