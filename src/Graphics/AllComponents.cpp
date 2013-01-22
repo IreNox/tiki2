@@ -287,9 +287,9 @@ namespace TikiEngine
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
 			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0),
-			  collisionRegions(0), layout(0)
+			  collisionRegions(0), indexBuffer(0), vertexBuffer(0), callback(0)
 #if _DEBUG
-			  , drawCollider(false), useCloddy(true)
+			  , useCloddy(true)
 #endif
 		{
 		}
@@ -299,7 +299,7 @@ namespace TikiEngine
 			SafeDelete(&collisionIndexBuffer);
 			SafeDelete(&collisionVertexBuffer);
 			SafeRelease(&material);
-			SafeRelease(&layout);
+			//SafeRelease(&layout);
 
 			if (terrain != 0)
 			{
@@ -358,10 +358,10 @@ namespace TikiEngine
 			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
-			vertexBuffer = new cloddy_VertexBuffer(engine->graphics->GetDevice(), size2, vertexFormat->GetVertexSize());
-			indexBuffer = new cloddy_IndexBuffer(engine->graphics->GetDevice(), size2 * 3);
-
-			callback = new cloddy_TriangulationCallback(engine->graphics->GetDevice(), vertexBuffer, indexBuffer);
+			vertexBuffer = new TerrainVertexBuffer(size2);
+			indexBuffer = new TerrainIndexBuffer(size2 * 3);
+			callback = new TerrainTriangulationCallback(indexBuffer, vertexBuffer);
+			if (material) callback->SetMaterial(material);
 
 			description = new cloddy_CloddyDescription();
 			description->SetVertexBuffer(vertexBuffer);
@@ -412,32 +412,11 @@ namespace TikiEngine
 
 		void TerrainRenderer::SetMaterial(Material* mat)
 		{
-			SafeRelease(&material);
-			SafeAddRef(mat, &material);
-
+			SafeChangeRef(&this->material, mat);
+			
 			if (this->GetReady())
 			{
-				UInt32 tmp;
-#if TIKI_DX10
-				D3D10_INPUT_ELEMENT_DESC layoutDescription[] =
-				{
-					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-				};
-#else
-				D3D11_INPUT_ELEMENT_DESC layoutDescription[] =
-				{
-					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				};
-#endif
-
-				Shader* shader = (Shader*)material->GetShader();
-				shader->CreateLayout(layoutDescription, 4, &layout, &tmp);
+				callback->SetMaterial(mat);
 			}
 		}
 
@@ -473,7 +452,7 @@ namespace TikiEngine
 
 		bool TerrainRenderer::GetReady()
 		{
-			return (material != 0);
+			return (material != 0) && (callback != 0);
 		}
 		#pragma endregion
 
@@ -523,8 +502,6 @@ namespace TikiEngine
 			material->UpdateDrawArgs(args, gameObject);
 			material->Apply();
 
-			DllMain::Context->IASetInputLayout(layout);
-
 			Matrix world;
 			gameObject->PRS.FillWorldMatrix(&world);
 
@@ -533,49 +510,32 @@ namespace TikiEngine
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
 
 #if _DEBUG
-			if (!drawCollider && useCloddy) {
+			if (useCloddy)
 #endif
-
-			manager->BeginTriangulation();
-			terrain->SetTransform(cloddy_Mat4F(world.n));
-			terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
-
-			if (light)
 			{
-				Vector3 lightD = light->GetGameObject()->PRS.GetForward();
-				//lightD.X = -lightD.X;
-				lightD.Z = -lightD.Z;
+				manager->BeginTriangulation();
+				terrain->SetTransform(cloddy_Mat4F(world.n));
+				terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
 
-				terrain->SetLight(0, cloddy_Vec3F(lightD.arr), toCloddyColor(light->GetColor()));
-				terrain->EnableLight(0);
+				if (light)
+				{
+					Vector3 lightD = light->GetGameObject()->PRS.GetForward();
+					lightD.Z = -lightD.Z;
+
+					terrain->SetLight(0, cloddy_Vec3F(lightD.arr), toCloddyColor(light->GetColor()));
+					terrain->EnableLight(0);
+				}
+				else
+				{
+					terrain->DisableLight(0);
+				}
+
+				terrain->Triangulate(
+					cloddy_Mat4F((float*)args.CurrentCamera->GetViewMatrix().n),
+					cloddy_Mat4F((float*)args.CurrentCamera->GetProjectionMatrix().n)
+				);
+				manager->EndTriangulation();
 			}
-			else
-			{
-				terrain->DisableLight(0);
-			}
-
-			terrain->Triangulate(
-				cloddy_Mat4F((float*)args.CurrentCamera->GetViewMatrix().n),
-				cloddy_Mat4F((float*)args.CurrentCamera->GetProjectionMatrix().n)
-			);
-			manager->EndTriangulation();
-
-#if _DEBUG
-			}
-			else if (collisionIndexBuffer != 0 && collisionIndexBuffer->indexCount != 0 && useCloddy)
-			{
-				DllMain::Context->IASetIndexBuffer(collisionIndexBuffer->indexBuffer->GetBuffer(), DXGI_FORMAT_R32_UINT, 0);
-
-				UInt32 offset = 0;
-				UInt32 stride = sizeof(CloddyVertex);
-				TDX_Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
-
-				DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
-				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-				DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
-			}
-#endif
 		}
 
 		void TerrainRenderer::Update(const UpdateArgs& args)

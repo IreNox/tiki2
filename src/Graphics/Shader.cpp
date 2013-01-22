@@ -139,10 +139,13 @@ namespace TikiEngine
 			);
 #endif
 			
-			*hash = HelperHash::Hash(
-				(UCHAR*)elements,
-				sizeof(D3D11_INPUT_ELEMENT_DESC) * elementsCount
-			);
+			if (hash)
+			{
+				*hash = HelperHash::Hash(
+					(UCHAR*)elements,
+					sizeof(D3D11_INPUT_ELEMENT_DESC) * elementsCount
+				);
+			}
 		}
 		#pragma endregion
 

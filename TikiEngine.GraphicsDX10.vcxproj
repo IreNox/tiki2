@@ -204,6 +204,7 @@
     <ClInclude Include="inc\Graphics\StaticBuffer.h" />
     <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h" />
     <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
+    <ClInclude Include="inc\Graphics\TerrainTriangulationCallback.h" />
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />
     <ClInclude Include="inc\Graphics\Texture.h" />
     <ClInclude Include="inc\Graphics\TikiAnimation.h" />

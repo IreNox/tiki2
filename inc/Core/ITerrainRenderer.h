@@ -43,10 +43,6 @@ namespace TikiEngine
 			virtual void UpdateCollider(IHeightFieldCollider* collider) = 0;
 			//virtual void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi) = 0;
 
-#if _DEBUG
-			virtual void ToggleDrawCollider() = 0;
-#endif
-
 		};
 	}
 }

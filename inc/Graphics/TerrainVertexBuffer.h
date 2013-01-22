@@ -37,12 +37,10 @@ namespace TikiEngine
 		{
 		public:
 			
-			DynamicBuffer<CloddyVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
-
 			TerrainVertexBuffer(int32 size);
 			~TerrainVertexBuffer();
 			
-			const Vector3* GetData() const;
+			void Apply();
 
 			int32 GetCapacity();
 			int32 GetVertexSize();
@@ -75,8 +73,8 @@ namespace TikiEngine
 
 			int32 size;
 
-			Vector3* dataVector;
 			CloddyVertex* dataVertices;
+			DynamicBuffer<CloddyVertex, TIKI_VERTEX_BUFFER>* vertexBuffer;
 
 			int32 lockMin;
 			int32 lockMax;

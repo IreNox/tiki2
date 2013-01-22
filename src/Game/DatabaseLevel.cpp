@@ -209,13 +209,6 @@ namespace TikiEngine
 		{
 			GameObject::Update(args);
 
-#if _DEBUG
-			if (args.Input.GetKeyPressed(KEY_F11))
-			{
-				terrain->ToggleDrawCollider();
-			}
-#endif
-
 			//if (frameCount % 10 == 0 && frameCount < 100)
 			//{
 			//	float hSize = (float)heightmapSize / 2;

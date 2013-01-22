@@ -28,14 +28,12 @@ namespace TikiEngine
 		{
 		public:
 
-			UInt32 indexCount;
-			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-
 			TerrainIndexBuffer(int32 size);
 			~TerrainIndexBuffer();
 			
-			UInt32 GetSizeList() const;
-			const UInt32* GetDataList() const;
+			void Apply();
+
+			UInt32 GetCount();
 
 			int32 GetCapacity();
 
@@ -73,6 +71,9 @@ namespace TikiEngine
 
 			int32 size;
 			UInt32* data;
+
+			UInt32 indexCount;
+			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
 
 		};
 	}

@@ -18,6 +18,7 @@
 #include "Graphics/TikiHeightmap.h"
 #include "Graphics/TerrainIndexBuffer.h"
 #include "Graphics/TerrainVertexBuffer.h"
+#include "Graphics/TerrainTriangulationCallback.h"
 #include "Graphics/VertexDeclaration.h"
 
 namespace TikiEngine
@@ -58,20 +59,11 @@ namespace TikiEngine
 			void UpdateCollider(IHeightFieldCollider* collider);
 			//void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
 
-#if _DEBUG
-			void ToggleDrawCollider() { drawCollider = !drawCollider; }
-#endif
-
 			bool GetReady();
 	
 		private:
 
 			Material* material;
-#if TIKI_DX10
-			ID3D10InputLayout* layout;
-#else
-			ID3D11InputLayout* layout;
-#endif
 
 			UInt32 collisionRegions;
 			TerrainIndexBuffer* collisionIndexBuffer;
@@ -84,8 +76,9 @@ namespace TikiEngine
 
 			codex_Ptr<IVertexFormat> vertexFormat;
 
-			codex_Ptr<IndexBuffer> indexBuffer;
-			codex_Ptr<VertexBuffer> vertexBuffer;
+			TerrainIndexBuffer* indexBuffer;
+			TerrainVertexBuffer* vertexBuffer;
+			TerrainTriangulationCallback* callback;
 
 			codex_Ptr<CloddyManager> manager;
 			codex_Ptr<CloddyDescription> description;
@@ -97,12 +90,8 @@ namespace TikiEngine
 
 			IHeightmap* heightmap;
 
-			codex_Ptr<TriangulationCallback> callback;
-
-
 #if _DEBUG
 			bool useCloddy;
-			bool drawCollider;
 #endif
 
 			CodeX::int32 toCloddyColor(Color c);

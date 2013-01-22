@@ -205,5 +205,8 @@
     <ClInclude Include="inc\Graphics\PPDefault.h">
       <Filter>Headerdateien\Internal\Rendering</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\TerrainTriangulationCallback.h">
+      <Filter>Headerdateien\Internal\Cloddy</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
