@@ -350,7 +350,7 @@ namespace TikiEngine
 			heightmap = datasetSample->GetHeightmap();
 				
 			vertexFormat = cloddy_VertexFormat::P3F()
-				->Append(cloddy_VertexFormat::T2F(1, 1))
+				//->Append(cloddy_VertexFormat::T2F(1, 1))
 				->Append(cloddy_VertexFormat::N3F())
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());

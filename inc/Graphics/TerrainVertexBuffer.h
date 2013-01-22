@@ -30,7 +30,7 @@ namespace TikiEngine
 			float Position[3];
 			float UV[2];
 			float Normal[3];
-			int Color;
+			Int32 Color;
 		};
 
 		class TerrainVertexBuffer : public codex_Disposable, public cloddy_IVertexBuffer

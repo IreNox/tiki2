@@ -17,7 +17,7 @@
 
 #include <typeinfo.h>
 
-#define USE_DX10 1
+#define USE_DX10 0
 
 namespace TikiEngine
 {
