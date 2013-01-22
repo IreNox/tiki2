@@ -37,7 +37,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\AnimationStack.h" />
-    <ClInclude Include="inc\Graphics\ModelInstance.h" />
     <ClInclude Include="inc\Graphics\PPDefault.h" />
     <ClInclude Include="inc\Graphics\TikiLayer.h" />
     <ClInclude Include="inc\Graphics\CBLights.h" />
@@ -114,7 +113,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
-    <Import Project="props\TikiEngine.Graphics_X86.props" />
+    <Import Project="props\TikiEngine.GraphicsDX11_X86.props" />
     <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\TikiEngine_Debug.props" />
   </ImportGroup>
@@ -122,7 +121,7 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
-    <Import Project="props\TikiEngine.Graphics_X64.props" />
+    <Import Project="props\TikiEngine.GraphicsDX11_X64.props" />
     <Import Project="props\TikiEngine_X64.props" />
     <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\TikiEngine_Debug.props" />
@@ -131,14 +130,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
-    <Import Project="props\TikiEngine.Graphics_X86.props" />
+    <Import Project="props\TikiEngine.GraphicsDX11_X86.props" />
     <Import Project="props\Cloddy_Libs.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="props\TikiEngine.props" />
     <Import Project="props\Output_dd_bin.props" />
-    <Import Project="props\TikiEngine.Graphics_X64.props" />
+    <Import Project="props\TikiEngine.GraphicsDX11_X64.props" />
     <Import Project="props\TikiEngine_X64.props" />
     <Import Project="props\Cloddy_Libs.props" />
   </ImportGroup>

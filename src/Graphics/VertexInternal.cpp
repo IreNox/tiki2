@@ -93,13 +93,13 @@ namespace TikiEngine
 		void VertexDeclaration::createInputLayout(const InputElement* decl, UInt32 count)
 		{
 			elementSize = 0;
-			D3D11_INPUT_ELEMENT_DESC* elements = new D3D11_INPUT_ELEMENT_DESC[count];
+			TDX_Input_Element_desc* elements = new TDX_Input_Element_desc[count];
 
 			UInt32 i = 0;
 			while (i < count)
 			{
 				InputElement input = decl[i];
-				D3D11_INPUT_ELEMENT_DESC element;
+				TDX_Input_Element_desc element;
 
 				switch (input.SemanticType)
 				{
@@ -180,9 +180,16 @@ namespace TikiEngine
 				}
 
 				element.InputSlot = 0;
+				element.InstanceDataStepRate = 0;
+
+#ifdef TIKI_DX10
+				element.AlignedByteOffset = D3D10_APPEND_ALIGNED_ELEMENT;
+				element.InputSlotClass = D3D10_INPUT_PER_VERTEX_DATA;
+#else
 				element.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT;
 				element.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
-				element.InstanceDataStepRate = 0;
+#endif
+
 
 				elements[i] = element;
 
@@ -194,7 +201,7 @@ namespace TikiEngine
 				count,
 				&inputLayout,
 				&hash
-				);
+			);
 
 			delete[](elements);
 		}

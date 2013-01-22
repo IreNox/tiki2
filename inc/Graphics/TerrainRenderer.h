@@ -67,7 +67,11 @@ namespace TikiEngine
 		private:
 
 			Material* material;
+#if TIKI_DX10
+			ID3D10InputLayout* layout;
+#else
 			ID3D11InputLayout* layout;
+#endif
 
 			UInt32 collisionRegions;
 			TerrainIndexBuffer* collisionIndexBuffer;

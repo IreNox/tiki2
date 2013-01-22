@@ -357,6 +357,7 @@ namespace TikiEngine
 			if(parent == 0)
 			{
 				_CrtDbgBreak();
+				return false;
 			}
 			else
 			{		

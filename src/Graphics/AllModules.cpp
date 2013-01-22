@@ -34,10 +34,10 @@ namespace TikiEngine
 		#pragma region Class
 		GraphicsModule::GraphicsModule(Engine* engine)
 			: IGraphics(engine), inited(false), rasterStateBackfaces(0), device(0), blendStateParticle(0),  blendStateInterface(0),
-			deviceContext(0), depthStencilState(0), depthStencilView(0), renderTargetView(0), rtBackBuffer(0),
-			renderTargets(), postProcesses(), postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty),
-			depthStencilStateDisable(0), screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0),
-			cbufferLights(0), cbufferCamera(0), cbufferObject(0), rtScreenIndex(0), defaultPostProcessPass(0)
+			depthStencilState(0), depthStencilView(0), renderTargetView(0), rtBackBuffer(0), renderTargets(), postProcesses(),
+			postProcessPassQuads(), defaultPostProcess(0), currentArgs(DrawArgs::Empty), depthStencilStateDisable(0),
+			screenSizeRenderTargets(), factory(0), adapter(0), swapChain(0), depthStencilBuffer(0), cbufferLights(0),
+			cbufferCamera(0), cbufferObject(0), rtScreenIndex(0), defaultPostProcessPass(0), deviceContext(0)
 #if _DEBUG
 			, debugConsole(0), debugLineRenderer(0)
 #endif
@@ -112,7 +112,9 @@ namespace TikiEngine
 			SafeRelease(&depthStencilView);
 			SafeRelease(&depthStencilBuffer);
 			SafeRelease(&renderTargetView);
+#if TIKI_DX11
 			SafeRelease(&deviceContext);
+#endif
 			SafeRelease(&device);
 			SafeRelease(&swapChain);
 
@@ -226,8 +228,13 @@ namespace TikiEngine
 			deviceContext->OMSetRenderTargets(0, 0, 0);
 			renderTargetView->Release();
 
+#if TIKI_DX10
+			ID3D10Texture2D* backBuffer;
+			swapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (void**)&backBuffer);
+#else
 			ID3D11Texture2D* backBuffer;
 			swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+#endif
 			while (backBuffer->Release()) {}
 
 			r = swapChain->ResizeBuffers(
@@ -303,7 +310,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Set
+#if TIKI_DX10
+		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D10RenderTargetView* target)
+#else
 		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target)
+#endif
 		{
 			while (slot >= renderTargets.Count())
 			{
@@ -320,7 +331,11 @@ namespace TikiEngine
 			);
 		}
 
+#if TIKI_DX10
+		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D10RenderTargetView* target)
+#else
 		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target)
+#endif
 		{
 			renderTargets.Clear();
 			this->SetRenderTarget(0, target);
@@ -407,7 +422,12 @@ namespace TikiEngine
 			rtScreen[rtScreenIndex]->Apply(0);
 			rtScreen[rtScreenIndex]->Clear(clearColor);
 			this->SetStateDepthEnabled(true);
+
+#if TIKI_DX10
+			deviceContext->ClearDepthStencilView(depthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
+#else
 			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+#endif
 						
 			rtDepth->Clear(Color::Black);
 			rtDepth->Apply(1);
@@ -557,6 +577,19 @@ namespace TikiEngine
 			swapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;
 			swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 			
+#if TIKI_DX10
+			HRESULT r = D3D10CreateDeviceAndSwapChain(
+				NULL,
+				D3D10_DRIVER_TYPE_HARDWARE,
+				NULL,
+				0,
+				D3D10_SDK_VERSION,
+				&swapDesc,
+				&swapChain,
+				&device
+			);
+			deviceContext = device;
+#else
 			D3D_FEATURE_LEVEL level;
 			D3D_FEATURE_LEVEL levels = D3D_FEATURE_LEVEL_11_0;
 
@@ -574,6 +607,7 @@ namespace TikiEngine
 				&level,
 				&deviceContext
 			);
+#endif
 
 			if (FAILED(r)) { return false; }
 
@@ -585,16 +619,28 @@ namespace TikiEngine
 			if (!initDirectXDepthStencil(desc)) return false;
 
 			#pragma region DepthStencilState
+#if TIKI_DX10
+			D3D10_DEPTH_STENCIL_DESC depthStencilDesc;
+			ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
+
+			depthStencilDesc.DepthWriteMask = D3D10_DEPTH_WRITE_MASK_ALL;
+			depthStencilDesc.DepthFunc = D3D10_COMPARISON_LESS_EQUAL;
+
+			depthStencilDesc.FrontFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+			depthStencilDesc.FrontFace.StencilDepthFailOp = D3D10_STENCIL_OP_INCR;
+			depthStencilDesc.FrontFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
+			depthStencilDesc.FrontFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+
+			depthStencilDesc.BackFace.StencilFailOp = D3D10_STENCIL_OP_KEEP;
+			depthStencilDesc.BackFace.StencilDepthFailOp = D3D10_STENCIL_OP_DECR;
+			depthStencilDesc.BackFace.StencilPassOp = D3D10_STENCIL_OP_KEEP;
+			depthStencilDesc.BackFace.StencilFunc = D3D10_COMPARISON_ALWAYS;
+#else
 			D3D11_DEPTH_STENCIL_DESC depthStencilDesc;
 			ZeroMemory(&depthStencilDesc, sizeof(depthStencilDesc));
 
-			depthStencilDesc.DepthEnable = true;
 			depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 			depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-
-			depthStencilDesc.StencilEnable = true;
-			depthStencilDesc.StencilReadMask = 0xFF;
-			depthStencilDesc.StencilWriteMask = 0xFF;
 
 			depthStencilDesc.FrontFace.StencilFailOp = D3D11_STENCIL_OP_KEEP;
 			depthStencilDesc.FrontFace.StencilDepthFailOp = D3D11_STENCIL_OP_INCR;
@@ -605,6 +651,12 @@ namespace TikiEngine
 			depthStencilDesc.BackFace.StencilDepthFailOp = D3D11_STENCIL_OP_DECR;
 			depthStencilDesc.BackFace.StencilPassOp = D3D11_STENCIL_OP_KEEP;
 			depthStencilDesc.BackFace.StencilFunc = D3D11_COMPARISON_ALWAYS;
+#endif
+
+			depthStencilDesc.DepthEnable = true;
+			depthStencilDesc.StencilEnable = true;
+			depthStencilDesc.StencilReadMask = 0xFF;
+			depthStencilDesc.StencilWriteMask = 0xFF;
 
 			r = device->CreateDepthStencilState(
 				&depthStencilDesc,
@@ -616,14 +668,22 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region RasterizerState
+#if TIKI_DX10
+			D3D10_RASTERIZER_DESC rasterDesc;
+
+			rasterDesc.CullMode = D3D10_CULL_NONE;
+			rasterDesc.FillMode = D3D10_FILL_SOLID;
+#else
 			D3D11_RASTERIZER_DESC rasterDesc;
 
-			rasterDesc.AntialiasedLineEnable = false;
 			rasterDesc.CullMode = D3D11_CULL_NONE;
+			rasterDesc.FillMode = D3D11_FILL_SOLID;
+#endif
+
+			rasterDesc.AntialiasedLineEnable = false;
 			rasterDesc.DepthBias = 0;
 			rasterDesc.DepthBiasClamp = 0.0f;
 			rasterDesc.DepthClipEnable = true;
-			rasterDesc.FillMode = D3D11_FILL_SOLID;
 			rasterDesc.FrontCounterClockwise = false;
 			rasterDesc.MultisampleEnable = false;
 			rasterDesc.ScissorEnable = false;
@@ -643,11 +703,16 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region DepthDisableStencil
+#if TIKI_DX10
+			D3D10_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
+			ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+#else
 			D3D11_DEPTH_STENCIL_DESC depthDisabledStencilDesc;
 			ZeroMemory(&depthDisabledStencilDesc, sizeof(depthDisabledStencilDesc));
+#endif
 
 			depthDisabledStencilDesc.DepthEnable = false;
-			depthDisabledStencilDesc.StencilEnable = false;
+			depthDisabledStencilDesc.StencilEnable = false;			
 
 			r = device->CreateDepthStencilState(
 				&depthDisabledStencilDesc,
@@ -658,10 +723,22 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region BlendState
+#if TIKI_DX10
+			D3D10_BLEND_DESC blendStateDesc;
+			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
+
+			blendStateDesc.BlendEnable[0] = TRUE;
+			blendStateDesc.SrcBlend = D3D10_BLEND_SRC_ALPHA;
+			blendStateDesc.DestBlend = D3D10_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.BlendOp = D3D10_BLEND_OP_ADD;
+			blendStateDesc.SrcBlendAlpha = D3D10_BLEND_ONE;
+			blendStateDesc.DestBlendAlpha = D3D10_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.BlendOpAlpha = D3D10_BLEND_OP_ADD;
+			blendStateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
+#else
 			D3D11_BLEND_DESC blendStateDesc;
 			ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
-			// GUT!!
 			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
 			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
@@ -670,8 +747,8 @@ namespace TikiEngine
 			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
 			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
 			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-
-
+#endif
+			
 			r = device->CreateBlendState(
 				&blendStateDesc,
 				&blendStateInterface
@@ -682,21 +759,30 @@ namespace TikiEngine
 
             ZeroMemory(&blendStateDesc, sizeof(blendStateDesc));
 
-            // GUT!!
-            blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
-            blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
-            blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
-            blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
-            blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
-            blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
-            blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
-            blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+#if TIKI_DX10
+			blendStateDesc.BlendEnable[0] = TRUE;
+			blendStateDesc.SrcBlend = D3D10_BLEND_SRC_ALPHA;
+			blendStateDesc.DestBlend = D3D10_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.BlendOp = D3D10_BLEND_OP_ADD;
+			blendStateDesc.SrcBlendAlpha = D3D10_BLEND_SRC_ALPHA;
+			blendStateDesc.DestBlendAlpha = D3D10_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.BlendOpAlpha = D3D10_BLEND_OP_ADD;
+			blendStateDesc.RenderTargetWriteMask[0] = D3D10_COLOR_WRITE_ENABLE_ALL;
+#else
+			blendStateDesc.RenderTarget[0].BlendEnable = TRUE;
+			blendStateDesc.RenderTarget[0].SrcBlend = D3D11_BLEND_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].DestBlend = D3D11_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].BlendOp = D3D11_BLEND_OP_ADD;
+			blendStateDesc.RenderTarget[0].SrcBlendAlpha = D3D11_BLEND_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_INV_SRC_ALPHA;
+			blendStateDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
+			blendStateDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
+#endif
 
-
-            r = device->CreateBlendState(
+			r = device->CreateBlendState(
                 &blendStateDesc,
                 &blendStateParticle
-                );
+            );
 
             if (FAILED(r)) { this->Dispose(); return false; }
             #pragma endregion
@@ -710,12 +796,8 @@ namespace TikiEngine
 		#pragma region Private Member - Init - DirectX - BackBuffer
 		bool GraphicsModule::initDirectXBackBuffer(EngineDescription& desc)
 		{
-			ID3D11Texture2D* backBufferPtr;
-			HRESULT r = swapChain->GetBuffer(
-				0,
-				__uuidof(ID3D11Texture2D),
-				(LPVOID*)&backBufferPtr
-			);
+			TDX_Texture2D* backBufferPtr;
+			HRESULT r = swapChain->GetBuffer(0, __uuidof(TDX_Texture2D), (void**)&backBufferPtr);
 
 			if (FAILED(r)) { return false; }
 
@@ -731,18 +813,28 @@ namespace TikiEngine
 		#pragma region Private Member - Init - DirectX - DepthStencil
 		bool GraphicsModule::initDirectXDepthStencil(EngineDescription& desc)
 		{
+#if TIKI_DX10
+			D3D10_TEXTURE2D_DESC depthDesc;
+			ZeroMemory(&depthDesc, sizeof(depthDesc));
+
+			depthDesc.Format =  DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthDesc.Usage = D3D10_USAGE_DEFAULT;
+			depthDesc.BindFlags = D3D10_BIND_DEPTH_STENCIL;
+#else
 			D3D11_TEXTURE2D_DESC depthDesc;
 			ZeroMemory(&depthDesc, sizeof(depthDesc));
+
+			depthDesc.Format =  DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthDesc.Usage = D3D11_USAGE_DEFAULT;
+			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+#endif
 
 			depthDesc.Width = desc.Graphics.Width;
 			depthDesc.Height = desc.Graphics.Height;
 			depthDesc.MipLevels = 1;
 			depthDesc.ArraySize = 1;
-			depthDesc.Format =  DXGI_FORMAT_D24_UNORM_S8_UINT;
 			depthDesc.SampleDesc.Count = 1;
 			depthDesc.SampleDesc.Quality = 0;
-			depthDesc.Usage = D3D11_USAGE_DEFAULT;
-			depthDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 			depthDesc.CPUAccessFlags = 0;
 			depthDesc.MiscFlags = 0;
 
@@ -750,15 +842,24 @@ namespace TikiEngine
 				&depthDesc,
 				NULL,
 				&depthStencilBuffer
-				);
+			);
 
 			if (FAILED(r)) { return false; }
 
+#if TIKI_DX10
+			D3D10_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
+			ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
+
+			depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
+			depthStencilViewDesc.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2D;
+#else
 			D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc;
 			ZeroMemory(&depthStencilViewDesc, sizeof(depthStencilViewDesc));
 
 			depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 			depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+#endif
+
 			depthStencilViewDesc.Texture2D.MipSlice = 0;
 
 			r = device->CreateDepthStencilView(
@@ -782,11 +883,20 @@ namespace TikiEngine
 		#pragma region Private Member - Init - DirectX - ViewPort
 		bool GraphicsModule::initDirectXViewPort(EngineDescription& desc)
 		{
-			D3D11_VIEWPORT viewPort = D3D11_VIEWPORT();
+#if TIKI_DX10
+			D3D10_VIEWPORT viewPort;
+			ZeroMemory(&viewPort, sizeof(viewPort));
+
+			viewPort.Width = desc.Graphics.Width;
+			viewPort.Height = desc.Graphics.Height;
+#else
+			D3D11_VIEWPORT viewPort;
 			ZeroMemory(&viewPort, sizeof(viewPort));
 
 			viewPort.Width = (float)desc.Graphics.Width;
 			viewPort.Height = (float)desc.Graphics.Height;
+#endif
+
 			viewPort.MinDepth = 0.0f;
 			viewPort.MaxDepth = 1.0f;
 			viewPort.TopLeftX = 0;
@@ -845,7 +955,7 @@ namespace TikiEngine
 			defaultPostProcess = new PPDefault(engine, rtBackBuffer);
 			defaultPostProcess->AddRef();
 
-			defaultPostProcessPass = defaultPostProcess->GetPasses()[3];
+			defaultPostProcessPass = defaultPostProcess->GetPasses()[(TIKI_SHADOWS_ENABLED ? 1 : 0)];
 			defaultPostProcessPass->AddRef();
 
 #if _DEBUG
@@ -945,7 +1055,7 @@ namespace TikiEngine
 				SpriteBatchVertex::DeclarationCount
 			);
 
-			buffer = new DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			buffer = new DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>(engine);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));
@@ -980,19 +1090,8 @@ namespace TikiEngine
 			memcpy(vertices, spriteVertices.GetInternalData(), sizeof(SpriteBatchVertex) * spriteVertices.Count());
 			buffer->Unmap();
 
-			UINT offset = 0;
-			UINT stride = declaration->GetElementSize();
-
 			declaration->Apply();
-
-			ID3D11Buffer* vertexBuffer = this->buffer->GetBuffer();
-			DllMain::Context->IASetVertexBuffers(
-				0,
-				1,
-				&vertexBuffer,
-				&stride,
-				&offset
-			);
+			buffer->Apply();
 
 			UInt32 i = 0;
 			Sprite& info = Sprite();
@@ -1001,7 +1100,7 @@ namespace TikiEngine
 				info = spriteInfos.GetRef(i);
 
 				DllMain::Context->IASetPrimitiveTopology(
-					(info.Lines ? D3D11_PRIMITIVE_TOPOLOGY_LINELIST : D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP)				
+					(info.Lines ? D3D_PRIMITIVE_TOPOLOGY_LINELIST : D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP)				
 				);
 
 				shader->SetSingle("value", info.Value);

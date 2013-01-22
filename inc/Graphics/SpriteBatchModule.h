@@ -73,7 +73,7 @@ namespace TikiEngine
 
 			Shader* shader;
 			VertexDeclaration* declaration;
-			DynamicBuffer<SpriteBatchVertex, D3D11_BIND_VERTEX_BUFFER>* buffer;
+			DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>* buffer;
 
 			List<Sprite> spriteInfos;
 			List<SpriteBatchVertex> spriteVertices;

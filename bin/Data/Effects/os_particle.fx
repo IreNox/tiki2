@@ -71,18 +71,33 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return tex.Sample(sam, input.UV) * input.Color;
 }
 
-
-
-technique11 Particle
+technique10 tiki10
 {
-    pass Particle_PointList
+    pass Particle_PointList10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader( CompileShader( gs_4_0, GS_Main_Point() ) );
+        SetPixelShader( CompileShader( ps_4_0, PS_Main() ) );
+    }
+
+    pass Particle_LineList10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader( CompileShader( gs_4_0, GS_Main_LineList() ) );
+        SetPixelShader( CompileShader( ps_4_0, PS_Main() ) );
+    }
+}
+
+technique11 tiki11
+{
+    pass Particle_PointList11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( CompileShader( gs_5_0, GS_Main_Point() ) );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
     }
 
-    pass Particle_LineList
+    pass Particle_LineList11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( CompileShader( gs_5_0, GS_Main_LineList() ) );

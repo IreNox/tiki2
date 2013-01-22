@@ -17,6 +17,8 @@
 
 #include <typeinfo.h>
 
+#define USE_DX10 0
+
 namespace TikiEngine
 {
 	using namespace TikiEngine::Components;
@@ -28,8 +30,13 @@ namespace TikiEngine
 	GraphicsModule* DllMain::ModuleGraphics = 0;
 	SpriteBatchModule* DllMain::ModuleSpriteBatch = 0;
 
+#if TIKI_DX10
+	ID3D10Device* DllMain::Device = 0;
+	ID3D10Device* DllMain::Context = 0;
+#else
 	ID3D11Device* DllMain::Device = 0;
 	ID3D11DeviceContext* DllMain::Context = 0;
+#endif
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
@@ -42,6 +49,7 @@ namespace TikiEngine
 		DllInfo.FuncTikiComponent = CreateComponent;
 		DllInfo.FuncDispose = DisposeDll;
 
+#if (TIKI_DX10 && USE_DX10) || TIKI_DX11
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
 
@@ -50,11 +58,11 @@ namespace TikiEngine
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
 		DllInfo.Resources.Add(typeid(IModel).hash_code());
-
-
+		
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
 		DllInfo.Components.Add(typeid(IParticleRenderer).hash_code());
+#endif
 	}
 
 	void DllMain::DisposeDll()

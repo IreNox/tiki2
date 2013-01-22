@@ -106,16 +106,33 @@ float4 PSPP_BlurHorizontal(PS_INPUT input) : SV_TARGET
 // Technique
 ////////////////////////////////////////////////////////////////////////////////
 
-technique11 basic
+technique10 tiki10
 {
-    pass blurVertical
+    pass blurVertical10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader( NULL );
+        SetPixelShader( CompileShader( ps_4_0, PSPP_BlurVertical() ) );
+    }
+
+    pass blurHorizontal10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader( NULL );
+        SetPixelShader( CompileShader( ps_4_0, PSPP_BlurHorizontal() ) );
+    }
+}
+
+technique11 tiki11
+{
+    pass blurVertical11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( NULL );
         SetPixelShader( CompileShader( ps_5_0, PSPP_BlurVertical() ) );
     }
 
-    pass blurHorizontal
+    pass blurHorizontal11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( NULL );

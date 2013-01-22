@@ -118,9 +118,6 @@
     <ClInclude Include="inc\Graphics\RenderTarget.h">
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\d3dx11effect.h">
-      <Filter>Headerdateien\Internal</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\GraphicsModule.h">
       <Filter>Headerdateien\Modules</Filter>
     </ClInclude>

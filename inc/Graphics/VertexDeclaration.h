@@ -31,7 +31,7 @@ namespace TikiEngine
 
 			UInt32 hash;
 			UInt32 elementSize;
-			ID3D11InputLayout* inputLayout;
+			TDX_InputLayout* inputLayout;
 
 			void createInputLayout(const InputElement* decl, UInt32 count);
 

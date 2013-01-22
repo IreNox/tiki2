@@ -4,7 +4,19 @@
 #include "Core/IShader.h"
 #include "Core/ITexture.h"
 
+#include "Graphics/DllMain.h"
+
+#if TIKI_DX10
+typedef ID3D10Effect TDX_Effect;
+typedef ID3D10EffectPass TDX_EffectPass;
+typedef ID3D10EffectTechnique TDX_EffectTechnique;
+#else
 #include "Graphics/D3dx11effect.h"
+
+typedef ID3DX11Effect TDX_Effect;
+typedef ID3DX11EffectPass TDX_EffectPass;
+typedef ID3DX11EffectTechnique TDX_EffectTechnique;
+#endif
 
 namespace TikiEngine
 {
@@ -47,20 +59,16 @@ namespace TikiEngine
 
 			void* GetNativeResource();
 			bool GetReady();
-
-			void CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash);
+			
+			void CreateLayout(TDX_Input_Element_desc* elements, UINT elementsCount, TDX_InputLayout** layout, UInt32* hash);
 
 		protected:
 			
 			ShaderType type;
 
-			ID3D11Device* device;
-			ID3D11DeviceContext* context;
-
-			ID3DX11Effect* effect;
-
-			ID3DX11EffectPass* pass;
-			ID3DX11EffectTechnique* technique;
+			TDX_Effect* effect;
+			TDX_EffectPass* pass;
+			TDX_EffectTechnique* technique;
 
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);

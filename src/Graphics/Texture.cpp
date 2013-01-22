@@ -7,9 +7,6 @@
 
 #include "Core/TypeGlobals.h"
 
-#include <d3d11.h>
-#include <d3dx11.h>
-
 namespace TikiEngine
 {
 	namespace Resources
@@ -20,25 +17,30 @@ namespace TikiEngine
 		{
 			ZeroMemory(
 				&desc,
-				sizeof(D3D11_TEXTURE2D_DESC)
+				sizeof(TDX_Texture2D_Desc)
 			);
 		}
 
-		Texture::Texture(Engine* engine, ID3D11Texture2D* tex, bool createShaderView, bool dynamic)
+		Texture::Texture(Engine* engine, TDX_Texture2D* tex, bool createShaderView, bool dynamic)
 			: ITexture(engine), texture(tex), dynamic(dynamic), textureResource(0)
 		{
 			tex->GetDesc(&desc);
-
-			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
-			ZeroMemory(&srDesc, sizeof(srDesc));
-
-			srDesc.Format = desc.Format;
-			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-			srDesc.Texture2D.MostDetailedMip = 0;
-			srDesc.Texture2D.MipLevels = 1;
-
+						
 			if (createShaderView)
 			{
+				TDX_ShaderResourceView_Desc srDesc;
+				ZeroMemory(&srDesc, sizeof(srDesc));
+
+#ifdef TIKI_DX10
+				srDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+#else
+				srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+#endif
+
+				srDesc.Format = desc.Format;
+				srDesc.Texture2D.MostDetailedMip = 0;
+				srDesc.Texture2D.MipLevels = 1;
+
 				HRESULT r = DllMain::Device->CreateShaderResourceView(
 					tex,
 					&srDesc,
@@ -93,16 +95,30 @@ namespace TikiEngine
 			desc.ArraySize = 1;
 			desc.Format = (DXGI_FORMAT)format;
 			desc.SampleDesc.Count = 1;
+
+#if TIKI_DX10
+			desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
+#else
 			desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+#endif
 
 			if (dynamic)
 			{
+#if TIKI_DX10
+				desc.Usage = D3D10_USAGE_DYNAMIC;
+				desc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+#else
 				desc.Usage = D3D11_USAGE_DYNAMIC;
 				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+#endif
 			}
 			else
 			{
+#if TIKI_DX10
+				desc.Usage = D3D10_USAGE_DEFAULT;
+#else
 				desc.Usage = D3D11_USAGE_DEFAULT;
+#endif
 				desc.CPUAccessFlags = 0;
 			}
 
@@ -113,11 +129,16 @@ namespace TikiEngine
 			);
 			texture->GetDesc(&this->desc);
 
-			D3D11_SHADER_RESOURCE_VIEW_DESC srDesc;
+			TDX_ShaderResourceView_Desc srDesc;
 			ZeroMemory(&srDesc, sizeof(srDesc));
+			
+#if TIKI_DX10
+			srDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
+#else
+			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+#endif
 
 			srDesc.Format = desc.Format;
-			srDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 			srDesc.Texture2D.MostDetailedMip = 0;
 			srDesc.Texture2D.MipLevels = 1;
 
@@ -135,10 +156,14 @@ namespace TikiEngine
 
 			stream->Read(data, 0, size);
 
-			ID3D11Texture2D* oldTexture = texture;
-			ID3D11ShaderResourceView* oldResource = textureResource;
+			TDX_Texture2D* oldTexture = texture;
+			TDX_ShaderResourceView* oldResource = textureResource;
 
+#ifdef TIKI_DX10
+			HRESULT r = D3DX10CreateShaderResourceViewFromMemory(
+#else
 			HRESULT r = D3DX11CreateShaderResourceViewFromMemory(
+#endif
 				DllMain::Device,
 				data,
 				size,
@@ -161,16 +186,17 @@ namespace TikiEngine
 			SafeRelease(&oldTexture);
 			SafeRelease(&oldResource);
 
-			ID3D11Resource* res;
+			TDX_Resource* res;
 			textureResource->GetResource(&res);
 
-			texture = (ID3D11Texture2D*)res;
+			texture = (TDX_Texture2D*)res;
 			texture->GetDesc(&desc);
 		}
 
 		void Texture::saveToStream(wcstring fileName, Stream* stream)
 		{
-			D3D11_TEXTURE2D_DESC desc;
+#if TIKI_DX11
+			TDX_Texture2D_Desc desc;
 			texture->GetDesc(&desc);
 
 			desc.BindFlags = 0;
@@ -201,6 +227,7 @@ namespace TikiEngine
 			}
 
 			tex->Release();
+#endif
 		}
 		#pragma endregion
 
@@ -250,8 +277,13 @@ namespace TikiEngine
 				return;
 			}
 
+#if TIKI_DX10
+			D3D10_MAPPED_TEXTURE2D mapped;
+			HRESULT r = texture->Map(0, D3D10_MAP_READ, 0, &mapped);
+#else
 			D3D11_MAPPED_SUBRESOURCE mapped;
 			HRESULT r = DllMain::Context->Map(texture, 0, D3D11_MAP_READ, 0, &mapped);
+#endif
 			
 			if (FAILED(r))
 			{
@@ -289,7 +321,11 @@ namespace TikiEngine
 				i++;
 			}
 
+#if TIKI_DX10
+			texture->Unmap(0);
+#else
 			DllMain::Context->Unmap(texture, 0);
+#endif
 
 			*data = pixels;
 			*dataLength = sizeof(Color) * desc.Width * desc.Height;
@@ -308,9 +344,14 @@ namespace TikiEngine
 				engine->HLog.Write("SetData: Wrong Format");
 				return;
 			}
-			
+
+#if TIKI_DX10
+			D3D10_MAPPED_TEXTURE2D mapped;
+			HRESULT r = texture->Map(0, D3D10_MAP_WRITE_DISCARD, 0, &mapped);
+#else
 			D3D11_MAPPED_SUBRESOURCE mapped;
-			DllMain::Context->Map(texture, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+			HRESULT r = DllMain::Context->Map(texture, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
+#endif
 
 			memcpy(
 				mapped.pData,
@@ -318,7 +359,11 @@ namespace TikiEngine
 				dataLength
 			);
 
+#if TIKI_DX10
+			texture->Unmap(0);
+#else
 			DllMain::Context->Unmap(texture, 0);
+#endif
 		}
 		#pragma endregion
 	}

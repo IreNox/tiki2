@@ -18,22 +18,14 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="inc\Input\DllMain.h" />
-    <ClInclude Include="inc\Input\InputModule.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\Input\DllMain.cpp" />
-    <ClCompile Include="src\Input\InputModule.cpp" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{64D225CE-7AAD-4E39-9E7D-8CCC214EDC00}</ProjectGuid>
+    <ProjectGuid>{A5DA3004-8282-427A-9B70-D029AF67A6A2}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>TikiEngineGraphicsDX10</RootNamespace>
     <SccProjectName>SAK</SccProjectName>
     <SccAuxPath>SAK</SccAuxPath>
     <SccLocalPath>SAK</SccLocalPath>
     <SccProvider>SAK</SccProvider>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>TikiEngineInput</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -63,44 +55,56 @@
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\Output_dd_bin.props" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\TikiEngine.GraphicsDX11_X86.props" />
     <Import Project="props\TikiEngine_Debug.props" />
+    <Import Project="props\TikiEngine.GraphicsDX10_X86.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\Output_dd_bin.props" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\TikiEngine.GraphicsDX11_X64.props" />
-    <Import Project="props\TikiEngine_X64.props" />
     <Import Project="props\TikiEngine_Debug.props" />
+    <Import Project="props\TikiEngine_X64.props" />
+    <Import Project="props\TikiEngine.GraphicsDX10_X64.props" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\Output_dd_bin.props" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\TikiEngine.GraphicsDX11_X86.props" />
+    <Import Project="props\TikiEngine.GraphicsDX10_X86.props" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="props\Cloddy_Libs.props" />
     <Import Project="props\Output_dd_bin.props" />
     <Import Project="props\TikiEngine.props" />
-    <Import Project="props\TikiEngine.GraphicsDX11_X64.props" />
     <Import Project="props\TikiEngine_X64.props" />
+    <Import Project="props\TikiEngine.GraphicsDX10_X64.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TIKIENGINEINPUT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TIKIENGINEGRAPHICSDX10_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -109,9 +113,11 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TIKIENGINEINPUT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;TIKIENGINEGRAPHICSDX10_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,10 +127,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TIKIENGINEINPUT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TIKIENGINEGRAPHICSDX10_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -136,10 +144,12 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TIKIENGINEINPUT_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;TIKIENGINEGRAPHICSDX10_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +158,61 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Graphics\AllComponents.cpp" />
+    <ClCompile Include="src\Graphics\AllModules.cpp" />
+    <ClCompile Include="src\Graphics\CloddyInternal.cpp" />
+    <ClCompile Include="src\Graphics\DebugConsole.cpp" />
+    <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
+    <ClCompile Include="src\Graphics\DllMain.cpp" />
+    <ClCompile Include="src\Graphics\Font.cpp" />
+    <ClCompile Include="src\Graphics\GraphicsInternal.cpp" />
+    <ClCompile Include="src\Graphics\Model.cpp" />
+    <ClCompile Include="src\Graphics\ModelInternal.cpp" />
+    <ClCompile Include="src\Graphics\Quad.cpp" />
+    <ClCompile Include="src\Graphics\RenderTarget.cpp" />
+    <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Graphics\Texture.cpp" />
+    <ClCompile Include="src\Graphics\VertexInternal.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Graphics\AnimationStack.h" />
+    <ClInclude Include="inc\Graphics\CBLights.h" />
+    <ClInclude Include="inc\Graphics\CBObjectData.h" />
+    <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
+    <ClInclude Include="inc\Graphics\DebugConsole.h" />
+    <ClInclude Include="inc\Graphics\DebugLineRenderer.h" />
+    <ClInclude Include="inc\Graphics\DllMain.h" />
+    <ClInclude Include="inc\Graphics\DynamicBuffer.h" />
+    <ClInclude Include="inc\Graphics\Font.h" />
+    <ClInclude Include="inc\Graphics\GraphicsModule.h" />
+    <ClInclude Include="inc\Graphics\LightData.h" />
+    <ClInclude Include="inc\Graphics\MeshRenderer.h" />
+    <ClInclude Include="inc\Graphics\Model.h" />
+    <ClInclude Include="inc\Graphics\ModelBinaryData.h" />
+    <ClInclude Include="inc\Graphics\ModelConverter.h" />
+    <ClInclude Include="inc\Graphics\ModelIOContext.h" />
+    <ClInclude Include="inc\Graphics\ParticleRenderer.h" />
+    <ClInclude Include="inc\Graphics\ParticleVertex.h" />
+    <ClInclude Include="inc\Graphics\PPDefault.h" />
+    <ClInclude Include="inc\Graphics\Quad.h" />
+    <ClInclude Include="inc\Graphics\RenderTarget.h" />
+    <ClInclude Include="inc\Graphics\Shader.h" />
+    <ClInclude Include="inc\Graphics\SkinMatrices.h" />
+    <ClInclude Include="inc\Graphics\SpriteBatchModule.h" />
+    <ClInclude Include="inc\Graphics\SpriteBatchVertex.h" />
+    <ClInclude Include="inc\Graphics\StaticBuffer.h" />
+    <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h" />
+    <ClInclude Include="inc\Graphics\TerrainRenderer.h" />
+    <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h" />
+    <ClInclude Include="inc\Graphics\Texture.h" />
+    <ClInclude Include="inc\Graphics\TikiAnimation.h" />
+    <ClInclude Include="inc\Graphics\TikiBone.h" />
+    <ClInclude Include="inc\Graphics\TikiHeightmap.h" />
+    <ClInclude Include="inc\Graphics\TikiLayer.h" />
+    <ClInclude Include="inc\Graphics\TikiMesh.h" />
+    <ClInclude Include="inc\Graphics\VertexDeclaration.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

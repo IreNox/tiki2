@@ -493,12 +493,12 @@ namespace TikiEngine
 			{
 				if (!hasAdjacencyIndices) return;
 				
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ);
 				DllMain::Context->DrawIndexed(adjacencyIndexCount, 0, 0);
 			}
 			else
 			{
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 				DllMain::Context->DrawIndexed(indexCount, 0, 0);
 			}
 #endif
@@ -537,7 +537,7 @@ namespace TikiEngine
 			Mesh::SetIndexData(data, count);
 
 #ifdef TIKI_ENGINE
-			indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
+			indexBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
 #endif
 		}
 
@@ -556,7 +556,7 @@ namespace TikiEngine
 			memcpy(adjacencyIndexData, data, sizeof(UInt32) * count);
 
 #ifdef TIKI_ENGINE
-			indexAdjacencyBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(engine, sizeof(UInt32), count, adjacencyIndexData);
+			indexAdjacencyBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, adjacencyIndexData);
 #endif
 		}
 
@@ -565,7 +565,7 @@ namespace TikiEngine
 			Mesh::SetVertexData(data, length);
 
 #ifdef TIKI_ENGINE
-			vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
+			vertexBuffer = new StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
 #endif
 		}
 		#pragma endregion

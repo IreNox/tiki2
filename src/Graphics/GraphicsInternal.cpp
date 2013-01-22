@@ -22,21 +22,16 @@ namespace TikiEngine
 
 			shadowTarget = new RenderTarget(engine);
 			shadowTarget->CreateScreenSize(false, PF_R8G8B8A8);
+			shadowTarget->Clear(Color::White);
 			shadowTarget->AddRef();
 
-			PostProcessPass* pass = new PostProcessPass(engine, shaderShadow);
+			PostProcessPass* pass;
+
+#if TIKI_SHADOWS_ENABLED
+			pass = new PostProcessPass(engine, shaderShadow);
 			pass->AddOutput(0, shadowTarget);
 			this->AddPass(pass);
-
-			pass = new PostProcessPass(engine, shaderShadow);
-			pass->AddInput("tex", shadowTarget);
-			pass->AddOutput(0, engine->graphics->GetUnusedScreenTarget());
-			this->AddPass(pass);
-
-			pass = new PostProcessPass(engine, shaderShadow);
-			pass->AddInput("tex", engine->graphics->GetUnusedScreenTarget());
-			pass->AddOutput(0, shadowTarget);
-			this->AddPass(pass);
+#endif
 
 			pass = new PostProcessPass(engine, shaderDefault);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
@@ -47,6 +42,8 @@ namespace TikiEngine
 			pass->AddInput("rtShadow", shadowTarget);
 			pass->AddOutput(0, backBuffer);
 			this->AddPass(pass);
+
+			engine->graphics->ScreenSizeChanged.AddHandler(this);
 		}
 
 		PPDefault::~PPDefault()
@@ -59,22 +56,17 @@ namespace TikiEngine
 
 		void PPDefault::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
+#if TIKI_SHADOWS_ENABLED
 			if (index == 0)
 			{
 				shadowTarget->Clear(Color::White);
 			}
-			else if (index == 1)
-			{
-				engine->graphics->SetStateDepthEnabled(false);
+#endif
+		}
 
-				passes[1]->SetOutput(0, engine->graphics->GetUnusedScreenTarget());
-				passes[2]->SetInput("tex", engine->graphics->GetUnusedScreenTarget());
-			}
-
-			if (index < 3)
-			{
-				shaderShadow->SelectSubByIndex(index);
-			}
+		void PPDefault::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
+		{
+			shadowTarget->Clear(Color::White);
 		}
 		#pragma endregion
 	}

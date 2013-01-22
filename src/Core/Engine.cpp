@@ -26,9 +26,9 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
-		  isLoading(false), isLoadingFinish(true)
+		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0)
 #if _DEBUG
-		, fpsMin(1000000000), fpsMax(0), fpsIndex(0), fpsAve(0)
+		, fpsIndex(0), fpsAve(0)
 #endif
 	{
 	}
@@ -192,22 +192,20 @@ namespace TikiEngine
 			last = current;
 
 #if _DEBUG
-			double fps = 1.0 / elapsedTime;
-			if (fps < fpsMin) fpsMin = fps;
-			if (fps > fpsMax) fpsMax = fps;
-			fpsAve = (fpsCache[0] + fpsCache[1] + fpsCache[2] + fpsCache[3] + fpsCache[4] + fps) / 6.0; 
-			fpsIndex = (++fpsIndex) % 5;
-			fpsCache[fpsIndex] = fps;
+			if (frameCount % 10 == 0)
+			{
+				fpsIndex = (++fpsIndex) % 5;
+				fpsCache[fpsIndex] = 1.0 / elapsedTime;
 
-			std::wostringstream s;
-			s << "TikiEngine 2.0 - FPS - Min: " << fpsMin << " - Max: " << fpsMax << " - Average: " << fpsAve;
+				double fps = fpsCache[0] + fpsCache[1] + fpsCache[2] + fpsCache[3] + fpsCache[4]; 
+				fps /= 6.0;
 
-			wstring str = s.str();
-			SetWindowText(window->GetHWND(), str.c_str());
-#else
-			std::wostringstream s;
-			s << "TikiEngine 2.0 - FPS: " << (1.0 / elapsedTime);
-			SetWindowText(window->GetHWND(), s.str().c_str());
+				std::wostringstream s;
+				s << "TikiEngine 2.0 - FPS: " << fps;
+
+				wstring str = s.str();
+				SetWindowText(window->GetHWND(), str.c_str());
+			}
 #endif
 
 			this->Update(updateArgs);
@@ -221,6 +219,7 @@ namespace TikiEngine
 			//}
 			
 			window->End();
+			frameCount++;
 		}
 	}
 
@@ -364,12 +363,14 @@ namespace TikiEngine
 			loadingScene->Update(args);
 		}
 
-		double wait = (1.0 / 60.0) - args.Time.ElapsedTime;
-
-		if (wait > 0.0)
+		syncWait += (args.Time.ElapsedTime > 0.015 ? -1 : 1);
+		if (syncWait > 0)
 		{
-			int milli = (int)(wait * 1000.0);
-			Sleep(milli);
+			Sleep(syncWait);
+		}
+		else
+		{
+			syncWait = 0;
 		}
 	}
 	#pragma endregion

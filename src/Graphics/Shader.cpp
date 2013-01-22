@@ -21,6 +21,18 @@
 #include "Graphics/DllMain.h"
 #include "Graphics/GraphicsModule.h"
 
+#if TIKI_DX10
+#define TDX_EFFECT_COMPILE D3DX10CompileFromMemory
+#define TDX_EFFECT_PROFILE "fx_4_0"
+#define TDX_EFFECT_CREATE D3DX10CreateEffectFromMemory
+#define TDX_EFFECT_TECHNIQUE "tiki10"
+#else
+#define TDX_EFFECT_COMPILE D3DX11CompileFromMemory
+#define TDX_EFFECT_PROFILE "fx_5_0"
+#define TDX_EFFECT_CREATE D3DX11CreateEffectFromMemory
+#define TDX_EFFECT_TECHNIQUE "tiki11"
+#endif
+
 namespace TikiEngine
 {
 	namespace Resources
@@ -31,8 +43,6 @@ namespace TikiEngine
 		Shader::Shader(Engine* engine)
 			: IShader(engine), effect(0)
 		{
-			this->device = DllMain::Device;
-			this->context = DllMain::Context;
 		}
 
 		Shader::~Shader()
@@ -59,7 +69,11 @@ namespace TikiEngine
 
 		void Shader::Apply()
 		{
-			pass->Apply(0, context);
+#if TIKI_DX10
+			pass->Apply(0);
+#else
+			pass->Apply(0, DllMain::Context);
+#endif
 		}
 
 		void Shader::ApplyVars(GameObject* gameObject, Material* material, const Matrix& localMatrix)
@@ -93,25 +107,38 @@ namespace TikiEngine
 			}
 		}
 
-		void Shader::CreateLayout(D3D11_INPUT_ELEMENT_DESC* elements, UINT elementsCount, ID3D11InputLayout** layout, UInt32* hash)
+		void Shader::CreateLayout(TDX_Input_Element_desc* elements, UINT elementsCount, TDX_InputLayout** layout, UInt32* hash)
 		{
-			D3DX11_PASS_SHADER_DESC effectVsDesc;
-			pass->GetVertexShaderDesc(&effectVsDesc);
+#if TIKI_DX10
+			D3D10_PASS_DESC passDesc;
+			pass->GetDesc(&passDesc);
 
+			HRESULT r = DllMain::Device->CreateInputLayout(
+				elements,
+				elementsCount,
+				passDesc.pIAInputSignature,
+				passDesc.IAInputSignatureSize,
+				layout
+			);
+#else
+			D3DX11_PASS_SHADER_DESC effectVsDesc;
 			D3DX11_EFFECT_SHADER_DESC effectVsDesc2;
+
+			pass->GetVertexShaderDesc(&effectVsDesc);
 			effectVsDesc.pShaderVariable->GetShaderDesc(effectVsDesc.ShaderIndex, &effectVsDesc2);
 
 			UINT vsCodeLen = effectVsDesc2.BytecodeLength;
 			const void* vsCodePtr = effectVsDesc2.pBytecode;
 
-			HRESULT r = device->CreateInputLayout(
+			HRESULT r = DllMain::Device->CreateInputLayout(
 				elements,
 				elementsCount,
 				vsCodePtr,
 				vsCodeLen,
 				layout
 			);
-
+#endif
+			
 			*hash = HelperHash::Hash(
 				(UCHAR*)elements,
 				sizeof(D3D11_INPUT_ELEMENT_DESC) * elementsCount
@@ -134,9 +161,13 @@ namespace TikiEngine
 		#pragma region Member - Variable
 		void Shader::SetConstantBuffer(cstring key, IConstantBuffer* constantBuffer)
 		{
-			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(
-				(ID3D11Buffer*)constantBuffer->GBuffer()
-			);
+#if TIKI_DX10
+			ID3D10Buffer* buffer = (ID3D10Buffer*)constantBuffer->GBuffer();
+#else
+			ID3D11Buffer* buffer = (ID3D11Buffer*)constantBuffer->GBuffer();
+#endif
+
+			HRESULT r = effect->GetConstantBufferByName(key)->SetConstantBuffer(buffer);
 
 			if (FAILED(r))
 			{
@@ -241,38 +272,58 @@ namespace TikiEngine
 
 		void Shader::SetMatrix(cstring key, const Matrix& value)
 		{
-			effect->GetVariableByName(key)->AsMatrix()->SetMatrix(
-				value.n
-			);
+			Matrix m = value;
+
+			effect->GetVariableByName(key)->AsMatrix()->SetMatrix(m.n);
 		}
 
 		void Shader::SetVector2(cstring key, const Vector2& value)
 		{
+			Vector2 v = value;
+
 			auto cv = effect->GetVariableByName(key)->AsVector();
-			cv->SetFloatVector(value.arr);
+			cv->SetFloatVector(v.arr);
 		}
 
 		void Shader::SetVector3(cstring key, const Vector3& value)
 		{
+			Vector3 v = value;
+
 			auto cv = effect->GetVariableByName(key)->AsVector();
-			cv->SetFloatVector(value.arr);
+			cv->SetFloatVector(v.arr);
 		}
 
 		void Shader::SetVector4(cstring key, const Vector4& value)
 		{
+			Vector4 v = value;
+
 			auto cv = effect->GetVariableByName(key)->AsVector();
-			cv->SetFloatVector(value.arr);
+			cv->SetFloatVector(v.arr);
 		}
 
 		void Shader::SetTexture(cstring key, ITexture* texture)
 		{
-			effect->GetVariableByName(key)->AsShaderResource()->SetResource(
-				(ID3D11ShaderResourceView*)texture->GetNativeResource()
-			);
+#if TIKI_DX10
+			ID3D10ShaderResourceView* tex = (ID3D10ShaderResourceView*)texture->GetNativeResource();
+#else
+			ID3D11ShaderResourceView* tex = (ID3D11ShaderResourceView*)texture->GetNativeResource();
+#endif
+
+			effect->GetVariableByName(key)->AsShaderResource()->SetResource(tex);
 		}
 
 		void Shader::SetTextureArray(cstring key, List<ITexture*>* array)
 		{
+#if TIKI_DX10
+			ID3D10ShaderResourceView** data = new ID3D10ShaderResourceView*[array->Count()];
+
+			UInt32 i = 0;
+			while (i < array->Count())
+			{
+				data[i] = (ID3D10ShaderResourceView*)array->Get(i)->GetNativeResource();
+				i++;
+			}
+#else
 			ID3D11ShaderResourceView** data = new ID3D11ShaderResourceView*[array->Count()];
 
 			UInt32 i = 0;
@@ -281,6 +332,7 @@ namespace TikiEngine
 				data[i] = (ID3D11ShaderResourceView*)array->Get(i)->GetNativeResource();
 				i++;
 			}
+#endif
 
 			HRESULT r = effect->GetVariableByName(key)->AsShaderResource()->SetResourceArray(
 				data,
@@ -301,6 +353,7 @@ namespace TikiEngine
 		void Shader::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			bool readFromFile = true;
+			ID3D10Blob *errorBlob = 0;
 
 #if !_DEBUG
 			wstring binFileName = engine->HPath.CombineWorkingPath(L"Data/BinShader/" + engine->HPath.GetFilenameWithoutExtension(fileName) + L".binfx");
@@ -310,37 +363,33 @@ namespace TikiEngine
 			);
 
 			if (!engine->HPath.FileExists(binFileName))
-			{
-#else
-			{
 #endif
-
+			{
 				ID3D10Blob *blob = 0;
-				ID3D10Blob *errorBlob = 0;
 
 				UPInt size = stream->GetLength();
 				char* data = new char[size];
 				stream->Read(data, 0, (UInt32)size);
 
-				HRESULT r = D3DX11CompileFromMemory(
+				HRESULT r = TDX_EFFECT_COMPILE(
 					data,
 					size,
 					0,
 					0,
 					0,
 					0,
-					"fx_5_0",
+					TDX_EFFECT_PROFILE,
 					0,
 					0,
 					0,
 					&blob,
 					&errorBlob,
 					0
-					);
+				);
 
 				if (FAILED(r))
 				{
-					if (r == D3D11_ERROR_FILE_NOT_FOUND)
+					if (r == D3D10_ERROR_FILE_NOT_FOUND)
 					{
 						engine->HLog.WriteError("Failed to compile effect. File not found", 0);
 					}
@@ -381,21 +430,40 @@ namespace TikiEngine
 				SafeRelease(&blob);
 			}
 
-			ID3DX11Effect* oldEffect = effect;
+			TDX_Effect* oldEffect = effect;
 #endif
 
 			UPInt size = stream->GetLength();
 			char* data = new char[size];
 			stream->Read(data, 0, size);
 
+#ifdef TIKI_DX10
+			HRESULT r = D3DX10CreateEffectFromMemory(
+				data,
+				size,
+				NULL,
+				NULL,
+				0,
+				TDX_EFFECT_PROFILE,
+				0,
+				0,
+				DllMain::Device,
+				0,
+				0,
+				&effect,
+				&errorBlob,
+				0
+			);
+#else
 			HRESULT r = D3DX11CreateEffectFromMemory(
 				data,
 				size,
 				0,
-				device,
+				DllMain::Device,
 				&effect
 			);
-			
+#endif
+						
 			if (FAILED(r))
 			{
 #if _DEBUG
@@ -447,7 +515,7 @@ namespace TikiEngine
 				break;
 			}
 
-			technique = effect->GetTechniqueByIndex(0);
+			technique = effect->GetTechniqueByName(TDX_EFFECT_TECHNIQUE);
 			this->SelectSubByIndex(0);
 		}
 

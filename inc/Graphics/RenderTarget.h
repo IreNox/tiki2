@@ -14,7 +14,8 @@ namespace TikiEngine
 		public:
 
 			RenderTarget(Engine* engine);
-			RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget, bool shaderView);
+			RenderTarget(Engine* engine, TDX_RenderTargetView* renderTarget, bool shaderView);
+
 			~RenderTarget();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
@@ -29,7 +30,7 @@ namespace TikiEngine
 			void Resize(UInt32 width, UInt32 height);
 
 			/*! @brief Resize RenderTarget. Create no ShaderResourceView! */
-			void Resize(ID3D11RenderTargetView* renderTarget);
+			void Resize(TDX_RenderTargetView* renderTarget);
 
 			Int32 GetWidth();
 			Int32 GetHeight();
@@ -54,8 +55,7 @@ namespace TikiEngine
 		private:
 
 			Texture* texture;
-
-			ID3D11RenderTargetView* renderTarget;
+			TDX_RenderTargetView* renderTarget;
 
 		};
 	}

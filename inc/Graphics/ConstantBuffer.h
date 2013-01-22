@@ -2,8 +2,9 @@
 
 #include "Core/Engine.h"
 #include "Core/HelperLog.h"
-
 #include "Core/IConstantBuffer.h"
+
+#include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -32,6 +33,10 @@ namespace TikiEngine
 			#pragma region Member
 			inline void* Map()
 			{
+#if TIKI_DX10
+				void* mapped;
+				HRESULT r = buffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &mapped);
+#else
 				D3D11_MAPPED_SUBRESOURCE mapped;
 
 				HRESULT r = DllMain::Context->Map(
@@ -41,13 +46,18 @@ namespace TikiEngine
 					0,
 					&mapped
 				);
+#endif
 
 				if (FAILED(r))
 				{
 					engine->HLog.WriteError("Can't map ConstantBuffer", 0);
 				}
 
+#if TIKI_DX10
+				return mapped;
+#else
 				return mapped.pData;
+#endif
 			}
 
 			inline T* MapTI()
@@ -57,7 +67,11 @@ namespace TikiEngine
 
 			inline void Unmap()
 			{
+#if TIKI_DX10
+				buffer->Unmap();
+#else
 				DllMain::Context->Unmap(buffer, 0);
+#endif
 			}
 
 			inline void* GBuffer() { return buffer; }
@@ -66,22 +80,26 @@ namespace TikiEngine
 
 		private:
 
-			#pragma region Vars
-			ID3D11Buffer* buffer;
-
 			UInt32 size;
-			#pragma endregion
+			TDX_Buffer* buffer;
 
 			#pragma region Member - CreateBuffer
 			void createBuffer()
 			{
+#if TIKI_DX10
+				D3D10_BUFFER_DESC desc;
+				desc.Usage = D3D10_USAGE_DYNAMIC;
+				desc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
+				desc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
+#else
 				D3D11_BUFFER_DESC desc;
 				desc.Usage = D3D11_USAGE_DYNAMIC;
 				desc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 				desc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+				desc.StructureByteStride = 0;
+#endif
 				desc.ByteWidth = size;
 				desc.MiscFlags = 0;
-				desc.StructureByteStride = 0;
 
 				HRESULT r = DllMain::Device->CreateBuffer(
 					&desc,

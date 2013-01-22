@@ -82,7 +82,7 @@ namespace TikiEngine
 			}
 
 			DllMain::Context->IASetPrimitiveTopology(
-				(D3D11_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology()
+				(D3D_PRIMITIVE_TOPOLOGY)mesh->GetPrimitiveTopology()
 			);
 
 			decl->Apply();
@@ -134,7 +134,7 @@ namespace TikiEngine
 				void* vertexData = 0;
 				mesh->GetVertexData(&vertexData, &lenCount);
 
-				vertexBuffer = new StaticBuffer<D3D11_BIND_VERTEX_BUFFER>(
+				vertexBuffer = new StaticBuffer<TIKI_VERTEX_BUFFER>(
 					engine,
 					decl->GetElementSize(),
 					lenCount / decl->GetElementSize(),
@@ -146,7 +146,7 @@ namespace TikiEngine
 
 				if (lenCount != 0)
 				{
-					indexBuffer = new StaticBuffer<D3D11_BIND_INDEX_BUFFER>(
+					indexBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(
 						engine,
 						sizeof(UInt32),
 						lenCount,
@@ -167,7 +167,7 @@ namespace TikiEngine
 			shader->AddRef();
 
 			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
-			vertexBuffer = new DynamicBuffer<ParticleVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+			vertexBuffer = new DynamicBuffer<ParticleVertex, TIKI_VERTEX_BUFFER>(engine);
 		}
 
 		ParticleRenderer::~ParticleRenderer()
@@ -221,24 +221,20 @@ namespace TikiEngine
 
 			decl->Apply();
 
-			UInt32 stride = sizeof(ParticleVertex);
-			UInt32 offset = 0;
-			ID3D11Buffer* buffer = vertexBuffer->GetBuffer();
-
 			switch (behavior->GRenderType())
 			{
 			case PRT_PointList:
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_POINTLIST);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_POINTLIST);
 				break;
 			case PRT_LineList:
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 				break;
 			case PRT_LineStrip:
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
 				break;
 			}
 
-			DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
+			vertexBuffer->Apply();
 
 			if (texture)
 				shader->SetTexture("tex", texture);
@@ -422,6 +418,15 @@ namespace TikiEngine
 			if (this->GetReady())
 			{
 				UInt32 tmp;
+#if TIKI_DX10
+				D3D10_INPUT_ELEMENT_DESC layoutDescription[] =
+				{
+					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
+				};
+#else
 				D3D11_INPUT_ELEMENT_DESC layoutDescription[] =
 				{
 					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -429,6 +434,7 @@ namespace TikiEngine
 					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, D3D10_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 				};
+#endif
 
 				Shader* shader = (Shader*)material->GetShader();
 				shader->CreateLayout(layoutDescription, 4, &layout, &tmp);
@@ -562,10 +568,10 @@ namespace TikiEngine
 
 				UInt32 offset = 0;
 				UInt32 stride = sizeof(CloddyVertex);
-				ID3D11Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
+				TDX_Buffer* buffer = collisionVertexBuffer->vertexBuffer->GetBuffer();
 
 				DllMain::Context->IASetVertexBuffers(0, 1, &buffer, &stride, &offset);
-				DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 				DllMain::Context->DrawIndexed(collisionIndexBuffer->indexCount, 0, 0);
 			}

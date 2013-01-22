@@ -18,8 +18,13 @@
 #include "Graphics/DebugLineRenderer.h"
 #endif
 
-#include <D3D11.h>
-#include <D3DX11.h>
+#if TIKI_DX10
+#include "D3D10.h"
+#include "D3DX10.h"
+#else
+#include "D3D11.h"
+#include "D3DX11.h"
+#endif
 
 namespace TikiEngine
 {
@@ -83,8 +88,13 @@ namespace TikiEngine
 			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
 			void SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget);
 
+#if TIKI_DX10
+			void SetRenderTarget(UInt32 slot, ID3D10RenderTargetView* target);
+			void SetFirstAndOnlyRenderTargets(ID3D10RenderTargetView* target);
+#else
 			void SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target);
 			void SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target);
+#endif
 
 			void SetCulling(bool value);
 			void SetStateAlphaBlend(BlendStateModes value);
@@ -99,13 +109,31 @@ namespace TikiEngine
 			bool inited;
 			DrawArgs& currentArgs;
 
+			Color clearColor;
+			ViewPort viewPort; 
+
 			IDXGIFactory* factory;
 			IDXGIAdapter* adapter;
+			IDXGISwapChain* swapChain;
 
+#if TIKI_DX10
+			ID3D10Device* device;
+			ID3D10Device* deviceContext;
+			ID3D10RenderTargetView* renderTargetView;
+
+			ID3D10Texture2D* depthStencilBuffer;
+			ID3D10DepthStencilView* depthStencilView;
+			ID3D10DepthStencilState* depthStencilState;
+			ID3D10DepthStencilState* depthStencilStateDisable;
+
+			ID3D10BlendState* blendStateInterface;
+			ID3D10BlendState* blendStateParticle;
+			ID3D10RasterizerState* rasterStateBackfaces;
+
+			List<ID3D10RenderTargetView*> renderTargets;
+#else
 			ID3D11Device* device;
 			ID3D11DeviceContext* deviceContext;
-
-			IDXGISwapChain* swapChain;
 			ID3D11RenderTargetView* renderTargetView;
 
 			ID3D11Texture2D* depthStencilBuffer;
@@ -113,12 +141,13 @@ namespace TikiEngine
 			ID3D11DepthStencilState* depthStencilState;
 			ID3D11DepthStencilState* depthStencilStateDisable;
 
-			ViewPort viewPort; 
 			ID3D11BlendState* blendStateInterface;
             ID3D11BlendState* blendStateParticle;
 			ID3D11RasterizerState* rasterStateBackfaces;
 
-			Color clearColor;
+			List<ID3D11RenderTargetView*> renderTargets;
+#endif
+
 			ConstantBuffer<CBLights>* cbufferLights;
 			ConstantBuffer<CBMatrices>* cbufferCamera;
 			ConstantBuffer<CBObjectData>* cbufferObject;
@@ -132,7 +161,6 @@ namespace TikiEngine
 			bool rtScreenIndex;
 
 			List<RenderTarget*> screenSizeRenderTargets;
-			List<ID3D11RenderTargetView*> renderTargets;
 
 			PostProcess* defaultPostProcess;
 			PostProcessPass* defaultPostProcessPass;

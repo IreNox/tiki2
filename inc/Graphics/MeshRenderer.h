@@ -6,9 +6,6 @@
 #include "Graphics/StaticBuffer.h"
 #include "Graphics/VertexDeclaration.h"
 
-#include <d3d11.h>
-#include <D3DX11.h>
-
 namespace TikiEngine
 {
 	namespace Components
@@ -38,8 +35,8 @@ namespace TikiEngine
 			Mesh* mesh;
 			Material* material;
 
-			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			StaticBuffer<TIKI_INDEX_BUFFER>* indexBuffer;
+			StaticBuffer<TIKI_VERTEX_BUFFER>* vertexBuffer;
 
 			VertexDeclaration* decl;
 

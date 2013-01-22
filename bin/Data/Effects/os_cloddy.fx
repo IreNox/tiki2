@@ -53,14 +53,22 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 
 #include "Data/Effects/IncOS/is_states.fx"
 
-RasterizerState bla
+technique10 tiki10
 {
-	CullMode = NONE;
-};
+    pass p10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader( NULL );
+        SetPixelShader( CompileShader( ps_4_0, PS_Main_Cloddy() ) );
 
-technique11 basic
+        SetBlendState( NoBlending, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+        SetDepthStencilState( EnableDepth, 0 );
+    }
+}
+
+technique11 tiki11
 {
-    pass p0
+    pass p11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader( NULL );
@@ -68,6 +76,5 @@ technique11 basic
 
         SetBlendState( NoBlending, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
         SetDepthStencilState( EnableDepth, 0 );
-        SetRasterizerState( bla );
     }
 }

@@ -34,7 +34,7 @@ namespace TikiEngine
 
 		Shader* shader;
 		VertexDeclaration* decl;
-		DynamicBuffer<ColorVertex, D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+		DynamicBuffer<ColorVertex, TIKI_VERTEX_BUFFER>* vertexBuffer;
 
 	};
 }

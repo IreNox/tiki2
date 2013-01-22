@@ -70,20 +70,24 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 // Technique
 ////////////////////////////////////////////////////////////////////////////////
 
-DepthStencilState DisableDepth
-{
-    DepthEnable = FALSE;
-    DepthWriteMask = ZERO;
-};
 
-technique11 basic
-{
-    pass FinalScreen
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-		SetGeometryShader(  NULL );
-        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+#include "Data/Effects/Inc/is_technique.fx"
 
-		SetDepthStencilState( DisableDepth, 0 );
-    }
-}
+
+//DepthStencilState DisableDepth
+//{
+//    DepthEnable = FALSE;
+//    DepthWriteMask = ZERO;
+//};
+
+//technique11 basic
+//{
+//    pass FinalScreen
+//    {
+//        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
+//		SetGeometryShader(  NULL );
+//        SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
+//
+//		SetDepthStencilState( DisableDepth, 0 );
+//    }
+//}

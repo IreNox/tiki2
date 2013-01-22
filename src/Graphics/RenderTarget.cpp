@@ -14,15 +14,10 @@ namespace TikiEngine
 		{
 		}
 
-		RenderTarget::RenderTarget(Engine* engine, ID3D11RenderTargetView* renderTarget, bool shaderView)
+		RenderTarget::RenderTarget(Engine* engine, TDX_RenderTargetView* renderTarget, bool shaderView)
 			: IRenderTarget(engine), renderTarget(renderTarget), texture(0)
 		{
-			ID3D11Resource* res = 0;
-			renderTarget->GetResource(&res);
-
-			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
-			texture = new Texture(engine, tex, shaderView, false);
-			texture->AddRef();
+			this->Resize(renderTarget);
 		}
 
 		RenderTarget::~RenderTarget()
@@ -60,17 +55,18 @@ namespace TikiEngine
 			this->Create(width, height, false, (PixelFormat)format);
 		}
 
-		void RenderTarget::Resize(ID3D11RenderTargetView* renderTarget)
+		void RenderTarget::Resize(TDX_RenderTargetView* renderTarget)
 		{
 			SafeRelease(&texture);
-
 			this->renderTarget = renderTarget;
 
-			ID3D11Resource* res = 0;
+			TDX_Resource* res = 0;
 			renderTarget->GetResource(&res);
 
-			ID3D11Texture2D* tex = (ID3D11Texture2D*)res;
+			TDX_Texture2D* tex = (TDX_Texture2D*)res;
 			texture = new Texture(engine, tex, false, false);
+
+			texture->AddRef();
 		}
 
 		void RenderTarget::SaveToFile(wcstring fileName)
@@ -134,17 +130,24 @@ namespace TikiEngine
 		{
 			if (this->GetReady()) return;
 
-			ID3D11Texture2D* texture;
-
-			D3D11_TEXTURE2D_DESC desc;
+			TDX_Texture2D* texture;
+			TDX_Texture2D_Desc desc;
 			ZeroMemory(&desc, sizeof(desc));
+			
+#if TIKI_DX10
+			desc.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
 
-			desc.Width = width;
-			desc.Height = height;
-			desc.MipLevels = 1;
-			desc.ArraySize = 1;
-			desc.Format = (DXGI_FORMAT)format;
-			desc.SampleDesc.Count = 1;
+			if (dynamic)
+			{
+				desc.Usage = D3D10_USAGE_STAGING;
+				desc.CPUAccessFlags = D3D10_CPU_ACCESS_READ | D3D10_CPU_ACCESS_WRITE;
+			}
+			else
+			{
+				desc.Usage = D3D10_USAGE_DEFAULT;
+				desc.CPUAccessFlags = 0;
+			}
+#else
 			desc.BindFlags = D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
 			if (dynamic)
@@ -157,6 +160,15 @@ namespace TikiEngine
 				desc.Usage = D3D11_USAGE_DEFAULT;
 				desc.CPUAccessFlags = 0;
 			}
+#endif
+
+			desc.Width = width;
+			desc.Height = height;
+			desc.MipLevels = 1;
+			desc.ArraySize = 1;
+			desc.Format = (DXGI_FORMAT)format;
+			desc.SampleDesc.Count = 1;
+
 
 			DllMain::Device->CreateTexture2D(
 				&desc,
@@ -167,9 +179,13 @@ namespace TikiEngine
 			this->texture = new Texture(engine, texture, true, dynamic);
 			this->texture->AddRef();
 
-			D3D11_RENDER_TARGET_VIEW_DESC rtDesc;
-			rtDesc.Format = desc.Format;
+			TDX_RenderTargetView_Desc rtDesc;
+#if TIKI_DX10
+			rtDesc.ViewDimension = D3D10_RTV_DIMENSION_TEXTURE2D;
+#else
 			rtDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+#endif
+			rtDesc.Format = desc.Format;
 			rtDesc.Texture2D.MipSlice = 0;
 
 			DllMain::Device->CreateRenderTargetView(

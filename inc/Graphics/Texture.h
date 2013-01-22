@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Core/TypeInc.h"
-
-#include <d3d11.h>
 #include "Core/ITexture.h"
+
+#include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
@@ -18,7 +18,7 @@ namespace TikiEngine
 		public:
 
 			Texture(Engine* engine);
-			Texture(Engine* engine, ID3D11Texture2D* tex, bool createShaderView, bool dynamic);
+			Texture(Engine* engine, TDX_Texture2D* tex, bool createShaderView, bool dynamic);
 			~Texture();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
@@ -46,10 +46,10 @@ namespace TikiEngine
 
 			bool dynamic;
 
-			ID3D11Texture2D* texture;
-			ID3D11ShaderResourceView* textureResource;
+			TDX_Texture2D* texture;
+			TDX_ShaderResourceView* textureResource;
 
-			D3D11_TEXTURE2D_DESC desc;
+			TDX_Texture2D_Desc desc;
 
 		};
 	}

@@ -16,7 +16,7 @@ namespace TikiEngine
 		List<InputElement> elements = List<InputElement>(ColorVertex::Declaration, ColorVertex::DeclarationCount, true);
 		decl = new VertexDeclaration(engine, shader, &elements);
 
-		vertexBuffer = new DynamicBuffer<ColorVertex, D3D11_BIND_VERTEX_BUFFER>(engine);
+		vertexBuffer = new DynamicBuffer<ColorVertex, TIKI_VERTEX_BUFFER>(engine);
 	}
 
 	DebugLineRenderer::~DebugLineRenderer()
@@ -91,19 +91,9 @@ namespace TikiEngine
 		vertexBuffer->Unmap();
 		delete[](data);
 
-		DllMain::Context->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+		DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_LINELIST);
 
-		UINT offset = 0;
-		UINT stride = decl->GetElementSize();
-		ID3D11Buffer* buffer = vertexBuffer->GetBuffer();
-		DllMain::Context->IASetVertexBuffers(
-			0,
-			1,
-			&buffer,
-			&stride,
-			&offset
-		);
-
+		vertexBuffer->Apply();
 		shader->Apply();
 		decl->Apply();
 

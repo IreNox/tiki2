@@ -35,45 +35,6 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	return color;
 }
 
-float4 PSPP_Blur(PS_INPUT input, float2 pixel, Texture2D tex)
-{
-	pixel /= ScreenSize;
-	pixel *= BlurIntensity; 
-	
-	float h = BlurRange / 2;
-	float w = 0;
-	float4 color = (float4)0;
-	
-	for (float i = 0; i < BlurRange; i++)
-	{
-		float weight = sin(i / h);
-		w += weight;
-		
-		color += tex.Sample(sam, input.UV + (pixel * (i - h))) * weight;
-	}
-	color /= w;
-	
-    return color;
-}
-
-float4 PSPP_BlurVertical(PS_INPUT input) : SV_TARGET 
-{	
-	return PSPP_Blur(
-		input,
-		float2(0, 1),
-		tex
-	);
-}
-
-float4 PSPP_BlurHorizontal(PS_INPUT input) : SV_TARGET 
-{	
-	return PSPP_Blur(
-		input,
-		float2(1, 0),
-		tex
-	);
-}
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // Technique
@@ -108,9 +69,23 @@ RasterizerState EnableCulling
     CullMode = BACK;
 };
 
-technique11 basic
+technique10 tiki10
 {
-    pass p0
+    pass Shadow10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader(  NULL );
+        SetPixelShader( CompileShader( ps_4_0, PS_Main() ) );
+
+        SetBlendState( EnableFrameBuffer, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
+        SetDepthStencilState( RenderNonShadows, 0 );
+        SetRasterizerState( EnableCulling );
+    }
+}
+
+technique11 tiki11
+{
+    pass Shadow11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader(  NULL );
@@ -119,19 +94,5 @@ technique11 basic
         SetBlendState( EnableFrameBuffer, float4( 0.0f, 0.0f, 0.0f, 0.0f ), 0xFFFFFFFF );
         SetDepthStencilState( RenderNonShadows, 0 );
         SetRasterizerState( EnableCulling );
-    }
-
-    pass blurVertical
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-		SetGeometryShader( NULL );
-        SetPixelShader( CompileShader( ps_5_0, PSPP_BlurVertical() ) );
-    }
-
-    pass blurHorizontal
-    {
-        SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
-		SetGeometryShader( NULL );
-        SetPixelShader( CompileShader( ps_5_0, PSPP_BlurHorizontal() ) );
     }
 }

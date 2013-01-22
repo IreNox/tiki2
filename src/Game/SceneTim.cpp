@@ -177,55 +177,6 @@ namespace TikiEngine
 			//blur->GetPasses()[1]->SetOutput(0, engine->graphics->GetLightTarget());
 			//engine->graphics->AddPostProcess(blur);
 
-			#pragma region Old Stuff
-			//IPhysicsMaterial* material; 
-			////material = engine->content->LoadPhysicsMaterial(L"TODO");
-			//material = engine->librarys->CreateResource<IPhysicsMaterial>();
-			//material->SetRestitution(0.2f);
-			//material->SetDynamicFriction(0.7f);
-			//material->SetStaticFriction(0.5f); // static friction may be higher than 1.
-
-			// Cloddy
-			//go = new GameObject(engine);
-
-			//mat = engine->content->LoadMaterial(L"os_cloddy");
-			//mat->GetShader()->SetTexture("tex", tex);
-
-			//terrain = engine->librarys->CreateComponent<ITerrainRenderer>(go);
-			//terrain->LoadTerrain("Data/Cloddy/Datasets/terrain.E16C24.rect.dat", 8192, 2048);
-			//terrain->SetMaterial(mat);
-			//terrain->Release();
-			//mat->Release();
-
-			//collider = engine->librarys->CreateComponent<ITriangleMeshCollider>(go);
-			//collider->SetMaterial(material->GetIndex());
-			//collider->SetCenter(Vector3::Zero);
-			//collider->SetDynamic(false);
-
-			//this->AddElement(go);
-			//go->Release();
-
-			//go = new GameObject(engine);
-			//go->Model = engine->content->LoadModel(L"replaceme_cube");
-			//go->Model->SetMaterial(mat);
-			//dynamicBox = engine->librarys->CreateComponent<IBoxCollider>(go);
-			//dynamicBox->SetMaterial(material->GetIndex()); // 0 = default material	
-			//dynamicBox->SetCenter(Vector3(0, 20, 0));
-			//dynamicBox->SetSize(Vector3(1, 1, 1));
-			//dynamicBox->SetDynamic(true);
-			//// assign collision groups after object is created, else it won't work!
-			//dynamicBox->SetGroup(CG_Collidable_Pushable);
-			//this->AddElement(go);
-			//go->Release();
-
-			//// Blur
-			//engine->graphics->AddPostProcess(new PPBlur(engine));
-
-			//// Sound
-			//ISound* sound = engine->librarys->CreateResource<ISound>();
-			//sound->LoadFromFile(L"beep");
-			#pragma endregion
-
 			font = engine->librarys->CreateResource<IFont>();
 			font->Create(L"Arial", 14.0f);
 			font->AddRef();

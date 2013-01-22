@@ -115,20 +115,13 @@ namespace TikiEngine
 
 		sqlite3* dataBase;
 
-		//Thread<Engine>* threadDraw;
-		//Thread<Engine>* threadUpdate;
-		//Mutex* csDraw;
-		//Mutex* csUpdate;
-		//Mutex* csEngine;
-		//BufferState state;
-
 #if _DEBUG
 		UInt32 fpsIndex;
-		double fpsMin;
 		double fpsAve;
-		double fpsMax;
 		double fpsCache[5];
 #endif
+		Int32 syncWait;
+		UInt64 frameCount;
 
 		EngineDescription desc;
 		List<IModule*> loadedModules;

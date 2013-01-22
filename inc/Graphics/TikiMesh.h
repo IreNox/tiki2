@@ -74,10 +74,10 @@ namespace TikiEngine
 			UInt32 adjacencyIndexCount;
 
 #ifdef TIKI_ENGINE
-			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexBuffer;
-			StaticBuffer<D3D11_BIND_INDEX_BUFFER>* indexAdjacencyBuffer;
+			StaticBuffer<TIKI_INDEX_BUFFER>* indexBuffer;
+			StaticBuffer<TIKI_INDEX_BUFFER>* indexAdjacencyBuffer;
 
-			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			StaticBuffer<TIKI_VERTEX_BUFFER>* vertexBuffer;
 
 			VertexDeclaration* decl;
 #endif

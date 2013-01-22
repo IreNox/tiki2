@@ -36,12 +36,12 @@ namespace TikiEngine
 			Shader* shader;
 
 			//VertexBuffer* vertexBuffer;
-			StaticBuffer<D3D11_BIND_VERTEX_BUFFER>* vertexBuffer;
+			StaticBuffer<TIKI_VERTEX_BUFFER>* vertexBuffer;
 
-			ID3D11InputLayout* inputLayout;
+			TDX_InputLayout* inputLayout;
 
 			static PostProcessVertex quadVertices[4];
-			static D3D11_INPUT_ELEMENT_DESC Quad::quadVertexElements[2];
+			static TDX_Input_Element_desc Quad::quadVertexElements[2];
 
 		};
 	}

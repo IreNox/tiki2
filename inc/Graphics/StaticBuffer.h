@@ -19,15 +19,22 @@ namespace TikiEngine
 			StaticBuffer(Engine* engine, UInt32 elementSize, UInt32 elementCount, void* initData)
 				: EngineObject(engine), buffer(0), elementCount(elementCount), elementSize(elementSize)
 			{
+#if TIKI_DX10
+				D3D10_BUFFER_DESC desc;
+				D3D10_SUBRESOURCE_DATA data;
+				desc.Usage = D3D10_USAGE_DEFAULT;
+#else
 				D3D11_BUFFER_DESC desc;
+				D3D11_SUBRESOURCE_DATA data;
 				desc.Usage = D3D11_USAGE_DEFAULT;
+				desc.StructureByteStride = 0;
+#endif
+
 				desc.BindFlags = TBinding;
 				desc.CPUAccessFlags = 0;
 				desc.ByteWidth = elementSize * elementCount;
 				desc.MiscFlags = 0;
-				desc.StructureByteStride = 0;
-				
-				D3D11_SUBRESOURCE_DATA data;
+
 				data.pSysMem = initData;
 				data.SysMemPitch = 0;
 				data.SysMemSlicePitch = 0;
@@ -52,7 +59,7 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region Member
-			inline ID3D11Buffer* GetBuffer()
+			inline TDX_Buffer* GetBuffer()
 			{
 				return buffer;
 			}
@@ -76,15 +83,15 @@ namespace TikiEngine
 			#pragma region Member - Apply
 			inline void Apply()
 			{
-				if (TBinding == D3D11_BIND_VERTEX_BUFFER)
+				if (TBinding == TIKI_VERTEX_BUFFER)
 				{
 					UInt32 offset = 0;
 					UInt32 stride = elementSize;
-					ID3D11Buffer* d3dbuffer = buffer;
+					TDX_Buffer* d3dbuffer = buffer;
 
 					DllMain::Context->IASetVertexBuffers(0, 1, &d3dbuffer, &stride, &offset);
 				}
-				else if (TBinding == D3D11_BIND_INDEX_BUFFER)
+				else if (TBinding == TIKI_INDEX_BUFFER)
 				{
 					DllMain::Context->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, 0);
 				}
@@ -95,7 +102,7 @@ namespace TikiEngine
 
 			UInt32 elementSize;
 			UInt32 elementCount;
-			ID3D11Buffer* buffer;
+			TDX_Buffer* buffer;
 
 		};
 	}
