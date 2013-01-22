@@ -228,13 +228,8 @@ namespace TikiEngine
 			deviceContext->OMSetRenderTargets(0, 0, 0);
 			renderTargetView->Release();
 
-#if TIKI_DX10
-			ID3D10Texture2D* backBuffer;
-			swapChain->GetBuffer(0, __uuidof(ID3D10Texture2D), (void**)&backBuffer);
-#else
-			ID3D11Texture2D* backBuffer;
-			swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
-#endif
+			TDX_Texture2D* backBuffer;
+			swapChain->GetBuffer(0, __uuidof(TDX_Texture2D), (void**)&backBuffer);
 			while (backBuffer->Release()) {}
 
 			r = swapChain->ResizeBuffers(
@@ -310,11 +305,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Set
-#if TIKI_DX10
-		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D10RenderTargetView* target)
-#else
-		void GraphicsModule::SetRenderTarget(UInt32 slot, ID3D11RenderTargetView* target)
-#endif
+		void GraphicsModule::SetRenderTarget(UInt32 slot, TDX_RenderTargetView* target)
 		{
 			while (slot >= renderTargets.Count())
 			{
@@ -331,11 +322,7 @@ namespace TikiEngine
 			);
 		}
 
-#if TIKI_DX10
-		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D10RenderTargetView* target)
-#else
-		void GraphicsModule::SetFirstAndOnlyRenderTargets(ID3D11RenderTargetView* target)
-#endif
+		void GraphicsModule::SetFirstAndOnlyRenderTargets(TDX_RenderTargetView* target)
 		{
 			renderTargets.Clear();
 			this->SetRenderTarget(0, target);
