@@ -11,7 +11,6 @@
 #include "Cloddy/Cloddy_Core.h"
 #include "Cloddy/Cloddy_Kernel.h"
 #include "Cloddy/Cloddy_API.h"
-#include "Cloddy/Cloddy_Graphics.h"
 #include "Cloddy/Cloddy_Extensions.h"
 
 #include "Core/TypeDef.h"
@@ -73,7 +72,7 @@ namespace TikiEngine
 			UInt32* data;
 
 			UInt32 indexCount;
-			DynamicBuffer<UInt32, D3D11_BIND_INDEX_BUFFER>* indexBuffer;
+			DynamicBuffer<UInt32, TIKI_INDEX_BUFFER>* indexBuffer;
 
 		};
 	}

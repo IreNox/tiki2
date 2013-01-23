@@ -286,8 +286,8 @@ namespace TikiEngine
 
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
-			: ITerrainRenderer(engine, gameObject), material(0), collisionIndexBuffer(0), collisionVertexBuffer(0),
-			  collisionRegions(0), indexBuffer(0), vertexBuffer(0), callback(0)
+			: ITerrainRenderer(engine, gameObject), material(0), indexBuffer(0), vertexBuffer(0), callback(0)
+			  //, collisionIndexBuffer(0), collisionVertexBuffer(0), collisionRegions(0)
 #if _DEBUG
 			  , useCloddy(true)
 #endif
@@ -296,10 +296,10 @@ namespace TikiEngine
 
 		TerrainRenderer::~TerrainRenderer()
 		{
-			SafeDelete(&collisionIndexBuffer);
-			SafeDelete(&collisionVertexBuffer);
+			//SafeDelete(&collisionIndexBuffer);
+			//SafeDelete(&collisionVertexBuffer);
 			SafeRelease(&material);
-			//SafeRelease(&layout);
+			SafeRelease(&layout);
 
 			if (terrain != 0)
 			{
@@ -358,10 +358,14 @@ namespace TikiEngine
 			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
-			vertexBuffer = new TerrainVertexBuffer(size2);
-			indexBuffer = new TerrainIndexBuffer(size2 * 3);
-			callback = new TerrainTriangulationCallback(indexBuffer, vertexBuffer);
-			if (material) callback->SetMaterial(material);
+			//vertexBuffer = new TerrainVertexBuffer(size2);
+			//indexBuffer = new TerrainIndexBuffer(size2 * 3);
+			//callback = new TerrainTriangulationCallback(indexBuffer, vertexBuffer);
+			//if (material) callback->SetMaterial(material);
+
+			indexBuffer = new IndexBuffer(DllMain::Device, size2 * 3);
+			vertexBuffer = new VertexBuffer(DllMain::Device, size2, vertexFormat->GetVertexSize());
+			callback = new TriangulationCallback(DllMain::Device, vertexBuffer, indexBuffer);
 
 			description = new cloddy_CloddyDescription();
 			description->SetVertexBuffer(vertexBuffer);
@@ -416,7 +420,18 @@ namespace TikiEngine
 			
 			if (this->GetReady())
 			{
-				callback->SetMaterial(mat);
+				TDX_Input_Element_desc layoutDescription[] =
+				{
+					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
+					{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
+					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
+					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
+				};
+
+				Shader* shader = (Shader*)material->GetShader();
+				shader->CreateLayout(layoutDescription, 4, &layout, 0);
+
+				//callback->SetMaterial(mat);
 			}
 		}
 
@@ -452,7 +467,7 @@ namespace TikiEngine
 
 		bool TerrainRenderer::GetReady()
 		{
-			return (material != 0) && (callback != 0);
+			return (material != 0); // && (callback != 0);
 		}
 		#pragma endregion
 
@@ -498,9 +513,11 @@ namespace TikiEngine
 		void TerrainRenderer::Draw(const DrawArgs& args)
 		{
 			if (!this->GetReady() || args.Mode == DM_Shadows) return;
-
+			
 			material->UpdateDrawArgs(args, gameObject);
 			material->Apply();
+
+			DllMain::Context->IASetInputLayout(layout);
 
 			Matrix world;
 			gameObject->PRS.FillWorldMatrix(&world);
@@ -508,7 +525,7 @@ namespace TikiEngine
 			Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
 
 			Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
-
+			
 #if _DEBUG
 			if (useCloddy)
 #endif

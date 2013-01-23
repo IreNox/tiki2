@@ -11,7 +11,6 @@
 #include "Cloddy/Cloddy_Core.h"
 #include "Cloddy/Cloddy_Kernel.h"
 #include "Cloddy/Cloddy_API.h"
-#include "Cloddy/Cloddy_Graphics.h"
 #include "Cloddy/Cloddy_Extensions.h"
 
 #include "Core/Vector3.h"

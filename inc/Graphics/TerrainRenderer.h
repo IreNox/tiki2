@@ -7,18 +7,27 @@
 #define CLODDY_GRAPHICS_PREFIX
 #define CLODDY_EXTENSIONS_PREFIX
 
-#include <CodeX/Codex.h>
+#include "CodeX/Codex.h"
 #include "Cloddy/Cloddy_Core.h"
 #include "Cloddy/Cloddy_Kernel.h"
 #include "Cloddy/Cloddy_API.h"
-#include "Cloddy/Cloddy_Graphics.h"
 #include "Cloddy/Cloddy_Extensions.h"
 
+#if TIKI_DX10
+#include "Cloddy/dx10/Cloddy_Graphics.h"
+#pragma comment(lib, "Cloddy.GraphicsDX10.lib")
+#else
+#include "Cloddy/dx11/Cloddy_Graphics.h"
+#pragma comment(lib, "Cloddy.GraphicsDX11.lib")
+#endif
+
 #include "Core/ITerrainRenderer.h"
-#include "Graphics/TikiHeightmap.h"
-#include "Graphics/TerrainIndexBuffer.h"
-#include "Graphics/TerrainVertexBuffer.h"
-#include "Graphics/TerrainTriangulationCallback.h"
+
+//#include "Graphics/TikiHeightmap.h"
+//#include "Graphics/TerrainIndexBuffer.h"
+//#include "Graphics/TerrainVertexBuffer.h"
+//#include "Graphics/TerrainTriangulationCallback.h"
+
 #include "Graphics/VertexDeclaration.h"
 
 namespace TikiEngine
@@ -27,6 +36,7 @@ namespace TikiEngine
 	{
 		using namespace Cloddy::Graphics;
 		using namespace Cloddy::Extensions;
+		using namespace Cloddy::API::Heightmaps;
 		using namespace Cloddy::API::VertexFactories::VertexFormats;
 		using namespace TikiEngine::Vertices;
 		using namespace TikiEngine::Graphics;
@@ -65,9 +75,11 @@ namespace TikiEngine
 
 			Material* material;
 
-			UInt32 collisionRegions;
-			TerrainIndexBuffer* collisionIndexBuffer;
-			TerrainVertexBuffer* collisionVertexBuffer;
+			TDX_InputLayout* layout;
+
+			//UInt32 collisionRegions;
+			//TerrainIndexBuffer* collisionIndexBuffer;
+			//TerrainVertexBuffer* collisionVertexBuffer;
 
 			int size;
 			int scale;
@@ -76,9 +88,13 @@ namespace TikiEngine
 
 			codex_Ptr<IVertexFormat> vertexFormat;
 
-			TerrainIndexBuffer* indexBuffer;
-			TerrainVertexBuffer* vertexBuffer;
-			TerrainTriangulationCallback* callback;
+			//TerrainIndexBuffer* indexBuffer;
+			//TerrainVertexBuffer* vertexBuffer;
+			//TerrainTriangulationCallback* callback;
+
+			codex_Ptr<IndexBuffer> indexBuffer;
+			codex_Ptr<VertexBuffer> vertexBuffer;
+			codex_Ptr<TriangulationCallback> callback;
 
 			codex_Ptr<CloddyManager> manager;
 			codex_Ptr<CloddyDescription> description;

@@ -11,6 +11,8 @@
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
 #include "Core/ISpriteBatch.h"
+#include "Core/ISoundSystem.h"
+#include "Core/IContentManager.h"
 
 #include "Game/GoalThink.h"
 #include "Game/Bullet.h"
@@ -162,6 +164,11 @@ namespace TikiEngine
 			if (args.Input.GetKeyPressed(KEY_F3)) DrawRenderTarget = !DrawRenderTarget;
 			if (args.Input.GetKeyPressed(KEY_F4)) DrawPhysX = !DrawPhysX;
 			if (args.Input.GetKeyPressed(KEY_F6)) DrawHud = !DrawHud;
+
+			if (args.Input.GetKeyPressed(KEY_F7))
+			{
+				engine->sound->Play(engine->content->LoadSound(L"Mech_Spawn"));
+			}
 			#endif
 
 			if (args.Input.GetKeyPressed(KEY_Z)) followHero = !followHero;
