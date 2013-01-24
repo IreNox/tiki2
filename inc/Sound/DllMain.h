@@ -24,6 +24,7 @@ namespace TikiEngine
 		static SoundModule* Module;
 
 		static void InitDll(TikiEngine::Engine* engine);
+		static void DisposeDll();
 
 		static IModule* CreateModule(PInt);
 		static IResource* CreateResource(PInt);

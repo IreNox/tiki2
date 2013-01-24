@@ -39,6 +39,13 @@ typedef const wchar_t* wcstring;
 
 #define TIKI_CULLING 1
 #define TIKI_SHADOWS_ENABLED 0
+
+#if _DEBUG
+#define _CRTDBG_MAP_ALLOC
+#define TIKI_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
+#else
+#define TIKI_NEW new
+#endif
 #pragma endregion
 
 #pragma region Macros

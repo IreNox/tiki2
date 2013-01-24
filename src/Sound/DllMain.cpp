@@ -19,14 +19,21 @@ namespace TikiEngine
 	{
 		DllMain::Engine = engine;
 		DllMain::Module = new SoundModule(engine);
+		DllMain::Module->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
-
+		DllInfo.FuncDispose = DisposeDll;
+		
 		DllInfo.Modules.Add(typeid(ISoundSystem).hash_code());
 
 		DllInfo.Resources.Add(typeid(ISound).hash_code());
+	}
+
+	void DllMain::DisposeDll()
+	{
+		SafeRelease(&DllMain::Module);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

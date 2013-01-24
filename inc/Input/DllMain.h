@@ -24,9 +24,10 @@ namespace TikiEngine
 		static TikiInfo DllInfo;
 
 		static Engine* Engine;
-		static InputModule* ModuleGraphics;
+		static InputModule* ModuleInput;
 
 		static void InitDll(TikiEngine::Engine* engine);
+		static void DisposeDll();
 
 		static IModule* CreateModule(PInt);
 		static Component* CreateComponent(PInt, GameObject* gameObject);

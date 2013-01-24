@@ -42,7 +42,9 @@ namespace TikiEngine
 	{
 		DllMain::Engine = engine;
 		DllMain::ModuleGraphics = new GraphicsModule(engine);
+		DllMain::ModuleGraphics->AddRef(),
 		DllMain::ModuleSpriteBatch = new SpriteBatchModule(engine);
+		DllMain::ModuleSpriteBatch->AddRef(),
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
@@ -67,6 +69,8 @@ namespace TikiEngine
 
 	void DllMain::DisposeDll()
 	{
+		SafeRelease(&DllMain::ModuleGraphics);
+		SafeRelease(&DllMain::ModuleSpriteBatch);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

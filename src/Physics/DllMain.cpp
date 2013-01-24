@@ -30,10 +30,12 @@ namespace TikiEngine
 	{
 		DllMain::Engine = engine;
 		DllMain::Module = new PhysicsModule(engine);
+		DllMain::Module->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
+		DllInfo.FuncDispose = DisposeDll;
 
 		DllInfo.Modules.Add(typeid(IPhysics).hash_code());
 
@@ -45,6 +47,11 @@ namespace TikiEngine
 		DllInfo.Components.Add(typeid(ICharacterController).hash_code());
 		DllInfo.Components.Add(typeid(IHeightFieldCollider).hash_code());
 		DllInfo.Components.Add(typeid(ITriangleMeshCollider).hash_code());		
+	}
+
+	void DllMain::DisposeDll()
+	{
+		SafeRelease(&DllMain::Module);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)

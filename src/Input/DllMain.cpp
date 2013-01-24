@@ -10,17 +10,24 @@ namespace TikiEngine
 	TikiInfo DllMain::DllInfo = TikiInfo();
 	
 	Engine* DllMain::Engine = 0;
-	InputModule* DllMain::ModuleGraphics = 0;
+	InputModule* DllMain::ModuleInput = 0;
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::ModuleGraphics = new InputModule(engine);
+		DllMain::ModuleInput = new InputModule(engine);
+		DllMain::ModuleInput->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiComponent = CreateComponent;
+		DllInfo.FuncDispose = DisposeDll;
 
 		DllInfo.Modules.Add(typeid(IInput).hash_code());
+	}
+
+	void DllMain::DisposeDll()
+	{
+		SafeRelease(&DllMain::ModuleInput);
 	}
 
 	IModule* DllMain::CreateModule(PInt hash)
@@ -30,7 +37,7 @@ namespace TikiEngine
 			return 0;
 		}
 
-		return DllMain::ModuleGraphics;
+		return DllMain::ModuleInput;
 	}
 
 	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
