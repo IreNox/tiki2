@@ -309,7 +309,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{					
-					RectangleF* rect = TIKI_NEW RectangleF();
+					RectangleF* rect = TIKI_NEW RectangleF;
 
 					Int32 i = 0;
 					Int32 count = sqlite3_column_count(state);

@@ -312,7 +312,7 @@ namespace TikiEngine
 
 		void ModelConverter::addPartsMesh(TikiMesh* mesh)
 		{
-			BinaryTikiMesh* btm = TIKI_NEW BinaryTikiMesh();
+			BinaryTikiMesh* btm = TIKI_NEW BinaryTikiMesh;
 			btm->NameId = addPartsString(mesh->GetName());
 			btm->UseDeformation = mesh->UseDeformation();
 			btm->HasAdjacencyIndices = mesh->HasAdjacencyIndices();
@@ -405,7 +405,7 @@ namespace TikiEngine
 
 		UInt32 ModelConverter::addPartsLayer(UInt32 animationId, TikiLayer* layer)
 		{
-			BinaryTikiLayer* btl = TIKI_NEW BinaryTikiLayer();
+			BinaryTikiLayer* btl = TIKI_NEW BinaryTikiLayer;
 
 			btl->AnimationId = animationId;
 			btl->RotationArrayId = context->AddPart((void*)layer->GetQuaternion().GetInternalData(), sizeof(Quaternion), PT_Array, PT_Quaternion, layer->GetQuaternion().Count());
@@ -416,7 +416,7 @@ namespace TikiEngine
 
 		void ModelConverter::addPartsAnimation(TikiAnimation* animation)
 		{
-			BinaryTikiAnimation* bta = TIKI_NEW BinaryTikiAnimation();
+			BinaryTikiAnimation* bta = TIKI_NEW BinaryTikiAnimation;
 			bta->NameId = addPartsString(animation->GetName());
 
 			bta->StartTime = animation->GetStartTime();

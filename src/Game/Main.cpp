@@ -26,14 +26,14 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && false)
+	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
-		scene = TIKI_NEW SceneTim(engine);
+		//scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
 		//scene = TIKI_NEW SceneAdrian(engine);
 
-		//scene = TIKI_NEW SceneLevel(engine);
-		//((SceneLevel*)scene)->LoadLevel(1);
+		scene = TIKI_NEW SceneLevel(engine);
+		((SceneLevel*)scene)->LoadLevel(2);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
@@ -58,7 +58,7 @@ inline Scene* GetStartScene(Engine* engine)
 #pragma region WinMain
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(800);
+	_CrtSetBreakAlloc(12775);
 
 	{
 #if _DEBUG

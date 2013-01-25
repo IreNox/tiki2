@@ -32,6 +32,7 @@
     <ClCompile Include="src\Core\Camera.cpp" />
     <ClCompile Include="src\Core\CameraObject.cpp" />
     <ClCompile Include="src\Core\Color.cpp" />
+    <ClCompile Include="src\Core\String.cpp" />
     <ClCompile Include="src\Core\VertexFormats.cpp" />
     <ClCompile Include="src\Core\Component.cpp" />
     <ClCompile Include="src\Core\File.cpp" />
@@ -153,6 +154,9 @@
     <ClInclude Include="inc\Core\Ray.h" />
     <ClInclude Include="inc\Core\Rectangle.h" />
     <ClInclude Include="inc\Core\RectangleF.h" />
+    <ClInclude Include="inc\Core\String.h" />
+    <ClInclude Include="inc\Core\StringConvert.h" />
+    <ClInclude Include="inc\Core\StringParse.h" />
     <ClInclude Include="inc\Core\SyncBarrier.h" />
     <ClInclude Include="inc\Core\Thread.h" />
     <ClInclude Include="inc\Core\TikiEnum.h" />

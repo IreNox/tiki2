@@ -24,3 +24,7 @@ using std::string;
 using std::wstring;
 using std::ostringstream;
 using std::wostringstream;
+
+//#include "Core/String.h"
+//using TikiEngine::string;
+//using TikiEngine::wstring;

@@ -21,12 +21,8 @@ namespace TikiEngine
 	}
 
 	SceneGraphElement::~SceneGraphElement()
-	{	
-		if(boundingBox)
-		{
-			delete boundingBox;
-			boundingBox = 0;
-		}
+	{
+		SafeDelete(&boundingBox);
 	}
 
 	void SceneGraphElement::SetBounds(const Vector2& size)

@@ -144,7 +144,7 @@ namespace TikiEngine
 				terrain->LoadTerrain(
 					heightmapFilename, heightmapScale, heightmapSize, heightmapElevation
 #if _DEBUG
-					, true
+					, false
 #endif					
 				);
 

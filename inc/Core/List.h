@@ -18,7 +18,12 @@ public:
 	List(const List<T>& copy)
 		: IsReadOnly(copy.IsReadOnly), lengthArr(copy.lengthArr), lengthData(copy.lengthData), data(TIKI_NEW T[copy.lengthArr])
 	{
-		memcpy(data, copy.data, sizeof(T) * lengthArr);
+		UInt32 i = 0;
+		while (i < lengthData)
+		{
+			this->data[i] = copy.data[i];
+			i++;
+		}
 	}
 
 	List(T* data, UInt32 count, bool readOnly)
@@ -27,7 +32,13 @@ public:
 		lengthArr = getNextSize(count);
 
 		this->data = TIKI_NEW T[lengthArr];
-		memcpy(this->data, data, count * sizeof(T));
+
+		UInt32 i = 0;
+		while (i < lengthData)
+		{
+			this->data[i] = data[i];
+			i++;
+		}
 	}
 
 	~List()

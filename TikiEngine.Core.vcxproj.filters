@@ -299,6 +299,9 @@
     <ClCompile Include="src\Core\SceneGraphNode.cpp">
       <Filter>Quelldateien\Core\SceneGraph</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\String.cpp">
+      <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Core\Dictionary.h">
@@ -722,6 +725,15 @@
       <Filter>Headerdateien\Interfaces\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Core\CriticalSection.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\String.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\StringConvert.h">
+      <Filter>Headerdateien\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Core\StringParse.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
   </ItemGroup>
