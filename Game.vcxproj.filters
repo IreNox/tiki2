@@ -455,6 +455,9 @@
     <ClInclude Include="inc\Game\PERoundSparks.h">
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PEDebris.h">
+      <Filter>Headerdateien\Particle</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -698,6 +701,9 @@
       <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PERoundSparks.cpp">
+      <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEDebris.cpp">
       <Filter>Quelldateien\Particle</Filter>
     </ClCompile>
   </ItemGroup>

@@ -55,6 +55,16 @@ namespace TikiEngine
 			prShockWave->AddRef();
 
 
+			// debris
+			peDebris = TIKI_NEW PEDebris(engine);
+			peDebris->SIsAlive(false);
+			peDebris->AddRef();
+
+			prDebris = engine->librarys->CreateComponent<IParticleRenderer>(this);
+			prDebris->SetTexture(engine->content->LoadTexture(L"particle/debris")); 
+			prDebris->SetParticleEffect(peDebris);
+			prDebris->AddRef();
+
             // explosion
             peExplosion = TIKI_NEW PEExplosion(engine);
             peExplosion->SIsAlive(false);
@@ -117,6 +127,9 @@ namespace TikiEngine
 			SafeRelease(&peRoundSparks);
 			SafeRelease(&prRoundSparks);
 
+			SafeRelease(&peDebris);
+			SafeRelease(&prDebris);
+
 		}
 		#pragma endregion
 
@@ -144,11 +157,15 @@ namespace TikiEngine
 			peBlood->Trigger(elapsedTime, releasePerSecound, pos);
 		}
 
-		void ProjectileManager::AddExplosionEffect(const Vector3& pos)
+		void ProjectileManager::AddExplosionEffect(const Vector3& pos, bool addDebrisEffect)
 		{
 			peExplosion->Trigger(1, 2000, pos);
 			peShockwave->Trigger(1, 1, pos);
 			peRoundSparks->Trigger(1, 5, pos);
+
+			if (addDebrisEffect)
+				peDebris->Trigger(1, 20, pos);
+
 		}
 
 		#pragma endregion
@@ -176,9 +193,9 @@ namespace TikiEngine
 						AddExplosionEffect(Matrix::TransformCoordinate(
 							Vector3(0, 0, 0),
 							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
-							)
+							),
+							false
 						);
-
                     }
 
 					pi.proj->GetGameObject()->Release();

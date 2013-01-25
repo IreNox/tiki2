@@ -351,7 +351,7 @@ namespace TikiEngine
 				Vector3 towerPos = bot->GetController()->GetCenter();
 				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
 
-				gameState->GetProjectiles()->AddExplosionEffect(towerPos);
+				gameState->GetProjectiles()->AddExplosionEffect(towerPos, true);
 
 				// Clear old GameObject
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
@@ -370,7 +370,7 @@ namespace TikiEngine
 				buildingPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
 
 
-				gameState->GetProjectiles()->AddExplosionEffect(buildingPos);
+				gameState->GetProjectiles()->AddExplosionEffect(buildingPos, true);
 
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 			}

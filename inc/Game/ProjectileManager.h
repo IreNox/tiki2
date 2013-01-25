@@ -12,6 +12,7 @@
 #include "Game/PEBlood.h"
 #include "Game/PEShockWave.h"
 #include "Game/PERoundSparks.h"
+#include "Game/PEDebris.h"
 
 #include "Core/IParticleRenderer.h"
 
@@ -29,7 +30,7 @@ namespace TikiEngine
 			void AddProjectile(Projectile* proj);
 
 			void AddBloodEffect(double elapsedTime, double releasePerSecound, const Vector3& pos);
-			void AddExplosionEffect(const Vector3& pos);
+			void AddExplosionEffect(const Vector3& pos, bool addDebrisEffect);
 
 			//void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);
@@ -58,6 +59,9 @@ namespace TikiEngine
 
 			PERoundSparks* peRoundSparks;
 			IParticleRenderer* prRoundSparks;
+
+			PEDebris* peDebris;
+			IParticleRenderer* prDebris;
 
 			struct ProjInfo
 			{

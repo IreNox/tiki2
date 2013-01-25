@@ -96,6 +96,7 @@
     <None Include="bin\Data\Textures\Hud\unit_shield.dds" />
     <None Include="bin\Data\Textures\logo.dds" />
     <None Include="bin\Data\Textures\particle\Blood.dds" />
+    <None Include="bin\Data\Textures\particle\debris.dds" />
     <None Include="bin\Data\Textures\particle\explosion.dds" />
     <None Include="bin\Data\Textures\particle\fire.dds" />
     <None Include="bin\Data\Textures\particle\HealAura.dds" />
