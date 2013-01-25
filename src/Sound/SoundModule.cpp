@@ -154,7 +154,7 @@ namespace TikiEngine
 		{
 			Sound* sound = 0;
 			
-			char* data = new char[stream->GetLength()];
+			char* data = TIKI_NEW char[stream->GetLength()];
 			stream->Read(data, 0, stream->GetLength());
 
 			FMOD_CREATESOUNDEXINFO info;

@@ -172,7 +172,7 @@ namespace TikiEngine
 
 				UInt32 i = 0;
 				UInt32 vertexCount = vertexLength / sizeof(DefaultVertex);
-				Vector3* vertices = new Vector3[vertexCount];
+				Vector3* vertices = TIKI_NEW Vector3[vertexCount];
 				while (i < vertexCount) { vertices[i] = vertexData[i].Position; i++; }
 
 				collider->SetMeshData(indexData, indexCount, vertices, vertexCount);

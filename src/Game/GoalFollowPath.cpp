@@ -26,8 +26,8 @@ namespace TikiEngine
 			// remove the edge from the path
 			path.pop_front();
 
-			// add a new subgoal to traverse an edge, if we loop, don't arrive
-			AddSubgoal(new GoalTraverseEdge(owner, edge, path.empty()));
+			// add a TIKI_NEW subgoal to traverse an edge, if we loop, don't arrive
+			AddSubgoal(TIKI_NEW GoalTraverseEdge(owner, edge, path.empty()));
 		}
 
 

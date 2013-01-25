@@ -11,7 +11,7 @@ string StringWtoA(wstring str)
 	size_t size = str.length() + 1;
 	size_t sizeOut;
 
-	char* cstr = new char[size];
+	char* cstr = TIKI_NEW char[size];
 
 	wcstombs_s(&sizeOut, cstr, size, str.c_str(), size);
 
@@ -26,7 +26,7 @@ wstring StringAtoW(string str)
 	size_t size = str.length() + 1;
 	size_t sizeOut;
 
-	wchar_t* cstr = new wchar_t[size];
+	wchar_t* cstr = TIKI_NEW wchar_t[size];
 
 	mbstowcs_s(&sizeOut, cstr, size, str.c_str(), size);
 

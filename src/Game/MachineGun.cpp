@@ -43,8 +43,8 @@ namespace TikiEngine
 				desc.Heading = owner->Heading();
 				desc.ShooterID = owner->ID();
 				desc.Damage = damage;
-				GameObject* go = new GameObject(owner->GetGameState()->GetEngine());
-				Bullet* proj = new Bullet(owner->GetGameState(), go);
+				GameObject* go = TIKI_NEW GameObject(owner->GetGameState()->GetEngine());
+				Bullet* proj = TIKI_NEW Bullet(owner->GetGameState(), go);
 				proj->Init(desc, args);
 				owner->GetGameState()->GetProjectiles()->AddProjectile(proj);
 

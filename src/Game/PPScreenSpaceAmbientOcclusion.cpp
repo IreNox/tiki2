@@ -35,7 +35,7 @@ namespace TikiEngine
 			randomTexture = engine->content->LoadTexture(L"random");
 			shader->SetTexture("tRandom", randomTexture);
 
-			PostProcessPass* pass = new PostProcessPass(engine, shader);
+			PostProcessPass* pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("rtNormal", engine->graphics->GetNormalTarget());
 			pass->AddInput("tDepth", engine->graphics->GetDepthTarget());
 			

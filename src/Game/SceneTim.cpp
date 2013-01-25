@@ -49,36 +49,36 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
 
-			GameObject* go = new GameObject(engine);
+			GameObject* go = TIKI_NEW GameObject(engine);
 			go->SModel(engine->content->LoadModel(L"mainbuilding"));
 			go->PRS.SScale() = 0.01f;
 			go->PRS.SPosition() = Vector3(0, 0, 0);
 
 			this->AddElement(go);
 
-			//go = new GameObject(engine);
+			//go = TIKI_NEW GameObject(engine);
 			//go->SModel(engine->content->LoadModel(L"marine_l"));
 			//go->PRS.SScale() = 0.01f;
 			//go->PRS.SPosition() = Vector3(3, 0, 3);
 
 			//this->AddElement(go);
 
-			//go = new GameObject(engine);
+			//go = TIKI_NEW GameObject(engine);
 			//go->SModel(engine->content->LoadModel(L"marine_l"));
 			//go->PRS.SScale() = 0.01f;
 			//go->PRS.SPosition() = Vector3(-3, 0, -3);
 
 			//this->AddElement(go);
 
-			//dof = new PPDepthOfField(engine);
+			//dof = TIKI_NEW PPDepthOfField(engine);
 			//engine->graphics->AddPostProcess(dof);
 
 
 			/////////////////
 			//Particle Effect
-			//GameObject* go = new GameObject(engine);
+			//GameObject* go = TIKI_NEW GameObject(engine);
 
-			// auto behavior = new PEShootMG(engine);
+			// auto behavior = TIKI_NEW PEShootMG(engine);
 
 			//IParticleRenderer* effect = engine->librarys->CreateComponent<IParticleRenderer>(go);
 			//effect->SetTexture(engine->content->LoadTexture(L"particle/mg"));
@@ -90,7 +90,7 @@ namespace TikiEngine
 			// Model
 			//for (int i = -1000; i < 1000; i++)
 			//{
-			//	GameObject* go = new GameObject(engine);
+			//	GameObject* go = TIKI_NEW GameObject(engine);
 
 			//	if (i == 0)
 			//	{
@@ -109,7 +109,7 @@ namespace TikiEngine
 			//target = engine->librarys->CreateResource<IRenderTarget>();
 			//target->CreateScreenSize();
 
-			//GameObject* go = new GameObject(engine);
+			//GameObject* go = TIKI_NEW GameObject(engine);
 
 			//go->SModel(args.Content->LoadModel(L"marine_l"));
 			//go->GModel()->SetAnimation(0);
@@ -127,7 +127,7 @@ namespace TikiEngine
 			//this->AddElement(go);
 
 
-			go = new GameObject(engine);
+			go = TIKI_NEW GameObject(engine);
 			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 
 			Material* mat = engine->content->LoadMaterial(L"os_default");
@@ -143,7 +143,7 @@ namespace TikiEngine
 			//targetLight->AddRef();
 
 			// Light
-			light = new LightObject(engine);
+			light = TIKI_NEW LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(75.0f);
 			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
@@ -153,7 +153,7 @@ namespace TikiEngine
 			this->AddElement(light);
 			
 			// Camera
-			//cameraLight = new CameraObject(engine);			
+			//cameraLight = TIKI_NEW CameraObject(engine);			
 			//cameraLight->PRS.SPosition() = light->PRS.GPosition();
 			//cameraLight->PRS.SRotation() = light->PRS.GRotation();
 			//cameraLight->GetCameraComponent()->SetRenderTarget(targetLight);
@@ -161,18 +161,18 @@ namespace TikiEngine
 
 			//this->AddElement(cameraLight);
 
-			camera = new CameraObject(engine);			
+			camera = TIKI_NEW CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(-1, 1.5f, 4.0f);
 			camera->AddRef();
-			(new CameraFly(engine, camera));
+			(TIKI_NEW CameraFly(engine, camera));
 			this->AddElement(camera);
 
 			// SSAO
-			//ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			//ssao = TIKI_NEW PPScreenSpaceAmbientOcclusion(engine);
 			//engine->graphics->AddPostProcess(ssao);
 			//engine->graphics->AddDefaultProcessTarget("ambientLight", ssao->GetAO());
 
-			//auto blur = new PPBlur(engine);
+			//auto blur = TIKI_NEW PPBlur(engine);
 			//blur->GetPasses()[0]->SetInput("tex", engine->graphics->GetLightTarget());
 			//blur->GetPasses()[1]->SetOutput(0, engine->graphics->GetLightTarget());
 			//engine->graphics->AddPostProcess(blur);

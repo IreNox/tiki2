@@ -152,7 +152,7 @@ namespace TikiEngine
 		void Texture::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			UPInt size = stream->GetLength();
-			Byte* data = new Byte[size];
+			Byte* data = TIKI_NEW Byte[size];
 
 			stream->Read(data, 0, size);
 
@@ -296,7 +296,7 @@ namespace TikiEngine
 
 			UInt32 i = 0;
 			UInt32 c = desc.Width * desc.Height;
-			Byte* pixels = new Byte[c * 4];
+			Byte* pixels = TIKI_NEW Byte[c * 4];
 			
 			while (i < c)
 			{

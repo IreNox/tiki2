@@ -128,7 +128,7 @@ namespace TikiEngine
 		#pragma region Member
 		IConstantBuffer* GraphicsModule::CreateConstantBuffer(UInt32 size)
 		{
-			return new ConstantBuffer<Byte>(engine, size);
+			return TIKI_NEW ConstantBuffer<Byte>(engine, size);
 		}
 
 		void GraphicsModule::SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget)
@@ -141,7 +141,7 @@ namespace TikiEngine
 
 		void GraphicsModule::MakeScreenshot(wcstring fileName)
 		{
-			bool newName = false;
+			bool TIKI_NEWName = false;
 			if (fileName == 0)
 			{
 				time_t now = time(0);
@@ -152,11 +152,11 @@ namespace TikiEngine
 				wostringstream s;
 				s << L"Screenshot-" << (time.tm_year + 1900) << "-" << (time.tm_mon + 1) << "-" << time.tm_mday << "-" << time.tm_hour << "-" << time.tm_min << "-" << time.tm_sec << ".dds";
 
-				wchar_t* fileName2 = new wchar_t[s.str().length() + 1];
+				wchar_t* fileName2 = TIKI_NEW wchar_t[s.str().length() + 1];
 				memcpy(fileName2, s.str().c_str(), sizeof(wchar_t) * (s.str().length() + 1));
 
 				fileName = fileName2;
-				newName = true;
+				TIKI_NEWName = true;
 			}
 
 			wstring path = engine->HPath.CombineWorkingPath(wstring(L"Screenshots/") + fileName);
@@ -167,7 +167,7 @@ namespace TikiEngine
 
 			//IRenderTarget* oldTarget = defaultPostProcess->GetPasses()->Get(0)->GetOutput()->Get(0);
 			//
-			//IRenderTarget* target = new RenderTarget(engine);
+			//IRenderTarget* target = TIKI_NEW RenderTarget(engine);
 			//target->CreateScreenSize(true);
 			//defaultPostProcess->GetPasses()->Get(0)->SetOutput(0, target);
 
@@ -182,7 +182,7 @@ namespace TikiEngine
 			//FileStream stream(fileName, FileMode::FM_Write);
 			//stream.Write(data, 0, len);
 
-			if (newName)
+			if (TIKI_NEWName)
 			{
 				SafeDelete(&fileName);
 			}
@@ -908,46 +908,46 @@ namespace TikiEngine
 		#pragma region Private Member - Init - Engine
 		bool GraphicsModule::initEngine(EngineDescription& desc)
 		{
-			this->cbufferLights = new ConstantBuffer<CBLights>(engine);
-			this->cbufferCamera = new ConstantBuffer<CBMatrices>(engine);
-			this->cbufferObject = new ConstantBuffer<CBObjectData>(engine);
+			this->cbufferLights = TIKI_NEW ConstantBuffer<CBLights>(engine);
+			this->cbufferCamera = TIKI_NEW ConstantBuffer<CBMatrices>(engine);
+			this->cbufferObject = TIKI_NEW ConstantBuffer<CBObjectData>(engine);
 
-			this->rtBackBuffer = new RenderTarget(engine, renderTargetView, false);
+			this->rtBackBuffer = TIKI_NEW RenderTarget(engine, renderTargetView, false);
 			this->rtBackBuffer->AddRef();
 
-			this->rtScreen[0] = new RenderTarget(engine);
+			this->rtScreen[0] = TIKI_NEW RenderTarget(engine);
 			this->rtScreen[0]->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtScreen[0]->AddRef();
 
-			this->rtScreen[1] = new RenderTarget(engine);
+			this->rtScreen[1] = TIKI_NEW RenderTarget(engine);
 			this->rtScreen[1]->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtScreen[1]->AddRef();
 
-			this->rtLight = new RenderTarget(engine);
+			this->rtLight = TIKI_NEW RenderTarget(engine);
 			this->rtLight->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtLight->AddRef();
 
-			this->rtInterface = new RenderTarget(engine);
+			this->rtInterface = TIKI_NEW RenderTarget(engine);
 			this->rtInterface->CreateScreenSize(false, PF_R8G8B8A8);
 			this->rtInterface->AddRef();
 
-			this->rtNormal = new RenderTarget(engine);
+			this->rtNormal = TIKI_NEW RenderTarget(engine);
 			this->rtNormal->CreateScreenSize();
 			this->rtNormal->AddRef();
 
-			this->rtDepth = new RenderTarget(engine);
+			this->rtDepth = TIKI_NEW RenderTarget(engine);
 			this->rtDepth->CreateScreenSize();
 			this->rtDepth->AddRef();
 
-			defaultPostProcess = new PPDefault(engine, rtBackBuffer);
+			defaultPostProcess = TIKI_NEW PPDefault(engine, rtBackBuffer);
 			defaultPostProcess->AddRef();
 
 			defaultPostProcessPass = defaultPostProcess->GetPasses()[(TIKI_SHADOWS_ENABLED ? 1 : 0)];
 			defaultPostProcessPass->AddRef();
 
 #if _DEBUG
-			debugConsole = new DebugConsole(engine);
-			debugLineRenderer = new DebugLineRenderer(engine);
+			debugConsole = TIKI_NEW DebugConsole(engine);
+			debugLineRenderer = TIKI_NEW DebugLineRenderer(engine);
 #endif
 
 			return true;
@@ -967,7 +967,7 @@ namespace TikiEngine
 
 				if (!postProcessPassQuads.ContainsKey(pass))
 				{
-					quad = new Quad(engine);
+					quad = TIKI_NEW Quad(engine);
 					quad->SetShader(pass->GetShader());
 					postProcessPassQuads.Add(pass, quad);
 				}
@@ -1035,14 +1035,14 @@ namespace TikiEngine
 			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
 			shader->AddRef();
 
-			declaration = new VertexDeclaration(
+			declaration = TIKI_NEW VertexDeclaration(
 				engine,
 				shader,
 				SpriteBatchVertex::Declaration,
 				SpriteBatchVertex::DeclarationCount
 			);
 
-			buffer = new DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>(engine);
+			buffer = TIKI_NEW DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>(engine);
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));

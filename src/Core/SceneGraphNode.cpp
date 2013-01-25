@@ -417,19 +417,19 @@ namespace TikiEngine
 		float width = this->bounds.Width * 0.5f;
 		float height = this->bounds.Height * 0.5f;
 
-		SceneGraphNode* node = new SceneGraphNode();
+		SceneGraphNode* node = TIKI_NEW SceneGraphNode();
 		node->Initialize(RectangleF::Create(x ,y , width, height), this->layerDepth -1, this);
 		childs.Add(node);
 
-		node = new SceneGraphNode();
+		node = TIKI_NEW SceneGraphNode();
 		node->Initialize(RectangleF::Create(x + width,y , width, height), layerDepth -1, this);
 		childs.Add(node);
 
-		node = new SceneGraphNode();
+		node = TIKI_NEW SceneGraphNode();
 		node->Initialize(RectangleF::Create(x ,y + height, width, height), layerDepth -1, this);
 		childs.Add(node);
 
-		node = new SceneGraphNode();
+		node = TIKI_NEW SceneGraphNode();
 		node->Initialize(RectangleF::Create(x + width ,y + height, width, height), layerDepth -1, this);
 		childs.Add(node);
 	}

@@ -65,7 +65,7 @@ namespace TikiEngine
 			/*! @brief 1 Armor blocks 1 Damage */
 			int Armor;
 
-			// New fields Added: Loot, Armor, SightRadius, EntityType
+			// TIKI_NEW fields Added: Loot, Armor, SightRadius, EntityType
 			Weapon* StartWeapon;
 			double StartMGDamage;
 			double StartMGFireRate;

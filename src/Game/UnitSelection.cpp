@@ -25,11 +25,11 @@ namespace TikiEngine
 		UnitSelection::UnitSelection(GameState* gameState)
 			: EngineObject(gameState->GetEngine()), gameState(gameState), 
 			enabled(true), dirty(true), mouseButton(false), changed(false),
-			newDragging(false)
+			TIKI_NEWDragging(false)
 		{
 			selectionRect = RectangleF::Create(0, 0, 0, 0);
 
-			selectButton = new GUIButton(gameState->GetEngine());
+			selectButton = TIKI_NEW GUIButton(gameState->GetEngine());
 			selectButton->AddRef();
 		}
 
@@ -182,13 +182,13 @@ namespace TikiEngine
 				selectionRect.Y = args.Input.MousePositionDisplay.Y;
 				selectButton->SPosition() = Vector2(selectionRect.X, selectionRect.Y);
 			
-				newDragging = true;
+				TIKI_NEWDragging = true;
 			}
 
 			if(args.Input.GetMouse(MB_Left))
 			{
 				// Mouse left button is being held down ( dragging )
-				// Calculate new width,height
+				// Calculate TIKI_NEW width,height
 				selectionRect.Width = abs(args.Input.MousePositionDisplay.X - selectionStartPoint.X);
 				selectionRect.Height = abs(args.Input.MousePositionDisplay.Y - selectionStartPoint.Y);
 
@@ -231,7 +231,7 @@ namespace TikiEngine
 					Matrix vp = cam->WorldToScreen();
 					Vector3 screenPos = Matrix::Project(slot->GetGameObject()->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedSlots.Contains(go) || newDragging))
+					if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedSlots.Contains(go) || TIKI_NEWDragging))
 					{
 						engine->HLog.Write("Rect-Select slot.");
 						selectedSlots.Add(go);
@@ -274,7 +274,7 @@ namespace TikiEngine
 
 						Vector3 screenPos = Matrix::Project(ent->Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedUnits.Contains(go) || newDragging))
+						if (selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)) && (!selectedUnits.Contains(go) || TIKI_NEWDragging))
 						{
 							//engine->HLog.Write("Rect-Select unit.");
 							selectedUnits.Add(go);
@@ -309,12 +309,12 @@ namespace TikiEngine
 				}
 				#pragma endregion
 
-				if (found && newDragging && !args.Input.GetKey(KEY_LSHIFT))
+				if (found && TIKI_NEWDragging && !args.Input.GetKey(KEY_LSHIFT))
 				{
 					selectedUnits.Clear();
 					selectedSlots.Clear();
 					(found == 1 ? selectedSlots : selectedUnits).Add(go);
-					newDragging = false;
+					TIKI_NEWDragging = false;
 				}
 
 				i++;
@@ -432,8 +432,8 @@ namespace TikiEngine
 				// Clear old GameObject
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 
-				// Create new GameObject and BuildSlot
-				GameObject* go = new GameObject(engine);
+				// Create TIKI_NEW GameObject and BuildSlot
+				GameObject* go = TIKI_NEW GameObject(engine);
 				gameState->GetBotFactory()->CreateBuildSlot(go);
 				go->PRS.SPosition() = towerPos;
 

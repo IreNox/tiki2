@@ -51,14 +51,14 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Modules
-		window = new WindowModule(this);
+		window = TIKI_NEW WindowModule(this);
 		if (!initModule(window))
 		{
 			MessageBox(window->GetHWND(), L"Can't create Window.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 
-		librarys = new LibraryManager(this);		
+		librarys = TIKI_NEW LibraryManager(this);		
 		if (!initModule(librarys))
 		{
 			MessageBox(window->GetHWND(), L"Can't create LibraryManager.", L"TikiEngine 2.0", MB_ICONERROR);
@@ -112,15 +112,15 @@ namespace TikiEngine
 		//function<void(void*)> funcDraw = &;
 		//function<void(void*)> funcUpdate = &;
 
-		//threadDraw = new Thread<Engine>(&Engine::Draw);
-		//threadUpdate = new Thread<Engine>(&Engine::Update);
+		//threadDraw = TIKI_NEW Thread<Engine>(&Engine::Draw);
+		//threadUpdate = TIKI_NEW Thread<Engine>(&Engine::Update);
 
-		//csDraw = new Mutex();
-		//csUpdate = new Mutex();
-		//csEngine = new Mutex();
+		//csDraw = TIKI_NEW Mutex();
+		//csUpdate = TIKI_NEW Mutex();
+		//csEngine = TIKI_NEW Mutex();
 		#pragma endregion
 
-		loadingScene = new Scene(this);
+		loadingScene = TIKI_NEW Scene(this);
 
 		return true;
 	}
@@ -246,7 +246,7 @@ namespace TikiEngine
 			isLoading = true;
 			isLoadingFinish = false;
 			
-			loadingThread = new Thread<Engine, Scene>(&Engine::initScene);
+			loadingThread = TIKI_NEW Thread<Engine, Scene>(&Engine::initScene);
 			loadingThread->Start(this, scene);
 		}
 	}

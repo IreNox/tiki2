@@ -32,32 +32,32 @@ namespace TikiEngine
 
 		int VoidList::Append(void* data, int size)
 		{
-			ListNode* newNode;
+			ListNode* TIKI_NEWNode;
 
-			newNode = (ListNode*)malloc(sizeof(ListNode));
-			if(newNode == 0)
+			TIKI_NEWNode = (ListNode*)malloc(sizeof(ListNode));
+			if(TIKI_NEWNode == 0)
 				return 0;
 
-			newNode->Data = malloc(size);
-			if(newNode->Data == 0)
+			TIKI_NEWNode->Data = malloc(size);
+			if(TIKI_NEWNode->Data == 0)
 				return 0;
 
-			memcpy(newNode->Data, data, size);
-			newNode->Next = 0;
-			newNode->Prev = 0;
-			newNode->ID = ListCount;
-			newNode->DataSize = size;
+			memcpy(TIKI_NEWNode->Data, data, size);
+			TIKI_NEWNode->Next = 0;
+			TIKI_NEWNode->Prev = 0;
+			TIKI_NEWNode->ID = ListCount;
+			TIKI_NEWNode->DataSize = size;
 
 			if (Last == 0)
 			{
-				First = newNode;
+				First = TIKI_NEWNode;
 				Last = First;
 			}
 			else
 			{
-				Last->Next = newNode;
-				newNode->Prev = Last;
-				Last = newNode;
+				Last->Next = TIKI_NEWNode;
+				TIKI_NEWNode->Prev = Last;
+				Last = TIKI_NEWNode;
 			}
 
 			ListCount++;

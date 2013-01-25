@@ -118,7 +118,7 @@ namespace TikiEngine
 
 			SafeRelease(&decl);
 
-			decl = new VertexDeclaration(
+			decl = TIKI_NEW VertexDeclaration(
 				engine,
 				material->GetShader(),
 				mesh->GetVertexDeclaration()->GetInternalData(),
@@ -134,7 +134,7 @@ namespace TikiEngine
 				void* vertexData = 0;
 				mesh->GetVertexData(&vertexData, &lenCount);
 
-				vertexBuffer = new StaticBuffer<TIKI_VERTEX_BUFFER>(
+				vertexBuffer = TIKI_NEW StaticBuffer<TIKI_VERTEX_BUFFER>(
 					engine,
 					decl->GetElementSize(),
 					lenCount / decl->GetElementSize(),
@@ -146,7 +146,7 @@ namespace TikiEngine
 
 				if (lenCount != 0)
 				{
-					indexBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(
+					indexBuffer = TIKI_NEW StaticBuffer<TIKI_INDEX_BUFFER>(
 						engine,
 						sizeof(UInt32),
 						lenCount,
@@ -166,8 +166,8 @@ namespace TikiEngine
 			shader = engine->content->LoadShader(L"os_particle");
 			shader->AddRef();
 
-			decl = new VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
-			vertexBuffer = new DynamicBuffer<ParticleVertex, TIKI_VERTEX_BUFFER>(engine);
+			decl = TIKI_NEW VertexDeclaration(engine, shader, ParticleVertex::Declaration, ParticleVertex::DeclarationCount);
+			vertexBuffer = TIKI_NEW DynamicBuffer<ParticleVertex, TIKI_VERTEX_BUFFER>(engine);
 		}
 
 		ParticleRenderer::~ParticleRenderer()
@@ -346,7 +346,7 @@ namespace TikiEngine
 			if (useCloddy) {
 #endif
 
-			datasetSample = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			datasetSample = TIKI_NEW cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			heightmap = datasetSample->GetHeightmap();
 				
 			vertexFormat = cloddy_VertexFormat::P3F()
@@ -355,19 +355,19 @@ namespace TikiEngine
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());
 
-			datasetDraw = new cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			datasetDraw = TIKI_NEW cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
-			//vertexBuffer = new TerrainVertexBuffer(size2);
-			//indexBuffer = new TerrainIndexBuffer(size2 * 3);
-			//callback = new TerrainTriangulationCallback(indexBuffer, vertexBuffer);
+			//vertexBuffer = TIKI_NEW TerrainVertexBuffer(size2);
+			//indexBuffer = TIKI_NEW TerrainIndexBuffer(size2 * 3);
+			//callback = TIKI_NEW TerrainTriangulationCallback(indexBuffer, vertexBuffer);
 			//if (material) callback->SetMaterial(material);
 
-			indexBuffer = new IndexBuffer(DllMain::Device, size2 * 3);
-			vertexBuffer = new VertexBuffer(DllMain::Device, size2, vertexFormat->GetVertexSize());
-			callback = new TriangulationCallback(DllMain::Device, vertexBuffer, indexBuffer);
+			indexBuffer = TIKI_NEW IndexBuffer(DllMain::Device, size2 * 3);
+			vertexBuffer = TIKI_NEW VertexBuffer(DllMain::Device, size2, vertexFormat->GetVertexSize());
+			callback = TIKI_NEW TriangulationCallback(DllMain::Device, vertexBuffer, indexBuffer);
 
-			description = new cloddy_CloddyDescription();
+			description = TIKI_NEW cloddy_CloddyDescription();
 			description->SetVertexBuffer(vertexBuffer);
 			description->SetIndexBuffer(indexBuffer);
 			description->SetVertexFormat(vertexFormat);
@@ -377,7 +377,7 @@ namespace TikiEngine
 			Stream* stream = engine->content->LoadData(L"Data/terrain/Licence/licence.dat");
 
 			UInt32 len = (UInt32)stream->GetLength();
-			Byte* data = new Byte[len];
+			Byte* data = TIKI_NEW Byte[len];
 
 			stream->Read(data, 0, len);
 			SafeRelease(&stream);
@@ -385,13 +385,13 @@ namespace TikiEngine
 			CodeX::Ptr<ByteBuffer> licBuffer = ByteBuffer::Raw(len);
 			licBuffer->SetRawPointer(data);
 
-			manager = new cloddy_CloddyManager(description);
+			manager = TIKI_NEW cloddy_CloddyManager(description);
 			manager->SetLicence(licBuffer);
 			manager->Initialize();
 
 			delete[](data);
 			
-			terrainDescription = new cloddy_CloddyRectangularTerrainDescription();
+			terrainDescription = TIKI_NEW cloddy_CloddyRectangularTerrainDescription();
 			terrainDescription->SetLightCount(1);
 			terrainDescription->SetElevation(elevation);
 			terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1)); // anpassen für perfekte aussehen
@@ -479,7 +479,7 @@ namespace TikiEngine
 			UInt32 h = heightmap->GetHeight() / 20;
 			UInt32 c = w * h;
 			
-			UInt16* height = new UInt16[c];
+			UInt16* height = TIKI_NEW UInt16[c];
 			HeightmapSample sam;
 
 			while (i < c)

@@ -75,7 +75,7 @@ namespace TikiEngine
 
 			virtual IConstantBuffer* CreateConstantBuffer(UInt32 size) = 0;
 
-			/*! @brief Reset the Graphics Device and apply new values. Use values from Engine::GetDescription() */
+			/*! @brief Reset the Graphics Device and apply TIKI_NEW values. Use values from Engine::GetDescription() */
 			virtual void Reset() = 0;
 
 			/*!

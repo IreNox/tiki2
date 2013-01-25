@@ -20,7 +20,7 @@ namespace TikiEngine
 			shaderDefault = engine->content->LoadShader(L"pp_default");
 			shaderDefault->AddRef();
 
-			shadowTarget = new RenderTarget(engine);
+			shadowTarget = TIKI_NEW RenderTarget(engine);
 			shadowTarget->CreateScreenSize(false, PF_R8G8B8A8);
 			shadowTarget->Clear(Color::White);
 			shadowTarget->AddRef();
@@ -28,12 +28,12 @@ namespace TikiEngine
 			PostProcessPass* pass;
 
 #if TIKI_SHADOWS_ENABLED
-			pass = new PostProcessPass(engine, shaderShadow);
+			pass = TIKI_NEW PostProcessPass(engine, shaderShadow);
 			pass->AddOutput(0, shadowTarget);
 			this->AddPass(pass);
 #endif
 
-			pass = new PostProcessPass(engine, shaderDefault);
+			pass = TIKI_NEW PostProcessPass(engine, shaderDefault);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
 			pass->AddInput("rtLight", engine->graphics->GetLightTarget());
 			pass->AddInput("rtScreen", engine->graphics->GetScreenTarget());

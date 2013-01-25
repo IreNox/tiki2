@@ -157,7 +157,7 @@ namespace TikiEngine
 			wanderTarget += Vector2(RandomClamped() * wanderJitter,
 									RandomClamped() * wanderJitter);
 
-			// reproject this new vector back on to a unit circle
+			// reproject this TIKI_NEW vector back on to a unit circle
 			wanderTarget.Normalize();
 
 			// increase the length of the vector to the same as the radius of the wander circle

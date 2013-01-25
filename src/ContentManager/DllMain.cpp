@@ -16,7 +16,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new ContentManagerModule(engine);
+		DllMain::Module = TIKI_NEW ContentManagerModule(engine);
 
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;

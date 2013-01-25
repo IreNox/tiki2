@@ -23,13 +23,13 @@ namespace TikiEngine
 
 			shader->SetVector2("ScreenSize", engine->graphics->GetViewPort()->GetSize());
 
-			PostProcessPass* pass = new PostProcessPass(engine, shader);
+			PostProcessPass* pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("rtScene", engine->graphics->GetScreenTarget());
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, verticleTarget);
 			this->AddPass(pass);
 
-			pass = new PostProcessPass(engine, shader);
+			pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("rtScene", verticleTarget);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, engine->graphics->GetScreenTarget());

@@ -16,7 +16,7 @@ namespace TikiEngine
 		this->go = go;
 		Vector3 pos = go->PRS.GPosition();
 		this->Bounds = RectangleF::Create( pos.X - width * 0.5f, pos.Z - height * 0.5f, width, height);
-		this->boundingBox = new Bounding(go->GetEngine());
+		this->boundingBox = TIKI_NEW Bounding(go->GetEngine());
 		SetBounds(Vector2::One);
 	}
 

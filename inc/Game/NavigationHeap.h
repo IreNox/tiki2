@@ -79,7 +79,7 @@ namespace TikiEngine
 			NavigationHeap();
 			~NavigationHeap();
 
-			// Initialize the heap and record our new session info
+			// Initialize the heap and record our TIKI_NEW session info
 			void Setup(int SessionID, const Vector3& Goal);
 
 			//´Add a cell to the heap, sorting it in by it's cost value 

@@ -29,7 +29,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new PhysicsModule(engine);
+		DllMain::Module = TIKI_NEW PhysicsModule(engine);
 		DllMain::Module->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;
@@ -68,11 +68,11 @@ namespace TikiEngine
 	{
 		if (hash == typeid(IPhysicsMaterial).hash_code())
 		{
-			return new PhysicsMaterial(DllMain::Engine);
+			return TIKI_NEW PhysicsMaterial(DllMain::Engine);
 		}
 		else if (hash == typeid(IBoundingBox).hash_code())
 		{
-			return new BoundingBox(DllMain::Engine);
+			return TIKI_NEW BoundingBox(DllMain::Engine);
 		}
 
 		return 0;
@@ -82,23 +82,23 @@ namespace TikiEngine
 	{
 		if (hash == typeid(IBoxCollider).hash_code())
 		{
-			return new BoxCollider(DllMain::Engine, gameObject);
+			return TIKI_NEW BoxCollider(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(ISphereCollider).hash_code())
 		{
-			return new SphereCollider(DllMain::Engine, gameObject);
+			return TIKI_NEW SphereCollider(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(ICharacterController).hash_code())
 		{
-			return new CharacterController(DllMain::Engine, gameObject);
+			return TIKI_NEW CharacterController(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(IHeightFieldCollider).hash_code())
 		{
-			return new HeightFieldCollider(DllMain::Engine, gameObject);
+			return TIKI_NEW HeightFieldCollider(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(ITriangleMeshCollider).hash_code())
 		{
-			return new TriangleMeshCollider(DllMain::Engine, gameObject);
+			return TIKI_NEW TriangleMeshCollider(DllMain::Engine, gameObject);
 		}
 
 		return 0;

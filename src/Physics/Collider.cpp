@@ -13,7 +13,7 @@ namespace TikiEngine
 			state = CS_UNINITIALIZED;
 			isTrigger = false;
 			center = NxVec3(NX_MAX_F32);
-			rigidBody = new RigidBody();
+			rigidBody = TIKI_NEW RigidBody();
 		}
 
 		Collider::~Collider()

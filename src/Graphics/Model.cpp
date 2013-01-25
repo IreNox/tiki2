@@ -21,7 +21,7 @@ namespace TikiEngine
 		Model::Model(Engine* engine)
 			: IModel(engine), rootBone(0), mainInstance(false)
 		{
-			constantBufferMatrices = new ConstantBuffer<SkinMatrices>(engine);
+			constantBufferMatrices = TIKI_NEW ConstantBuffer<SkinMatrices>(engine);
 
 			SkinMatrices* mat = constantBufferMatrices->MapTI();
 			ZeroMemory(mat, sizeof(SkinMatrices));
@@ -61,7 +61,7 @@ namespace TikiEngine
 			i = 0;
 			while (i < baseModel->animations.Count())
 			{
-				TikiAnimation* ani = new TikiAnimation(baseModel->animations[i]);
+				TikiAnimation* ani = TIKI_NEW TikiAnimation(baseModel->animations[i]);
 
 				dict.Add(baseModel->animations[i], ani);
 				animations.Add(ani);
@@ -260,7 +260,7 @@ namespace TikiEngine
 		{
 			mainInstance = true;
 
-			ModelConverter* convert = new ModelConverter(this, stream);
+			ModelConverter* convert = TIKI_NEW ModelConverter(this, stream);
 			delete(convert);
 			
 			FOREACH_PTR_CALL(meshes, AddRef())
@@ -271,7 +271,7 @@ namespace TikiEngine
 
 		void Model::saveToStream(wcstring fileName, Stream* stream)
 		{
-			ModelConverter* convert = new ModelConverter(this);
+			ModelConverter* convert = TIKI_NEW ModelConverter(this);
 			convert->WriteToStream(stream);
 			delete(stream);
 		}

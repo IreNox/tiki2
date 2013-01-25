@@ -49,7 +49,7 @@ namespace TikiEngine
 		{
 			SafeDeleteArray(&vertexData);
 
-			vertexData = new Byte[dataLength];
+			vertexData = TIKI_NEW Byte[dataLength];
 			vertexDataLength = dataLength;
 
 			memcpy(vertexData, data, dataLength);
@@ -65,7 +65,7 @@ namespace TikiEngine
 		{
 			SafeDeleteArray(&indexData);
 
-			indexData = new UInt32[count];
+			indexData = TIKI_NEW UInt32[count];
 			indexCount = count;
 
 			memcpy(
@@ -118,12 +118,12 @@ namespace TikiEngine
 			ZeroMemory(buffer, 256);
 		
 			UPInt size = stream->GetLength();	
-			char* file = new char[size + 1];
+			char* file = TIKI_NEW char[size + 1];
 			stream->Read(file, 0, size);
 			file[size] = 10;
 
 			#pragma region Parse Data
-			bool newLine = true;
+			bool TIKI_NEWLine = true;
 			bool bufferWork = false;
 
 			/* BlockMode:
@@ -156,7 +156,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i <= size)
 			{
-				if (newLine)
+				if (TIKI_NEWLine)
 				{
 					if (file[i] == 'v')
 					{
@@ -181,7 +181,7 @@ namespace TikiEngine
 						blockCount = 12;
 					}
 				}
-				newLine = false;
+				TIKI_NEWLine = false;
 
 				switch (file[i])
 				{
@@ -191,7 +191,7 @@ namespace TikiEngine
 				case 10:
 				case 13:
 					bufferWork = true;
-					newLine = true;
+					TIKI_NEWLine = true;
 					break;
 				case '/':
 				case ' ':
@@ -287,7 +287,7 @@ namespace TikiEngine
 								miscVar++;
 							}
 
-							if (newLine)
+							if (TIKI_NEWLine)
 							{
 								List<UInt32> data;
 
@@ -335,7 +335,7 @@ namespace TikiEngine
 						}
 					}
 			
-					if (blockMode == 0 || newLine)
+					if (blockMode == 0 || TIKI_NEWLine)
 					{
 						blockMode = 0;
 						blockCount = 0;

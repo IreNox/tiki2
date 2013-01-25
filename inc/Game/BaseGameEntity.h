@@ -53,7 +53,7 @@ namespace TikiEngine
 			void SetScale(float val) { gameObject->PRS.SScale() = Vector3(val); }
 
 			EntityTypes EntityType() const { return type; }
-			//void SetEntityType(int newType) { type = newType; }
+			//void SetEntityType(int TIKI_NEWType) { type = TIKI_NEWType; }
 
 			bool GetReady() { return true; }
 

@@ -39,13 +39,13 @@ namespace TikiEngine
 		{
 			engine->HLog.ConsoleCommand.AddHandler(this);
 
-			hud = new GameHud(this);
-			cheater = new Cheater(this);
-			navMesh = new NavigationMesh(engine);
-			unitSelection = new UnitSelection(this);
-			projectiles = new ProjectileManager(this);
+			hud = TIKI_NEW GameHud(this);
+			cheater = TIKI_NEW Cheater(this);
+			navMesh = TIKI_NEW NavigationMesh(engine);
+			unitSelection = TIKI_NEW UnitSelection(this);
+			projectiles = TIKI_NEW ProjectileManager(this);
 
-			botFactory = new TikiBotFactory(this);
+			botFactory = TIKI_NEW TikiBotFactory(this);
 
 			defaultMaterial = engine->librarys->CreateResource<IPhysicsMaterial>();
 			defaultMaterial->SetRestitution(0.2f);
@@ -220,8 +220,8 @@ namespace TikiEngine
 // 						desc.ShooterID = bot->ID();
 // 						desc.Damage = 20; 
 // 						desc.LifeTime = 10.0f;
-// 						GameObject* go = new GameObject(engine);
-// 						Rocket* proj = new Rocket(this, go);
+// 						GameObject* go = TIKI_NEW GameObject(engine);
+// 						Rocket* proj = TIKI_NEW Rocket(this, go);
 // 						proj->Init(desc, 30, false);
 // 						projectiles->AddProjectile(proj);
 // 					}

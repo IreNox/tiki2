@@ -35,7 +35,7 @@ namespace TikiEngine
 		Quad::Quad(Engine* engine)
 			: EngineObject(engine), vertexBuffer(0), shader(0), inputLayout(0)
 		{
-			vertexBuffer = new StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices);
+			vertexBuffer = TIKI_NEW StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices);
 		}
 
 		Quad::~Quad()

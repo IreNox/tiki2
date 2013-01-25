@@ -28,7 +28,7 @@ namespace TikiEngine
 			}
 
 			// move to the random location
-			AddSubgoal(new GoalMoveToPosition(owner, currentDestination));
+			AddSubgoal(TIKI_NEW GoalMoveToPosition(owner, currentDestination));
 		}
 
 		int GoalExplore::Process(const UpdateArgs& args)
@@ -42,7 +42,7 @@ namespace TikiEngine
 			if (owner->GetTargetSys()->IsTargetWithinFOV() && owner->GetTargetSys()->IsTargetShootable())
 			{
 				//owner->GetEngine()->HLog.Write("Target Within FOV while exploring. Attacking it");
-				AddSubgoal(new GoalAttackTarget(owner));
+				AddSubgoal(TIKI_NEW GoalAttackTarget(owner));
 				
 				status = Completed;
 			}

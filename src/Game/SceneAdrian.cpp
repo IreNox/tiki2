@@ -48,7 +48,7 @@ namespace TikiEngine
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
 
 
-			GameObject* go = new GameObject(engine);
+			GameObject* go = TIKI_NEW GameObject(engine);
 			go->GetSceneGraphElement().SetDynamic();
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
@@ -56,7 +56,7 @@ namespace TikiEngine
 
 			this->model = go->GModel();
 			int count = this->model->AnimationCount();
-			this->model->AnimationHandler.AddHandler(new AnimationHandlerDefaultUnit(this->model));
+			this->model->AnimationHandler.AddHandler(TIKI_NEW AnimationHandlerDefaultUnit(this->model));
 			this->spidermine = go;
 
 			go->PRS.SScale() = Vector3(0.01f);
@@ -64,7 +64,7 @@ namespace TikiEngine
 			//sceneGraph.Add(go);
 			this->AddElement(go);
 
-			light = new LightObject(engine);
+			light = TIKI_NEW LightObject(engine);
 			light->AddRef();
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(750.0f);
@@ -73,11 +73,11 @@ namespace TikiEngine
 
 			this->AddElement(light);
 
-			go = new CameraObject(engine);
+			go = TIKI_NEW CameraObject(engine);
 
 			go->PRS.SPosition() = Vector3(0, 0, 5.0f);
 
-			CameraFly* fly = new CameraFly(engine, go);
+			CameraFly* fly = TIKI_NEW CameraFly(engine, go);
 			//fly->Release();
 
 			this->AddElement(go);

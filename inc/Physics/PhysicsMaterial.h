@@ -16,7 +16,7 @@ namespace TikiEngine
 		{
 
 		public:
-			/*! @brief Creates a new material. */
+			/*! @brief Creates a TIKI_NEW material. */
 			PhysicsMaterial(Engine* engine);
 			~PhysicsMaterial();
 

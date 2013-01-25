@@ -56,7 +56,7 @@ namespace TikiEngine
 		HelperLog HLog;
 	
 		/*!
-		 * @brief Create new instance of Engine.
+		 * @brief Create TIKI_NEW instance of Engine.
 		 */
 		Engine();
 		~Engine();
@@ -74,12 +74,12 @@ namespace TikiEngine
 
 		/*! @brief Get current Scene */
 		Scene* GetScene() const;
-		/*! @brief Set and initialize a new Scene */
+		/*! @brief Set and initialize a TIKI_NEW Scene */
 		void SetScene(Scene* scene);
 
 		/*! @brief Get the Scene there was showing at loading */
 		Scene* GetLoadingScene() const;
-		/*! @brief Set and initialize a new Scene */
+		/*! @brief Set and initialize a TIKI_NEW Scene */
 		void SetLoadingScene(Scene* scene);
 
 

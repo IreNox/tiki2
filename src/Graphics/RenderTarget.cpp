@@ -64,7 +64,7 @@ namespace TikiEngine
 			renderTarget->GetResource(&res);
 
 			TDX_Texture2D* tex = (TDX_Texture2D*)res;
-			texture = new Texture(engine, tex, false, false);
+			texture = TIKI_NEW Texture(engine, tex, false, false);
 
 			texture->AddRef();
 		}
@@ -176,7 +176,7 @@ namespace TikiEngine
 				&texture
 			);
 						
-			this->texture = new Texture(engine, texture, true, dynamic);
+			this->texture = TIKI_NEW Texture(engine, texture, true, dynamic);
 			this->texture->AddRef();
 
 			TDX_RenderTargetView_Desc rtDesc;

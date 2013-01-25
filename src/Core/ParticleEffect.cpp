@@ -11,7 +11,7 @@ namespace TikiEngine
 			  particleBudget(1000), particleUsed(0), renderType(PRT_PointList), deltaTime(0), totalTime(0),
 			  multiplayReleaseCount(false)
 		{
-			particles = new Particle[particleBudget];
+			particles = TIKI_NEW Particle[particleBudget];
 		}
 
 		ParticleEffect::~ParticleEffect()
@@ -94,7 +94,7 @@ namespace TikiEngine
 			
 			particleUsed = 0;
 			particleBudget = budget;
-			particles = new Particle[particleBudget];
+			particles = TIKI_NEW Particle[particleBudget];
 		}
 		#pragma endregion
 

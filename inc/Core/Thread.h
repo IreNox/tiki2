@@ -11,7 +11,7 @@ namespace TikiEngine
 
 	enum ThreadState
 	{
-		TS_New,
+		TS_TIKI_NEW,
 		TS_Starting,
 		TS_Running,
 		TS_Suspend,
@@ -25,7 +25,7 @@ namespace TikiEngine
 	public:
 
 		Thread(function<void(TInst*, TArgs*)> func)
-			: func(func), state(TS_New)
+			: func(func), state(TS_TIKI_NEW)
 		{
 		}
 

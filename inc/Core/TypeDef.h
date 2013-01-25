@@ -41,6 +41,8 @@ typedef const wchar_t* wcstring;
 #define TIKI_SHADOWS_ENABLED 0
 
 #if _DEBUG
+#include <crtdbg.h>
+
 #define _CRTDBG_MAP_ALLOC
 #define TIKI_NEW new(_NORMAL_BLOCK, __FILE__, __LINE__)
 #else

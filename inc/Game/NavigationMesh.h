@@ -33,7 +33,7 @@ namespace TikiEngine
 
 			// Delete all cells associated with this mesh 
 			void Clear();
-			// Add a new cell, defined by the three vertices in clockwise order, to this mesh 
+			// Add a TIKI_NEW cell, defined by the three vertices in clockwise order, to this mesh 
 			void AddCell(const Vector3& pointA, const Vector3& pointB, const Vector3& pointC);
 			void LinkCells();
 

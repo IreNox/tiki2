@@ -19,14 +19,14 @@ namespace TikiEngine
 
 			// accessors
 			Vector2 Velocity() const { return velocity; }
-			void SetVelocity(const Vector2& newVel) { velocity = newVel; }
+			void SetVelocity(const Vector2& TIKI_NEWVel) { velocity = TIKI_NEWVel; }
   
 			Double Mass() const { return mass; }
   
 			Vector2 Side() const { return side; }
 
 			Double MaxSpeed() const { return maxSpeed; }                       
-			void SetMaxSpeed(Double newSpeed) { maxSpeed = newSpeed; }
+			void SetMaxSpeed(Double TIKI_NEWSpeed) { maxSpeed = TIKI_NEWSpeed; }
   
 			double MaxForce() const { return maxForce; }
 			void SetMaxForce(Double mf) { maxForce = mf; }
@@ -36,7 +36,7 @@ namespace TikiEngine
 			Double SpeedSq() const { return velocity.LengthSquared(); }
   
 			Vector2 Heading() const { return heading; }
-			void SetHeading(Vector2 newHeading);
+			void SetHeading(Vector2 TIKI_NEWHeading);
 			bool RotateHeadingToFacePosition(Vector2 target);
 
 			float MaxTurnRate() const { return maxTurnRate; }

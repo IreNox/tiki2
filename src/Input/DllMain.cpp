@@ -15,7 +15,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::ModuleInput = new InputModule(engine);
+		DllMain::ModuleInput = TIKI_NEW InputModule(engine);
 		DllMain::ModuleInput->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;

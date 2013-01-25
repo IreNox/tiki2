@@ -238,7 +238,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			texture = new Texture(engine);
+			texture = TIKI_NEW Texture(engine);
 			texture->Create(512, 512, true);
 			texture->SetData(
 				PF_A8R8G8B8,

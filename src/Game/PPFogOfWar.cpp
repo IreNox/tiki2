@@ -28,7 +28,7 @@ namespace TikiEngine
 			buffer = engine->graphics->CreateConstantBuffer(sizeof(CBFogOfWar));
 			shader->SetConstantBuffer("FogOfWar", buffer);
 
-			PostProcessPass* pass = new PostProcessPass(engine, shader);
+			PostProcessPass* pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("rtScreen", 0);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
 			pass->AddOutput(0, 0);

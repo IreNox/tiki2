@@ -206,9 +206,9 @@ namespace TikiEngine
 
 			if (rdNormal == 0)
 			{
-				rdNormal = new GUIControlRectangles(engine, "button_normal");
-				rdHover = new GUIControlRectangles(engine, "button_hover");
-				rdClick = new GUIControlRectangles(engine, "button_click");
+				rdNormal = TIKI_NEW GUIControlRectangles(engine, "button_normal");
+				rdHover = TIKI_NEW GUIControlRectangles(engine, "button_hover");
+				rdClick = TIKI_NEW GUIControlRectangles(engine, "button_click");
 			}
 
 			rdNormal->AddRef();
@@ -309,7 +309,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{					
-					RectangleF* rect = new RectangleF();
+					RectangleF* rect = TIKI_NEW RectangleF();
 
 					Int32 i = 0;
 					Int32 count = sqlite3_column_count(state);
@@ -642,7 +642,7 @@ namespace TikiEngine
 
 			if (rd == 0)
 			{
-				rd = new GUIControlRectangles(engine, "window");
+				rd = TIKI_NEW GUIControlRectangles(engine, "window");
 			}
 
 			rd->AddRef();

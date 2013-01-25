@@ -43,7 +43,7 @@ namespace TikiEngine
 		void Sound::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			/*UInt32 len = stream->GetLength();
-			char* data = new char[len];
+			char* data = TIKI_NEW char[len];
 			stream->Read(data, 0, len);*/
 
 			//string str = StringWtoA(fileName);

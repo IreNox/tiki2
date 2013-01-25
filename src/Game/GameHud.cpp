@@ -23,7 +23,7 @@ namespace TikiEngine
 		GameHud::GameHud(GameState* state)
 			: EngineObject(state->GetEngine()), gameState(state), selectedBot(0), selectedSlot(0)
 		{
-			buttonMenu = new GUIButton(engine);
+			buttonMenu = TIKI_NEW GUIButton(engine);
 			buttonMenu->SPosition() = Vector2(20, -15);
 			buttonMenu->Text() = L"Menu";
 			buttonMenu->SSize() = Vector2(100, 55);
@@ -31,33 +31,33 @@ namespace TikiEngine
 			buttonMenu->Click.AddHandler(this);
 			enabledControls.Add(buttonMenu);
 
-			windowResources = new GUIWindow(engine);
+			windowResources = TIKI_NEW GUIWindow(engine);
 			windowResources->SSize() = Vector2(180, 55);
 			windowResources->AddRef();
 			enabledControls.Add(windowResources);
 
-			imgMinimap = new GUIImage(engine);
+			imgMinimap = TIKI_NEW GUIImage(engine);
 			imgMinimap->Click.AddHandler(this);
 			enabledControls.Add(imgMinimap);
 
-			GUIImage* image = new GUIImage(engine);
+			GUIImage* image = TIKI_NEW GUIImage(engine);
 			image->SetTexture(engine->content->LoadTexture(L"hud/mass"));
 			image->SSize() = Vector2(16, 16);
 			image->SPosition() = Vector2(16, 20);
 			windowResources->AddChild(image);
 
-			labelRes = new GUILabel(engine);
+			labelRes = TIKI_NEW GUILabel(engine);
 			labelRes->Text() = L"0";
 			labelRes->SPosition() = Vector2(35, 20);
 			windowResources->AddChild(labelRes);
 
-			windowSkills = new GUIWindow(engine);
+			windowSkills = TIKI_NEW GUIWindow(engine);
 			windowSkills->SSize() = Vector2(295, 90);
 
 			UInt32 i = 0;
 			while (i < 4)
 			{
-				GUIButton* cmd = new GUIButton(engine);
+				GUIButton* cmd = TIKI_NEW GUIButton(engine);
 				cmd->SSize() = Vector2(70, 70);
 				cmd->SPosition() = Vector2(10.0f + (68.0f * i), 10.0f);
 				cmd->Click.AddHandler(this);
@@ -67,13 +67,13 @@ namespace TikiEngine
 				i++;
 			}
 
-			windowSkillUpgrades = new GUIWindow(engine);
+			windowSkillUpgrades = TIKI_NEW GUIWindow(engine);
 			windowSkillUpgrades->SSize() = Vector2(219, 67);
 
 			i = 0;
 			while (i < 4)
 			{
-				GUIButton* cmd = new GUIButton(engine);
+				GUIButton* cmd = TIKI_NEW GUIButton(engine);
 				cmd->SSize() = Vector2(48, 48);
 				cmd->SPosition() = Vector2(10.0f + (50.0f * i), 10.0f);
 				cmd->Text() = L"+";
@@ -84,10 +84,10 @@ namespace TikiEngine
 				i++;
 			}
 
-			windowBuildSlot = new GUIWindow(engine);
+			windowBuildSlot = TIKI_NEW GUIWindow(engine);
 			windowBuildSlot->SSize() = Vector2(90, 90);
 
-			GUIButton* cmd = new GUIButton(engine);
+			GUIButton* cmd = TIKI_NEW GUIButton(engine);
 			cmd->SSize() = Vector2(70, 70);
 			cmd->SPosition() = Vector2(10.0f, 10.0f);
 			cmd->Text() = L"Build";

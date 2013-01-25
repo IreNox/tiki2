@@ -214,22 +214,22 @@ namespace TikiEngine
 			// this gives us the magnitude of our motion along the wall  
 			float DotResult = Vector2::Dot(MotionVector, WallNormal);  
       
-			// our projected vector is then the normalized wall vector times our new found magnatude  
+			// our projected vector is then the normalized wall vector times our TIKI_NEW found magnatude  
 			MotionVector = Vector2( (DotResult * WallNormal.X), (DotResult * WallNormal.Y));  
   
-			// redirect our motion path along the new reflected direction  
+			// redirect our motion path along the TIKI_NEW reflected direction  
 			MotionPath.SetEndPointB(MotionPath.EndPointA() + MotionVector);  
   
 
 			// Make sure starting point of motion path is within the cell  
-			Vector2 NewPoint = MotionPath.EndPointA();  
-			ForcePointToCellCollumn(NewPoint);  
-			MotionPath.SetEndPointA(NewPoint);  
+			Vector2 TIKI_NEWPoint = MotionPath.EndPointA();  
+			ForcePointToCellCollumn(TIKI_NEWPoint);  
+			MotionPath.SetEndPointA(TIKI_NEWPoint);  
   
 			// Make sure destination point does not intersect this wall again  
-			NewPoint = MotionPath.EndPointB();  
-			ForcePointToWallInterior(SideNumber, NewPoint);  
-			MotionPath.SetEndPointB(NewPoint);  
+			TIKI_NEWPoint = MotionPath.EndPointB();  
+			ForcePointToWallInterior(SideNumber, TIKI_NEWPoint);  
+			MotionPath.SetEndPointB(TIKI_NEWPoint);  
 		}  
 
 
@@ -353,7 +353,7 @@ namespace TikiEngine
 		{  
 			if (sessionID != pHeap->SessionID())  
 			{  
-				// this is a new session, reset our internal data  
+				// this is a TIKI_NEW session, reset our internal data  
 				sessionID = pHeap->SessionID();  
   
 				if (Caller)  
@@ -392,7 +392,7 @@ namespace TikiEngine
 			else if (open)  
 			{  
 				// Open means we are already in the Open Heap.  
-				// If this new caller provides a better path, adjust our data  
+				// If this TIKI_NEW caller provides a better path, adjust our data  
 				// Then tell the Heap to resort our position in the list.  
 				if ((cost + heuristic) < (this->arrivalCost + heuristic))  
 				{  

@@ -26,12 +26,12 @@ namespace TikiEngine
 			NavigationPath();
 			~NavigationPath();
 
-			// Sets up a new path from StartPoint to EndPoint. It adds the StartPoint as the first 
+			// Sets up a TIKI_NEW path from StartPoint to EndPoint. It adds the StartPoint as the first 
 			// waypoint in the list and waits for further calls to AddWayPoint and EndPath to 
 			// complete the list 
 			void Setup(NavigationMesh* Parent, const Vector3& StartPoint, NavigationCell* StartCell, const Vector3& EndPoint, NavigationCell* EndCell);
 			
-			// Adds a new waypoint to the end of the list 
+			// Adds a TIKI_NEW waypoint to the end of the list 
 			void AddWayPoint(const Vector3& Point, NavigationCell* Cell);
 
 			// Caps the end of the waypoint list by adding our final destination point 

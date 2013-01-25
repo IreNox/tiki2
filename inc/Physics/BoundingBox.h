@@ -14,7 +14,7 @@ namespace TikiEngine
 		{
 
 		public:
-			/*! @brief Creates a new BoundingBox. */
+			/*! @brief Creates a TIKI_NEW BoundingBox. */
 			BoundingBox(Engine* engine);
 			~BoundingBox();
 

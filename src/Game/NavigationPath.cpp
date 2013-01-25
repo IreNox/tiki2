@@ -29,12 +29,12 @@ namespace TikiEngine
 
 		void NavigationPath::AddWayPoint(const Vector3& Point, NavigationCell* Cell)
 		{
-			WAYPOINT NewPoint;
+			WAYPOINT TIKI_NEWPoint;
 
-			NewPoint.position = Point;
-			NewPoint.cell = Cell;
+			TIKI_NEWPoint.position = Point;
+			TIKI_NEWPoint.cell = Cell;
 
-			this->waypointList.push_back(NewPoint);
+			this->waypointList.push_back(TIKI_NEWPoint);
 		}
 
 		void NavigationPath::EndPath()

@@ -318,7 +318,7 @@ namespace TikiEngine
 		void Shader::SetTextureArray(cstring key, List<ITexture*>* array)
 		{
 #if TIKI_DX10
-			ID3D10ShaderResourceView** data = new ID3D10ShaderResourceView*[array->Count()];
+			ID3D10ShaderResourceView** data = TIKI_NEW ID3D10ShaderResourceView*[array->Count()];
 
 			UInt32 i = 0;
 			while (i < array->Count())
@@ -327,7 +327,7 @@ namespace TikiEngine
 				i++;
 			}
 #else
-			ID3D11ShaderResourceView** data = new ID3D11ShaderResourceView*[array->Count()];
+			ID3D11ShaderResourceView** data = TIKI_NEW ID3D11ShaderResourceView*[array->Count()];
 
 			UInt32 i = 0;
 			while (i < array->Count())
@@ -371,7 +371,7 @@ namespace TikiEngine
 				ID3D10Blob *blob = 0;
 
 				UPInt size = stream->GetLength();
-				char* data = new char[size];
+				char* data = TIKI_NEW char[size];
 				stream->Read(data, 0, (UInt32)size);
 
 				HRESULT r = TDX_EFFECT_COMPILE(
@@ -415,7 +415,7 @@ namespace TikiEngine
 				delete[](data);
 
 #if !_DEBUG
-				FileStream* binShader = new FileStream(binFileName, FM_Write);
+				FileStream* binShader = TIKI_NEW FileStream(binFileName, FM_Write);
 
 				binShader->Write(
 					blob->GetBufferPointer(),
@@ -427,9 +427,9 @@ namespace TikiEngine
 				SafeRelease(&blob);
 			}
 
-			stream = new FileStream(binFileName, FM_Read);
+			stream = TIKI_NEW FileStream(binFileName, FM_Read);
 #else
-				stream = new MemoryStream(blob->GetBufferPointer(), blob->GetBufferSize());
+				stream = TIKI_NEW MemoryStream(blob->GetBufferPointer(), blob->GetBufferSize());
 				SafeRelease(&blob);
 			}
 
@@ -437,7 +437,7 @@ namespace TikiEngine
 #endif
 
 			UPInt size = stream->GetLength();
-			char* data = new char[size];
+			char* data = TIKI_NEW char[size];
 			stream->Read(data, 0, size);
 
 #ifdef TIKI_DX10

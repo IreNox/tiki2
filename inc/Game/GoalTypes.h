@@ -23,9 +23,8 @@ namespace TikiEngine
 		class GoalTypeToString
 		{
 		public:
-			GoalTypeToString() { }
 
-			std::wstring Convert(int gt)
+			static std::wstring Convert(int gt)
 			{
 				switch(gt)
 				{

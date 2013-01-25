@@ -72,7 +72,7 @@ namespace TikiEngine
 					i++;
 				}
 
-				T* nT = new T(this);
+				T* nT = TIKI_NEW T(this);
 				nT->SetID(id);
 				gameParts.Add(nT);
 

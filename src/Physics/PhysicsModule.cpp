@@ -65,7 +65,7 @@ namespace TikiEngine
 		bool PhysicsModule::Initialize(EngineDescription& desc)
 		{
 			if (!userAllocator)
-				userAllocator = new ControllerManagerAllocator();
+				userAllocator = TIKI_NEW ControllerManagerAllocator();
 
 
 			// init PhysX SDK
@@ -203,7 +203,7 @@ namespace TikiEngine
 			{
 				scene->simulate(timeSinceLastUpdate); 			
 				scene->flushStream();
-				// the new method to start the SDK				
+				// the TIKI_NEW method to start the SDK				
 
 				// in here we can do computations which depend only on the old state of the scene "actors". 
 				// Writing to the scene is not allowed. Write calls in here are skipped.

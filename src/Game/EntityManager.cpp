@@ -27,9 +27,9 @@ namespace TikiEngine
 		    entityMap.erase(entityMap.find(entity->ID()));
 		} 
 
-		void EntityManager::RegisterEntity(BaseGameEntity* newEntity)
+		void EntityManager::RegisterEntity(BaseGameEntity* TIKI_NEWEntity)
 		{
-			entityMap.insert(std::make_pair(newEntity->ID(), newEntity));
+			entityMap.insert(std::make_pair(TIKI_NEWEntity->ID(), TIKI_NEWEntity));
 		}
 
 	}

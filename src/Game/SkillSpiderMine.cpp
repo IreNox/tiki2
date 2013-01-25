@@ -31,7 +31,7 @@ namespace TikiEngine
 				return false;
 			}
 
-			GameObject* go = new GameObject(engine);
+			GameObject* go = TIKI_NEW GameObject(engine);
 			go->PRS.SPosition() = owner->Pos3D() + Vector3(5);
 			
 			gameState->GetBotFactory()->CreatePlayerSpiderMine(go, target);

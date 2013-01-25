@@ -30,17 +30,17 @@ namespace TikiEngine
 		{
 			ViewPort* vp = engine->graphics->GetViewPort();
 
-			GameObject* obj = new CameraObject(engine);
+			GameObject* obj = TIKI_NEW CameraObject(engine);
 			this->AddElement(obj);
 
 			ITexture* logo = engine->content->LoadTexture(L"logo");
 
-			image = new GUIImage(engine);
+			image = TIKI_NEW GUIImage(engine);
 			image->SetTexture(logo);
 			image->SSize() = Vector2(200);
 			image->AddRef();
 
-			window = new GUIWindow(engine);
+			window = TIKI_NEW GUIWindow(engine);
 			window->SSize() = Vector2(350, 475);
 			window->AddRef();
 
@@ -56,7 +56,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < 6)
 			{
-				GUIButton* cmd = new GUIButton(engine);
+				GUIButton* cmd = TIKI_NEW GUIButton(engine);
 				cmd->SSize() = Vector2(300, 50);
 				cmd->Text() = text[i];
 				cmd->UserData = (void*)i;
@@ -128,25 +128,25 @@ namespace TikiEngine
 					engine->content->LoadSound(L"Mech_Spawn")
 				);
 
-				sLevel = new SceneLevel(engine);
+				sLevel = TIKI_NEW SceneLevel(engine);
 				engine->SetScene(sLevel);
 				sLevel->LoadLevel(1);
 				break;
 			case 1:
-				sLevel = new SceneLevel(engine);
+				sLevel = TIKI_NEW SceneLevel(engine);
 				engine->SetScene(sLevel);
 				sLevel->LoadLevel(2);
 				break;
 			case 2:
-				s = new SceneTim(engine);
+				s = TIKI_NEW SceneTim(engine);
 				engine->SetScene(s);
 				break;
 			case 3:
-				s = new SceneMark(engine);
+				s = TIKI_NEW SceneMark(engine);
 				engine->SetScene(s);
 				break;
 			case 4:
-				s = new SceneAdrian(engine);
+				s = TIKI_NEW SceneAdrian(engine);
 				engine->SetScene(s);
 				break;
 			case 5:

@@ -99,7 +99,7 @@ public:
 	#pragma region Member - Get Lists
 	inline List<TKey>* GetKeys() const
 	{
-		List<TKey>* list = new List<TKey>();
+		List<TKey>* list = TIKI_NEW List<TKey>();
 
 		for (UInt32 i = 0; i < this->Count(); i++)
 		{
@@ -114,7 +114,7 @@ public:
 
 	inline List<TValue>* GetValues() const
 	{
-		List<TValue>* list = new List<TValue>();
+		List<TValue>* list = TIKI_NEW List<TValue>();
 
 		for (UInt32 i = 0; i < this->Count(); i++)
 		{

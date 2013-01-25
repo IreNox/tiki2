@@ -53,13 +53,13 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(-256,-256, 512, 512), 6);
 
-			gameState = new GameState(engine, this);
+			gameState = TIKI_NEW GameState(engine, this);
 			gameState->AddRef();
 
-			level = new Level(gameState);
+			level = TIKI_NEW Level(gameState);
 
 			//Light
-			LightObject* lo = new LightObject(engine);
+			LightObject* lo = TIKI_NEW LightObject(engine);
 			lo->PRS.SPosition() = Vector3(0, 256, 0);
 			lo->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			lo->GetLight()->SetColor(Color::White);
@@ -67,19 +67,19 @@ namespace TikiEngine
 			this->AddElement(lo);
 
 			// Camera
-			CameraObject* go = new CameraObject(engine);
-			(new CameraRTS(go, level->GetTerrain()));
+			CameraObject* go = TIKI_NEW CameraObject(engine);
+			(TIKI_NEW CameraRTS(go, level->GetTerrain()));
 			this->mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 
 			// PostProcess
-			engine->graphics->AddPostProcess(new PPFogOfWar(gameState));
+			engine->graphics->AddPostProcess(TIKI_NEW PPFogOfWar(gameState));
 			
-			//auto ssao = new PPScreenSpaceAmbientOcclusion(engine);
+			//auto ssao = TIKI_NEW PPScreenSpaceAmbientOcclusion(engine);
 			//temp = ssao->GetAO();
 			//engine->graphics->AddPostProcess(ssao);
 
-			//auto dof = new PPDepthOfField(engine);
+			//auto dof = TIKI_NEW PPDepthOfField(engine);
 			//engine->graphics->AddPostProcess(dof);
 
 			engine->content->LoadModel(L"unit_marine");
@@ -137,7 +137,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{
-					LevelPoint* point = new LevelPoint(gameState);
+					LevelPoint* point = TIKI_NEW LevelPoint(gameState);
 					point->LoadFromDatabase(state);
 
 					if (point->GType() == 1)
@@ -171,7 +171,7 @@ namespace TikiEngine
 			{
 				while (sqlite3_step(state) == SQLITE_ROW)
 				{
-					LevelObject* object = new LevelObject(gameState);
+					LevelObject* object = TIKI_NEW LevelObject(gameState);
 					object->LoadFromDatabase(state);
 				}
 				sqlite3_finalize(state);

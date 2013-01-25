@@ -23,12 +23,12 @@ namespace TikiEngine
 		
 		void NavigationHeap::AddCell(NavigationCell* cell)
 		{
-			NavigationNode NewNode;
+			NavigationNode TIKI_NEWNode;
 
-			NewNode.cell = cell;
-			NewNode.cost = cell->PathfindingCost();
+			TIKI_NEWNode.cell = cell;
+			TIKI_NEWNode.cost = cell->PathfindingCost();
 
-			nodes.push_back(NewNode);
+			nodes.push_back(TIKI_NEWNode);
 			std::push_heap( nodes.begin(), nodes.end(), comp );
 		}
 

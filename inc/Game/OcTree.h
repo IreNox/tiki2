@@ -48,13 +48,13 @@ namespace TikiEngine
 			int BuildRootNode(const TRI* tris, int triCount);
 
 			// After building the root node, this function recursively subdivides the tree into octants.  
-			// Each octants gets a new bounding box and all the polygons in the parent are tested to see
-			// which lie within the new box.  Stops once each node contains no more than trisPerNode
+			// Each octants gets a TIKI_NEW bounding box and all the polygons in the parent are tested to see
+			// which lie within the TIKI_NEW box.  Stops once each node contains no more than trisPerNode
 			void BuildTree(OctNode* node, int trisPerNode, const TRI* tris, int triCount);
 
 			// Given a parent box, finds a partitioned child box based on the index i.
-			// i refers to the octant of the new box 0-7
-			void GetBox(IBoundingBox* parentBox, IBoundingBox* newBox, int i);
+			// i refers to the octant of the TIKI_NEW box 0-7
+			void GetBox(IBoundingBox* parentBox, IBoundingBox* TIKI_NEWBox, int i);
 
 
 		public:

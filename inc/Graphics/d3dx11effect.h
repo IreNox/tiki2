@@ -1552,7 +1552,7 @@ extern "C" {
 // [out]
 //
 //  ppEffect
-//      Address of the newly created Effect interface
+//      Address of the TIKI_NEWly created Effect interface
 //
 //----------------------------------------------------------------------------
 

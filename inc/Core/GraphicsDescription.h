@@ -6,7 +6,7 @@ namespace TikiEngine
 {
 	namespace Description
 	{
-		enum GraphicsModule
+		enum GraphicsModules
 		{
 			GM_OpenGL,
 			GM_DirectX10,
@@ -33,7 +33,7 @@ namespace TikiEngine
 			/*! @brief The Graphics Module. */
 			UInt32 AdapterIndex;
 
-			GraphicsModule Module;
+			GraphicsModules Module;
 
 			GaphicsDescription()
 				: Width(800), Height(600), AdapterIndex(0), Fullscreen(false), VSync(false), Module(GM_DirectX11)

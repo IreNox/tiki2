@@ -24,7 +24,7 @@ namespace TikiEngine
 
 			NxU32 i = 0;
 			NxU32 c = desc.Columns * desc.Rows;
-			NxU32* current = new NxU32[desc.Columns * desc.Rows];
+			NxU32* current = TIKI_NEW NxU32[desc.Columns * desc.Rows];
 
 			nxDesc.samples = current;
 			nxDesc.sampleStride = sizeof(NxU32);

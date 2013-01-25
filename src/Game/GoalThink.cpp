@@ -25,7 +25,7 @@ namespace TikiEngine
 			: GoalComposite<TikiBot>(bot, Goal_Think)
 		{
 			hasWaypoints = false;
-			attackTargetRegulator = new Regulator(3);
+			attackTargetRegulator = TIKI_NEW Regulator(3);
 
             bot->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(bot->GetGameObject()->GModel(), AnimationArgs(Idle));
 		}
@@ -44,9 +44,9 @@ namespace TikiEngine
 
 		void GoalThink::Init(float exploreBias, float attackBias, float patrolBias)
 		{
-			evaluators.push_back(new ExploreGoalEvaluator(exploreBias));
-			evaluators.push_back(new AttackTargetGoalEvaluator(attackBias));
-			evaluators.push_back(new PatrolGoalEvaluator(patrolBias));
+			evaluators.push_back(TIKI_NEW ExploreGoalEvaluator(exploreBias));
+			evaluators.push_back(TIKI_NEW AttackTargetGoalEvaluator(attackBias));
+			evaluators.push_back(TIKI_NEW PatrolGoalEvaluator(patrolBias));
 		}
 
 
@@ -120,7 +120,7 @@ namespace TikiEngine
 			if (NotPresent(Goal_Explore))
 			{
 				RemoveAllSubgoals();
-				AddSubgoal(new GoalExplore(owner));
+				AddSubgoal(TIKI_NEW GoalExplore(owner));
 			}
 		}
 
@@ -132,14 +132,14 @@ namespace TikiEngine
 				wayPoints = wps;
 
 				RemoveAllSubgoals();
-				AddSubgoal(new GoalPatrol(owner, wps));
+				AddSubgoal(TIKI_NEW GoalPatrol(owner, wps));
 			}
 		}
 
 		void GoalThink::AddGoalAttackGlobalTarget(TikiBot* target)
 		{
 			RemoveAllSubgoals();
-			AddSubgoal(new GoalAttackGlobalTarget(owner, target, attackTargetRegulator));
+			AddSubgoal(TIKI_NEW GoalAttackGlobalTarget(owner, target, attackTargetRegulator));
 		}
 
 		void GoalThink::AddGoalAttackTarget()
@@ -147,7 +147,7 @@ namespace TikiEngine
 			if (NotPresent(Goal_Attack_Target))
 			{
 				RemoveAllSubgoals();
-				AddSubgoal(new GoalAttackTarget(owner));
+				AddSubgoal(TIKI_NEW GoalAttackTarget(owner));
 			}
 		}
 
@@ -156,23 +156,23 @@ namespace TikiEngine
  			//if (NotPresent(Goal_Attack_Move))
  			//{
  				//RemoveAllSubgoals();
- 				AddSubgoal(new GoalAttackMove(owner, pos));
+ 				AddSubgoal(TIKI_NEW GoalAttackMove(owner, pos));
  			//}
 		}
 
 		void GoalThink::QueueGoalAttackMove(Vector3 pos)
 		{
-			subGoals.push_back(new GoalAttackMove(owner, pos));
+			subGoals.push_back(TIKI_NEW GoalAttackMove(owner, pos));
 		}
 
 		void GoalThink::AddGoalMoveToPosition(Vector3 pos)
 		{
-			AddSubgoal( new GoalMoveToPosition(owner, pos));
+			AddSubgoal( TIKI_NEW GoalMoveToPosition(owner, pos));
 		}
 
 		void GoalThink::QueueGoalMoveToPosition(Vector3 pos)
 		{
-			subGoals.push_back(new GoalMoveToPosition(owner, pos));
+			subGoals.push_back(TIKI_NEW GoalMoveToPosition(owner, pos));
 		}
 
 

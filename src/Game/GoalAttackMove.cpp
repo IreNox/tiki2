@@ -29,7 +29,7 @@ namespace TikiEngine
 				{
 					attacking = true;
 					//owner->GetEngine()->HLog.Write("AttackMove - Attacking. \n");
-					AddSubgoal(new GoalAttackTarget(owner));
+					AddSubgoal(TIKI_NEW GoalAttackTarget(owner));
 				}
 
 			}
@@ -37,7 +37,7 @@ namespace TikiEngine
 			{
 				attacking = false;
 				//owner->GetEngine()->HLog.Write("AttackMove - Moving. \n");
-				AddSubgoal(new GoalMoveToPosition(owner, destination));
+				AddSubgoal(TIKI_NEW GoalMoveToPosition(owner, destination));
 			}
 		}
 

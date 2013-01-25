@@ -33,13 +33,13 @@ namespace TikiEngine
 				RectangleF rects[9];
 			};
 
-			/*! @brief Create new non initialized GUIControlRectangles */
+			/*! @brief Create TIKI_NEW non initialized GUIControlRectangles */
 			GUIControlRectangles();
 			
-			/*! @brief Create new GUIControlRectangles from Database */
+			/*! @brief Create TIKI_NEW GUIControlRectangles from Database */
 			GUIControlRectangles(Engine* engine, string control);
 
-			/*! @brief Create new GUIControlRectangles from Database-data */
+			/*! @brief Create TIKI_NEW GUIControlRectangles from Database-data */
 			GUIControlRectangles(const RectangleF& destRect, GUIControlRectangles* srcRects);
 			
 			~GUIControlRectangles();

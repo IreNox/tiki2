@@ -16,7 +16,7 @@ public:
 	}
 
 	List(const List<T>& copy)
-		: IsReadOnly(copy.IsReadOnly), lengthArr(copy.lengthArr), lengthData(copy.lengthData), data(new T[copy.lengthArr])
+		: IsReadOnly(copy.IsReadOnly), lengthArr(copy.lengthArr), lengthData(copy.lengthData), data(TIKI_NEW T[copy.lengthArr])
 	{
 		memcpy(data, copy.data, sizeof(T) * lengthArr);
 	}
@@ -26,7 +26,7 @@ public:
 	{
 		lengthArr = getNextSize(count);
 
-		this->data = new T[lengthArr];
+		this->data = TIKI_NEW T[lengthArr];
 		memcpy(this->data, data, count * sizeof(T));
 	}
 
@@ -72,7 +72,7 @@ public:
 	inline T* ToArray() const
 	{
 		UInt32 c = lengthData; 
-		T* arr = new T[c];
+		T* arr = TIKI_NEW T[c];
 
 		UInt32 i = 0;
 		while (i < c)
@@ -215,7 +215,7 @@ public:
 		this->lengthArr = copy.lengthArr;
 		this->lengthData = copy.lengthData;
 
-		this->data = new T[copy.lengthArr];
+		this->data = TIKI_NEW T[copy.lengthArr];
 		memcpy(this->data, copy.data, sizeof(T) * copy.lengthArr);
 	}
 #pragma endregion
@@ -246,17 +246,17 @@ private:
 		if (lengthArr < neddedSize)
 		{
 			lengthArr = getNextSize(neddedSize);
-			T* newData = new T[lengthArr];
+			T* TIKI_NEWData = TIKI_NEW T[lengthArr];
 
 			UInt32 i = 0;
 			while (i < lengthData)
 			{
-				newData[i] = data[i];
+				TIKI_NEWData[i] = data[i];
 				i++;
 			}
 
 			if (data != 0) delete[](data);
-			data = newData;
+			data = TIKI_NEWData;
 		}
 
 		lengthData = neddedSize;

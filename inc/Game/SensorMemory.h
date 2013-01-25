@@ -13,7 +13,7 @@ namespace TikiEngine
 	{
 		class TikiBot;
 
-		// Each time a bot encounters a new opponent, an instance of a MemoryRecord
+		// Each time a bot encounters a TIKI_NEW opponent, an instance of a MemoryRecord
 		// is created and added to the memory map. Once a record has been made,
 		// whenever the corresponding opponent is heard or seen its record is updated
 		// with the relevant information
@@ -99,8 +99,8 @@ namespace TikiEngine
 			typedef std::map<TikiBot*, MemoryRecord> MemoryMap;
 
 			// this methods checks to see if there is an existing record for the bot. If
-			// not a new MemoryRecord record is made and added to the memory map.(called by UpdateVision)
-			void MakeNewRecordIfNotAlreadyPresent(TikiBot* opponent);
+			// not a TIKI_NEW MemoryRecord record is made and added to the memory map.(called by UpdateVision)
+			void MakeTIKI_NEWRecordIfNotAlreadyPresent(TikiBot* opponent);
 
 			// the owner of this instance
 			TikiBot* owner;

@@ -14,9 +14,9 @@ namespace TikiEngine
 		shader->AddRef();
 
 		List<InputElement> elements = List<InputElement>(ColorVertex::Declaration, ColorVertex::DeclarationCount, true);
-		decl = new VertexDeclaration(engine, shader, &elements);
+		decl = TIKI_NEW VertexDeclaration(engine, shader, &elements);
 
-		vertexBuffer = new DynamicBuffer<ColorVertex, TIKI_VERTEX_BUFFER>(engine);
+		vertexBuffer = TIKI_NEW DynamicBuffer<ColorVertex, TIKI_VERTEX_BUFFER>(engine);
 	}
 
 	DebugLineRenderer::~DebugLineRenderer()

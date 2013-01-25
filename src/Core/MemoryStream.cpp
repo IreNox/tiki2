@@ -13,7 +13,7 @@ namespace TikiEngine
 		}
 
 		MemoryStream::MemoryStream(void* data, UPInt length)
-			: dataByte(new Byte[length]), length(length), position(0)
+			: dataByte(TIKI_NEW Byte[length]), length(length), position(0)
 		{
 			memcpy(dataByte, data, length);
 		}
@@ -91,18 +91,18 @@ namespace TikiEngine
 		#pragma region Private Member
 		void MemoryStream::extendData(UPInt size)
 		{
-			Byte* newData = new Byte[size];
+			Byte* TIKI_NEWData = TIKI_NEW Byte[size];
 
 			if (dataByte != 0)
 			{
 				UPInt copySize = size < length ? size : length;
 
-				memcpy(newData, dataByte, copySize);
+				memcpy(TIKI_NEWData, dataByte, copySize);
 				SafeDeleteArray(&dataByte);
 			}
 
 			length = size;
-			dataByte = newData;
+			dataByte = TIKI_NEWData;
 		}
 		#pragma endregion
 	}

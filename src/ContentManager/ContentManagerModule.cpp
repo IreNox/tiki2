@@ -69,9 +69,9 @@ namespace TikiEngine
 
 			if (engine->HPath.FileExists(L"Data/TikiRes.tikipak"))
 			{
-				FileStream* stream = new FileStream(L"Data/TikiRes.tikipak", FM_Read);
-				//CompressedStream* stream = new CompressedStream(L"Data/TikiRes.tikipak", COM_Read);
-				resourceContext = new ResIOContext(stream, false);
+				FileStream* stream = TIKI_NEW FileStream(L"Data/TikiRes.tikipak", FM_Read);
+				//CompressedStream* stream = TIKI_NEW CompressedStream(L"Data/TikiRes.tikipak", COM_Read);
+				resourceContext = TIKI_NEW ResIOContext(stream, false);
 
 				wchar_t* filelist = (wchar_t*)resourceContext->ReadPartPointer(resourceContext->GetHeader()->FilelistId);
 				UInt32* datalist = (UInt32*)resourceContext->ReadPartPointer(resourceContext->GetHeader()->DatalistId);
@@ -185,7 +185,7 @@ namespace TikiEngine
 				}
 				else if (hash == typeid(Mesh).hash_code())
 				{
-					value = new Mesh(engine);
+					value = TIKI_NEW Mesh(engine);
 				}
 				else if (hash == typeid(IModel).hash_code())
 				{
@@ -253,14 +253,14 @@ namespace TikiEngine
 			Stream* stream = 0;
 			if (resourcePackage.TryGetValue(name, &id))
 			{
-				stream = new MemoryStream(
+				stream = TIKI_NEW MemoryStream(
 					resourceContext->ReadPartPointer(id),
 					resourceContext->ReadPart(id).ArrayCount
 				);
 			}
 			else
 			{
-				FileStream* fileStream = new FileStream(name, FM_Read);
+				FileStream* fileStream = TIKI_NEW FileStream(name, FM_Read);
 
 				if (fileStream->IsOpen())
 					stream = fileStream;
@@ -313,7 +313,7 @@ namespace TikiEngine
 
 		Material* ContentManagerModule::LoadMaterial(const wstring& name)
 		{
-			Material* mat = new Material(engine);
+			Material* mat = TIKI_NEW Material(engine);
 			mat->SetShader(
 				(IShader*)this->Load(typeid(IShader).hash_code(), name)
 			);

@@ -18,7 +18,7 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::Module = new SoundModule(engine);
+		DllMain::Module = TIKI_NEW SoundModule(engine);
 		DllMain::Module->AddRef();
 
 		DllInfo.FuncTikiModule = CreateModule;
@@ -50,7 +50,7 @@ namespace TikiEngine
 	{
 		if (hash == typeid(ISound).hash_code())
 		{
-			return new Sound(DllMain::Engine);
+			return TIKI_NEW Sound(DllMain::Engine);
 		}
 
 		return 0;

@@ -41,9 +41,9 @@ namespace TikiEngine
 	void DllMain::InitDll(TikiEngine::Engine* engine)
 	{
 		DllMain::Engine = engine;
-		DllMain::ModuleGraphics = new GraphicsModule(engine);
+		DllMain::ModuleGraphics = TIKI_NEW GraphicsModule(engine);
 		DllMain::ModuleGraphics->AddRef(),
-		DllMain::ModuleSpriteBatch = new SpriteBatchModule(engine);
+		DllMain::ModuleSpriteBatch = TIKI_NEW SpriteBatchModule(engine);
 		DllMain::ModuleSpriteBatch->AddRef(),
 
 		DllInfo.FuncTikiModule = CreateModule;
@@ -91,23 +91,23 @@ namespace TikiEngine
 	{
 		if (hash == typeid(IFont).hash_code())
 		{
-			return new Font(DllMain::Engine);
+			return TIKI_NEW Font(DllMain::Engine);
 		}
 		else if (hash == typeid(IShader).hash_code())
 		{
-			return new Shader(DllMain::Engine);
+			return TIKI_NEW Shader(DllMain::Engine);
 		}
 		else if (hash == typeid(ITexture).hash_code())
 		{
-			return new Texture(DllMain::Engine);
+			return TIKI_NEW Texture(DllMain::Engine);
 		}
 		else if (hash == typeid(IRenderTarget).hash_code())
 		{
-			return new RenderTarget(DllMain::Engine);
+			return TIKI_NEW RenderTarget(DllMain::Engine);
 		}
 		else if(hash == typeid(IModel).hash_code())
 		{
-			return new Model(DllMain::Engine);
+			return TIKI_NEW Model(DllMain::Engine);
 		}
 		return 0;
 	}
@@ -116,15 +116,15 @@ namespace TikiEngine
 	{
 		if (hash == typeid(IMeshRenderer).hash_code())
 		{
-			return new MeshRenderer(DllMain::Engine, gameObject);
+			return TIKI_NEW MeshRenderer(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(ITerrainRenderer).hash_code())
 		{
-			return new TerrainRenderer(DllMain::Engine, gameObject);
+			return TIKI_NEW TerrainRenderer(DllMain::Engine, gameObject);
 		}
 		else if (hash == typeid(IParticleRenderer).hash_code())
 		{
-			return new ParticleRenderer(DllMain::Engine, gameObject);
+			return TIKI_NEW ParticleRenderer(DllMain::Engine, gameObject);
 		}
 
 		return 0;

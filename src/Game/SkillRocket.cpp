@@ -49,8 +49,8 @@ namespace TikiEngine
             desc.MaxSpeed = 70.0f;
             desc.Mass = 1.0f;
 
-			GameObject* go = new GameObject(engine);
-			Rocket* proj = new Rocket(gameState, go);
+			GameObject* go = TIKI_NEW GameObject(engine);
+			Rocket* proj = TIKI_NEW Rocket(gameState, go);
 			proj->Init(desc, 30, false);
 
 			rocket = proj;

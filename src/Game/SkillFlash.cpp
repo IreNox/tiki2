@@ -19,7 +19,7 @@ namespace TikiEngine
 			: Skill(owner, Desc)
 		{
 			prFlash = engine->librarys->CreateComponent<IParticleRenderer>(owner->GetGameObject());
-			prFlash->SetParticleEffect(new PEFlash(engine));
+			prFlash->SetParticleEffect(TIKI_NEW PEFlash(engine));
 			prFlash->SetTexture(engine->content->LoadTexture(L"particle/star"));
 			prFlash->GetParticleEffect()->SIsAlive(false);
 			prFlash->AddRef();

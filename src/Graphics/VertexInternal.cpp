@@ -93,7 +93,7 @@ namespace TikiEngine
 		void VertexDeclaration::createInputLayout(const InputElement* decl, UInt32 count)
 		{
 			elementSize = 0;
-			TDX_Input_Element_desc* elements = new TDX_Input_Element_desc[count];
+			TDX_Input_Element_desc* elements = TIKI_NEW TDX_Input_Element_desc[count];
 
 			UInt32 i = 0;
 			while (i < count)

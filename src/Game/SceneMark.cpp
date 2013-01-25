@@ -30,7 +30,7 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(0, 0, 512, 512), 3);
 
-            GameObject* go = new GameObject(engine);
+            GameObject* go = TIKI_NEW GameObject(engine);
 			IMeshRenderer* renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
 			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"checker");
@@ -39,7 +39,7 @@ namespace TikiEngine
 			this->AddElement(go);
 
 			// Plane
-			go = new GameObject(engine);
+			go = TIKI_NEW GameObject(engine);
             renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
             renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
 			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
@@ -48,7 +48,7 @@ namespace TikiEngine
             this->AddElement(go);
 			
             // Light
-            light = new LightObject(engine);
+            light = TIKI_NEW LightObject(engine);
             light->GetLight()->SetColor(Color(1, 1, 1, 1));
             light->GetLight()->SetRange(75.0f);
             light->PRS.SPosition() = Vector3(-5, 5, 1.5);
@@ -57,20 +57,20 @@ namespace TikiEngine
             this->AddElement(light);
 
             //cam
-            camera = new CameraObject(engine);			
+            camera = TIKI_NEW CameraObject(engine);			
             camera->PRS.SPosition() = Vector3(-1, 1.5f, 4.0f);
             camera->AddRef();
-            (new CameraFly(engine, camera));
+            (TIKI_NEW CameraFly(engine, camera));
             this->AddElement(camera);
 
 
             // --- Particles ---
 
 			// HealAura
-            go = new GameObject(engine);
+            go = TIKI_NEW GameObject(engine);
             go->PRS.SPosition() = Vector3(0, 1, 0);
             go->PRS.SScale() = Vector3(0.01f);
-            auto heal = new PEHealAura(engine);
+            auto heal = TIKI_NEW PEHealAura(engine);
 
             IParticleRenderer* healPR = engine->librarys->CreateComponent<IParticleRenderer>(go);
             healPR->SetTexture(engine->content->LoadTexture(L"particle/HealAura"));
@@ -78,11 +78,11 @@ namespace TikiEngine
             this->AddElement(go);
 
             // Fire
-            fireEmitter = new GameObject(engine);
+            fireEmitter = TIKI_NEW GameObject(engine);
             fireEmitter->PRS.SPosition() = Vector3(0, 0, 0);
             //fireEmitter->PRS.SScale() = Vector3(0.01f);
 
-            fireEffect = new PEFire(engine);
+            fireEffect = TIKI_NEW PEFire(engine);
             fireEffect->SIsAlive(false);
 
             IParticleRenderer* firePR = engine->librarys->CreateComponent<IParticleRenderer>(fireEmitter);
@@ -91,11 +91,11 @@ namespace TikiEngine
             this->AddElement(fireEmitter);
 
 			// Smoke
-			smokeEmitter = new GameObject(engine);
+			smokeEmitter = TIKI_NEW GameObject(engine);
 			smokeEmitter->PRS.SPosition() = Vector3(0, 0, 0);
 			//smokeEmitter->PRS.SScale() = Vector3(0.01f);
 
-			smokeEffect = new PESmoke(engine);
+			smokeEffect = TIKI_NEW PESmoke(engine);
 			smokeEffect->SIsAlive(false);
 
 			IParticleRenderer* smokePR = engine->librarys->CreateComponent<IParticleRenderer>(smokeEmitter);
@@ -105,10 +105,10 @@ namespace TikiEngine
 
 
 			// Explosion
-			explosionEmitter = new GameObject(engine);
+			explosionEmitter = TIKI_NEW GameObject(engine);
 			explosionEmitter->PRS.SPosition() = Vector3(0, 0, 0);
 			//explosionEmitter->PRS.SScale() = Vector3(0.01f);
-			expEffect = new PEExplosion(engine);
+			expEffect = TIKI_NEW PEExplosion(engine);
             expEffect->SIsAlive(false);
 
 			IParticleRenderer* explosionPR = engine->librarys->CreateComponent<IParticleRenderer>(explosionEmitter);
@@ -118,11 +118,11 @@ namespace TikiEngine
 
 
 			// Blood
-			bloodEmitter = new GameObject(engine);
+			bloodEmitter = TIKI_NEW GameObject(engine);
 			bloodEmitter->PRS.SPosition() = Vector3(3, 2, 0);
 			//bloodEmitter->PRS.SScale() = Vector3(0.01f);
 
-			bloodEffect = new PEBlood(engine);
+			bloodEffect = TIKI_NEW PEBlood(engine);
 			//bloodEffect->SIsAlive(false);
 
 			IParticleRenderer* bloodPR = engine->librarys->CreateComponent<IParticleRenderer>(bloodEmitter);
@@ -131,11 +131,11 @@ namespace TikiEngine
 			this->AddElement(bloodEmitter);
 
 			// Flash
-			flashEmitter = new GameObject(engine);
+			flashEmitter = TIKI_NEW GameObject(engine);
 			flashEmitter->PRS.SPosition() = Vector3(-3, 1, 0);
 			flashEmitter->PRS.SScale() = Vector3(0.01f);
 
-			flashEffect = new PEFlash(engine);
+			flashEffect = TIKI_NEW PEFlash(engine);
 			//flashEffect->SIsAlive(false);
 
 			IParticleRenderer* flashPR = engine->librarys->CreateComponent<IParticleRenderer>(flashEmitter);
@@ -144,10 +144,10 @@ namespace TikiEngine
 			this->AddElement(flashEmitter);
 
 			// Sparks
-			sparksEmitter = new GameObject(engine);
+			sparksEmitter = TIKI_NEW GameObject(engine);
 			sparksEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
 
-			sparksEffect = new PESparks(engine);
+			sparksEffect = TIKI_NEW PESparks(engine);
 			sparksEffect->SIsAlive(false);
 
 			IParticleRenderer* sparksPR = engine->librarys->CreateComponent<IParticleRenderer>(sparksEmitter);
@@ -157,10 +157,10 @@ namespace TikiEngine
 
 
 			// Shockwave
-			shockwaveEmitter = new GameObject(engine);
+			shockwaveEmitter = TIKI_NEW GameObject(engine);
 			shockwaveEmitter->PRS.SPosition() = Vector3(-6, 1, 0);
 
-			shockwaveEffect = new PEShockWave(engine);
+			shockwaveEffect = TIKI_NEW PEShockWave(engine);
 			shockwaveEffect->SIsAlive(false);
 
 			IParticleRenderer* shockPR = engine->librarys->CreateComponent<IParticleRenderer>(shockwaveEmitter);

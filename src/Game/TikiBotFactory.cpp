@@ -83,7 +83,7 @@ namespace TikiEngine
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);			
-			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
@@ -99,7 +99,7 @@ namespace TikiEngine
 			botDesc.StartMGDamage = 5;
 			botDesc.StartMGFireRate = 5;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
 			if (wayPoints.Count() != 0)
@@ -130,7 +130,7 @@ namespace TikiEngine
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 			go->GetSceneGraphElement().SetDynamic();
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
@@ -152,7 +152,7 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
 			go->GetSceneGraphElement().SetDynamic();
@@ -167,7 +167,7 @@ namespace TikiEngine
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_hero"));
 			go->GModel()->GetMesh("Laser")->SetVisible(false);
-			auto ah = new AnimationHandlerHero(go->GModel());
+			auto ah = TIKI_NEW AnimationHandlerHero(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
@@ -185,13 +185,13 @@ namespace TikiEngine
 			botDesc.StartMGDamage = 6;
 			botDesc.StartMGFireRate = 6;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
-			bot->GetSkillSys()->AddSkill(new SkillFlash(bot));
-			bot->GetSkillSys()->AddSkill(new SkillRocket(bot));
-			bot->GetSkillSys()->AddSkill(new SkillHealAura(bot));
-			bot->GetSkillSys()->AddSkill(new SkillSpiderMine(bot));
+			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillFlash(bot));
+			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillRocket(bot));
+			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillHealAura(bot));
+			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillSpiderMine(bot));
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -201,7 +201,7 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_marine"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 
-			auto ah = new AnimationHandlerDefaultUnit(go->GModel());
+			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 			go->GetSceneGraphElement().SetDynamic();
@@ -216,7 +216,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Bot;
 			botDesc.StartMGFireRate = 5;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
 			bot->GetBrain()->AddGoalAttackMove(dest);
@@ -243,7 +243,7 @@ namespace TikiEngine
 			botDesc.EntityType = ET_Tower;
 			botDesc.StartMGFireRate = 3;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->GetBrain()->AddGoalExplore();
@@ -266,7 +266,7 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
 
@@ -297,7 +297,7 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
 
@@ -321,7 +321,7 @@ namespace TikiEngine
 			botDesc.MaxSpeed = 25;
 			botDesc.EntityType = ET_Bot;
 
-			TikiBot* bot = new TikiBot(gameState, go, botDesc);
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
 			bot->GetTargetSys()->SetGlobalTarget(target);
@@ -341,7 +341,7 @@ namespace TikiEngine
 
 			go->GetSceneGraphElement().SetDynamic();
 
-			new BuildSlot(gameState, go);
+			TIKI_NEW BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);
 		}
 		#pragma endregion

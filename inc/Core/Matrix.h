@@ -432,7 +432,7 @@ public:
 	static Matrix CreateWorld(const Vector3& position, const Vector3& forward, const Vector3& up);
 	static Matrix CreateFromQuaternion(const Quaternion& quaternion);
 	
-	/// <summary>Creates a new rotation matrix from a specified yaw, pitch, and roll.</summary>
+	/// <summary>Creates a TIKI_NEW rotation matrix from a specified yaw, pitch, and roll.</summary>
 	/// <param name="yaw">Angle of rotation, in radians, around the y-axis.</param>
 	/// <param name="pitch">Angle of rotation, in radians, around the x-axis.</param>
 	/// <param name="roll">Angle of rotation, in radians, around the z-axis.</param>

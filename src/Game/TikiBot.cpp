@@ -24,8 +24,6 @@ namespace TikiEngine
 	{
 		using namespace TikiEngine::Components;
 
-		static GoalTypeToString* ttsInstance = new GoalTypeToString();
-
 		#pragma region Class
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
 			: MovingEntity(gameState, gameObject), attSys(gameObject->GetEngine())
@@ -50,10 +48,10 @@ namespace TikiEngine
             fieldOfView = DegsToRads(desc.FoV);
 
             // create the navigation module
-            pathPlanner = new PathPlanner(this);
+            pathPlanner = TIKI_NEW PathPlanner(this);
 
             // Create steering behavior
-            steering = new TikiSteering(this);
+            steering = TIKI_NEW TikiSteering(this);
 			if (type != ET_Building && type != ET_Tower)
 			{
 				steering->SeparationOn();
@@ -70,24 +68,24 @@ namespace TikiEngine
             controller->AddRef();
 
             // create regulators
-            visionUpdateRegulator = new Regulator(12.0);
-            targetSelectionRegulator = new Regulator(12.0);
+            visionUpdateRegulator = TIKI_NEW Regulator(12.0);
+            targetSelectionRegulator = TIKI_NEW Regulator(12.0);
 
 			if (type != ET_Building)
 			{
 				// create Targeting System
-				targSys = new TargetingSystem(this);
+				targSys = TIKI_NEW TargetingSystem(this);
 
 				// we can remember bots
-				sensorMem = new SensorMemory(this, desc.MemorySpan);
+				sensorMem = TIKI_NEW SensorMemory(this, desc.MemorySpan);
 
-				weaponSys = new WeaponSystem(this);
+				weaponSys = TIKI_NEW WeaponSystem(this);
 				weaponSys->Init(desc);
 
-				skillSys = new SkillSystem(this);
+				skillSys = TIKI_NEW SkillSystem(this);
 
 				// Create the goal queue
-				brain = new GoalThink(this);
+				brain = TIKI_NEW GoalThink(this);
 				brain->Init(desc.ExploreBias, desc.AttackBias, desc.PatrolBias);
 			}
 			else
@@ -286,7 +284,7 @@ namespace TikiEngine
 
 				Vector3 screenPos = Matrix::Project(Pos3D(), 0, 0, bbDim.X, bbDim.Y, -1, 1, vp);
 
-				brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y), ttsInstance);
+				brain->DrawAtPos(args, Vector2(screenPos.X, screenPos.Y));
 			}
 			#endif
 		}
@@ -398,7 +396,7 @@ namespace TikiEngine
 				);
 			}
 
-			//velocity[bufferState.UpdateIndex] = new value;
+			//velocity[bufferState.UpdateIndex] = TIKI_NEW value;
 		}
 		#pragma endregion
 	}

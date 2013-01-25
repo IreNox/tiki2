@@ -25,7 +25,7 @@ namespace TikiEngine
 
 		void IResource::LoadFromFile(wcstring fileName)
 		{
-			FileStream* stream = new FileStream(fileName, FM_Read);
+			FileStream* stream = TIKI_NEW FileStream(fileName, FM_Read);
 
 			try
 			{
@@ -48,7 +48,7 @@ namespace TikiEngine
 
 		void IResource::SaveToFile(wcstring fileName)
 		{
-			FileStream* stream = new FileStream(fileName, FM_Write);
+			FileStream* stream = TIKI_NEW FileStream(fileName, FM_Write);
 
 			saveToStream(fileName, stream);
 

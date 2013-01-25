@@ -23,12 +23,12 @@ namespace TikiEngine
 
 			shader->SetVector2("ScreenSize", engine->graphics->GetViewPort()->GetSize());
 
-			PostProcessPass* pass = new PostProcessPass(engine, shader);
+			PostProcessPass* pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("tex", engine->graphics->GetScreenTarget());
 			pass->AddOutput(0, verticleTarget);
 			this->AddPass(pass);
 
-			pass = new PostProcessPass(engine, shader);
+			pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("tex", verticleTarget);
 			pass->AddOutput(0, engine->graphics->GetScreenTarget());
 			this->AddPass(pass);

@@ -3,14 +3,14 @@
 #include "Core/TypeInc.h"
 
 template <class T>
-inline void SafeChangeRef(T** ptr, T* newValue)
+inline void SafeChangeRef(T** ptr, T* TIKI_NEWValue)
 {
 	T* oldValue = *ptr;
 
-	if (newValue)
+	if (TIKI_NEWValue)
 	{
-		(*ptr) = newValue;
-		newValue->AddRef();
+		(*ptr) = TIKI_NEWValue;
+		TIKI_NEWValue->AddRef();
 	}
 
 	if (oldValue)

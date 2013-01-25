@@ -97,16 +97,16 @@ namespace TikiEngine
 			//update an entity's cell by calling this from your entity's Update method 
 			void CellSpacePartition<entity>::UpdateEntity(const entity& ent, Vector2 oldPos)
 			{
-				// if the index for the old pos and the new pos are not equal then the entity has moved to another cell.
+				// if the index for the old pos and the TIKI_NEW pos are not equal then the entity has moved to another cell.
 				int oldIdx = PositionToIndex(oldPos);
-				int newIdx = PositionToIndex(ent->Pos());
+				int TIKI_NEWIdx = PositionToIndex(ent->Pos());
 
-				if (newIdx == oldIdx)
+				if (TIKI_NEWIdx == oldIdx)
 					return;
 
-				 // the entity has moved into another cell so delete from current cell and add to new one
+				 // the entity has moved into another cell so delete from current cell and add to TIKI_NEW one
 				cells[oldIdx].Members.remove(ent);
-				cells[newIdx].Members.push_back(ent);
+				cells[TIKI_NEWIdx].Members.push_back(ent);
 			}
 
 			// this method calculates all a target's neighbors and stores them in

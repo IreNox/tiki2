@@ -52,7 +52,7 @@ public:
 	 * @param patch X Axis
 	 * @param roll Z Axis
 	 *
-	 * @return New Quaternion		
+	 * @return TIKI_NEW Quaternion		
 	 */
 	static Quaternion CreateFromYawPitchRoll(const Vector3& rotation);
 	static Quaternion CreateFromYawPitchRoll(float yaw, float pitch, float roll);

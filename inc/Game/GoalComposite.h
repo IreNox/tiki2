@@ -46,7 +46,7 @@ namespace TikiEngine
 			virtual void Draw(const DrawArgs& args);
 
 			//this is used to draw the name of the goal at the specific position used for debugging
-			virtual void DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const;
+			virtual void DrawAtPos(const DrawArgs& args, Vector2& pos) const;
 
 
         protected:
@@ -132,15 +132,15 @@ namespace TikiEngine
 		}
 
 		template <class entity_type>
-		void GoalComposite<entity_type>::DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const
+		void GoalComposite<entity_type>::DrawAtPos(const DrawArgs& args, Vector2& pos) const
 		{
-			Goal<entity_type>::DrawAtPos(args, pos, tts);
+			Goal<entity_type>::DrawAtPos(args, pos);
 
 			pos.X += 10;
 			SubgoalList::const_reverse_iterator it;
 			for (it = subGoals.rbegin(); it != subGoals.rend(); ++it)
 			{
-				(*it)->DrawAtPos(args, pos, tts);
+				(*it)->DrawAtPos(args, pos);
 			}
 
 			pos.X -= 10;

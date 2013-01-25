@@ -52,7 +52,7 @@ namespace TikiEngine
 				{
 					attacking = false;
 					//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Moving to target \n");
-					AddSubgoal(new GoalMoveToPosition(owner, target->Pos3D()));
+					AddSubgoal(TIKI_NEW GoalMoveToPosition(owner, target->Pos3D()));
 				}
 			}
 

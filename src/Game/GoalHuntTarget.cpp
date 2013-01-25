@@ -35,12 +35,12 @@ namespace TikiEngine
 				if (lrp2D.IsZero() || owner->IsAtPosition(lrp2D))
 				{
 					owner->GetEngine()->HLog.Write("bot reached lrp and hasn't found target, hunting: GoalExplore.  \n");
-					AddSubgoal(new GoalExplore(owner));
+					AddSubgoal(TIKI_NEW GoalExplore(owner));
 				}
 				else
 				{
 					owner->GetEngine()->HLog.Write("Active target, hunting : GoalMoveToPosition.  \n");
-					AddSubgoal(new GoalMoveToPosition(owner, lrp));
+					AddSubgoal(TIKI_NEW GoalMoveToPosition(owner, lrp));
 				}
 			}
 			else

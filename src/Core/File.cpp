@@ -41,7 +41,7 @@ namespace TikiEngine
 			case FT_Database:
 				return 0;
 			case FT_Filesystem:
-				return new FileStream(fileName, FM_Read);
+				return TIKI_NEW FileStream(fileName, FM_Read);
 			default:
 				throw "Not supported";
 			}

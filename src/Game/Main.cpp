@@ -28,29 +28,29 @@ inline Scene* GetStartScene(Engine* engine)
 
 	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
-		scene = new SceneTim(engine);
-		//scene = new SceneMark(engine);
-		//scene = new SceneAdrian(engine);
+		scene = TIKI_NEW SceneTim(engine);
+		//scene = TIKI_NEW SceneMark(engine);
+		//scene = TIKI_NEW SceneAdrian(engine);
 
-		//scene = new SceneLevel(engine);
+		//scene = TIKI_NEW SceneLevel(engine);
 		//((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
-		scene = new SceneAdrian(engine);
+		scene = TIKI_NEW SceneAdrian(engine);
 	}
 	else if((name == L"Mark.Reichert" || name == L"Shekk") && false)
 	{
-		scene = new SceneMark(engine);
+		scene = TIKI_NEW SceneMark(engine);
 	}
 	else
 	{
-		scene = new SceneMenuMain(engine);
+		scene = TIKI_NEW SceneMenuMain(engine);
 	}
 
 	return scene;
 #else
-	return new SceneMenuMain(engine);
+	return TIKI_NEW SceneMenuMain(engine);
 #endif
 }
 #pragma endregion
@@ -77,14 +77,14 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.Graphics.Fullscreen = true;
 #endif
 
-		Engine* engine = new Engine();
+		Engine* engine = TIKI_NEW Engine();
 		
 		if (engine->Initialize(desc))
 		{
 			Scene* scene = GetStartScene(engine);
 			scene->AddRef();
 
-			engine->SetLoadingScene(new SceneLoading(engine));
+			engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
 			engine->SetScene(scene);
 
 #if _DEBUG

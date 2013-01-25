@@ -4,7 +4,7 @@
 //namespace TikiEngine
 //{
 //	Thread::Thread(function<void(void*)> func)
-//		: func(func), state(TS_New)
+//		: func(func), state(TS_TIKI_NEW)
 //	{
 //	}
 //

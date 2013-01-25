@@ -63,7 +63,7 @@ namespace TikiEngine
             virtual void Draw(const DrawArgs& args) { }
 
 			//this is used to draw the name of the goal at the specific position used for debugging
-			virtual void DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const;
+			virtual void DrawAtPos(const DrawArgs& args, Vector2& pos) const;
 
             // Goal status Getters
             bool IsComplete() const { return status == Completed; }
@@ -106,7 +106,7 @@ namespace TikiEngine
         }
 
 		template <class entity_type>
-		void  Goal<entity_type>::DrawAtPos(const DrawArgs& args, Vector2& pos, GoalTypeToString* tts) const
+		void  Goal<entity_type>::DrawAtPos(const DrawArgs& args, Vector2& pos) const
 		{
 			pos.Y += 15;
 			Color col; //(0, 0, 255, 255);
@@ -115,10 +115,7 @@ namespace TikiEngine
 			if (HasFailed()) col = Color(255, 0, 0, 255);
 			if (IsActive()) col = Color(0, 0, 255, 255);
 
-			args.SpriteBatch->DrawString(GUIControl::GetDefaultFont(), tts->Convert(GetType()), pos, col);
+			args.SpriteBatch->DrawString(GUIControl::GetDefaultFont(), GoalTypeToString::Convert(GetType()), pos, col);
 		}
-
-
-
     }
 }

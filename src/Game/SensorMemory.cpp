@@ -47,7 +47,7 @@ namespace TikiEngine
 
 					if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
 					{
-						MakeNewRecordIfNotAlreadyPresent(curBot);
+						MakeTIKI_NEWRecordIfNotAlreadyPresent(curBot);
 
 						MemoryRecord& info = memoryMap[curBot];
 
@@ -172,10 +172,10 @@ namespace TikiEngine
 #endif
 		}
 
-		void SensorMemory::MakeNewRecordIfNotAlreadyPresent(TikiBot* opponent)
+		void SensorMemory::MakeTIKI_NEWRecordIfNotAlreadyPresent(TikiBot* opponent)
 		{
 			// else check to see if this Opponent already exists in the memory. 
-			// If it doesn't, create a new record
+			// If it doesn't, create a TIKI_NEW record
 			if (memoryMap.find(opponent) == memoryMap.end())
 				memoryMap[opponent] = MemoryRecord();
 		}

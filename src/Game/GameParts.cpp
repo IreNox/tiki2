@@ -72,7 +72,7 @@ namespace TikiEngine
 
 			if (enemy)
 			{
-				GameObject* go = new GameObject(gameState->GetEngine());
+				GameObject* go = TIKI_NEW GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = pos;
 				gameState->GetBotFactory()->CreateEnemy1(go, this->WayPoints);
 			}
@@ -81,7 +81,7 @@ namespace TikiEngine
 			{
 				Vector2 pos2 = playerPos + Vector2(Random(-2, 2), Random(-2, 2));
 
-				GameObject* go = new GameObject(gameState->GetEngine());
+				GameObject* go = TIKI_NEW GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = gameState->GetBotFactory()->GetPos(pos2, 3);
 				gameState->GetBotFactory()->CreatePlayerMop(go, pos);
 			}
@@ -125,7 +125,7 @@ namespace TikiEngine
 			platformTrigger->SetGroup(CG_Collidable_Non_Pushable);
 			platformTrigger->SetTrigger(true);
 
-			Hero = new GameObject(engine);
+			Hero = TIKI_NEW GameObject(engine);
 			gameState->GetBotFactory()->CreatePlayerHero(Hero);
 			Hero->GetComponent<TikiBot>()->GetController()->SetCenter(gameState->GetBotFactory()->GetPos(heroStartPos, 10.0f));
 

@@ -150,30 +150,30 @@ namespace TikiEngine
 		}
 
 
-		void OcTree::GetBox(IBoundingBox* parentBox, IBoundingBox* newBox, int i)
+		void OcTree::GetBox(IBoundingBox* parentBox, IBoundingBox* TIKI_NEWBox, int i)
 		{
 			Vector3 center = (parentBox->GetMax() + parentBox->GetMin()) / 2;
 			Vector3 boxSize = parentBox->GetMax() - parentBox->GetMin();
 			
-			Vector3 newCenter;
+			Vector3 TIKI_NEWCenter;
 			if(i % 2 == 0)
-				newCenter.X = (center.X - (boxSize.X / 4));
+				TIKI_NEWCenter.X = (center.X - (boxSize.X / 4));
 			else
-				newCenter.X = (center.X + (boxSize.X / 4));
+				TIKI_NEWCenter.X = (center.X + (boxSize.X / 4));
 
 			if(i < 4)
-				newCenter.Y = (center.Y - (boxSize.Y / 4));
+				TIKI_NEWCenter.Y = (center.Y - (boxSize.Y / 4));
 			else
-				newCenter.Y = (center.Y + (boxSize.Y / 4));
+				TIKI_NEWCenter.Y = (center.Y + (boxSize.Y / 4));
 
 			if(i== 2 || i== 3 || i== 6 || i== 7)
-				newCenter.Z = (center.Z - (boxSize.Z / 4));
+				TIKI_NEWCenter.Z = (center.Z - (boxSize.Z / 4));
 			else
-				newCenter.Z = (center.Z + (boxSize.Z / 4));
+				TIKI_NEWCenter.Z = (center.Z + (boxSize.Z / 4));
 
 
-			newBox->Set(newCenter - boxSize / 4,
-						newCenter + boxSize / 4);
+			TIKI_NEWBox->Set(TIKI_NEWCenter - boxSize / 4,
+						TIKI_NEWCenter + boxSize / 4);
 		}
 
 		void OcTree::BuildTree(OctNode* node, int trisPerNode, const TRI* tris, int triCount)
@@ -184,25 +184,25 @@ namespace TikiEngine
 
 				for (int i = 0; i < NUM_CHILDREN; i++)
 				{
-					OctNode newNode;
+					OctNode TIKI_NEWNode;
 
 					// Set this node's child pointer.
 					node->ChildIdx[i] = OctNodeList.GetCount();
 
-					// partition the new box for the child.
-					newNode.BBox = engine->librarys->CreateResource<IBoundingBox>();
-					GetBox(node->BBox, newNode.BBox, i);
+					// partition the TIKI_NEW box for the child.
+					TIKI_NEWNode.BBox = engine->librarys->CreateResource<IBoundingBox>();
+					GetBox(node->BBox, TIKI_NEWNode.BBox, i);
 
 					//	Initialize fields
 					for (int j = 0; j < NUM_CHILDREN; j++)
-						newNode.ChildIdx[i] = NULL_NODE;
+						TIKI_NEWNode.ChildIdx[i] = NULL_NODE;
 
 					for (int j = 0; j < NUM_NEIGHBORS; j++)
-						newNode.NeighborIdx[i] = NULL_NODE;
+						TIKI_NEWNode.NeighborIdx[i] = NULL_NODE;
 
-					//	See which of the parent's triangles lie within the new node.
-					newNode.TriIdxCount = 0;
-					newNode.TriIdxStart = TriIdxList.GetCount();
+					//	See which of the parent's triangles lie within the TIKI_NEW node.
+					TIKI_NEWNode.TriIdxCount = 0;
+					TIKI_NEWNode.TriIdxStart = TriIdxList.GetCount();
 					TriIdxList.PositionAt(node->TriIdxStart);
 
 					for (int j = 0; j < node->TriIdxCount; j++)
@@ -210,17 +210,17 @@ namespace TikiEngine
 						unsigned int* TriIdx = (unsigned int*)TriIdxList.GetCurrent();
 						const TRI* Tri = &tris[*TriIdx];
 
-						if (TriBoxIntersect(newNode.BBox, *Tri) == INSIDE)
+						if (TriBoxIntersect(TIKI_NEWNode.BBox, *Tri) == INSIDE)
 						{
 							TriIdxList.Append(TriIdx, sizeof(unsigned int));
-							newNode.TriIdxCount++;
+							TIKI_NEWNode.TriIdxCount++;
 						} // if 
 
 						TriIdxList.Advance();
 					} // for (j)
 
-					// Add the new node ad recurse on its children
-					OctNodeList.Append(&newNode, sizeof(OctNode));
+					// Add the TIKI_NEW node ad recurse on its children
+					OctNodeList.Append(&TIKI_NEWNode, sizeof(OctNode));
 					BuildTree((OctNode*)OctNodeList.GetLast(), trisPerNode, tris, triCount);
 
 				} // for (i)

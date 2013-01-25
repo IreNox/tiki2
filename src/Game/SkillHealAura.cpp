@@ -21,7 +21,7 @@ namespace TikiEngine
 			: Skill(owner, Desc)
 		{
             prHeal = engine->librarys->CreateComponent<IParticleRenderer>(owner->GetGameObject());
-            prHeal->SetParticleEffect(new PEHealAura(engine));
+            prHeal->SetParticleEffect(TIKI_NEW PEHealAura(engine));
             prHeal->SetTexture(engine->content->LoadTexture(L"particle/HealAura"));
             prHeal->GetParticleEffect()->SIsAlive(false);
 		}

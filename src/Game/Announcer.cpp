@@ -18,7 +18,7 @@ namespace TikiEngine
 
 		Announcement* Announcer::Announce(const wstring& msg, const wstring& icon /* = 0 */, const wstring& sound /* = 0 */, function<void(void)> funcActivate /* = 0 */)
 		{
-			Announcement* ann = new Announcement();
+			Announcement* ann = TIKI_NEW Announcement();
 			ann->Message = msg;
 
 			if (!icon.empty())

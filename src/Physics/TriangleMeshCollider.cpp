@@ -71,11 +71,11 @@ namespace TikiEngine
 			SafeDeleteArray(&this->indexData);
 
 			//this->indexCount = count;
-			//this->indexData = new NxU32[count];
+			//this->indexData = TIKI_NEW NxU32[count];
 			//memcpy(this->indexData, indices, sizeof(UInt32) * count);
 
 			this->indexCount = 3;
-			this->indexData = new NxU32[3];
+			this->indexData = TIKI_NEW NxU32[3];
 			this->indexData[0] = 0;
 			this->indexData[1] = 1;
 			this->indexData[2] = 2;
@@ -88,11 +88,11 @@ namespace TikiEngine
 			SafeDeleteArray(&this->vertexData);
 
 			//this->vertexCount = count;
-			//this->vertexData = new NxVec3[count];
+			//this->vertexData = TIKI_NEW NxVec3[count];
 			//memcpy(this->vertexData, vertices, sizeof(Vector3) * count);
 
 			this->vertexCount = 3;
-			this->vertexData = new NxVec3[3];
+			this->vertexData = TIKI_NEW NxVec3[3];
 			this->vertexData[0] = NxVec3(-1, -1, -1);
 			this->vertexData[1] = NxVec3( 1, -1, -1);
 			this->vertexData[2] = NxVec3( 1,  1, -1);
@@ -106,7 +106,7 @@ namespace TikiEngine
 			{
 				SafeDeleteArray(&this->indexData);
 				this->indexCount = indicesCount;
-				this->indexData = new NxU32[indicesCount];
+				this->indexData = TIKI_NEW NxU32[indicesCount];
 			}
 			memcpy(this->indexData, indices, sizeof(UInt32) * indicesCount);
 
@@ -114,7 +114,7 @@ namespace TikiEngine
 			{
 				SafeDeleteArray(&this->vertexData);
 				this->vertexCount = verticesCount;
-				this->vertexData = new NxVec3[verticesCount];
+				this->vertexData = TIKI_NEW NxVec3[verticesCount];
 			}
 			memcpy(this->vertexData, vertices, sizeof(Vector3) * verticesCount);
 

@@ -61,7 +61,7 @@ namespace TikiEngine
 
 			GUIButton* selectButton;
 
-			bool newDragging;
+			bool TIKI_NEWDragging;
 			
 			Frustum selectionFrustum;
 		};

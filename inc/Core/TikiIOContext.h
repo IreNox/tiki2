@@ -43,7 +43,7 @@ namespace TikiEngine
 				{
 					UInt32 len = (UInt32)stream->GetLength();
 
-					data = new Byte[len];
+					data = TIKI_NEW Byte[len];
 					stream->Read(data, 0, len);
 					stream->SetPosition(0);
 				}
@@ -98,7 +98,7 @@ namespace TikiEngine
 						stream->SetPosition(binaryParts[id].Start);
 
 						UInt32 len = binaryParts[id].Length * binaryParts[id].ArrayCount;
-						Byte* partData = new Byte[len];
+						Byte* partData = TIKI_NEW Byte[len];
 						stream->Read(partData, 0, len);
 
 						binaryPartPointer[id] = partData;
@@ -169,7 +169,7 @@ namespace TikiEngine
 
 			void readParts(Stream* stream, bool readFullFile)
 			{
-				TikiBinaryPart<TPartType>* parts = new TikiBinaryPart<TPartType>[binaryHeader.PartCount];
+				TikiBinaryPart<TPartType>* parts = TIKI_NEW TikiBinaryPart<TPartType>[binaryHeader.PartCount];
 				stream->Read(parts, 0, sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount);
 
 				UInt32 i = 0;
@@ -222,7 +222,7 @@ namespace TikiEngine
 				stream->Write(&binaryHeader, 0, sizeof(THeaderType));
 				stream->Write(binaryParts.GetInternalData(), 0, sizeof(TikiBinaryPart<TPartType>) * binaryHeader.PartCount);
 
-				//data = new Byte[binaryHeader.FileLength];
+				//data = TIKI_NEW Byte[binaryHeader.FileLength];
 				//Byte* writeTo = data;
 
 

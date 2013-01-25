@@ -13,7 +13,7 @@ namespace TikiEngine
 			: GameObject(state->GetEngine()), gameState(state)
 		{
             // assault
-			peAssault = new PEShootMG(engine);
+			peAssault = TIKI_NEW PEShootMG(engine);
 			peAssault->AddRef();
 
 			prAssault = engine->librarys->CreateComponent<IParticleRenderer>(this);
@@ -23,7 +23,7 @@ namespace TikiEngine
 
 
 			// Smoke
-			peSmoke = new PESmoke(engine);
+			peSmoke = TIKI_NEW PESmoke(engine);
 			peSmoke->SIsAlive(false);
 			peSmoke->AddRef();
 
@@ -34,7 +34,7 @@ namespace TikiEngine
 
 
 			// Fire
-			peFire = new PEFire(engine);
+			peFire = TIKI_NEW PEFire(engine);
 			peFire->SIsAlive(false);
 			peFire->AddRef();
 
@@ -45,7 +45,7 @@ namespace TikiEngine
 
 
 			// Shockwave
-			peShockwave = new PEShockWave(engine);
+			peShockwave = TIKI_NEW PEShockWave(engine);
 			peShockwave->SIsAlive(false);
 			peShockwave->AddRef();
 
@@ -56,7 +56,7 @@ namespace TikiEngine
 
 
             // explosion
-            peExplosion = new PEExplosion(engine);
+            peExplosion = TIKI_NEW PEExplosion(engine);
             peExplosion->SIsAlive(false);
             peExplosion->AddRef();
 
@@ -66,7 +66,7 @@ namespace TikiEngine
             prExplosion->AddRef();
 
 			// round sparks
-			peRoundSparks = new PERoundSparks(engine);
+			peRoundSparks = TIKI_NEW PERoundSparks(engine);
 			peRoundSparks->SIsAlive(false);
 			peRoundSparks->AddRef();
 
@@ -77,7 +77,7 @@ namespace TikiEngine
 
 
 			// Blood
-			peBlood = new PEBlood(engine);
+			peBlood = TIKI_NEW PEBlood(engine);
 			peBlood->SIsAlive(false);
 			peBlood->AddRef();
 

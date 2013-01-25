@@ -45,9 +45,9 @@ namespace TikiEngine
 
 		void NavigationMesh::AddCell(const Vector3& pointA, const Vector3& pointB, const Vector3& pointC)
 		{
-			NavigationCell* NewCell = new NavigationCell;
-			NewCell->Initialize(pointA, pointB, pointC);
-			cellArray.push_back(NewCell);
+			NavigationCell* TIKI_NEWCell = TIKI_NEW NavigationCell;
+			TIKI_NEWCell->Initialize(pointA, pointB, pointC);
+			cellArray.push_back(TIKI_NEWCell);
 		}
 
 		void NavigationMesh::LinkCells()  
@@ -139,7 +139,7 @@ namespace TikiEngine
 			LinkCells();
 
 
-			tree = new OcTree();
+			tree = TIKI_NEW OcTree();
 			int totalCells = TotalCells();
 
 			for (int i = 0; i < totalCells; i++)
@@ -203,10 +203,10 @@ namespace TikiEngine
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
-					Vector3 NewPosition(Point);  
-					pCell->MapVectorHeightToCell(NewPosition);  
+					Vector3 TIKI_NEWPosition(Point);  
+					pCell->MapVectorHeightToCell(TIKI_NEWPosition);  
 
-					ThisDistance = fabs(NewPosition.Y - Point.Y);  
+					ThisDistance = fabs(TIKI_NEWPosition.Y - Point.Y);  
 
 					if (FoundHomeCell)  
 					{  
@@ -273,10 +273,10 @@ namespace TikiEngine
 
 				if (pCell->IsPointInCellCollumn(Point))  
 				{  
-					Vector3 NewPosition(Point);  
-					pCell->MapVectorHeightToCell(NewPosition);  
+					Vector3 TIKI_NEWPosition(Point);  
+					pCell->MapVectorHeightToCell(TIKI_NEWPosition);  
 
-					ThisDistance = fabs(NewPosition.Y - Point.Y);  
+					ThisDistance = fabs(TIKI_NEWPosition.Y - Point.Y);  
 
 					if (FoundHomeCell)  
 					{  
@@ -391,7 +391,7 @@ namespace TikiEngine
 			if (FoundPath)  
 			{  
 				NavigationCell* TestCell = StartCell;  
-				Vector3 NewWayPoint;  
+				Vector3 TIKI_NEWWayPoint;  
 
 				// Setup the Path object, clearing out any old data  
 				NavPath.Setup(this, StartPos, StartCell, EndPos, EndCell);  
@@ -412,10 +412,10 @@ namespace TikiEngine
 					// add the link point of the cell as a way point (the exit wall's center)  
 					int LinkWall = TestCell->ArrivalWall();  
 
-					NewWayPoint = TestCell->WallMidpoint(LinkWall);  
-					NewWayPoint = SnapPointToCell(TestCell, NewWayPoint); // just to be sure  
+					TIKI_NEWWayPoint = TestCell->WallMidpoint(LinkWall);  
+					TIKI_NEWWayPoint = SnapPointToCell(TestCell, TIKI_NEWWayPoint); // just to be sure  
 
-					NavPath.AddWayPoint(NewWayPoint, TestCell);  
+					NavPath.AddWayPoint(TIKI_NEWWayPoint, TestCell);  
 
 					// and on to the next cell  
 					TestCell = TestCell->Link(LinkWall);  
@@ -457,7 +457,7 @@ namespace TikiEngine
 					if(NextCell)  
 					{  
 						// moving on. Set our motion origin to the point of intersection with this cell  
-						// and continue, using the new cell as our test cell.  
+						// and continue, using the TIKI_NEW cell as our test cell.  
 						MotionPath.SetEndPointA(PointOfIntersection);  
 						TestCell = NextCell;  
 					}  
@@ -467,7 +467,7 @@ namespace TikiEngine
 						MotionPath.SetEndPointA(PointOfIntersection);  
 						TestCell->ProjectPathOnCellWall(WallNumber, MotionPath);  
 
-						// add some friction to the new MotionPath since we are scraping against a wall.  
+						// add some friction to the TIKI_NEW MotionPath since we are scraping against a wall.  
 						// we do this by reducing the magnatude of our motion by 10%  
 						Vector2 Direction = MotionPath.EndPointB() - MotionPath.EndPointA();  
 						Direction = Direction * 0.9f;
@@ -481,16 +481,16 @@ namespace TikiEngine
 					// This can be viewed by some routines as being outside the cell.  
 					// To accomodate this rare case, we can force our starting point to be within  
 					// the current cell by nudging it back so we may continue.  
-					Vector2 NewOrigin = MotionPath.EndPointA();  
-					TestCell->ForcePointToCellCollumn(NewOrigin);  
-					MotionPath.SetEndPointA(NewOrigin);  
+					Vector2 TIKI_NEWOrigin = MotionPath.EndPointA();  
+					TestCell->ForcePointToCellCollumn(TIKI_NEWOrigin);  
+					MotionPath.SetEndPointA(TIKI_NEWOrigin);  
 				}  
 			}  
 
-			// we now have our new host cell  
+			// we now have our TIKI_NEW host cell  
 			*EndCell = TestCell;  
 
-			// Update the new control point position,   
+			// Update the TIKI_NEW control point position,   
 			// solving for Y using the Plane member of the NavigationCell  
 			EndPos.X = MotionPath.EndPointB().X;  
 			EndPos.Z = MotionPath.EndPointB().Y;  

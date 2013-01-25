@@ -17,7 +17,7 @@ namespace TikiEngine
 			: meshIds(), animationIds(), constantBufferIndices()
 		{
 			SafeAddRef(model, &this->model);
-			context = new ModelIOContext();
+			context = TIKI_NEW ModelIOContext();
 
 			addPartsModel();
 		}
@@ -26,7 +26,7 @@ namespace TikiEngine
 			: meshIds(), animationIds(), constantBufferIndices()
 		{
 			SafeAddRef(model, &this->model);
-			this->context = new ModelIOContext(stream);
+			this->context = TIKI_NEW ModelIOContext(stream);
 
 			readPartsModel();
 		}
@@ -127,11 +127,11 @@ namespace TikiEngine
 		TikiMesh* ModelConverter::readTikiMesh(BinaryPart& part, BinaryTikiMesh* binMesh)
 		{
 #ifdef TIKI_ENGINE
-			TikiMesh* mesh = new TikiMesh(
+			TikiMesh* mesh = TIKI_NEW TikiMesh(
 				model->GetEngine()
 			);
 #else
-			TikiMesh* mesh = new TikiMesh();
+			TikiMesh* mesh = TIKI_NEW TikiMesh();
 #endif
 
 			mesh->SetName(readString(binMesh->NameId));
@@ -180,7 +180,7 @@ namespace TikiEngine
 
 		TikiAnimation* ModelConverter::readTikiAnimation(BinaryPart& part, BinaryTikiAnimation* binAni)
 		{
-			TikiAnimation* ani = new TikiAnimation();
+			TikiAnimation* ani = TIKI_NEW TikiAnimation();
 
 			ani->SetName(readString(binAni->NameId));
 			ani->SetBSV(binAni->BSV);
@@ -200,7 +200,7 @@ namespace TikiEngine
 
 		TikiBone* ModelConverter::readTikiBone(BinaryPart& part, BinaryTikiBone* binBone, TikiBone* parent)
 		{
-			TikiBone* bone = new TikiBone();
+			TikiBone* bone = TIKI_NEW TikiBone();
 
 			bone->SetParent(parent);
 			bone->SetName(readString(binBone->NameId));
@@ -261,7 +261,7 @@ namespace TikiEngine
 		{
 			BinaryPart& part = context->ReadPart(id);
 
-			char* cstr = new char[part.Length];
+			char* cstr = TIKI_NEW char[part.Length];
 			memcpy(cstr, context->ReadPartPointer(id), part.Length);
 
 			string str = cstr;
@@ -312,7 +312,7 @@ namespace TikiEngine
 
 		void ModelConverter::addPartsMesh(TikiMesh* mesh)
 		{
-			BinaryTikiMesh* btm = new BinaryTikiMesh();
+			BinaryTikiMesh* btm = TIKI_NEW BinaryTikiMesh();
 			btm->NameId = addPartsString(mesh->GetName());
 			btm->UseDeformation = mesh->UseDeformation();
 			btm->HasAdjacencyIndices = mesh->HasAdjacencyIndices();
@@ -367,7 +367,7 @@ namespace TikiEngine
 
 		UInt32 ModelConverter::addPartsBone(TikiBone* bone, UInt32 parentId)
 		{
-			BinaryTikiBone* btb = new BinaryTikiBone();
+			BinaryTikiBone* btb = TIKI_NEW BinaryTikiBone();
 			btb->NameId = addPartsString(bone->GetName());
 			btb->ParentId = parentId;
 			btb->Init = bone->BoneInitTransform();
@@ -405,7 +405,7 @@ namespace TikiEngine
 
 		UInt32 ModelConverter::addPartsLayer(UInt32 animationId, TikiLayer* layer)
 		{
-			BinaryTikiLayer* btl = new BinaryTikiLayer();
+			BinaryTikiLayer* btl = TIKI_NEW BinaryTikiLayer();
 
 			btl->AnimationId = animationId;
 			btl->RotationArrayId = context->AddPart((void*)layer->GetQuaternion().GetInternalData(), sizeof(Quaternion), PT_Array, PT_Quaternion, layer->GetQuaternion().Count());
@@ -416,7 +416,7 @@ namespace TikiEngine
 
 		void ModelConverter::addPartsAnimation(TikiAnimation* animation)
 		{
-			BinaryTikiAnimation* bta = new BinaryTikiAnimation();
+			BinaryTikiAnimation* bta = TIKI_NEW BinaryTikiAnimation();
 			bta->NameId = addPartsString(animation->GetName());
 
 			bta->StartTime = animation->GetStartTime();
@@ -434,7 +434,7 @@ namespace TikiEngine
 		UInt32 ModelConverter::addPartsString(string str)
 		{
 			UInt32 len = (UInt32)str.size() + 1;
-			char* str2 = new char[len];
+			char* str2 = TIKI_NEW char[len];
 			memcpy(str2, str.c_str(), len);
 
 			return context->AddPart(str2, len, PT_String);
@@ -520,7 +520,7 @@ namespace TikiEngine
 			if (material)
 			{
 				SafeRelease(&decl);
-				decl = new VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
+				decl = TIKI_NEW VertexDeclaration(engine, material->GetShader(), SkinningVertex::Declaration, SkinningVertex::DeclarationCount);
 			}
 #endif
 		}
@@ -537,7 +537,7 @@ namespace TikiEngine
 			Mesh::SetIndexData(data, count);
 
 #ifdef TIKI_ENGINE
-			indexBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
+			indexBuffer = TIKI_NEW StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, indexData);
 #endif
 		}
 
@@ -550,13 +550,13 @@ namespace TikiEngine
 		void TikiMesh::SetAdjacencyIndexData(const UInt32* data, UInt32 count)
 		{
 			SafeDeleteArray(&adjacencyIndexData);
-			adjacencyIndexData = new UInt32[count];
+			adjacencyIndexData = TIKI_NEW UInt32[count];
 			adjacencyIndexCount = count;
 
 			memcpy(adjacencyIndexData, data, sizeof(UInt32) * count);
 
 #ifdef TIKI_ENGINE
-			indexAdjacencyBuffer = new StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, adjacencyIndexData);
+			indexAdjacencyBuffer = TIKI_NEW StaticBuffer<TIKI_INDEX_BUFFER>(engine, sizeof(UInt32), count, adjacencyIndexData);
 #endif
 		}
 
@@ -565,7 +565,7 @@ namespace TikiEngine
 			Mesh::SetVertexData(data, length);
 
 #ifdef TIKI_ENGINE
-			vertexBuffer = new StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
+			vertexBuffer = TIKI_NEW StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(SkinningVertex), length / sizeof(SkinningVertex), vertexData);
 #endif
 		}
 		#pragma endregion
