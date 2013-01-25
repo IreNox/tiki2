@@ -35,14 +35,7 @@ namespace TikiEngine
 			void Draw(const DrawArgs& args);
 			
 		private:
-
-			void HandleTikiBot(GameObject* go);
-			void HandleBuildSlot(GameObject* go);
-			void HandleSelection(GameObject* go);
-
-			bool IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps = 15);
-
-			void RemoveBot(TikiBot* bot/*, UInt32 index*/);
+			void RemoveBot(TikiBot* bot, const UpdateArgs& args);
 			
 			bool enabled;
 

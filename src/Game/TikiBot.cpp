@@ -28,6 +28,8 @@ namespace TikiEngine
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
 			: MovingEntity(gameState, gameObject), attSys(gameObject->GetEngine())
 		{
+			timeSinceDeath = 0.0;
+
             // Init MovingEntity stats
             MovingEntity::Init(desc.Radius, Vector2::Zero, desc.MaxSpeed, desc.Heading, desc.MaxTurnRate, desc.MaxForce);
 
@@ -294,7 +296,7 @@ namespace TikiEngine
 		void TikiBot::Update(const UpdateArgs& args)
 		{
 			// don't do this for buildings
-			if (EntityType() == ET_Building)
+			if (EntityType() == ET_Building || IsDead())
 				return;
 
 			// Update Hero Skills

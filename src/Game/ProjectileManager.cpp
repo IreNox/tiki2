@@ -144,6 +144,13 @@ namespace TikiEngine
 			peBlood->Trigger(elapsedTime, releasePerSecound, pos);
 		}
 
+		void ProjectileManager::AddExplosionEffect(const Vector3& pos)
+		{
+			peExplosion->Trigger(1, 2000, pos);
+			peShockwave->Trigger(1, 1, pos);
+			peRoundSparks->Trigger(1, 5, pos);
+		}
+
 		#pragma endregion
 		
 		#pragma region Member - Update
@@ -166,30 +173,7 @@ namespace TikiEngine
                     }
                     else if (pi.proj->GetProjectileType() == PT_Rocket)
                     {
-
-                        // explosion
-                        peExplosion->Trigger(
-							1,
-                            2000,
-                            Matrix::TransformCoordinate(
-								Vector3(0, 0, 0),
-								Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
-                            )
-                        );
-
-						peShockwave->Trigger(
-							1,
-							1,
-							Matrix::TransformCoordinate(
-							Vector3(0, 0, 0),
-							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
-							)
-						);
-
-						peRoundSparks->Trigger(
-							1,
-							5,
-							Matrix::TransformCoordinate(
+						AddExplosionEffect(Matrix::TransformCoordinate(
 							Vector3(0, 0, 0),
 							Matrix::Transpose(pi.proj->GetGameObject()->PRS.GetWorld())
 							)

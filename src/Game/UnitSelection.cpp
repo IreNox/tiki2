@@ -10,6 +10,7 @@
 #include "Game/TikiBot.h"
 #include "Game/BuildSlot.h"
 #include "Game/GoalThink.h"
+#include "Game/ProjectileManager.h"
 
 #include "Core/IPhysics.h"
 #include "Core/IGraphics.h"
@@ -151,24 +152,6 @@ namespace TikiEngine
 			this->changed = false;
 			this->dirty = false;
 
-			//this->worldToScreen = gameState->GetScene()->GCamera()->WorldToScreen();
-
-			//Matrix view = Matrix::Transpose(gameState->GetScene()->GCamera()->GetViewMatrix());
-			//Matrix proj = Matrix::Transpose(gameState->GetScene()->GCamera()->GetProjectionMatrix());
-
-			//proj = Frustum::ProjectionRectangle(
-			//	selectionRect,
-			//	engine->graphics->GetViewPort()->GetSize(),
-			//	proj);
-
-
-			//selectionFrustum.CreatePlanes(view * proj);
-
-			//this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){
-				
-			//this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleBuildSlot(go); });
-			//this->gameState->GetScene()->SceneGraph.Do([&](GameObject* go){ this->HandleTikiBot(go); });
-
 			// Handle Rectangle
 			// Mouse left button has just been pressed down
 			if (args.Input.GetMousePressed(MB_Left))
@@ -303,7 +286,7 @@ namespace TikiEngine
 					// check if dead and clear from list
 					if (ent->IsDead())
 					{
-						RemoveBot(ent);
+						RemoveBot(ent, args);
 						changed = true;
 					}
 				}
@@ -327,69 +310,8 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Member - Helper
-		void UnitSelection::HandleTikiBot(GameObject* go)
-		{
-			TikiBot* ent = go->GetComponent<TikiBot>();
-
-			if(ent->GetFaction() == 0)
-			{
-				if(!selectedUnits.Contains(go))
-				{
-					selectedUnits.Add(go);
-					changed = true;
-				}
-			}
-			if(ent->IsDead())
-				RemoveBot(ent);
-
-
-			//TikiBot* ent = go->GetComponent<TikiBot>();
-			//if(ent == 0)
-			//	return;
-
-			//if(ent->GetFaction() == 0)
-			//{
-			//	if(IsUnderMouse(go, this->worldToScreen) && !selectedUnits.Contains(go))
-			//	{
-			//		selectedUnits.Add(go);
-			//		changed = true;
-			//	}
-			//}
-			//if(ent->IsDead())
-			//	RemoveBot(ent);
-		}
-
-		void UnitSelection::HandleBuildSlot(GameObject* go)
-		{
-			BuildSlot* slot = go->GetComponent<BuildSlot>();
-			if(slot == 0)
-				return;
-		}
-
-		bool UnitSelection::IsUnderMouse(GameObject* go, Matrix& worldToScreen, float eps)
-		{
-			Vector2 bbDim = gameState->GetEngine()->graphics->GetViewPort()->GetSize();
-			Vector3 screenPos = Matrix::Project(go->PRS.GPosition(), 0, 0, bbDim.X, bbDim.Y, -1, 1, worldToScreen);
-			if(selectionRect.Contains(Vector2(screenPos.X, screenPos.Y)))
-				return true;
-			
-			if(mouseButton)
-			{
-				if(screenPos.X <= selectionRect.X + eps && 
-					screenPos.X >= selectionRect.X - eps &&
-					screenPos.Y <= selectionRect.Y + eps && 
-					screenPos.Y >= selectionRect.Y - eps)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
-		#pragma endregion
-
 		#pragma region Member - RemoveBot
-		void UnitSelection::RemoveBot(TikiBot* bot/*, UInt32 index*/)
+		void UnitSelection::RemoveBot(TikiBot* bot, const UpdateArgs& args)
 		{
 			UInt32 i = 0;
 			while (i < gameState->GetScene()->SceneGraph.GetAllGameObjects().Count())
@@ -429,6 +351,8 @@ namespace TikiEngine
 				Vector3 towerPos = bot->GetController()->GetCenter();
 				towerPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
 
+				gameState->GetProjectiles()->AddExplosionEffect(towerPos);
+
 				// Clear old GameObject
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 
@@ -440,9 +364,29 @@ namespace TikiEngine
 				BuildSlot* slot = go->GetComponent<BuildSlot>();
 				slot->Enable();
 			}
-			else 
+			else if(bot->EntityType() == ET_Building)
 			{
-				//engine->HLog.Write("Released bot go");
+				Vector3 buildingPos = bot->GetController()->GetCenter();
+				buildingPos.Y -= (bot->GetController()->GetHeight() * 0.5f + bot->GetController()->GetRadius());
+
+
+				gameState->GetProjectiles()->AddExplosionEffect(buildingPos);
+
+				gameState->GetScene()->RemoveElement(bot->GetGameObject());
+			}
+			else if (bot->EntityType() == ET_Bot || bot->EntityType() == ET_Hero)
+			{
+				bot->IncreaseTimeSInceDead(args.Time.ElapsedTime);
+				
+				const double DeathAnimationDuration = 2.0f;
+				if (bot->GetTimeSinceDead() >= DeathAnimationDuration)
+				{
+					bot->SetTimeSinceDead(0);
+					gameState->GetScene()->RemoveElement(bot->GetGameObject());
+				}
+			}
+			else
+			{
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 			}
 		}

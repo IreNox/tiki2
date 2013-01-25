@@ -29,6 +29,7 @@ namespace TikiEngine
 			void AddProjectile(Projectile* proj);
 
 			void AddBloodEffect(double elapsedTime, double releasePerSecound, const Vector3& pos);
+			void AddExplosionEffect(const Vector3& pos);
 
 			//void Draw(const DrawArgs& args);
 			void Update(const UpdateArgs& args);

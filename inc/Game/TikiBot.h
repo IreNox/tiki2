@@ -135,6 +135,10 @@ namespace TikiEngine
 			inline void RestoreHealthToMaximum() { health = attSys[TA_MaxHealth]; }
 			void ReduceHealth(double val, bool useArmor);
 			void IncreaseHealth(double val);
+
+			void SetTimeSinceDead(double deathTime) { timeSinceDeath = deathTime; }
+			void IncreaseTimeSInceDead(double timeInc) { timeSinceDeath += timeInc; }
+			double GetTimeSinceDead() { return timeSinceDeath; }
 				 
 			//Vector2 Facing() const {return facing;}
 			inline float FieldOfView() const { return fieldOfView; }
@@ -258,6 +262,8 @@ namespace TikiEngine
 			float sightRadius;
 			int loot;
 			int armor;
+
+			double timeSinceDeath;
 
 		};
 
