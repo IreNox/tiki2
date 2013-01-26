@@ -18,13 +18,15 @@
 #include "Core/List.h"
 #include "Core/Dictionary.h"
 
-#include <string>
-#include <sstream>
-using std::string;
-using std::wstring;
-using std::ostringstream;
-using std::wostringstream;
+//#include <string>
+//#include <sstream>
+//using std::string;
+//using std::wstring;
+//using std::ostringstream;
+//using std::wostringstream;
 
-//#include "Core/String.h"
-//using TikiEngine::string;
-//using TikiEngine::wstring;
+#include "Core/String.h"
+#include "Core/StringConvert.h"
+#include "Core/StringParse.h"
+using TikiEngine::string;
+using TikiEngine::wstring;

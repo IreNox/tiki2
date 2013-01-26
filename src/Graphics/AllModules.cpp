@@ -149,11 +149,11 @@ namespace TikiEngine
 				tm time;
 				localtime_s(&time, &now);
 
-				wostringstream s;
-				s << L"Screenshot-" << (time.tm_year + 1900) << "-" << (time.tm_mon + 1) << "-" << time.tm_mday << "-" << time.tm_hour << "-" << time.tm_min << "-" << time.tm_sec << ".dds";
+				wstring s = L"Screenshot.dds";
+				//s << L"Screenshot-" << (time.tm_year + 1900) << "-" << (time.tm_mon + 1) << "-" << time.tm_mday << "-" << time.tm_hour << "-" << time.tm_min << "-" << time.tm_sec << ".dds";
 
-				wchar_t* fileName2 = TIKI_NEW wchar_t[s.str().length() + 1];
-				memcpy(fileName2, s.str().c_str(), sizeof(wchar_t) * (s.str().length() + 1));
+				wchar_t* fileName2 = TIKI_NEW wchar_t[s.Length() + 1];
+				memcpy(fileName2, s.CStr(), sizeof(wchar_t) * (s.Length() + 1));
 
 				fileName = fileName2;
 				TIKI_NEWName = true;
@@ -162,7 +162,7 @@ namespace TikiEngine
 			wstring path = engine->HPath.CombineWorkingPath(wstring(L"Screenshots/") + fileName);
 
 			rtBackBuffer->SaveToFile(
-				path.c_str()
+				path.CStr()
 			);
 
 			//IRenderTarget* oldTarget = defaultPostProcess->GetPasses()->Get(0)->GetOutput()->Get(0);
@@ -1324,7 +1324,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			float width = 0;
 			Vector2 pos = position;
-			while (i < text.length())
+			while (i < text.Length())
 			{
 				width = font->DrawChar(text[i], pos, color, layerDepth);
 

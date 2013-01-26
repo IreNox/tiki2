@@ -27,8 +27,8 @@ namespace TikiEngine
 		const char* tmp = 0;
 		int r = sqlite3_prepare(
 			engine->GetDB(),
-			sql.c_str(),
-			(int)sql.size(),
+			sql.CStr(),
+			(int)sql.Length(),
 			&state,
 			&tmp
 		);

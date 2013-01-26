@@ -107,7 +107,7 @@ namespace TikiEngine
 						try
 						{
 							loadedResources[a].resource->LoadFromFile(
-								changedFiles[i].c_str()
+								changedFiles[i].CStr()
 							);
 						}
 						catch (const char*)
@@ -155,7 +155,6 @@ namespace TikiEngine
 			UInt32 i = 0;
 			while (i < loadedResources.Count())
 			{
-				loadedResources[i].fileName.erase();
 				loadedResources[i].resource->Release();
 				i++;
 			}
@@ -228,11 +227,11 @@ namespace TikiEngine
 
 						try
 						{
-							value->LoadFromStream(name.c_str(), stream);
+							value->LoadFromStream(name.CStr(), stream);
 						}
 						catch (string e)
 						{							
-							MessageBoxA(0, e.c_str(), "TikiEngine 2.0", MB_OK | MB_ICONERROR);
+							MessageBoxA(0, e.CStr(), "TikiEngine 2.0", MB_OK | MB_ICONERROR);
 						}
 
 						SafeRelease(&stream);
@@ -380,7 +379,7 @@ namespace TikiEngine
 		void ContentManagerModule::threadDynamicReload()
 		{
 			HANDLE hDir = CreateFile(
-				filePath.c_str(),
+				filePath.CStr(),
 				FILE_LIST_DIRECTORY,                
 				FILE_SHARE_READ | FILE_SHARE_DELETE,
 				NULL,                               
@@ -406,13 +405,13 @@ namespace TikiEngine
 						wstring(dataInfo->FileName, dataInfo->FileNameLength / sizeof(wchar_t))
 					);
 
-					UInt32 len = (UInt32)engine->HPath.GetWorkingPath().size() + 1;
-					fileName = fileName.substr(len, fileName.size() - len);
+					UInt32 len = (UInt32)engine->HPath.GetWorkingPath().Length() + 1;
+					fileName = fileName.Substring(len, fileName.Length() - len);
 
 					if (engine->HPath.FileExists(fileName))
 					{
 						HANDLE handle;
-						while((handle = CreateFile(fileName.c_str(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
+						while((handle = CreateFile(fileName.CStr(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
 						CloseHandle(handle);
 
 						changedFiles.Add(fileName);

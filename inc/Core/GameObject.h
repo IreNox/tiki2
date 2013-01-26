@@ -27,7 +27,7 @@ namespace TikiEngine
 		Transform PRS;
 
 		GameObject(Engine* engine);
-		virtual ~GameObject();
+		~GameObject();
 		
 		virtual void Draw(const DrawArgs& args);
 		virtual void Update(const UpdateArgs& args);
@@ -89,7 +89,7 @@ namespace TikiEngine
 		inline void* GetUserData() { return userData; }
 		inline void SetUserData(void* ud) { userData = ud; }
 
-#if !TIKI_EDITOR
+#if !TIKI_EDITOR && TIKI_USE_SCENEGRAPH
 		inline SceneGraphElement& GetSceneGraphElement() { return this->sgElement; }
 #endif
 
@@ -106,7 +106,7 @@ namespace TikiEngine
 		
 		List<GameObject*> childs;
 
-#if !TIKI_EDITOR
+#if !TIKI_EDITOR && TIKI_USE_SCENEGRAPH
 		SceneGraphElement sgElement;
 #endif
 

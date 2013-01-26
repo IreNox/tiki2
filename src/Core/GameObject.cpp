@@ -11,7 +11,7 @@ namespace TikiEngine
 	{
 		this->PRS = Transform(this);
 
-#if !TIKI_EDITOR
+#if !TIKI_EDITOR && TIKI_USE_SCENEGRAPH
 		this->sgElement.SetGameObject(this);
 #endif
 	}
@@ -61,7 +61,7 @@ namespace TikiEngine
 				bound = Matrix::TransformCoordinate(model->GetBounds(), mat);
 			}
 
-#ifdef TIKI_ENGINE
+#if TIKI_ENGINE && TIKI_USE_SCENEGRAPH
 			sgElement.SetBounds(
 				bound.XZ()
 			);
@@ -165,17 +165,21 @@ namespace TikiEngine
 
 		if (model) model->Update(args);
 
+#if TIKI_USE_SCENEGRAPH
 		this->sgElement.Update(args);
+#endif
 #endif
 	}
 
 	void GameObject::LateUpdate(const UpdateArgs& args)
 	{
-#if !TIKI_EDITOR
+#if !TIKI_EDITOR && TIKI_USE_SCENEGRAPH
 		if(!sgElement.IsCulled && model)
 		{
 			model->LateUpdate(args);
 		}
+#elif !TIKI_EDITOR && !TIKI_USE_SCENEGRAPH
+		if (model) model->LateUpdate(args);
 #endif
 	}
 	#pragma endregion

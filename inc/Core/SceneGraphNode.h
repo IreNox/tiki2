@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Core/TypeInc.h"
+
+#if TIKI_USE_SCENEGRAPH
 #include "Core/RectangleF.h"
-#include "Core/List.h"
 #include "Core/GameObject.h"
 #include "Core/UpdateArgs.h"
 #include "Core/DrawArgs.h"
 #include "Core/Frustum.h"
-
 
 namespace TikiEngine
 {
@@ -71,3 +72,4 @@ namespace TikiEngine
 		List<SceneGraphNode*> childs;
 	};
 }
+#endif

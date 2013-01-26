@@ -14,16 +14,16 @@ namespace TikiEngine
 			switch (mode)
 			{
 			case FM_Read:
-				_wfopen_s(&handle, fileName.c_str(), L"rb");
+				_wfopen_s(&handle, fileName.CStr(), L"rb");
 				break;
 			case FM_ReadWrite:
-				_wfopen_s(&handle, fileName.c_str(), L"wb+");
+				_wfopen_s(&handle, fileName.CStr(), L"wb+");
 				break;
 			case FM_Write:
-				_wfopen_s(&handle, fileName.c_str(), L"wb");
+				_wfopen_s(&handle, fileName.CStr(), L"wb");
 				break;
 			case FM_WriteAppend:
-				_wfopen_s(&handle, fileName.c_str(), L"ab");
+				_wfopen_s(&handle, fileName.CStr(), L"ab");
 				break;
 			}
 		}

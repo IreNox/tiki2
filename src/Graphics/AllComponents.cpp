@@ -346,7 +346,7 @@ namespace TikiEngine
 			if (useCloddy) {
 #endif
 
-			datasetSample = TIKI_NEW cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			datasetSample = TIKI_NEW cloddy_CloddyLocalDataset(fileName.CStr(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			heightmap = datasetSample->GetHeightmap();
 				
 			vertexFormat = cloddy_VertexFormat::P3F()
@@ -355,7 +355,7 @@ namespace TikiEngine
 				->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
 			//->Append(cloddy_VertexFormat::X4F_12());
 
-			datasetDraw = TIKI_NEW cloddy_CloddyLocalDataset(fileName.c_str(), true, cloddy_CloddyDatasetConverterType::E16C24);
+			datasetDraw = TIKI_NEW cloddy_CloddyLocalDataset(fileName.CStr(), true, cloddy_CloddyDatasetConverterType::E16C24);
 			
 			int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
 			//vertexBuffer = TIKI_NEW TerrainVertexBuffer(size2);

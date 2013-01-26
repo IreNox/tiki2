@@ -23,40 +23,30 @@ namespace TikiEngine
 		workingPath = HelperPath::GetDirectoryName(binaryPath);
 
 		SetCurrentDirectory(
-			workingPath.c_str()
+			workingPath.CStr()
 		);
 	}
 
 	HelperPath::~HelperPath()
 	{
-		binaryPath.erase();
-		workingPath.erase();
+		//binaryPath.erase();
+		//workingPath.erase();
 	}
 	#pragma endregion
 
 	#pragma region Member - Check
 	void HelperPath::CheckPath(const wstring& path) const
 	{
-		if (GetFileAttributes(path.c_str()) == INVALID_FILE_ATTRIBUTES)
+		if (GetFileAttributes(path.CStr()) == INVALID_FILE_ATTRIBUTES)
 		{
-			CreateDirectory(path.c_str(), 0);
+			CreateDirectory(path.CStr(), 0);
 		}
 	}
 
 	void HelperPath::CheckSlashes(wstring& path) const
 	{
-		static wchar_t mi = L'Z' - L'z';
-
-		UInt32 i = 0;
-		while (i < path.length())
-		{
-			wchar_t c = path[i];
-
-			if (c == '\\') path[i] = '/';
-			if(c <= 'Z' && c >= 'A') path[i] -= mi;
-
-			i++;
-		}		
+		path = path.Replace('\\', '/');
+		path = path.ToLower();
 	}
 	#pragma endregion
 
@@ -65,9 +55,9 @@ namespace TikiEngine
 	{
 		wstring fileName = fullPath;
 		CheckSlashes(fileName);
-		PInt index = fileName.find_last_of(L'/') + 1;
+		Int32 index = fileName.LastIndexOf(L'/') + 1;
 
-		return fileName.substr(index, fileName.size() - index);
+		return fileName.Substring(index, fileName.Length() - index);
 	}
 
 	wstring HelperPath::GetFilenameWithoutExtension(const wstring& fullPath) const
@@ -75,11 +65,11 @@ namespace TikiEngine
 		wstring fileName = fullPath;
 		CheckSlashes(fileName);
 
-		PInt index = fileName.find_last_of(L'/') + 1;
-		fileName = fullPath.substr(index, fileName.size() - index);
+		Int32 index = fileName.LastIndexOf(L'/') + 1;
+		fileName = fullPath.Substring(index, fileName.Length() - index);
 		
-		index = fileName.find_last_of(L'.');
-		fileName = fileName.substr(0, index);
+		index = fileName.LastIndexOf(L'.');
+		fileName = fileName.Substring(0, index);
 
 		return fileName;
 	}
@@ -89,21 +79,21 @@ namespace TikiEngine
 		wstring dirName = fullPath;
 		CheckSlashes(dirName);
 
-		return dirName.substr(0, dirName.find_last_of(L'/'));
+		return dirName.Substring(0, dirName.LastIndexOf(L'/'));
 	}
 	#pragma endregion
 
 	#pragma region Member - Exists
 	bool HelperPath::FileExists(const wstring& fullPath) const
 	{
-		DWORD att = GetFileAttributes(fullPath.c_str());
+		DWORD att = GetFileAttributes(fullPath.CStr());
 
 		return (att != INVALID_FILE_ATTRIBUTES) && (att != FILE_ATTRIBUTE_DIRECTORY);
 	}
 
 	bool HelperPath::DirectoryExists(const wstring& fullPath) const
 	{
-		DWORD att = GetFileAttributes(fullPath.c_str());
+		DWORD att = GetFileAttributes(fullPath.CStr());
 
 		return (att != INVALID_FILE_ATTRIBUTES) && (att == FILE_ATTRIBUTE_DIRECTORY);
 	}
@@ -112,13 +102,13 @@ namespace TikiEngine
 	#pragma region Member - Combine
 	wstring HelperPath::Combine(const wstring& path1, const wstring& path2) const
 	{
-		wchar_t i1 = path1[path1.size() - 1];
+		wchar_t i1 = path1[path1.Length() - 1];
 		wchar_t i2 = path2[0];
 
 		int rightV = (i2 == '/' || i2 == '\\' ? 1 : 0);
 
-		wstring left = path1.substr(0, path1.size() - (i1 == '/' || i1 == '\\' ? -1 : 0));
-		wstring right = path2.substr(rightV, path2.size() - rightV);
+		wstring left = path1.Substring(0, path1.Length() - (i1 == '/' || i1 == '\\' ? -1 : 0));
+		wstring right = path2.Substring(rightV, path2.Length() - rightV);
 
 		wstring fullPath = left + L"/" + right;
 
@@ -131,7 +121,7 @@ namespace TikiEngine
 		wchar_t i2 = path[0];
 		int rightV = (i2 == '/' || i2 == '\\' ? 1 : 0);
 
-		wstring right = path.substr(rightV, path.size() - rightV);
+		wstring right = path.Substring(rightV, path.Length() - rightV);
 
 		return workingPath + L"/" + right;
 	}

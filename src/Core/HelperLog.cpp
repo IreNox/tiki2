@@ -23,7 +23,7 @@ namespace TikiEngine
 	{
 		if (output)
 		{
-			MessageReceived.RaiseEvent(this, MessageReceivedArgs(text.c_str()));
+			MessageReceived.RaiseEvent(this, MessageReceivedArgs(text.CStr()));
 		}
 
 		FILE* h;
@@ -32,9 +32,9 @@ namespace TikiEngine
 		text += "\n";
 
 		fwrite(
-			text.c_str(),
+			text.CStr(),
 			1,
-			text.size(),
+			text.Length(),
 			h
 		);
 
@@ -43,12 +43,11 @@ namespace TikiEngine
 
 	void HelperLog::WriteError(string message, void* exception) const
 	{
-		ostringstream s;
-		s << "Error: " << message << ". Exception: " << exception << endl;
+		string error = "Error: " + message + ". Exception: " + StringConvert::ToString((Int64)exception) + "\n";
 
-		HelperLog::Write(s.str());
+		HelperLog::Write(error);
 
-		throw s.str().c_str();
+		throw error.CStr();
 	}
 }
 

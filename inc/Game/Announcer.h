@@ -30,7 +30,7 @@ namespace TikiEngine
 			Announcer(GameState* state);
 			~Announcer();
 
-			Announcement* Announce(const wstring& msg, const wstring& icon = 0, const wstring& sound = 0, function<void(void)> funcActivate = 0);
+			Announcement* Announce(const wstring& msg, const wstring& icon = L"", const wstring& sound = L"", function<void(void)> funcActivate = 0);
 
 			void ActivateAnnouncement(Announcement* announcement);						 
 

@@ -48,7 +48,7 @@ namespace TikiEngine
 
 			//string str = StringWtoA(fileName);
 
-			sound = DllMain::Module->LoadSound(stream); //str.c_str()
+			sound = DllMain::Module->LoadSound(stream); //str.CStr()
 
 			//delete(sound);
 		}

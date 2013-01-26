@@ -49,7 +49,10 @@ namespace TikiEngine
 
 
 			GameObject* go = TIKI_NEW GameObject(engine);
+
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
 			go->SModel(args.Content->LoadModel(L"unit_soldier"));

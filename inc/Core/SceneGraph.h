@@ -1,5 +1,10 @@
 #pragma once
-#include "Core/List.h"
+
+#include "Core/TypeInc.h"
+
+#if !TIKI_USE_SCENEGRAPH
+#include "Core/FakeSceneGraph.h"
+#else
 #include "Core/UpdateArgs.h"
 #include "Core/DrawArgs.h"
 #include "Core/SceneGraphNode.h"
@@ -59,3 +64,4 @@ namespace TikiEngine
 		SceneGraphNode dynamicObjects;
 	};
 }
+#endif

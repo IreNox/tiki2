@@ -433,9 +433,9 @@ namespace TikiEngine
 
 		UInt32 ModelConverter::addPartsString(string str)
 		{
-			UInt32 len = (UInt32)str.size() + 1;
+			UInt32 len = (UInt32)str.Length() + 1;
 			char* str2 = TIKI_NEW char[len];
-			memcpy(str2, str.c_str(), len);
+			memcpy(str2, str.CStr(), len);
 
 			return context->AddPart(str2, len, PT_String);
 		}
@@ -446,7 +446,7 @@ namespace TikiEngine
 		#pragma region Class
 #ifdef TIKI_ENGINE
 		TikiMesh::TikiMesh(Engine* engine)
-			: IModelMesh(engine), indexBuffer(0), vertexBuffer(0), decl(0), visible(true), localMatrix(Matrix::Identity),
+			: IModelMesh(engine), indexBuffer(0), vertexBuffer(0), decl(0), visible(true), localMatrix(Matrix::Identity), indexAdjacencyBuffer(0),
 #else
 		TikiMesh::TikiMesh()
 			: IModelMesh(0),

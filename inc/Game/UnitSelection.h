@@ -3,6 +3,7 @@
 #include "Core/RectangleF.h"
 #include "Core/UpdateArgs.h"
 #include "Core/GUIButton.h"
+#include "Core/Frustum.h"
 
 #include "Game/GameState.h"
 

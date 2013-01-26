@@ -85,11 +85,7 @@ namespace TikiEngine
 			if (currentLevel < description.MaxLevel)
 			{
 				currentLevel++;
-
-				wostringstream s;
-				s << currentLevel;
-
-				currentLevelString = s.str();
+				currentLevelString = StringConvert::ToWString(currentLevel);
 
 				internUpgrade();
 			}

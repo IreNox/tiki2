@@ -22,7 +22,7 @@ namespace TikiEngine
 			wstring path = engine->HPath.GetBinaryPath() + L"\\*.dll";
 
 			WIN32_FIND_DATA file;
-			HANDLE handle = FindFirstFile(path.c_str(), &file);
+			HANDLE handle = FindFirstFile(path.CStr(), &file);
 
 			if(handle != INVALID_HANDLE_VALUE)
 			{
@@ -89,7 +89,7 @@ namespace TikiEngine
 			time.Start();
 #endif
 
-			HMODULE libraryHandle = LoadLibrary(libraryName.c_str());
+			HMODULE libraryHandle = LoadLibrary(libraryName.CStr());
 			if (libraryHandle == 0) return 0;
 
 			FARPROC temp = GetProcAddress(libraryHandle, "GetTikiInfo");
@@ -147,10 +147,9 @@ namespace TikiEngine
 #if _DEBUG
 			double el = time.Stop();
 
-			ostringstream s;
-			s << "LoadLibrary: " << StringWtoA(engine->HPath.GetFilename(libraryName)) << " - ElapsedTime: " << el;
-
-			engine->HLog.Write(s.str());
+			engine->HLog.Write(
+				"LoadLibrary: " + StringWtoA(engine->HPath.GetFilename(libraryName)) + " - ElapsedTime: " + StringConvert::ToString(el)
+			);
 #endif
 
 			return info;

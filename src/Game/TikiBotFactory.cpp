@@ -39,7 +39,6 @@ namespace TikiEngine
 		void TikiBotFactory::Init()
 		{
 			playerBase->Init();
-            playerBase->Hero->AddRef();
 
 			enemyBases.Clear();
 			gameState->GetParts<EnemyBase>(enemyBases);
@@ -87,7 +86,9 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 			
 			// Create bot
 			TikiBotDescription botDesc;
@@ -128,7 +129,10 @@ namespace TikiEngine
 			botDesc.StartMGFireRate = 3;
 
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
+
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -155,7 +159,10 @@ namespace TikiEngine
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
+
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -171,7 +178,9 @@ namespace TikiEngine
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -204,7 +213,10 @@ namespace TikiEngine
 			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->AnimationHandler.AddHandler(ah);
 			go->SetUserData(ah);
+
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -230,7 +242,9 @@ namespace TikiEngine
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"tower_player"));
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -270,7 +284,9 @@ namespace TikiEngine
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -310,7 +326,9 @@ namespace TikiEngine
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			// Create bot
 			TikiBotDescription botDesc;
@@ -339,7 +357,9 @@ namespace TikiEngine
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 0.13f);
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"buildpoint"));
 
+#if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
+#endif
 
 			TIKI_NEW BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);

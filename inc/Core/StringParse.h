@@ -9,93 +9,93 @@ namespace TikiEngine
 	{
 	public:
 
-#pragma region String
-		static Int16 ParseInt16(const String& string)
+		#pragma region String
+		static Int16 ParseInt16(const string& string)
 		{			
 			return parseSigedInteger<char, UInt16>(string);
 		}
 
-		static Int32 ParseInt32(const String& string)
+		static Int32 ParseInt32(const string& string)
 		{			
 			return parseSigedInteger<char, UInt32>(string);
 		}
 
-		static Int64 ParseInt64(const String& string)
+		static Int64 ParseInt64(const string& string)
 		{			
 			return parseSigedInteger<char, UInt64>(string);
 		}
 
-		static UInt16 ParseUInt16(const String& string)
+		static UInt16 ParseUInt16(const string& string)
 		{			
 			return parseUnsigedInteger<char, UInt16>(string);
 		}
 
-		static UInt32 ParseUInt32(const String& string)
+		static UInt32 ParseUInt32(const string& string)
 		{			
 			return parseUnsigedInteger<char, UInt32>(string);
 		}
 
-		static UInt64 ParseUInt64(const String& string)
+		static UInt64 ParseUInt64(const string& string)
 		{			
 			return parseUnsigedInteger<char, UInt64>(string);
 		}
 
-		static Single ParseSingle(const String& string)
+		static Single ParseSingle(const string& string)
 		{			
 			return parseFloat<char, Single>(string);
 		}
 
-		static Double ParseDouble(const String& string)
+		static Double ParseDouble(const string& string)
 		{			
 			return parseFloat<char, Double>(string);
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region WString
-		static Int16 WParseInt16(const WString& string)
+		#pragma region WString
+		static Int16 WParseInt16(const wstring& string)
 		{			
 			return parseSigedInteger<wchar_t, UInt16>(string);
 		}
 
-		static Int32 WParseInt32(const WString& string)
+		static Int32 WParseInt32(const wstring& string)
 		{			
 			return parseSigedInteger<wchar_t, UInt32>(string);
 		}
 
-		static Int64 WParseInt64(const WString& string)
+		static Int64 WParseInt64(const wstring& string)
 		{			
 			return parseSigedInteger<wchar_t, UInt64>(string);
 		}
 
-		static UInt16 WParseUInt16(const WString& string)
+		static UInt16 WParseUInt16(const wstring& string)
 		{			
 			return parseUnsigedInteger<wchar_t, UInt16>(string);
 		}
 
-		static UInt32 WParseUInt32(const WString& string)
+		static UInt32 WParseUInt32(const wstring& string)
 		{			
 			return parseUnsigedInteger<wchar_t, UInt32>(string);
 		}
 
-		static UInt64 WParseUInt64(const WString& string)
+		static UInt64 WParseUInt64(const wstring& string)
 		{			
 			return parseUnsigedInteger<wchar_t, UInt64>(string);
 		}
 
-		static Single WParseSingle(const WString& string)
+		static Single WParseSingle(const wstring& string)
 		{			
 			return parseFloat<wchar_t, Single>(string);
 		}
 
-		static Double WParseDouble(const WString& string)
+		static Double WParseDouble(const wstring& string)
 		{			
 			return parseFloat<wchar_t, Double>(string);
 		}
-#pragma endregion
+		#pragma endregion
 
 	private:
 
-#pragma region Private Member
+		#pragma region Private Member
 		template <typename TString>
 		static bool getSiged(TikiBasicString<TString>& string)
 		{
@@ -112,9 +112,9 @@ namespace TikiEngine
 
 			return true;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Private Member - Integer
+		#pragma region Private Member - Integer
 		template<typename TString, typename TUInt>
 		static TUInt parseUnsigedInteger(const TikiBasicString<TString>& string)
 		{
@@ -149,9 +149,9 @@ namespace TikiEngine
 
 			return parseUnsigedInteger<TString, TInt>(str) * mul;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Private Member - Float
+		#pragma region Private Member - Float
 		template <typename TString, typename TFloat>
 		static TFloat parseFloat(const TikiBasicString<TString>& string)
 		{
@@ -183,6 +183,6 @@ namespace TikiEngine
 
 			return num * mul;
 		}
-#pragma endregion
+		#pragma endregion
 	};
 }

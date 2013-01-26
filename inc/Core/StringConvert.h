@@ -9,98 +9,98 @@ namespace TikiEngine
 	{
 	public:
 
-#pragma region String
-		static String ToString(Int16 value)
+		#pragma region String
+		static string ToString(Int16 value)
 		{
 			return integerToString<char, Int16>(value);
 		}
 
-		static String ToString(Int32 value)
+		static string ToString(Int32 value)
 		{
 			return integerToString<char, Int32>(value);
 		}
 
-		static String ToString(Int64 value)
+		static string ToString(Int64 value)
 		{
 			return integerToString<char, Int64>(value);
 		}
 
-		static String ToString(UInt16 value)
+		static string ToString(UInt16 value)
 		{
 			return integerToString<char, UInt16>(value);
 		}
 
-		static String ToString(UInt32 value)
+		static string ToString(UInt32 value)
 		{
 			return integerToString<char, UInt32>(value);
 		}
 
-		static String ToString(UInt64 value)
+		static string ToString(UInt64 value)
 		{
 			return integerToString<char, UInt64>(value);
 		}
 
-		static String ToString(Single value)
+		static string ToString(Single value)
 		{
 			return floatToString<char, Single>(value);
 		}
 
-		static String ToString(Double value)
+		static string ToString(Double value)
 		{
 			return floatToString<char, Double>(value);
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region WString
-		static WString ToWString(Int16 value)
+		#pragma region WString
+		static wstring ToWString(Int16 value)
 		{
 			return integerToString<wchar_t, Int16>(value);
 		}
 
-		static WString ToWString(Int32 value)
+		static wstring ToWString(Int32 value)
 		{
 			return integerToString<wchar_t, Int32>(value);
 		}
 
-		static WString ToWString(Int64 value)
+		static wstring ToWString(Int64 value)
 		{
 			return integerToString<wchar_t, Int64>(value);
 		}
 
-		static WString ToWString(UInt16 value)
+		static wstring ToWString(UInt16 value)
 		{
 			return integerToString<wchar_t, UInt16>(value);
 		}
 
-		static WString ToWString(UInt32 value)
+		static wstring ToWString(UInt32 value)
 		{
 			return integerToString<wchar_t, UInt32>(value);
 		}
 
-		static WString ToWString(UInt64 value)
+		static wstring ToWString(UInt64 value)
 		{
 			return integerToString<wchar_t, UInt64>(value);
 		}
 
-		static WString ToWString(Single value)
+		static wstring ToWString(Single value)
 		{
 			return floatToString<wchar_t, Single>(value);
 		}
 
-		static WString ToWString(Double value)
+		static wstring ToWString(Double value)
 		{
 			return floatToString<wchar_t, Double>(value);
 		}
-#pragma endregion
+		#pragma endregion
 
 	private:
 
-#pragma region IntegerToString
+		#pragma region IntegerToString
 		template <typename TString, typename TInt>
 		static TikiBasicString<TString> integerToString(TInt value)
 		{
 			UInt32 len = 0;
-			TInt val = (TInt)abs((Int64)value);
+			TInt val = (TInt)abs((Int32)value);
 
 			if (value < 0)
 				len++;
@@ -144,26 +144,26 @@ namespace TikiEngine
 
 			return str;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region FloatToString
+		#pragma region FloatToString
 		template <typename TString, typename TFloat>
 		static TikiBasicString<TString> floatToString(TFloat value)
 		{
-			TString buffer[32];
+			TString buffer[64];
 
 			if (sizeof(TString) == 1)
 			{
-				_snprintf_s((char*)buffer, 32, 32, "%f", value);
+				_snprintf_s((char*)buffer, 64, 64, "%f", value);
 			}
 			else
 			{
-				_snwprintf_s((wchar_t*)buffer, 64, 32, L"%f", value);
+				_snwprintf_s((wchar_t*)buffer, 64, 64, L"%f", value);
 			}
 
 			return TikiBasicString<TString>(buffer);
 		}
-#pragma endregion
+		#pragma endregion
 
 	};
 }

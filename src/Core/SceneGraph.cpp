@@ -1,4 +1,7 @@
+
 #include "Core/SceneGraph.h"
+
+#if TIKI_USE_SCENEGRAPH
 #include "Core/IGraphics.h"
 
 namespace TikiEngine
@@ -189,3 +192,6 @@ namespace TikiEngine
 #pragma endregion
 
 }
+#else
+bool emptySceneGraph = true;
+#endif

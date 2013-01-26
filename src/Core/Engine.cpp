@@ -31,6 +31,13 @@ namespace TikiEngine
 		, fpsIndex(0), fpsAve(0)
 #endif
 	{
+#if _DEBUG
+		fpsCache[0] = 0.0;
+		fpsCache[1] = 0.0;
+		fpsCache[2] = 0.0;
+		fpsCache[3] = 0.0;
+		fpsCache[4] = 0.0;
+#endif
 	}
 
 	Engine::~Engine()
@@ -45,7 +52,7 @@ namespace TikiEngine
 
 		#pragma region Database
 		sqlite3_open(
-			StringWtoA(this->HPath.CombineWorkingPath(L"Data/TikiData.sqlite")).c_str(),
+			StringWtoA(this->HPath.CombineWorkingPath(L"Data/TikiData.sqlite")).CStr(),
 			&dataBase
 		);
 		#pragma endregion
@@ -108,20 +115,6 @@ namespace TikiEngine
 		}
 		#pragma endregion
 
-		#pragma region Threading
-		//function<void(void*)> funcDraw = &;
-		//function<void(void*)> funcUpdate = &;
-
-		//threadDraw = TIKI_NEW Thread<Engine>(&Engine::Draw);
-		//threadUpdate = TIKI_NEW Thread<Engine>(&Engine::Update);
-
-		//csDraw = TIKI_NEW Mutex();
-		//csUpdate = TIKI_NEW Mutex();
-		//csEngine = TIKI_NEW Mutex();
-		#pragma endregion
-
-		loadingScene = TIKI_NEW Scene(this);
-
 		return true;
 	}
 	#pragma endregion
@@ -131,12 +124,6 @@ namespace TikiEngine
 	{
 		SafeRelease(&scene);
 		SafeRelease(&loadingScene);
-
-		//SafeRelease(&threadDraw);
-		//SafeRelease(&threadUpdate);
-		//SafeRelease(&csDraw);
-		//SafeRelease(&csUpdate);
-		//SafeRelease(&csEngine);
 
 		loadedModules.Remove(librarys);
 
@@ -192,7 +179,7 @@ namespace TikiEngine
 			last = current;
 
 #if _DEBUG
-			if (frameCount % 10 == 0)
+			if (frameCount % 5 == 0)
 			{
 				fpsIndex = (++fpsIndex) % 5;
 				fpsCache[fpsIndex] = 1.0 / elapsedTime;
@@ -200,11 +187,8 @@ namespace TikiEngine
 				double fps = fpsCache[0] + fpsCache[1] + fpsCache[2] + fpsCache[3] + fpsCache[4]; 
 				fps /= 6.0;
 
-				std::wostringstream s;
-				s << "TikiEngine 2.0 - FPS: " << fps;
-
-				wstring str = s.str();
-				SetWindowText(window->GetHWND(), str.c_str());
+				wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(fps);
+				SetWindowText(window->GetHWND(), s.CStr());
 			}
 #endif
 
@@ -243,11 +227,17 @@ namespace TikiEngine
 
 		if (!scene->IsInitialized())
 		{
-			isLoading = true;
-			isLoadingFinish = false;
-			
-			loadingThread = TIKI_NEW Thread<Engine, Scene>(&Engine::initScene);
-			loadingThread->Start(this, scene);
+			if (loadingScene)
+			{
+				isLoading = true;
+				isLoadingFinish = false;			
+				loadingThread = TIKI_NEW Thread<Engine, Scene>(&Engine::initScene);
+				loadingThread->Start(this, scene);
+			}
+			else
+			{
+				initScene(scene);
+			}
 		}
 	}
 
@@ -363,7 +353,7 @@ namespace TikiEngine
 			loadingScene->Update(args);
 		}
 
-		syncWait += (args.Time.ElapsedTime > 0.015 ? -1 : 1);
+		syncWait += (args.Time.ElapsedTime > 0.014 ? -1 : 1);
 		if (syncWait > 0)
 		{
 			Sleep(syncWait);
@@ -381,12 +371,8 @@ namespace TikiEngine
 		if (module != 0)
 		{
 #if _DEBUG
-			LARGE_INTEGER freq;
-			LARGE_INTEGER start;
-			LARGE_INTEGER end;
-
-			QueryPerformanceFrequency(&freq);
-			QueryPerformanceCounter(&start);
+			TikiPerformanceCounter timer;
+			timer.Start();
 #endif
 
 			module->AddRef();
@@ -395,12 +381,11 @@ namespace TikiEngine
 			loadedModules.Add(module);
 
 #if _DEBUG
-			QueryPerformanceCounter(&end);
+			double el = timer.Stop();
 			
-			ostringstream s;
-			s << "Loading Module: " << typeid(*module).name() << " - Elapsed Time: " << ((double)(end.QuadPart - start.QuadPart) / freq.QuadPart); 
+			string s = string("Loading Module: ") + typeid(*module).name() + " - Elapsed Time: " + StringConvert::ToString(el); 
 
-			this->HLog.Write(s.str(), false);
+			this->HLog.Write(s, false);
 #endif
 
 			return true;
@@ -422,10 +407,9 @@ namespace TikiEngine
 #if _DEBUG
 		double el = time.Stop();
 
-		ostringstream s;
-		s << "LoadScene: " << typeid(*scene).name() << " - ElapsedTime: " << el;
+		string s = string("LoadScene: ") + typeid(*scene).name() + " - ElapsedTime: " + StringConvert::ToString(el);
 
-		HLog.Write(s.str(), false);
+		HLog.Write(s, false);
 #endif
 
 		critLoading.Lock();

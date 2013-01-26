@@ -10,7 +10,7 @@ namespace TikiEngine
 	public:
 
 		EngineObject(Engine* engine) : engine(engine) { }
-		virtual ~EngineObject() { }
+		~EngineObject() { }
 
 		inline Engine* GetEngine()
 		{

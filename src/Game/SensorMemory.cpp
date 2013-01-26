@@ -26,12 +26,12 @@ namespace TikiEngine
 
 		void SensorMemory::UpdateVision(const UpdateArgs& args)
 		{
+#if TIKI_USE_SCENEGRAPH
 			if(owner->GetFaction() == 0)
 			{
 				owner->GetGameObject()->GetSceneGraphElement().MarkVisible();
 			}
-
-
+#endif
 
 			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
 				owner->Pos3D(),
@@ -61,8 +61,10 @@ namespace TikiEngine
 							info.TimeLastVisible = args.Time.TotalTime;
 							info.WithinFOV = true;
 
+#if TIKI_USE_SCENEGRAPH
 							go->GetSceneGraphElement().MarkVisible();
 							owner->GetGameObject()->GetSceneGraphElement().MarkVisible();
+#endif
 						}
 						else
 						{

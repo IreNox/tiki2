@@ -736,5 +736,8 @@
     <ClInclude Include="inc\Core\StringParse.h">
       <Filter>Headerdateien\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Core\FakeSceneGraph.h">
+      <Filter>Headerdateien\Core\SceneGraph</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

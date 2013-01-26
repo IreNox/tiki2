@@ -86,6 +86,7 @@
     <ClInclude Include="inc\Core\EventLog.h" />
     <ClInclude Include="inc\Core\EventTriggers.h" />
     <ClInclude Include="inc\Core\Exception.h" />
+    <ClInclude Include="inc\Core\FakeSceneGraph.h" />
     <ClInclude Include="inc\Core\HelperThreading.h" />
     <ClInclude Include="inc\Core\IAnimation.h" />
     <ClInclude Include="inc\Core\IBone.h" />

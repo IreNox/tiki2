@@ -12,7 +12,7 @@ namespace TikiEngine
 		ResourceInfo() : hash(0), fileName(), resource(0) {}
 		ResourceInfo(PInt hash, wstring name, IResource* res) : hash(hash), fileName(name), resource(res) {}
 
-		~ResourceInfo() { fileName.erase(); }
+		~ResourceInfo() { }
 
 		PInt hash;
 		wstring fileName;

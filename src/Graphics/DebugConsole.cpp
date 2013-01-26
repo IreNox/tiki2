@@ -69,12 +69,9 @@ namespace TikiEngine
 					c++;
 				}
 
-				wostringstream s;
-				s << L"> " << cmdEnter;
-
 				DllMain::ModuleSpriteBatch->DrawString(
 					font,
-					s.str(),
+					L"> " + cmdEnter,
 					Vector2(5, 14.0f * c),
 					Color::White,
 					0.8f
@@ -123,7 +120,7 @@ namespace TikiEngine
 					switch (keys[i])
 					{
 					case KEY_BACK:
-						if (cmdEnter.length() != 0) cmdEnter.pop_back();
+						if (cmdEnter.Length() != 0) cmdEnter.Remove(cmdEnter.Length() - 1, 1);
 						break;
 					case KEY_RETURN:
 						if (executeCommand())
@@ -131,7 +128,7 @@ namespace TikiEngine
 							engine->HLog.Write(
 								StringWtoA(cmdEnter)
 							);
-							cmdEnter.erase();
+							cmdEnter = L"";
 						}
 						break;
 					}

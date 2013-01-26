@@ -53,7 +53,7 @@ namespace TikiEngine
 			float width = 0.0f;
 			RectangleF rect;
 
-			while (i < text.length())
+			while (i < text.Length())
 			{
 				wchar_t c = text[i];
 

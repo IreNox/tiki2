@@ -334,9 +334,7 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void GameHud::Update(const UpdateArgs& args)
 		{
-			wostringstream s;
-			s << gameState->GetResource();
-			labelRes->Text() = s.str();
+			labelRes->Text() = StringConvert::ToWString(gameState->GetResource());
 
 			UInt32 i = 0;
 			while (i < enabledControls.Count())

@@ -86,7 +86,7 @@ namespace TikiEngine
 			while (i < input.Count())
 			{
 				const KeyValuePair<string, IRenderTarget*>& kvp = input.GetKVPCRef(i);
-				shader->SetTexture(kvp.GetKey().c_str(), kvp.GetValue());
+				shader->SetTexture(kvp.GetKey().CStr(), kvp.GetValue());
 
 				i++;
 			}

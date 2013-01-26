@@ -2,9 +2,7 @@
 
 #include "Core/TypeDef.h"
 #include "Core/List.h"
-
 #include <crtdefs.h>
-//#include <ostream>
 
 extern "C"
 {
@@ -13,7 +11,7 @@ extern "C"
 
 namespace TikiEngine
 {
-#pragma region TikiStringData
+	#pragma region TikiStringData
 	template<typename TChar>
 	struct TikiStringData
 	{
@@ -32,19 +30,19 @@ namespace TikiEngine
 		TikiStringData(UInt32 strLen, UInt32 dataLen)
 			: StringLength(strLen), StringDataLength(dataLen), RefCount(1)
 		{
-			StringData = new TChar[dataLen];
+			StringData = TIKI_NEW TChar[dataLen];
 			StringData[strLen] = 0;
 		}
 
 		TikiStringData(UInt32 strLen, UInt32 dataLen, const TChar* baseData, Int32 baseDataLen = -1)
 			: StringLength(strLen), StringDataLength(dataLen), RefCount(1)
 		{
-			StringData = new TChar[dataLen];
+			StringData = TIKI_NEW TChar[dataLen];
 			memcpy(
 				StringData,
 				baseData,
 				sizeof(TChar) * (baseDataLen == -1 ? strLen : baseDataLen)
-				);
+			);
 			StringData[strLen] = 0;
 		}
 
@@ -69,7 +67,7 @@ namespace TikiEngine
 			return RefCount;
 		}
 	};
-#pragma endregion
+	#pragma endregion
 
 	template<typename TChar>
 	class TikiBasicString
@@ -77,15 +75,18 @@ namespace TikiEngine
 		friend class ParseString;
 		friend class StringConvert;
 		friend struct TikiStringData<TChar>;
-		//friend std::basic_ostream<char, std::char_traits<char>>& operator<<(std::basic_ostream<char, std::char_traits<char>>& ostr, const TikiBasicString<char>& str);
 
 	public:
 
-#pragma region Class
+		#pragma region Class
 		TikiBasicString()
-			: data(0)
 		{
 			data = &emptyData;
+		}
+
+		TikiBasicString(TChar c)
+		{
+			data = TIKI_NEW TikiStringData<TChar>(1, 2, &c, 1);
 		}
 
 		TikiBasicString(const TChar* string, Int32 length = -1)
@@ -98,11 +99,11 @@ namespace TikiEngine
 			{
 				UInt32 len = (length == -1 ? stringLength(string) : length);
 
-				data = new TikiStringData<TChar>(
+				data = TIKI_NEW TikiStringData<TChar>(
 					len,
 					calcLength(len + 1),
 					string
-					);
+				);
 			}
 		}
 
@@ -116,22 +117,27 @@ namespace TikiEngine
 		{
 			data->Release();
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - Get
-		UInt32 Length() const
+		#pragma region Member - Get
+		inline UInt32 Length() const
 		{
 			return data->StringLength;
 		}
 
-		bool Empty()
+		inline bool Empty() const
 		{
 			return data->StringLength == 0;
 		}
-#pragma endregion
 
-#pragma region Member - Split
-		List<TikiBasicString<TChar>> Split(const TikiBasicString<TChar>& seperator)
+		inline const TChar* CStr() const
+		{
+			return data->StringData;
+		}
+		#pragma endregion
+
+		#pragma region Member - Split
+		inline List<TikiBasicString<TChar>> Split(const TikiBasicString<TChar>& seperator)
 		{
 			List<TikiBasicString<TChar>> list;
 
@@ -144,7 +150,7 @@ namespace TikiEngine
 
 				list.Add(
 					this->Substring(lastIndex, index - lastIndex)
-					);
+				);
 
 				lastIndex = index + seperator.data->StringLength;
 				i++;
@@ -154,32 +160,32 @@ namespace TikiEngine
 			{
 				list.Add(
 					this->Substring(lastIndex, data->StringLength - lastIndex)
-					);
+				);
 			}
 
 			return list;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - Replace
-		TikiBasicString<TChar> Replace(TChar oldValue, TChar newValue)
+		#pragma region Member - Replace
+		inline TikiBasicString<TChar> Replace(TChar oldValue, TChar TIKI_NEWValue) const
 		{
 			TikiBasicString str = *this;
 
 			UInt32 i = 0;
 			while (i < data->StringLength)
 			{
-				if (str[i] == oldValue) str[i] = newValue;
+				if (str[i] == oldValue) str[i] = TIKI_NEWValue;
 				i++;
 			}
 
 			return str;
 		}
 
-		TikiBasicString<TChar> Replace(const TikiBasicString<TChar>& oldValue, const TikiBasicString<TChar>& newValue)
+		inline TikiBasicString<TChar> Replace(const TikiBasicString<TChar>& oldValue, const TikiBasicString<TChar>& TIKI_NEWValue) const
 		{
 			UInt32 count = this->CountSubstring(oldValue);
-			UInt32 length = data->StringLength - (count * oldValue.data->StringLength) + (count * newValue.data->StringLength);
+			UInt32 length = data->StringLength - (count * oldValue.data->StringLength) + (count * TIKI_NEWValue.data->StringLength);
 
 			TikiBasicString<TChar> str = TikiBasicString<TChar>(length);
 
@@ -194,7 +200,7 @@ namespace TikiEngine
 				offsetOld += index - offsetOld;
 				offsetNew += index - offsetNew;
 
-				memcpy(str.data->StringData + offsetNew, newValue.data->StringData, sizeof(TChar) * newValue.data->StringLength);
+				memcpy(str.data->StringData + offsetNew, TIKI_NEWValue.data->StringData, sizeof(TChar) * TIKI_NEWValue.data->StringLength);
 				offsetOld += oldValue.data->StringLength;
 				offsetNew += oldValue.data->StringLength;
 
@@ -203,10 +209,10 @@ namespace TikiEngine
 
 			return str;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - Substring
-		TikiBasicString<TChar> Substring(UInt32 startIndex, Int32 length = -1)
+		#pragma region Member - Substring
+		inline TikiBasicString<TChar> Substring(UInt32 startIndex, Int32 length = -1) const
 		{
 			if (length == -1 || startIndex + length > data->StringLength) length = data->StringLength - startIndex;
 			if (startIndex > data->StringLength) throw "Index > Length";
@@ -222,7 +228,7 @@ namespace TikiEngine
 				);
 		}
 
-		UInt32 CountSubstring(const TikiBasicString<TChar>& str)
+		inline UInt32 CountSubstring(const TikiBasicString<TChar>& str) const
 		{
 			if (str.data->StringLength > data->StringLength)
 				throw "str.Length > this.Length";
@@ -256,10 +262,10 @@ namespace TikiEngine
 
 			return c;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - Insert/Remove
-		TikiBasicString<TChar> Insert(const TikiBasicString<TChar>& str, UInt32 index)
+		#pragma region Member - Insert/Remove
+		inline TikiBasicString<TChar> Insert(const TikiBasicString<TChar>& str, UInt32 index) const
 		{
 			TikiBasicString<TChar> oStr = TikiBasicString<TChar>(data->StringLength + str.data->StringLength);
 
@@ -270,7 +276,7 @@ namespace TikiEngine
 			return oStr;
 		}
 
-		TikiBasicString<TChar> Remove(UInt32 startIndex, UInt32 len)
+		inline TikiBasicString<TChar> Remove(UInt32 startIndex, UInt32 len) const
 		{
 			TikiBasicString<TChar> oStr = TikiBasicString<TChar>(data->StringLength - len);
 
@@ -279,10 +285,10 @@ namespace TikiEngine
 
 			return oStr;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - ToLower/ToUpper
-		TikiBasicString<TChar> ToLower()
+		#pragma region Member - ToLower/ToUpper
+		inline TikiBasicString<TChar> ToLower() const
 		{
 			TikiBasicString<TChar> str = *this;
 
@@ -298,7 +304,7 @@ namespace TikiEngine
 			return str;
 		}
 
-		TikiBasicString<TChar> ToUpper()
+		inline TikiBasicString<TChar> ToUpper() const
 		{
 			TikiBasicString<TChar> str = *this;
 
@@ -313,10 +319,10 @@ namespace TikiEngine
 
 			return str;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - IndexOf/Contains
-		Int32 IndexOf(TChar c, UInt32 index = 0) const
+		#pragma region Member - IndexOf/Contains
+		inline Int32 IndexOf(TChar c, UInt32 index = 0) const
 		{
 			UInt32 i = index;
 			while (i < data->StringLength)
@@ -327,7 +333,7 @@ namespace TikiEngine
 			return -1;
 		}
 
-		Int32 IndexOf(const TikiBasicString<TChar>& str, UInt32 index = 0) const
+		inline Int32 IndexOf(const TikiBasicString<TChar>& str, UInt32 index = 0) const
 		{
 			if (str.data->StringLength > data->StringLength) return -1;
 
@@ -360,7 +366,7 @@ namespace TikiEngine
 			return -1;
 		}
 
-		Int32 LastIndexOf(TChar c) const
+		inline Int32 LastIndexOf(TChar c) const
 		{
 			Int32 i = data->StringLength - 1;
 			while (i >= 0)
@@ -371,7 +377,7 @@ namespace TikiEngine
 			return -1;
 		}
 
-		Int32 LastIndexOf(const TikiBasicString<TChar>& str) const
+		inline Int32 LastIndexOf(const TikiBasicString<TChar>& str) const
 		{
 			Int32 i = (data->StringLength - str.data->StringLength);
 			while (i >= 0)
@@ -399,26 +405,26 @@ namespace TikiEngine
 			return -1;
 		}
 
-		bool Contains(TChar c)
+		inline bool Contains(TChar c) const
 		{
 			return this->IndexOf(c) != -1;
 		}
 
-		bool Contains(const TikiBasicString<TChar>& str)
+		inline bool Contains(const TikiBasicString<TChar>& str) const
 		{
 			return this->IndexOf(str) != -1;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Member - StartWith/EndWith
-		bool StartsWith(TChar c)
+		#pragma region Member - StartWith/EndWith
+		inline bool StartsWith(TChar c) const
 		{
 			if (data->StringLength < 1) return false;
 
 			return data->StringData[0] == c;
 		}
 
-		bool StartsWith(const TikiBasicString<TChar>& str)
+		inline bool StartsWith(const TikiBasicString<TChar>& str) const
 		{
 			if (data->StringLength < str.data->StringLength) return false;
 
@@ -432,14 +438,14 @@ namespace TikiEngine
 			return true;
 		}
 
-		bool EndsWith(TChar c)
+		inline bool EndsWith(TChar c) const
 		{
 			if (data->StringLength < 1) return false;
 
 			return data->StringData[data->StringLength - 1] == c;
 		}
 
-		bool EndsWith(const TikiBasicString<TChar>& str)
+		inline bool EndsWith(const TikiBasicString<TChar>& str) const
 		{
 			if (data->StringLength < str.data->StringLength) return false;
 
@@ -454,10 +460,10 @@ namespace TikiEngine
 
 			return true;
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Operators - Const - []/==/!=
-		TChar operator[](UInt32 index) const
+		#pragma region Operators - Const - []/==/!=
+		inline TChar operator[](UInt32 index) const
 		{
 			if (index >= data->StringLength) 
 				throw "Index > Length";
@@ -465,7 +471,7 @@ namespace TikiEngine
 			return data->StringData[index];
 		}
 
-		TChar& operator[](UInt32 index)
+		inline TChar& operator[](UInt32 index)
 		{
 			if (index >= data->StringLength)
 				throw "Index > Length";
@@ -474,11 +480,11 @@ namespace TikiEngine
 			{
 				TikiStringData<TChar>* oldData = data;
 
-				data = new TikiStringData<TChar>(
+				data = TIKI_NEW TikiStringData<TChar>(
 					data->StringLength,
 					data->StringDataLength,
 					data->StringData
-					);
+				);
 
 				oldData->Release();
 			}
@@ -486,7 +492,7 @@ namespace TikiEngine
 			return data->StringData[index];
 		}
 
-		bool operator==(const TikiBasicString<TChar>& rhs) const
+		inline bool operator==(const TikiBasicString<TChar>& rhs) const
 		{
 			if (data == rhs.data) return true;
 			if (data->StringLength != rhs.data->StringLength) return false;
@@ -501,14 +507,14 @@ namespace TikiEngine
 			return true;
 		}
 
-		bool operator!=(const TikiBasicString<TChar>& rhs) const
+		inline bool operator!=(const TikiBasicString<TChar>& rhs) const
 		{
-			return !(this == rhs);
+			return !(*this == rhs);
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Operators - =/+/+=
-		void operator=(const TikiBasicString<TChar>& rhs)
+		#pragma region Operators - =/+/+=
+		inline void operator=(const TikiBasicString<TChar>& rhs)
 		{
 			TikiStringData<TChar>* oldData = data;
 
@@ -518,7 +524,7 @@ namespace TikiEngine
 			oldData->Release();
 		}
 
-		TikiBasicString<TChar> operator+(const TikiBasicString<TChar>& rhs)
+		inline TikiBasicString<TChar> operator+(const TikiBasicString<TChar>& rhs) const
 		{
 			UInt32 len = data->StringLength + rhs.data->StringLength;
 			TikiBasicString<TChar> str = TikiBasicString<TChar>(len);
@@ -530,21 +536,21 @@ namespace TikiEngine
 			return str;
 		}
 
-		TikiBasicString<TChar>& operator+=(const TikiBasicString<TChar>& rhs)
+		inline TikiBasicString<TChar>& operator+=(const TikiBasicString<TChar>& rhs)
 		{
 			UInt32 sl = data->StringLength;
 			UInt32 len = data->StringLength + rhs.data->StringLength;
 
-			if (data->RefCount != 1 || data->StringDataLength < len)
+			if (data->RefCount != 1 || data->StringDataLength <= len)
 			{
 				TikiStringData<TChar>* oldData = data;
 
-				data = new TikiStringData<TChar>(
+				data = TIKI_NEW TikiStringData<TChar>(
 					len,
 					calcLength(len + 1),
 					oldData->StringData,
 					oldData->StringLength
-					);
+				);
 
 				oldData->Release();
 			}
@@ -554,21 +560,61 @@ namespace TikiEngine
 
 			return *this;
 		}
-#pragma endregion
+		#pragma endregion
+
+		#pragma region Operators - >/>=/</<=
+		inline bool operator>(const TikiBasicString<TChar>& rhs) const
+		{
+			if (data == rhs.data) return false;
+
+			UInt32 i = 0;
+			UInt32 c = (data->StringLength < rhs.data->StringLength ? data->StringLength : rhs.data->StringLength);
+			while (i < c && data->StringData[i] == rhs.data->StringData[i])
+			{
+				i++;
+			}
+
+			return data->StringData[i] > rhs.data->StringData[i];
+		}
+
+		inline bool operator>=(const TikiBasicString<TChar>& rhs) const
+		{
+			return (*this > rhs) || (*this == rhs);
+		}
+
+		inline bool operator<(const TikiBasicString<TChar>& rhs) const
+		{
+			if (data == rhs.data) return false;
+
+			UInt32 i = 0;
+			UInt32 c = (data->StringLength < rhs.data->StringLength ? data->StringLength : rhs.data->StringLength);
+			while (i < c && data->StringData[i] == rhs.data->StringData[i])
+			{
+				i++;
+			}
+
+			return data->StringData[i] < rhs.data->StringData[i];
+		}
+
+		inline bool operator<=(const TikiBasicString<TChar>& rhs) const
+		{
+			return (*this < rhs) || (*this == rhs);
+		}
+		#pragma endregion
 
 	private:
 
-#pragma region Private Constructor
+		#pragma region Private Constructor
 		TikiBasicString(UInt32 len)
 		{
-			data = new TikiStringData<TChar>(
+			data = TIKI_NEW TikiStringData<TChar>(
 				len,
 				calcLength(len + 1)
-				);
+			);
 		}
-#pragma endregion
+		#pragma endregion
 
-#pragma region Vars
+		#pragma region Vars
 		TikiStringData<TChar>* data;
 
 		static const TChar letterBigA;
@@ -581,9 +627,9 @@ namespace TikiEngine
 		static const TChar numberPlus;
 		static const TChar numberMinus;
 		static TikiStringData<TChar> emptyData;
-#pragma endregion
+		#pragma endregion
 
-#pragma region Private Member
+		#pragma region Private Member
 		inline UInt32 stringLength(const TChar* string) const
 		{
 			if (string == 0) return 0;
@@ -601,23 +647,23 @@ namespace TikiEngine
 			while (len < neededLen) { len *= 2; }
 			return len;
 		}
-#pragma endregion
+		#pragma endregion
 
 	};
 
-	//inline std::basic_ostream<char, std::char_traits<char>>& operator<<(std::basic_ostream<char, std::char_traits<char>>& ostr, const TikiBasicString<char>& str)
-	//{
-	//	if (str.data->StringData)
-	//	{
-	//		ostr.write(str.data->StringData, str.data->StringLength);
-	//	}
+	inline TikiBasicString<char> operator+(const char* str1, TikiBasicString<char> str2)
+	{
+		return TikiBasicString<char>(str1) + str2;
+	}
 
-	//	return ostr;
-	//}
+	inline TikiBasicString<wchar_t> operator+(const wchar_t* str1, TikiBasicString<wchar_t> str2)
+	{
+		return TikiBasicString<wchar_t>(str1) + str2;
+	}
 
 	typedef TikiBasicString<char> string;
 	typedef TikiBasicString<wchar_t> wstring;
 
-	typedef TikiBasicString<char> String;
-	typedef TikiBasicString<wchar_t> WString;
+	//typedef TikiBasicString<char> String;
+	//typedef TikiBasicString<wchar_t> WString;
 }

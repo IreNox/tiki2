@@ -22,7 +22,7 @@ inline Scene* GetStartScene(Engine* engine)
 	DWORD buffer;
 	WCHAR username[100];
 	GetUserName(username, &buffer);
-	wstring name = username;
+	::TikiEngine::wstring name = username;
 
 	Scene* scene;
 
@@ -58,7 +58,7 @@ inline Scene* GetStartScene(Engine* engine)
 #pragma region WinMain
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	_CrtSetBreakAlloc(12775);
+	//_CrtSetBreakAlloc(159771);
 
 	{
 #if _DEBUG
@@ -90,9 +90,10 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 #if _DEBUG
 			double el = time.Stop();
 
-			ostringstream s;
-			s << "Complete Loading: " << el << " sec";
-			engine->HLog.Write(s.str(), false);
+			engine->HLog.Write(
+				::TikiEngine::string("Complete Loading: ") + StringConvert::ToString(el) + " sec",
+				false
+			);
 #endif
 
 			engine->Run();

@@ -300,10 +300,9 @@ namespace TikiEngine
 			const char* tmp = 0;
 			sqlite3_stmt* state = 0;
 
-			ostringstream sql;
-			sql << "SELECT * FROM \"tiki_gui\" WHERE \"Control\" = '" << control << "';";
+			string sql = "SELECT * FROM \"tiki_gui\" WHERE \"Control\" = '" + control + "';";
 
-			int r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (int)sql.str().size(), &state, &tmp);
+			int r = sqlite3_prepare(engine->GetDB(), sql.CStr(), (int)sql.Length(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{

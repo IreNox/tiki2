@@ -144,7 +144,7 @@ namespace TikiEngine
 				terrain->LoadTerrain(
 					heightmapFilename, heightmapScale, heightmapSize, heightmapElevation
 #if _DEBUG
-					, false
+					, true
 #endif					
 				);
 
@@ -332,9 +332,11 @@ namespace TikiEngine
 			case 7:
 			case 8:
 				{
-					wostringstream s;
-					s << L"rock_0" << (type - 5);
-					this->SModel(engine->content->LoadModel(s.str()));
+					this->SModel(
+						engine->content->LoadModel(
+							L"rock_0" + StringConvert::ToWString(type - 5)
+						)
+					);
 					gameState->GetScene()->AddElement(this);
 				}
 				break;
@@ -347,9 +349,11 @@ namespace TikiEngine
 			case 20:
 			case 21:
 				{
-					wostringstream s;
-					s << L"tree0" << (type - 13);
-					this->SModel(engine->content->LoadModel(s.str()));
+					this->SModel(
+						engine->content->LoadModel(
+							L"tree0" + StringConvert::ToWString(type - 13)
+						)
+					);
 					gameState->GetScene()->AddElement(this);
 				}
 				break;
@@ -369,6 +373,8 @@ namespace TikiEngine
 			case 13:
 				gameState->GetBotFactory()->CreatePlayerTower(this);
 				break;
+			default:
+				throw "Wrong Object Type";
 			}
 		}
 

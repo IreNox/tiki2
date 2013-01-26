@@ -1,4 +1,8 @@
 #pragma once
+
+#include "Core/TypeInc.h"
+
+#if TIKI_USE_SCENEGRAPH
 #include "Core/RectangleF.h"
 #include "Core/Frustum.h"
 #include "Core/IBoundingBox.h"
@@ -112,3 +116,4 @@ namespace TikiEngine
 		Vector3 max;
 	};
 }
+#endif

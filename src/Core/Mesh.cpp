@@ -213,12 +213,7 @@ namespace TikiEngine
 					{
 						if (blockMode != 4 && bufferIndex > 3)
 						{
-							float val;
-							string str = buffer;
-							istringstream is;
-
-							is.str(str);
-							is >> val;					
+							float val = ParseString::ParseSingle(buffer);
 
 							switch (blockCount)
 							{
@@ -255,12 +250,7 @@ namespace TikiEngine
 						{
 							if (bufferIndex > 0)
 							{
-								int val;
-								string str = buffer;
-								istringstream is;
-
-								is.str(str);
-								is >> val;
+								int val = ParseString::ParseInt32(buffer);
 								val--;
 
 								if (miscVar == 0)

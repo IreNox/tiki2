@@ -1,6 +1,8 @@
-#include "Core/SceneGraphElement.h"
-#include "Core/GameObject.h"
 
+#include "Core/SceneGraphElement.h"
+
+#if TIKI_USE_SCENEGRAPH
+#include "Core/GameObject.h"
 
 namespace TikiEngine
 {
@@ -56,5 +58,6 @@ namespace TikiEngine
 	}
 	
 }
-
+#else
 bool emptySceneGraphElement = true;
+#endif

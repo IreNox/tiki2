@@ -21,10 +21,10 @@ namespace TikiEngine
 			Announcement* ann = TIKI_NEW Announcement();
 			ann->Message = msg;
 
-			if (!icon.empty())
+			if (!icon.Empty())
 				ann->Icon = engine->content->LoadTexture(icon);
 
-			if (!sound.empty())
+			if (!sound.Empty())
 				ann->Sound = engine->content->LoadSound(sound);
 			
 			announcements.Add(ann);

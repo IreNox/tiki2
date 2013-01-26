@@ -15,7 +15,7 @@ namespace TikiEngine
 			if (mode == COM_Write)
 			{
 				int r;				
-				_wfopen_s(&file, fileName.c_str(), L"wb");
+				_wfopen_s(&file, fileName.CStr(), L"wb");
 
 				bzipFile = BZ2_bzWriteOpen(&r, file, 9, 0, 30);
 
@@ -61,7 +61,7 @@ namespace TikiEngine
 			ptr += offset;
 
 			int r;				
-			_wfopen_s(&file, fileName.c_str(), L"rb");
+			_wfopen_s(&file, fileName.CStr(), L"rb");
 
 			bzipFile = BZ2_bzReadOpen(&r, file, 0, 0, 0, (int)pos);
 

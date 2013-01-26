@@ -112,10 +112,9 @@ namespace TikiEngine
 			const char* tmp = 0;
 			sqlite3_stmt* state = 0;
 
-			ostringstream sql;
-			sql << "SELECT * FROM \"tiki_level\" WHERE \"ID\" = '" << id << "';";
+			string sql = "SELECT * FROM \"tiki_level\" WHERE \"ID\" = '" + StringConvert::ToString(id) + "';";
 
-			int r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
+			int r = sqlite3_prepare(engine->GetDB(), sql.CStr(), (Int32)sql.Length(), &state, &tmp);
 
 			if (r != SQLITE_OK || sqlite3_step(state) != SQLITE_ROW)
 			{
@@ -128,10 +127,9 @@ namespace TikiEngine
 
 			//////////////
 			// Load Points
-			sql = ostringstream();
-			sql << "SELECT * FROM \"tiki_level_points\" WHERE \"LevelID\" = '" << id << "';";
+			sql = "SELECT * FROM \"tiki_level_points\" WHERE \"LevelID\" = '" + StringConvert::ToString(id) + "';";
 
-			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
+			r = sqlite3_prepare(engine->GetDB(), sql.CStr(), (Int32)sql.Length(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{
@@ -162,10 +160,9 @@ namespace TikiEngine
 
 			///////////////
 			// Load Objects
-			sql = ostringstream();
-			sql << "SELECT * FROM \"tiki_level_objects\" WHERE \"LevelID\" = '" << id << "';";
+			sql = "SELECT * FROM \"tiki_level_objects\" WHERE \"LevelID\" = '" + StringConvert::ToString(id) + "';";
 
-			r = sqlite3_prepare(engine->GetDB(), sql.str().c_str(), (Int32)sql.str().size(), &state, &tmp);
+			r = sqlite3_prepare(engine->GetDB(), sql.CStr(), (Int32)sql.Length(), &state, &tmp);
 
 			if (r == SQLITE_OK)
 			{
@@ -205,9 +202,12 @@ namespace TikiEngine
 
 			SceneGraph.Update(args);
 
-#if TIKI_CULLING
+#if TIKI_CULLING && TIKI_USE_SCENEGRAPH
 			DoFoWCulling();
 #else
+			hudContent.Clear();
+			hudContent.AddRange(SceneGraph.GetAllGameObjects());
+
 			drawContent.Clear();
 			drawContent.AddRange(SceneGraph.GetAllGameObjects());
 #endif
@@ -221,6 +221,7 @@ namespace TikiEngine
 #pragma region Culling
 		void SceneLevel::DoFoWCulling()
 		{
+#if TIKI_USE_SCENEGRAPH
 			hudContent.Clear();
 			drawContent.Clear();
 
@@ -262,6 +263,7 @@ namespace TikiEngine
 					}
 				}
 			});
+#endif
 		}
 #pragma  endregion
 	}

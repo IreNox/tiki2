@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/TypeDef.h"
+
 namespace TikiEngine
 {
 	namespace AI
@@ -24,7 +26,7 @@ namespace TikiEngine
 		{
 		public:
 
-			static std::wstring Convert(int gt)
+			static wstring Convert(int gt)
 			{
 				switch(gt)
 				{
