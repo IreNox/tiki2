@@ -557,6 +557,7 @@ namespace TikiEngine
 
 			memcpy(data->StringData + sl, rhs.data->StringData, sizeof(TChar) * rhs.data->StringLength);
 			data->StringData[len] = 0;
+			data->StringLength = len;
 
 			return *this;
 		}

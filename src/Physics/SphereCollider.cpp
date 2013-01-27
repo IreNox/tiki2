@@ -129,10 +129,13 @@ namespace TikiEngine
 
 		void SphereCollider::Update(const UpdateArgs& args)
 		{	
-			gameObject->PRS.SPosition() = actor->getGlobalPosition().get();
+			if (!isTrigger)
+			{
+				gameObject->PRS.SPosition() = actor->getGlobalPosition().get();
 
-			NxQuat rot = actor->getGlobalOrientationQuat();
-			gameObject->PRS.SRotation() = Quaternion(rot.x, rot.y, rot.z, rot.w);
+				NxQuat rot = actor->getGlobalOrientationQuat();
+				gameObject->PRS.SRotation() = Quaternion(rot.x, rot.y, rot.z, rot.w);
+			}
 		}
 
 	}

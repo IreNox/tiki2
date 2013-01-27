@@ -21,6 +21,8 @@ namespace TikiEngine
 			WindowDescription Window;
 			GaphicsDescription Graphics;
 
+			List<wstring> IgnoreModules;
+
 			EngineDescription()
 				: hInst(0), Input(), Sound(), Window(), Graphics()
 			{

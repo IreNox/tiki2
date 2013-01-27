@@ -17,8 +17,6 @@
 
 #include <typeinfo.h>
 
-#define USE_DX10 0
-
 namespace TikiEngine
 {
 	using namespace TikiEngine::Components;
@@ -51,7 +49,6 @@ namespace TikiEngine
 		DllInfo.FuncTikiComponent = CreateComponent;
 		DllInfo.FuncDispose = DisposeDll;
 
-#if (TIKI_DX10 && USE_DX10) || TIKI_DX11
 		DllInfo.Modules.Add(typeid(IGraphics).hash_code());
 		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
 
@@ -64,7 +61,6 @@ namespace TikiEngine
 		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
 		DllInfo.Components.Add(typeid(IParticleRenderer).hash_code());
-#endif
 	}
 
 	void DllMain::DisposeDll()

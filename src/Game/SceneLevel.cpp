@@ -201,6 +201,7 @@ namespace TikiEngine
 			if (level) level->Update(args);
 
 			SceneGraph.Update(args);
+			gameState->Update(args);
 
 #if TIKI_CULLING && TIKI_USE_SCENEGRAPH
 			DoFoWCulling();
@@ -213,8 +214,6 @@ namespace TikiEngine
 #endif
 
 			SceneGraph.LateUpdate(args);
-
-			gameState->Update(args);
 		}
 		#pragma endregion
 

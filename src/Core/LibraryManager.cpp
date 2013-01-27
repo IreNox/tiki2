@@ -30,10 +30,16 @@ namespace TikiEngine
 				{
 					if (file.cFileName[0] == '.') continue;
 
-					loadLibrary(
-						engine,
-						engine->HPath.GetBinaryPath() + L"\\" + wstring(file.cFileName)
-					);
+					wstring fileName = file.cFileName;
+					fileName = fileName.ToLower();
+
+					if (fileName.StartsWith(L"tikiengine") && !desc.IgnoreModules.Contains(fileName))
+					{
+						loadLibrary(
+							engine,
+							engine->HPath.GetBinaryPath() + L"\\" + fileName
+						);
+					}
 				}
 				while (FindNextFile(handle, &file));
 			}
@@ -148,7 +154,7 @@ namespace TikiEngine
 			double el = time.Stop();
 
 			engine->HLog.Write(
-				"LoadLibrary: " + StringWtoA(engine->HPath.GetFilename(libraryName)) + " - ElapsedTime: " + StringConvert::ToString(el)
+				"LoadLibrary: " + StringWtoA(engine->HPath.GetFilename(libraryName)) + " - ElapsedTime: " + StringConvert::ToString(el) + " sec"
 			);
 #endif
 
