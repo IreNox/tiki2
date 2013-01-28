@@ -10,7 +10,6 @@ namespace TikiEngine
 {
 	namespace Graphics
 	{
-
 		template <class T, UINT TBinding>
 		class DynamicBuffer : public EngineObject
 		{

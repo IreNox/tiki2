@@ -11,7 +11,7 @@
       <AdditionalDependencies>NxCharacter.lib;PhysXCooking.lib;PhysXCore.lib;PhysXLoader.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <ClCompile>
-      <AdditionalIncludeDirectories>.\inc\PhysX\Cooking;.\inc\PhysX\Foundation;.\inc\PhysX\NxCharacter;.\inc\PhysX\Physics;.\inc\PhysX\PhysXLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\inc\extern\PhysX\Cooking;$(SolutionDir)\inc\extern\PhysX\Foundation;$(SolutionDir)\inc\extern\PhysX\NxCharacter;$(SolutionDir)\inc\extern\PhysX\Physics;$(SolutionDir)\inc\extern\PhysX\PhysXLoader;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup />

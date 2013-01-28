@@ -82,7 +82,7 @@ namespace TikiEngine
 		graphics = librarys->CreateModule<IGraphics>();
 		if (!initModule(graphics))
 		{
-			MessageBox(window->GetHWND(), L"Can't init Direct3D.", L"TikiEngine 2.0", MB_ICONERROR);
+			MessageBox(window->GetHWND(), L"Can't init Graphics.", L"TikiEngine 2.0", MB_ICONERROR);
 			return false;
 		}
 

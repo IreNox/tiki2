@@ -22,6 +22,7 @@
     <ClCompile Include="src\Graphics\DebugConsole.cpp" />
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
+    <ClCompile Include="src\Graphics\DXSpriteBatchModule.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\AllModules.cpp" />
     <ClCompile Include="src\Graphics\AllComponents.cpp" />
@@ -31,6 +32,7 @@
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\RenderTarget.cpp" />
     <ClCompile Include="src\Graphics\Shader.cpp" />
+    <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp" />
     <ClCompile Include="src\Graphics\VertexInternal.cpp" />
     <ClCompile Include="src\Graphics\Texture.cpp" />
     <ClCompile Include="src\Graphics\CloddyInternal.cpp" />

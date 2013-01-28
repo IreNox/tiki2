@@ -26,19 +26,22 @@ namespace TikiEngine
 			MessageReceived.RaiseEvent(this, MessageReceivedArgs(text.CStr()));
 		}
 
+		text += "\n";
+
 		FILE* h;
 		fopen_s(&h, "engine.log", "a");
 		
-		text += "\n";
+		if (h != 0)
+		{
+			fwrite(
+				text.CStr(),
+				1,
+				text.Length(),
+				h
+				);
 
-		fwrite(
-			text.CStr(),
-			1,
-			text.Length(),
-			h
-		);
-
-		fclose(h);
+			fclose(h);
+		}
 	}
 
 	void HelperLog::WriteError(string message, void* exception) const

@@ -51,9 +51,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsDX10", "
 		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsOGL", "TikiEngine.GraphicsOGL.vcxproj", "{7DE74242-4745-40AD-808E-FD205405B128}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 11
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
 		SccLocalPath0 = .
@@ -88,6 +90,9 @@ Global
 		SccProjectUniqueName10 = TikiEngine.GraphicsDX10.vcxproj
 		SccProjectTopLevelParentUniqueName10 = TikiEngine.sln
 		SccLocalPath10 = .
+		SccProjectUniqueName11 = TikiEngine.GraphicsOGL.vcxproj
+		SccProjectTopLevelParentUniqueName11 = TikiEngine.sln
+		SccLocalPath11 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -172,6 +177,14 @@ Global
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x64.Build.0 = Release|x64
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x86.ActiveCfg = Release|Win32
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x86.Build.0 = Release|Win32
+		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x64.ActiveCfg = Debug|x64
+		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x64.Build.0 = Debug|x64
+		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x86.ActiveCfg = Debug|Win32
+		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x86.Build.0 = Debug|Win32
+		{7DE74242-4745-40AD-808E-FD205405B128}.Release|x64.ActiveCfg = Release|x64
+		{7DE74242-4745-40AD-808E-FD205405B128}.Release|x64.Build.0 = Release|x64
+		{7DE74242-4745-40AD-808E-FD205405B128}.Release|x86.ActiveCfg = Release|Win32
+		{7DE74242-4745-40AD-808E-FD205405B128}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,6 +198,7 @@ Global
 		{60826F76-797B-476A-A4A0-237278730964} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
 		{E29CCD5B-949C-477F-BBC2-2B694ACA8346} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
+		{7DE74242-4745-40AD-808E-FD205405B128} = {FEA39EEE-8608-4B43-BD2F-3BF60194DC0D}
 		{DF460EAB-570D-4B50-9089-2E2FC801BF38} = {586B6389-7027-4E84-9EE8-56C347BFF8F2}
 		{07E6BAA5-4F4C-4F0F-A331-BF09FFB08A2E} = {2BD9FA24-8D3E-446C-8C39-D4BF79B32C87}
 	EndGlobalSection

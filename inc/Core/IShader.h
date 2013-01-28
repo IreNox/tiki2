@@ -55,7 +55,7 @@ namespace TikiEngine
 			virtual void SetVector4(cstring key, const Vector4& value) = 0;
 			virtual void SetMatrix(cstring key, const Matrix& value) = 0;
 			virtual void SetTexture(cstring key, ITexture* value) = 0;
-			virtual void SetTextureArray(cstring key, List<ITexture*>* array) = 0;
+			virtual void SetTextureArray(cstring key, List<ITexture*>& array) = 0;
 
 			virtual void SetConstantBuffer(cstring key, IConstantBuffer* buffer) = 0;
 

@@ -48,6 +48,9 @@
     <Filter Include="Headerdateien\Internal\Model">
       <UniqueIdentifier>{e8bfa32a-5d6a-4500-97d8-bcbca723ed41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SpriteBatch">
+      <UniqueIdentifier>{b2d12663-4ac2-4a76-919a-28c746e4ba15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\Texture.cpp">
@@ -95,6 +98,12 @@
     <ClCompile Include="src\Graphics\GraphicsInternal.cpp">
       <Filter>Quelldateien\Internal</Filter>
     </ClCompile>
+    <ClCompile Include="src\Graphics\DXSpriteBatchModule.cpp">
+      <Filter>SpriteBatch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
+      <Filter>SpriteBatch</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\ConstantBuffer.h">
@@ -119,9 +128,6 @@
       <Filter>Headerdateien\Resources</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\GraphicsModule.h">
-      <Filter>Headerdateien\Modules</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
       <Filter>Headerdateien\Modules</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchVertex.h">
@@ -207,6 +213,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainTriangulationCallback.h">
       <Filter>Headerdateien\Internal\Cloddy</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
+      <Filter>SpriteBatch</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

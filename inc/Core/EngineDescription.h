@@ -27,6 +27,24 @@ namespace TikiEngine
 				: hInst(0), Input(), Sound(), Window(), Graphics()
 			{
 			}
+
+			EngineDescription(const EngineDescription& desc)
+				: hInst(desc.hInst), Input(desc.Input), Sound(desc.Sound), Window(desc.Window), Graphics(desc.Graphics)
+			{
+				this->IgnoreModules = desc.IgnoreModules;
+			}
+
+			inline void operator=(const EngineDescription& rhs)
+			{
+				this->hInst = rhs.hInst;
+
+				this->Input = rhs.Input;
+				this->Sound = rhs.Sound;
+				this->Window = rhs.Window;
+				this->Graphics = rhs.Graphics;
+
+				this->IgnoreModules = rhs.IgnoreModules;
+			}
 		};
 	}
 }

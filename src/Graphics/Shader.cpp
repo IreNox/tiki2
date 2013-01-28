@@ -1,4 +1,4 @@
-#pragma comment(lib, "Effects11.lib")
+
 #pragma comment(lib, "d3dcompiler.lib")
 
 #include "Core/TypeGlobals.h"
@@ -14,8 +14,6 @@
 #include "Graphics/Shader.h"
 #include "Graphics/ConstantBuffer.h"
 
-#include <d3d11.h>
-#include <d3dx11.h>
 #include <D3Dcompiler.h>
 
 #include "Graphics/DllMain.h"
@@ -26,7 +24,8 @@
 #define TDX_EFFECT_PROFILE "fx_4_0"
 #define TDX_EFFECT_CREATE D3DX10CreateEffectFromMemory
 #define TDX_EFFECT_TECHNIQUE "tiki10"
-#else
+#elif TIKI_DX11
+#pragma comment(lib, "Effects11.lib")
 #define TDX_EFFECT_COMPILE D3DX11CompileFromMemory
 #define TDX_EFFECT_PROFILE "fx_5_0"
 #define TDX_EFFECT_CREATE D3DX11CreateEffectFromMemory
@@ -143,7 +142,7 @@ namespace TikiEngine
 			{
 				*hash = HelperHash::Hash(
 					(UCHAR*)elements,
-					sizeof(D3D11_INPUT_ELEMENT_DESC) * elementsCount
+					sizeof(TDX_Input_Element_desc) * elementsCount
 				);
 			}
 		}
@@ -315,32 +314,21 @@ namespace TikiEngine
 			effect->GetVariableByName(key)->AsShaderResource()->SetResource(tex);
 		}
 
-		void Shader::SetTextureArray(cstring key, List<ITexture*>* array)
+		void Shader::SetTextureArray(cstring key, List<ITexture*>& array)
 		{
-#if TIKI_DX10
-			ID3D10ShaderResourceView** data = TIKI_NEW ID3D10ShaderResourceView*[array->Count()];
+			TDX_ShaderResourceView** data = TIKI_NEW TDX_ShaderResourceView*[array.Count()];
 
 			UInt32 i = 0;
-			while (i < array->Count())
+			while (i < array.Count())
 			{
-				data[i] = (ID3D10ShaderResourceView*)array->Get(i)->GetNativeResource();
+				data[i] = (TDX_ShaderResourceView*)array[i]->GetNativeResource();
 				i++;
 			}
-#else
-			ID3D11ShaderResourceView** data = TIKI_NEW ID3D11ShaderResourceView*[array->Count()];
-
-			UInt32 i = 0;
-			while (i < array->Count())
-			{
-				data[i] = (ID3D11ShaderResourceView*)array->Get(i)->GetNativeResource();
-				i++;
-			}
-#endif
 
 			HRESULT r = effect->GetVariableByName(key)->AsShaderResource()->SetResourceArray(
 				data,
 				0,
-				array->Count()
+				array.Count()
 			);
 
 			if (FAILED(r))

@@ -9,7 +9,7 @@ public:
 
 	bool IsReadOnly;
 
-#pragma region Class
+	#pragma region Class
 	List()
 		: IsReadOnly(false), lengthArr(0), lengthData(0), data(0)
 	{
@@ -45,9 +45,9 @@ public:
 	{
 		delete[](this->data);
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Member
+	#pragma region Member
 	inline UInt32 Count() const
 	{
 		return lengthData;
@@ -95,9 +95,9 @@ public:
 
 		return arr;
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Member - Add
+	#pragma region Member - Add
 	inline void Add(T item)
 	{
 		if (this->IsReadOnly) return;
@@ -150,9 +150,9 @@ public:
 	{
 		return data;
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Member - Remove
+	#pragma region Member - Remove
 	inline bool Remove(T item)
 	{
 		if (this->IsReadOnly) return false;
@@ -183,9 +183,9 @@ public:
 
 		lengthData--;
 	}  
-#pragma endregion
+	#pragma endregion
 
-#pragma region Indexer
+	#pragma region Indexer
 	inline T Get(const UInt32& index) const
 	{
 		return this->data[index];
@@ -215,9 +215,9 @@ public:
 	{
 		return this->data[index];
 	} 
-#pragma endregion
+	#pragma endregion
 
-#pragma region Operators
+	#pragma region Operators
 	inline void operator=(const List<T>& copy)
 	{
 		delete[](data);
@@ -227,9 +227,15 @@ public:
 		this->lengthData = copy.lengthData;
 
 		this->data = TIKI_NEW T[copy.lengthArr];
-		memcpy(this->data, copy.data, sizeof(T) * copy.lengthArr);
+		UInt32 i = 0;
+		while (i < lengthData)
+		{
+			this->data[i] = copy.data[i];
+			i++;
+		}
+		
 	}
-#pragma endregion
+	#pragma endregion
 
 protected:
 
@@ -239,7 +245,7 @@ protected:
 
 private:
 
-#pragma region Private Member
+	#pragma region Private Member
 	inline UInt32 getNextSize(UInt32 targetSize)
 	{
 		if (lengthArr == 0) lengthArr = 2;
@@ -272,9 +278,9 @@ private:
 
 		lengthData = neddedSize;
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region Private Member - Sort
+	#pragma region Private Member - Sort
 	inline void sortQuickSort(int left, int right)
 	{
 		int iLeft = left;
@@ -333,5 +339,5 @@ private:
 
 		return i;
 	}
-#pragma endregion
+	#pragma endregion
 };

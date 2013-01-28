@@ -5,9 +5,14 @@
 #include "Core/EventScreenSizeChanged.h"
 
 #include "Graphics/Shader.h"
+#include "Graphics/SpriteBatchVertex.h"
+
+#if TIKI_DX10 | TIKI_DX11
 #include "Graphics/DynamicBuffer.h"
 #include "Graphics/VertexDeclaration.h"
-#include "Graphics/SpriteBatchVertex.h"
+#elif TIKI_OGL
+#include "Graphics/OGLVertexArray.h"
+#endif
 
 namespace TikiEngine
 {
@@ -72,8 +77,13 @@ namespace TikiEngine
 			};
 
 			Shader* shader;
+
+#if TIKI_DX10 || TIKI_DX11
 			VertexDeclaration* declaration;
 			DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>* buffer;
+#elif TIKI_OGL
+			OGLVertexArray<SpriteBatchVertex>* buffer;
+#endif
 
 			List<Sprite> spriteInfos;
 			List<SpriteBatchVertex> spriteVertices;

@@ -29,7 +29,7 @@ typedef D3D10_INPUT_ELEMENT_DESC TDX_Input_Element_desc;
 
 #define TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT D3D10_APPEND_ALIGNED_ELEMENT
 #define TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA D3D10_INPUT_PER_VERTEX_DATA
-#else
+#elif TIKI_DX11
 #include "D3D11.h"
 #include "D3DX11.h"
 
@@ -54,6 +54,12 @@ typedef D3D11_INPUT_ELEMENT_DESC TDX_Input_Element_desc;
 
 #define TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT D3D11_APPEND_ALIGNED_ELEMENT
 #define TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA D3D11_INPUT_PER_VERTEX_DATA
+#elif TIKI_OGL
+#include <gl/GL.h>
+#include "Graphics/OGLDllInfo.h"
+
+#define TIKI_VERTEX_BUFFER	GL_ARRAY_BUFFER
+#define TIKI_INDEX_BUFFER	GL_ELEMENT_ARRAY_BUFFER
 #endif
 
 using TikiEngine::Engine;
@@ -89,9 +95,13 @@ namespace TikiEngine
 #if TIKI_DX10
 		static ID3D10Device* Device;
 		static ID3D10Device* Context;
-#else
+#elif TIKI_DX11
 		static ID3D11Device* Device;
 		static ID3D11DeviceContext* Context;
+#elif TIKI_OGL
+		static HDC Device;
+		static HGLRC Context;
+		static OGLDllInfo Info;
 #endif
 
 		static void InitDll(TikiEngine::Engine* engine);

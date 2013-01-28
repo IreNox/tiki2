@@ -26,14 +26,14 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && true)
+	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
-		//scene = TIKI_NEW SceneTim(engine);
+		scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
 		//scene = TIKI_NEW SceneAdrian(engine);
 
-		scene = TIKI_NEW SceneLevel(engine);
-		((SceneLevel*)scene)->LoadLevel(2);
+		//scene = TIKI_NEW SceneLevel(engine);
+		//((SceneLevel*)scene)->LoadLevel(2);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
@@ -74,6 +74,8 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.Window.Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 
 		desc.IgnoreModules.Add(L"tikiengine.graphicsdx10.dll");
+		//desc.IgnoreModules.Add(L"tikiengine.graphicsdx11.dll");
+		desc.IgnoreModules.Add(L"tikiengine.graphicsogl.dll");
 
 #if !_DEBUG
 		desc.Graphics.Fullscreen = true;

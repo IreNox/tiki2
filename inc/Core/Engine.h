@@ -124,6 +124,7 @@ namespace TikiEngine
 		UInt64 frameCount;
 
 		EngineDescription desc;
+
 		List<IModule*> loadedModules;
 
 		void initScene(Scene* scene);

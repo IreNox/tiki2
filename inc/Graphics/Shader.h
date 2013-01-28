@@ -10,7 +10,7 @@
 typedef ID3D10Effect TDX_Effect;
 typedef ID3D10EffectPass TDX_EffectPass;
 typedef ID3D10EffectTechnique TDX_EffectTechnique;
-#else
+#elif TIKI_DX11
 #include "Graphics/D3dx11effect.h"
 
 typedef ID3DX11Effect TDX_Effect;
@@ -53,22 +53,30 @@ namespace TikiEngine
 			void SetVector4(cstring key, const Vector4& value);
 			void SetMatrix(cstring key, const Matrix& value);
 			void SetTexture(cstring key, ITexture* value);
-			void SetTextureArray(cstring key, List<ITexture*>* array);
+			void SetTextureArray(cstring key, List<ITexture*>& array);
 
 			ShaderType GetShaderType();
 
 			void* GetNativeResource();
 			bool GetReady();
 			
+#if TIKI_DX10 || TIKI_DX11
 			void CreateLayout(TDX_Input_Element_desc* elements, UINT elementsCount, TDX_InputLayout** layout, UInt32* hash);
+#endif
 
 		protected:
 			
 			ShaderType type;
 
+#if TIKI_DX10 || TIKI_DX11
 			TDX_Effect* effect;
 			TDX_EffectPass* pass;
 			TDX_EffectTechnique* technique;
+#elif TIKI_OGL
+			UInt32 vertexShader;
+			UInt32 pixelShader;
+			UInt32 shaderProgram;
+#endif
 
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);

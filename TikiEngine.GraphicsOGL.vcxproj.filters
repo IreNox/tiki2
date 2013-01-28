@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="DllMain">
+      <UniqueIdentifier>{0c645aca-783c-49e3-902a-74a6897cb518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules">
+      <UniqueIdentifier>{081d5dad-d596-45cf-9062-09a61a094f31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\SpriteBatchModule">
+      <UniqueIdentifier>{8ec66eeb-4eca-45b5-abf3-81cc6e9e3837}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\GraphicsModule">
+      <UniqueIdentifier>{90926c5a-aedf-443f-8077-21c31fdc3f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{e5e46d2a-8016-48b4-a399-c4c783fecbcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Texture">
+      <UniqueIdentifier>{cffd9225-315d-403c-865e-5d2b312e4acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\RenderTarget">
+      <UniqueIdentifier>{f2d5777c-59d9-4191-9ad1-2a4333e326ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Font">
+      <UniqueIdentifier>{94204b92-8af8-471e-8d5e-4c7bb011619d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{257e6fc2-7700-438f-984a-22c2cb739e8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\MeshRenderer">
+      <UniqueIdentifier>{5792c280-f9f0-4a80-a6cd-7a08107b7525}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\ParticleRenderer">
+      <UniqueIdentifier>{caa25b7e-257a-4fd2-bff9-8c724c44ba2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\TerrainRenderer">
+      <UniqueIdentifier>{171cd7c0-3b2d-429e-9a2d-f260133b61f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{7ee53c7b-c4e6-4609-b500-652a8605bae2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\Buffer">
+      <UniqueIdentifier>{72bfc793-be9d-4403-897b-be384bbc93d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{d1fd283c-76fe-4a2b-9c42-59e8a1fa8b98}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="inc\Graphics\OGLGraphicsModule.h">
+      <Filter>Modules\GraphicsModule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DllMain.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\OGLDllInfo.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\OGLVertexArray.h">
+      <Filter>Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
+      <Filter>Modules\SpriteBatchModule</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Graphics\OGLGraphicsModule.cpp">
+      <Filter>Modules\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DllMain.cpp">
+      <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OGLSpriteBatchModule.cpp">
+      <Filter>Modules\SpriteBatchModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OGLShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
+      <Filter>Modules\SpriteBatchModule</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
