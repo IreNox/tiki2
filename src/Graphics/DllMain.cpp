@@ -44,7 +44,7 @@ namespace TikiEngine
 #elif TIKI_OGL
 	HDC DllMain::Device = 0;
 	HGLRC DllMain::Context = 0;
-	OGLDllInfo DllMain::Info;
+	//OGLDllInfo DllMain::Info;
 #endif
 
 	void DllMain::InitDll(TikiEngine::Engine* engine)

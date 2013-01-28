@@ -162,6 +162,7 @@
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\extern\glew.c" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\OGLGraphicsModule.cpp" />
     <ClCompile Include="src\Graphics\OGLShader.cpp" />

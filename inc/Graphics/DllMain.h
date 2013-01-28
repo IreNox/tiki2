@@ -55,8 +55,9 @@ typedef D3D11_INPUT_ELEMENT_DESC TDX_Input_Element_desc;
 #define TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT D3D11_APPEND_ALIGNED_ELEMENT
 #define TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA D3D11_INPUT_PER_VERTEX_DATA
 #elif TIKI_OGL
-#include <gl/GL.h>
-#include "Graphics/OGLDllInfo.h"
+#include "GL/glew.h"
+#include "GL/wglew.h"
+//#include "Graphics/OGLDllInfo.h"
 
 #define TIKI_VERTEX_BUFFER	GL_ARRAY_BUFFER
 #define TIKI_INDEX_BUFFER	GL_ELEMENT_ARRAY_BUFFER
@@ -101,7 +102,7 @@ namespace TikiEngine
 #elif TIKI_OGL
 		static HDC Device;
 		static HGLRC Context;
-		static OGLDllInfo Info;
+		//static OGLDllInfo Info;
 #endif
 
 		static void InitDll(TikiEngine::Engine* engine);

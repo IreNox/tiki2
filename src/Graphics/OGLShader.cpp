@@ -13,20 +13,20 @@ namespace TikiEngine
 
 		Shader::~Shader()
 		{
-			DllMain::Info.glDetachShader(shaderProgram, vertexShader);
-			DllMain::Info.glDetachShader(shaderProgram, pixelShader);
+			//glDetachShader(shaderProgram, vertexShader);
+			//glDetachShader(shaderProgram, pixelShader);
 
-			DllMain::Info.glDeleteShader(vertexShader);
-			DllMain::Info.glDeleteShader(pixelShader);
+			//glDeleteShader(vertexShader);
+			//glDeleteShader(pixelShader);
 
-			DllMain::Info.glDeleteProgram(shaderProgram);
+			//glDeleteProgram(shaderProgram);
 		}
 		#pragma endregion
 
 		#pragma region Member
 		void Shader::Apply()
 		{
-			DllMain::Info.glUseProgram(shaderProgram);
+			glUseProgram(shaderProgram);
 		}
 		#pragma endregion
 
@@ -45,8 +45,8 @@ namespace TikiEngine
 		{
 			Int32 value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformiv(shaderProgram, loc, &value);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformiv(shaderProgram, loc, &value);
 
 			return value;
 		}
@@ -55,8 +55,8 @@ namespace TikiEngine
 		{
 			float value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformfv(shaderProgram, loc, &value);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformfv(shaderProgram, loc, &value);
 
 			return value;
 		}
@@ -70,8 +70,8 @@ namespace TikiEngine
 		{
 			Vector2 value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformfv(shaderProgram, loc, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformfv(shaderProgram, loc, value.arr);
 
 			return value;
 		}
@@ -80,8 +80,8 @@ namespace TikiEngine
 		{
 			Vector3 value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformfv(shaderProgram, loc, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformfv(shaderProgram, loc, value.arr);
 
 			return value;
 		}
@@ -90,8 +90,8 @@ namespace TikiEngine
 		{
 			Vector4 value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformfv(shaderProgram, loc, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformfv(shaderProgram, loc, value.arr);
 
 			return value;
 		}
@@ -100,8 +100,8 @@ namespace TikiEngine
 		{
 			Matrix value;
 
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glGetUniformfv(shaderProgram, loc, value.n);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glGetUniformfv(shaderProgram, loc, value.n);
 
 			return value;
 		}
@@ -110,14 +110,14 @@ namespace TikiEngine
 		#pragma region Member - Set
 		void Shader::SetInt(cstring key, Int32 value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniform1i(loc, value);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glUniform1i(loc, value);
 		}
 
 		void Shader::SetSingle(cstring key, Single value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniform1f(loc, value);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glUniform1f(loc, value);
 		}
 
 		void Shader::SetBoolean(cstring key, Boolean value)
@@ -127,26 +127,26 @@ namespace TikiEngine
 
 		void Shader::SetVector2(cstring key, const Vector2& value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniform2fv(loc, 1, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glUniform2fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetVector3(cstring key, const Vector3& value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniform3fv(loc, 1, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glUniform3fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetVector4(cstring key, const Vector4& value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniform4fv(loc, 1, value.arr);
+			UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			if (loc) glUniform4fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetMatrix(cstring key, const Matrix& value)
 		{
-			UInt32 loc = DllMain::Info.glGetUniformLocation(shaderProgram, key);
-			if (loc) DllMain::Info.glUniformMatrix4fv(loc, 1, false, value.n);
+			//UInt32 loc = glGetUniformLocation(shaderProgram, key);
+			//if (loc) glUniformMatrix4fv(loc, 1, false, value.n);
 		}
 
 		void Shader::SetTexture(cstring key, ITexture* value)

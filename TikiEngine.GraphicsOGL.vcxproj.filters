@@ -46,6 +46,9 @@
     <Filter Include="Resources\Shader">
       <UniqueIdentifier>{d1fd283c-76fe-4a2b-9c42-59e8a1fa8b98}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_extern">
+      <UniqueIdentifier>{1347afed-720b-4fc7-8b45-0c8390057b81}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\OGLGraphicsModule.h">
@@ -82,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
       <Filter>Modules\SpriteBatchModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\glew.c">
+      <Filter>_extern</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
