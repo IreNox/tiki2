@@ -52,6 +52,9 @@
     <Filter Include="Internal\Vertices">
       <UniqueIdentifier>{361d3109-c7f0-4eb8-9b33-1e8a6b05ad6f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resources\Model">
+      <UniqueIdentifier>{3644d435-d95e-4230-b840-3dc4fed11784}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\OGLGraphicsModule.h">
@@ -81,6 +84,9 @@
     <ClInclude Include="inc\Graphics\Texture.h">
       <Filter>Resources\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Graphics\Font.h">
+      <Filter>Resources\Font</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\OGLGraphicsModule.cpp">
@@ -104,20 +110,14 @@
     <ClCompile Include="src\extern\glew.c">
       <Filter>_extern</Filter>
     </ClCompile>
-    <ClCompile Include="src\extern\glfx\glfx.cpp">
-      <Filter>_extern</Filter>
-    </ClCompile>
-    <ClCompile Include="src\extern\glfx\glfxLALRParser.cpp">
-      <Filter>_extern</Filter>
-    </ClCompile>
-    <ClCompile Include="src\extern\glfx\glfxScanner.cpp">
-      <Filter>_extern</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\VertexInternal.cpp">
       <Filter>Internal\Vertices</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\OGLTexture.cpp">
       <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Font.cpp">
+      <Filter>Resources\Font</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

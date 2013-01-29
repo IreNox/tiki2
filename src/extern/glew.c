@@ -279,6 +279,8 @@ static GLboolean _glewSearchExtension (const char* name, const GLubyte *start, c
 
 #if !defined(_WIN32) || !defined(GLEW_MX)
 
+#pragma warning(disable: 4273)
+
 PFNGLCOPYTEXSUBIMAGE3DPROC __glewCopyTexSubImage3D = NULL;
 PFNGLDRAWRANGEELEMENTSPROC __glewDrawRangeElements = NULL;
 PFNGLTEXIMAGE3DPROC __glewTexImage3D = NULL;

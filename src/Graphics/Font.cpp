@@ -1,4 +1,6 @@
 
+#pragma comment(lib, "gdiplus.lib")
+
 #include <Windows.h>
 
 #include "Graphics/Font.h"
@@ -245,19 +247,6 @@ namespace TikiEngine
 				pixels,
 				sizeof(DWORD) * width * height
 			);
-
-			//ID3D11ShaderResourceView* textureResource = (ID3D11ShaderResourceView*)texture->GetNativeResource();
-
-			//ID3D11Resource* res;
-			//textureResource->GetResource(&res);
-
-			//D3D11_MAPPED_SUBRESOURCE mapped;
-
-			//DllMain::Context->Map(res, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapped);
-
-			//memcpy(mapped.pData, pixels, sizeof(DWORD) * width * height);
-
-			//DllMain::Context->Unmap(res, 0);
 
 			charRect.Optimize();
 		}

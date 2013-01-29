@@ -98,6 +98,7 @@ namespace TikiEngine
 
 		PlayerBase::~PlayerBase()
 		{
+			SafeRelease(&Hero);
 		}
 		#pragma endregion
 
@@ -125,10 +126,10 @@ namespace TikiEngine
 			platformTrigger->SetGroup(CG_Collidable_Non_Pushable);
 			platformTrigger->SetTrigger(true);
 
-			Hero = TIKI_NEW GameObject(engine);
+			SafeAddRef(TIKI_NEW GameObject(engine), &Hero);
 			gameState->GetBotFactory()->CreatePlayerHero(Hero);
 			Hero->GetComponent<TikiBot>()->GetController()->SetCenter(gameState->GetBotFactory()->GetPos(heroStartPos, 10.0f));
-
+			
 			this->Hero->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
 			this->MainBuilding->GetComponent<TikiBot>()->OnDeath.AddHandler(this);
 		}

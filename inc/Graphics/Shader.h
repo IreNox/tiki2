@@ -73,9 +73,11 @@ namespace TikiEngine
 			TDX_EffectPass* pass;
 			TDX_EffectTechnique* technique;
 #elif TIKI_OGL
-			int effectId;
+			int vsId;
+			int psId;
+			int shaderId;
 
-			UInt32 shaderProgram;
+			bool getShaderInfo(int id, string& log, bool program);
 #endif
 
 			void loadFromStream(wcstring fileName, Stream* stream);

@@ -304,6 +304,8 @@ namespace TikiEngine
 			screenSize = args.CurrentViewPort->GetSize();
 			projMatrix = Matrix::CreateOrthographicOffCenter(screenSize.X,	screenSize.Y, 0.001f, 10.0f);
 
+			//projMatrix.M33 = 1.0f/(10.0f-0.001f);
+
 			shader->SetMatrix("SBProjM", projMatrix);
 		}
 		#pragma endregion

@@ -68,13 +68,29 @@ namespace TikiEngine
 
 		void Texture::SetData(PixelFormat format, void* data, UInt32 dataLength)
 		{
+			if (format != PF_R8G8B8A8 && format != PF_A8R8G8B8)
+				throw string("PixelFormat not supported");
 
+			if (dataLength < 4U * width * height)
+				throw string("Data to small");
+
+			glTexImage2D(
+				GL_TEXTURE_2D,
+				0,
+				GL_RGBA,
+				width,
+				height,
+				0,
+				GL_RGBA,
+				GL_UNSIGNED_BYTE,
+				data
+			);
 		}
 		#pragma endregion
 
 		#pragma region IResource
 		bool Texture::GetDynamic() { return dynamic; }
-		void* Texture::GetNativeResource() { return (void*)textureId; }
+		void* Texture::GetNativeResource() { return &textureId; }
 
 		bool Texture::GetReady() { return textureId != 0; }
 		#pragma endregion
@@ -92,13 +108,11 @@ namespace TikiEngine
 			glGenTextures(1, &textureId);
 			glBindTexture(GL_TEXTURE_2D, textureId);
 
-			glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP );
-			glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP );
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+			glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 		}
 		#pragma endregion
 
@@ -131,7 +145,7 @@ namespace TikiEngine
 				width,
 				height,
 				0,
-				GL_RGBA8,
+				GL_RGBA,
 				GL_UNSIGNED_BYTE,
 				data
 			);

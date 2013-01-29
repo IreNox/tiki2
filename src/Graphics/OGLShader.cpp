@@ -2,29 +2,32 @@
 #include "Graphics/Shader.h"
 #include "Core/NotSupportedException.h"
 
-#include "glfx/glfx.h"
-
-
 namespace TikiEngine
 {
 	namespace Resources
 	{
 		#pragma region Class
 		Shader::Shader(Engine* engine)
-			: IShader(engine), shaderProgram(0), effectId(0)
+			: IShader(engine), shaderId(0), vsId(0), psId(0)
 		{
 		}
 
 		Shader::~Shader()
 		{
-			glfxDeleteEffect(effectId); 
+			glDetachShader(shaderId, vsId);
+			glDetachShader(shaderId, psId);
+
+			glDeleteShader(vsId);
+			glDeleteShader(psId);
+
+			glDeleteProgram(shaderId);
 		}
 		#pragma endregion
 
 		#pragma region Member
 		void Shader::Apply()
 		{
-			glUseProgram(shaderProgram);
+			glUseProgram(shaderId);
 		}
 		#pragma endregion
 
@@ -48,8 +51,8 @@ namespace TikiEngine
 		{
 			Int32 value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformiv(shaderProgram, loc, &value);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformiv(shaderId, loc, &value);
 
 			return value;
 		}
@@ -58,8 +61,8 @@ namespace TikiEngine
 		{
 			float value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformfv(shaderProgram, loc, &value);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformfv(shaderId, loc, &value);
 
 			return value;
 		}
@@ -68,8 +71,8 @@ namespace TikiEngine
 		{
 			Vector2 value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformfv(shaderProgram, loc, value.arr);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformfv(shaderId, loc, value.arr);
 
 			return value;
 		}
@@ -78,8 +81,8 @@ namespace TikiEngine
 		{
 			Vector3 value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformfv(shaderProgram, loc, value.arr);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformfv(shaderId, loc, value.arr);
 
 			return value;
 		}
@@ -88,8 +91,8 @@ namespace TikiEngine
 		{
 			Vector4 value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformfv(shaderProgram, loc, value.arr);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformfv(shaderId, loc, value.arr);
 
 			return value;
 		}
@@ -98,8 +101,8 @@ namespace TikiEngine
 		{
 			Matrix value;
 
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glGetUniformfv(shaderProgram, loc, value.n);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc != -1) glGetUniformfv(shaderId, loc, value.n);
 
 			return value;
 		}
@@ -113,50 +116,61 @@ namespace TikiEngine
 
 		void Shader::SetInt(cstring key, Int32 value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
+			Int32 loc = glGetUniformLocation(shaderId, key);
 			if (loc != -1) glUniform1i(loc, value);
 		}
 
 		void Shader::SetSingle(cstring key, Single value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
+			Int32 loc = glGetUniformLocation(shaderId, key);
 			if (loc != -1) glUniform1f(loc, value);
 		}
 
 		void Shader::SetVector2(cstring key, const Vector2& value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
+			Int32 loc = glGetUniformLocation(shaderId, key);
 			if (loc != -1) glUniform2fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetVector3(cstring key, const Vector3& value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
+			Int32 loc = glGetUniformLocation(shaderId, key);
 			if (loc != -1) glUniform3fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetVector4(cstring key, const Vector4& value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
+			Int32 loc = glGetUniformLocation(shaderId, key);
 			if (loc != -1) glUniform4fv(loc, 1, value.arr);
 		}
 
 		void Shader::SetMatrix(cstring key, const Matrix& value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) glUniformMatrix4fv(loc, 1, false, value.n);
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc == -1)
+			{
+				engine->HLog.Write(string("Can't find Uniform: ") + key);
+				return;
+			}	
+
+			glUniformMatrix4fv(loc, 1, false, value.n);
 		}
 
 		void Shader::SetTexture(cstring key, ITexture* value)
 		{
-			Int32 loc = glGetUniformLocation(shaderProgram, key);
-			if (loc != -1) 
+			Int32 loc = glGetUniformLocation(shaderId, key);
+			if (loc == -1)
 			{
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, (GLuint)value->GetNativeResource());
+				engine->HLog.Write(string("Can't find Uniform: ") + key);
+				return;
+			}	
 
-				glUniform1i(loc, 0); //(GLint)value->GetNativeResource());
-			}
+			glActiveTexture(GL_TEXTURE0);
+
+			GLint id = *((GLint*)value->GetNativeResource());
+			glBindTexture(GL_TEXTURE_2D, id);
+
+			glUniform1i(loc, 0); //(GLint)value->GetNativeResource());
 		}
 
 		void Shader::SetTextureArray(cstring key, List<ITexture*>& array)
@@ -173,43 +187,102 @@ namespace TikiEngine
 		#pragma region Member - IResource
 		void* Shader::GetNativeResource()
 		{
-			return (void*)shaderProgram;
+			return (void*)shaderId;
 		}
 		bool Shader::GetReady()
 		{
-			return shaderProgram != 0;
+			return shaderId != 0;
 		}
 		#pragma endregion
 
 		#pragma region Member - Load/Save
 		void Shader::loadFromStream(wcstring fileName, Stream* stream)
 		{
-			effectId = glfxGenEffect();
+			UInt32 len = (UInt32)stream->GetLength();
 
-			char* data = new char[stream->GetLength()];
-			stream->Read(data, 0, stream->GetLength());
+			char* data = new char[len];
+			stream->Read(data, 0, len);
 
-			if (!glfxParseEffectFromMemory(effectId, data))
-			{
-				delete[](data);
+			string code = string(data, len);
+			string codeVS = "#define TIKI_VS" + code;
+			string codePS = "#define TIKI_PS" + code;
 
-				string s = glfxGetEffectLog(effectId).c_str();
-				engine->HLog.WriteError("Can't parse Effect. Error: " + s, 0);
-			}
-			delete[](data);
+			vsId = glCreateShader(GL_VERTEX_SHADER);
+			psId = glCreateShader(GL_FRAGMENT_SHADER);
 
-			shaderProgram = glfxCompileProgram(effectId, "tiki");
+			const char* codeVSP = codeVS.CStr();
+			const char* codePSP = codePS.CStr();
 
-			if (shaderProgram < 0)
-			{
-				string s = glfxGetEffectLog(effectId).c_str();
-				engine->HLog.WriteError("Can't compile Effect. Error: " + s, 0);
-			}
+			glShaderSource(vsId, 1, &codeVSP, 0);
+			glShaderSource(psId, 1, &codePSP, 0);
+
+			glCompileShader(vsId);
+			glCompileShader(psId);
+
+			string error;
+			if (getShaderInfo(vsId, error, false) || getShaderInfo(psId, error, false))
+				throw error;
+
+			shaderId = glCreateProgram();
+			glAttachShader(shaderId, vsId);
+			glAttachShader(shaderId, psId);
+			
+			glBindAttribLocation(shaderId, 0, "inPos");
+			glBindAttribLocation(shaderId, 1, "inUV");
+			glBindAttribLocation(shaderId, 2, "inColor");
+			glLinkProgram(shaderId);
+
+			if (getShaderInfo(shaderId, error, true))
+				throw error;
+
+
+			//effectId = glfxGenEffect();
+
+
+			//if (!glfxParseEffectFromMemory(effectId, data))
+			//{
+			//	delete[](data);
+
+			//	string s = glfxGetEffectLog(effectId).c_str();
+			//	engine->HLog.WriteError("Can't parse Effect. Error: " + s, 0);
+			//}
+			//delete[](data);
+
+			//shaderProgram = glfxCompileProgram(effectId, "tiki");
+
+			//if (shaderProgram < 0)
+			//{
+			//	string s = glfxGetEffectLog(effectId).c_str();
+			//	engine->HLog.WriteError("Can't compile Effect. Error: " + s, 0);
+			//}
 		}
 
 		void Shader::saveToStream(wcstring fileName, Stream* stream)
 		{
 			throw NotSupportedException();
+		}
+		#pragma endregion
+
+		#pragma region Private - Info
+		bool Shader::getShaderInfo(int id, string& log, bool program)
+		{
+			int len = 0;
+			(program ? glGetProgramiv : glGetShaderiv)(id, GL_INFO_LOG_LENGTH, &len);
+
+			if (len > 0)
+			{
+				int charsWritten  = 0;
+				char* cLog = new char[len];
+
+				(program ? glGetProgramInfoLog : glGetShaderInfoLog)(id, len, &charsWritten, cLog);
+
+				log += string(cLog, charsWritten);
+				free(cLog);
+
+				return true;
+			}
+
+			return false;
 		}
 		#pragma endregion
 	}

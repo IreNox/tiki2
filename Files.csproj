@@ -31,6 +31,7 @@
   <ItemGroup>
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
+    <None Include="bin\Data\EffectsGL\os_glfx.glsl" />
     <None Include="bin\Data\EffectsGL\os_test.glsl" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />

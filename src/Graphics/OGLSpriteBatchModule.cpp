@@ -12,7 +12,7 @@ namespace TikiEngine
 			if (spriteInfos.Count() == 0) return;
 			spriteInfos.Sort();
 
-			//DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Interface);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Interface);
 			//DllMain::ModuleGraphics->GetInterfaceTarget()->ApplyFirstAndOnly();
 
 			SpriteBatchVertex* vertices = buffer->Map(spriteVertices.Count());
@@ -57,7 +57,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			//DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Disable);
+			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Disable);
 		}
 	}
 }

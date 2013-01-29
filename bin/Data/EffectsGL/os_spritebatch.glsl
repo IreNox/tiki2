@@ -1,33 +1,38 @@
-struct VSInput
-{
-    vec3 Pos;
-    vec2 UV;
-    vec4 Color;
-};
 
-interface VSOutput
-{
-    vec2 UV;                                                                 
-    vec4 Color;
-};
-			 
+#version 400
+
+#ifdef TIKI_VS
+
+in vec3 inPos;
+in vec2 inUV;
+in vec4 inColor;
+
+out vec4 Color;
+
 uniform mat4 SBProjM;
-uniform sampler2D tex;
-                                                                                    
-shader VSmain(in VSInput VSin, out VSOutput VSout)                                                                         
+
+void main()
 {
-    gl_Position		= SBProjM * vec4(VSin.Pos, 1.0);
-    VSout.UV		= VSin.UV;                                                         
-    VSout.Color		= VSin.Color;
-}
-                                                                                            
-shader FSmain(in VSOutput FSin, out vec4 FragColor)
-{                                    
-    FragColor = texture(tex, FSin.UV) * FSin.Color;
+	gl_Position = SBProjM * vec4(inPos, 1.0);
+	gl_TexCoord[0] = vec4(inUV, 0, 0);
+
+	Color = inColor;
 }
 
-program tiki
+#endif
+#ifdef TIKI_PS
+
+in vec4 Color;
+
+uniform float value;
+uniform sampler2D tex;
+
+void main()
 {
-    vs(330)=VSmain();
-    fs(330)=FSmain();
-};
+	float v = value;
+
+	gl_FragColor = Color * texture(tex, vec2(gl_TexCoord[0]));
+	gl_FragColor += vec4(0, 0, 0, 0.5);
+}
+
+#endif

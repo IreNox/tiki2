@@ -38,7 +38,8 @@ namespace TikiEngine
 
 		SceneTim::~SceneTim()
 		{
-			SafeRelease(&tex);
+			SafeRelease(&tex1);
+			SafeRelease(&tex2);
 
 			SafeRelease(&light);
 			SafeRelease(&camera);
@@ -49,7 +50,8 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
 
-			tex = engine->content->LoadTexture(L"logo");
+			tex1 = engine->content->LoadTexture(L"logo");
+			tex2 = engine->content->LoadTexture(L"checker");
 
 			//// Building
 			//GameObject* go = TIKI_NEW GameObject(engine);
@@ -94,10 +96,15 @@ namespace TikiEngine
 			Scene::Draw(args);
 
 			engine->sprites->Draw(
-				tex,
+				tex1,
 				Rectangle(10, 10, 512, 512)
 			);
 
+			engine->sprites->Draw(
+				tex2,
+				Rectangle(266, 266, 512, 512)
+			);
+			
 			if (showRenderTargets)
 			{
 				//engine->sprites->Draw(
