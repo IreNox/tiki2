@@ -3,16 +3,8 @@
 
 #include <Windows.h>
 
-#include "Core/Mesh.h"
-#include "Core/IModel.h"
-#include "Core/ISound.h"
-#include "Core/IShader.h"
-#include "Core/ITexture.h"
-
 namespace TikiEngine
 {
-	using namespace TikiEngine::Resources;
-
 	#pragma region Init/Dispose
 	HelperPath::HelperPath()
 	{
@@ -124,49 +116,6 @@ namespace TikiEngine
 		wstring right = path.Substring(rightV, path.Length() - rightV);
 
 		return workingPath + L"/" + right;
-	}
-	#pragma endregion
-
-	#pragma region Member - Resource
-	wstring HelperPath::GetResourcePath(PInt typeHash, const wstring& fileName) const
-	{
-		wstring typeExt = L"";
-		wstring typeName = L"";
-
-		if (typeid(Mesh).hash_code() == typeHash)
-		{
-			typeExt = L"obj";
-			typeName = L"Meshes";
-		}
-		else if (typeid(IModel).hash_code() == typeHash)
-		{
-			typeExt = L"tiki";
-			typeName = L"Models";
-		}
-		else if (typeid(ISound).hash_code() == typeHash)
-		{
-			typeExt = L"wav";
-			typeName = L"Sounds";
-		}
-		else if (typeid(IShader).hash_code() == typeHash)
-		{
-			typeExt = L"fx";
-			typeName = L"Effects";
-		}
-		else if (typeid(ITexture).hash_code() == typeHash)
-		{
-			typeExt = L"dds";
-			typeName = L"Textures";
-		}
-		else
-		{
-			throw "Resource type not found.";
-		}
-
-		return HelperPath::Combine(
-			/* HelperPath::GetWorkingPath() + */ L"Data/" + typeName,
-			fileName + L"." + typeExt
-		);
 	}
 	#pragma endregion
 

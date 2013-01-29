@@ -57,10 +57,15 @@ typedef D3D11_INPUT_ELEMENT_DESC TDX_Input_Element_desc;
 #elif TIKI_OGL
 #include "GL/glew.h"
 #include "GL/wglew.h"
-//#include "Graphics/OGLDllInfo.h"
+
+#pragma warning(disable: 4049 4217)
 
 #define TIKI_VERTEX_BUFFER	GL_ARRAY_BUFFER
 #define TIKI_INDEX_BUFFER	GL_ELEMENT_ARRAY_BUFFER
+
+typedef UInt32 TDX_Buffer;
+
+typedef UInt32 TDX_InputLayout;
 #endif
 
 using TikiEngine::Engine;
@@ -111,6 +116,9 @@ namespace TikiEngine
 		static IModule* CreateModule(PInt);
 		static IResource* CreateResource(PInt);
 		static Component* CreateComponent(PInt, GameObject* gameObject);
+
+		static wcstring GetResourceExt(PInt);
+		static wcstring GetResourcePath(PInt);
 
 	private:
 

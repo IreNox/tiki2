@@ -16,6 +16,8 @@ namespace TikiEngine
 	typedef IModule*(*FuncGetTikiModule)(PInt);
 	typedef IResource*(*FuncGetTikiResource)(PInt);
 	typedef Component*(*FuncGetTikiComponent)(PInt, GameObject* gameObject);
+	typedef wcstring(*FuncGetTikiResourcePath)(PInt);
+	typedef wcstring(*FuncGetTikiResourceExt)(PInt);
 	typedef void(*FuncDisposeLibrary)();
 
 	struct TikiInfo 
@@ -26,6 +28,9 @@ namespace TikiEngine
 		FuncGetTikiResource FuncTikiResource;
 		FuncGetTikiComponent FuncTikiComponent;
 
+		FuncGetTikiResourceExt FuncTikiResourceExt;
+		FuncGetTikiResourcePath FuncTikiResourcePath;
+
 		FuncDisposeLibrary FuncDispose;
 
 		List<PInt> Modules;
@@ -33,7 +38,7 @@ namespace TikiEngine
 		List<PInt> Components;
 
 		TikiInfo()
-			: LibraryHandle(0), FuncTikiModule(0), FuncTikiResource(0), FuncTikiComponent(0), FuncDispose(0), Modules(), Resources(), Components()
+			: LibraryHandle(0), FuncTikiModule(0), FuncTikiResource(0), FuncTikiComponent(0), FuncDispose(0), FuncTikiResourcePath(0), FuncTikiResourceExt(0), Modules(), Resources(), Components()
 		{
 		}
 

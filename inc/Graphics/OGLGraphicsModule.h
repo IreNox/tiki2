@@ -67,7 +67,6 @@ namespace TikiEngine
 			ViewPort viewPort;
 
 			bool initExtensions();
-			bool initExtensionList();
 			bool initOpenGL();
 
 		};

@@ -167,7 +167,7 @@ namespace TikiEngine
 		#pragma region Member - Load
 		IResource* ContentManagerModule::Load(PInt hash, wstring name)
 		{
-			name = engine->HPath.GetResourcePath(hash, name);
+			name = engine->librarys->GetResourcePath(hash, name);
 			IResource* value = this->findLoadedResource(hash, name);
 
 			if (value == 0)

@@ -2,12 +2,15 @@
 #include "Core/LibraryManager.h"
 #include "Core/TikiPerformanceCounter.h"
 
+#include "Core/Mesh.h"
+
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		typedef TikiInfo*(*GetTikiInfo)(Engine* engine);
 
+		#pragma region Class
 		LibraryManager::LibraryManager(Engine* engine)
 			: IModule(engine), defaultLibrarys(), loadedLibrarys()
 		{
@@ -16,7 +19,9 @@ namespace TikiEngine
 		LibraryManager::~LibraryManager()
 		{
 		}
+		#pragma endregion
 
+		#pragma region Init/Dispose
 		bool LibraryManager::Initialize(EngineDescription& desc)
 		{
 			wstring path = engine->HPath.GetBinaryPath() + L"\\*.dll";
@@ -48,41 +53,11 @@ namespace TikiEngine
 				return false;
 			}
 
+			defaultLibrarys.Optimize();
+
 			return true;
 		}
-
-		void LibraryManager::Begin()
-		{
-		}
-
-		void LibraryManager::End()
-		{
-		}
-
-		void LibraryManager::Dispose()
-		{
-			List<TikiInfo*>* infos = loadedLibrarys.GetValues();
-
-			UInt32 i = 0;			
-			TikiInfo* info = 0;
-
-			while (i < infos->Count())
-			{
-				info = infos->Get(i);
-				
-				if (info->FuncDispose != 0)
-				{
-					info->FuncDispose();
-				}
-
-				FreeLibrary(info->LibraryHandle);
-
-				i++;
-			}
-
-			delete(infos);
-		}
-
+		
 		TikiInfo* LibraryManager::loadLibrary(Engine* engine, wstring libraryName)
 		{
 			if (loadedLibrarys.ContainsKey(libraryName))
@@ -155,10 +130,71 @@ namespace TikiEngine
 
 			engine->HLog.Write(
 				"LoadLibrary: " + StringWtoA(engine->HPath.GetFilename(libraryName)) + " - ElapsedTime: " + StringConvert::ToString(el) + " sec"
-			);
+				);
 #endif
 
 			return info;
 		}
+
+		void LibraryManager::Dispose()
+		{
+			List<TikiInfo*>* infos = loadedLibrarys.GetValues();
+
+			UInt32 i = 0;			
+			TikiInfo* info = 0;
+
+			while (i < infos->Count())
+			{
+				info = infos->Get(i);
+
+				if (info->FuncDispose != 0)
+				{
+					info->FuncDispose();
+				}
+
+				FreeLibrary(info->LibraryHandle);
+
+				i++;
+			}
+
+			delete(infos);
+		}
+
+#pragma endregion
+
+		#pragma region Begin/End
+		void LibraryManager::Begin()
+		{
+		}
+
+		void LibraryManager::End()
+		{
+		}
+		#pragma endregion
+
+		#pragma region Member - Resource
+		wstring LibraryManager::GetResourcePath(PInt typeHash, const wstring& fileName) const
+		{
+			TikiInfo* info = 0;
+			wstring typeExt = L"";
+			wstring typeName = L"";
+
+			if (defaultLibrarys.TryGetValue(typeHash, &info))
+			{
+				typeExt = info->FuncTikiResourceExt(typeHash);
+				typeName = info->FuncTikiResourcePath(typeHash);
+			}
+			else if (typeid(Mesh).hash_code() == typeHash)
+			{
+				typeExt = L"obj";
+				typeName = L"Meshes";
+			}
+
+			return engine->HPath.Combine(
+				L"Data/" + typeName,
+				fileName + L"." + typeExt
+			);
+		}
+		#pragma endregion
 	}
 }

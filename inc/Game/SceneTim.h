@@ -52,7 +52,7 @@ namespace TikiEngine
 			CameraObject* cameraLight;
 			IRenderTarget* targetLight;
 
-			//ITexture* tex;
+			ITexture* tex;
 			Vector3 tmp;
 			//double lastTime;
 			//IBoxCollider* dynamicBox;

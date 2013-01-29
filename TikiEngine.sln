@@ -52,6 +52,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsDX10", "
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsOGL", "TikiEngine.GraphicsOGL.vcxproj", "{7DE74242-4745-40AD-808E-FD205405B128}"
+	ProjectSection(ProjectDependencies) = postProject
+		{939525FD-4CD7-4020-9947-77629AC5A091} = {939525FD-4CD7-4020-9947-77629AC5A091}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution

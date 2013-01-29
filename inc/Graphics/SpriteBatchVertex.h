@@ -7,7 +7,7 @@ namespace TikiEngine
 {
 	namespace Vertices
 	{
-		// Implemented in GraphicsVertexFormats.cpp
+		// Implemented in VertexInternal.cpp
 		struct SpriteBatchVertex
 		{
 			Single Position[3];

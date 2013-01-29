@@ -49,6 +49,9 @@
     <Filter Include="_extern">
       <UniqueIdentifier>{1347afed-720b-4fc7-8b45-0c8390057b81}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Internal\Vertices">
+      <UniqueIdentifier>{361d3109-c7f0-4eb8-9b33-1e8a6b05ad6f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\OGLGraphicsModule.h">
@@ -57,14 +60,26 @@
     <ClInclude Include="inc\Graphics\DllMain.h">
       <Filter>DllMain</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\OGLDllInfo.h">
-      <Filter>DllMain</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\OGLVertexArray.h">
       <Filter>Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
       <Filter>Modules\SpriteBatchModule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DynamicBuffer.h">
+      <Filter>Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SpriteBatchVertex.h">
+      <Filter>Internal\Vertices</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\VertexDeclaration.h">
+      <Filter>Internal\Vertices</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Shader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Texture.h">
+      <Filter>Resources\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -88,6 +103,21 @@
     </ClCompile>
     <ClCompile Include="src\extern\glew.c">
       <Filter>_extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\glfx\glfx.cpp">
+      <Filter>_extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\glfx\glfxLALRParser.cpp">
+      <Filter>_extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\extern\glfx\glfxScanner.cpp">
+      <Filter>_extern</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexInternal.cpp">
+      <Filter>Internal\Vertices</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OGLTexture.cpp">
+      <Filter>Resources\Texture</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

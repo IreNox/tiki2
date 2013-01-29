@@ -38,6 +38,8 @@ namespace TikiEngine
 
 		SceneTim::~SceneTim()
 		{
+			SafeRelease(&tex);
+
 			SafeRelease(&light);
 			SafeRelease(&camera);
 			//SafeRelease(&font);
@@ -47,21 +49,23 @@ namespace TikiEngine
 		{
 			SceneGraph.Initialize(RectangleF::Create(-512,-512,1024,1024),3);
 
-			//// Building
-			//GameObject* go = TIKI_NEW GameObject(engine);
-			//go->SModel(engine->content->LoadModel(L"mainbuilding"));
-			//go->PRS.SScale() = 0.01f;
-			//go->PRS.SPosition() = Vector3(0, 0, 0);
-			//this->AddElement(go);
+			tex = engine->content->LoadTexture(L"logo");
 
-			//// Plane
-			//go = TIKI_NEW GameObject(engine);
-			//auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			//renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
-			//renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
-			//renP->SetMesh(engine->content->LoadMesh(L"plane"));
-			//go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			//this->AddElement(go);
+			// Building
+			GameObject* go = TIKI_NEW GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"mainbuilding"));
+			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(0, 0, 0);
+			this->AddElement(go);
+
+			// Plane
+			go = TIKI_NEW GameObject(engine);
+			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
+			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
+			renP->SetMesh(engine->content->LoadMesh(L"plane"));
+			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			this->AddElement(go);
 
 			light = TIKI_NEW LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
@@ -89,21 +93,26 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
+			engine->sprites->Draw(
+				tex,
+				Rectangle(10, 10, 512, 512)
+			);
+
 			if (showRenderTargets)
 			{
 				//engine->sprites->Draw(
 				//	engine->graphics->GetNormalTarget(),
-				//	Rectangle(500, 10, 200, 180)
+				//	Rectangle(10, 10, 200, 180)
 				//);
 
 				//engine->sprites->Draw(
 				//	engine->graphics->GetLightTarget(),
-				//	Rectangle(500, 200, 200, 180)
+				//	Rectangle(10, 200, 200, 180)
 				//);
 
 				//engine->sprites->Draw(
 				//	engine->graphics->GetScreenTarget(),
-				//	Rectangle(500, 390, 200, 180)
+				//	Rectangle(10, 390, 200, 180)
 				//);
 			}
 			

@@ -73,8 +73,8 @@ namespace TikiEngine
 			TDX_EffectPass* pass;
 			TDX_EffectTechnique* technique;
 #elif TIKI_OGL
-			UInt32 vertexShader;
-			UInt32 pixelShader;
+			int effectId;
+
 			UInt32 shaderProgram;
 #endif
 

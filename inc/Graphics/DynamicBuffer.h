@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include "Core/TypeGlobals.h"
 #include "Core/EngineObject.h"
@@ -23,7 +23,7 @@ namespace TikiEngine
 
 			~DynamicBuffer()
 			{
-				SafeRelease(&buffer);
+				releaseBuffer();
 			}
 			#pragma endregion
 
@@ -41,7 +41,7 @@ namespace TikiEngine
 #if TIKI_DX10
 				void* mapped;
 				HRESULT r = buffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &mapped);
-#else
+#elif TIKI_DX11
 				D3D11_MAPPED_SUBRESOURCE mapped;
 
 				HRESULT r = DllMain::Context->Map(
@@ -51,16 +51,21 @@ namespace TikiEngine
 					0,
 					&mapped
 				);
+#elif TIKI_OGL
+				glBindBuffer(TBinding, buffer);
+				void* mapped = glMapBuffer(TBinding, GL_WRITE_ONLY);
+
+				HRESULT r = (mapped != 0 ? S_OK : -1);
 #endif
 
 				if (FAILED(r))
 				{
-					engine->HLog.WriteError("Can't map ConstantBuffer", 0);
+					engine->HLog.WriteError("Can't map DynamicBuffer", 0);
 				}
 
-#if TIKI_DX10
+#if TIKI_DX10 || TIKI_OGL
 				return (T*)mapped;
-#else
+#elif TIKI_DX11
 				return (T*)mapped.pData;
 #endif
 			}
@@ -69,8 +74,14 @@ namespace TikiEngine
 			{
 #if TIKI_DX10
 				if (buffer) buffer->Unmap();
-#else
+#elif TIKI_DX11
 				if (buffer) DllMain::Context->Unmap(buffer, 0);
+#elif TIKI_OGL
+				if (buffer)
+				{
+					glUnmapBuffer(TBinding);
+					glBindBuffer(TBinding, 0);
+				}
 #endif
 			}
 
@@ -83,6 +94,7 @@ namespace TikiEngine
 			#pragma region Member - Apply
 			inline void Apply()
 			{
+#if TIKI_DX10 || TIKI_DX11
 				if (TBinding == TIKI_VERTEX_BUFFER)
 				{
 					UInt32 offset = 0;
@@ -95,21 +107,43 @@ namespace TikiEngine
 				{
 					DllMain::Context->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, 0);
 				}
+#elif TIKI_OGL
+				glBindBuffer(TBinding, buffer);
+#endif
 			}
 			#pragma endregion
 
 		private:
 
 			UInt32 elementCount;
+#if TIKI_OGL
+			TDX_Buffer buffer;
+#else
 			TDX_Buffer* buffer;
+#endif
 
-			#pragma region Private Member - CreateBuffer
+			#pragma region Private Member - CreateBuffer/ReleaseBuffer - OpenGL
+#if TIKI_OGL
+			void createBuffer()
+			{
+				glGenBuffers(1, &buffer);
+				glBindBuffer(TBinding, buffer);
+				glBufferData(TBinding, elementCount * sizeof(T), 0, GL_DYNAMIC_DRAW);
+			}
+
+			void releaseBuffer()
+			{
+				glDeleteBuffers(1, &buffer);
+			}
+#endif
+			#pragma endregion
+
+			#pragma region Private Member - CreateBuffer/ReleaseBuffer - DirectX
+#if TIKI_DX10 || TIKI_DX11
 			void createBuffer()
 			{
 				if (buffer != 0)
-				{
-					SafeRelease(&buffer);
-				}
+					releaseBuffer();
 
 #if TIKI_DX10
 				D3D10_BUFFER_DESC desc;
@@ -136,6 +170,12 @@ namespace TikiEngine
 					engine->HLog.WriteError("Can't create FullSizeBuffer", 0);
 				}
 			}
+
+			void releaseBuffer()
+			{
+				SafeRelease(&buffer);
+			}
+#endif
 			#pragma endregion
 
 		};

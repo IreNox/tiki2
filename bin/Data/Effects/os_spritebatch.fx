@@ -12,14 +12,14 @@
 struct VS_INPUT
 {
     float3 Pos		: POSITION;
-	float3 UV		: TEXCOORD0;
+	float2 UV		: TEXCOORD0;
 	float4 Color	: COLOR;
 };
 
 struct PS_INPUT
 {
     float4 Pos		: SV_POSITION;
-	float3 UV		: TEXCOORD0;
+	float2 UV		: TEXCOORD0;
 	float4 Color	: COLOR;
 };
 
@@ -80,7 +80,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	
 	if (!(input.UV.x == -1.0f && input.UV.y == -1.0f))
 	{
-		color = tex.Sample(sam, input.UV.xy) * color;
+		color = tex.Sample(sam, input.UV) * color;
 	}
 
 	return color;

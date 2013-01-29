@@ -24,6 +24,8 @@ namespace TikiEngine
 		DllInfo.FuncTikiModule = CreateModule;
 		DllInfo.FuncTikiResource = CreateResource;
 		DllInfo.FuncTikiComponent = CreateComponent;
+		DllInfo.FuncTikiResourceExt = GetResourceExt;
+		DllInfo.FuncTikiResourcePath = GetResourcePath;
 		DllInfo.FuncDispose = DisposeDll;
 		
 		DllInfo.Modules.Add(typeid(ISoundSystem).hash_code());
@@ -51,6 +53,26 @@ namespace TikiEngine
 		if (hash == typeid(ISound).hash_code())
 		{
 			return TIKI_NEW Sound(DllMain::Engine);
+		}
+
+		return 0;
+	}
+
+	wcstring DllMain::GetResourceExt(PInt hash)
+	{
+		if (hash == typeid(ISound).hash_code())
+		{
+			return L"wav";
+		}
+
+		return 0;
+	}
+
+	wcstring DllMain::GetResourcePath(PInt hash)
+	{
+		if (hash == typeid(ISound).hash_code())
+		{
+			return L"sounds";
 		}
 
 		return 0;

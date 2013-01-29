@@ -18,7 +18,9 @@ namespace TikiEngine
 		public:
 
 			Texture(Engine* engine);
+#if TIKI_DX10 || TIKI_DX11
 			Texture(Engine* engine, TDX_Texture2D* tex, bool createShaderView, bool dynamic);
+#endif
 			~Texture();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
@@ -46,10 +48,17 @@ namespace TikiEngine
 
 			bool dynamic;
 
+#if TIKI_DX10 || TIKI_DX11
 			TDX_Texture2D* texture;
 			TDX_ShaderResourceView* textureResource;
 
 			TDX_Texture2D_Desc desc;
+#elif TIKI_OGL
+			UInt32 textureId;
+
+			Int32 width;
+			Int32 height;
+#endif
 
 		};
 	}

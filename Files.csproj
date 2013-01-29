@@ -31,6 +31,7 @@
   <ItemGroup>
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
+    <None Include="bin\Data\EffectsGL\os_test.glsl" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
     <None Include="bin\Data\Models\gatecontrol.tiki" />
@@ -180,6 +181,7 @@
     <Content Include="bin\Bin64\PhysXCore64.dll" />
     <Content Include="bin\Bin64\PhysXDevice64.dll" />
     <Content Include="bin\Bin64\PhysXLoader64.dll" />
+    <None Include="bin\Data\EffectsGL\os_spritebatch.glsl" />
     <Content Include="bin\Data\Effects\IncOS\is_defaultshader_pixel.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_defaultshader_vertex.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_input.fx" />

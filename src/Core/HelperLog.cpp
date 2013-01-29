@@ -50,7 +50,7 @@ namespace TikiEngine
 
 		HelperLog::Write(error);
 
-		throw error.CStr();
+		throw error;
 	}
 }
 

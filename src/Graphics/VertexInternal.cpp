@@ -59,7 +59,10 @@ namespace TikiEngine
 		VertexDeclaration::~VertexDeclaration()
 		{
 			SafeRelease(&shader);
+
+#if TIKI_DX10 || TIKI_DX11
 			SafeRelease(&inputLayout);
+#endif
 		}
 		#pragma endregion
 
@@ -83,15 +86,18 @@ namespace TikiEngine
 		#pragma region Member - Apply
 		void VertexDeclaration::Apply() 
 		{
+#if TIKI_DX10 || TIKI_DX11
 			DllMain::Context->IASetInputLayout(
 				this->inputLayout
 			);
+#endif
 		}
 		#pragma endregion
 
 		#pragma region Private Member - CreateInputLayout
 		void VertexDeclaration::createInputLayout(const InputElement* decl, UInt32 count)
 		{
+#if TIKI_DX10 || TIKI_DX11
 			elementSize = 0;
 			TDX_Input_Element_desc* elements = TIKI_NEW TDX_Input_Element_desc[count];
 
@@ -204,6 +210,7 @@ namespace TikiEngine
 			);
 
 			delete[](elements);
+#endif
 		}
 		#pragma endregion
 		#pragma endregion

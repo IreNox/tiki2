@@ -30,6 +30,9 @@ namespace TikiEngine
 		static IResource* CreateResource(PInt);
 		static Component* CreateComponent(PInt, GameObject* gameObject);
 
+		static wcstring GetResourceExt(PInt);
+		static wcstring GetResourcePath(PInt);
+
 	private:
 
 		DllMain() {}

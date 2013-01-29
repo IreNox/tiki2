@@ -26,13 +26,6 @@ namespace TikiEngine
 		bool FileExists(const wstring& fullPath) const;
 		bool DirectoryExists(const wstring& fullPath) const;
 
-		template<class T>
-		wstring GetResourcePath(const wstring& fileName) const
-		{
-			return HelperPath::GetResourcePath(typeid(T).hash_code(), fileName);
-		}
-		wstring GetResourcePath(PInt typeHash, const wstring& fileName) const;
-
 		void CheckPath(const wstring& path) const;
 		void CheckSlashes(wstring& path) const;
 

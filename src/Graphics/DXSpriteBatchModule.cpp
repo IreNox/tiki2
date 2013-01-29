@@ -29,7 +29,7 @@ namespace TikiEngine
 
 				DllMain::Context->IASetPrimitiveTopology(
 					(info.Lines ? D3D_PRIMITIVE_TOPOLOGY_LINELIST : D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP)				
-					);
+				);
 
 				shader->SetSingle("value", info.Value);
 				if (info.Texture != 0) shader->SetTexture("tex", info.Texture);

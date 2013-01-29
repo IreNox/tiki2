@@ -23,6 +23,8 @@ namespace TikiEngine
 
 			bool Initialize(EngineDescription& desc);
 
+			wstring GetResourcePath(PInt hash, const wstring& fileName) const;
+
 			void Begin();
 			void End();
 
@@ -85,9 +87,10 @@ namespace TikiEngine
 			{
 				*hash = typeid(T).hash_code();
 
-				if (defaultLibrarys.ContainsKey(*hash))
+				TikiInfo* info = 0;
+				if (defaultLibrarys.TryGetValue(*hash, &info))
 				{
-					return defaultLibrarys.Get(*hash);
+					return info;
 				}
 
 				return 0;

@@ -36,9 +36,9 @@ namespace TikiEngine
 				SpriteBatchVertex::Declaration,
 				SpriteBatchVertex::DeclarationCount
 			);
+#endif
 
 			buffer = TIKI_NEW DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>(engine);
-#endif
 
 			engine->graphics->ScreenSizeChanged.AddHandler(this);
 			this->Handle(engine->graphics, ScreenSizeChangedArgs(engine->graphics, engine->graphics->GetViewPort()));
@@ -69,50 +69,52 @@ namespace TikiEngine
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position)
 		{
 			Vector3 tl = transformPoint(
-				Vector3(position.X, position.Y, 0.0f)
-				);
+				Vector3(position.X, position.Y, 1.0f)
+			);
 
 			Vector2 br = Vector2(
 				tl.X + texture->GetWidth(),
 				tl.Y - texture->GetHeight()
-				);
+			);
 
 			drawInternal(
 				texture,
 				tl,
-				Vector3(br.X, tl.Y, 0.0f),
-				Vector3(tl.X, br.Y, 0.0f),
-				Vector3(br.X, br.Y, 0.0f),
+				Vector3(br.X, tl.Y, -1.0f),
+				Vector3(tl.X, br.Y, -1.0f),
+				Vector3(br.X, br.Y, -1.0f),
 				Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-				Color::White
-				);
+				Color::White,
+				0.0f
+			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect)
 		{
 			Vector3 tl = transformPoint(
 				Vector3(
-				(float)destRect.X,
-				(float)destRect.Y,
-				0.0f
+					(float)destRect.X,
+					(float)destRect.Y,
+					1.0f
 				)
-				); 
+			); 
 
 			Vector3 br = Vector3(
 				tl.X + destRect.Width,
 				tl.Y - destRect.Height,
-				0.0f
-				);
+				-1.0f
+			);
 
 			drawInternal(
 				texture,
 				tl,
-				Vector3(br.X, tl.Y, 0.0f),
-				Vector3(tl.X, br.Y, 0.0f),
+				Vector3(br.X, tl.Y, -1.0f),
+				Vector3(tl.X, br.Y, -1.0f),
 				br,
 				Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-				Color::White
-				);
+				Color::White,
+				0.0f
+			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Rectangle& destRect, const Rectangle& srcRect)
@@ -123,14 +125,14 @@ namespace TikiEngine
 				(float)destRect.Y,
 				1.0f
 				)
-				); 
+			); 
 
 			Vector3 br = Vector3(
 				tl.X + destRect.Width,
 				tl.Y - destRect.Height,
 				-1.0f
-				);
-
+			);
+			
 			Vector2 size = texture->GetSize();
 
 			Vector4 texCorrd = Vector4(
@@ -138,7 +140,7 @@ namespace TikiEngine
 				(float)srcRect.Y / size.Y,
 				(float)(srcRect.X + srcRect.Width) / size.X,
 				(float)(srcRect.Y + srcRect.Height) / size.Y
-				);
+			);
 
 			drawInternal(
 				texture,
@@ -148,7 +150,7 @@ namespace TikiEngine
 				br,
 				texCorrd,
 				Color::White
-				);
+			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const RectangleF& destRect, const Color& color)
@@ -170,13 +172,13 @@ namespace TikiEngine
 		{
 			Vector3 tl = transformPoint(
 				Vector3(destRect.X, destRect.Y, layerDepth)
-				); 
+			); 
 
 			Vector3 br = Vector3(
 				tl.X + destRect.Width,
 				tl.Y - destRect.Height,
 				-layerDepth
-				);
+			);
 
 			Vector2 size = texture->GetSize();
 
@@ -185,7 +187,7 @@ namespace TikiEngine
 				srcRect.Y / size.Y,
 				(srcRect.X + srcRect.Width) / size.X,
 				(srcRect.Y + srcRect.Height) / size.Y
-				);
+			);
 
 			drawInternal(
 				texture,
@@ -195,7 +197,7 @@ namespace TikiEngine
 				br,
 				texCorrd,
 				color
-				);
+			);
 		}
 
 		void SpriteBatchModule::Draw(ITexture* texture, const Vector2& position, float rotation, const Vector2& origin, float scale, float layerDepth)
