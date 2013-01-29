@@ -46,8 +46,6 @@ namespace TikiEngine
 
 			RectangleF selectionRectangle;
 
-			GameObject* spidermine;
-
 			List<GameObject*> drawContent;
 		};
 	}

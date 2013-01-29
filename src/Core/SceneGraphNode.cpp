@@ -23,7 +23,7 @@ namespace TikiEngine
 
 	SceneGraphNode::~SceneGraphNode()
 	{
-		FOREACH(data, SafeRelease(&data[i]))
+		//FOREACH(data, SafeRelease(&data[i]))
 
 		for(UINT i = 0; i < childs.Count(); i++)
 		{
@@ -43,7 +43,7 @@ namespace TikiEngine
 		}
 
 		data.Add(gameObject);
-		gameObject->AddRef();
+		//gameObject->AddRef();
 
 		return true;
 	}
@@ -64,7 +64,7 @@ namespace TikiEngine
 
 		if(data.Remove(gameObject))
 		{			
-			gameObject->Release();
+			//gameObject->Release();
 			return true;
 		}
 

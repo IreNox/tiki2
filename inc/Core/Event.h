@@ -14,7 +14,7 @@ namespace TikiEngine
 		{	
 		}
 
-		~Event()
+		virtual ~Event()
 		{
 			FOREACH_PTR_CALL(eventHandler, handled.Remove(this));
 		}

@@ -60,7 +60,6 @@ namespace TikiEngine
 			this->model = go->GModel();
 			int count = this->model->AnimationCount();
 			this->model->AnimationHandler.AddHandler(TIKI_NEW AnimationHandlerDefaultUnit(this->model));
-			this->spidermine = go;
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -153,34 +152,6 @@ namespace TikiEngine
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
 				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(Death));
-			}
-
-			//links
-			if(args.Input.GetKey(KEY_NUMPAD4))
-			{
-				//this->selectionRectangle.X -= 10.0f * (float)args.Time.ElapsedTime;
-				this->spidermine->PRS.SPosition() += Vector3(-1,0,0) * (float)args.Time.ElapsedTime;
-			}
-
-			//rechts
-			if(args.Input.GetKey(KEY_NUMPAD6))
-			{
-				//this->selectionRectangle.X += 10.0f * (float)args.Time.ElapsedTime;
-				this->spidermine->PRS.SPosition() += Vector3(1,0,0) * (float)args.Time.ElapsedTime;
-			}
-
-			//hoch
-			if(args.Input.GetKey(KEY_NUMPAD8))
-			{
-				//this->selectionRectangle.Y -= 10.0f * (float)args.Time.ElapsedTime;
-				this->spidermine->PRS.SPosition() += Vector3(0,0,-1) * (float)args.Time.ElapsedTime;
-			}
-
-			//runter
-			if(args.Input.GetKey(KEY_NUMPAD5))
-			{
-				//this->selectionRectangle.Y += 10.0f * (float)args.Time.ElapsedTime;
-				this->spidermine->PRS.SPosition() += Vector3(0,0,1) * (float)args.Time.ElapsedTime;
 			}
 		}
 	}
