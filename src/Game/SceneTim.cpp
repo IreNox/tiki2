@@ -51,21 +51,21 @@ namespace TikiEngine
 
 			tex = engine->content->LoadTexture(L"logo");
 
-			// Building
-			GameObject* go = TIKI_NEW GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"mainbuilding"));
-			go->PRS.SScale() = 0.01f;
-			go->PRS.SPosition() = Vector3(0, 0, 0);
-			this->AddElement(go);
+			//// Building
+			//GameObject* go = TIKI_NEW GameObject(engine);
+			//go->SModel(engine->content->LoadModel(L"mainbuilding"));
+			//go->PRS.SScale() = 0.01f;
+			//go->PRS.SPosition() = Vector3(0, 0, 0);
+			//this->AddElement(go);
 
-			// Plane
-			go = TIKI_NEW GameObject(engine);
-			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
-			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
-			renP->SetMesh(engine->content->LoadMesh(L"plane"));
-			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			this->AddElement(go);
+			//// Plane
+			//go = TIKI_NEW GameObject(engine);
+			//auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			//renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
+			//renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
+			//renP->SetMesh(engine->content->LoadMesh(L"plane"));
+			//go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			//this->AddElement(go);
 
 			light = TIKI_NEW LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
