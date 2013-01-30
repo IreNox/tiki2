@@ -120,7 +120,13 @@ namespace TikiEngine
 
 	bool GameObject::RemoveComponent(Component* comp)
 	{
-		return components.Remove(comp);
+		if (components.Remove(comp))
+		{
+			comp->Release();
+			return true;
+		}
+
+		return false;
 	}
 	#pragma endregion
 
