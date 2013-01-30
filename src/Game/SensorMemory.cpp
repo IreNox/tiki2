@@ -45,7 +45,7 @@ namespace TikiEngine
 				{
 					TikiBot* curBot = go->GetComponent<TikiBot>();
 
-					if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction())
+					if(curBot != 0 && curBot != owner && curBot->GetFaction() != owner->GetFaction() && !curBot->IsDead())
 					{
 						MakeTIKI_NEWRecordIfNotAlreadyPresent(curBot);
 

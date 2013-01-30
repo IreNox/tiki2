@@ -16,6 +16,7 @@
 #include "Core/IGraphics.h"
 
 #include "Game/GD.h"
+#include "Game/BotRemove.h"
 
 namespace TikiEngine
 {
@@ -307,6 +308,7 @@ namespace TikiEngine
 				gameState->UnitSelectionChanged.RaiseEvent(gameState, UnitSelectionChangedArgs(selectedUnits, selectedSlots));
 
 			selectButton->Update(args);
+
 		}
 		#pragma endregion
 
@@ -376,6 +378,11 @@ namespace TikiEngine
 			}
 			else if (bot->EntityType() == ET_Bot || bot->EntityType() == ET_Hero)
 			{
+				//GameObject* toRemove = bot->GetGameObject();
+
+				//toRemove->RemoveComponent(bot);
+				//new BotRemove(gameState, toRemove);
+
 				bot->IncreaseTimeSInceDead(args.Time.ElapsedTime);
 				
 				const double DeathAnimationDuration = 2.0f;

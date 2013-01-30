@@ -24,6 +24,7 @@
     <ClInclude Include="inc\Game\Announcer.h" />
     <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h" />
     <ClInclude Include="inc\Game\Attributes.h" />
+    <ClInclude Include="inc\Game\BotRemove.h" />
     <ClInclude Include="inc\Game\Cheater.h" />
     <ClInclude Include="inc\Game\EventBotDead.h" />
     <ClInclude Include="inc\Game\EventHeroEvents.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\AttributeSystem.cpp" />
     <ClCompile Include="src\Game\BaseGameEntity.cpp" />
+    <ClCompile Include="src\Game\BotRemove.cpp" />
     <ClCompile Include="src\Game\BuildSlot.cpp" />
     <ClCompile Include="src\Game\Cheater.cpp" />
     <ClCompile Include="src\Game\DatabaseLevel.cpp" />

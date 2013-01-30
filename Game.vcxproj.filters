@@ -458,6 +458,9 @@
     <ClInclude Include="inc\Game\PEDebris.h">
       <Filter>Headerdateien\Particle</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\BotRemove.h">
+      <Filter>Headerdateien\AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -705,6 +708,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\PEDebris.cpp">
       <Filter>Quelldateien\Particle</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BotRemove.cpp">
+      <Filter>Quelldateien\AI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
