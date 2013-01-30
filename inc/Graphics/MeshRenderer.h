@@ -34,11 +34,10 @@ namespace TikiEngine
 
 			Mesh* mesh;
 			Material* material;
+			VertexDeclaration* decl;
 
 			StaticBuffer<TIKI_INDEX_BUFFER>* indexBuffer;
 			StaticBuffer<TIKI_VERTEX_BUFFER>* vertexBuffer;
-
-			VertexDeclaration* decl;
 
 			void updateData(bool udMesh, bool udMaterial);
 			

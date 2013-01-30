@@ -27,11 +27,12 @@ namespace TikiEngine
 
 			PostProcessPass* pass;
 
-#if TIKI_SHADOWS_ENABLED
-			pass = TIKI_NEW PostProcessPass(engine, shaderShadow);
-			pass->AddOutput(0, shadowTarget);
-			this->AddPass(pass);
-#endif
+			if (engine->GetShadowsEnabled())
+			{
+				pass = TIKI_NEW PostProcessPass(engine, shaderShadow);
+				pass->AddOutput(0, shadowTarget);
+				this->AddPass(pass);
+			}
 
 			pass = TIKI_NEW PostProcessPass(engine, shaderDefault);
 			pass->AddInput("rtDepth", engine->graphics->GetDepthTarget());
@@ -56,12 +57,10 @@ namespace TikiEngine
 
 		void PPDefault::UpdatePass(UInt32 index, const DrawArgs& args)
 		{
-#if TIKI_SHADOWS_ENABLED
-			if (index == 0)
+			if (index == 0 && engine->GetShadowsEnabled())
 			{
 				shadowTarget->Clear(Color::White);
 			}
-#endif
 		}
 
 		void PPDefault::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)

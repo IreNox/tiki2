@@ -43,7 +43,7 @@ namespace TikiEngine
 		{
 			if (gameObjects.Remove(go))
 			{
-				go->Release();
+				removeList.Add(go);
 				return true;
 			}
 
@@ -57,7 +57,23 @@ namespace TikiEngine
 
 		void Update(const UpdateArgs& args)
 		{
-			FOREACH_PTR_CALL(gameObjects, Update(args))
+			UInt32 i = 0;
+			while (i < removeList.Count())
+			{
+				gameObjects.Remove(removeList[i]);
+				removeList[i]->Release();
+
+				i++;
+			}
+			removeList.Clear();
+
+			i = 0;
+			while (i < gameObjects.Count())
+			{
+				gameObjects[i]->Update(args);
+
+				i++;
+			}
 		}
 
 		void LateUpdate(const UpdateArgs& args)
@@ -164,6 +180,7 @@ namespace TikiEngine
 	private:
 
 		List<GameObject*> gameObjects;
+		List<GameObject*> removeList;
 
 	};
 }

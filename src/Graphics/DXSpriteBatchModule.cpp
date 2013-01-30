@@ -1,6 +1,6 @@
 
 #include "Graphics/SpriteBatchModule.h"
-#include "Graphics/GraphicsModule.h"
+#include "Graphics/DXGraphicsModule.h"
 
 namespace TikiEngine
 {

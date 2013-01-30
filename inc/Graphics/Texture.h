@@ -20,6 +20,8 @@ namespace TikiEngine
 			Texture(Engine* engine);
 #if TIKI_DX10 || TIKI_DX11
 			Texture(Engine* engine, TDX_Texture2D* tex, bool createShaderView, bool dynamic);
+#elif TIKI_OGL
+			Texture(Engine* engine, UInt32 textureId);
 #endif
 			~Texture();
 

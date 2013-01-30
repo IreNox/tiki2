@@ -5,6 +5,7 @@
 #include "Game/Cheater.h"
 #include "Game/GameHud.h"
 #include "Game/SceneLevel.h"
+#include "Game/DebugConsole.h"
 #include "Game/UnitSelection.h"
 #include "Game/ProjectileManager.h"
 
@@ -41,6 +42,7 @@ namespace TikiEngine
 
 			hud = TIKI_NEW GameHud(this);
 			cheater = TIKI_NEW Cheater(this);
+			console = TIKI_NEW DebugConsole(engine);
 			navMesh = TIKI_NEW NavigationMesh(engine);
 			unitSelection = TIKI_NEW UnitSelection(this);
 			projectiles = TIKI_NEW ProjectileManager(this);
@@ -62,6 +64,7 @@ namespace TikiEngine
 
 			SafeRelease(&hud);
 			SafeRelease(&cheater);
+			SafeRelease(&console);
 			SafeRelease(&projectiles);
 
 			SafeRelease(&defaultMaterial);
@@ -99,6 +102,9 @@ namespace TikiEngine
 #else
 			hud->Draw(args);
 #endif
+
+			if (consoleEnabled)
+				console->Draw(args);
 
 			projectiles->Draw(args);
 			unitSelection->Draw(args);
@@ -152,6 +158,9 @@ namespace TikiEngine
 #else
 			hud->Update(args);
 #endif
+
+			if (consoleEnabled)
+				console->Update(args);
 
 			botFactory->Update(args);
 			projectiles->Update(args);

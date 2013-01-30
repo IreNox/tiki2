@@ -26,6 +26,7 @@
     <ClInclude Include="inc\Game\Attributes.h" />
     <ClInclude Include="inc\Game\BotRemove.h" />
     <ClInclude Include="inc\Game\Cheater.h" />
+    <ClInclude Include="inc\Game\DebugConsole.h" />
     <ClInclude Include="inc\Game\EventBotDead.h" />
     <ClInclude Include="inc\Game\EventHeroEvents.h" />
     <ClInclude Include="inc\Game\GD.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="src\Game\Bullet.cpp" />
     <ClCompile Include="src\Game\CameraFly.cpp" />
     <ClCompile Include="src\Game\CameraRTS.cpp" />
+    <ClCompile Include="src\Game\DebugConsole.cpp" />
     <ClCompile Include="src\Game\EntityManager.cpp" />
     <ClCompile Include="src\Game\ExploreGoalEvaluator.cpp" />
     <ClCompile Include="src\Game\GameHud.cpp" />

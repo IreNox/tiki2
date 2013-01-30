@@ -485,21 +485,31 @@ namespace TikiEngine
 			}
 			material->Apply();
 
-			decl->Apply();
 			vertexBuffer->Apply();
-			(args.Mode == DM_Shadows ? indexAdjacencyBuffer : indexBuffer)->Apply();
+			decl->Apply();
 
 			if (args.Mode == DM_Shadows)
 			{
 				if (!hasAdjacencyIndices) return;
-				
+				indexAdjacencyBuffer->Apply();
+
+#if TIKI_DX10 || TIKI_DX11
 				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST_ADJ);
 				DllMain::Context->DrawIndexed(adjacencyIndexCount, 0, 0);
+#elif TIKI_OGL
+				glDrawElements(GL_TRIANGLES_ADJACENCY, adjacencyIndexCount, GL_UNSIGNED_INT, 0);
+#endif
 			}
 			else
 			{
+				indexBuffer->Apply();
+
+#if TIKI_DX10 || TIKI_DX11
 				DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 				DllMain::Context->DrawIndexed(indexCount, 0, 0);
+#elif TIKI_OGL
+				glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, 0);
+#endif
 			}
 #endif
 		}

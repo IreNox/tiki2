@@ -6,6 +6,8 @@ namespace TikiEngine
 {
 	namespace Resources
 	{
+		GLuint Shader::bindIndex = 0;
+
 		#pragma region Class
 		Shader::Shader(Engine* engine)
 			: IShader(engine), shaderId(0), vsId(0), psId(0)
@@ -180,7 +182,24 @@ namespace TikiEngine
 
 		void Shader::SetConstantBuffer(cstring key, IConstantBuffer* constantBuffer)
 		{
+			GLint loc = glGetUniformBlockIndex(shaderId, key);
+			if (loc == -1)
+			{
+				engine->HLog.Write(string("Can't find UniformBuffer: ") + key);
+				return;
+			}
 
+			GLuint bind;
+			GLuint buffer = (GLuint)constantBuffer->GBuffer();
+			if (!bufferBinding.TryGetValue(buffer, &bind))
+			{
+				bind = bindIndex;
+				bindIndex++;
+
+				glBindBufferBase(GL_UNIFORM_BUFFER, bind, buffer);
+			}
+
+			glUniformBlockBinding(shaderId, loc, bind);
 		}
 		#pragma endregion
 
@@ -235,26 +254,7 @@ namespace TikiEngine
 			if (getShaderInfo(shaderId, error, true))
 				throw error;
 
-
-			//effectId = glfxGenEffect();
-
-
-			//if (!glfxParseEffectFromMemory(effectId, data))
-			//{
-			//	delete[](data);
-
-			//	string s = glfxGetEffectLog(effectId).c_str();
-			//	engine->HLog.WriteError("Can't parse Effect. Error: " + s, 0);
-			//}
-			//delete[](data);
-
-			//shaderProgram = glfxCompileProgram(effectId, "tiki");
-
-			//if (shaderProgram < 0)
-			//{
-			//	string s = glfxGetEffectLog(effectId).c_str();
-			//	engine->HLog.WriteError("Can't compile Effect. Error: " + s, 0);
-			//}
+			this->applyType(fileName);
 		}
 
 		void Shader::saveToStream(wcstring fileName, Stream* stream)

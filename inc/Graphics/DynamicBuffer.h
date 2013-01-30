@@ -28,7 +28,7 @@ namespace TikiEngine
 			#pragma endregion
 
 			#pragma region Member
-			T* Map(UInt32 count)
+			inline T* Map(UInt32 count)
 			{
 				if (count == 0) return 0;
 
@@ -70,7 +70,7 @@ namespace TikiEngine
 #endif
 			}
 
-			void Unmap()
+			inline void Unmap()
 			{
 #if TIKI_DX10
 				if (buffer) buffer->Unmap();

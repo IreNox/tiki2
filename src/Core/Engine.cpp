@@ -26,7 +26,7 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
-		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0)
+		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(true)
 #if _DEBUG
 		, fpsIndex(0), fpsAve(0)
 #endif
@@ -286,7 +286,7 @@ namespace TikiEngine
 			sprites->Begin();
 
 			UInt32 bi = 0;
-			UInt32 bc = 1 + (TIKI_SHADOWS_ENABLED ? 1 : 0);
+			UInt32 bc = 1 + (useShadows ? 1 : 0);
 			while (bi < bc)
 			{
 				if (bi != 0)
@@ -299,10 +299,6 @@ namespace TikiEngine
 
 				bi++;
 			}
-
-#if _DEBUG
-			graphics->DrawConsole(drawArgs);
-#endif
 
 			sprites->End();
 			graphics->End();

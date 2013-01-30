@@ -19,6 +19,7 @@ namespace TikiEngine
 			StaticBuffer(Engine* engine, UInt32 elementSize, UInt32 elementCount, void* initData)
 				: EngineObject(engine), buffer(0), elementCount(elementCount), elementSize(elementSize)
 			{
+#if TIKI_DX10 || TIKI_DX11
 #if TIKI_DX10
 				D3D10_BUFFER_DESC desc;
 				D3D10_SUBRESOURCE_DATA data;
@@ -44,6 +45,13 @@ namespace TikiEngine
 					&data,
 					&buffer
 				);
+#elif TIKI_OGL
+				glGenBuffers(1, &buffer);
+				glBindBuffer(TBinding, buffer);
+				glBufferData(TBinding, elementCount * elementSize, initData, GL_STATIC_DRAW);
+
+				HRESULT r = S_OK; // glGetError() == GL_NO_ERROR ? S_OK : -1;
+#endif
 
 				if (FAILED(r)) 
 				{
@@ -54,7 +62,11 @@ namespace TikiEngine
 
 			~StaticBuffer()
 			{
+#if TIKI_DX10 || TIKI_DX11
 				SafeRelease(&buffer);
+#elif TIKI_OGL
+				glDeleteBuffers(1, &buffer);
+#endif
 			}
 			#pragma endregion
 
@@ -83,6 +95,7 @@ namespace TikiEngine
 			#pragma region Member - Apply
 			inline void Apply()
 			{
+#if TIKI_DX10 || TIKI_DX11
 				if (TBinding == TIKI_VERTEX_BUFFER)
 				{
 					UInt32 offset = 0;
@@ -95,6 +108,9 @@ namespace TikiEngine
 				{
 					DllMain::Context->IASetIndexBuffer(buffer, DXGI_FORMAT_R32_UINT, 0);
 				}
+#elif TIKI_OGL
+				glBindBuffer(TBinding, buffer);
+#endif
 			}
 			#pragma endregion
 
@@ -102,7 +118,11 @@ namespace TikiEngine
 
 			UInt32 elementSize;
 			UInt32 elementCount;
+#if TIKI_OGL
+			TDX_Buffer buffer;
+#else
 			TDX_Buffer* buffer;
+#endif
 
 		};
 	}

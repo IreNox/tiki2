@@ -53,26 +53,34 @@ namespace TikiEngine
 			tex1 = engine->content->LoadTexture(L"logo");
 			tex2 = engine->content->LoadTexture(L"checker");
 
-			//// Building
-			//GameObject* go = TIKI_NEW GameObject(engine);
-			//go->SModel(engine->content->LoadModel(L"mainbuilding"));
-			//go->PRS.SScale() = 0.01f;
-			//go->PRS.SPosition() = Vector3(0, 0, 0);
-			//this->AddElement(go);
+			// Building
+			GameObject* go = TIKI_NEW GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"mainbuilding"));
+			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(0, 0, 0);
+			this->AddElement(go);
 
-			//// Plane
-			//go = TIKI_NEW GameObject(engine);
-			//auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
-			//renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
-			//renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
-			//renP->SetMesh(engine->content->LoadMesh(L"plane"));
-			//go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			//this->AddElement(go);
+			// Plane
+			go = TIKI_NEW GameObject(engine);
+			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
+			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
+			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
+			renP->SetMesh(engine->content->LoadMesh(L"plane"));
+			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
+			this->AddElement(go);
+
+			// Plane
+			go = TIKI_NEW GameObject(engine);
+			go->SModel(engine->content->LoadModel(L"unit_marine"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			go->PRS.SScale() = 0.01f;
+			go->PRS.SPosition() = Vector3(15, 0, 0);
+			this->AddElement(go);
 
 			light = TIKI_NEW LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));
 			light->GetLight()->SetRange(75.0f);
-			light->PRS.SPosition() = Vector3(-5, 5, 1.5);
+			light->PRS.SPosition() = Vector3(-10, 10, 2.5);
 			light->PRS.SRotation() = Quaternion::CreateFromYawPitchRoll(-1.59f, -0.92f, 0);
 			light->AddRef();
 			this->AddElement(light);
@@ -95,32 +103,32 @@ namespace TikiEngine
 		{
 			Scene::Draw(args);
 
-			engine->sprites->Draw(
-				tex1,
-				Rectangle(10, 10, 512, 512)
-			);
+			//engine->sprites->Draw(
+			//	tex1,
+			//	Rectangle(10, 10, 512, 512)
+			//);
 
-			engine->sprites->Draw(
-				tex2,
-				Rectangle(266, 266, 512, 512)
-			);
+			//engine->sprites->Draw(
+			//	tex2,
+			//	Rectangle(266, 266, 512, 512)
+			//);
 			
 			if (showRenderTargets)
 			{
-				//engine->sprites->Draw(
-				//	engine->graphics->GetNormalTarget(),
-				//	Rectangle(10, 10, 200, 180)
-				//);
+				engine->sprites->Draw(
+					engine->graphics->GetNormalTarget(),
+					Rectangle(10, 10, 200, 180)
+				);
 
-				//engine->sprites->Draw(
-				//	engine->graphics->GetLightTarget(),
-				//	Rectangle(10, 200, 200, 180)
-				//);
+				engine->sprites->Draw(
+					engine->graphics->GetLightTarget(),
+					Rectangle(10, 200, 200, 180)
+				);
 
-				//engine->sprites->Draw(
-				//	engine->graphics->GetScreenTarget(),
-				//	Rectangle(10, 390, 200, 180)
-				//);
+				engine->sprites->Draw(
+					engine->graphics->GetScreenTarget(),
+					Rectangle(10, 390, 200, 180)
+				);
 			}
 			
 			#if _DEBUG
@@ -134,6 +142,14 @@ namespace TikiEngine
 		{			
 			if (args.Input.GetKeyReleased(KEY_F3))
 				showRenderTargets = !showRenderTargets;
+
+			Vector3 move = Vector3(
+				(args.Input.GetKey(KEY_F) ? -1 : 0) + (args.Input.GetKey(KEY_H) ? 1 : 0),
+				(args.Input.GetKey(KEY_Z) ? -1 : 0) + (args.Input.GetKey(KEY_R) ? 1 : 0),
+				(args.Input.GetKey(KEY_G) ? -1 : 0) + (args.Input.GetKey(KEY_T) ? 1 : 0)
+			) * args.Time.ElapsedTime * 10;
+
+			light->PRS.SPosition() += move;
 
 			Scene::Update(args);
 		}

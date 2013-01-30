@@ -21,12 +21,12 @@ namespace TikiEngine
 			{
 				if (!this->size) this->size = sizeof(T);
 
-				this->createBuffer();
+				createBuffer();
 			}
 
 			~ConstantBuffer()
 			{
-				SafeRelease(&buffer);
+				releaseBuffer();
 			}
 			#pragma endregion
 
@@ -36,7 +36,7 @@ namespace TikiEngine
 #if TIKI_DX10
 				void* mapped;
 				HRESULT r = buffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &mapped);
-#else
+#elif TIKI_DX11
 				D3D11_MAPPED_SUBRESOURCE mapped;
 
 				HRESULT r = DllMain::Context->Map(
@@ -45,7 +45,12 @@ namespace TikiEngine
 					D3D11_MAP_WRITE_DISCARD,
 					0,
 					&mapped
-				);
+					);
+#elif TIKI_OGL
+				glBindBuffer(GL_UNIFORM_BUFFER, buffer);
+				void* mapped = glMapBuffer(GL_UNIFORM_BUFFER, GL_WRITE_ONLY);
+
+				HRESULT r = (mapped != 0 ? S_OK : -1);
 #endif
 
 				if (FAILED(r))
@@ -53,10 +58,10 @@ namespace TikiEngine
 					engine->HLog.WriteError("Can't map ConstantBuffer", 0);
 				}
 
-#if TIKI_DX10
-				return mapped;
-#else
-				return mapped.pData;
+#if TIKI_DX10 || TIKI_OGL
+				return (T*)mapped;
+#elif TIKI_DX11
+				return (T*)mapped.pData;
 #endif
 			}
 
@@ -65,25 +70,52 @@ namespace TikiEngine
 				return (T*)this->Map();
 			}
 
-			inline void Unmap()
+			void Unmap()
 			{
 #if TIKI_DX10
-				buffer->Unmap();
-#else
-				DllMain::Context->Unmap(buffer, 0);
+				if (buffer) buffer->Unmap();
+#elif TIKI_DX11
+				if (buffer) DllMain::Context->Unmap(buffer, 0);
+#elif TIKI_OGL
+				if (buffer)
+				{
+					glUnmapBuffer(GL_UNIFORM_BUFFER);
+					glBindBuffer(GL_UNIFORM_BUFFER, 0);
+				}
 #endif
 			}
 
-			inline void* GBuffer() { return buffer; }
+			inline void* GBuffer() { return (void*)buffer; }
 			inline UInt32 GSize() { return size; }
 			#pragma endregion
 
 		private:
 
 			UInt32 size;
+#if TIKI_OGL
+			TDX_Buffer buffer;
+#else
 			TDX_Buffer* buffer;
+#endif
 
-			#pragma region Member - CreateBuffer
+			#pragma region Private - Create/Release - OpenGL
+#if TIKI_OGL
+			void createBuffer()
+			{
+				glGenBuffers(1, &buffer);
+				glBindBuffer(GL_UNIFORM_BUFFER, buffer);
+				glBufferData(GL_UNIFORM_BUFFER, sizeof(T), 0, GL_DYNAMIC_DRAW);
+			}
+
+			void releaseBuffer()
+			{
+				glDeleteBuffers(1, &buffer);
+			}
+#endif
+			#pragma endregion
+
+			#pragma region Private - Create/Release - DirectX
+#if TIKI_DX10 || TIKI_DX11
 			void createBuffer()
 			{
 #if TIKI_DX10
@@ -112,6 +144,12 @@ namespace TikiEngine
 					engine->HLog.WriteError("Can't create ConstantBuffer", 0);
 				}
 			}
+
+			void releaseBuffer()
+			{
+				SafeRelease(&buffer);
+			}
+#endif
 			#pragma endregion
 
 		};

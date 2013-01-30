@@ -2,12 +2,22 @@
 
 #include "Core/IGraphics.h"
 
+#include "Core/CBMatrices.h"
+#include "Graphics/CBLights.h"
+#include "Graphics/CBObjectData.h"
+
+#include "Graphics/Quad.h"
+#include "Graphics/RenderTarget.h"
+#include "Graphics/ConstantBuffer.h"
+
 #include "Graphics/DllMain.h"
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
+		using namespace TikiEngine::Graphics;
+
 		class GraphicsModule : public IGraphics
 		{
 		public:
@@ -24,28 +34,34 @@ namespace TikiEngine
 #if _DEBUG
 			void DrawLine(const Vector3& start, const Vector3& end, const Color& color);
 			void DrawLine(List<Vector3>* points, const Color& color, bool lastToFirst = false);
-
-			void DrawConsole(const DrawArgs& args);
 #endif
 
 			void* GetDevice() { return deviceContext; }
 			void* GetDeviceContext() { return renderContext; }
 			ViewPort* GetViewPort() { return &viewPort; }
 
-			IRenderTarget* GetDepthTarget() { return 0; }
-			IRenderTarget* GetLightTarget() { return 0; }
-			IRenderTarget* GetNormalTarget() { return 0; }
-			IRenderTarget* GetScreenTarget() { return 0; }
-			IRenderTarget* GetUnusedScreenTarget() { return 0; }
-			IRenderTarget* GetInterfaceTarget() { return 0; }
+			IRenderTarget* GetDepthTarget() { return rtDepth; }
+			IRenderTarget* GetLightTarget() { return rtLight; }
+			IRenderTarget* GetNormalTarget() { return rtNormal; }
+			IRenderTarget* GetScreenTarget() { return rtScreen[rtScreenIndex]; }
+			IRenderTarget* GetUnusedScreenTarget() { return rtScreen[!rtScreenIndex]; }
+			IRenderTarget* GetInterfaceTarget() { return rtInterface; }
 
-			IConstantBuffer* GetCBufferObject() { return 0; }
+			ConstantBuffer<CBLights>* GetCBufferLight();
+			ConstantBuffer<CBMatrices>* GetCBufferCamera();
+			ConstantBuffer<CBObjectData>* GetCBufferObject();
 
 			void AddPostProcess(PostProcess* postProcess);
 			void RemovePostProcess(PostProcess* postProcess);
 
+			void AddScreenSizeRenderTarget(RenderTarget* target);
+			void RemoveScreenSizeRenderTarget(RenderTarget* target);
+
 			void AddDefaultProcessTarget(cstring varName, IRenderTarget* target);
 			void SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget);
+
+			void SetRenderTarget(UInt32 slot, UInt32 target);
+			void SetFirstAndOnlyRenderTargets(UInt32 target);
 
 			void SetCulling(bool value);
 			void SetStateAlphaBlend(BlendStateModes value);
@@ -58,16 +74,43 @@ namespace TikiEngine
 
 		private:
 			
+			DrawArgs& currentArgs;
+
 			HWND hWnd;
 			HDC deviceContext;
 			HGLRC renderContext;
 
 			Color clearColor;
-
 			ViewPort viewPort;
 
-			bool initExtensions();
+			ConstantBuffer<CBLights>* cbufferLights;
+			ConstantBuffer<CBMatrices>* cbufferCamera;
+			ConstantBuffer<CBObjectData>* cbufferObject;
+
+			RenderTarget* rtBackBuffer;
+			RenderTarget* rtLight;
+			RenderTarget* rtDepth;
+			RenderTarget* rtNormal;
+			RenderTarget* rtInterface;
+			RenderTarget* rtScreen[2];
+			bool rtScreenIndex;
+
+			UInt32 frameBuffer;
+			List<UInt32> renderTargets;
+
+			List<RenderTarget*> screenSizeRenderTargets;
+
+			PostProcess* defaultPostProcess;
+			PostProcessPass* defaultPostProcessPass;
+			List<PostProcess*> postProcesses;
+			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
+
 			bool initOpenGL();
+			bool initEngine(EngineDescription& desc);
+			bool initFrameBuffer();
+
+			void drawPostProcess(PostProcess* postProcess);
+			void setLightChanged(const DrawArgs& args);
 
 		};
 	}

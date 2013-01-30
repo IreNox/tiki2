@@ -98,6 +98,7 @@ namespace TikiEngine
 			if(animations.Count() == 1)
 				animationStack.SetAnimation((IAnimation*)animation);
 		}
+
 		IAnimation* Model::GetAnimation(string name)
 		{
 			for(UInt32 i = 0; i < animations.Count(); i++)
@@ -107,6 +108,7 @@ namespace TikiEngine
 			}
 			return 0;
 		}
+
 		IAnimation* Model::GetAnimation(UInt32 index)
 		{
 			if(index >= 0 && index <= animations.Count())
@@ -118,6 +120,7 @@ namespace TikiEngine
 		{
 			this->animationStack.SetAnimation(animation);
 		}
+
 		void Model::BlendToAnimation(IAnimation* animation, double time)
 		{
 			this->animationStack.BlendAnimation(animation, time);
@@ -217,23 +220,13 @@ namespace TikiEngine
 				meshes[i]->Draw(args, this, gameObject);
 				i++;
 			}
-
-#if _DEBUG
-			//args.Graphics->DrawLine(Vector3(), Vector3(3.0f,0.0f,0.0f), Color::Red);
-			//args.Graphics->DrawLine(Vector3(), Vector3(0.0f,3.0f,0.0f), Color::Green);
-			//args.Graphics->DrawLine(Vector3(), Vector3(0.0f,0.0f,3.0f), Color::Blue);
-
-			//rootBone->Draw(args);
-#endif
 		}
 
 		void Model::Update(const UpdateArgs& args)
 		{
 #if _DEBUG
 			if (!this->GetReady())
-			{
 				throw "Model don't ready.";
-			}
 #endif
 
 			this->animationStack.Update(args);

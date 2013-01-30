@@ -7,7 +7,7 @@
 #if TIKI_OGL
 #include "Graphics/OGLGraphicsModule.h"
 #else
-#include "Graphics/GraphicsModule.h"
+#include "Graphics/DXGraphicsModule.h"
 #endif
 
 #include "Graphics/CBObjectData.h"
@@ -27,7 +27,7 @@ namespace TikiEngine
 
 				objData->WorldMIT = Matrix::Transpose(
 					Matrix::Invert(objData->WorldM)
-					);
+				);
 
 				if (material)
 				{
@@ -50,6 +50,46 @@ namespace TikiEngine
 		ShaderType Shader::GetShaderType()
 		{
 			return type;
+		}
+
+		void Shader::applyType(const wstring& fileName)
+		{
+			wstring file = engine->HPath.GetFilename(fileName);
+
+			switch (file[0])
+			{
+			case 'o':
+			case 'O':
+				type = ST_Object;
+
+				this->SetConstantBuffer(
+					"ObjectData",
+					DllMain::ModuleGraphics->GetCBufferObject()
+				);
+
+				this->SetConstantBuffer(
+					"LightBuffer",
+					DllMain::ModuleGraphics->GetCBufferLight()
+				);
+
+				this->SetConstantBuffer(
+					"MatrixBuffer",
+					DllMain::ModuleGraphics->GetCBufferCamera()
+				);
+				break;
+			case 'p':
+			case 'P':
+				type = ST_PostProcess;
+
+				this->SetConstantBuffer(
+					"LightBuffer",
+					DllMain::ModuleGraphics->GetCBufferLight()
+				);
+				break;
+			default:
+				type = ST_Unknown;
+				break;
+			}
 		}
 	}
 }

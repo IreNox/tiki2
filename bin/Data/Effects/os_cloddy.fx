@@ -40,6 +40,7 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 	float2 uv = input.WorldPos.xz + halfSize;
 	uv /= TerrainSize;
 
+	//output.Normal = float4(0, 1, 0, 1.0);
 	output.Screen = TexDiffuse.Sample(sam, uv);
 	output.Screen.a = 0.0f;
 

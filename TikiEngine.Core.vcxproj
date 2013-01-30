@@ -222,6 +222,13 @@
     <ClInclude Include="inc\extern\bzlib.h" />
     <ClInclude Include="inc\extern\bzlib_private.h" />
     <ClInclude Include="inc\extern\sqlite3.h" />
+    <ClInclude Include="misc\res\resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="misc\res\resources.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="misc\res\icon.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{939525FD-4CD7-4020-9947-77629AC5A091}</ProjectGuid>

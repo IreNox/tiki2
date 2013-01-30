@@ -40,6 +40,8 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region PostProcessVertex
+		UInt32 PostProcessVertex::DeclarationCount = 2;
+
 		InputElement PostProcessVertex::Declaration[2] = {
 			InputElement(IST_Position, 0, IEF_Float, 3),
 			InputElement(IST_TexCoord, 0, IEF_Float, 2)

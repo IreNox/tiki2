@@ -1,221 +1,240 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Components">
+      <UniqueIdentifier>{68319712-a75e-4844-85de-7c105c6cc7cd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    <Filter Include="Components\MeshRenderer">
+      <UniqueIdentifier>{c5c68109-f64e-42c4-9cde-1423e427eded}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal">
-      <UniqueIdentifier>{8d8958a3-9884-4db2-80ae-b47347c8f79b}</UniqueIdentifier>
+    <Filter Include="Resources">
+      <UniqueIdentifier>{9ad0e9a9-f26d-4153-b2de-b697d11a3614}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\Buffer">
-      <UniqueIdentifier>{dbea668f-bcab-45ca-80e9-c9256b9693ab}</UniqueIdentifier>
+    <Filter Include="Resources\Shader">
+      <UniqueIdentifier>{02f8cd70-83ba-4857-9bb0-254688f97f1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\Vertex">
-      <UniqueIdentifier>{84667c00-bfd7-4a54-94f8-2a9d68f25750}</UniqueIdentifier>
+    <Filter Include="Resources\Model">
+      <UniqueIdentifier>{a4e4ed80-6159-498c-8b68-7009fd93660b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Components">
-      <UniqueIdentifier>{2233eb01-a8e9-4594-bd6e-c681c179a21e}</UniqueIdentifier>
+    <Filter Include="Resources\RenderTarget">
+      <UniqueIdentifier>{2690748c-f690-462c-a738-1b319c8bf579}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Resources">
-      <UniqueIdentifier>{18fb9633-b103-4628-af7e-0a7ff86a5f5b}</UniqueIdentifier>
+    <Filter Include="Resources\Font">
+      <UniqueIdentifier>{c3a7eb88-96a4-4723-b3a8-957b14e5cce4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Resources">
+    <Filter Include="Resources\Texture">
       <UniqueIdentifier>{ab46f0ec-920e-484c-b473-a7a851bd4257}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Internal">
-      <UniqueIdentifier>{873bba07-b6d0-4c1d-b74a-373788301624}</UniqueIdentifier>
+    <Filter Include="DllMain">
+      <UniqueIdentifier>{5cc25201-ee47-46e7-aa28-9d24b989b0fe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Modules">
-      <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
+    <Filter Include="Components\ParticleRenderer">
+      <UniqueIdentifier>{2233eb01-a8e9-4594-bd6e-c681c179a21e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\Rendering">
+    <Filter Include="Components\TerrainRenderer">
+      <UniqueIdentifier>{ac0540ce-e138-4a32-98b7-6c2935557815}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_extern">
+      <UniqueIdentifier>{488981e2-44f8-450e-a316-70fac48a1512}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal">
+      <UniqueIdentifier>{8d8958a3-9884-4db2-80ae-b47347c8f79b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\Buffer">
+      <UniqueIdentifier>{dbea668f-bcab-45ca-80e9-c9256b9693ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\Vertex">
+      <UniqueIdentifier>{84667c00-bfd7-4a54-94f8-2a9d68f25750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\Rendering">
       <UniqueIdentifier>{c919f251-3e77-4de8-a6a2-12114241571d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Quelldateien\Internal\Rendering">
-      <UniqueIdentifier>{0b570a00-d9c5-4fdf-ab6c-6de06647b201}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Internal\Cloddy">
+    <Filter Include="Internal\Cloddy">
       <UniqueIdentifier>{e6432fc2-ca46-4cba-86a8-d3521817312d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\Data">
+    <Filter Include="Internal\Data">
       <UniqueIdentifier>{bbcc8707-8f12-4c91-885f-e62f0dfb08c7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Headerdateien\Internal\Model">
+    <Filter Include="Internal\Model">
       <UniqueIdentifier>{e8bfa32a-5d6a-4500-97d8-bcbca723ed41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SpriteBatch">
+    <Filter Include="Modules">
+      <UniqueIdentifier>{0b8db9c6-28cf-4f19-ab2b-dc2f051fe7e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\SpriteBatch">
       <UniqueIdentifier>{85a5624d-1f52-4208-8e10-88ce6ceab2c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Modules\GraphicsModule">
+      <UniqueIdentifier>{725dbfe2-1ce8-46fa-a537-adc8782a1d4e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Graphics\Texture.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Shader.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\DllMain.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\RenderTarget.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Font.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Quad.cpp">
-      <Filter>Quelldateien\Internal\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
-      <Filter>Quelldateien\Internal\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\Model.cpp">
-      <Filter>Quelldateien\Resources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\DebugConsole.cpp">
-      <Filter>Quelldateien\Internal\Rendering</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\ModelInternal.cpp">
-      <Filter>Quelldateien\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
-      <Filter>Quelldateien\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\VertexInternal.cpp">
-      <Filter>Quelldateien\Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\AllComponents.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\AllModules.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsInternal.cpp">
-      <Filter>Quelldateien\Internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
-      <Filter>SpriteBatch</Filter>
+      <Filter>Modules\SpriteBatch</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\DXSpriteBatchModule.cpp">
-      <Filter>SpriteBatch</Filter>
+      <Filter>Modules\SpriteBatch</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\AllComponents.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEMeshRenderer.cpp">
+      <Filter>Components\MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DXShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEShader.cpp">
+      <Filter>Resources\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Font.cpp">
+      <Filter>Resources\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Model.cpp">
+      <Filter>Resources\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DllMain.cpp">
+      <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Quad.cpp">
+      <Filter>Internal\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
+      <Filter>Internal\Rendering</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexInternal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\GraphicsInternal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ModelInternal.cpp">
+      <Filter>Internal</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DXRenderTarget.cpp">
+      <Filter>Resources\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEGraphicsModule.cpp">
+      <Filter>Modules\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DXGraphicsModule.cpp">
+      <Filter>Modules\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\DXTexture.cpp">
+      <Filter>Resources\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\ConstantBuffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\Shader.h">
-      <Filter>Headerdateien\Resources</Filter>
+      <Filter>Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\VertexDeclaration.h">
-      <Filter>Headerdateien\Internal\Vertex</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DllMain.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Internal\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Texture.h">
-      <Filter>Headerdateien\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\MeshRenderer.h">
-      <Filter>Headerdateien\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\RenderTarget.h">
-      <Filter>Headerdateien\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\d3dx11effect.h">
-      <Filter>Headerdateien\Internal</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\GraphicsModule.h">
-      <Filter>Headerdateien\Modules</Filter>
+      <Filter>Resources\Texture</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchVertex.h">
-      <Filter>Headerdateien\Internal\Vertex</Filter>
+      <Filter>Internal\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DynamicBuffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\Font.h">
-      <Filter>Headerdateien\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TerrainRenderer.h">
-      <Filter>Headerdateien\Components</Filter>
+      <Filter>Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\DebugLineRenderer.h">
-      <Filter>Headerdateien\Internal\Rendering</Filter>
+      <Filter>Internal\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\Quad.h">
-      <Filter>Headerdateien\Internal\Rendering</Filter>
+      <Filter>Internal\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\TikiHeightmap.h">
-      <Filter>Headerdateien\Internal\Cloddy</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\Model.h">
-      <Filter>Headerdateien\Resources</Filter>
+      <Filter>Internal\Cloddy</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainIndexBuffer.h">
-      <Filter>Headerdateien\Internal\Cloddy</Filter>
+      <Filter>Internal\Cloddy</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainVertexBuffer.h">
-      <Filter>Headerdateien\Internal\Cloddy</Filter>
+      <Filter>Internal\Cloddy</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\CBLights.h">
-      <Filter>Headerdateien\Internal\Data</Filter>
+      <Filter>Internal\Data</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\CBObjectData.h">
-      <Filter>Headerdateien\Internal\Data</Filter>
+      <Filter>Internal\Data</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\LightData.h">
-      <Filter>Headerdateien\Internal\Data</Filter>
+      <Filter>Internal\Data</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ParticleVertex.h">
-      <Filter>Headerdateien\Internal\Vertex</Filter>
+      <Filter>Internal\Vertex</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ParticleRenderer.h">
-      <Filter>Headerdateien\Components</Filter>
+      <Filter>Components\ParticleRenderer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\StaticBuffer.h">
-      <Filter>Headerdateien\Internal\Buffer</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\DebugConsole.h">
-      <Filter>Headerdateien\Internal\Rendering</Filter>
+      <Filter>Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ModelConverter.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
+      <Filter>Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ModelIOContext.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
+      <Filter>Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\ModelBinaryData.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiLayer.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiMesh.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
+      <Filter>Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SkinMatrices.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiAnimation.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\TikiBone.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
+      <Filter>Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\AnimationStack.h">
-      <Filter>Headerdateien\Internal\Model</Filter>
+      <Filter>Internal\Model</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\PPDefault.h">
-      <Filter>Headerdateien\Internal\Rendering</Filter>
+      <Filter>Internal\Rendering</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
-      <Filter>SpriteBatch</Filter>
+      <Filter>Modules\SpriteBatch</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\MeshRenderer.h">
+      <Filter>Components\MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Shader.h">
+      <Filter>Resources\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Model.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiMesh.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiLayer.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiBone.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimation.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderTarget.h">
+      <Filter>Resources\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Font.h">
+      <Filter>Resources\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DllMain.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TerrainRenderer.h">
+      <Filter>Components\TerrainRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\d3dx11effect.h">
+      <Filter>_extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\DXGraphicsModule.h">
+      <Filter>Modules\GraphicsModule</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

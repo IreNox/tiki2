@@ -14,14 +14,16 @@ namespace TikiEngine
 		public:
 
 			RenderTarget(Engine* engine);
+#if TIKI_DX10 || TIKI_DX11
 			RenderTarget(Engine* engine, TDX_RenderTargetView* renderTarget, bool shaderView);
+#elif TIKI_OGL
+			RenderTarget(Engine* engine, UInt32 textureId);
+#endif
 
 			~RenderTarget();
 
 			void Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format);
 			void CreateScreenSize(bool dynamic = false, PixelFormat format = PF_R32G32B32A32);
-
-			void SaveToFile(wcstring fileName);
 
 			void Apply(UInt32 slot);
 			void ApplyFirstAndOnly();
@@ -29,8 +31,10 @@ namespace TikiEngine
 
 			void Resize(UInt32 width, UInt32 height);
 
+#if TIKI_DX10 || TIKI_DX11
 			/*! @brief Resize RenderTarget. Create no ShaderResourceView! */
 			void Resize(TDX_RenderTargetView* renderTarget);
+#endif
 
 			Int32 GetWidth();
 			Int32 GetHeight();
@@ -55,7 +59,12 @@ namespace TikiEngine
 		private:
 
 			Texture* texture;
+
+#if TIKI_DX10 || TIKI_DX11
 			TDX_RenderTargetView* renderTarget;
+#elif TIKI_OGL
+			UInt32 renderTarget;
+#endif
 
 		};
 	}

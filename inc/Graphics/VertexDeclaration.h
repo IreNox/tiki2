@@ -31,7 +31,12 @@ namespace TikiEngine
 
 			UInt32 hash;
 			UInt32 elementSize;
+
+#if TIKI_DX10 || TIKI_DX11
 			TDX_InputLayout* inputLayout;
+#elif TIKI_OGL
+			List<InputElement> inputLayout;
+#endif
 
 			void createInputLayout(const InputElement* decl, UInt32 count);
 

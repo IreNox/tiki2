@@ -122,9 +122,9 @@ namespace TikiEngine
 						{
 							engine->HLog.Write("Can't reload Resource");
 						}
-						catch (string)
+						catch (string s)
 						{
-							engine->HLog.Write("Can't reload Resource");
+							engine->HLog.Write("Can't reload Resource. Error: " + s);
 						}
 					}
 

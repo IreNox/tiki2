@@ -1,6 +1,6 @@
 
 #include "Graphics/DebugLineRenderer.h"
-#include "Graphics/GraphicsModule.h"
+#include "Graphics/DXGraphicsModule.h"
 
 #include "Core/IContentManager.h"
 

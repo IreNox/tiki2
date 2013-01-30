@@ -12,6 +12,7 @@ namespace TikiEngine
 			Single Position[3];
 			Single UV[2];
 
+			static UInt32 DeclarationCount;
 			static InputElement Declaration[2];
 		};
 	}

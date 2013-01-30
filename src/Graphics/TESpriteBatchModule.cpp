@@ -10,10 +10,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		SpriteBatchModule::SpriteBatchModule(Engine* engine)
-			: ISpriteBatch(engine), shader(0), buffer(0)
-#if TIKI_DX10 || TIKI_DX11
-			, declaration(0)
-#endif
+			: ISpriteBatch(engine), shader(0), buffer(0), declaration(0)
 		{
 		}
 
@@ -29,14 +26,12 @@ namespace TikiEngine
 			shader = (Shader*)engine->content->LoadShader(L"os_spritebatch");
 			shader->AddRef();
 
-#if TIKI_DX10 || TIKI_DX11
 			declaration = TIKI_NEW VertexDeclaration(
 				engine,
 				shader,
 				SpriteBatchVertex::Declaration,
 				SpriteBatchVertex::DeclarationCount
 			);
-#endif
 
 			buffer = TIKI_NEW DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>(engine);
 
@@ -50,10 +45,7 @@ namespace TikiEngine
 		{
 			SafeRelease(&buffer);
 			SafeRelease(&shader);
-
-#if TIKI_DX10 || TIKI_DX11
 			SafeRelease(&declaration);
-#endif
 		}
 		#pragma endregion
 

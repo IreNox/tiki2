@@ -461,6 +461,9 @@
     <ClInclude Include="inc\Game\BotRemove.h">
       <Filter>Headerdateien\AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\DebugConsole.h">
+      <Filter>Headerdateien\Gameplay</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\Main.cpp">
@@ -711,6 +714,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\BotRemove.cpp">
       <Filter>Quelldateien\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\DebugConsole.cpp">
+      <Filter>Quelldateien\Gameplay</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

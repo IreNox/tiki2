@@ -77,11 +77,16 @@ namespace TikiEngine
 			int psId;
 			int shaderId;
 
+			static GLuint bindIndex;
+			Dictionary<GLuint, GLuint> bufferBinding;
+
 			bool getShaderInfo(int id, string& log, bool program);
 #endif
 
 			void loadFromStream(wcstring fileName, Stream* stream);
 			void saveToStream(wcstring fileName, Stream* stream);
+
+			void applyType(const wstring& fileName);
 		};
 	}
 }

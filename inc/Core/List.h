@@ -26,7 +26,7 @@ public:
 		}
 	}
 
-	List(T* data, UInt32 count, bool readOnly)
+	List(const T* data, UInt32 count, bool readOnly)
 		: IsReadOnly(readOnly), lengthData(count), lengthArr(2)
 	{
 		lengthArr = getNextSize(count);

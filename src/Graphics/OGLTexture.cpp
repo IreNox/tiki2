@@ -1,6 +1,8 @@
 
 #include "Graphics/Texture.h"
 
+#include "Core/IGraphics.h"
+
 struct DDS_PIXELFORMAT {
 	DWORD dwSize;
 	DWORD dwFlags;
@@ -39,9 +41,20 @@ namespace TikiEngine
 		{
 		}
 
+		Texture::Texture(Engine* engine, UInt32 textureId)
+			: ITexture(engine), textureId(textureId), dynamic(false)
+		{
+			if (textureId == 0)
+			{
+				width = engine->graphics->GetViewPort()->Width;
+				height = engine->graphics->GetViewPort()->Height;
+			}
+		}
+
 		Texture::~Texture()
 		{
-			glDeleteTextures(1, &textureId);
+			if (textureId != 0)
+				glDeleteTextures(1, &textureId);
 		}
 		#pragma endregion
 
@@ -49,6 +62,22 @@ namespace TikiEngine
 		void Texture::Create(UInt32 width, UInt32 height, bool dynamic, PixelFormat format)
 		{
 			createInternal(width, height, dynamic, format);
+
+			GLenum intFormat = GL_FALSE;
+
+			switch(format)
+			{
+			case PF_R8G8B8A8:
+				intFormat = GL_RGBA;
+				break;
+			case PF_R32G32B32A32:
+				intFormat = GL_RGBA32F;
+				break;
+			default:
+				throw string("PixelFormat not supported");
+			}
+
+			glTexImage2D(textureId, 0, intFormat, width, height, 0, GL_RGBA, GL_UNSIGNED_INT, 0);
 		}
 		#pragma endregion
 
@@ -81,7 +110,7 @@ namespace TikiEngine
 				width,
 				height,
 				0,
-				GL_RGBA,
+				GL_BGRA,
 				GL_UNSIGNED_BYTE,
 				data
 			);
@@ -98,9 +127,6 @@ namespace TikiEngine
 		#pragma region Private - Create
 		void Texture::createInternal(UInt32 width, UInt32 height, bool dynamic, PixelFormat format)
 		{
-			if (format != PF_R8G8B8A8)
-				throw string("PixelFormat not supported");
-
 			this->width = width;
 			this->height = height;
 			this->dynamic = dynamic;
@@ -145,7 +171,7 @@ namespace TikiEngine
 				width,
 				height,
 				0,
-				GL_RGBA,
+				GL_BGRA,
 				GL_UNSIGNED_BYTE,
 				data
 			);

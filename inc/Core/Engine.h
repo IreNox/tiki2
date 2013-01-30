@@ -98,6 +98,9 @@ namespace TikiEngine
 			return dataBase;
 		}
 
+		inline bool GetShadowsEnabled() { return useShadows; }
+		inline void SetShadowsEnabled(bool use) { useShadows = use; }
+
 	protected:
 
 		void Draw(UpdateArgs& args);
@@ -114,6 +117,8 @@ namespace TikiEngine
 		Thread<Engine, Scene>* loadingThread;
 
 		sqlite3* dataBase;
+
+		bool useShadows;
 
 #if _DEBUG
 		UInt32 fpsIndex;

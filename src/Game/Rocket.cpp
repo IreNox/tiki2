@@ -83,7 +83,6 @@ namespace TikiEngine
 
 		void Rocket::Update(const UpdateArgs& args)
 		{
-
 			if (Vector2::DistanceSquared(sphere->GetCenter().XZ(), projTarget) < 3.0f * 3.0f )
 			{
 				impacted = true;

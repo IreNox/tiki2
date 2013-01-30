@@ -2,21 +2,22 @@
 #include "Graphics/DllMain.h"
 
 #include "Graphics/Font.h"
+#include "Graphics/Model.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
+
+#include "Graphics/MeshRenderer.h"
 
 #include "Graphics/SpriteBatchModule.h"
 
 #if TIKI_DX10 || TIKI_DX11
 #include "Graphics/RenderTarget.h"
-#include "Graphics/Model.h"
 #include "Graphics/TikiAnimation.h"
 
-#include "Graphics/MeshRenderer.h"
 #include "Graphics/TerrainRenderer.h"
 #include "Graphics/ParticleRenderer.h"
 
-#include "Graphics/GraphicsModule.h"
+#include "Graphics/DXGraphicsModule.h"
 #include "Graphics/SpriteBatchModule.h"
 #elif TIKI_OGL
 #include "Graphics/OGLGraphicsModule.h"
@@ -66,14 +67,15 @@ namespace TikiEngine
 		DllInfo.Modules.Add(typeid(ISpriteBatch).hash_code());
 
 		DllInfo.Resources.Add(typeid(IFont).hash_code());
+		DllInfo.Resources.Add(typeid(IModel).hash_code());
 		DllInfo.Resources.Add(typeid(IShader).hash_code());
 		DllInfo.Resources.Add(typeid(ITexture).hash_code());
 
+		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
+
 #if TIKI_DX10 || TIKI_DX11
 		DllInfo.Resources.Add(typeid(IRenderTarget).hash_code());
-		DllInfo.Resources.Add(typeid(IModel).hash_code());
 		
-		DllInfo.Components.Add(typeid(IMeshRenderer).hash_code());
 		DllInfo.Components.Add(typeid(ITerrainRenderer).hash_code());
 		DllInfo.Components.Add(typeid(IParticleRenderer).hash_code());
 #endif
@@ -113,14 +115,14 @@ namespace TikiEngine
 		{
 			return TIKI_NEW Font(DllMain::Engine);
 		}
+		else if(hash == typeid(IModel).hash_code())
+		{
+			return TIKI_NEW Model(DllMain::Engine);
+		}
 #if TIKI_DX10 || TIKI_DX11
 		else if (hash == typeid(IRenderTarget).hash_code())
 		{
 			return TIKI_NEW RenderTarget(DllMain::Engine);
-		}
-		else if(hash == typeid(IModel).hash_code())
-		{
-			return TIKI_NEW Model(DllMain::Engine);
 		}
 #endif
 
@@ -134,7 +136,7 @@ namespace TikiEngine
 #if TIKI_DX10 || TIKI_DX11
 			return L"effects";
 #elif TIKI_OGL
-			return L"effectsgl";
+			return L"gfx_glsl";
 #endif
 		}
 		else if (hash == typeid(IFont).hash_code())
@@ -149,12 +151,10 @@ namespace TikiEngine
 		{
 			return L"textures";
 		}
-#if TIKI_DX10 || TIKI_DX11
 		else if(hash == typeid(IModel).hash_code())
 		{
 			return L"models";
 		}
-#endif
 
 		return 0;
 	}
@@ -181,23 +181,21 @@ namespace TikiEngine
 		{
 			return L"dds";
 		}
-#if TIKI_DX10 || TIKI_DX11
 		else if(hash == typeid(IModel).hash_code())
 		{
 			return L"tiki";
 		}
-#endif
 
 		return 0;
 	}
 
 	Component* DllMain::CreateComponent(PInt hash, GameObject* gameObject)
 	{
-#if TIKI_DX10 || TIKI_DX11
 		if (hash == typeid(IMeshRenderer).hash_code())
 		{
 			return TIKI_NEW MeshRenderer(DllMain::Engine, gameObject);
 		}
+#if TIKI_DX10 || TIKI_DX11
 		else if (hash == typeid(ITerrainRenderer).hash_code())
 		{
 			return TIKI_NEW TerrainRenderer(DllMain::Engine, gameObject);

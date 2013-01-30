@@ -90,6 +90,29 @@ namespace TikiEngine
 			DllMain::Context->IASetInputLayout(
 				this->inputLayout
 			);
+#elif TIKI_OGL
+			UInt32 i = 0;
+			Byte* offset = 0;
+			while (i < inputLayout.Count())
+			{
+				GLenum type;
+
+				switch (inputLayout[i].ElementFormat)
+				{
+				case IEF_Float:
+					type = GL_FLOAT;
+					break;
+				case IEF_UInt:
+					type = GL_UNSIGNED_INT;
+					break;
+				}
+
+				glEnableVertexAttribArray(i);
+				glVertexAttribPointer(i, inputLayout[i].ElementSize, type, false, elementSize, offset);
+
+				offset += 4 * inputLayout[i].ElementSize;
+				i++;
+			}
 #endif
 		}
 		#pragma endregion
@@ -97,8 +120,28 @@ namespace TikiEngine
 		#pragma region Private Member - CreateInputLayout
 		void VertexDeclaration::createInputLayout(const InputElement* decl, UInt32 count)
 		{
-#if TIKI_DX10 || TIKI_DX11
 			elementSize = 0;
+
+#if TIKI_OGL
+			inputLayout = List<InputElement>(decl, count, true);
+
+			UInt32 i = 0;
+			while (i < count)
+			{
+				switch (decl[i].ElementFormat)
+				{
+				case IEF_Bool:
+					elementSize += decl[i].ElementSize;
+					break;
+				case IEF_UInt:
+				case IEF_Float:
+					elementSize += decl[i].ElementSize * 4;
+					break;
+				}
+
+				i++;
+			}
+#elif TIKI_DX10 || TIKI_DX11
 			TDX_Input_Element_desc* elements = TIKI_NEW TDX_Input_Element_desc[count];
 
 			UInt32 i = 0;

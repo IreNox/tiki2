@@ -5,13 +5,9 @@
 #include "Core/EventScreenSizeChanged.h"
 
 #include "Graphics/Shader.h"
-#include "Graphics/SpriteBatchVertex.h"
-
 #include "Graphics/DynamicBuffer.h"
-
-#if TIKI_DX10 || TIKI_DX11
 #include "Graphics/VertexDeclaration.h"
-#endif
+#include "Graphics/SpriteBatchVertex.h"
 
 namespace TikiEngine
 {
@@ -77,9 +73,7 @@ namespace TikiEngine
 
 			Shader* shader;
 
-#if TIKI_DX10 || TIKI_DX11
 			VertexDeclaration* declaration;
-#endif
 			DynamicBuffer<SpriteBatchVertex, TIKI_VERTEX_BUFFER>* buffer;
 
 			List<Sprite> spriteInfos;

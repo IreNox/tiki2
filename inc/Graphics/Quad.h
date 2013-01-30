@@ -8,6 +8,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/RenderTarget.h"
 #include "Graphics/StaticBuffer.h"
+#include "Graphics/VertexDeclaration.h"
 
 namespace TikiEngine
 {
@@ -20,11 +21,10 @@ namespace TikiEngine
 		{
 		public:
 
-			Quad(Engine* Engine);
+			Quad(Engine* Engine, IShader* shader);
 			~Quad();
 
 			IShader* GetShader();
-			void SetShader(IShader* shader);
 
 			void SetInput(const Dictionary<string, IRenderTarget*>& input);
 			void SetOutput(const Dictionary<UInt32, IRenderTarget*>& output);
@@ -33,15 +33,11 @@ namespace TikiEngine
 
 		private:
 
-			Shader* shader;
-
-			//VertexBuffer* vertexBuffer;
+			IShader* shader;
+			VertexDeclaration* decl;
 			StaticBuffer<TIKI_VERTEX_BUFFER>* vertexBuffer;
 
-			TDX_InputLayout* inputLayout;
-
 			static PostProcessVertex quadVertices[4];
-			static TDX_Input_Element_desc Quad::quadVertexElements[2];
 
 		};
 	}

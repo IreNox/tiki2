@@ -94,7 +94,7 @@ namespace TikiEngine
 		return element;
 	}
 
-	GameObject* Scene::RemoveElement(GameObject* element)
+	bool Scene::RemoveElement(GameObject* element)
 	{
 		UInt32 i = 0;
 		while (i < lighting.SceneLights->Count())
@@ -122,9 +122,7 @@ namespace TikiEngine
 			}
 		}
 		
-		SceneGraph.Remove(element);
-
-		return element;
+		return SceneGraph.Remove(element);
 	}
 	#pragma endregion
 

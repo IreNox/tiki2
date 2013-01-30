@@ -20,6 +20,7 @@ namespace TikiEngine
 		class Cheater;
 		class GameHud;
 		class SceneLevel;
+		class DebugConsole;
 		class UnitSelection;
 		class TikiBotFactory;
 		class ProjectileManager;
@@ -104,9 +105,12 @@ namespace TikiEngine
 			double resource;
 
 			bool followHero;
+			bool consoleEnabled;
 
 			GameHud* hud;
 			Cheater* cheater;
+			DebugConsole* console;
+
 			SceneLevel* scene;
 			List<GamePart*> gameParts;
 

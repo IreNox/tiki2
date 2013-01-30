@@ -55,6 +55,12 @@
     <Filter Include="Resources\Model">
       <UniqueIdentifier>{3644d435-d95e-4230-b840-3dc4fed11784}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Internal\Model">
+      <UniqueIdentifier>{9dc9b5b1-ad19-488b-a59b-8ea9d373baf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Internal\Quad">
+      <UniqueIdentifier>{44475857-8d39-4aff-9199-1032a13ae1f3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\OGLGraphicsModule.h">
@@ -62,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DllMain.h">
       <Filter>DllMain</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Graphics\OGLVertexArray.h">
-      <Filter>Internal\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
       <Filter>Modules\SpriteBatchModule</Filter>
@@ -86,6 +89,51 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\Font.h">
       <Filter>Resources\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\MeshRenderer.h">
+      <Filter>Components\MeshRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\StaticBuffer.h">
+      <Filter>Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ConstantBuffer.h">
+      <Filter>Internal\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Model.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiAnimation.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiBone.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiLayer.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\TikiMesh.h">
+      <Filter>Resources\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\AnimationStack.h">
+      <Filter>Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelBinaryData.h">
+      <Filter>Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelConverter.h">
+      <Filter>Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\ModelIOContext.h">
+      <Filter>Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\SkinMatrices.h">
+      <Filter>Internal\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\RenderTarget.h">
+      <Filter>Resources\RenderTarget</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\Quad.h">
+      <Filter>Internal\Quad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +166,27 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\Font.cpp">
       <Filter>Resources\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEMeshRenderer.cpp">
+      <Filter>Components\MeshRenderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OGLComponents.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ModelInternal.cpp">
+      <Filter>Internal\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Model.cpp">
+      <Filter>Resources\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\OGLRenderTarget.cpp">
+      <Filter>Resources\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\TEGraphicsModule.cpp">
+      <Filter>Modules\GraphicsModule</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Quad.cpp">
+      <Filter>Internal\Quad</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

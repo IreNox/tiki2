@@ -106,6 +106,7 @@ namespace TikiEngine
 
 		TikiBot::~TikiBot()
 		{
+			gameObject->RemoveComponent(controller);
 			SafeRelease(&controller);
 			
 			SafeDelete(&brain);

@@ -129,7 +129,7 @@ namespace TikiEngine
 
 		void SphereCollider::Update(const UpdateArgs& args)
 		{	
-			if (!isTrigger)
+			if (state == CS_DYNAMIC)
 			{
 				gameObject->PRS.SPosition() = actor->getGlobalPosition().get();
 

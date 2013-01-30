@@ -8,12 +8,12 @@
 /////////////
 #include "Data/Effects/IncPP/is_input.fx"
 
-Texture2D tex;
+//Texture2D tex;
 
-float BlurRange = 2.0f;
-float BlurIntensity = 1.0f;
+//float BlurRange = 2.0f;
+//float BlurIntensity = 1.0f;
 
-float2 ScreenSize = float2(400, 300);
+//float2 ScreenSize = float2(400, 300);
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -55,7 +55,7 @@ DepthStencilState RenderNonShadows
     StencilReadMask = 0xFFFFFFFF;
     StencilWriteMask = 0x0;
     
-    FrontFaceStencilFunc = NOT_EQUAL;
+    FrontFaceStencilFunc = Less;
     FrontFaceStencilPass = Keep;
     FrontFaceStencilFail = Zero;
     
