@@ -132,9 +132,6 @@
     <Filter Include="Headerdateien\Core\Exceptions">
       <UniqueIdentifier>{c8a84f74-f1ce-4346-8453-89bf0d45a744}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resources">
-      <UniqueIdentifier>{b0795a83-a304-419e-9aa4-33e99132ba8c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -742,18 +739,5 @@
     <ClInclude Include="inc\Core\FakeSceneGraph.h">
       <Filter>Headerdateien\Core\SceneGraph</Filter>
     </ClInclude>
-    <ClInclude Include="misc\res\resource.h">
-      <Filter>Resources</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="misc\res\resources.rc">
-      <Filter>Resources</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="misc\res\icon.ico">
-      <Filter>Resources</Filter>
-    </None>
   </ItemGroup>
 </Project>

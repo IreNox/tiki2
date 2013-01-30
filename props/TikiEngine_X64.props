@@ -7,6 +7,9 @@
     <ClCompile>
       <PreprocessorDefinitions>_WIN64;_AMD64_;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Link>
+      <TargetMachine>MachineX64</TargetMachine>
+    </Link>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>

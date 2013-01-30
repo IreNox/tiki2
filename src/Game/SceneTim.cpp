@@ -144,10 +144,10 @@ namespace TikiEngine
 				showRenderTargets = !showRenderTargets;
 
 			Vector3 move = Vector3(
-				(args.Input.GetKey(KEY_F) ? -1 : 0) + (args.Input.GetKey(KEY_H) ? 1 : 0),
-				(args.Input.GetKey(KEY_Z) ? -1 : 0) + (args.Input.GetKey(KEY_R) ? 1 : 0),
-				(args.Input.GetKey(KEY_G) ? -1 : 0) + (args.Input.GetKey(KEY_T) ? 1 : 0)
-			) * args.Time.ElapsedTime * 10;
+				(args.Input.GetKey(KEY_F) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_H) ? 1.0f : 0.0f),
+				(args.Input.GetKey(KEY_Z) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_R) ? 1.0f : 0.0f),
+				(args.Input.GetKey(KEY_G) ? -1.0f : 0.0f) + (args.Input.GetKey(KEY_T) ? 1.0f : 0.0f)
+			) * (float)(args.Time.ElapsedTime * 10.0);
 
 			light->PRS.SPosition() += move;
 
