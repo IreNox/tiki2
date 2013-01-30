@@ -49,7 +49,7 @@ namespace TikiEngine
 				owner->GetGameState()->GetProjectiles()->AddProjectile(proj);
 
 				//owner->GetEngine()->HLog.Write("WeaponSystem - Raised Attack Animation. \n");
-				owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+				owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(AT_Attack));
 
 				UpdateTimeWeaponIsAvailable(args);
 

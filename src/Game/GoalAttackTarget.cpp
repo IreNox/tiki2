@@ -29,7 +29,7 @@ namespace TikiEngine
 			{
 				//owner->GetEngine()->HLog.Write("no target to attack (GoalAttackTarget). \n");
 				status = Completed;
-				owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
+				owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(AT_Idle));
 				return;
 			}
 //             else

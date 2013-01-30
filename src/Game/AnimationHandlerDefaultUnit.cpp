@@ -44,23 +44,23 @@ namespace TikiEngine
 
 		switch(args.animationType)
 		{
-		case Idle:
+		case AT_Idle:
 			model->BlendToAnimation(this->idle);
 			break;
 
-		case Walk:
+		case AT_Walk:
 			model->BlendToAnimation(this->walk);
 			break;
 
-		case Run:
+		case AT_Run:
 			model->BlendToAnimation(this->run);
 			break;
 
-		case Attack:
+		case AT_Attack:
 			model->BlendToAnimation(this->attack);
 			break;
 
-		case Death:
+		case AT_Death:
 			if(random <= 0.5f)
 				model->BlendToAnimation(this->death1);
 			else

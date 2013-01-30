@@ -13,17 +13,17 @@ namespace TikiEngine
 
 	enum AnimationType
 	{
-		Idle,
-		Walk,
-		Attack,
-		Run,
-		Death
+		AT_Idle,
+		AT_Walk,
+		AT_Attack,
+		AT_Run,
+		AT_Death
 	};
 	
 	struct AnimationArgs
 	{
 		AnimationType animationType;
-		AnimationArgs(AnimationType type = Run) : animationType(type) {}
+		AnimationArgs(AnimationType type = AT_Run) : animationType(type) {}
 	};
 
 	class AnimationEvent: public Event<IModel, AnimationArgs>

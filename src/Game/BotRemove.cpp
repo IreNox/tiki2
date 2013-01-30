@@ -12,9 +12,13 @@ namespace TikiEngine
 		{
 			this->gameState = gameState;
 			timeTillDeath = 0.0f;
+
+			gameObject->GModel()->AnimationHandler.RaiseEvent(
+				gameObject->GModel(),
+				AnimationArgs(AT_Death)
+			);
 		}
-
-
+		
 		const double DeathAnimationLength = 2.0f;
 
 		void BotRemove::Update(const UpdateArgs& args)

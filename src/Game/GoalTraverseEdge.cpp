@@ -61,7 +61,7 @@ namespace TikiEngine
             if( owner->GetGameObject()->GModel())
             {
                 if (lastEdgeInPath)
-                    owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
+                    owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(AT_Idle));
             }
 
 		}

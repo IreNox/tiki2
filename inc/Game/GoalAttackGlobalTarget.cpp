@@ -40,7 +40,7 @@ namespace TikiEngine
 						owner->GetSteering()->SeekOff();
 						owner->GetSteering()->ArriveOff();
 
-                        owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Attack));
+                        owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(AT_Attack));
 
 
 						//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Attacking. Raised Attack event \n");
@@ -74,7 +74,7 @@ namespace TikiEngine
 			{
 				owner->GetTargetSys()->ClearGlobalTarget();
 				//target->GetEngine()->HLog.Write("GoalAttackGlobalTarget - Target dead or NUll. Raised idle event.");
-                owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(Idle));
+                owner->GetGameObject()->GModel()->AnimationHandler.RaiseEvent(owner->GetGameObject()->GModel(), AnimationArgs(AT_Idle));
 
 				status = Completed;
 			}

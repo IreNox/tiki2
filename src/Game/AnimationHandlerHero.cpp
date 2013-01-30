@@ -29,13 +29,13 @@ namespace TikiEngine
 
 		switch(args.animationType)
 		{
-		case Idle:
+		case AT_Idle:
 			model->BlendToAnimation(this->idle);
 			break;
-		case Run:
+		case AT_Run:
 			model->BlendToAnimation(this->run);
 			break;
-		case Attack:
+		case AT_Attack:
 			model->BlendToAnimation(this->attack);
 			break;
 		default:
