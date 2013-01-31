@@ -463,6 +463,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Operators - Const - []/==/!=
+		inline const TChar* operator*()
+		{
+			return data->StringData;
+		}
+
 		inline TChar operator[](UInt32 index) const
 		{
 			if (index >= data->StringLength) 

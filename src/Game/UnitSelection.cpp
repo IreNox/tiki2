@@ -376,21 +376,18 @@ namespace TikiEngine
 
 				gameState->GetScene()->RemoveElement(bot->GetGameObject());
 			}
-			else if (bot->EntityType() == ET_Bot || bot->EntityType() == ET_Hero)
+			else if (bot->EntityType() == ET_Bot)
 			{
 				GameObject* toRemove = bot->GetGameObject();
 
 				toRemove->RemoveComponent(bot);
 				new BotRemove(gameState, toRemove);
-
-				//bot->IncreaseTimeSInceDead(args.Time.ElapsedTime);
-				//
-				//const double DeathAnimationDuration = 2.0f;
-				//if (bot->GetTimeSinceDead() >= DeathAnimationDuration)
-				//{
-				//	bot->SetTimeSinceDead(0);
-				//	gameState->GetScene()->RemoveElement(bot->GetGameObject());
-				//}
+			}
+			else if (bot->EntityType() == ET_Hero)
+			{
+				gameState->GetScene()->RemoveElement(
+					bot->GetGameObject()
+				);
 			}
 			else
 			{

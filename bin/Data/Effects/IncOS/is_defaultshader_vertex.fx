@@ -15,13 +15,18 @@ PS_INPUT VS_Main(VS_INPUT input)
     output.Pos = mul(output.Pos, ViewM);
     output.Pos = mul(output.Pos, ProjectionM);
 
+	#ifndef VS_MAIN_USE_NOUV
 	output.UV = input.UV;
 	output.UV.y = 1 - output.UV.y;
-
-	float3 c1 = cross(input.Normal, float3(0.0, 0.0, 1.0)); 
-	float3 c2 = cross(input.Normal, float3(0.0, 1.0, 0.0)); 
+	#else
+	output.UV = float2(0, 0);
+	#endif
 
 	output.Normal = normalize(mul(input.Normal, (float3x3)world));
+
+	float3 c1 = cross(output.Normal, float3(0.0, 0.0, 1.0)); 
+	float3 c2 = cross(output.Normal, float3(0.0, 1.0, 0.0)); 
+
 	output.Tangent = normalize(length(c1) > length(c2) ? c1 : c2);
     output.Binormal = normalize(cross(output.Normal, output.Tangent));
     

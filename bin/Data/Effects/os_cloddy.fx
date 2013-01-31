@@ -1,9 +1,10 @@
 /////////////
 // DEFINES //
 /////////////
-#define VS_INPUT_EXT float4 Color : COLOR;
+#define VS_INPUT_NODEF 1
 #define PS_INPUT_EXT float4 Color : COLOR;
 
+#define VS_MAIN_USE_NOUV 1
 #define VS_MAIN_EXT output.Color = input.Color;
 
 //////////////
@@ -11,12 +12,26 @@
 //////////////
 #include "Data/Effects/IncOS/is_structs.fx"
 
+struct VS_INPUT
+{
+    float3 Pos		: POSITION;
+	float3 Normal	: NORMAL;
+	float4 Color	: COLOR;
+};
+
 /////////////
 // GLOBALS //
 /////////////
 #include "Data/Effects/IncOS/is_input.fx"
 
-float2 TerrainSize;
+float2 TerrainSize = float2(512, 512);
+
+SamplerState samC
+{    
+  AddressU  = WRAP;
+  AddressV = WRAP;
+  FILTER = MIN_MAG_LINEAR_MIP_POINT;
+};
 
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
@@ -31,18 +46,28 @@ float2 TerrainSize;
 
 #include "Data/Effects/IncOS/is_defaultshader_pixel.fx"
 
+float4 colorTiled(Texture2D tex, float value, float2 uv, float scale)
+{
+	return tex.Sample(samC, uv * scale) * value;
+}
+
 PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 {
-	PS_OUTPUT output = PS_Main(input);
-
 	float2 halfSize = TerrainSize / 2;
-
 	float2 uv = input.WorldPos.xz + halfSize;
-	uv /= TerrainSize;
 
-	//output.Normal = float4(0, 1, 0, 1.0);
-	output.Screen = TexDiffuse.Sample(sam, uv);
+	float4 color = float4(0, 0, 0, 0);
+	color += TexDiffuse.Sample(sam, uv / TerrainSize);
+	color += colorTiled(TexLightMap, input.Color.r, uv, 0.1);
+	color += colorTiled(TexNormalMap, input.Color.g, uv, 0.1);
+	color += colorTiled(TexSpecularMap, input.Color.b, uv, 0.2);
+
+	PS_OUTPUT output = (PS_OUTPUT)0;
+	output.Screen.rgb = color.rgb * color.w;
 	output.Screen.a = 0.0f;
+	output.Normal = float4(input.Normal, 1);
+	output.Depth.rgb = input.WorldPos;
+	output.Depth.a = input.Pos.z / input.Pos.w;
 
 	return output;
 }
