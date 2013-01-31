@@ -89,7 +89,7 @@ namespace TikiEngine
 			camera = TIKI_NEW CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(-1, 1.5f, 4.0f);
 			camera->AddRef();
-			(TIKI_NEW CameraTPS(engine, camera, go));
+			(TIKI_NEW CameraFly(engine, camera));
 			this->AddElement(camera);
 
 			//font = engine->librarys->CreateResource<IFont>();
