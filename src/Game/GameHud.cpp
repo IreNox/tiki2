@@ -78,6 +78,7 @@ namespace TikiEngine
 				cmd->SPosition() = Vector2(10.0f + (50.0f * i), 10.0f);
 				cmd->Text() = L"+";
 				cmd->Click.AddHandler(this);
+				cmd->UserData = (void*)i;
 
 				windowSkillUpgrades->AddChild(cmd);
 
@@ -431,18 +432,15 @@ namespace TikiEngine
 			}
 			else if (sender->GetParent() == windowSkillUpgrades)
 			{
-				Int32 index = windowSkillUpgrades->ChildControls().IndexOf(sender);
+				UInt32 index = (UInt32)sender->UserData;
 
-				if (index != -1)
+				SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
+				sys->UpgradeSkill(index);
+
+				Skill* skill = sys->GetSkills().Get(index);
+				if (skill->GetCurrentLevel() == skill->GetDesc().MaxLevel)
 				{
-					SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
-					sys->UpgradeSkill(index);
-
-					Skill* skill = sys->GetSkills().Get(index);
-					if (skill->GetCurrentLevel() == skill->GetDesc().MaxLevel)
-					{
-						windowSkillUpgrades->RemoveChild(sender);
-					}
+					windowSkillUpgrades->RemoveChild(sender);
 				}
 			}
 			else if (sender->GetParent() == windowBuildSlot)

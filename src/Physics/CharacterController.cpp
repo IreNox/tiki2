@@ -184,7 +184,7 @@ namespace TikiEngine
 		void CharacterController::Update(const UpdateArgs& args)
 		{
 			gameObject->PRS.SPosition() = actor->getGlobalPosition().get();
-			gameObject->PRS.SPosition().Y -= (height / 2) + (radius / 2);
+			gameObject->PRS.SPosition().Y -= (height / 2.0f) + (radius / 1.5f);
 			// controllers have no rotation!
 		}
 
