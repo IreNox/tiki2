@@ -5,6 +5,8 @@
 #include "Graphics/OGLGraphicsModule.h"
 #endif
 
+#include "Core/Camera.h"
+#include "Core/DrawArgs.h"
 #include "Core/GameObject.h"
 
 #include "Graphics/PPDefault.h"
@@ -18,6 +20,94 @@ namespace TikiEngine
 		{
 			return TIKI_NEW ConstantBuffer<Byte>(engine, size);
 		}
+
+		void GraphicsModule::SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget)
+		{
+			*inputTarget = rtScreen[rtScreenIndex];
+			*outputTarget = rtScreen[!rtScreenIndex];
+
+			rtScreenIndex = !rtScreenIndex;
+		}
+		#pragma endregion
+
+		#pragma region Member - Begin/End
+		void GraphicsModule::Begin(DrawArgs& args)
+		{
+			currentArgs = args;
+
+			if (args.Lights.IsDirty) // || args.Lights.Properties.IsDirty)
+			{
+				setLightChanged(args);
+				args.Lights.IsDirty = false;
+				//args.Lights.Properties.IsDirty = false;
+			}
+
+			defaultPostProcessPass->SetOutput(
+				0,
+				(args.CurrentCamera != 0 && args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
+			);
+
+			this->SetStateDepthEnabled(true);
+#if TIKI_DX10
+			deviceContext->ClearDepthStencilView(depthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
+#elif TIKI_DX11
+			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+#elif TIKI_OGL
+			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+			glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+#endif
+
+			rtDepth->Clear(Color::Black);
+			rtNormal->Clear(Color::Black);
+			rtLight->Clear(Color::TransparentBlack);
+			rtScreen[rtScreenIndex]->Clear(clearColor);
+			rtInterface->Clear(Color::TransparentBlack);
+
+			rtLight->Apply(3);
+			rtDepth->Apply(1);
+			rtNormal->Apply(2);
+			rtScreen[rtScreenIndex]->Apply(0);
+
+			if (args.CurrentCamera)
+			{
+				CBMatrices* matrices = cbufferCamera->MapTI();
+				*matrices = args.CurrentCamera->GetMatrices();
+				cbufferCamera->Unmap();
+			}
+
+#if TIKI_DX10 || TIKI_DX11
+			deviceContext->RSSetState(rasterStateBackfaces);
+#if _DEBUG
+			debugLineRenderer->Begin();
+#endif
+#endif
+		}
+
+		void GraphicsModule::End()
+		{
+			this->SetStateDepthEnabled(false);
+			this->SetStateAlphaBlend(BSM_Disable);
+
+#if _DEBUG && (TIKI_DX10 || TIKI_DX11)
+			debugLineRenderer->End();
+#endif
+
+			UInt32 i = 0;
+			while (i < postProcesses.Count())
+			{
+				drawPostProcess(postProcesses[i]);
+
+				i++;
+			}
+			defaultPostProcessPass->SetInput("rtScreen", rtScreen[rtScreenIndex]);
+			drawPostProcess(defaultPostProcess);
+
+#if TIKI_DX10 || TIKI_DX11
+			swapChain->Present(0, 0);
+#elif TIKI_OGL
+			SwapBuffers(deviceContext);
+#endif
+		}		
 		#pragma endregion
 
 		#pragma region Member - Add/Remove
@@ -183,19 +273,46 @@ namespace TikiEngine
 			this->rtDepth->CreateScreenSize();
 			this->rtDepth->AddRef();
 
-#if TIKI_DX10 || TIKI_DX11
 			defaultPostProcess = TIKI_NEW PPDefault(engine, rtBackBuffer);
 			defaultPostProcess->AddRef();
 
 			defaultPostProcessPass = defaultPostProcess->GetPasses()[(engine->GetShadowsEnabled() ? 1 : 0)];
 			defaultPostProcessPass->AddRef();
 
+#if TIKI_DX10 || TIKI_DX11
 #if _DEBUG
 			debugLineRenderer = TIKI_NEW DebugLineRenderer(engine);
 #endif
 #endif
 
 			return true;
+		}
+		#pragma endregion
+
+		#pragma region Private Member - Dispose - Engine
+		void GraphicsModule::disposeEngine()
+		{
+			SafeRelease(&rtInterface);
+			SafeRelease(&rtDepth);
+			SafeRelease(&rtNormal);
+			SafeRelease(&rtLight);
+			SafeRelease(&rtScreen[0]);
+			SafeRelease(&rtScreen[1]);
+			SafeRelease(&rtBackBuffer);
+
+			SafeRelease(&defaultPostProcessPass);
+			this->RemovePostProcess(defaultPostProcess);
+
+			UInt32 i = 0;
+			while (i < postProcesses.Count())
+			{
+				this->RemovePostProcess(postProcesses[i]);
+				i++;
+			}
+
+			SafeDelete(&cbufferLights);
+			SafeDelete(&cbufferCamera);
+			SafeDelete(&cbufferObject);
 		}
 		#pragma endregion
 	}

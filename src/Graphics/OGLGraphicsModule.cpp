@@ -41,6 +41,18 @@ namespace TikiEngine
 
 		void GraphicsModule::Dispose()
 		{
+			disposeEngine();
+
+			if (depthBuffer)
+			{
+				glDeleteRenderbuffers(1, &depthBuffer);
+			}
+
+			if (frameBuffer)
+			{
+				glDeleteFramebuffers(1, &frameBuffer);
+			}
+
 			if(renderContext)
 			{
 				wglMakeCurrent(NULL, NULL);
@@ -97,6 +109,7 @@ namespace TikiEngine
 			glClearDepth(1.0f);
 			glDepthFunc(GL_LEQUAL);	
 			glEnable(GL_DEPTH_TEST);
+			glDisable(GL_ALPHA_TEST);
 
 			// Back face culling
 			glFrontFace(GL_CW);
@@ -104,7 +117,7 @@ namespace TikiEngine
 			glCullFace(GL_BACK);
 
 			glClearColor(clearColor.R, clearColor.G, clearColor.B, clearColor.A);
-
+			
 			RECT rect;
 			GetClientRect(hWnd, &rect);
 			viewPort = ViewPort(0, 0, rect.right, rect.bottom, 0.001f, 1000.0f);
@@ -121,90 +134,20 @@ namespace TikiEngine
 
 			rtScreen[0]->Apply(0);
 
-			UInt32 depth = 0;
-			glGenRenderbuffers(1, &depth);
-			glBindRenderbuffer(GL_TEXTURE_2D, depth);
-			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, viewPort.Width, viewPort.Height);
-			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depth);
+			glGenRenderbuffers(1, &depthBuffer);
+			glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);
+			glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, viewPort.Width, viewPort.Height);
 			glBindRenderbuffer(GL_RENDERBUFFER, 0);
-
-			//UInt32 stencil = 0;
-			//glGenRenderbuffers(1, &stencil);
-			//glBindRenderbuffer(GL_TEXTURE_2D, stencil);
-			//glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, viewPort.Width, viewPort.Height);
-			//glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, stencil);
-
-			switch (glCheckFramebufferStatus(GL_FRAMEBUFFER))
-			{
-			case GL_FRAMEBUFFER_COMPLETE:
-				break;
-
-			case GL_FRAMEBUFFER_UNSUPPORTED:
-				throw string("FBO Building failed! Unsupported framebuffer format.");
-
-			case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:
-				throw string("FBO Building failed! Missing attachment.");
-
-			case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:
-				throw string("FBO Building failed! Attachment type error.");
-
-			case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:
-				throw string("FBO Building failed! Missing draw buffer.");
-
-			case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:
-				throw string("FBO Building failed! Missing read buffer.");
-
-			case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:
-				throw string("FBO Building failed! Attached images must have the same number of samples.");
-
-			default:
-				throw string("FBO Building failed! Fatal error.");
-			}
-
-			//if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			//	return false;
+			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
+			
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+				return false;
 
 			return true;
 		}
 		#pragma endregion
 
-		#pragma region Member - Begin/End
-		void GraphicsModule::Begin(DrawArgs& args)
-		{
-			glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
-
-			CBMatrices* mat = cbufferCamera->MapTI();
-			*mat = args.CurrentCamera->GetMatrices();
-			cbufferCamera->Unmap();
-			
-			rtInterface->Clear(Color::TransparentBlack);
-			rtScreen[rtScreenIndex]->Apply(0);
-			rtScreen[rtScreenIndex]->Clear(clearColor);
-
-			rtDepth->Clear(Color::Black);
-			rtDepth->Apply(1);
-			rtNormal->Clear(Color::Black);
-			rtNormal->Apply(2);
-			rtLight->Clear(Color::TransparentBlack);
-			rtLight->Apply(3);
-
-			glClear(GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		}
-
-		void GraphicsModule::End()
-		{
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-			SwapBuffers(deviceContext);
-		}
-		#pragma endregion
-
 		#pragma region Member - RenderTarget
-		void GraphicsModule::SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget)
-		{
-
-		}
-
 		void GraphicsModule::SetRenderTarget(UInt32 slot, UInt32 target)
 		{
 			while (slot >= renderTargets.Count())
@@ -216,34 +159,38 @@ namespace TikiEngine
 
 			renderTargets[slot] = target;
 			if (target)
-				glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + slot, target, 0);
+			{
+				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + slot, GL_TEXTURE_2D, target, 0);
 
-			//static const GLenum attachments[] = {
-			//	GL_COLOR_ATTACHMENT0,
-			//	GL_COLOR_ATTACHMENT1,
-			//	GL_COLOR_ATTACHMENT2,
-			//	GL_COLOR_ATTACHMENT3,
-			//	GL_COLOR_ATTACHMENT4,
-			//	GL_COLOR_ATTACHMENT5,
-			//	GL_COLOR_ATTACHMENT6,
-			//	GL_COLOR_ATTACHMENT7,
-			//	GL_COLOR_ATTACHMENT8,
-			//	GL_COLOR_ATTACHMENT9,
-			//	GL_COLOR_ATTACHMENT10,
-			//	GL_COLOR_ATTACHMENT11,
-			//	GL_COLOR_ATTACHMENT12,
-			//	GL_COLOR_ATTACHMENT13,
-			//	GL_COLOR_ATTACHMENT14,
-			//	GL_COLOR_ATTACHMENT15
-			//};
+				static const GLenum attachments[] = {
+					GL_COLOR_ATTACHMENT0,
+					GL_COLOR_ATTACHMENT1,
+					GL_COLOR_ATTACHMENT2,
+					GL_COLOR_ATTACHMENT3,
+					GL_COLOR_ATTACHMENT4,
+					GL_COLOR_ATTACHMENT5,
+					GL_COLOR_ATTACHMENT6,
+					GL_COLOR_ATTACHMENT7,
+					GL_COLOR_ATTACHMENT8,
+					GL_COLOR_ATTACHMENT9,
+					GL_COLOR_ATTACHMENT10,
+					GL_COLOR_ATTACHMENT11,
+					GL_COLOR_ATTACHMENT12,
+					GL_COLOR_ATTACHMENT13,
+					GL_COLOR_ATTACHMENT14,
+					GL_COLOR_ATTACHMENT15
+				};
 
-			//glDrawBuffers(
-			//	renderTargets.Count(),
-			//	attachments
-			//);
-
-			if (!target)
+				glDrawBuffers(
+					renderTargets.Count(),
+					attachments
+				);
+			}
+			else
+			{
 				glBindFramebuffer(GL_FRAMEBUFFER, 0);
+				glDrawBuffer(GL_COLOR_ATTACHMENT0);
+			}
 		}
 
 		void GraphicsModule::SetFirstAndOnlyRenderTargets(UInt32 target)

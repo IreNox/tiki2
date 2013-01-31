@@ -28,7 +28,7 @@ namespace TikiEngine
 
 #pragma region Member - Add/Remove/Draw/Update
 		void Add(GameObject* go);
-		void Remove(GameObject* go);
+		bool Remove(GameObject* go);
 
 		void Draw(const DrawArgs& args);
 		void Update(const UpdateArgs& args);

@@ -296,9 +296,17 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void TikiBot::Update(const UpdateArgs& args)
 		{
-			// don't do this for buildings
-			if (EntityType() == ET_Building || IsDead())
+			if (IsDead())
 				return;
+
+			// don't do this for buildings
+			if (EntityType() == ET_Building)
+			{
+				controller->Move(
+					Vector3(0, -9.81f, 0) * (float)args.Time.ElapsedTime
+				);
+				return;
+			}
 
 			// Update Hero Skills
 			if (EntityType() == ET_Hero)

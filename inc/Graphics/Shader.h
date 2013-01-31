@@ -78,6 +78,7 @@ namespace TikiEngine
 			int shaderId;
 
 			static GLuint bindIndex;
+			List<string> textureUnits;
 			Dictionary<GLuint, GLuint> bufferBinding;
 
 			bool getShaderInfo(int id, string& log, bool program);

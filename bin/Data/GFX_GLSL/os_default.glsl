@@ -8,6 +8,12 @@ in vec2 inUV;
 in vec3 inNormal;
 
 out vec3 Normal;
+out vec3 Tangent;
+out vec3 Binormal;
+
+out vec3 WorldPos;
+out vec3 ViewPos;
+out vec4 ProjPos;
 
 uniform ObjectData
 {
@@ -31,8 +37,13 @@ void main()
 {
 	gl_Position = vec4(inPos, 1.0);
 	gl_Position *= WorldM;
+
+	WorldPos = gl_Position.xyz;
+	ViewPos = normalize(ViewIM[3] - gl_Position).xyz;
+
 	gl_Position *= ViewM;
 	gl_Position *= ProjectionM;
+	ProjPos = gl_Position;
 
 	gl_TexCoord[0] = vec4(
 		inUV.x,
@@ -41,13 +52,26 @@ void main()
 		0
 	);
 
-	Normal = inNormal;
+	mat3 world = mat3(WorldM);
+	Normal = normalize(inNormal * world);
+
+	vec3 c1 = cross(Normal, vec3(0.0, 0.0, 1.0)); 
+	vec3 c2 = cross(Normal, vec3(0.0, 1.0, 0.0)); 
+
+	Tangent = normalize(length(c1) > length(c2) ? c1 : c2);
+    Binormal = normalize(cross(Normal, Tangent));
 }
 
 #endif
 #ifdef TIKI_PS
 
 in vec3 Normal;
+in vec3 Tangent;
+in vec3 Binormal;
+
+in vec3 WorldPos;
+in vec3 ViewPos;
+in vec4 ProjPos;
 
 struct Light
 {
@@ -66,10 +90,6 @@ uniform LightBuffer
 
 	vec4 AmbientColor;
 	vec4 EmissiveColor;
-
-	//float IsDirty;
-	//float DefaultShading;
-	//float UnusedLightProperties[2];
 
 	Light Lights[32];
 };
@@ -92,8 +112,41 @@ uniform sampler2D TexSpecularMap;
 
 void main()
 {
-	gl_FragData[0] = texture(TexDiffuse, vec2(gl_TexCoord[0]));
-	gl_FragData[1] = vec4(Normal, 1);
+	vec4 termDiffuse = vec4(0.8, 0.8, 0.8, 1);
+	
+	if (true)
+	{
+		termDiffuse = texture(TexSpecularMap, vec2(gl_TexCoord[0])) * DiffuseIntensity;
+	}
+
+	vec3 bumpedNormal = Normal;		
+	if (true)
+	{
+		vec3 normalSample = 2 * texture(TexNormalMap, vec2(gl_TexCoord[0])).xyz - 1;
+		//float3x3 TBN = float3x3(input.Tangent, input.Binormal, input.Normal);
+		
+		//bumpedNormal = normalize(mul(normalSample, TBN));
+		bumpedNormal = normalize(Normal + normalSample.x * Tangent + normalSample.y * Binormal);
+	}
+
+	if (true)
+	{
+		float specularIntensity = 1.0f;
+		float specularity = 25.0f;
+
+		vec3 H = normalize(ViewPos - Lights[0].Direction);
+		termDiffuse.xyz += specularIntensity * texture(TexSpecularMap, vec2(gl_TexCoord[0])).xyz * pow(clamp(dot(H, bumpedNormal), 0.0, 1.0), specularity);
+	}
+
+	if (true)
+	{
+	}
+	gl_FragData[3] = texture(TexLightMap, vec2(gl_TexCoord[0]));
+
+	gl_FragData[0] = termDiffuse;
+	gl_FragData[1].rgb = WorldPos;
+	gl_FragData[1].a = ProjPos.z / ProjPos.w;
+	gl_FragData[2] = vec4(bumpedNormal, 1.0f);
 }
 
 #endif

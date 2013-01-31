@@ -58,7 +58,7 @@ inline Scene* GetStartScene(Engine* engine)
 #pragma region WinMain
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(159771);
+	//_CrtSetBreakAlloc(662);
 
 	{
 #if _DEBUG

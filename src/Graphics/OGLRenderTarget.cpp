@@ -42,7 +42,7 @@ namespace TikiEngine
 
 		void RenderTarget::Clear(const Color& color)
 		{
-			glBindFramebuffer(GL_FRAMEBUFFER, renderTarget);
+			this->ApplyFirstAndOnly();
 			glClearColor(color.R, color.G, color.B, color.A);
 			glClear(GL_COLOR_BUFFER_BIT);
 		}
@@ -117,10 +117,7 @@ namespace TikiEngine
 			texture = TIKI_NEW Texture(engine);
 			texture->Create(width, height, dynamic, format);
 			texture->AddRef();
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
+			
 			renderTarget = *((UInt32*)texture->GetNativeResource());
 		}
 

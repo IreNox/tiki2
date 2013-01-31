@@ -54,16 +54,10 @@ namespace TikiEngine
 
 		void PostProcessPass::SetInput(string varName, IRenderTarget* target)
 		{
+			target->AddRef();
 			SafeRelease(&inputTargets[varName]);
 			inputTargets[varName] = target;
-			target->AddRef();
 		}
-
-		//void PostProcessPass::RemoveInput(IRenderTarget* target)
-		//{
-		//	inputTargets.Remove(target);
-		//	SafeRelease(&target);
-		//}
 
 		void PostProcessPass::AddOutput(UInt32 slot, IRenderTarget* target)
 		{
@@ -73,16 +67,10 @@ namespace TikiEngine
 
 		void PostProcessPass::SetOutput(UInt32 slot, IRenderTarget* target)
 		{
+			target->AddRef();
 			SafeRelease(&outputTargets[slot]);
 			outputTargets[slot] = target;
-			outputTargets[slot]->AddRef();
 		}
-
-		//void PostProcessPass::RemoveOutput(IRenderTarget* target)
-		//{
-		//	outputTargets.Remove(target);
-		//	SafeRelease(&target);
-		//}
 		#pragma endregion
 	}
 }

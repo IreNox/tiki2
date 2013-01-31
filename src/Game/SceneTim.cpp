@@ -18,6 +18,7 @@
 #include "Core/DefaultVertex.h"
 
 #include "Game/CameraFly.h"
+#include "Game/CameraTPS.h"
 
 #include "Game/PEShootMG.h"
 
@@ -32,7 +33,7 @@ namespace TikiEngine
 		using namespace TikiEngine::Vertices;
 
 		SceneTim::SceneTim(Engine* engine)
-			: Scene(engine), showRenderTargets(true)
+			: Scene(engine), showRenderTargets(false)
 		{
 		}
 
@@ -69,7 +70,7 @@ namespace TikiEngine
 			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
 			this->AddElement(go);
 
-			// Plane
+			// Marine
 			go = TIKI_NEW GameObject(engine);
 			go->SModel(engine->content->LoadModel(L"unit_marine"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
@@ -88,7 +89,7 @@ namespace TikiEngine
 			camera = TIKI_NEW CameraObject(engine);			
 			camera->PRS.SPosition() = Vector3(-1, 1.5f, 4.0f);
 			camera->AddRef();
-			(TIKI_NEW CameraFly(engine, camera));
+			(TIKI_NEW CameraTPS(engine, camera, go));
 			this->AddElement(camera);
 
 			//font = engine->librarys->CreateResource<IFont>();

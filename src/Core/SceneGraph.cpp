@@ -29,7 +29,7 @@ namespace TikiEngine
 	}
 #pragma endregion
 
-#pragma region Add/Remove/Draw/Update
+	#pragma region Add/Remove/Draw/Update
 	void SceneGraph::Add(GameObject* go)
 	{
 		if(go->GetSceneGraphElement().IsDynamic())
@@ -39,11 +39,15 @@ namespace TikiEngine
 		go->AddRef();
 	}
 
-	void SceneGraph::Remove(GameObject* go)
+	bool SceneGraph::Remove(GameObject* go)
 	{
 		if(gameObjects.Contains(go))
+		{
 			removeList.Add(go);
+			return true;
+		}
 
+		return false;
 	}
 
 	void SceneGraph::Draw(const DrawArgs& args)
@@ -68,9 +72,9 @@ namespace TikiEngine
 	{
 		FOREACH_PTR_CALL(gameObjects, LateUpdate(args))
 	}
-#pragma endregion
+	#pragma endregion
 
-#pragma region DO
+	#pragma region DO
 	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
 	{
 		FOREACH(gameObjects, whatIWant(gameObjects[i]))

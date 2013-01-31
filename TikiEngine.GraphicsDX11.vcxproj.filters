@@ -67,6 +67,9 @@
     <Filter Include="Modules\GraphicsModule">
       <UniqueIdentifier>{725dbfe2-1ce8-46fa-a537-adc8782a1d4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Internal\PPDefault">
+      <UniqueIdentifier>{2949e90a-8b71-4741-87c1-3375f8b803d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
@@ -108,9 +111,6 @@
     <ClCompile Include="src\Graphics\VertexInternal.cpp">
       <Filter>Internal</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsInternal.cpp">
-      <Filter>Internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\ModelInternal.cpp">
       <Filter>Internal</Filter>
     </ClCompile>
@@ -125,6 +125,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\DXTexture.cpp">
       <Filter>Resources\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\PPDefault.cpp">
+      <Filter>Internal\PPDefault</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,9 +194,6 @@
     <ClInclude Include="inc\Graphics\AnimationStack.h">
       <Filter>Internal\Model</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\PPDefault.h">
-      <Filter>Internal\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\SpriteBatchModule.h">
       <Filter>Modules\SpriteBatch</Filter>
     </ClInclude>
@@ -235,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\DXGraphicsModule.h">
       <Filter>Modules\GraphicsModule</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\PPDefault.h">
+      <Filter>Internal\PPDefault</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-
+﻿
 #include "Graphics/ParticleVertex.h"
 #include "Graphics/SpriteBatchVertex.h"
 
@@ -112,6 +112,24 @@ namespace TikiEngine
 
 				offset += 4 * inputLayout[i].ElementSize;
 				i++;
+			}
+
+
+			int on;
+			Int32 count;
+			Int32 b = 0;
+			glGetIntegerv(GL_MAX_VERTEX_ATTRIBS, &count);
+
+			while (b < count)
+			{
+				glGetVertexAttribiv(b, GL_VERTEX_ATTRIB_ARRAY_ENABLED, &on);
+
+				if (!on)
+					break;
+
+				glDisableVertexAttribArray(b);
+
+				b++;
 			}
 #endif
 		}

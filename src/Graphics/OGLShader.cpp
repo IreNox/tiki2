@@ -165,14 +165,23 @@ namespace TikiEngine
 			{
 				engine->HLog.Write(string("Can't find Uniform: ") + key);
 				return;
-			}	
+			}
 
-			glActiveTexture(GL_TEXTURE0);
+			GLint i = textureUnits.IndexOf(key);
 
-			GLint id = *((GLint*)value->GetNativeResource());
-			glBindTexture(GL_TEXTURE_2D, id);
+			if (i == -1)
+			{
+				i = textureUnits.Count();
+				textureUnits.Add(key);
+			}
 
-			glUniform1i(loc, 0); //(GLint)value->GetNativeResource());
+			glActiveTexture(GL_TEXTURE0 + i);
+			glBindTexture(
+				GL_TEXTURE_2D,
+				*((GLint*)value->GetNativeResource())
+			);
+
+			glUniform1i(loc, i);
 		}
 
 		void Shader::SetTextureArray(cstring key, List<ITexture*>& array)
@@ -226,6 +235,8 @@ namespace TikiEngine
 			string codeVS = "#define TIKI_VS" + code;
 			string codePS = "#define TIKI_PS" + code;
 
+			delete[](data);
+
 			vsId = glCreateShader(GL_VERTEX_SHADER);
 			psId = glCreateShader(GL_FRAGMENT_SHADER);
 
@@ -246,14 +257,36 @@ namespace TikiEngine
 			glAttachShader(shaderId, vsId);
 			glAttachShader(shaderId, psId);
 			
-			glBindAttribLocation(shaderId, 0, "inPos");
-			glBindAttribLocation(shaderId, 1, "inUV");
-			glBindAttribLocation(shaderId, 2, "inColor");
 			glLinkProgram(shaderId);
-
 			if (getShaderInfo(shaderId, error, true))
 				throw error;
 
+			static const cstring attribs[] =
+			{
+				"inPos",
+				"inUV",
+				"inColor",
+				"inNormal",
+				"inIndices",
+				"inWeights"
+			};
+
+			UInt32 i = 0;
+			UInt32 c = 0;
+			while (i < 6)
+			{
+				GLint ix = glGetAttribLocation(shaderId, attribs[i]);
+
+				if (ix != -1)
+				{
+					glBindAttribLocation(shaderId, c, attribs[i]);
+					c++;
+				}
+
+				i++;
+			}
+
+			glLinkProgram(shaderId);
 			this->applyType(fileName);
 		}
 

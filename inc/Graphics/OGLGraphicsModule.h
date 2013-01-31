@@ -96,6 +96,7 @@ namespace TikiEngine
 			bool rtScreenIndex;
 
 			UInt32 frameBuffer;
+			UInt32 depthBuffer;
 			List<UInt32> renderTargets;
 
 			List<RenderTarget*> screenSizeRenderTargets;
@@ -106,8 +107,10 @@ namespace TikiEngine
 			Dictionary<PostProcessPass*, Quad*> postProcessPassQuads;
 
 			bool initOpenGL();
-			bool initEngine(EngineDescription& desc);
 			bool initFrameBuffer();
+
+			bool initEngine(EngineDescription& desc);
+			void disposeEngine();
 
 			void drawPostProcess(PostProcess* postProcess);
 			void setLightChanged(const DrawArgs& args);

@@ -9,9 +9,6 @@
 #include "Graphics/SpriteBatchModule.h"
 #include "Graphics/DllMain.h"
 
-#include "Core/DrawArgs.h"
-
-#include "Core/Camera.h"
 #include "Core/GameObject.h"
 
 #include "Core/FileStream.h"
@@ -68,32 +65,12 @@ namespace TikiEngine
 			{
 				swapChain->SetFullscreenState(false, NULL);
 			}
-
-			SafeRelease(&rtInterface);
-			SafeRelease(&rtDepth);
-			SafeRelease(&rtNormal);
-			SafeRelease(&rtLight);
-			SafeRelease(&rtScreen[0]);
-			SafeRelease(&rtScreen[1]);
-			SafeRelease(&rtBackBuffer);
-
-			SafeRelease(&defaultPostProcessPass);
-			this->RemovePostProcess(defaultPostProcess);
-
-			UInt32 i = 0;
-			while (i < postProcesses.Count())
-			{
-				this->RemovePostProcess(postProcesses[i]);
-				i++;
-			}
-
+			
 #if _DEBUG
 			SafeRelease(&debugLineRenderer);
 #endif
 
-			SafeDelete(&cbufferLights);
-			SafeDelete(&cbufferCamera);
-			SafeDelete(&cbufferObject);
+			disposeEngine();
 
 			SafeRelease(&blendStateParticle);
             SafeRelease(&blendStateInterface);
@@ -119,14 +96,6 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		void GraphicsModule::SwitchScreenTarget(IRenderTarget** inputTarget, IRenderTarget** outputTarget)
-		{
-			*inputTarget = rtScreen[rtScreenIndex];
-			*outputTarget = rtScreen[!rtScreenIndex];
-
-			rtScreenIndex = !rtScreenIndex;
-		}
-
 		void GraphicsModule::MakeScreenshot(wcstring fileName)
 		{
 			bool TIKI_NEWName = false;
@@ -351,79 +320,6 @@ namespace TikiEngine
 			debugLineRenderer->DrawLine(points, color, lastToFirst);
 		}
 #endif
-		#pragma endregion
-
-		#pragma region Member - Begin/End
-		void GraphicsModule::Begin(DrawArgs& args)
-		{
-			currentArgs = args;
-
-			if (args.Lights.IsDirty) // || args.Lights.Properties.IsDirty)
-			{
-				setLightChanged(args);
-				args.Lights.IsDirty = false;
-				//args.Lights.Properties.IsDirty = false;
-			}
-
-			defaultPostProcessPass->SetOutput(
-				0,
-				(args.CurrentCamera != 0 && args.CurrentCamera->GetRenderTarget() != 0 ? args.CurrentCamera->GetRenderTarget() : rtBackBuffer)
-			);
-
-			this->SetStateDepthEnabled(true);
-#if TIKI_DX10
-			deviceContext->ClearDepthStencilView(depthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-#else
-			deviceContext->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
-#endif
-
-			rtInterface->Clear(Color::TransparentBlack);
-			rtScreen[rtScreenIndex]->Apply(0);
-			rtScreen[rtScreenIndex]->Clear(clearColor);
-
-			rtDepth->Clear(Color::Black);
-			rtDepth->Apply(1);
-			rtNormal->Clear(Color::Black);
-			rtNormal->Apply(2);
-			rtLight->Clear(Color::TransparentBlack);
-			rtLight->Apply(3);
-
-			if (args.CurrentCamera)
-			{
-				CBMatrices* matrices = cbufferCamera->MapTI();
-				*matrices = args.CurrentCamera->GetMatrices();
-				cbufferCamera->Unmap();
-			}
-
-			deviceContext->RSSetState(rasterStateBackfaces);
-
-#if _DEBUG
-			debugLineRenderer->Begin();
-#endif
-		}
-
-		void GraphicsModule::End()
-		{
-			this->SetStateDepthEnabled(false);
-
-#if _DEBUG
-			debugLineRenderer->End();
-#endif
-
-			this->SetStateAlphaBlend(BSM_Disable);
-
-			UInt32 i = 0;
-			while (i < postProcesses.Count())
-			{
-				drawPostProcess(postProcesses[i]);
-
-				i++;
-			}
-			defaultPostProcessPass->SetInput("rtScreen", rtScreen[rtScreenIndex]);
-			drawPostProcess(defaultPostProcess);
-
-			swapChain->Present(0, 0);
-		}
 		#pragma endregion
 		
 		#pragma region Private Member - Init - SelectAdapter

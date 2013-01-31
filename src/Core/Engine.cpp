@@ -125,16 +125,26 @@ namespace TikiEngine
 		SafeRelease(&scene);
 		SafeRelease(&loadingScene);
 
-		loadedModules.Remove(librarys);
+		physics->Dispose();
+		SafeRelease(&physics);
 
-		int i = loadedModules.Count() - 1;
-		while (i >= 0)
-		{
-			loadedModules[i]->Dispose();
-			SafeRelease(&loadedModules[i]);
+		sound->Dispose();
+		SafeRelease(&sound);
 
-			i--;
-		}
+		input->Dispose();
+		SafeRelease(&input);
+
+		sprites->Dispose();
+		SafeRelease(&sprites);
+
+		content->Dispose();
+		SafeRelease(&content);
+
+		graphics->Dispose();
+		SafeRelease(&graphics);
+
+		window->Dispose();
+		SafeRelease(&window);
 
 		librarys->Dispose();
 		SafeRelease(&librarys);

@@ -20,8 +20,8 @@ PS_OUTPUT PS_Main(PS_INPUT input) : SV_TARGET
 
 	if (UseSpecularMap)
 	{
-		float specularIntensity = 5.0f;
-		float specularity = 75.0f;
+		float specularIntensity = 1.0f;
+		float specularity = 25.0f;
 
 		float3 H = normalize(input.ViewPos - Lights[0].Direction);
 		termDiffuse += specularIntensity * TexSpecularMap.Sample(sam, input.UV) * pow(saturate(dot(H, bumpedNormal)), specularity);

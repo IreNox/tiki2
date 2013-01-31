@@ -15,20 +15,6 @@ namespace TikiEngine
 			-1.0f, -1.0f, 0.0f, 0.0f, 1.0f, // BL
 			 1.0f, -1.0f, 0.0f, 1.0f, 1.0f, // BR
 		};
-//
-//#ifdef TIKI_DX10
-//		TDX_Input_Element_desc Quad::quadVertexElements[2] =
-//		{
-//			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 },
-//			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D10_APPEND_ALIGNED_ELEMENT, D3D10_INPUT_PER_VERTEX_DATA, 0 }
-//		};
-//#else
-//		TDX_Input_Element_desc Quad::quadVertexElements[2] =
-//		{
-//			{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-//			{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-//		};
-//#endif
 		#pragma endregion
 
 		#pragma region Class
@@ -37,6 +23,7 @@ namespace TikiEngine
 		{
 			decl = TIKI_NEW VertexDeclaration(engine, shader, PostProcessVertex::Declaration, PostProcessVertex::DeclarationCount);
 			vertexBuffer = TIKI_NEW StaticBuffer<TIKI_VERTEX_BUFFER>(engine, sizeof(PostProcessVertex), 4, Quad::quadVertices);
+			shader->AddRef();
 		}
 
 		Quad::~Quad()
@@ -91,7 +78,7 @@ namespace TikiEngine
 			DllMain::Context->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 			DllMain::Context->Draw(4, 0);
-#elif OPEN_GL
+#elif TIKI_OGL
 			glDrawArrays(
 				GL_TRIANGLE_STRIP,
 				0,

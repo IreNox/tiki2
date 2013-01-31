@@ -65,6 +65,9 @@
     <Filter Include="Components\TerrainRenderer">
       <UniqueIdentifier>{2233eb01-a8e9-4594-bd6e-c681c179a21e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Internal\PPDefault">
+      <UniqueIdentifier>{cdf16d78-7a31-4bda-9c2d-2a08774cdce3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\DXSpriteBatchModule.cpp">
@@ -100,9 +103,6 @@
     <ClCompile Include="src\Graphics\VertexInternal.cpp">
       <Filter>Internal</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\GraphicsInternal.cpp">
-      <Filter>Internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\ModelInternal.cpp">
       <Filter>Internal</Filter>
     </ClCompile>
@@ -123,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\DXRenderTarget.cpp">
       <Filter>Resources\RenderTarget</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\PPDefault.cpp">
+      <Filter>Internal\PPDefault</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +195,6 @@
     <ClInclude Include="inc\Graphics\AnimationStack.h">
       <Filter>Internal\Model</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Graphics\PPDefault.h">
-      <Filter>Internal\Rendering</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Graphics\TerrainTriangulationCallback.h">
       <Filter>Internal\Cloddy</Filter>
     </ClInclude>
@@ -233,6 +233,9 @@
     </ClInclude>
     <ClInclude Include="inc\Graphics\ParticleRenderer.h">
       <Filter>Components\ParticleRenderer</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Graphics\PPDefault.h">
+      <Filter>Internal\PPDefault</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

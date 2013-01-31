@@ -26,14 +26,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="bin\Data\GFX_GLSL\IncOS\" />
+    <Folder Include="bin\Data\GFX_GLSL\IncPP\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
+    <None Include="bin\Data\GFX_GLSL\pp_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_glfx.glsl" />
-    <None Include="bin\Data\GFX_GLSL\os_test.glsl" />
+    <None Include="bin\Data\GFX_GLSL\Inc\is_define.glsl" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
     <None Include="bin\Data\Models\gatecontrol.tiki" />

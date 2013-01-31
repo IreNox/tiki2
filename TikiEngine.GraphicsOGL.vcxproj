@@ -166,6 +166,7 @@
     <ClInclude Include="inc\Graphics\ModelConverter.h" />
     <ClInclude Include="inc\Graphics\ModelIOContext.h" />
     <ClInclude Include="inc\Graphics\OGLGraphicsModule.h" />
+    <ClInclude Include="inc\Graphics\PPDefault.h" />
     <ClInclude Include="inc\Graphics\Quad.h" />
     <ClInclude Include="inc\Graphics\RenderTarget.h" />
     <ClInclude Include="inc\Graphics\Shader.h" />
@@ -192,6 +193,7 @@
     <ClCompile Include="src\Graphics\OGLShader.cpp" />
     <ClCompile Include="src\Graphics\OGLSpriteBatchModule.cpp" />
     <ClCompile Include="src\Graphics\OGLTexture.cpp" />
+    <ClCompile Include="src\Graphics\PPDefault.cpp" />
     <ClCompile Include="src\Graphics\Quad.cpp" />
     <ClCompile Include="src\Graphics\TEGraphicsModule.cpp" />
     <ClCompile Include="src\Graphics\TEMeshRenderer.cpp" />

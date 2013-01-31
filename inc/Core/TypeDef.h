@@ -38,7 +38,7 @@ typedef const wchar_t* wcstring;
 #endif
 
 #define TIKI_CULLING 1
-#define TIKI_USE_SCENEGRAPH 0
+#define TIKI_USE_SCENEGRAPH 1
 
 #if _DEBUG
 #include <crtdbg.h>

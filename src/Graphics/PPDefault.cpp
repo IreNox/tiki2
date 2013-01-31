@@ -9,14 +9,9 @@ namespace TikiEngine
 {
 	namespace Graphics
 	{
-		#pragma region PPDefault
 		PPDefault::PPDefault(Engine* engine, IRenderTarget* backBuffer)
-			: PostProcess(engine)
+			: PostProcess(engine), shaderShadow(0)
 		{
-			shaderShadow = engine->content->LoadShader(L"pp_shadow");
-			shaderShadow->SetVector2("ScreenSize", engine->graphics->GetViewPort()->GetSize());
-			shaderShadow->AddRef();
-
 			shaderDefault = engine->content->LoadShader(L"pp_default");
 			shaderDefault->AddRef();
 
@@ -29,6 +24,10 @@ namespace TikiEngine
 
 			if (engine->GetShadowsEnabled())
 			{
+				shaderShadow = engine->content->LoadShader(L"pp_shadow");
+				shaderShadow->SetVector2("ScreenSize", engine->graphics->GetViewPort()->GetSize());
+				shaderShadow->AddRef();
+
 				pass = TIKI_NEW PostProcessPass(engine, shaderShadow);
 				pass->AddOutput(0, shadowTarget);
 				this->AddPass(pass);
@@ -67,6 +66,5 @@ namespace TikiEngine
 		{
 			shadowTarget->Clear(Color::White);
 		}
-		#pragma endregion
 	}
 }

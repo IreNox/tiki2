@@ -161,12 +161,12 @@ namespace TikiEngine
 			bool initDirectXBackBuffer(EngineDescription& desc);
 			bool initDirectXDepthStencil(EngineDescription& desc);
 			bool initDirectXViewPort(EngineDescription& desc);
-			bool initEngine(EngineDescription& desc);
 
-			void drawPostProcess(PostProcess* postProcess);
+			bool initEngine(EngineDescription& desc);
+			void disposeEngine();
 
 			void setLightChanged(const DrawArgs& args);
-
+			void drawPostProcess(PostProcess* postProcess);
 		};
 	}
 }

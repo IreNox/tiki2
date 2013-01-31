@@ -20,7 +20,8 @@ namespace TikiEngine
 
 		IResource::~IResource()
 		{
-			if (engine) engine->content->ReleaseResource(this);
+			if (engine && engine->content)
+				engine->content->ReleaseResource(this);
 		}
 
 		void IResource::LoadFromFile(wcstring fileName)
