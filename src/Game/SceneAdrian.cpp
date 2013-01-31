@@ -126,6 +126,19 @@ namespace TikiEngine
 
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
+			//ANIMATION TIMING EXAMPLE
+
+			//AnimationArgs animArgs(AT_Death);
+			//this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
+			//IAnimation* animation = animArgs.animation;
+
+			//if(animation && animation->IsFinished())
+			//{
+			//	//do stuff at the end of the animation
+			//}
+
+
+
 #if TIKI_CULLING
 			SceneGraph.Update(args);
 			drawContent.Clear();
@@ -155,14 +168,6 @@ namespace TikiEngine
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
-				//AnimationArgs animArgs(AT_Death);
-				//this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
-				//IAnimation* animation = animArgs.animation;
-				//if(animation && animation->IsFinished())
-				//{
-				//	//DO REMOVING
-				//}
-
 				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
 			}
 		}
