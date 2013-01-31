@@ -13,7 +13,7 @@ namespace TikiEngine
 			this->gameState = gameState;
 			timeTillDeath = 0.0f;
 
-			gameObject->GModel()->AnimationHandler.RaiseEvent(
+			gameObject->GModel()->AnimationHandler->RaiseAnimationEvent(
 				gameObject->GModel(),
 				AnimationArgs(AT_Death)
 			);

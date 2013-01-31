@@ -26,13 +26,19 @@ namespace TikiEngine
 		{
 		public:
 
-			AnimationEvent AnimationHandler;
+			AnimationEvent* AnimationHandler;
 
 			IModel(Engine* engine)
 				: IResource(engine)
 			{
+				AnimationHandler = TIKI_NEW AnimationEvent();
+				AnimationHandler->AddHandler(TIKI_NEW AnimationEventHandler());
+
 			}
-			virtual ~IModel() { }
+			virtual ~IModel() 
+			{
+				SafeDelete(&AnimationHandler);
+			}
 			
 			virtual void CreateInstance(IModel* model) = 0;
 
@@ -45,7 +51,7 @@ namespace TikiEngine
 			virtual IAnimation* GetAnimation(string name) = 0;
 			virtual IAnimation* GetAnimation(UInt32 index) = 0;
 
-			virtual void SetAnimation(IAnimation* animation) = 0;
+			virtual void PlayAnimation(IAnimation* animation) = 0;
 			virtual void BlendToAnimation(IAnimation* animation, double time = 0.5) = 0;
 
 			virtual IBone* GetBone(string name) = 0;
@@ -54,6 +60,12 @@ namespace TikiEngine
 			virtual Vector3 GetBounds() = 0;
 			virtual void SetBounds(const Vector3& size) = 0;
 
+			virtual void SetAnimationHandler(AnimationEvent* handler)
+			{
+				SafeDelete(&AnimationHandler);
+				AnimationHandler = handler;
+				AnimationHandler->AddHandler(TIKI_NEW AnimationEventHandler());
+			}
 		};
 	}
 }

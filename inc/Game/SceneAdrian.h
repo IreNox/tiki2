@@ -32,21 +32,14 @@ namespace TikiEngine
 			LightObject* light;
 			ITexture* tex;
 
-			List<IAnimation*> animations;
-
-			int animationId;
 
 			IModel* model;
 
-			IBone* bone;
-
-			AnimationEvent* animationEvent;
-
-			//SceneGraph sceneGraph;
 
 			RectangleF selectionRectangle;
 
 			List<GameObject*> drawContent;
+
 		};
 	}
 }

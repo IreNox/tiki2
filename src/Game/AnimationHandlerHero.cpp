@@ -23,23 +23,23 @@ namespace TikiEngine
 	{
 	}
 
-	void AnimationHandlerHero::Handle(IModel* model, const AnimationArgs& args)
+	void AnimationHandlerHero::FindMappedAnimation(AnimationArgs& args)
 	{
-		float random = RandFloat();
-
+		IAnimation* anim = 0;
 		switch(args.animationType)
 		{
 		case AT_Idle:
-			model->BlendToAnimation(this->idle);
+			anim = this->idle;
 			break;
 		case AT_Run:
-			model->BlendToAnimation(this->run);
+			anim = this->run;
 			break;
 		case AT_Attack:
-			model->BlendToAnimation(this->attack);
+			anim = this->attack;
 			break;
 		default:
 			break;
 		}
+		args.animation = anim;
 	}
 }

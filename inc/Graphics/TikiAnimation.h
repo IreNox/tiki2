@@ -50,6 +50,9 @@ namespace TikiEngine
 			void SetNextAnimation(IAnimation* animation);
 			IAnimation* GetNextAnimation();
 
+			void	SetPriority(int amount);
+			int		GetPriority();
+
 			void Reset();
 
 			int Left;
@@ -75,6 +78,8 @@ namespace TikiEngine
 
 			float weight;
 			float animationSpeed;
+
+			int priority;
 
 			bool isLoop;
 			bool finished;

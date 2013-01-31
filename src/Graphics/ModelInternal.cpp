@@ -869,14 +869,14 @@ namespace TikiEngine
 
 		#pragma region TikiAnimation
 		TikiAnimation::TikiAnimation()
-			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false), nextAnimation(0)
+			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false), nextAnimation(0), priority(0)
 		{
 		}
 
 		TikiAnimation::TikiAnimation(TikiAnimation* copy)
 			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed), isLoop(copy->isLoop),
 			  finished(copy->finished), nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
-			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime)
+			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime), priority(copy->priority)
 		{
 			timeStamps = copy->timeStamps;
 
@@ -1008,6 +1008,16 @@ namespace TikiEngine
 			return this->nextAnimation;
 		}
 
+		void TikiAnimation::SetPriority(int amount)
+		{
+			this->priority = amount;
+		}
+		
+		int TikiAnimation::GetPriority()
+		{
+			return this->priority;
+		}
+
 		void TikiAnimation::Reset()
 		{
 			this->currentTime = this->startTime;
@@ -1024,12 +1034,16 @@ namespace TikiEngine
 
 			if(currentTime >= stopTime)
 			{
-				if(!isLoop)
+				if(isLoop)
+				{
+					currentTime -= stopTime - startTime;
+				}
+				else
+				{
 					finished = true;
-
-				currentTime -= stopTime - startTime;
+					currentTime = stopTime;
+				}
 			}
-
 
 			if(lastUpdateTime == currentTime)
 				return;
@@ -1098,32 +1112,47 @@ namespace TikiEngine
 		{
 			this->blend(args);
 
-			for(UInt32 i = 0; i < this->stack.Count(); i++)
+			if(!blendTarget)
 			{
-				TikiAnimation* anim = stack[i];
-				if(anim == blendTarget)
-					continue;
-
-				anim->Update(args.Time.ElapsedTime);
-				if(anim->IsFinished() && blendTarget == 0)
+				for(UINT i = 0; i < this->stack.Count(); i++)
 				{
-					BlendAnimation(anim->GetNextAnimation());
-					break;
+					TikiAnimation* anim = stack[i];
+					anim->Update(args.Time.ElapsedTime);
+
+					if(anim->IsFinished() && blendTarget == 0)
+					{
+						if(anim->GetNextAnimation())
+						{
+							BlendAnimation(anim->GetNextAnimation());
+						}
+					}
 				}
 			}
 
+			//for(UInt32 i = 0; i < this->stack.Count(); i++)
+			//{
+			//	TikiAnimation* anim = stack[i];
+			//	if(anim == blendTarget)
+			//		continue;
+
+			//	anim->Update(args.Time.ElapsedTime);
+			//	if(anim->IsFinished() && blendTarget == 0)
+			//	{
+			//		IAnimation* nextAnim = anim->GetNextAnimation();
+			//		if(nextAnim && !stack.Contains((TikiAnimation*)nextAnim))
+			//		{
+			//			BlendAnimation(nextAnim);
+			//		}
+			//		break;
+			//	}
+			//}
 		}
 
-		void AnimationStack::SetAnimation(IAnimation* animation)
+		void AnimationStack::PlayAnimation(IAnimation* animation)
 		{
-//#if _DEBUG
-//			if(animation == 0) 
-//				_CrtDbgBreak();
-//#endif
-			this->stack.Clear();
-
 			if (animation != 0)
 			{
+				this->stack.Clear();
 				animation->Reset();
 				animation->SetWeight(1.0);
 				this->stack.Add((TikiAnimation*)animation);
@@ -1132,14 +1161,17 @@ namespace TikiEngine
 
 		void AnimationStack::BlendAnimation(IAnimation* animation, double time)
 		{
-			if(blendTarget != 0 && blendTarget == animation)
+			//if we are allready blending to this specific animation
+			if(animation != 0 && blendTarget != 0 && blendTarget == animation)
 				return;
 
-#if _DEBUG
-			if(animation == 0)
-				_CrtDbgBreak();
-#endif
-			
+			for(UINT i = 0; i < stack.Count(); i++)
+			{
+				if(animation->GetPriority() < stack[i]->GetPriority())
+					return;
+			}
+
+
 			if(stack.Contains((TikiAnimation*)animation))
 			{
 				blendTarget = (TikiAnimation*)animation;

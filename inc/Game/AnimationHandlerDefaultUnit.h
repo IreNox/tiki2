@@ -5,16 +5,19 @@
 
 namespace TikiEngine
 {
-	class AnimationHandlerDefaultUnit : public AnimationEventHandler
+	class AnimationHandlerDefaultUnit : public AnimationEvent
 	{
 	public:
 
 		AnimationHandlerDefaultUnit(IModel* model);
 		~AnimationHandlerDefaultUnit();
 
-		void Handle(IModel* model, const AnimationArgs& args);
+
+		void FindMappedAnimation(AnimationArgs& args);
 
 	private:
+
+		
 
 		IModel* model;
 

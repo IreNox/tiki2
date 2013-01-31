@@ -132,6 +132,9 @@
     <Filter Include="Headerdateien\Core\Exceptions">
       <UniqueIdentifier>{c8a84f74-f1ce-4346-8453-89bf0d45a744}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quelldateien\Core\Args/States\Events">
+      <UniqueIdentifier>{ed133e0b-c64c-488b-87b8-bd4fcbe78a8d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Vector2.cpp">
@@ -301,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\String.cpp">
       <Filter>Quelldateien\Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\EventAnimation.cpp">
+      <Filter>Quelldateien\Core\Args/States\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

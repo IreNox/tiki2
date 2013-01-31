@@ -59,7 +59,9 @@ namespace TikiEngine
 
 			this->model = go->GModel();
 			int count = this->model->AnimationCount();
-			this->model->AnimationHandler.AddHandler(TIKI_NEW AnimationHandlerDefaultUnit(this->model));
+
+			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
+			go->GModel()->SetAnimationHandler(ah);
 
 			go->PRS.SScale() = Vector3(0.01f);
 
@@ -100,7 +102,7 @@ namespace TikiEngine
 			
 
 			engine->sprites->Draw(
-				engine->graphics->GetDepthTarget(),
+				engine->graphics->GetNormalTarget(),
 				Rectangle(10, 10, 200, 180)
 			);
 
@@ -133,25 +135,35 @@ namespace TikiEngine
 			Scene::Update(args);
 #endif
 
+			
+
 			if(args.Input.GetKey(KEY_ALPHA1))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(AT_Idle));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Idle));
 			}
 			if(args.Input.GetKey(KEY_ALPHA2))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(AT_Walk));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Walk));
 			}
 			if(args.Input.GetKey(KEY_ALPHA3))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(AT_Run));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Run));
 			}
 			if(args.Input.GetKey(KEY_ALPHA4))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(AT_Attack));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Attack));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{
-				this->model->AnimationHandler.RaiseEvent(this->model, AnimationArgs(AT_Death));
+				//AnimationArgs animArgs(AT_Death);
+				//this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
+				//IAnimation* animation = animArgs.animation;
+				//if(animation && animation->IsFinished())
+				//{
+				//	//DO REMOVING
+				//}
+
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
 			}
 		}
 	}

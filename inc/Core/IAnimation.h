@@ -42,8 +42,13 @@ namespace TikiEngine
 			virtual bool GetLoop() = 0;
 			virtual void SetLoop(bool isLoop) = 0;
 
+			virtual bool IsFinished() = 0;
+
 			virtual void SetNextAnimation(IAnimation* animation) = 0;
 			virtual IAnimation* GetNextAnimation() = 0;
+
+			virtual void SetPriority(int amount) = 0;
+			virtual int	 GetPriority() = 0;
 
 			virtual void Reset() = 0;
 

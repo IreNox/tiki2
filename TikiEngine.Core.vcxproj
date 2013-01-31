@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="src\Core\CompressedStream.cpp" />
     <ClCompile Include="src\Core\DatabaseState.cpp" />
+    <ClCompile Include="src\Core\EventAnimation.cpp" />
     <ClCompile Include="src\Core\HelperHash.cpp" />
     <ClCompile Include="src\Core\HelperThreading.cpp" />
     <ClCompile Include="src\Core\Mutex.cpp" />

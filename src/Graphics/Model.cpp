@@ -82,7 +82,7 @@ namespace TikiEngine
 
 			if (i > 0)
 			{
-				animationStack.SetAnimation(animations[0]);
+				animationStack.PlayAnimation(animations[0]);
 			}
 		}
 		#pragma endregion
@@ -96,7 +96,7 @@ namespace TikiEngine
 				this->animations.Add(animation);
 			}
 			if(animations.Count() == 1)
-				animationStack.SetAnimation((IAnimation*)animation);
+				animationStack.PlayAnimation((IAnimation*)animation);
 		}
 
 		IAnimation* Model::GetAnimation(string name)
@@ -116,9 +116,9 @@ namespace TikiEngine
 			return 0;
 		}
 
-		void Model::SetAnimation(IAnimation* animation)
+		void Model::PlayAnimation(IAnimation* animation)
 		{
-			this->animationStack.SetAnimation(animation);
+			this->animationStack.PlayAnimation(animation);
 		}
 
 		void Model::BlendToAnimation(IAnimation* animation, double time)

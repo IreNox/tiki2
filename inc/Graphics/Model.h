@@ -51,7 +51,8 @@ namespace TikiEngine
 
 			IAnimation* GetAnimation(string name);
 			IAnimation* GetAnimation(UInt32 index);
-			void SetAnimation(IAnimation* animation);
+
+			void PlayAnimation(IAnimation* animation);
 			void BlendToAnimation(IAnimation* animation, double time = 0.5);
 
 			Vector3 GetBounds();

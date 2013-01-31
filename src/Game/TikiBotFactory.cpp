@@ -83,8 +83,8 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);			
 			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
-			go->GModel()->AnimationHandler.AddHandler(ah);
-			go->SetUserData(ah);
+			go->GModel()->SetAnimationHandler(ah);
+				
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
@@ -175,8 +175,8 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_hero"));
 			go->GModel()->GetMesh("Laser")->SetVisible(false);
 			auto ah = TIKI_NEW AnimationHandlerHero(go->GModel());
-			go->GModel()->AnimationHandler.AddHandler(ah);
-			go->SetUserData(ah);
+			go->GModel()->SetAnimationHandler(ah);
+				
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
@@ -211,8 +211,8 @@ namespace TikiEngine
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 
 			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
-			go->GModel()->AnimationHandler.AddHandler(ah);
-			go->SetUserData(ah);
+			go->GModel()->SetAnimationHandler(ah);
+
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();

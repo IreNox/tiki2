@@ -5,14 +5,15 @@
 
 namespace TikiEngine
 {
-	class AnimationHandlerHero : public AnimationEventHandler
+	class AnimationHandlerHero : public AnimationEvent
 	{
 	public:
 
 		AnimationHandlerHero(IModel* model);
 		~AnimationHandlerHero();
 
-		void Handle(IModel* model, const AnimationArgs& args);
+		void FindMappedAnimation(AnimationArgs& args);
+
 
 	private:
 

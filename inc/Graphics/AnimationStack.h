@@ -16,7 +16,7 @@ namespace TikiEngine
 
 			void Update(const UpdateArgs& args);
 
-			void SetAnimation(IAnimation* animation);
+			void PlayAnimation(IAnimation* animation);
 			void BlendAnimation(IAnimation* animation, double time = 0.5);
 			
 			List<TikiAnimation*>& GetStack();
