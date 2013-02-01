@@ -17,7 +17,7 @@ namespace TikiEngine
 
 		SkillSystem::~SkillSystem()
 		{
-			FOREACH(skills, SafeRelease(&skills[i]));
+			FOREACH_CODE(skills, SafeRelease(&skills[i]));
 		}
 		#pragma endregion
 

@@ -1,35 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
+    <Filter Include="DllMain">
+      <UniqueIdentifier>{b85bfc5d-c2b8-4882-b9a6-92cf58c00c6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Module">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Headerdateien">
+    <Filter Include="Header">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\ContentManager\ContentManagerModule.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\ContentManager\DllMain.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\ContentManager\ResourceInfo.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
     </ClInclude>
     <ClInclude Include="inc\ContentManager\ResourceBinaryData.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ContentManager\DllMain.h">
+      <Filter>DllMain</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ContentManager\ContentManagerModule.h">
+      <Filter>Module</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\ContentManager\ContentManagerModule.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Module</Filter>
     </ClCompile>
     <ClCompile Include="src\ContentManager\DllMain.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>DllMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

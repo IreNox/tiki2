@@ -17,7 +17,7 @@ namespace TikiEngine
 			: IScript(gameObject->GetEngine(), gameObject), zoom(1.0f), targetZoom(1.1f), 
 			cameraTarget(0), distanceToTarget(50.0)
 #if _DEBUG
-			, useMouse(true), useRealCamera(true)
+			, useMouse(false), useRealCamera(true)
 #endif
 		{
 			SafeAddRef(terrain, &this->terrain);

@@ -55,9 +55,11 @@ typedef D3D11_INPUT_ELEMENT_DESC TDX_Input_Element_desc;
 #define TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT D3D11_APPEND_ALIGNED_ELEMENT
 #define TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA D3D11_INPUT_PER_VERTEX_DATA
 #elif TIKI_OGL
+#define GLEW_STATIC
 #include "GL/glew.h"
 #include "GL/wglew.h"
 
+#pragma comment(lib, "glew32.lib")
 #pragma warning(disable: 4049 4217)
 
 #define TIKI_VERTEX_BUFFER	GL_ARRAY_BUFFER

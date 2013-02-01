@@ -52,7 +52,7 @@ namespace TikiEngine
 			void update()
 			{
 				currentValue = baseValue;
-				FOREACH(modifier, currentValue += modifier[i]->Calculate(currentValue))
+				FOREACH_CODE(modifier, currentValue += modifier[i]->Calculate(currentValue))
 			}
 
 		};

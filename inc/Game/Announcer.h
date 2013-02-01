@@ -18,9 +18,12 @@ namespace TikiEngine
 		struct Announcement
 		{
 			wstring Message;
+			bool ShowAtScreenCenter;
 
 			ISound* Sound;
 			ITexture* Icon;
+
+			double ShowDuration;
 		};
 
 		class Announcer : public EngineObject
@@ -30,9 +33,12 @@ namespace TikiEngine
 			Announcer(GameState* state);
 			~Announcer();
 
-			Announcement* Announce(const wstring& msg, const wstring& icon = L"", const wstring& sound = L"", function<void(void)> funcActivate = 0);
+			Announcement* Announce(const wstring& msg, bool showAtScreenCenter = false, const wstring& icon = L"", const wstring& sound = L"", function<void(void)> funcClick = 0);
 
 			void ActivateAnnouncement(Announcement* announcement);						 
+
+			void Draw(const DrawArgs& args);
+			void Update(const UpdateArgs& args);
 
 		private:
 

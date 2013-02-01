@@ -141,6 +141,12 @@
     <ClInclude Include="inc\Graphics\PPDefault.h">
       <Filter>Internal\PPDefault</Filter>
     </ClInclude>
+    <ClInclude Include="inc\extern\GL\glew.h">
+      <Filter>_extern</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\extern\GL\wglew.h">
+      <Filter>_extern</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\OGLGraphicsModule.cpp">
@@ -160,9 +166,6 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp">
       <Filter>Modules\SpriteBatchModule</Filter>
-    </ClCompile>
-    <ClCompile Include="src\extern\glew.c">
-      <Filter>_extern</Filter>
     </ClCompile>
     <ClCompile Include="src\Graphics\VertexInternal.cpp">
       <Filter>Internal\Vertices</Filter>

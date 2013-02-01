@@ -26,7 +26,7 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && true)
+	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
 		scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
@@ -89,7 +89,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			Scene* scene = GetStartScene(engine);
 			scene->AddRef();
 
-			//engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
+			engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
 			engine->SetScene(scene);
 
 #if _DEBUG

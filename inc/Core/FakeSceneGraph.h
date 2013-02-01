@@ -85,7 +85,7 @@ namespace TikiEngine
 		#pragma region Member - Do
 		void Do(function<void(GameObject*)> whatIWant)
 		{
-			FOREACH(gameObjects, whatIWant(gameObjects[i]))
+			FOREACH_CODE(gameObjects, whatIWant(gameObjects[i]))
 		}
 
 		void DoInFrustum(function<void(GameObject*)> whatIWant)

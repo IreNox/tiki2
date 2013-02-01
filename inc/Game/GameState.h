@@ -5,6 +5,7 @@
 #include "Game/GamePart.h"
 #include "Game/NavigationMesh.h"
 
+#include "Core/IFont.h"
 #include "Core/IPhysicsMaterial.h"
 
 #include "Game/EventUnitSelectionChanged.h"
@@ -96,6 +97,7 @@ namespace TikiEngine
 			#pragma endregion
 			inline void AddPart(GamePart* part) { gameParts.Add(part); }
 
+			inline IFont* GetDefaultFont() { return defaultFont; }
 			inline IPhysicsMaterial* GetDefaultMaterial() { return defaultMaterial; }
 
 			void Handle(const HelperLog* sender, const wstring& args);
@@ -119,6 +121,7 @@ namespace TikiEngine
 			UnitSelection* unitSelection;
 			ProjectileManager* projectiles;
 
+			IFont* defaultFont;
 			IPhysicsMaterial* defaultMaterial;
 
 		};

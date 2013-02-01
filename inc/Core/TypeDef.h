@@ -51,10 +51,17 @@ typedef const wchar_t* wcstring;
 #pragma endregion
 
 #pragma region Macros
-#define FOREACH(list, code) UInt32 i = 0; while (i < list.Count()) { code;  i++; }
+#define FOR(list) for (UInt32 i = 0; i < list.Count(); i++)
 
-#define FOREACH_CALL(list, code) UInt32 i = 0; while (i < list.Count()) { list[i].code;  i++; }
-#define FOREACH_PTR_CALL(list, code) UInt32 i = 0; while (i < list.Count()) { list[i]->code;  i++; }
+#define FOREACH_PTR(type, varname, list) { \
+	type* varname = 0;\
+	for (UInt32 i = 0; i < list.Count(); i++) { \
+	varname = list[i];
+#define FOREACH_END }}
+
+#define FOREACH_CODE(list, code) for (UInt32 i = 0; i < list.Count(); i++) { code; }
+#define FOREACH_PTR_CALL(list, code) for (UInt32 i = 0; i < list.Count(); i++) { list[i]->code; }
+#define FOREACH_VALUE_CALL(list, code) for (UInt32 i = 0; i < list.Count(); i++) { list[i].code; }
 
 #if _DEBUG
 #define TIKI_LOG(msg) engine->HLog.Write(msg)

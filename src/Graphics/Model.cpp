@@ -58,17 +58,15 @@ namespace TikiEngine
 
 			Dictionary<IAnimation*, IAnimation*> dict;
 
-			i = 0;
-			while (i < baseModel->animations.Count())
+			FOR (baseModel->animations)
 			{
 				TikiAnimation* ani = TIKI_NEW TikiAnimation(baseModel->animations[i]);
 
 				dict.Add(baseModel->animations[i], ani);
 				animations.Add(ani);
-				i++;
 			}
 
-			i = 0;
+			UInt32 i = 0;
 			while (i < baseModel->animations.Count())
 			{
 				if (animations[i]->GetNextAnimation())

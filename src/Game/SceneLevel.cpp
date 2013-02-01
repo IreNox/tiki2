@@ -41,7 +41,7 @@ namespace TikiEngine
 		{
 			this->DisposeLevel();
 
-			FOREACH(points, SafeRelease(&points[i]);)
+			FOREACH_CODE(points, SafeRelease(&points[i]);)
 
 			SafeRelease(&level);
 			SafeRelease(&gameState);

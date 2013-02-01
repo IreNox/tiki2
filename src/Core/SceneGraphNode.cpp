@@ -23,7 +23,7 @@ namespace TikiEngine
 
 	SceneGraphNode::~SceneGraphNode()
 	{
-		//FOREACH(data, SafeRelease(&data[i]))
+		//FOREACH_CODE(data, SafeRelease(&data[i]))
 
 		for(UINT i = 0; i < childs.Count(); i++)
 		{

@@ -105,15 +105,6 @@
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp">
       <Filter>Internal\Rendering</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
-      <Filter>Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\VertexInternal.cpp">
-      <Filter>Internal</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Graphics\ModelInternal.cpp">
-      <Filter>Internal</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\DXRenderTarget.cpp">
       <Filter>Resources\RenderTarget</Filter>
     </ClCompile>
@@ -128,6 +119,15 @@
     </ClCompile>
     <ClCompile Include="src\Graphics\PPDefault.cpp">
       <Filter>Internal\PPDefault</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\ModelInternal.cpp">
+      <Filter>Internal\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
+      <Filter>Internal\Cloddy</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\VertexInternal.cpp">
+      <Filter>Internal\Vertex</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

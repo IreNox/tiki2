@@ -1,47 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Headerdateien">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Headerdateien\Module">
-      <UniqueIdentifier>{5fae75bd-f30b-4b98-973a-c3a6b818636c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Headerdateien\Resource">
-      <UniqueIdentifier>{e35c83d1-55ba-4b4f-a8d4-c872b74bbef0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Module">
-      <UniqueIdentifier>{dd2021e3-62d9-49cf-9d52-031d27d8eef5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Quelldateien\Resource">
+    <Filter Include="DllMain">
       <UniqueIdentifier>{f8b20b0b-4b2e-45b3-b09f-823d3906ed85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Module">
+      <UniqueIdentifier>{5fae75bd-f30b-4b98-973a-c3a6b818636c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{e35c83d1-55ba-4b4f-a8d4-c872b74bbef0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Sound\DllMain.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Sound\SoundModule.h">
-      <Filter>Headerdateien\Module</Filter>
+      <Filter>Module</Filter>
     </ClInclude>
     <ClInclude Include="inc\Sound\Sound.h">
-      <Filter>Headerdateien\Resource</Filter>
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Sound\DllMain.h">
+      <Filter>DllMain</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Sound\DllMain.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="src\Sound\Sound.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
     <ClCompile Include="src\Sound\SoundModule.cpp">
-      <Filter>Quelldateien\Module</Filter>
+      <Filter>Module</Filter>
     </ClCompile>
-    <ClCompile Include="src\Sound\Sound.cpp">
-      <Filter>Quelldateien\Resource</Filter>
+    <ClCompile Include="src\Sound\DllMain.cpp">
+      <Filter>DllMain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

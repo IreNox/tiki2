@@ -77,7 +77,7 @@ namespace TikiEngine
 	#pragma region DO
 	void SceneGraph::Do(function<void(GameObject*)> whatIWant)
 	{
-		FOREACH(gameObjects, whatIWant(gameObjects[i]))
+		FOREACH_CODE(gameObjects, whatIWant(gameObjects[i]))
 	}
 
 	void SceneGraph::DoInFrustum(function<void(GameObject*)> whatIWant)

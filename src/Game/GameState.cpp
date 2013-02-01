@@ -49,6 +49,9 @@ namespace TikiEngine
 
 			botFactory = TIKI_NEW TikiBotFactory(this);
 
+			defaultFont = engine->librarys->CreateResource<IFont>();
+			defaultFont->Create(L"Calibri", 12);
+
 			defaultMaterial = engine->librarys->CreateResource<IPhysicsMaterial>();
 			defaultMaterial->SetRestitution(0.2f);
 			defaultMaterial->SetDynamicFriction(0.7f);
@@ -69,7 +72,7 @@ namespace TikiEngine
 
 			SafeRelease(&defaultMaterial);
 
-			FOREACH(gameParts, SafeRelease(&gameParts[i]));
+			FOREACH_CODE(gameParts, SafeRelease(&gameParts[i]));
 		}
 		#pragma endregion
 

@@ -155,6 +155,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="inc\extern\GL\glew.h" />
+    <ClInclude Include="inc\extern\GL\wglew.h" />
     <ClInclude Include="inc\Graphics\AnimationStack.h" />
     <ClInclude Include="inc\Graphics\ConstantBuffer.h" />
     <ClInclude Include="inc\Graphics\DllMain.h" />
@@ -182,7 +184,6 @@
     <ClInclude Include="inc\Graphics\VertexDeclaration.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\extern\glew.c" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\Font.cpp" />
     <ClCompile Include="src\Graphics\Model.cpp" />
