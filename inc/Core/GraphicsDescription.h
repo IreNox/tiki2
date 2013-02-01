@@ -35,8 +35,11 @@ namespace TikiEngine
 
 			GraphicsModules Module;
 
+			/*! @brief Shadows enabled */
+			bool UseShadows;
+
 			GaphicsDescription()
-				: Width(800), Height(600), AdapterIndex(0), Fullscreen(false), VSync(false), Module(GM_DirectX11)
+				: Width(800), Height(600), AdapterIndex(0), Fullscreen(false), VSync(false), Module(GM_DirectX11), UseShadows(false)
 			{
 			}
 		};

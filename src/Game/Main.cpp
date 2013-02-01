@@ -28,12 +28,12 @@ inline Scene* GetStartScene(Engine* engine)
 
 	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
-		//scene = TIKI_NEW SceneTim(engine);
+		scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
 		//scene = TIKI_NEW SceneAdrian(engine);
 
-		scene = TIKI_NEW SceneLevel(engine);
-		((SceneLevel*)scene)->LoadLevel(2);
+		//scene = TIKI_NEW SceneLevel(engine);
+		//((SceneLevel*)scene)->LoadLevel(2);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && false)
 	{
@@ -72,6 +72,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.Window.Width = 1100;
 		desc.Window.Height = 750;
 		desc.Window.Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
+		desc.Graphics.UseShadows = true;
 
 		desc.IgnoreModules.Add(L"tikiengine.graphicsdx10.dll");
 		//desc.IgnoreModules.Add(L"tikiengine.graphicsdx11.dll");

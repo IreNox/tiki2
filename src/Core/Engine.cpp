@@ -26,7 +26,7 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
-		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(true)
+		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(false)
 #if _DEBUG
 		, fpsIndex(0), fpsAve(0)
 #endif
@@ -49,6 +49,7 @@ namespace TikiEngine
 	bool Engine::Initialize(EngineDescription& desc)
 	{
 		this->desc = desc;
+		useShadows = desc.Graphics.UseShadows;
 
 		#pragma region Database
 		sqlite3_open(

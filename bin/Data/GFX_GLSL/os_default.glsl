@@ -7,6 +7,8 @@ in vec3 inPos;
 in vec2 inUV;
 in vec3 inNormal;
 
+out vec2 UV;
+
 out vec3 Normal;
 out vec3 Tangent;
 out vec3 Binormal;
@@ -45,12 +47,7 @@ void main()
 	gl_Position *= ProjectionM;
 	ProjPos = gl_Position;
 
-	gl_TexCoord[0] = vec4(
-		inUV.x,
-		1 - inUV.y,
-		0,
-		0
-	);
+	UV = vec2(inUV.x, 1 - inUV.y);
 
 	mat3 world = mat3(WorldM);
 	Normal = normalize(inNormal * world);
@@ -64,6 +61,8 @@ void main()
 
 #endif
 #ifdef TIKI_PS
+
+in vec2 UV;
 
 in vec3 Normal;
 in vec3 Tangent;
@@ -116,13 +115,13 @@ void main()
 	
 	if (true)
 	{
-		termDiffuse = texture(TexSpecularMap, vec2(gl_TexCoord[0])) * DiffuseIntensity;
+		termDiffuse = texture(TexSpecularMap, UV) * DiffuseIntensity;
 	}
 
 	vec3 bumpedNormal = Normal;		
 	if (true)
 	{
-		vec3 normalSample = 2 * texture(TexNormalMap, vec2(gl_TexCoord[0])).xyz - 1;
+		vec3 normalSample = 2 * texture(TexNormalMap, UV).xyz - 1;
 		//float3x3 TBN = float3x3(input.Tangent, input.Binormal, input.Normal);
 		
 		//bumpedNormal = normalize(mul(normalSample, TBN));
@@ -135,13 +134,13 @@ void main()
 		float specularity = 25.0f;
 
 		vec3 H = normalize(ViewPos - Lights[0].Direction);
-		termDiffuse.xyz += specularIntensity * texture(TexSpecularMap, vec2(gl_TexCoord[0])).xyz * pow(clamp(dot(H, bumpedNormal), 0.0, 1.0), specularity);
+		termDiffuse.xyz += specularIntensity * texture(TexSpecularMap, vec2(UV)).xyz * pow(clamp(dot(H, bumpedNormal), 0.0, 1.0), specularity);
 	}
 
 	if (true)
 	{
 	}
-	gl_FragData[3] = texture(TexLightMap, vec2(gl_TexCoord[0]));
+	gl_FragData[3] = texture(TexLightMap, UV);
 
 	gl_FragData[0] = termDiffuse;
 	gl_FragData[1].rgb = WorldPos;

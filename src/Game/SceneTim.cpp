@@ -70,13 +70,13 @@ namespace TikiEngine
 			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
 			this->AddElement(go);
 
-			// Marine
-			go = TIKI_NEW GameObject(engine);
-			go->SModel(engine->content->LoadModel(L"unit_marine"));
-			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
-			go->PRS.SScale() = 0.01f;
-			go->PRS.SPosition() = Vector3(15, 0, 0);
-			this->AddElement(go);
+			//// Marine
+			//go = TIKI_NEW GameObject(engine);
+			//go->SModel(engine->content->LoadModel(L"unit_marine"));
+			//go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			//go->PRS.SScale() = 0.01f;
+			//go->PRS.SPosition() = Vector3(15, 0, 0);
+			//this->AddElement(go);
 
 			light = TIKI_NEW LightObject(engine);
 			light->GetLight()->SetColor(Color(1, 1, 1, 1));

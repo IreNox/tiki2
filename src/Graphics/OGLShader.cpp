@@ -302,7 +302,7 @@ namespace TikiEngine
 			int len = 0;
 			(program ? glGetProgramiv : glGetShaderiv)(id, GL_INFO_LOG_LENGTH, &len);
 
-			if (len > 0)
+			if (len > 1)
 			{
 				int charsWritten  = 0;
 				char* cLog = new char[len];

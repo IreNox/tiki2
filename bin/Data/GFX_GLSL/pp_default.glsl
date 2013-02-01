@@ -6,19 +6,18 @@
 in vec3 inPos;
 in vec2 inUV;
 
+out vec2 UV;
+
 void main()
 {
 	gl_Position = vec4(inPos, 1.0);
-	gl_TexCoord[0] = vec4(
-		inUV.x,
-		1 - inUV.y,
-		0,
-		0
-	);
+	UV = vec2(inUV.x, 1 - inUV.y);
 }
 
 #endif
 #ifdef TIKI_PS
+
+in vec2 UV;
 
 struct Light
 {
@@ -50,10 +49,10 @@ uniform sampler2D rtInterface;
 
 void main()
 {
-	vec4 sceneColor		= texture(rtScreen, vec2(gl_TexCoord[0]));
-	vec4 shadowColor	= texture(rtShadow, vec2(gl_TexCoord[0]));
-	vec4 lightColor		= texture(rtLight, vec2(gl_TexCoord[0]));
-	vec4 interfaceColor	= texture(rtInterface, vec2(gl_TexCoord[0]));
+	vec4 sceneColor		= texture(rtScreen, UV);
+	vec4 shadowColor	= texture(rtShadow, UV);
+	vec4 lightColor		= texture(rtLight, UV);
+	vec4 interfaceColor	= texture(rtInterface, UV);
 	vec4 ambientColor	= vec4(1, 1, 1, 1); //ambientLight.Sample(sam, input.UV);
 
 	vec4 color = sceneColor;
@@ -62,8 +61,8 @@ void main()
 	{
 		vec3 termLight = vec3(1, 1, 1);
 
-		vec3 pixelPos = texture(rtDepth, vec2(gl_TexCoord[0])).xyz;
-		vec3 pixelNormal = texture(rtNormal, vec2(gl_TexCoord[0])).xyz;
+		vec3 pixelPos = texture(rtDepth, UV).xyz;
+		vec3 pixelNormal = texture(rtNormal, UV).xyz;
 
 		for (int i = 0; i < LightsCount; i++)
 		{
