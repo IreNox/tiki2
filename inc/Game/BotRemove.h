@@ -6,6 +6,7 @@
 
 #include "Game/Utils.h"
 #include "Game/GameState.h"
+#include "Core/IAnimation.h"
 
 namespace TikiEngine
 {
@@ -25,6 +26,7 @@ namespace TikiEngine
 			bool GetReady() { return true; }
 
 		private:
+			IAnimation* deathAnimation;
 			double timeTillDeath;
 			GameState* gameState;
 		};

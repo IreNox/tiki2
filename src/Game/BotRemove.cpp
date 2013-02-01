@@ -8,29 +8,36 @@ namespace TikiEngine
 
 
 		BotRemove::BotRemove(GameState* gameState, GameObject* gameObject)
-			: Component(gameState->GetEngine(), gameObject)
+			: Component(gameState->GetEngine(), gameObject), deathAnimation(0)
 		{
 			this->gameState = gameState;
 			timeTillDeath = 0.0f;
 
+
+			AnimationArgs animArgs(AT_Death);
 			gameObject->GModel()->AnimationHandler->RaiseAnimationEvent(
-				gameObject->GModel(),
-				AnimationArgs(AT_Death)
-			);
+				gameObject->GModel(),animArgs);
+			deathAnimation = animArgs.animation;
 		}
 		
 		const double DeathAnimationLength = 2.0f;
 
 		void BotRemove::Update(const UpdateArgs& args)
 		{
-			timeTillDeath += args.Time.ElapsedTime;
-
-			if (timeTillDeath >= DeathAnimationLength)
+			if(deathAnimation && deathAnimation->IsFinished())
 			{
 				gameState->GetScene()->RemoveElement(GetGameObject());
-				return;
+			}
+			else
+			{
+				timeTillDeath += args.Time.ElapsedTime;
+
+				if (timeTillDeath >= DeathAnimationLength)
+				{
+					gameState->GetScene()->RemoveElement(GetGameObject());
+					return;
+				}
 			}
 		}
-
 	}
 }

@@ -28,6 +28,7 @@ namespace TikiEngine
 
 		this->death1->SetDuration(1.0);
 		this->death1->SetPriority(1);
+		this->death1->SetLoop(false);
 
 		this->death2->SetDuration(1.5);
 		this->death2->SetPriority(1);
