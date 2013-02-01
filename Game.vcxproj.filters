@@ -31,312 +31,115 @@
     <Filter Include="Scripts">
       <UniqueIdentifier>{f06ad67d-c0ee-4496-a4c1-7b49b6772397}</UniqueIdentifier>
     </Filter>
-    <Filter Include="_header">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="_header\Effects">
-      <UniqueIdentifier>{71a92541-ad33-4dde-a8d2-a1a48b14512a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI">
-      <UniqueIdentifier>{24c564ce-4b1a-4c4e-a17c-6066f142d221}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\BaseEntities">
-      <UniqueIdentifier>{64989333-28a1-4308-9a00-2daf5e57dfe0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Movement">
-      <UniqueIdentifier>{e4e91d21-6cce-412a-8809-d34e5b655889}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Movement\OcTree">
-      <UniqueIdentifier>{217db9dc-55b2-4d21-a6c2-342e1ce53dca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Goals">
-      <UniqueIdentifier>{916dd52a-210a-48f4-a781-920a42deb46f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Goals\Composite">
-      <UniqueIdentifier>{34c19c77-e97d-4b7d-94f5-9781c836291c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Goals\Atomic">
-      <UniqueIdentifier>{00e99b86-bfb2-4ae7-b04a-fd9fdbc163be}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Goals\Evaluation">
-      <UniqueIdentifier>{05a633a7-e2f7-4192-bb28-0452d52f523c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Targeting">
-      <UniqueIdentifier>{802dd064-fbd6-4d01-af9d-b67bd8a005d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\WeaponSystem">
-      <UniqueIdentifier>{148fb390-ee74-4372-87be-df54d5ae8944}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\WeaponSystem\Projectiles">
-      <UniqueIdentifier>{969e7232-eb77-4064-a70a-69be5535fe49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\WeaponSystem\Weapons">
-      <UniqueIdentifier>{432e7abc-45ba-4bf8-ac36-c085a2215ec3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Triggers">
-      <UniqueIdentifier>{4a62173d-18e2-4ebd-b1ad-ed654939ffb5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\SkillSystem">
-      <UniqueIdentifier>{a594a1ff-d6dd-427a-9daf-420f80e6980d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Attributes">
-      <UniqueIdentifier>{109d67f1-2f4f-4fa4-addd-e86e9a8ad061}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\AI\Animation">
-      <UniqueIdentifier>{4955c06b-417b-4696-8d26-ff69b5f95c2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\Level">
-      <UniqueIdentifier>{7a7e5513-4730-4ce8-b491-89f7fb412383}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\Particle">
-      <UniqueIdentifier>{739812fe-bed1-4148-8b62-744e3351f8ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_header\Events">
-      <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="_source\Effects">
+    <Filter Include="Effects">
       <UniqueIdentifier>{11762833-c888-4f3a-bab3-a3f9c86d6d26}</UniqueIdentifier>
     </Filter>
-    <Filter Include="_source\AI">
-      <UniqueIdentifier>{b2539aea-d156-4889-aa79-12c6cb93e27b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\BaseEntities">
-      <UniqueIdentifier>{670f9ad6-f7ad-4db9-981a-870f52bd0c75}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Movement">
-      <UniqueIdentifier>{b610b4b7-6fef-4aba-bc57-6f03a9d1991a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Movement\OcTree">
-      <UniqueIdentifier>{3445e5b7-03a9-45c1-975a-d6ca029d5005}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Goals">
-      <UniqueIdentifier>{293211ee-d60b-4b0f-8879-6f4aa1a2b7c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Goals\Atomic">
-      <UniqueIdentifier>{8c6e3587-7b1c-4676-b9f6-d45869753a72}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Goals\Composite">
-      <UniqueIdentifier>{4ce544bd-46b8-4f09-b2e1-95482ab91e67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Goals\Evaluation">
-      <UniqueIdentifier>{f6092538-ec1e-4cb0-b179-7645fd28da62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Targeting">
-      <UniqueIdentifier>{eb926976-7b70-493d-a6a2-c79ed62f6027}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Triggers">
-      <UniqueIdentifier>{dd83813e-5c29-49e1-8f21-1cc93bebf10d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\SkillSystem">
-      <UniqueIdentifier>{c42db035-1f96-4d9b-b1c3-2c15a931c76a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\WeaponSystem">
-      <UniqueIdentifier>{e69b5898-bbbc-4060-8eb0-a53dd4193baf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\WeaponSystem\Projectiles">
-      <UniqueIdentifier>{f7aa7432-dcaa-485b-a362-1f8edd00c151}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\WeaponSystem\Weapons">
-      <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Attributes">
-      <UniqueIdentifier>{1918e6f0-25d4-490d-a337-b1cb434052c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\AI\Animation">
-      <UniqueIdentifier>{efccb9fe-a6aa-4cd5-aee4-dc249338dac6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_source\Level">
+    <Filter Include="Level">
       <UniqueIdentifier>{fd233766-67c9-400f-bf57-484c10707460}</UniqueIdentifier>
     </Filter>
-    <Filter Include="_source\Particle">
-      <UniqueIdentifier>{b7811ccb-7da3-44b4-9836-2a55afa2bbdc}</UniqueIdentifier>
+    <Filter Include="Particle">
+      <UniqueIdentifier>{739812fe-bed1-4148-8b62-744e3351f8ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEBlood">
+      <UniqueIdentifier>{46338e79-8524-47f8-8b82-cef7cd034705}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEDebris">
+      <UniqueIdentifier>{8132b892-4054-498c-bd8b-3092c94a2f1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEExplosion">
+      <UniqueIdentifier>{64506ec8-7c71-4253-bee7-a1160b67947e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEFire">
+      <UniqueIdentifier>{d69bbffd-61fd-4ad2-b4dc-eabae3ff8612}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEFlash">
+      <UniqueIdentifier>{b9697af0-4214-46fe-b9a2-2fabcdefb52a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEHealAura">
+      <UniqueIdentifier>{9d5da182-3696-4835-84b6-b9d474076dda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PERoundSparks">
+      <UniqueIdentifier>{945c239c-d0fd-4d90-bc69-afc46033b957}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEShockWave">
+      <UniqueIdentifier>{7a803679-24d1-4ecd-9143-ec623351b239}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PEShootMG">
+      <UniqueIdentifier>{f4a37a92-a7f2-4134-b7c3-a383c6e0bdf6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PESmoke">
+      <UniqueIdentifier>{63cea7e9-3fac-4327-9921-7c1aab8397fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Particle\PESparks">
+      <UniqueIdentifier>{7857a03b-a63a-4342-a4eb-e70564f11275}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Events">
+      <UniqueIdentifier>{96b777cb-f463-4bad-a3a1-ffb5bd68ccdf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI">
+      <UniqueIdentifier>{b2539aea-d156-4889-aa79-12c6cb93e27b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\BaseEntities">
+      <UniqueIdentifier>{670f9ad6-f7ad-4db9-981a-870f52bd0c75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Movement">
+      <UniqueIdentifier>{b610b4b7-6fef-4aba-bc57-6f03a9d1991a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Movement\OcTree">
+      <UniqueIdentifier>{3445e5b7-03a9-45c1-975a-d6ca029d5005}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Goals">
+      <UniqueIdentifier>{293211ee-d60b-4b0f-8879-6f4aa1a2b7c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Goals\Atomic">
+      <UniqueIdentifier>{8c6e3587-7b1c-4676-b9f6-d45869753a72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Goals\Composite">
+      <UniqueIdentifier>{4ce544bd-46b8-4f09-b2e1-95482ab91e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Goals\Evaluation">
+      <UniqueIdentifier>{f6092538-ec1e-4cb0-b179-7645fd28da62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Targeting">
+      <UniqueIdentifier>{eb926976-7b70-493d-a6a2-c79ed62f6027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Triggers">
+      <UniqueIdentifier>{dd83813e-5c29-49e1-8f21-1cc93bebf10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\SkillSystem">
+      <UniqueIdentifier>{c42db035-1f96-4d9b-b1c3-2c15a931c76a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\SkillSystem\Skills">
+      <UniqueIdentifier>{2ee9b86a-8a05-4f30-8766-e4d044b0b51a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\WeaponSystem">
+      <UniqueIdentifier>{e69b5898-bbbc-4060-8eb0-a53dd4193baf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\WeaponSystem\Projectiles">
+      <UniqueIdentifier>{f7aa7432-dcaa-485b-a362-1f8edd00c151}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\WeaponSystem\Weapons">
+      <UniqueIdentifier>{b97ba456-2322-43db-b3d5-4c5a9b1b6299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Attributes">
+      <UniqueIdentifier>{1918e6f0-25d4-490d-a337-b1cb434052c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Animation">
+      <UniqueIdentifier>{efccb9fe-a6aa-4cd5-aee4-dc249338dac6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="AI\Misc">
+      <UniqueIdentifier>{c6b65b13-b5d4-4d74-9b96-20f9c63d2a96}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\Game\PPBlur.h">
-      <Filter>_header\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Utils.h">
-      <Filter>_header\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h">
-      <Filter>_header\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Level.h">
-      <Filter>_header\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\LevelObject.h">
-      <Filter>_header\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BasicTransform.h">
-      <Filter>_header\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BasicDatabase.h">
-      <Filter>_header\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BaseGameEntity.h">
-      <Filter>_header\AI\BaseEntities</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\MovingEntity.h">
-      <Filter>_header\AI\BaseEntities</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\EntityManager.h">
-      <Filter>_header\AI\BaseEntities</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TikiBot.h">
-      <Filter>_header\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TikiSteering.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\CellSpacePartition.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\NavigationCell.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\NavigationHeap.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\NavigationMesh.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\NavigationPath.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\GameState.h">
       <Filter>Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="misc\res\resource.h">
       <Filter>_res</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\VoidList.h">
-      <Filter>_header\AI\Movement\OcTree</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\OcTree.h">
-      <Filter>_header\AI\Movement\OcTree</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TriBox.h">
-      <Filter>_header\AI\Movement\OcTree</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BoxSide.h">
-      <Filter>_header\AI\Movement\OcTree</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Goal.h">
-      <Filter>_header\AI\Goals\Atomic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalComposite.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalThink.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalTypes.h">
-      <Filter>_header\AI\Goals</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalWander.h">
-      <Filter>_header\AI\Goals\Atomic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalSeekToPosition.h">
-      <Filter>_header\AI\Goals\Atomic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PathPlanner.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PathEdge.h">
-      <Filter>_header\AI\Movement</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalTraverseEdge.h">
-      <Filter>_header\AI\Goals\Atomic</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalFollowPath.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalMoveToPosition.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\SensorMemory.h">
-      <Filter>_header\AI\Targeting</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TargetingSystem.h">
-      <Filter>_header\AI\Targeting</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Regulator.h">
-      <Filter>_header\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalHuntTarget.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalExplore.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalAttackTarget.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalEvaluator.h">
-      <Filter>_header\AI\Goals\Evaluation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\ExploreGoalEvaluator.h">
-      <Filter>_header\AI\Goals\Evaluation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h">
-      <Filter>_header\AI\Goals\Evaluation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalAttackMove.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalPatrol.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEShootMG.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PatrolGoalEvaluator.h">
-      <Filter>_header\AI\Goals\Evaluation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Weapon.h">
-      <Filter>_header\AI\WeaponSystem\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Projectile.h">
-      <Filter>_header\AI\WeaponSystem\Projectiles</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\MachineGun.h">
-      <Filter>_header\AI\WeaponSystem\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Bullet.h">
-      <Filter>_header\AI\WeaponSystem\Projectiles</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\WeaponSystem.h">
-      <Filter>_header\AI\WeaponSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h">
-      <Filter>_header\AI\Goals\Composite</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\EventUnitSelectionChanged.h">
-      <Filter>_header\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Trigger.h">
-      <Filter>_header\AI\Triggers</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
-      <Filter>_header\AI\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\LevelPoint.h">
-      <Filter>_header\Level</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PPFogOfWar.h">
-      <Filter>_header\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BuildSlot.h">
-      <Filter>_header\AI</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Rocket.h">
-      <Filter>_header\AI\WeaponSystem\Projectiles</Filter>
+      <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\EnemyBase.h">
       <Filter>Gameplay\GameParts</Filter>
@@ -347,80 +150,11 @@
     <ClInclude Include="inc\Game\PlayerBase.h">
       <Filter>Gameplay\GameParts</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\SkillSystem.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Skill.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\SkillRocket.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\SkillFlash.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\SkillHealAura.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\SkillSpiderMine.h">
-      <Filter>_header\AI\SkillSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AttributeSystem.h">
-      <Filter>_header\AI\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TikiAtt.h">
-      <Filter>_header\AI\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\TikiAttModifier.h">
-      <Filter>_header\AI\Attributes</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\Attributes.h">
-      <Filter>_header\AI\Attributes</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\EventBotDead.h">
-      <Filter>_header\Events</Filter>
+      <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\EventHeroEvents.h">
-      <Filter>_header\Events</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEHealAura.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PESmoke.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEFire.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEExplosion.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEBlood.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEFlash.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PPDepthOfField.h">
-      <Filter>_header\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PESparks.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEShockWave.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerHero.h">
-      <Filter>_header\AI\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PERoundSparks.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\PEDebris.h">
-      <Filter>_header\Particle</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\BotRemove.h">
-      <Filter>_header\AI</Filter>
+      <Filter>Events</Filter>
     </ClInclude>
     <ClInclude Include="inc\Game\SceneAdrian.h">
       <Filter>Scenes\Test</Filter>
@@ -471,211 +205,400 @@
     <ClInclude Include="inc\Game\CameraTPS.h">
       <Filter>Scripts</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\PPBlur.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PPScreenSpaceAmbientOcclusion.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PPDepthOfField.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PPFogOfWar.h">
+      <Filter>Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BasicDatabase.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\LevelPoint.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BasicTransform.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Level.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\LevelObject.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEBlood.h">
+      <Filter>Particle\PEBlood</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEDebris.h">
+      <Filter>Particle\PEDebris</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEExplosion.h">
+      <Filter>Particle\PEExplosion</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEFire.h">
+      <Filter>Particle\PEFire</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEFlash.h">
+      <Filter>Particle\PEFlash</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEHealAura.h">
+      <Filter>Particle\PEHealAura</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PERoundSparks.h">
+      <Filter>Particle\PERoundSparks</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEShockWave.h">
+      <Filter>Particle\PEShockWave</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PEShootMG.h">
+      <Filter>Particle\PEShootMG</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PESmoke.h">
+      <Filter>Particle\PESmoke</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PESparks.h">
+      <Filter>Particle\PESparks</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
+      <Filter>AI\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\AnimationHandlerHero.h">
+      <Filter>AI\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Attributes.h">
+      <Filter>AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiAttModifier.h">
+      <Filter>AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\AttributeSystem.h">
+      <Filter>AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiAtt.h">
+      <Filter>AI\Attributes</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BaseGameEntity.h">
+      <Filter>AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\MovingEntity.h">
+      <Filter>AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\EntityManager.h">
+      <Filter>AI\BaseEntities</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Goal.h">
+      <Filter>AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalWander.h">
+      <Filter>AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalSeekToPosition.h">
+      <Filter>AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalTraverseEdge.h">
+      <Filter>AI\Goals\Atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackGlobalTarget.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalThink.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackMove.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalAttackTarget.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalComposite.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalExplore.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalFollowPath.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalHuntTarget.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalMoveToPosition.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalPatrol.h">
+      <Filter>AI\Goals\Composite</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h">
+      <Filter>AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PatrolGoalEvaluator.h">
+      <Filter>AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\ExploreGoalEvaluator.h">
+      <Filter>AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalEvaluator.h">
+      <Filter>AI\Goals\Evaluation</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\GoalTypes.h">
+      <Filter>AI\Goals</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BoxSide.h">
+      <Filter>AI\Movement\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\VoidList.h">
+      <Filter>AI\Movement\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\OcTree.h">
+      <Filter>AI\Movement\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TriBox.h">
+      <Filter>AI\Movement\OcTree</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\CellSpacePartition.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiSteering.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationCell.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationHeap.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationMesh.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\NavigationPath.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PathEdge.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\PathPlanner.h">
+      <Filter>AI\Movement</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillFlash.h">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillSpiderMine.h">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillHealAura.h">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillRocket.h">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Skill.h">
+      <Filter>AI\SkillSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SkillSystem.h">
+      <Filter>AI\SkillSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\SensorMemory.h">
+      <Filter>AI\Targeting</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TargetingSystem.h">
+      <Filter>AI\Targeting</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Trigger.h">
+      <Filter>AI\Triggers</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Bullet.h">
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Rocket.h">
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Projectile.h">
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\MachineGun.h">
+      <Filter>AI\WeaponSystem\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Weapon.h">
+      <Filter>AI\WeaponSystem\Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\WeaponSystem.h">
+      <Filter>AI\WeaponSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BotRemove.h">
+      <Filter>AI\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Regulator.h">
+      <Filter>AI\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\Utils.h">
+      <Filter>AI\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\BuildSlot.h">
+      <Filter>AI</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\Game\TikiBot.h">
+      <Filter>AI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\CameraFly.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PPBlur.cpp">
-      <Filter>_source\Effects</Filter>
+      <Filter>Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PPScreenSpaceAmbientOcclusion.cpp">
-      <Filter>_source\Effects</Filter>
+      <Filter>Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CameraRTS.cpp">
       <Filter>Scripts</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BaseGameEntity.cpp">
-      <Filter>_source\AI\BaseEntities</Filter>
+      <Filter>AI\BaseEntities</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\MovingEntity.cpp">
-      <Filter>_source\AI\BaseEntities</Filter>
+      <Filter>AI\BaseEntities</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\EntityManager.cpp">
-      <Filter>_source\AI\BaseEntities</Filter>
+      <Filter>AI\BaseEntities</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\TikiBot.cpp">
-      <Filter>_source\AI</Filter>
+      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\TikiSteering.cpp">
-      <Filter>_source\AI\Movement</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\NavigationCell.cpp">
-      <Filter>_source\AI\Movement</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\NavigationHeap.cpp">
-      <Filter>_source\AI\Movement</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\NavigationMesh.cpp">
-      <Filter>_source\AI\Movement</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\NavigationPath.cpp">
-      <Filter>_source\AI\Movement</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\VoidList.cpp">
-      <Filter>_source\AI\Movement\OcTree</Filter>
+      <Filter>AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\OcTree.cpp">
-      <Filter>_source\AI\Movement\OcTree</Filter>
+      <Filter>AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\TriBox.cpp">
-      <Filter>_source\AI\Movement\OcTree</Filter>
+      <Filter>AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BoxSide.cpp">
-      <Filter>_source\AI\Movement\OcTree</Filter>
+      <Filter>AI\Movement\OcTree</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalThink.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalWander.cpp">
-      <Filter>_source\AI\Goals\Atomic</Filter>
+      <Filter>AI\Goals\Atomic</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalSeekToPosition.cpp">
-      <Filter>_source\AI\Goals\Atomic</Filter>
+      <Filter>AI\Goals\Atomic</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalTraverseEdge.cpp">
-      <Filter>_source\AI\Goals\Atomic</Filter>
+      <Filter>AI\Goals\Atomic</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalFollowPath.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalMoveToPosition.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SensorMemory.cpp">
-      <Filter>_source\AI\Targeting</Filter>
+      <Filter>AI\Targeting</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\TargetingSystem.cpp">
-      <Filter>_source\AI\Targeting</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\Regulator.cpp">
-      <Filter>_source\AI</Filter>
+      <Filter>AI\Targeting</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalHuntTarget.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalExplore.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalAttackTarget.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\ExploreGoalEvaluator.cpp">
-      <Filter>_source\AI\Goals\Evaluation</Filter>
+      <Filter>AI\Goals\Evaluation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp">
-      <Filter>_source\AI\Goals\Evaluation</Filter>
+      <Filter>AI\Goals\Evaluation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalAttackMove.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\GoalPatrol.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEShootMG.cpp">
-      <Filter>_source\Particle</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PatrolGoalEvaluator.cpp">
-      <Filter>_source\AI\Goals\Evaluation</Filter>
+      <Filter>AI\Goals\Evaluation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Weapon.cpp">
-      <Filter>_source\AI\WeaponSystem\Weapons</Filter>
+      <Filter>AI\WeaponSystem\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Projectile.cpp">
-      <Filter>_source\AI\WeaponSystem\Projectiles</Filter>
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\MachineGun.cpp">
-      <Filter>_source\AI\WeaponSystem\Weapons</Filter>
+      <Filter>AI\WeaponSystem\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Bullet.cpp">
-      <Filter>_source\AI\WeaponSystem\Projectiles</Filter>
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\WeaponSystem.cpp">
-      <Filter>_source\AI\WeaponSystem</Filter>
+      <Filter>AI\WeaponSystem</Filter>
     </ClCompile>
     <ClCompile Include="inc\Game\GoalAttackGlobalTarget.cpp">
-      <Filter>_source\AI\Goals\Composite</Filter>
+      <Filter>AI\Goals\Composite</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Trigger.cpp">
-      <Filter>_source\AI\Triggers</Filter>
+      <Filter>AI\Triggers</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp">
-      <Filter>_source\AI\Animation</Filter>
+      <Filter>AI\Animation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\DatabaseLevel.cpp">
-      <Filter>_source\Level</Filter>
+      <Filter>Level</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PPFogOfWar.cpp">
-      <Filter>_source\Effects</Filter>
+      <Filter>Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\BuildSlot.cpp">
-      <Filter>_source\AI</Filter>
+      <Filter>AI</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Rocket.cpp">
-      <Filter>_source\AI\WeaponSystem\Projectiles</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\SkillRocket.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
+      <Filter>AI\WeaponSystem\Projectiles</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\SkillSystem.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
+      <Filter>AI\SkillSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\Skill.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\SkillFlash.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\SkillHealAura.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\SkillSpiderMine.cpp">
-      <Filter>_source\AI\SkillSystem</Filter>
+      <Filter>AI\SkillSystem</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\AttributeSystem.cpp">
-      <Filter>_source\AI\Attributes</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEHealAura.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PESmoke.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEFire.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEExplosion.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEBlood.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEFlash.cpp">
-      <Filter>_source\Particle</Filter>
+      <Filter>AI\Attributes</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PPDepthOfField.cpp">
-      <Filter>_source\Effects</Filter>
+      <Filter>Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\PathPlanner.cpp">
-      <Filter>_source\AI\Movement</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PESparks.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEShockWave.cpp">
-      <Filter>_source\Particle</Filter>
+      <Filter>AI\Movement</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\AnimationHandlerHero.cpp">
-      <Filter>_source\AI\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PERoundSparks.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\PEDebris.cpp">
-      <Filter>_source\Particle</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\BotRemove.cpp">
-      <Filter>_source\AI</Filter>
+      <Filter>AI\Animation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CameraTPS.cpp">
       <Filter>Scripts</Filter>
@@ -725,6 +648,57 @@
     </ClCompile>
     <ClCompile Include="src\Game\GameState.cpp">
       <Filter>Gameplay</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEBlood.cpp">
+      <Filter>Particle\PEBlood</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEDebris.cpp">
+      <Filter>Particle\PEDebris</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEExplosion.cpp">
+      <Filter>Particle\PEExplosion</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEFire.cpp">
+      <Filter>Particle\PEFire</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEFlash.cpp">
+      <Filter>Particle\PEFlash</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEHealAura.cpp">
+      <Filter>Particle\PEHealAura</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PERoundSparks.cpp">
+      <Filter>Particle\PERoundSparks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEShockWave.cpp">
+      <Filter>Particle\PEShockWave</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PEShootMG.cpp">
+      <Filter>Particle\PEShootMG</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PESmoke.cpp">
+      <Filter>Particle\PESmoke</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\PESparks.cpp">
+      <Filter>Particle\PESparks</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillFlash.cpp">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillSpiderMine.cpp">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillHealAura.cpp">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SkillRocket.cpp">
+      <Filter>AI\SkillSystem\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\BotRemove.cpp">
+      <Filter>AI\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\Regulator.cpp">
+      <Filter>AI\Misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
