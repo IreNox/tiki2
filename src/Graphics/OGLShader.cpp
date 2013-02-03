@@ -258,35 +258,42 @@ namespace TikiEngine
 			glAttachShader(shaderId, psId);
 			
 			glLinkProgram(shaderId);
+
+			GLenum errCode = glGetError();
+			if (errCode)
+			{
+				throw errCode;
+			}
+
 			if (getShaderInfo(shaderId, error, true))
 				throw error;
 
-			static const cstring attribs[] =
-			{
-				"inPos",
-				"inUV",
-				"inColor",
-				"inNormal",
-				"inIndices",
-				"inWeights"
-			};
+			//static const cstring attribs[] =
+			//{
+			//	"inPos",
+			//	"inUV",
+			//	"inColor",
+			//	"inNormal",
+			//	"inIndices",
+			//	"inWeights"
+			//};
 
-			UInt32 i = 0;
-			UInt32 c = 0;
-			while (i < 6)
-			{
-				GLint ix = glGetAttribLocation(shaderId, attribs[i]);
+			//UInt32 i = 0;
+			//UInt32 c = 0;
+			//while (i < 6)
+			//{
+			//	GLint ix = glGetAttribLocation(shaderId, attribs[i]);
 
-				if (ix != -1)
-				{
-					glBindAttribLocation(shaderId, c, attribs[i]);
-					c++;
-				}
+			//	if (ix != -1)
+			//	{
+			//		glBindAttribLocation(shaderId, c, attribs[i]);
+			//		c++;
+			//	}
 
-				i++;
-			}
+			//	i++;
+			//}
 
-			glLinkProgram(shaderId);
+			//glLinkProgram(shaderId);
 			this->applyType(fileName);
 		}
 
@@ -310,7 +317,7 @@ namespace TikiEngine
 				(program ? glGetProgramInfoLog : glGetShaderInfoLog)(id, len, &charsWritten, cLog);
 
 				log += string(cLog, charsWritten);
-				free(cLog);
+				delete[](cLog);
 
 				return true;
 			}

@@ -73,9 +73,9 @@ namespace TikiEngine
 			TDX_EffectPass* pass;
 			TDX_EffectTechnique* technique;
 #elif TIKI_OGL
-			int vsId;
-			int psId;
-			int shaderId;
+			UInt32 vsId;
+			UInt32 psId;
+			UInt32 shaderId;
 
 			static GLuint bindIndex;
 			List<string> textureUnits;

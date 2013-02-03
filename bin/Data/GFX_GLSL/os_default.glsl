@@ -1,11 +1,11 @@
 
-#version 140
+#version 400
 
 #ifdef TIKI_VS
 
-in vec3 inPos;
-in vec2 inUV;
-in vec3 inNormal;
+layout(location = 0) in vec3 inPos;
+layout(location = 1) in vec2 inUV;
+layout(location = 2) in vec3 inNormal;
 
 out vec2 UV;
 
@@ -71,6 +71,11 @@ in vec3 Binormal;
 in vec3 WorldPos;
 in vec3 ViewPos;
 in vec4 ProjPos;
+
+layout(location = 0) out vec4 outDiffuse;
+layout(location = 1) out vec4 outDepth;
+layout(location = 2) out vec4 outNormal;
+layout(location = 3) out vec4 outLight;
 
 struct Light
 {
@@ -139,13 +144,12 @@ void main()
 
 	if (true)
 	{
+		//outLight = texture(TexLightMap, UV);
 	}
-	gl_FragData[3] = texture(TexLightMap, UV);
 
-	gl_FragData[0] = termDiffuse;
-	gl_FragData[1].rgb = WorldPos;
-	gl_FragData[1].a = ProjPos.z / ProjPos.w;
-	gl_FragData[2] = vec4(bumpedNormal, 1.0f);
+	outDiffuse = termDiffuse;
+	//outDepth = vec4(WorldPos, ProjPos.z / ProjPos.w);
+	//outNormal = vec4(bumpedNormal, 1.0f);
 }
 
 #endif

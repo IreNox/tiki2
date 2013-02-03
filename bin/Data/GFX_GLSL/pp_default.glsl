@@ -3,8 +3,8 @@
 
 #ifdef TIKI_VS
 
-in vec3 inPos;
-in vec2 inUV;
+layout(location = 0) in vec3 inPos;
+layout(location = 1) in vec2 inUV;
 
 out vec2 UV;
 
@@ -18,6 +18,8 @@ void main()
 #ifdef TIKI_PS
 
 in vec2 UV;
+
+layout(location = 0) out vec4 outColor;
 
 struct Light
 {
@@ -74,16 +76,16 @@ void main()
 			termLight += Lights[i].Color.xyz * lighting;
 		}
 
-		color.rgb *= termLight;
+		//color.rgb *= termLight;
 	}
 	//color *= shadowColor;
-	color *= ambientColor;
-	color += lightColor;
+	//color *= ambientColor;
+	//color += lightColor;
 
 	//color = (color * (1 - interfaceColor.a)) + interfaceColor;
 	color.a = 1;
 
-	gl_FragData[0] = color;
+	outColor = color;
 }
 
 #endif
