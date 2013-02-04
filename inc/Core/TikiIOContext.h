@@ -54,7 +54,7 @@ namespace TikiEngine
 
 			~TikiIOContext()
 			{
-				if (data == 0)
+				if (data == 0 && stream != 0)
 				{
 					UInt32 i = 0;
 					while (i < binaryPartPointer.Count())
@@ -69,12 +69,9 @@ namespace TikiEngine
 						i++;
 					}
 				}
-				else
+				else if (data != 0)
 				{
-					if (data != 0)
-					{
-						delete[](data);
-					}
+					delete[](data);
 				}
 
 				SafeRelease(&stream);

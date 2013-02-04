@@ -134,6 +134,14 @@ namespace TikiEngine
 		{
 			return data->StringData;
 		}
+
+		inline TChar* CreateCStr() const
+		{
+			TChar* str = new TChar[data->StringLength + 1];
+			memcpy(str, data->StringData, sizeof(TChar) * (data->StringLength + 1));
+
+			return str;
+		}
 		#pragma endregion
 
 		#pragma region Member - Split

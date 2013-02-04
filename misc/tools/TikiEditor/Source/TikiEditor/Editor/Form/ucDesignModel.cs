@@ -205,7 +205,7 @@ namespace TikiEditor
                 import.InputMaterials.Add(
                     new MeshMaterial() {
                         Name = m.Name,
-                        CreatetAdjacencyIndices = m.CreatetShadow,
+                        CreatetAdjacencyIndices = m.CreateShadow,
                         TextureDiffuse = m.MatDiffuse,
                         TextureNormal = m.MatNormal,
                         TextureSpec = m.MatSpec,
@@ -290,6 +290,8 @@ namespace TikiEditor
             {
                 _name = name;
 
+                _createtAdjacencyIndices = true;
+
                 _matDiffuse = String.Format("{0}/{1}_diff",   model, name);
                 _matNormal  = String.Format("{0}/{1}_normal", model, name);
                 _matSpec    = String.Format("{0}/{1}_spec",   model, name);
@@ -304,7 +306,7 @@ namespace TikiEditor
                 set { _name = value; }
             }
 
-            public bool CreatetShadow
+            public bool CreateShadow
             {
                 get { return _createtAdjacencyIndices; }
                 set { _createtAdjacencyIndices = value; }
