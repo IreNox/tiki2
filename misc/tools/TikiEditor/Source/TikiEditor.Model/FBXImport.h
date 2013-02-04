@@ -3,6 +3,8 @@
 #include "FakeTexture.h"
 #include "MeshMaterial.h"
 
+#include "Core\String.h"
+
 using System::String;
 
 namespace TikiEditor

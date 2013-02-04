@@ -13,6 +13,8 @@
 
 namespace TikiEditor
 {
+	using TikiEngine::string;
+	using TikiEngine::wstring;
 	using namespace TikiEngine::IO;
 	using namespace TikiEngine::Resources;
 	using namespace System::Runtime::InteropServices;
@@ -46,7 +48,7 @@ namespace TikiEditor
 
 			TikiAnimation* ani = helper->GetAnimation();
 			ani->SetName(
-				StringWtoA(name).c_str()
+				StringWtoA(name).CStr()
 			);
 
 			if (i == 0)
@@ -161,7 +163,7 @@ namespace TikiEditor
 		}
 
 		ITexture* tex = new FakeTexture();
-		tex->LoadFromFile(str.c_str());
+		tex->LoadFromFile(str.CStr());
 
 		return tex;
 	}

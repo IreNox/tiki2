@@ -62,8 +62,8 @@ namespace TikiEditor
 		//TODO: Convert Function wstring to char*
 		bool lStatus;
 		size_t blatmpscheissegal;
-		char* pFbxFilePath = new char[filename.length()+1];
-		wcstombs_s(&blatmpscheissegal,pFbxFilePath,  filename.length() + 1, filename.c_str(), filename.length() + 1);
+		char* pFbxFilePath = new char[filename.Length()+1];
+		wcstombs_s(&blatmpscheissegal,pFbxFilePath,  filename.Length() + 1, filename.CStr(), filename.Length() + 1);
 
 		// Create an importer.
 		FbxImporter* lImporter = FbxImporter::Create(pSdkManager,"");

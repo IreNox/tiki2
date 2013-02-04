@@ -21,3 +21,5 @@
 #include "..\src\Core\GameObject.cpp"
 
 #include "..\src\Graphics\ModelInternal.cpp"
+
+#include "..\src\Core\String.cpp"

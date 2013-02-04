@@ -1,7 +1,6 @@
 #pragma  once
 
-#include <string.h>
-#include <stdlib.h>
+#include <Core/String.h>
 
 #include "Core/Matrix.h"
 #include "Core/DefaultVertex.h"
@@ -20,6 +19,9 @@ using namespace TikiEngine::Vertices;
 
 namespace TikiEditor
 {
+	using TikiEngine::string;
+	using TikiEngine::wstring;
+
 	class FbxLoader
 	{
 	public:

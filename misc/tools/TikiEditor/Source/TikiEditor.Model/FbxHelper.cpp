@@ -404,7 +404,7 @@ namespace TikiEditor
 		TikiBone* bone = 0;
 		for(UInt32 i = 0; i < tikiBones.Count(); i++)
 		{
-			if(node->GetName() == tikiBones[i]->GetName())
+			if(tikiBones[i]->GetName() == node->GetName())
 			{
 				bone = tikiBones[i];
 				break;
