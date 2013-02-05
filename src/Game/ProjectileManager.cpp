@@ -154,6 +154,7 @@ namespace TikiEngine
 
 		void ProjectileManager::AddBloodEffect(double elapsedTime, double releasePerSecound, const Vector3& pos)
 		{
+			peBlood->setNewRandom(Random(0, 1));
 			peBlood->Trigger(elapsedTime, releasePerSecound, pos);
 		}
 

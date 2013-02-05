@@ -13,7 +13,10 @@ namespace TikiEngine
 			void CreateParticle(Particle* particle);
 			void UpdateParticle(Particle* particle);
 
+			void setNewRandom(float rand);
 
+		private:
+			float randomBlood;
 		};
 
 	}
