@@ -26,7 +26,7 @@ namespace TikiEngine
 
 		#pragma region Class
 		TikiBot::TikiBot(GameState* gameState, GameObject* gameObject, const TikiBotDescription& desc) 
-			: MovingEntity(gameState, gameObject), attSys(gameObject->GetEngine())
+			: MovingEntity(gameState, gameObject), spiderMine(false), attSys(gameObject->GetEngine())
 		{
 			timeSinceDeath = 0.0;
 

@@ -171,7 +171,8 @@ namespace TikiEngine
 			bool HasLOSTo(Vector3 pos, float dist, float eps);
 
 			// this is called to allow a human player to control the bot
-			//void TakePossession();
+			void SetSpiderMine() { spiderMine = true; }
+			bool IsSpiderMine() {return spiderMine; }
 
 			// called when a human is exorcised from this bot and the AI takes control
 			//void Exorcise();
@@ -253,6 +254,8 @@ namespace TikiEngine
 
 			// set to true when a human player takes over control of the bot
 			bool possessed;
+
+			bool spiderMine;
 
 			int faction;
 

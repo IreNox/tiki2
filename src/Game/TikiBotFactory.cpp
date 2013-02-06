@@ -13,6 +13,9 @@
 #include "Game/SkillSpiderMine.h"
 #include "Game/SkillSystem.h"
 
+#include "Game/WeaponSystem.h"
+#include "Game/Weapon.h"
+
 #include "Game/Trigger.h"
 #include "Core/IContentManager.h"
 
@@ -322,7 +325,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create - Player - Misc
-		void TikiBotFactory::CreatePlayerSpiderMine(GameObject* go, TikiBot* target)
+		void TikiBotFactory::CreatePlayerSpiderMine(GameObject* go, const Vector3& target)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
 
@@ -333,17 +336,20 @@ namespace TikiEngine
 			// Create bot
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
-			botDesc.Height = 0.33f;
-			botDesc.Radius = 0.33f;
-			botDesc.MaxHealth = 10;
-			botDesc.MaxSpeed = 25;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
+			botDesc.MaxHealth = 200;
+			botDesc.StartMGDamage = 5;
 			botDesc.EntityType = ET_Bot;
-
+			botDesc.StartMGFireRate = 5;
+			botDesc.MaxSpeed = 15.0f;
+			
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
+			bot->SetSpiderMine();
 			bot->SetScale(0.01f);
-
-			bot->GetTargetSys()->SetGlobalTarget(target);
-			bot->GetBrain()->AddGoalAttackTarget();
+			bot->GetWeaponSys()->GetCurrentWeapon()->SetRange(10.0f);
+			//bot->GetTargetSys()->SetGlobalTarget(target);
+			bot->GetBrain()->AddGoalAttackMove(target);
 
 			gameState->GetScene()->AddElement(go);
 			

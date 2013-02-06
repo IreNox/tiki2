@@ -31,7 +31,7 @@ namespace TikiEngine
 			
 			void CreatePlayerMop(GameObject* go, const Vector3& destination);
 			void CreatePlayerHero(GameObject* go);
-			void CreatePlayerSpiderMine(GameObject* go, TikiBot* target);
+			void CreatePlayerSpiderMine(GameObject* go, const Vector3& target);
 
 			void CreatePlayerTower(GameObject* go);
 			void CreatePlayerMainBuilding(GameObject* go);

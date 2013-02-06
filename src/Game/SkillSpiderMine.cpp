@@ -10,7 +10,7 @@ namespace TikiEngine
 	{
 		SkillDescription SkillSpiderMine::Desc = SkillDescription(
 			SKILL_SPIDERMINE_DESC,
-			(SkillFlags)(SF_Active | SF_TargetBot),
+			(SkillFlags)(SF_Active | SF_TargetPoint),
 			L"spider_mine",
 			L""
 		);
@@ -24,19 +24,19 @@ namespace TikiEngine
 		{
 		}
 
-		bool SkillSpiderMine::internActivationBot(TikiBot* target)
+		void SkillSpiderMine::internActivationPoint(const Vector3& target)
 		{
-			if (target->GetFaction() == owner->GetFaction())
-			{
-				return false;
-			}
+			//if (target->GetFaction() == owner->GetFaction())
+			//{
+			//	return false;
+			//}
 
 			GameObject* go = TIKI_NEW GameObject(engine);
 			go->PRS.SPosition() = owner->Pos3D() + Vector3(5);
 			
 			gameState->GetBotFactory()->CreatePlayerSpiderMine(go, target);
 
-			return true;
+			//return true;
 		}
 	}
 }

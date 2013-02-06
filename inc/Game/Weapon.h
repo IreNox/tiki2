@@ -45,6 +45,7 @@ namespace TikiEngine
 			void IncrementRounds(int num);
 			unsigned int GetType() const { return wType; }
 			float GetIdealRange() const { return idealRange; }
+			void SetRange(float range) { this->idealRange = range; }
 
 			inline double GetDamage() { return damage; }
 			inline void SetDamage(double val) { damage = val; }

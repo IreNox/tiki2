@@ -6,6 +6,9 @@
 #include "Game/GoalTypes.h"
 #include "Game/GoalThink.h"
 
+#include "Game/Rocket.h"
+#include "Game/ProjectileManager.h"
+
 namespace TikiEngine
 {
     namespace AI
@@ -60,7 +63,34 @@ namespace TikiEngine
 				if (owner->GetBrain()->NotPresent(Goal_Move_To_Position))
 					if (owner->RotateFacingTowardPosition(Vector2(aimingPos.X, aimingPos.Z)))
 					{
-						currentWeapon->ShootAt(args, aimingPos);
+						if (owner->IsSpiderMine())
+						{
+							ProjectileDescription desc;
+							desc.Target = aimingPos; 
+							desc.Shooter = owner;
+							desc.ShooterID = owner->ID();
+							desc.Origin = owner->Pos3D();
+							desc.Heading = owner->Heading();
+							desc.Damage = 20; 
+							desc.LifeTime = 10.0f;
+							desc.MaxSpeed = 70.0f;
+							desc.Mass = 1.0f;
+
+							GameObject* go = TIKI_NEW GameObject(owner->GetGameObject()->GetEngine());
+							Rocket* proj = TIKI_NEW Rocket(owner->GetGameState(), go);
+							proj->Init(desc, 30, false);
+
+							//rocket = proj;
+
+							owner->GetGameState()->GetProjectiles()->AddProjectile(proj);
+							owner->SetDead();
+
+						}
+						else
+						{
+							currentWeapon->ShootAt(args, aimingPos);
+						}
+						
 					}
 
             }

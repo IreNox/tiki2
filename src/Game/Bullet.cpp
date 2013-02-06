@@ -2,6 +2,7 @@
 #include "Game/TikiBot.h"
 #include "Core/ITriangleMeshCollider.h"
 #include "Game/ProjectileManager.h"
+#include "Game/GoalThink.h"
 
 namespace TikiEngine
 {
@@ -51,6 +52,11 @@ namespace TikiEngine
 					if (bot->IsDead())
 					{
 						shooter->KilledBot(bot);
+					}
+					else if (bot->IsSpiderMine() && bot->GetBrain()->NotPresent(Goal_Attack_Move))
+					{
+						
+						bot->GetBrain()->AddGoalAttackMove(shooter->Pos3D());
 					}
                 }
             }

@@ -15,7 +15,8 @@ namespace TikiEngine
 
 		protected:
 
-			bool internActivationBot(TikiBot* target);
+			//bool internActivationBot(TikiBot* target);
+			void internActivationPoint(const Vector3& target);
 
 		private:
 
