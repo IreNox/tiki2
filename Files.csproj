@@ -42,6 +42,12 @@
     <None Include="bin\Data\Models\gatecontrol.tiki" />
     <None Include="bin\Data\Models\heroplatform.tiki" />
     <None Include="bin\Data\Models\mainbuilding.tiki" />
+    <None Include="bin\Data\Models\ruin_01.tiki" />
+    <None Include="bin\Data\Models\ruin_02.tiki" />
+    <None Include="bin\Data\Models\ruin_03.tiki" />
+    <None Include="bin\Data\Models\ruin_04.tiki" />
+    <None Include="bin\Data\Models\ruin_05.tiki" />
+    <None Include="bin\Data\Models\ruin_06.tiki" />
     <None Include="bin\Data\Models\tower_player.tiki" />
     <None Include="bin\Data\Models\tree01.tiki" />
     <None Include="bin\Data\Models\tree02.tiki" />
@@ -128,6 +134,9 @@
     <None Include="bin\Data\Textures\rock_03\rock_03_diff.dds" />
     <None Include="bin\Data\Textures\rock_03\rock_03_normal.dds" />
     <None Include="bin\Data\Textures\rock_03\rock_03_spec.dds" />
+    <None Include="bin\Data\Textures\ruins\ruin_diff.dds" />
+    <None Include="bin\Data\Textures\ruins\ruin_normal.dds" />
+    <None Include="bin\Data\Textures\ruins\ruin_spec.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_diff.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_light.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_normal.dds" />

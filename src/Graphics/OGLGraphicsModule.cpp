@@ -250,6 +250,7 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Debug
+#if _DEBUG
 		void GraphicsModule::DrawLine(const Vector3& start, const Vector3& end, const Color& color)
 		{
 
@@ -259,6 +260,7 @@ namespace TikiEngine
 		{
 
 		}
+#endif
 		#pragma endregion	
 	}
 }

@@ -126,28 +126,28 @@ namespace TikiEngine
 		SafeRelease(&scene);
 		SafeRelease(&loadingScene);
 
-		physics->Dispose();
+		if (physics) physics->Dispose();
 		SafeRelease(&physics);
 
-		sound->Dispose();
+		if (sound) sound->Dispose();
 		SafeRelease(&sound);
 
-		input->Dispose();
+		if (input) input->Dispose();
 		SafeRelease(&input);
 
-		sprites->Dispose();
+		if (sprites) sprites->Dispose();
 		SafeRelease(&sprites);
 
-		content->Dispose();
+		if (content) content->Dispose();
 		SafeRelease(&content);
 
-		graphics->Dispose();
+		if (graphics) graphics->Dispose();
 		SafeRelease(&graphics);
 
-		window->Dispose();
+		if (window) window->Dispose();
 		SafeRelease(&window);
 
-		librarys->Dispose();
+		if (librarys) librarys->Dispose();
 		SafeRelease(&librarys);
 
 		if (dataBase != 0)
@@ -201,6 +201,9 @@ namespace TikiEngine
 				wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(fps);
 				SetWindowText(window->GetHWND(), s.CStr());
 			}
+#else
+			wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(1.0 / elapsedTime);
+			SetWindowText(window->GetHWND(), s.CStr());
 #endif
 
 			this->Update(updateArgs);
@@ -236,7 +239,7 @@ namespace TikiEngine
 
 		SafeChangeRef(&this->scene, scene);
 
-		if (!scene->IsInitialized())
+		if (this->scene && !this->scene->IsInitialized())
 		{
 			if (loadingScene)
 			{
@@ -363,7 +366,7 @@ namespace TikiEngine
 		syncWait += (args.Time.ElapsedTime > 0.014 ? -1 : 1);
 		if (syncWait > 0)
 		{
-			Sleep(syncWait);
+			//Sleep(syncWait);
 		}
 		else
 		{

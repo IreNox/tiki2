@@ -259,11 +259,11 @@ namespace TikiEngine
 			
 			glLinkProgram(shaderId);
 
-			GLenum errCode = glGetError();
-			if (errCode)
-			{
-				throw errCode;
-			}
+			//GLenum errCode = glGetError();
+			//if (errCode)
+			//{
+			//	throw errCode;
+			//}
 
 			if (getShaderInfo(shaderId, error, true))
 				throw error;

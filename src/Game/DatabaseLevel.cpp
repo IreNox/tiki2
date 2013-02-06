@@ -360,6 +360,21 @@ namespace TikiEngine
 					gameState->GetScene()->AddElement(this);
 				}
 				break;
+			case 22:
+			case 23:
+			case 24:
+			case 25:
+			case 26:
+			case 27:
+				{
+					this->SModel(
+						engine->content->LoadModel(
+							L"ruin_0" + StringConvert::ToWString(type - 13)
+						)
+					);
+					gameState->GetScene()->AddElement(this);
+				}
+				break;
 			case 9: // Tower Build slot
 				gameState->GetBotFactory()->CreateBuildSlot(this);
 				break;
@@ -375,6 +390,10 @@ namespace TikiEngine
 				break;
 			case 13:
 				gameState->GetBotFactory()->CreatePlayerTower(this);
+				break;
+			case 28:
+			case 29:
+				// reserve for future objects
 				break;
 			default:
 				throw "Wrong Object Type";

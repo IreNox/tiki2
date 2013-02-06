@@ -188,7 +188,7 @@ namespace TikiEngine
 				data
 			);
 			delete[](data);
-
+			
 			if (header.dwMipMapCount)
 			{
 				glGenerateMipmap(GL_TEXTURE_2D);

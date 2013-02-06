@@ -26,7 +26,7 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && false)
+	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
 		scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.IgnoreModules.Add(L"tikiengine.graphicsogl.dll");
 
 #if !_DEBUG
-		desc.Graphics.Fullscreen = true;
+		//desc.Graphics.Fullscreen = true;
 #endif
 
 		Engine* engine = TIKI_NEW Engine();
@@ -89,7 +89,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			Scene* scene = GetStartScene(engine);
 			scene->AddRef();
 
-			engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
+			//engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
 			engine->SetScene(scene);
 
 #if _DEBUG
