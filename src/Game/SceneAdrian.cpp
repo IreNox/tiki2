@@ -64,9 +64,16 @@ namespace TikiEngine
 			go->GModel()->SetAnimationHandler(ah);
 
 			go->PRS.SScale() = Vector3(0.01f);
-
-			//sceneGraph.Add(go);
 			this->AddElement(go);
+
+
+			go = new GameObject(engine);
+			go->SModel(args.Content->LoadModel(L"test"));
+			go->PRS.SPosition() = Vector3(2,0,0);
+			go->PRS.SScale() = Vector3(0.01f);
+			this->AddElement(go);
+
+
 
 			light = TIKI_NEW LightObject(engine);
 			light->AddRef();
@@ -92,12 +99,12 @@ namespace TikiEngine
 
 		void SceneAdrian::Draw(const DrawArgs& args)
 		{
-#if TIKI_CULLING
-			for(UINT i = 0; i < drawContent.Count(); i++)
-				drawContent[i]->Draw(args);
-#else
+//#if TIKI_CULLING
+//			for(UINT i = 0; i < drawContent.Count(); i++)
+//				drawContent[i]->Draw(args);
+//#else
 			Scene::Draw(args);
-#endif
+//#endif
 
 			
 

@@ -334,14 +334,20 @@ namespace TikiEditor
 		FbxVector4* vertexArray = new FbxVector4[vertexCount];
 		memcpy(vertexArray, mesh->GetControlPoints(), vertexCount * sizeof(FbxVector4));
 
+
+		FbxNode* node = mesh->GetNode();
+
+		FbxAMatrix transform = node->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE);
+		FbxVector4 pivT = node->GetGeometricTranslation(FbxNode::eSourcePivot);
+		FbxVector4 pivR = node->GetGeometricRotation(FbxNode::eSourcePivot);
+		FbxVector4 pivS = node->GetGeometricScaling(FbxNode::eSourcePivot);
+
+		transform *= FbxAMatrix(pivT, pivR, pivS);
+		FbxMatrix trans = static_cast<FbxMatrix>(transform);
+
 		for(int i = 0; i < vertexCount; i++)
 		{
-			vertexArray[i] = (
-				static_cast<FbxMatrix>(
-					mesh->GetNode()->EvaluateGlobalTransform(FBXSDK_TIME_INFINITE)).MultNormalize(vertexArray[i]
-				)
-			);
-
+			vertexArray[i] = trans.MultNormalize(vertexArray[i]);
 			list.Add(FBXConverter::ConvertDrop(vertexArray[i]));
 		}
 
