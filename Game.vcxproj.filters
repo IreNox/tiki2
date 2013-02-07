@@ -445,6 +445,9 @@
     <ClInclude Include="inc\Game\TikiBot.h">
       <Filter>AI</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\AnimationHandlerSpidermine.h">
+      <Filter>AI\Animation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\CameraFly.cpp">
@@ -699,6 +702,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\Regulator.cpp">
       <Filter>AI\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\AnimationHandlerSpidermine.cpp">
+      <Filter>AI\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

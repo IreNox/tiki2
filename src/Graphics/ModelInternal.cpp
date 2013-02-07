@@ -1128,24 +1128,6 @@ namespace TikiEngine
 					}
 				}
 			}
-
-			//for(UInt32 i = 0; i < this->stack.Count(); i++)
-			//{
-			//	TikiAnimation* anim = stack[i];
-			//	if(anim == blendTarget)
-			//		continue;
-
-			//	anim->Update(args.Time.ElapsedTime);
-			//	if(anim->IsFinished() && blendTarget == 0)
-			//	{
-			//		IAnimation* nextAnim = anim->GetNextAnimation();
-			//		if(nextAnim && !stack.Contains((TikiAnimation*)nextAnim))
-			//		{
-			//			BlendAnimation(nextAnim);
-			//		}
-			//		break;
-			//	}
-			//}
 		}
 
 		void AnimationStack::PlayAnimation(IAnimation* animation)

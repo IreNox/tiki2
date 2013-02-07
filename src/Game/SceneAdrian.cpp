@@ -18,6 +18,7 @@
 #include "Core/LightObject.h"
 
 #include "Game/AnimationHandlerDefaultUnit.h"
+#include "Game/AnimationHandlerSpidermine.h"
 #include "Core/EventAnimation.h"
 
 #include "Core/RectangleF.h"
@@ -48,14 +49,14 @@ namespace TikiEngine
 			SceneGraph.Initialize(RectangleF::Create(-50,-50, 100, 100), 6);
 
 
-			GameObject* go = TIKI_NEW GameObject(engine);
+			//GameObject* go = TIKI_NEW GameObject(engine);
 
 #if TIKI_USE_SCENEGRAPH
-			go->GetSceneGraphElement().SetDynamic();
+			//go->GetSceneGraphElement().SetDynamic();
 #endif
 
-			//go->SModel(args.Content->LoadModel(L"spidermine")); //soldier_l_testForAgga10
-			go->SModel(args.Content->LoadModel(L"unit_soldier"));
+
+			/*	go->SModel(args.Content->LoadModel(L"unit_soldier"));
 
 			this->model = go->GModel();
 			int count = this->model->AnimationCount();
@@ -63,15 +64,18 @@ namespace TikiEngine
 			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
 			go->GModel()->SetAnimationHandler(ah);
 
+			go->PRS.SScale() = Vector3(0.01f);*/
+			//this->AddElement(go);
+
+
+			GameObject* go = new GameObject(engine);
+			go->SModel(args.Content->LoadModel(L"spidermine"));
+			auto ha = TIKI_NEW AnimationHandlerSpidermine(go->GModel());
+			go->GModel()->SetAnimationHandler(ha);
 			go->PRS.SScale() = Vector3(0.01f);
 			this->AddElement(go);
 
-
-			go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"test"));
-			go->PRS.SPosition() = Vector3(2,0,0);
-			go->PRS.SScale() = Vector3(0.01f);
-			this->AddElement(go);
+			this->model = go->GModel();
 
 
 

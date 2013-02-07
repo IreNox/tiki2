@@ -35,7 +35,7 @@ inline Scene* GetStartScene(Engine* engine)
 		//scene = TIKI_NEW SceneLevel(engine);
 		//((SceneLevel*)scene)->LoadLevel(2);
 	}
-	else if((name == L"adrian.lück" || name == L"Adrian") && false)
+	else if((name == L"adrian.lück" || name == L"Adrian") && true)
 	{
 		scene = TIKI_NEW SceneAdrian(engine);
 	}

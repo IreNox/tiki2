@@ -48,6 +48,7 @@
     <None Include="bin\Data\Models\ruin_04.tiki" />
     <None Include="bin\Data\Models\ruin_05.tiki" />
     <None Include="bin\Data\Models\ruin_06.tiki" />
+    <None Include="bin\Data\Models\spidermine.tiki" />
     <None Include="bin\Data\Models\tower_player.tiki" />
     <None Include="bin\Data\Models\tree01.tiki" />
     <None Include="bin\Data\Models\tree02.tiki" />
@@ -75,7 +76,6 @@
     <None Include="bin\Data\Models\rock_01.tiki" />
     <None Include="bin\Data\Models\rock_02.tiki" />
     <None Include="bin\Data\Models\rock_03.tiki" />
-    <None Include="bin\Data\Models\spidermine.tiki" />
     <None Include="bin\Data\Models\tower_enemy.tiki" />
     <None Include="bin\Data\Textures\building03_05\building03_05_diff.dds" />
     <None Include="bin\Data\Textures\building03_05\building03_05_normal.dds" />
