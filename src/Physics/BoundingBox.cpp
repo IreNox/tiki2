@@ -49,6 +49,11 @@ namespace TikiEngine
 			maximum = max;
 			bounds.set(min.arr, max.arr);
 		}
+		
+		void BoundingBox::SetOffset(const Vector3& offset)
+		{
+			_CrtDbgBreak();
+		}
 
 		bool BoundingBox::Intersects(IBoundingBox* b) 
 		{

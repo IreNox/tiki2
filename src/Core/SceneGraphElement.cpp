@@ -19,7 +19,9 @@ namespace TikiEngine
 		Vector3 pos = go->PRS.GPosition();
 		this->Bounds = RectangleF::Create( pos.X - width * 0.5f, pos.Z - height * 0.5f, width, height);
 		this->boundingBox = TIKI_NEW Bounding(go->GetEngine());
-		SetBounds(Vector2::One);
+
+		SetBoundingVolume(Vector2::One);
+		SetCullingBounds(Vector3::One);
 	}
 
 	SceneGraphElement::~SceneGraphElement()
@@ -27,13 +29,18 @@ namespace TikiEngine
 		SafeDelete(&boundingBox);
 	}
 
-	void SceneGraphElement::SetBounds(const Vector2& size)
-	{		
-		this->min = Vector3( -size.X * 0.5f, 0, -size.X * 0.5f );
-		this->max = Vector3( size.X * 0.5f, size.Y, size.X * 0.5f );
+	void SceneGraphElement::SetBoundingVolume(const Vector2& size)
+	{
 		this->Bounds.Width = this->width = size.X;
 		this->Bounds.Height = this->height = size.X;
 		this->radius = size.X * 0.5f;
+	}
+
+	void SceneGraphElement::SetCullingBounds(const Vector3& size, const Vector3& offset)
+	{
+		this->boundingBox->SetOffset(offset);
+		this->min = Vector3( -size.X * 0.5f, 0, -size.Z * 0.5f );
+		this->max = Vector3( size.X * 0.5f, size.Y, size.Z * 0.5f );
 	}
 
 	void SceneGraphElement::Update(const UpdateArgs& args)

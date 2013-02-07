@@ -15,9 +15,9 @@ namespace TikiEngine
 	{
 	public:
 
-		Vector3 Min,Max;
+		Vector3 Min,Max, Offset;
 
-		Bounding(Engine* engine) : IBoundingBox(engine), Min(Vector3::Zero), Max(Vector3::Zero){}
+		Bounding(Engine* engine) : IBoundingBox(engine), Min(Vector3::Zero), Max(Vector3::Zero), Offset(Vector3::Zero){}
 		virtual ~Bounding() {}
 		
 		Vector3 GetMin() const { return Min;} 
@@ -43,8 +43,13 @@ namespace TikiEngine
 
 		void Set( const Vector3& min, const Vector3& max)
 		{
-			this->Min = min;
-			this->Max = max;
+			this->Min = min + Offset;
+			this->Max = max + Offset;
+		}
+
+		void SetOffset(const Vector3& offset)
+		{
+			this->Offset = offset;
 		}
 
 		bool Intersects(IBoundingBox* b) { return true;}
@@ -84,7 +89,8 @@ namespace TikiEngine
 		~SceneGraphElement();
 
 		void SetGameObject( GameObject* go );
-		void SetBounds(const Vector2& size);
+		void SetBoundingVolume(const Vector2& size);
+		void SetCullingBounds(const Vector3& size, const Vector3& offset = Vector3::Zero);
 
 		void Update(const UpdateArgs& args);
 

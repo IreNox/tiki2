@@ -25,6 +25,7 @@ namespace TikiEngine
 			Vector3 GetVertexN(const Vector3& normal);
 
 			void Set(const Vector3& min, const Vector3& max);
+			void SetOffset(const Vector3& offset);
 			bool Intersects(IBoundingBox* b);
 		    bool Contains(const Vector3& p);
 

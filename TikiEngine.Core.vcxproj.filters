@@ -203,9 +203,6 @@
     <ClCompile Include="src\Core\PostProcessPass.cpp">
       <Filter>Quelldateien\Core\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\TikiObject.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Component.cpp">
       <Filter>Quelldateien\Engine\Components</Filter>
     </ClCompile>
@@ -307,6 +304,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\EventAnimation.cpp">
       <Filter>Quelldateien\Core\Args/States\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\TikiObject.cpp">
+      <Filter>Quelldateien\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

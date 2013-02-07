@@ -73,6 +73,8 @@ namespace TikiEngine
 			auto ha = TIKI_NEW AnimationHandlerSpidermine(go->GModel());
 			go->GModel()->SetAnimationHandler(ha);
 			go->PRS.SScale() = Vector3(0.01f);
+			go->GetSceneGraphElement().SetDynamic();
+
 			this->AddElement(go);
 
 			this->model = go->GModel();

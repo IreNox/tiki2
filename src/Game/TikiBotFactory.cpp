@@ -6,6 +6,7 @@
 #include "Game/BuildSlot.h"
 #include "Game/AnimationHandlerHero.h"
 #include "Game/AnimationHandlerDefaultUnit.h"
+#include "Game/AnimationHandlerSpidermine.h"
 
 #include "Game/SkillRocket.h"
 #include "Game/SkillFlash.h"
@@ -328,6 +329,9 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerSpiderMine(GameObject* go, const Vector3& target)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"spidermine"));
+
+			auto ah = TIKI_NEW AnimationHandlerSpidermine(go->GModel());
+			go->GModel()->SetAnimationHandler(ah);
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();

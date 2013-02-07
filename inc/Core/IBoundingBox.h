@@ -28,6 +28,7 @@ namespace TikiEngine
 				@param min - Minimum point of bounds.
 				@param max - Maximum point of bounds. */
 			virtual void Set(const Vector3& min, const Vector3& max) = 0;
+			virtual void SetOffset(const Vector3& offset) = 0;
 
 			
 			/* !@brief indicates whether the intersection of this and b is empty or not.

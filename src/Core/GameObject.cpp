@@ -62,9 +62,13 @@ namespace TikiEngine
 			}
 
 #if TIKI_ENGINE && TIKI_USE_SCENEGRAPH
-			sgElement.SetBounds(
-				bound.XZ()
-			);
+			sgElement.SetBoundingVolume(bound.XZ());
+
+			Vector3 scaling = Vector3( 1.7f, 1.0f, 1.0f);
+			Vector3 newBounding = Vector3(bound.X * scaling.X, bound.Y * scaling.Y, bound.Z * scaling.Z);
+			Vector3 offset = (newBounding - bound) * 0.5f;
+
+			sgElement.SetCullingBounds(newBounding, offset);
 #endif
 		}
 	}
