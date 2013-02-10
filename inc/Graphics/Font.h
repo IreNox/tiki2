@@ -41,7 +41,7 @@ namespace TikiEngine
 
 			ITexture* texture;
 
-			void createGdiImage(wcstring fontName, float fontSize, DWORD** pixels, int* width, int* height);
+			void createGdiImage(void* font, DWORD** pixels, int* width, int* height);
 			void fillTexture(DWORD* pixels, int width, int height);
 
 		};

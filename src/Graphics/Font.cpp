@@ -3,9 +3,10 @@
 
 #include <Windows.h>
 
-#include "Graphics/Font.h"
 #include "Core/TypeGlobals.h"
+#include "Core/NotSupportedException.h"
 
+#include "Graphics/Font.h"
 #include "Graphics/DllMain.h"
 #include "Graphics/Texture.h"
 #include "Graphics/SpriteBatchModule.h"
@@ -36,9 +37,16 @@ namespace TikiEngine
 			int height = 0;
 			DWORD* pixels;
 			
-			this->createGdiImage(fontName, fontSize, &pixels, &width, &height);
+			ULONG_PTR           gdiplusToken;  
+			GdiplusStartupInput gdiplusStartupInput;
+			GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
+
+			Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
+
+			this->createGdiImage(font, &pixels, &width, &height);
 			this->fillTexture(pixels, width, height);
 
+			GdiplusShutdown(gdiplusToken);
 			delete[](pixels);
 		}
 		#pragma endregion
@@ -126,26 +134,47 @@ namespace TikiEngine
 		#pragma region Protected Member - Load/Save
 		void Font::loadFromStream(wcstring fileName, Stream* stream)
 		{
+			int width = 0;
+			int height = 0;
+			DWORD* pixels;
 
-		}
-
-		void Font::saveToStream(wcstring fileName, Stream* stream)
-		{
-
-		}
-		#pragma endregion
-
-		#pragma region Private Member
-		void Font::createGdiImage(wcstring fontName, float fontSize, DWORD** pixels, int* width, int* height)
-		{
 			ULONG_PTR           gdiplusToken;  
 			GdiplusStartupInput gdiplusStartupInput;
 			GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
+			Gdiplus::PrivateFontCollection fontCollection;
+
+			Byte* data = new Byte[stream->GetLength()];
+			stream->Read(data, 0, stream->GetLength());
+			fontCollection.AddMemoryFont(data, (int)stream->GetLength());
+
+			int found = 0;
+			FontFamily family;
+			fontCollection.GetFamilies(1, &family, &found);
+
+			Gdiplus::Font font(&family, 14.0f, FontStyleRegular, UnitPixel);
+
+			this->createGdiImage(&font, &pixels, &width, &height);
+			this->fillTexture(pixels, width, height);
+
+			GdiplusShutdown(gdiplusToken);
+			delete[](pixels);
+		}
+
+		void Font::saveToStream(wcstring fileName, Stream* stream)
+		{
+			throw NotSupportedException();
+		}
+		#pragma endregion
+
+		#pragma region Private Member
+		void Font::createGdiImage(void* fontIn, DWORD** pixels, int* width, int* height)
+		{
+			Gdiplus::Font* font = (Gdiplus::Font*)fontIn;
+
 			wcstring chars = L" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"§$%&/()=?,.-;:_#'+*~<>|";
 			PInt len = wcslen(chars);
-
-			Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
+			
 			pixelHeight = font->GetHeight(96);
 
 			*width = 512;
@@ -156,21 +185,21 @@ namespace TikiEngine
 			*pixels = new DWORD[size];
 			ZeroMemory(*pixels, sizeof(DWORD) * size);
 
-			Bitmap* bmp = new Bitmap(*width, *height, stride, PixelFormat32bppARGB, (BYTE*)*pixels);
-			Gdiplus::Graphics* g = Gdiplus::Graphics::FromImage(bmp);
+			Bitmap bmp(*width, *height, stride, PixelFormat32bppARGB, (BYTE*)*pixels);
+			Gdiplus::Graphics* g = Gdiplus::Graphics::FromImage(&bmp);
 
-			SolidBrush* bg = new SolidBrush(Gdiplus::Color(255, 255, 0, 0));
-			SolidBrush* black = new SolidBrush(Gdiplus::Color::Black);
+			SolidBrush bg(Gdiplus::Color(255, 255, 0, 0));
+			SolidBrush black(Gdiplus::Color::Black);
 			
 			g->FillRectangle(
-				bg,
+				&bg,
 				0,
 				0,
 				*width,
 				*height
 			);
 
-			StringFormat* format = new StringFormat(StringFormatFlagsNoFitBlackBox);
+			StringFormat format(StringFormatFlagsNoFitBlackBox);
 
 			PInt i = 0;
 			float spaceWidth = 0;
@@ -183,7 +212,7 @@ namespace TikiEngine
 					1,
 					font,
 					pos,
-					format,
+					&format,
 					&charSize
 				);
 
@@ -198,7 +227,7 @@ namespace TikiEngine
 					1,
 					font,
 					pos,
-					black
+					&black
 				);
 				
 				if (i == 0)
@@ -220,14 +249,7 @@ namespace TikiEngine
 				i++;
 			}
 
-			delete(bg);
-			delete(black);
-
 			delete(g);
-			delete(bmp);
-			delete(font);
-			delete(format);
-			GdiplusShutdown(gdiplusToken);
 		}
 
 		void Font::fillTexture(DWORD* pixels, int width, int height)

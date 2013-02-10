@@ -28,12 +28,12 @@ inline Scene* GetStartScene(Engine* engine)
 
 	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
-		scene = TIKI_NEW SceneTim(engine);
+		//scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
 		//scene = TIKI_NEW SceneAdrian(engine);
 
-		//scene = TIKI_NEW SceneLevel(engine);
-		//((SceneLevel*)scene)->LoadLevel(2);
+		scene = TIKI_NEW SceneLevel(engine);
+		((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else if((name == L"adrian.lück" || name == L"Adrian") && true)
 	{

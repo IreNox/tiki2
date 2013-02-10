@@ -33,6 +33,9 @@
   <ItemGroup>
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
+    <None Include="bin\Data\Fonts\arial.ttf" />
+    <None Include="bin\Data\Fonts\SegoeWP.ttf" />
+    <None Include="bin\Data\Fonts\wearealien.ttf" />
     <None Include="bin\Data\GFX_GLSL\pp_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_glfx.glsl" />
@@ -147,7 +150,7 @@
     <None Include="bin\Data\Textures\terrain\minimap_map2.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Crack.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Grass.dds" />
-    <None Include="bin\Data\Textures\terrain\Terrain_Rock.dds" />
+    <None Include="bin\Data\Textures\terrain\Terrain_Rock2.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Sand.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_diff.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_normal.dds" />
