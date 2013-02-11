@@ -68,7 +68,7 @@ namespace TikiEngine
 
 				this->LevelUp.RaiseEvent(
 					owner,
-					HeroLevelUpEventArgs(currentXp, nextLevelXp)
+					HeroLevelUpEventArgs(heroLevel, currentXp, nextLevelXp)
 				);
 			}
 		}

@@ -61,7 +61,7 @@ const double XPKillTower = 25.0;
 const double XPKillBuilding = 35.0;
 #pragma endregion
 
-#pragma region camera
+#pragma region Camera
 const float CameraSpeed = 30.0f;
 const float CameraSpeedFast = 60.0f;
 const float CameraMinDist = 20.0f;

@@ -69,7 +69,7 @@ namespace TikiEditor
 				&sample
 			);
 
-			data[i] = sample.Elevation;
+			data[(int)i] = sample.Elevation;
 
 			i++;
 		}

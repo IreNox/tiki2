@@ -35,7 +35,7 @@ namespace TikiEngine
 
 			owner->GetGameState()->GetScene()->SceneGraph.DoWithinRange(
 				owner->Pos3D(),
-				owner->GetSightRadius(),
+				(float)owner->GetAttSys()[TA_SightRadius],
 
 			//owner->GetGameState()->GetScene()->SceneGraph.Do(
 			//	// fix and test...

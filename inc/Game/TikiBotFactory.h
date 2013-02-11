@@ -10,12 +10,14 @@
 
 #include "Game/PlayerBase.h"
 #include "Game/EnemyBase.h"
+#include "Game/TikiAtt.h"
+#include "Game/EventHeroEvents.h"
 
 namespace TikiEngine
 {
 	namespace Game
 	{
-		class TikiBotFactory
+		class TikiBotFactory : public HeroLevelUpEventHandler
 		{
 		public:
 
@@ -44,11 +46,14 @@ namespace TikiEngine
 
 			Vector3 GetPos(const Vector2& pos, float heightAdjust);
 			Vector3 GetPos(const Vector3& pos, float heightAdjust);
+			
+			void Handle(TikiBot* sender, const HeroLevelUpEventArgs& args);
 
 		private:
 
 			GameState* gameState;
 
+			UInt32 gameTime;
 			TikiTimer timerSpawn;
 			TikiTimer timerNextUnit;
 
@@ -57,6 +62,13 @@ namespace TikiEngine
 
 			PlayerBase* playerBase;
 			List<EnemyBase*> enemyBases;
+
+			TikiAttModifier amodBuildingLifeReg;
+
+			TikiAttModifier amodHeroArmor;
+			TikiAttModifier amodHeroDamage;
+			TikiAttModifier amodHeroLifeReg;
+			TikiAttModifier amodHeroAttackSpeed;
 
 			void loadFromDatabase(sqlite3_stmt* state, GameObject* obj);
 

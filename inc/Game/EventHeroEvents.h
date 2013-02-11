@@ -12,10 +12,15 @@ namespace TikiEngine
 
 		struct HeroLevelUpEventArgs 
 		{
+			int HeroLevel;
+
 			double HeroXP;
 			double NextLevelXP;
 
-			HeroLevelUpEventArgs(double xp, double nextXp) : HeroXP(xp), NextLevelXP(nextXp) { }
+			HeroLevelUpEventArgs(int level, double xp, double nextXp)
+				: HeroLevel(level), HeroXP(xp), NextLevelXP(nextXp)
+			{
+			}
 		};
 
 		typedef Event<TikiBot, HeroLevelUpEventArgs> HeroLevelUpEvent;

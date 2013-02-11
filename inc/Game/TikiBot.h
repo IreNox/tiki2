@@ -63,7 +63,7 @@ namespace TikiEngine
 
 			int Loot;
 			/*! @brief 1 Armor blocks 1 Damage */
-			int Armor;
+			double Armor;
 
 			// TIKI_NEW fields Added: Loot, Armor, SightRadius, EntityType
 			Weapon* StartWeapon;
@@ -75,7 +75,7 @@ namespace TikiEngine
 
 			TikiBotDescription()
 			{
-				MaxHealth = 100;
+				MaxHealth = 100.0f;
 
 				FoV = 180.0f;
 				ReactionTime = 0.001f;
@@ -145,7 +145,6 @@ namespace TikiEngine
 
             // 0 = Player, 1 = Enemy
             inline int GetFaction() const { return faction; }
-			inline float GetSightRadius() const { return sightRadius; }
 
 			//bool IsPossessed() const {return possessed;}
 			inline bool IsDead() const { return status == dead; }
@@ -236,9 +235,6 @@ namespace TikiEngine
 			// it reaches zero then the bot dies (and respawns)
 			double health;
   
-			// the bot's maximum health value. It starts its life with health at this value
-			//float maxHealth;
-
 			// a bot only perceives other bots within this field of view
 			float fieldOfView;
   
@@ -262,9 +258,7 @@ namespace TikiEngine
 			Vector3 orig;
 			Vector3 dir;
 
-			float sightRadius;
 			int loot;
-			int armor;
 
 			double timeSinceDeath;
 

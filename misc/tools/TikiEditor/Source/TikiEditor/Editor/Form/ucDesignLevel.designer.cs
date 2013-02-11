@@ -37,6 +37,22 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabAdd = new System.Windows.Forms.TabPage();
             this.panelButtons = new System.Windows.Forms.Panel();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.buttonAddEnvRuin01 = new System.Windows.Forms.Button();
+            this.buttonAddTree03 = new System.Windows.Forms.Button();
+            this.buttonAddTree04 = new System.Windows.Forms.Button();
+            this.buttonAddTree02 = new System.Windows.Forms.Button();
+            this.buttonAddTree01 = new System.Windows.Forms.Button();
+            this.buttonAddEnvTreeStump04 = new System.Windows.Forms.Button();
+            this.buttonAddEnvTreeStump03 = new System.Windows.Forms.Button();
+            this.buttonAddEnvTreeStump02 = new System.Windows.Forms.Button();
+            this.buttonAddEnvTreeStump01 = new System.Windows.Forms.Button();
+            this.buttonAddEnemyTower = new System.Windows.Forms.Button();
+            this.buttonAddPlayerTower = new System.Windows.Forms.Button();
             this.buttonAddPointWaypoint = new System.Windows.Forms.Button();
             this.buttonAddPointSpawnpoint = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
@@ -139,7 +155,7 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 67);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(239, 488);
+            this.tabControl1.Size = new System.Drawing.Size(239, 836);
             this.tabControl1.TabIndex = 6;
             // 
             // tabAdd
@@ -148,7 +164,7 @@
             this.tabAdd.Location = new System.Drawing.Point(4, 22);
             this.tabAdd.Name = "tabAdd";
             this.tabAdd.Padding = new System.Windows.Forms.Padding(3);
-            this.tabAdd.Size = new System.Drawing.Size(231, 462);
+            this.tabAdd.Size = new System.Drawing.Size(231, 810);
             this.tabAdd.TabIndex = 0;
             this.tabAdd.Text = "Add";
             this.tabAdd.UseVisualStyleBackColor = true;
@@ -156,6 +172,22 @@
             // panelButtons
             // 
             this.panelButtons.AutoScroll = true;
+            this.panelButtons.Controls.Add(this.button5);
+            this.panelButtons.Controls.Add(this.button4);
+            this.panelButtons.Controls.Add(this.button3);
+            this.panelButtons.Controls.Add(this.button2);
+            this.panelButtons.Controls.Add(this.button1);
+            this.panelButtons.Controls.Add(this.buttonAddEnvRuin01);
+            this.panelButtons.Controls.Add(this.buttonAddTree03);
+            this.panelButtons.Controls.Add(this.buttonAddTree04);
+            this.panelButtons.Controls.Add(this.buttonAddTree02);
+            this.panelButtons.Controls.Add(this.buttonAddTree01);
+            this.panelButtons.Controls.Add(this.buttonAddEnvTreeStump04);
+            this.panelButtons.Controls.Add(this.buttonAddEnvTreeStump03);
+            this.panelButtons.Controls.Add(this.buttonAddEnvTreeStump02);
+            this.panelButtons.Controls.Add(this.buttonAddEnvTreeStump01);
+            this.panelButtons.Controls.Add(this.buttonAddEnemyTower);
+            this.panelButtons.Controls.Add(this.buttonAddPlayerTower);
             this.panelButtons.Controls.Add(this.buttonAddPointWaypoint);
             this.panelButtons.Controls.Add(this.buttonAddPointSpawnpoint);
             this.panelButtons.Controls.Add(this.label2);
@@ -175,16 +207,192 @@
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelButtons.Location = new System.Drawing.Point(3, 3);
             this.panelButtons.Name = "panelButtons";
-            this.panelButtons.Size = new System.Drawing.Size(225, 456);
+            this.panelButtons.Size = new System.Drawing.Size(225, 804);
             this.panelButtons.TabIndex = 0;
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(3, 670);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(202, 23);
+            this.button5.TabIndex = 35;
+            this.button5.Text = "Environment: Ruine 02 (23)";
+            this.button5.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button4.Location = new System.Drawing.Point(3, 699);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(202, 23);
+            this.button4.TabIndex = 34;
+            this.button4.Text = "Environment: Ruine 03 (24)";
+            this.button4.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(3, 728);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(202, 23);
+            this.button3.TabIndex = 33;
+            this.button3.Text = "Environment: Ruine 01 (22)";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(3, 757);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(202, 23);
+            this.button2.TabIndex = 32;
+            this.button2.Text = "Environment: Ruine 01 (22)";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.button1.Location = new System.Drawing.Point(3, 786);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(202, 23);
+            this.button1.TabIndex = 31;
+            this.button1.Text = "Environment: Ruine 01 (22)";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnvRuin01
+            // 
+            this.buttonAddEnvRuin01.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnvRuin01.Location = new System.Drawing.Point(3, 641);
+            this.buttonAddEnvRuin01.Name = "buttonAddEnvRuin01";
+            this.buttonAddEnvRuin01.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnvRuin01.TabIndex = 30;
+            this.buttonAddEnvRuin01.Text = "Environment: Ruine 01 (22)";
+            this.buttonAddEnvRuin01.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddTree03
+            // 
+            this.buttonAddTree03.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddTree03.Location = new System.Drawing.Point(3, 583);
+            this.buttonAddTree03.Name = "buttonAddTree03";
+            this.buttonAddTree03.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddTree03.TabIndex = 29;
+            this.buttonAddTree03.Text = "Environment: Tree 03 (20)";
+            this.buttonAddTree03.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddTree04
+            // 
+            this.buttonAddTree04.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddTree04.Location = new System.Drawing.Point(3, 612);
+            this.buttonAddTree04.Name = "buttonAddTree04";
+            this.buttonAddTree04.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddTree04.TabIndex = 28;
+            this.buttonAddTree04.Text = "Environment: Tree 04 (21)";
+            this.buttonAddTree04.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddTree02
+            // 
+            this.buttonAddTree02.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddTree02.Location = new System.Drawing.Point(3, 554);
+            this.buttonAddTree02.Name = "buttonAddTree02";
+            this.buttonAddTree02.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddTree02.TabIndex = 27;
+            this.buttonAddTree02.Text = "Environment: Tree 02 (19)";
+            this.buttonAddTree02.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddTree01
+            // 
+            this.buttonAddTree01.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddTree01.Location = new System.Drawing.Point(3, 525);
+            this.buttonAddTree01.Name = "buttonAddTree01";
+            this.buttonAddTree01.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddTree01.TabIndex = 26;
+            this.buttonAddTree01.Text = "Environment: Tree 01 (18)";
+            this.buttonAddTree01.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnvTreeStump04
+            // 
+            this.buttonAddEnvTreeStump04.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnvTreeStump04.Location = new System.Drawing.Point(3, 496);
+            this.buttonAddEnvTreeStump04.Name = "buttonAddEnvTreeStump04";
+            this.buttonAddEnvTreeStump04.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnvTreeStump04.TabIndex = 25;
+            this.buttonAddEnvTreeStump04.Text = "Environment: Tree stump 04 (17)";
+            this.buttonAddEnvTreeStump04.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnvTreeStump03
+            // 
+            this.buttonAddEnvTreeStump03.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnvTreeStump03.Location = new System.Drawing.Point(3, 467);
+            this.buttonAddEnvTreeStump03.Name = "buttonAddEnvTreeStump03";
+            this.buttonAddEnvTreeStump03.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnvTreeStump03.TabIndex = 24;
+            this.buttonAddEnvTreeStump03.Text = "Environment: Tree stump 03 (16)";
+            this.buttonAddEnvTreeStump03.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnvTreeStump02
+            // 
+            this.buttonAddEnvTreeStump02.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnvTreeStump02.Location = new System.Drawing.Point(3, 438);
+            this.buttonAddEnvTreeStump02.Name = "buttonAddEnvTreeStump02";
+            this.buttonAddEnvTreeStump02.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnvTreeStump02.TabIndex = 23;
+            this.buttonAddEnvTreeStump02.Text = "Environment: Tree stump 02 (15)";
+            this.buttonAddEnvTreeStump02.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnvTreeStump01
+            // 
+            this.buttonAddEnvTreeStump01.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnvTreeStump01.Location = new System.Drawing.Point(3, 409);
+            this.buttonAddEnvTreeStump01.Name = "buttonAddEnvTreeStump01";
+            this.buttonAddEnvTreeStump01.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnvTreeStump01.TabIndex = 22;
+            this.buttonAddEnvTreeStump01.Text = "Environment: Tree stump 01 (14)";
+            this.buttonAddEnvTreeStump01.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddEnemyTower
+            // 
+            this.buttonAddEnemyTower.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddEnemyTower.Location = new System.Drawing.Point(3, 351);
+            this.buttonAddEnemyTower.Name = "buttonAddEnemyTower";
+            this.buttonAddEnemyTower.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddEnemyTower.TabIndex = 21;
+            this.buttonAddEnemyTower.Text = "Enemy: Tower (12)";
+            this.buttonAddEnemyTower.UseVisualStyleBackColor = true;
+            // 
+            // buttonAddPlayerTower
+            // 
+            this.buttonAddPlayerTower.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddPlayerTower.Location = new System.Drawing.Point(3, 380);
+            this.buttonAddPlayerTower.Name = "buttonAddPlayerTower";
+            this.buttonAddPlayerTower.Size = new System.Drawing.Size(202, 23);
+            this.buttonAddPlayerTower.TabIndex = 20;
+            this.buttonAddPlayerTower.Text = "Player: Tower (13)";
+            this.buttonAddPlayerTower.UseVisualStyleBackColor = true;
             // 
             // buttonAddPointWaypoint
             // 
             this.buttonAddPointWaypoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddPointWaypoint.Location = new System.Drawing.Point(3, 407);
+            this.buttonAddPointWaypoint.Location = new System.Drawing.Point(3, 909);
             this.buttonAddPointWaypoint.Name = "buttonAddPointWaypoint";
-            this.buttonAddPointWaypoint.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointWaypoint.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPointWaypoint.TabIndex = 19;
             this.buttonAddPointWaypoint.Text = "Enemy: Waypoint (2)";
             this.buttonAddPointWaypoint.UseVisualStyleBackColor = true;
@@ -194,9 +402,9 @@
             // 
             this.buttonAddPointSpawnpoint.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddPointSpawnpoint.Location = new System.Drawing.Point(3, 433);
+            this.buttonAddPointSpawnpoint.Location = new System.Drawing.Point(3, 935);
             this.buttonAddPointSpawnpoint.Name = "buttonAddPointSpawnpoint";
-            this.buttonAddPointSpawnpoint.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointSpawnpoint.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPointSpawnpoint.TabIndex = 18;
             this.buttonAddPointSpawnpoint.Text = "Enemy: Spawnpoint (3)";
             this.buttonAddPointSpawnpoint.UseVisualStyleBackColor = true;
@@ -205,7 +413,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 362);
+            this.label2.Location = new System.Drawing.Point(3, 864);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(39, 13);
             this.label2.TabIndex = 17;
@@ -217,7 +425,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddPlayerBuilding.Location = new System.Drawing.Point(3, 322);
             this.buttonAddPlayerBuilding.Name = "buttonAddPlayerBuilding";
-            this.buttonAddPlayerBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerBuilding.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPlayerBuilding.TabIndex = 16;
             this.buttonAddPlayerBuilding.Text = "Player: Main Building (11)";
             this.buttonAddPlayerBuilding.UseVisualStyleBackColor = true;
@@ -229,7 +437,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnemyBuilding.Location = new System.Drawing.Point(3, 293);
             this.buttonAddEnemyBuilding.Name = "buttonAddEnemyBuilding";
-            this.buttonAddEnemyBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnemyBuilding.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnemyBuilding.TabIndex = 15;
             this.buttonAddEnemyBuilding.Text = "Enemy: Gate Control (10)";
             this.buttonAddEnemyBuilding.UseVisualStyleBackColor = true;
@@ -250,7 +458,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddPlayerMop.Location = new System.Drawing.Point(3, 61);
             this.buttonAddPlayerMop.Name = "buttonAddPlayerMop";
-            this.buttonAddPlayerMop.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerMop.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPlayerMop.TabIndex = 12;
             this.buttonAddPlayerMop.Text = "Player: Mop (1)";
             this.buttonAddPlayerMop.UseVisualStyleBackColor = true;
@@ -262,7 +470,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnvRock03.Location = new System.Drawing.Point(3, 264);
             this.buttonAddEnvRock03.Name = "buttonAddEnvRock03";
-            this.buttonAddEnvRock03.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock03.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnvRock03.TabIndex = 11;
             this.buttonAddEnvRock03.Text = "Environment: Rock 03 (8)";
             this.buttonAddEnvRock03.UseVisualStyleBackColor = true;
@@ -274,7 +482,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnvRock02.Location = new System.Drawing.Point(3, 235);
             this.buttonAddEnvRock02.Name = "buttonAddEnvRock02";
-            this.buttonAddEnvRock02.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock02.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnvRock02.TabIndex = 10;
             this.buttonAddEnvRock02.Text = "Environment: Rock 02 (7)";
             this.buttonAddEnvRock02.UseVisualStyleBackColor = true;
@@ -286,7 +494,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnvRock01.Location = new System.Drawing.Point(3, 206);
             this.buttonAddEnvRock01.Name = "buttonAddEnvRock01";
-            this.buttonAddEnvRock01.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvRock01.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnvRock01.TabIndex = 9;
             this.buttonAddEnvRock01.Text = "Environment: Rock 01 (6)";
             this.buttonAddEnvRock01.UseVisualStyleBackColor = true;
@@ -298,7 +506,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnvPipes.Location = new System.Drawing.Point(3, 177);
             this.buttonAddEnvPipes.Name = "buttonAddEnvPipes";
-            this.buttonAddEnvPipes.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvPipes.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnvPipes.TabIndex = 8;
             this.buttonAddEnvPipes.Text = "Environment: Pipes (5)";
             this.buttonAddEnvPipes.UseVisualStyleBackColor = true;
@@ -310,7 +518,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnvBuilding.Location = new System.Drawing.Point(3, 148);
             this.buttonAddEnvBuilding.Name = "buttonAddEnvBuilding";
-            this.buttonAddEnvBuilding.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnvBuilding.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnvBuilding.TabIndex = 7;
             this.buttonAddEnvBuilding.Text = "Environment: Building (4)";
             this.buttonAddEnvBuilding.UseVisualStyleBackColor = true;
@@ -322,7 +530,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddEnemyMop.Location = new System.Drawing.Point(3, 90);
             this.buttonAddEnemyMop.Name = "buttonAddEnemyMop";
-            this.buttonAddEnemyMop.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddEnemyMop.Size = new System.Drawing.Size(202, 23);
             this.buttonAddEnemyMop.TabIndex = 3;
             this.buttonAddEnemyMop.Text = "Enemy: Mop (2)";
             this.buttonAddEnemyMop.UseVisualStyleBackColor = true;
@@ -332,9 +540,9 @@
             // 
             this.buttonAddPointCamera.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddPointCamera.Location = new System.Drawing.Point(3, 378);
+            this.buttonAddPointCamera.Location = new System.Drawing.Point(3, 880);
             this.buttonAddPointCamera.Name = "buttonAddPointCamera";
-            this.buttonAddPointCamera.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPointCamera.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPointCamera.TabIndex = 2;
             this.buttonAddPointCamera.Text = "Camera Start (1)";
             this.buttonAddPointCamera.UseVisualStyleBackColor = true;
@@ -346,7 +554,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddPlayerHero.Location = new System.Drawing.Point(3, 119);
             this.buttonAddPlayerHero.Name = "buttonAddPlayerHero";
-            this.buttonAddPlayerHero.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddPlayerHero.Size = new System.Drawing.Size(202, 23);
             this.buttonAddPlayerHero.TabIndex = 1;
             this.buttonAddPlayerHero.Text = "Player: Hero (3)";
             this.buttonAddPlayerHero.UseVisualStyleBackColor = true;
@@ -358,7 +566,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonAddObject.Location = new System.Drawing.Point(3, 32);
             this.buttonAddObject.Name = "buttonAddObject";
-            this.buttonAddObject.Size = new System.Drawing.Size(219, 23);
+            this.buttonAddObject.Size = new System.Drawing.Size(202, 23);
             this.buttonAddObject.TabIndex = 0;
             this.buttonAddObject.Text = "Replace Me Cube (0)";
             this.buttonAddObject.UseVisualStyleBackColor = true;
@@ -371,7 +579,7 @@
             this.tabEdit.Location = new System.Drawing.Point(4, 22);
             this.tabEdit.Name = "tabEdit";
             this.tabEdit.Padding = new System.Windows.Forms.Padding(3);
-            this.tabEdit.Size = new System.Drawing.Size(231, 462);
+            this.tabEdit.Size = new System.Drawing.Size(231, 810);
             this.tabEdit.TabIndex = 1;
             this.tabEdit.Text = "Edit";
             this.tabEdit.UseVisualStyleBackColor = true;
@@ -384,7 +592,7 @@
             this.tabView.Controls.Add(this.checkShowPoints);
             this.tabView.Location = new System.Drawing.Point(4, 22);
             this.tabView.Name = "tabView";
-            this.tabView.Size = new System.Drawing.Size(231, 462);
+            this.tabView.Size = new System.Drawing.Size(231, 810);
             this.tabView.TabIndex = 2;
             this.tabView.Text = "View/Help";
             this.tabView.UseVisualStyleBackColor = true;
@@ -398,7 +606,7 @@
             this.trackBar1.Maximum = 10000;
             this.trackBar1.Minimum = 100;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(223, 42);
+            this.trackBar1.Size = new System.Drawing.Size(223, 45);
             this.trackBar1.TabIndex = 3;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar1.Value = 100;
@@ -445,7 +653,7 @@
             this.Controls.Add(this.tabControl1);
             this.Location = new System.Drawing.Point(1300, 100);
             this.Name = "ucDesignLevel";
-            this.Size = new System.Drawing.Size(245, 558);
+            this.Size = new System.Drawing.Size(245, 906);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabControl1.ResumeLayout(false);
@@ -492,5 +700,21 @@
         private System.Windows.Forms.Button buttonAddPointSpawnpoint;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button buttonAddEnvTreeStump01;
+        private System.Windows.Forms.Button buttonAddEnemyTower;
+        private System.Windows.Forms.Button buttonAddPlayerTower;
+        private System.Windows.Forms.Button buttonAddTree03;
+        private System.Windows.Forms.Button buttonAddTree04;
+        private System.Windows.Forms.Button buttonAddTree02;
+        private System.Windows.Forms.Button buttonAddTree01;
+        private System.Windows.Forms.Button buttonAddEnvTreeStump04;
+        private System.Windows.Forms.Button buttonAddEnvTreeStump03;
+        private System.Windows.Forms.Button buttonAddEnvTreeStump02;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonAddEnvRuin01;
     }
 }

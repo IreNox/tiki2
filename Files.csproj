@@ -150,7 +150,7 @@
     <None Include="bin\Data\Textures\terrain\minimap_map2.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Crack.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Grass.dds" />
-    <None Include="bin\Data\Textures\terrain\Terrain_Rock2.dds" />
+    <None Include="bin\Data\Textures\terrain\terrain_rock.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Sand.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_diff.dds" />
     <None Include="bin\Data\Textures\tower_enemy\tower_normal.dds" />

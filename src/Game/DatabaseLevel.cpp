@@ -139,7 +139,7 @@ namespace TikiEngine
 			{
 				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
 				mat->TexDiffuse = engine->content->LoadTexture(L"terrain/color_" + StringAtoW(name));
-				mat->TexLightMap = engine->content->LoadTexture(L"terrain/Terrain_Crack");
+				mat->TexLightMap = engine->content->LoadTexture(L"terrain/terrain_rock");
 				mat->TexNormalMap = engine->content->LoadTexture(L"terrain/Terrain_Grass");
 				mat->TexSpecularMap = engine->content->LoadTexture(L"terrain/Terrain_Sand");
 				mat->GetShader()->SetVector2("TerrainSize", Vector2((float)heightmapSize, (float)heightmapSize));

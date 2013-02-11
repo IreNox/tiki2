@@ -29,7 +29,9 @@ namespace TikiEngine
 		#pragma region Class
 		TikiBotFactory::TikiBotFactory(GameState* gameState)
 			: gameState(gameState), timerSpawn(SPAWN_INTERVAL), timerNextUnit(SPAWN_UNIT_INTERVAL), enemySpawnLeft(0), playerSpawnLeft(0),
-			  playerBase(0)
+			  playerBase(0), amodBuildingLifeReg(TA_HealthRegValue, AMT_PerValue, 5, 0), amodHeroLifeReg(TA_HealthRegValue, AMT_PerValue, 4.7, 0),
+			  amodHeroDamage(TA_WeaponDamage, AMT_PerValue, 0.0, 0), amodHeroAttackSpeed(TA_WeaponFireSpeed, AMT_PerValue, 0.0, 0),
+			  amodHeroArmor(TA_Armor, AMT_PerValue, 0.0, 0)
 		{
 			playerBase = gameState->GetPart<PlayerBase>(0);
 		}
@@ -53,6 +55,8 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void TikiBotFactory::Update(const UpdateArgs& args)
 		{
+			gameTime = (UInt32)args.Time.TotalTime;
+
 			if (timerSpawn.IsReady(args.Time))
 			{
 				enemySpawnLeft += SPAWN_ENEMY_COUNT;
@@ -99,10 +103,15 @@ namespace TikiEngine
 			botDesc.Faction = 1;
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 1.8f;
-			botDesc.MaxHealth = 30;			
 			botDesc.EntityType = ET_Bot;
-			botDesc.StartMGDamage = 5;
-			botDesc.StartMGFireRate = 5;
+
+			float upgrades = (float)(gameTime / 180);
+
+			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
+			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGFireRate = 0.67f;
+			botDesc.MaxSpeed = 3.25f;
+			botDesc.Armor = (1.25f * upgrades);
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -122,15 +131,16 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
-			botDesc.Armor = 2;
 			botDesc.Faction = 1;
 			botDesc.Height = 5.0f;
-			botDesc.Radius = 3.0f;
-			botDesc.MaxHealth = 300;	
+			botDesc.Radius = 2.0f;
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
-			botDesc.StartMGDamage = 20;
-			botDesc.StartMGFireRate = 3;
+
+			botDesc.MaxHealth = 1550.0f;
+			botDesc.StartMGDamage = 152;
+			botDesc.StartMGFireRate = 1.083f;
+			botDesc.Armor = 200;
 
 			go->PRS.SPosition() = GetPos(Vector2(go->PRS.GPosition().X, go->PRS.GPosition().Z), 4.0f);
 
@@ -152,17 +162,18 @@ namespace TikiEngine
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"gatecontrol"));
 
 			TikiBotDescription botDesc;
-			botDesc.Armor = 3;
 			botDesc.Faction = 1;
-			botDesc.Height = 8.0f;
-			botDesc.Radius = 8.0f; //5.0f;
-			botDesc.MaxHealth = 900;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
+			botDesc.Height = 8.0f;
+			botDesc.Radius = 8.0f; //5.0f;
+
+			botDesc.MaxHealth = 5000;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
+			bot->GetAttSys().AddModifier(&amodBuildingLifeReg);
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
@@ -188,23 +199,31 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
-			botDesc.Armor = 3;
 			botDesc.Faction = 0;
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 1.8f;
-			botDesc.MaxHealth = 300;
 			botDesc.EntityType = ET_Hero;
-			botDesc.MaxSpeed = 7.0f;
-			botDesc.StartMGDamage = 6;
-			botDesc.StartMGFireRate = 6;
+
+			botDesc.Armor = 12.65f;
+			botDesc.MaxHealth = 395;
+			botDesc.MaxSpeed = 3.95f;
+			botDesc.StartMGDamage = 47.5f;
+			botDesc.StartMGFireRate = 0.625f;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
 
+			bot->GetAttSys().AddModifier(&amodHeroArmor);
+			bot->GetAttSys().AddModifier(&amodHeroDamage);
+			bot->GetAttSys().AddModifier(&amodHeroLifeReg);
+			bot->GetAttSys().AddModifier(&amodHeroAttackSpeed);
+			
 			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillFlash(bot));
 			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillRocket(bot));
 			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillHealAura(bot));
 			bot->GetSkillSys()->AddSkill(TIKI_NEW SkillSpiderMine(bot));
+
+			bot->GetSkillSys()->LevelUp.AddHandler(this);
 
 			gameState->GetScene()->AddElement(go);
 		}
@@ -227,10 +246,14 @@ namespace TikiEngine
 			botDesc.Faction = 0;
 			botDesc.Height = 2.0f;
 			botDesc.Radius = 1.8f;
-			botDesc.MaxHealth = 30;
-			botDesc.StartMGDamage = 5;
-			botDesc.EntityType = ET_Bot;
-			botDesc.StartMGFireRate = 5;
+
+			float upgrades = (float)(gameTime / 180);
+
+			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
+			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGFireRate = 0.67f;
+			botDesc.MaxSpeed = 3.25f;
+			botDesc.Armor = (1.25f * upgrades);
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -252,14 +275,16 @@ namespace TikiEngine
 
 			// Create bot
 			TikiBotDescription botDesc;
-			botDesc.Armor = 2;
 			botDesc.Faction = 0;
 			botDesc.Height = 5.0f;
 			botDesc.Radius = 2.0f;
-			botDesc.MaxHealth = 300;
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Tower;
-			botDesc.StartMGFireRate = 3;
+
+			botDesc.MaxHealth = 1550.0f;
+			botDesc.StartMGDamage = 152;
+			botDesc.StartMGFireRate = 1.083f;
+			botDesc.Armor = 200;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -280,13 +305,15 @@ namespace TikiEngine
 			botDesc.Faction = 0;
 			botDesc.Height = 10.0f;
 			botDesc.Radius = 5.0f;
-			botDesc.MaxHealth = 2000;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
+
+			botDesc.MaxHealth = 5500;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
 			bot->SetScale(0.01f);
+			bot->GetAttSys().AddModifier(&amodBuildingLifeReg);
 
 #if TIKI_USE_SCENEGRAPH
 			go->GetSceneGraphElement().SetDynamic();
@@ -313,9 +340,10 @@ namespace TikiEngine
 			botDesc.Faction = 0;
 			botDesc.Height = 10.0f;
 			botDesc.Radius = 5.0f;
-			botDesc.MaxHealth = 100;	
 			botDesc.MaxSpeed = 0.000001f;
 			botDesc.EntityType = ET_Building;
+
+			botDesc.MaxHealth = 4000.0f;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
@@ -373,6 +401,13 @@ namespace TikiEngine
 
 			TIKI_NEW BuildSlot(gameState, go);
 			gameState->GetScene()->AddElement(go);
+		}
+		#pragma endregion
+
+		#pragma region Member - EventHandler
+		void TikiBotFactory::Handle(TikiBot* sender, const HeroLevelUpEventArgs& args)
+		{
+			//args.
 		}
 		#pragma endregion
 

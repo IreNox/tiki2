@@ -35,14 +35,16 @@ namespace TikiEngine
 
             // Init bot attributes
             faction = desc.Faction;
-			sightRadius = desc.SightRadius;
 			loot = desc.Loot;
-			armor = desc.Armor;
 			type = desc.EntityType;
 
+			attSys[TA_Armor] = desc.Armor;
 			attSys[TA_MaxHealth] = desc.MaxHealth;
-            //maxHealth = desc.MaxHealth;
-            health = attSys[TA_MaxHealth];
+			attSys[TA_SightRadius] = desc.SightRadius;
+			attSys[TA_WeaponDamage] = desc.StartMGDamage;
+			attSys[TA_WeaponFireSpeed] = desc.StartMGFireRate;
+
+			health = attSys[TA_MaxHealth];
 
             numUpdatesHitPersistant = 12; //(int) (60 * 0.2);
             hit = false;
@@ -127,7 +129,7 @@ namespace TikiEngine
 		{
 			if (useArmor)
 			{
-				val -= armor;
+				val *= 100 / (100 + attSys[TA_Armor]);
 			}
 
 			health -= val;
