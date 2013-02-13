@@ -101,7 +101,10 @@
     <None Include="bin\Data\Textures\Hud\icons\heal_aura.dds" />
     <None Include="bin\Data\Textures\Hud\icons\rocket.dds" />
     <None Include="bin\Data\Textures\Hud\icons\spider_mine.dds" />
+    <None Include="bin\Data\Textures\Hud\if_main.dds" />
+    <None Include="bin\Data\Textures\Hud\if_minimap.dds" />
     <None Include="bin\Data\Textures\Hud\loading.dds" />
+    <None Include="bin\Data\Textures\Hud\mainmenu_bg.dds" />
     <None Include="bin\Data\Textures\Hud\mass.dds" />
     <None Include="bin\Data\Textures\Hud\crosshair\pointer.dds" />
     <None Include="bin\Data\Textures\Hud\minimap_hero.dds" />

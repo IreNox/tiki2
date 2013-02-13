@@ -39,6 +39,9 @@ namespace TikiEngine
 			GUIImage* image;
 			GUIWindow* window;
 
+			ITexture* texBG;
+			RectangleF rectBG;
+
 			//List<GUIButton*> buttons;
 			//List<GUIControl*> controls;
 

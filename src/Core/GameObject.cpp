@@ -154,7 +154,7 @@ namespace TikiEngine
 		}
 
 #if _DEBUG
-		sgElement.boundingBox->DrawDebug(Color::Red);
+		//sgElement.boundingBox->DrawDebug(Color::Red);
 #endif
 
 	}

@@ -22,6 +22,8 @@ namespace TikiEngine
 		{
 			SafeRelease(&image);
 			SafeRelease(&window);
+
+			SafeRelease(&texBG);
 		}
 		#pragma endregion
 
@@ -35,9 +37,10 @@ namespace TikiEngine
 
 			ITexture* logo = engine->content->LoadTexture(L"logo");
 
+			texBG = engine->content->LoadTexture(L"hud/mainmenu_bg");
+			
 			image = TIKI_NEW GUIImage(engine);
 			image->SetTexture(logo);
-			image->SSize() = Vector2(200);
 			image->AddRef();
 
 			window = TIKI_NEW GUIWindow(engine);
@@ -80,6 +83,15 @@ namespace TikiEngine
 			image->Draw(args);
 			window->Draw(args);
 
+
+			args.SpriteBatch->Draw(
+				texBG,
+				rectBG,
+				texBG->GetRectangle(),
+				Color::White,
+				1.5f
+			);
+
 			Scene::Draw(args);
 		}
 
@@ -96,7 +108,7 @@ namespace TikiEngine
 		void SceneMenuMain::Handle(IGraphics* sender, const ScreenSizeChangedArgs& args)
 		{
 			image->SPosition() = Vector2(
-				((float)args.CurrentViewPort->Width / 2) - 100,
+				((float)args.CurrentViewPort->Width / 2) - 384,
 				25.0f
 			);
 
@@ -114,6 +126,18 @@ namespace TikiEngine
 				);
 				i++;
 			}
+
+			float scale = TIKI_MAX(
+				(float)args.Graphics->GetViewPort()->Width / (float)texBG->GetWidth(),
+				(float)args.Graphics->GetViewPort()->Height / (float)texBG->GetHeight()
+			)
+
+			rectBG = RectangleF::Create(
+				0,
+				args.Graphics->GetViewPort()->Height - (texBG->GetHeight() * scale),
+				texBG->GetWidth() * scale,
+				texBG->GetHeight() * scale
+			);
 		}
 
 		void SceneMenuMain::Handle(GUIControl* sender, const ClickEventArgs& args)
