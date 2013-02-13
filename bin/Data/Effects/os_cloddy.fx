@@ -57,10 +57,12 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 	float2 uv = input.WorldPos.xz + halfSize;
 
 	float4 color = float4(0, 0, 0, 0);
-	color += TexDiffuse.Sample(sam, uv / TerrainSize);
+	color += TexDiffuse.Sample(sam, uv / TerrainSize) * 0.5f; 
 	color += colorTiled(TexLightMap, input.Color.r, uv, 0.2);
 	color += colorTiled(TexNormalMap, input.Color.g, uv, 0.4);
-	color += colorTiled(TexSpecularMap, input.Color.b, uv, 0.2);
+	color += colorTiled(TexSpecularMap, input.Color.b * 2, uv, 0.1);
+
+	color.g += input.Color.b * 0.1f;
 
 	PS_OUTPUT output = (PS_OUTPUT)0;
 	output.Screen.rgb = color.rgb / color.w;

@@ -148,7 +148,6 @@
     <None Include="bin\Data\Textures\terrain\color_map2.dds" />
     <None Include="bin\Data\Textures\terrain\minimap_map1.dds" />
     <None Include="bin\Data\Textures\terrain\minimap_map2.dds" />
-    <None Include="bin\Data\Textures\terrain\Terrain_Crack.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Grass.dds" />
     <None Include="bin\Data\Textures\terrain\terrain_rock.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Sand.dds" />

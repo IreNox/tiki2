@@ -140,8 +140,8 @@ namespace TikiEngine
 				Material* mat = engine->content->LoadMaterial(L"os_cloddy");
 				mat->TexDiffuse = engine->content->LoadTexture(L"terrain/color_" + StringAtoW(name));
 				mat->TexLightMap = engine->content->LoadTexture(L"terrain/terrain_rock");
-				mat->TexNormalMap = engine->content->LoadTexture(L"terrain/Terrain_Grass");
-				mat->TexSpecularMap = engine->content->LoadTexture(L"terrain/Terrain_Sand");
+				mat->TexNormalMap = engine->content->LoadTexture(L"terrain/Terrain_Sand");
+				mat->TexSpecularMap = engine->content->LoadTexture(L"terrain/Terrain_Grass");
 				mat->GetShader()->SetVector2("TerrainSize", Vector2((float)heightmapSize, (float)heightmapSize));
 				terrain->SetMaterial(mat);
 				terrain->LoadTerrain(
@@ -352,6 +352,7 @@ namespace TikiEngine
 			case 20:
 			case 21:
 				{
+					this->PRS.SScale() *= 0.01f;
 					this->SModel(
 						engine->content->LoadModel(
 							L"tree0" + StringConvert::ToWString(type - 13)
@@ -360,13 +361,14 @@ namespace TikiEngine
 					gameState->GetScene()->AddElement(this);
 				}
 				break;
-			case 22:
+			case 22: // Ruins
 			case 23:
 			case 24:
 			case 25:
 			case 26:
 			case 27:
 				{
+					this->PRS.SScale() *= 0.01f;
 					this->SModel(
 						engine->content->LoadModel(
 							L"ruin_0" + StringConvert::ToWString(type - 21)
