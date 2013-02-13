@@ -369,7 +369,7 @@ namespace TikiEngine
 				{
 					this->SModel(
 						engine->content->LoadModel(
-							L"ruin_0" + StringConvert::ToWString(type - 13)
+							L"ruin_0" + StringConvert::ToWString(type - 21)
 						)
 					);
 					gameState->GetScene()->AddElement(this);
