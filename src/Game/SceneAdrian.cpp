@@ -19,6 +19,7 @@
 
 #include "Game/AnimationHandlerDefaultUnit.h"
 #include "Game/AnimationHandlerSpidermine.h"
+#include "Game/AnimationHandlerPlayerBase.h"
 #include "Core/EventAnimation.h"
 
 #include "Core/RectangleF.h"
@@ -67,12 +68,17 @@ namespace TikiEngine
 			go->PRS.SScale() = Vector3(0.01f);*/
 			//this->AddElement(go);
 
+			//folding
+			//idle
+			//unfolding
+			//
+
 
 			GameObject* go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"spidermine"));
-			auto ha = TIKI_NEW AnimationHandlerSpidermine(go->GModel());
+			go->SModel(args.Content->LoadModel(L"mainbuilding"));
+			auto ha = TIKI_NEW AnimationHandlerPlayerBase(go->GModel());
 			go->GModel()->SetAnimationHandler(ha);
-			go->PRS.SScale() = Vector3(0.01f);
+			go->PRS.SScale() = Vector3(0.001f);
 			go->GetSceneGraphElement().SetDynamic();
 
 			this->AddElement(go);
@@ -169,15 +175,15 @@ namespace TikiEngine
 			}
 			if(args.Input.GetKey(KEY_ALPHA2))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Walk));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Folding));
 			}
 			if(args.Input.GetKey(KEY_ALPHA3))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Run));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Folded));
 			}
 			if(args.Input.GetKey(KEY_ALPHA4))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Attack));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_UnFolding));
 			}
 			if(args.Input.GetKeyPressed(KEY_ALPHA5))
 			{

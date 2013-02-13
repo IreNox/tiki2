@@ -17,7 +17,11 @@ namespace TikiEngine
 		AT_Walk,
 		AT_Attack,
 		AT_Run,
-		AT_Death
+		AT_Death,
+
+		AT_Folding,
+		AT_UnFolding,
+		AT_Folded
 	};
 	
 	struct AnimationArgs

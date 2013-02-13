@@ -153,7 +153,10 @@ namespace TikiEngine
 			i++;
 		}
 
-		//sgElement.boundingBox->DrawDebug(Color::Red);
+#if _DEBUG
+		sgElement.boundingBox->DrawDebug(Color::Red);
+#endif
+
 	}
 
 	void GameObject::Update(const UpdateArgs& args)

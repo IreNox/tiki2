@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h" />
     <ClInclude Include="inc\Game\AnimationHandlerHero.h" />
+    <ClInclude Include="inc\Game\AnimationHandlerPlayerBase.h" />
     <ClInclude Include="inc\Game\AnimationHandlerSpidermine.h" />
     <ClInclude Include="inc\Game\Announcer.h" />
     <ClInclude Include="inc\Game\AttackTargetGoalEvaluator.h" />
@@ -131,6 +132,7 @@
     <ClCompile Include="inc\Game\SceneLoading.cpp" />
     <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp" />
     <ClCompile Include="src\Game\AnimationHandlerHero.cpp" />
+    <ClCompile Include="src\Game\AnimationHandlerPlayerBase.cpp" />
     <ClCompile Include="src\Game\AnimationHandlerSpidermine.cpp" />
     <ClCompile Include="src\Game\Announcer.cpp" />
     <ClCompile Include="src\Game\AttackTargetGoalEvaluator.cpp" />
