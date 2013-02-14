@@ -7,6 +7,7 @@
 #include "Core/ISpriteBatch.h"
 #include "Core/IMeshRenderer.h"
 #include "Core/LibraryManager.h"
+#include "Core/ISoundSystem.h"
 
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
@@ -94,6 +95,8 @@ namespace TikiEngine
 			{
 				this->LoadLevel(levelId);
 			}
+
+			//engine->sound->Play(engine->content->LoadSound(L"ambient"), true);
 		}
 		#pragma endregion
 
@@ -199,6 +202,14 @@ namespace TikiEngine
 		void SceneLevel::Update(const UpdateArgs& args)
 		{
 			if (level) level->Update(args);
+
+			GameObject* go = GetMainCamera()->GetGameObject();
+
+			engine->sound->SetListenerPosition(
+				go->PRS.GPosition(),
+				Vector3::Zero, 
+				go->PRS.GetForward(),
+				go->PRS.GetUp());
 
 			SceneGraph.Update(args);
 			gameState->Update(args);

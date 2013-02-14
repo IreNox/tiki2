@@ -147,7 +147,7 @@ namespace TikiEngine
 				this->Dispose();
 				return false;
 			}
-			system->set3DSettings(1.0f, 1.0f, 1.0f);
+			system->set3DSettings(1.0f, 0.5f, 1.0f);
 
 
 			return true;

@@ -60,6 +60,9 @@ namespace TikiEngine
 			virtual Vector3 GetBounds() = 0;
 			virtual void SetBounds(const Vector3& size) = 0;
 
+			virtual void SetGameObject(GameObject* go) = 0;
+			virtual GameObject* GetGameObject() = 0;
+
 			virtual void SetAnimationHandler(AnimationEvent* handler)
 			{
 				SafeDelete(&AnimationHandler);

@@ -52,6 +52,7 @@
     <None Include="bin\Data\Models\ruin_04.tiki" />
     <None Include="bin\Data\Models\ruin_05.tiki" />
     <None Include="bin\Data\Models\ruin_06.tiki" />
+    <None Include="bin\Data\Models\schinken.tiki" />
     <None Include="bin\Data\Models\spidermine.tiki" />
     <None Include="bin\Data\Models\tower_player.tiki" />
     <None Include="bin\Data\Models\tree01.tiki" />
@@ -144,6 +145,9 @@
     <None Include="bin\Data\Textures\ruins\ruin_diff.dds" />
     <None Include="bin\Data\Textures\ruins\ruin_normal.dds" />
     <None Include="bin\Data\Textures\ruins\ruin_spec.dds" />
+    <None Include="bin\Data\Textures\schinken\Ultraschinken_diff_bluewings.dds" />
+    <None Include="bin\Data\Textures\schinken\Ultraschinken_normal.dds" />
+    <None Include="bin\Data\Textures\schinken\Ultraschinken_spec.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_diff.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_light.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_normal.dds" />
@@ -242,6 +246,22 @@
     <Content Include="bin\Data\Effects\pp_ssao.fx" />
     <Content Include="bin\Data\Sounds\ambient.wav" />
     <Content Include="bin\Data\Sounds\beep.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_1.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_2.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_3.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_4.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_5.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_6.wav" />
+    <Content Include="bin\Data\Sounds\Explosion\Explosion_7.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_01.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_02.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_03.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_04.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_05.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_06.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_07.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_08.wav" />
+    <Content Include="bin\Data\Sounds\GunShot\GUN_SHOT_09.wav" />
     <Content Include="bin\Data\Sounds\Mech_Spawn.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

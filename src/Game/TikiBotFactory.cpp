@@ -126,7 +126,6 @@ namespace TikiEngine
 		void TikiBotFactory::CreateEnemyMobHeavy(GameObject* go, const List<Vector2>& wayPoints)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
-			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 			go->GModel()->GetMesh("standartMG")->SetVisible(false);			
 			auto ah = TIKI_NEW AnimationHandlerPlasmaUnit(go->GModel());
 			go->GModel()->SetAnimationHandler(ah);

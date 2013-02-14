@@ -67,26 +67,34 @@ namespace TikiEngine
 
 			go->PRS.SScale() = Vector3(0.01f);*/
 			//this->AddElement(go);
+			GameObject* go = 0;
+
+			for(int i =  -5; i < 6 ; i++)
+			{
+				go = new GameObject(engine);
+				go->SModel(args.Content->LoadModel(L"schinken"));
+				IAnimation* anim = go->GModel()->GetAnimation(0);
+				anim->SetAnimationSpeed(5.0);
+				go->PRS.SScale() = Vector3(0.01f);
+				go->PRS.SPosition() = Vector3(i , 0, 0);
+				go->GetSceneGraphElement().SetDynamic();
+
+				this->AddElement(go);
+			}
 
 
-			GameObject* go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"base_radar"));
-			int animCount = go->GModel()->AnimationCount();
 
 			//go->GModel()->GetMesh("LP_Backpack")->SetVisible(false);
 			//go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
 			//go->GModel()->GetMesh("standartMG")->SetVisible(false);
 			//go->GModel()->GetMesh("Laser")->SetVisible(false);
 
-			auto ha = TIKI_NEW AnimationHandlerResearchBuilding(go->GModel());
-			go->GModel()->SetAnimationHandler(ha);
+	/*		auto ha = TIKI_NEW AnimationHandlerResearchBuilding(go->GModel());
+			go->GModel()->SetAnimationHandler(ha);*/
 
-			go->PRS.SScale() = Vector3(0.001f);
-			go->GetSceneGraphElement().SetDynamic();
 
-			this->AddElement(go);
 
-			this->model = go->GModel();
+			//this->model = go->GModel();
 
 
 

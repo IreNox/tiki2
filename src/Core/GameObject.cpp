@@ -61,6 +61,8 @@ namespace TikiEngine
 				bound = Matrix::TransformCoordinate(model->GetBounds(), mat);
 			}
 
+			model->SetGameObject(this);
+
 #if TIKI_ENGINE && TIKI_USE_SCENEGRAPH
 			sgElement.SetBoundingVolume(bound.XZ());
 
@@ -177,6 +179,7 @@ namespace TikiEngine
 		}
 
 		if (model) model->Update(args);
+
 
 #if TIKI_USE_SCENEGRAPH
 		this->sgElement.Update(args);

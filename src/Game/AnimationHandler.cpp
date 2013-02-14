@@ -2,6 +2,10 @@
 
 #include "Core/IModel.h"
 #include "Game/Utils.h"
+#include "Core/GameObject.h"
+#include "Core/IContentManager.h"
+#include "Core/ISoundSystem.h"
+
 
 namespace TikiEngine
 {
@@ -49,7 +53,19 @@ namespace TikiEngine
 			break;
 
 		case AT_Attack:
-			anim = this->attack;
+			{
+				anim = this->attack;
+
+				int randomSound = (static_cast<int>(RandFloat() * 100) % 9 ) + 1;
+				
+				Vector3 pos = model->GetGameObject()->PRS.GPosition();
+
+				Engine* engine = model->GetEngine();
+
+				wstring file = L"GunShot/GUN_SHOT_0" + StringConvert::ToWString(randomSound);
+				engine->sound->Play3D(engine->content->LoadSound(file), pos);
+			}
+
 			break;
 
 		case AT_Death:
@@ -193,7 +209,19 @@ namespace TikiEngine
 			anim = this->run;
 			break;
 		case AT_Attack:
-			anim = this->attack;
+			{
+				anim = this->attack;
+
+				int randomSound = (static_cast<int>(RandFloat() * 100) % 9 ) + 1;
+
+				Vector3 pos = model->GetGameObject()->PRS.GPosition();
+
+				Engine* engine = model->GetEngine();
+
+				wstring file = L"GunShot/GUN_SHOT_0" + StringConvert::ToWString(randomSound);
+				engine->sound->Play3D(engine->content->LoadSound(file), pos);
+			}
+			
 			break;
 
 		case AT_Death:

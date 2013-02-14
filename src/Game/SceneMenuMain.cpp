@@ -148,10 +148,6 @@ namespace TikiEngine
 			switch ((Int32)sender->UserData)
 			{
 			case 0:
-				engine->sound->Play(
-					engine->content->LoadSound(L"Mech_Spawn")
-				);
-
 				sLevel = TIKI_NEW SceneLevel(engine);
 				engine->SetScene(sLevel);
 				sLevel->LoadLevel(1);

@@ -8,6 +8,8 @@
 
 #include "Game/Rocket.h"
 #include "Game/ProjectileManager.h"
+#include "Core/IContentManager.h"
+#include "Core/ISoundSystem.h"
 
 namespace TikiEngine
 {
@@ -84,6 +86,15 @@ namespace TikiEngine
 
 							owner->GetGameState()->GetProjectiles()->AddProjectile(proj);
 							owner->SetDead();
+
+
+
+							int randomSound = (static_cast<int>(RandFloat() * 100) % 7 ) + 1;
+
+							Vector3 pos = owner->GetGameObject()->PRS.GPosition();
+
+							wstring file = L"Explosion/Explosion_" + StringConvert::ToWString(randomSound);
+							owner->GetEngine()->sound->Play3D(owner->GetEngine()->content->LoadSound(file), pos);
 
 						}
 						else

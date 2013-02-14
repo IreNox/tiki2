@@ -58,6 +58,9 @@ namespace TikiEngine
 			Vector3 GetBounds();
 			void SetBounds(const Vector3& bounds);
 
+			void SetGameObject(GameObject* go);
+			GameObject* GetGameObject();
+
 			inline ConstantBuffer<SkinMatrices>* GetConstantBuffer() { return constantBufferMatrices; }
 
 			void* GetNativeResource();
@@ -86,6 +89,8 @@ namespace TikiEngine
 
 			SkinMatrices matrices;
 			ConstantBuffer<SkinMatrices>* constantBufferMatrices;
+
+			GameObject* go;
 
 		};
 	}

@@ -33,16 +33,6 @@ namespace TikiEngine
 		
 	};
 
-	//class AnimationEvent: public Event<IModel, AnimationArgs>
-	//{
-	//public:
-	//	~AnimationEvent()
-	//	{
-	//		for(UINT i = 0; i < eventHandler.Count(); i++)
-	//			SafeDelete(&eventHandler[i]);
-	//	}
-	//};
-
 	class AnimationEvent : public Event<IModel, AnimationArgs>
 	{
 	public:
@@ -71,8 +61,4 @@ namespace TikiEngine
 	public:
 		void Handle(IModel* sender, const AnimationArgs& args);
 	};
-
-
-	//typedef Event<IModel, AnimationArgs> AnimationEvent;
-	//typedef EventHandler<IModel, AnimationArgs> AnimationEventHandler;
 }

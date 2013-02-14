@@ -74,7 +74,7 @@ namespace TikiEngine
 			{
 				GameObject* go = TIKI_NEW GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = pos;
-				gameState->GetBotFactory()->CreateEnemyMobHeavy(go, this->WayPoints);
+				gameState->GetBotFactory()->CreateEnemyMob(go, this->WayPoints);
 			}
 
 			if (player)

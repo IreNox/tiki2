@@ -19,7 +19,7 @@ namespace TikiEngine
 	{
 		#pragma region Class
 		Model::Model(Engine* engine)
-			: IModel(engine), rootBone(0), mainInstance(false)
+			: IModel(engine), rootBone(0), mainInstance(false), go(0)
 		{
 			constantBufferMatrices = TIKI_NEW ConstantBuffer<SkinMatrices>(engine);
 
@@ -201,6 +201,16 @@ namespace TikiEngine
 		{
 			this->bounds = bounds;
 		}
+
+		void Model::SetGameObject(GameObject* go)
+		{
+			this->go = go;
+		}
+
+		GameObject* Model::GetGameObject()
+		{
+			return this->go;
+		}
 		#pragma endregion
 
 		#pragma region Member - Draw/Update
@@ -223,6 +233,9 @@ namespace TikiEngine
 
 		void Model::Update(const UpdateArgs& args)
 		{
+			//if(go == 0)
+			//	_CrtDbgBreak();
+
 #if _DEBUG
 			if (!this->GetReady())
 				throw "Model don't ready.";
