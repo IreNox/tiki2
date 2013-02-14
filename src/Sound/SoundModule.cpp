@@ -119,7 +119,8 @@ namespace TikiEngine
 				}
 			}
 
-			r = system->init(100, FMOD_INIT_NORMAL, 0);
+			r = system->init(100, FMOD_INIT_3D_RIGHTHANDED, 0);
+			//r = system->init(100, FMOD_INIT_NORMAL, 0);
 			if (r == FMOD_ERR_OUTPUT_CREATEBUFFER)
 			{
 				/*
@@ -136,7 +137,9 @@ namespace TikiEngine
 				/*
 				... and re-init.
 				*/
-				r = system->init(100, FMOD_INIT_NORMAL, 0);
+
+				r = system->init(100, FMOD_INIT_3D_RIGHTHANDED, 0);
+				//r = system->init(100, FMOD_INIT_NORMAL, 0);
 			}
 
 			if (FAILED(r))
@@ -144,6 +147,8 @@ namespace TikiEngine
 				this->Dispose();
 				return false;
 			}
+			system->set3DSettings(1.0f, 1.0f, 1.0f);
+
 
 			return true;
 		}
@@ -162,11 +167,30 @@ namespace TikiEngine
 			info.cbsize = sizeof(info);
 			info.length = (UInt32)stream->GetLength();
 
-			system->createStream(data, FMOD_OPENMEMORY, &info, &sound);
-			//system->createStream(fileName, FMOD_DEFAULT, 0, &sound);
+			system->createStream(data, FMOD_OPENMEMORY , &info, &sound);
+
 
 			return sound;
 		}
+
+		FMOD::Sound* SoundModule::LoadSound3D(Stream* stream)
+		{
+			Sound* sound = 0;
+
+			char* data = TIKI_NEW char[stream->GetLength()];
+			stream->Read(data, 0, stream->GetLength());
+
+			FMOD_CREATESOUNDEXINFO info;
+			ZeroMemory(&info, sizeof(info));
+			info.cbsize = sizeof(info);
+			info.length = (UInt32)stream->GetLength();
+
+			system->createStream(data, FMOD_OPENMEMORY | FMOD_3D, &info, &sound);
+
+
+			return sound;
+		}
+
 		#pragma endregion
 
 		#pragma region Member - Begin/End
@@ -192,12 +216,48 @@ namespace TikiEngine
 				
 		void SoundModule::Play(ISound* sound)
 		{
-			FMOD::Sound* natSound = (FMOD::Sound*)sound->GetNativeResource();
+			char* nativeResource = (char*)sound->GetNativeResource();
+
+			FMOD::Sound* natSound = 0;
 			FMOD::Channel* ch = 0;
-			
+
+			FMOD_CREATESOUNDEXINFO info;
+			ZeroMemory(&info, sizeof(info));
+			info.cbsize = sizeof(info);
+			info.length = *(UInt32*)nativeResource;
+
+			system->createStream(nativeResource + 4, FMOD_OPENMEMORY, &info, &natSound);
+
 			system->playSound(FMOD_CHANNEL_FREE, natSound, false, &ch);
-			//ch->
-			//ch->setVolume()
+
+		}
+
+		void SoundModule::Play3D(ISound3D* sound, const Vector3& position)
+		{
+			char* nativeResource = (char*)sound->GetNativeResource();
+
+			FMOD::Sound* natSound = 0;
+			FMOD::Channel* ch = 0;
+
+			FMOD_CREATESOUNDEXINFO info;
+			ZeroMemory(&info, sizeof(info));
+			info.cbsize = sizeof(info);
+			info.length = *(UInt32*)nativeResource;
+
+			system->createStream(nativeResource + 4, FMOD_OPENMEMORY | FMOD_3D, &info, &natSound);
+
+			system->playSound(FMOD_CHANNEL_FREE, natSound, true, &ch);
+
+			ch->set3DAttributes((FMOD_VECTOR*)&position, (FMOD_VECTOR*)&Vector3::Zero);
+			ch->setPaused(false);
+		}
+
+		void SoundModule::SetListenerPosition(const Vector3& position, const Vector3& velocity, 
+			const Vector3& forward, const Vector3& up)
+		{
+			system->set3DListenerAttributes(0, (FMOD_VECTOR*)&position, (FMOD_VECTOR*)&velocity, 
+				(FMOD_VECTOR*)&forward, (FMOD_VECTOR*)&up);
+			system->update();
 		}
 	}
 }

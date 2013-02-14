@@ -191,17 +191,22 @@ namespace TikiEngine
 			else if (args.Input.GetKey(KEY_L))
 				smokeEmitter->PRS.SPosition() = smokeEmitter->PRS.GPosition() - Vector3(0.01f, 0, 0);
 
-			SceneGraph.GetAllGameObjects()[0]->PRS.SPosition() = Vector3(
-				sinf((float)args.Time.TotalTime) * 7.5f,
-				5,
-				cosf((float)args.Time.TotalTime) * 7.5f
-			);
+			if(SceneGraph.GetAllGameObjects().Count() != 0)
+			{
+				SceneGraph.GetAllGameObjects()[0]->PRS.SPosition() = Vector3(
+					sinf((float)args.Time.TotalTime) * 7.5f,
+					5,
+					cosf((float)args.Time.TotalTime) * 7.5f
+					);
+			}
 
-			SceneGraph.GetAllGameObjects()[0]->PRS.SRotation() = Quaternion::CreateFromAxisAngle(
-				Vector3::Normalize(Vector3(sinf((float)args.Time.TotalTime / 2), 0, cosf((float)args.Time.TotalTime / 2))),
-				3.15149f
-			);
-
+			if(SceneGraph.GetAllGameObjects().Count() != 0)
+			{
+				SceneGraph.GetAllGameObjects()[0]->PRS.SRotation() = Quaternion::CreateFromAxisAngle(
+					Vector3::Normalize(Vector3(sinf((float)args.Time.TotalTime / 2), 0, cosf((float)args.Time.TotalTime / 2))),
+					3.15149f
+					);
+			}
 
 			if (args.Input.GetKeyPressed(KEY_SPACE))
 				expEffect->Trigger(
@@ -247,23 +252,28 @@ namespace TikiEngine
 				explo = true;
  			}
 
-
-            fireEffect->Trigger(
-                args.Time.ElapsedTime, 200,
-                Matrix::TransformCoordinate(
-                Vector3(0.8f, 0, 0),
-                Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
-                ) 
-            );
-
-
-			smokeEffect->Trigger(
-				args.Time.ElapsedTime, 200,
-				Matrix::TransformCoordinate(
+			if(SceneGraph.GetAllGameObjects().Count() != 0)
+			{
+				fireEffect->Trigger(
+					args.Time.ElapsedTime, 200,
+					Matrix::TransformCoordinate(
 					Vector3(0.8f, 0, 0),
 					Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
-				)
-			);
+					) 
+				);
+			}
+
+
+			if(SceneGraph.GetAllGameObjects().Count() != 0)
+			{
+				smokeEffect->Trigger(
+					args.Time.ElapsedTime, 200,
+					Matrix::TransformCoordinate(
+					Vector3(0.8f, 0, 0),
+					Matrix::Transpose(SceneGraph.GetAllGameObjects()[0]->PRS.GetWorld())
+					)
+				);
+			}
 
 
 			// Update base

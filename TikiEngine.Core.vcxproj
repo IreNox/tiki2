@@ -95,6 +95,7 @@
     <ClInclude Include="inc\Core\IHeightFieldCollider.h" />
     <ClInclude Include="inc\Core\IModelMesh.h" />
     <ClInclude Include="inc\Core\Interpolator.h" />
+    <ClInclude Include="inc\Core\ISound3D.h" />
     <ClInclude Include="inc\Core\Mutex.h" />
     <ClInclude Include="inc\Core\Event.h" />
     <ClInclude Include="inc\Core\EventControls.h" />

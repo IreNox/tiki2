@@ -21,6 +21,9 @@
     <ClInclude Include="inc\Sound\DllMain.h">
       <Filter>DllMain</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Sound\Sound3D.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Sound\Sound.cpp">
@@ -31,6 +34,9 @@
     </ClCompile>
     <ClCompile Include="src\Sound\DllMain.cpp">
       <Filter>DllMain</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sound\Sound3D.cpp">
+      <Filter>Resource</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

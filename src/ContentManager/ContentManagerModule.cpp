@@ -194,6 +194,10 @@ namespace TikiEngine
 				{
 					value = engine->librarys->CreateResource<ISound>();
 				}
+				else if(hash == typeid(ISound3D).hash_code())
+				{
+					value = engine->librarys->CreateResource<ISound3D>();
+				}
 				else if (hash == typeid(IPhysicsMaterial).hash_code())
 				{
 					value = engine->librarys->CreateResource<IPhysicsMaterial>();
@@ -293,6 +297,15 @@ namespace TikiEngine
 				name
 			);
 		}
+
+		ISound3D* ContentManagerModule::LoadSound3D(const wstring& name)
+		{
+			return (ISound3D*)this->Load(
+				typeid(ISound3D).hash_code(),
+				name
+				);
+		}
+
 
 		ITexture* ContentManagerModule::LoadTexture(const wstring& name)
 		{

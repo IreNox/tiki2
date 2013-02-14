@@ -1,22 +1,25 @@
 #pragma once
 
-#include "Core/ISound.h"
+#include "Core/ISound3D.h"
 #include "fmod/fmod.hpp"
 
 namespace TikiEngine
 {
 	namespace Resources
 	{
-		class Sound : public ISound
+		class Sound3D : public ISound3D
 		{
 		public:
 
-			Sound(Engine* engine);
-			~Sound();
+			Sound3D(Engine* engine);
+			~Sound3D();
+
+			void CreateInstance(ISound3D* obj);
+
+			float GetDuration();
 
 			void* GetNativeResource();
 			bool GetReady();
-
 		protected:
 
 			void loadFromStream(wcstring fileName, Stream* stream);
@@ -25,8 +28,6 @@ namespace TikiEngine
 		private:
 
 			char* data;
-
-
 		};
 	}
 }

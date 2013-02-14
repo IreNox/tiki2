@@ -26,8 +26,16 @@ namespace TikiEngine
 			void Dispose();
 
 			void Play(ISound* sound);
+			void Play3D(ISound3D* sound, const Vector3& position);
+
+			void SetListenerPosition(
+				const Vector3& position, 
+				const Vector3& velocity, 
+				const Vector3& forward, 
+				const Vector3& up);
 
 			FMOD::Sound* LoadSound(Stream* stream);
+			FMOD::Sound* LoadSound3D(Stream* stream);
 
 		private:
 

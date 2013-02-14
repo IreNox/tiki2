@@ -29,6 +29,7 @@ namespace TikiEngine
 			IModel* LoadModel(const wstring& name);
 
 			ISound* LoadSound(const wstring& name);
+			ISound3D* LoadSound3D(const wstring& name);
 
 			ITexture* LoadTexture(const wstring& name);
 
