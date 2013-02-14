@@ -28,7 +28,7 @@ Texture2D TexSpecularMap;
 
 SamplerState sam : register(s0)
 {    
-  AddressU  = CLAMP;
-  AddressV = CLAMP;
+  AddressU  = WRAP;
+  AddressV = WRAP;
   FILTER = MIN_MAG_LINEAR_MIP_POINT;
 };

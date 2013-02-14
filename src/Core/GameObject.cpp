@@ -153,9 +153,9 @@ namespace TikiEngine
 			i++;
 		}
 
-#if _DEBUG
-		//sgElement.boundingBox->DrawDebug(Color::Red);
-#endif
+//#if _DEBUG && !TIKI_EDITOR
+//		sgElement.boundingBox->DrawDebug(Color::Red);
+//#endif
 
 	}
 

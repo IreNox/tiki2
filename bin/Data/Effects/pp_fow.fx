@@ -96,7 +96,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 		}
 	}
 
-	fog = clamp(fog, 0, 1);
+	fog = clamp(fog, 1, 1);
 	fog = lerp(0.2f, 1, fog);
 
 	if (diff.a != 0)
