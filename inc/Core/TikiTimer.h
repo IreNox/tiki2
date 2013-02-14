@@ -28,6 +28,11 @@ namespace TikiEngine
 			elapsed = this->Interval;
 		}
 
+		inline double GetElapsed() const
+		{
+			return elapsed;
+		}
+
 		inline double GetCurrentState() const
 		{
 			return elapsed / Interval;

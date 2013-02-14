@@ -12,6 +12,8 @@
 #include "Game/WeaponSystem.h"
 #include "Game/SkillSystem.h"
 
+#include "Game/PlayerBase.h"
+
 namespace TikiEngine
 {
 	namespace Graphics
@@ -27,6 +29,7 @@ namespace TikiEngine
 
 			buffer = engine->graphics->CreateConstantBuffer(sizeof(CBFogOfWar));
 			shader->SetConstantBuffer("FogOfWar", buffer);
+			shader->SetBoolean("heroDead", false);
 
 			PostProcessPass* pass = TIKI_NEW PostProcessPass(engine, shader);
 			pass->AddInput("rtScreen", 0);
@@ -53,6 +56,13 @@ namespace TikiEngine
 
 			passes[0]->SetInput("rtScreen", input);
 			passes[0]->SetOutput(0, output);
+
+			PlayerBase* pb = 0;
+			pb = state->GetPart<PlayerBase>(0);
+			if (pb != 0)
+			{
+				shader->SetBoolean("heroDead", pb->IsHeroDead());
+			}
 
 #if _DEBUG
 			shader->SetConstantBuffer("FogOfWar", buffer);

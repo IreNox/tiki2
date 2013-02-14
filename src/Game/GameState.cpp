@@ -112,6 +112,8 @@ namespace TikiEngine
 			projectiles->Draw(args);
 			unitSelection->Draw(args);
 
+			FOREACH_PTR_CALL(gameParts, Draw(args))
+
 			#if _DEBUG
 			if (DrawNavMesh)
 			{

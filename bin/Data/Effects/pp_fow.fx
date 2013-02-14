@@ -28,6 +28,8 @@ Texture2D rtDepth;
 
 Texture2D SkillCrosshair;
 
+bool heroDead;
+
 SamplerState samW
 {    
   AddressU  = BORDER;
@@ -107,6 +109,11 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	diff.rgb *= fog;
 	diff.rgb += addc;
 	diff.a = 1;
+
+	if (heroDead)
+	{
+		diff.rgb = (diff.r + diff.g + diff.b) / 3;
+	}
 
 	return diff;
 }

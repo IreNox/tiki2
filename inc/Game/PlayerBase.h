@@ -33,11 +33,14 @@ namespace TikiEngine
 			void Init();
 
 			void Update(const UpdateArgs& args);
+			void Draw(const DrawArgs& args);
 
 			void Handle(TikiBot* sender, const BotDeadArgs& args);
 			void Handle(ICollider* sender, const TriggerEnterArgs& args);
 			void Handle(ICollider* sender, const TriggerExitArgs& args);
 			
+			bool IsHeroDead() { return heroDead; }
+
 		private:
 
 			bool heroDead;

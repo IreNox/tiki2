@@ -138,6 +138,9 @@ namespace TikiEngine
 		#pragma region Member - Update
 		void PlayerBase::Update(const UpdateArgs& args)
 		{
+			//if (args.Input.GetKeyPressed(KEY_V))
+			//	Hero->GetComponent<TikiBot>()->ReduceHealth(1000, false);
+
 			if (heroDead && heroDeadTimer.IsReady(args.Time))
 			{				
 				TikiBot* hero = Hero->GetComponent<TikiBot>();
@@ -152,6 +155,32 @@ namespace TikiEngine
                 hero->RestoreHealthToMaximum();
 				gameState->GetScene()->AddElement(Hero);
 				heroDead = false;
+			}
+		}
+		#pragma endregion
+
+		#pragma region Member - Draw
+		void PlayerBase::Draw(const DrawArgs& args)
+		{
+			if (heroDead)
+			{
+				Vector2 textPos = engine->graphics->GetViewPort()->GetSize() / 2;
+				textPos.X -= 170;
+
+				double secsToRevive = heroDeadTimer.Interval - heroDeadTimer.GetElapsed();
+				string s = StringConvert::ToString((int)(secsToRevive + 1));
+				wstring text = wstring(L"Your Hero is Dead! Respawn in   ") + 
+							   wstring(StringAtoW(s));
+				if (secsToRevive <= 1)
+					text += wstring(L"  second.");
+				else
+					text += wstring(L"  seconds.");
+
+				args.SpriteBatch->DrawString(gameState->GetDefaultFont(),
+					text, 
+					textPos, 
+					Color::Red
+				);
 			}
 		}
 		#pragma endregion
