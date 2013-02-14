@@ -42,10 +42,9 @@ namespace TikiEngine
 			double GetAnimationSpeed();
 			void SetAnimationSpeed(double speed);
 
-			bool GetLoop();
-			void SetLoop(bool isLoop);
-
-			bool IsFinished();
+			inline bool IsLoop() { return loopAmount == 0; }
+			inline void SetLoop(int loopAmount = 1) { this->loopAmount = loopAmount; }
+			inline bool IsFinished() { return loopAmount && loopCounter == 0; }
 
 			void SetNextAnimation(IAnimation* animation);
 			IAnimation* GetNextAnimation();
@@ -81,8 +80,11 @@ namespace TikiEngine
 
 			int priority;
 
-			bool isLoop;
-			bool finished;
+			int loopAmount;
+			int loopCounter;
+
+			//bool isLoop;
+			//bool finished;
 
 			IAnimation* nextAnimation;
 		};

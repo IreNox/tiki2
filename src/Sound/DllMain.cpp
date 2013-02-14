@@ -2,7 +2,6 @@
 #include "Sound/DllMain.h"
 
 #include "Sound/Sound.h"
-#include "Sound/Sound3D.h"
 
 #include <typeinfo.h>
 
@@ -32,7 +31,6 @@ namespace TikiEngine
 		DllInfo.Modules.Add(typeid(ISoundSystem).hash_code());
 
 		DllInfo.Resources.Add(typeid(ISound).hash_code());
-		DllInfo.Resources.Add(typeid(ISound3D).hash_code());
 	}
 
 	void DllMain::DisposeDll()
@@ -56,17 +54,13 @@ namespace TikiEngine
 		{
 			return TIKI_NEW Sound(DllMain::Engine);
 		}
-		else if(hash == typeid(ISound3D).hash_code())
-		{
-			return TIKI_NEW Sound3D(DllMain::Engine);
-		}
 
 		return 0;
 	}
 
 	wcstring DllMain::GetResourceExt(PInt hash)
 	{
-		if (hash == typeid(ISound).hash_code() || hash == typeid(ISound3D).hash_code())
+		if (hash == typeid(ISound).hash_code())
 		{
 			return L"wav";
 		}
@@ -76,7 +70,7 @@ namespace TikiEngine
 
 	wcstring DllMain::GetResourcePath(PInt hash)
 	{
-		if (hash == typeid(ISound).hash_code() || hash == typeid(ISound3D).hash_code())
+		if (hash == typeid(ISound).hash_code())
 		{
 			return L"sounds";
 		}

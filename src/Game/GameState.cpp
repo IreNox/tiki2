@@ -17,7 +17,7 @@
 
 #include "Game/GoalThink.h"
 #include "Game/Bullet.h"
-#include "Game/AnimationHandlerDefaultUnit.h"
+#include "Game/AnimationHandler.h"
 #include "Game/BuildSlot.h"
 
 #include "Game/TikiBotFactory.h"

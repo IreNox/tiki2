@@ -4,9 +4,7 @@
 #include "Game/GoalThink.h"
 #include "Game/SceneLevel.h"
 #include "Game/BuildSlot.h"
-#include "Game/AnimationHandlerHero.h"
-#include "Game/AnimationHandlerDefaultUnit.h"
-#include "Game/AnimationHandlerSpidermine.h"
+#include "Game/AnimationHandler.h"
 
 #include "Game/SkillRocket.h"
 #include "Game/SkillFlash.h"
@@ -86,11 +84,11 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member - Create - Enemy
-		void TikiBotFactory::CreateEnemy1(GameObject* go, const List<Vector2>& wayPoints)
+		void TikiBotFactory::CreateEnemyMob(GameObject* go, const List<Vector2>& wayPoints)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);			
-			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
+			auto ah = TIKI_NEW AnimationHandlerMGUnit(go->GModel());
 			go->GModel()->SetAnimationHandler(ah);
 				
 
@@ -124,6 +122,47 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+
+		void TikiBotFactory::CreateEnemyMobHeavy(GameObject* go, const List<Vector2>& wayPoints)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_soldier"));
+			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			go->GModel()->GetMesh("standartMG")->SetVisible(false);			
+			auto ah = TIKI_NEW AnimationHandlerPlasmaUnit(go->GModel());
+			go->GModel()->SetAnimationHandler(ah);
+
+
+#if TIKI_USE_SCENEGRAPH
+			go->GetSceneGraphElement().SetDynamic();
+#endif
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 1;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
+			botDesc.EntityType = ET_Bot;
+
+			float upgrades = (float)(gameTime / 180);
+
+			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
+			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGFireRate = 0.67f;
+			botDesc.MaxSpeed = 3.25f;
+			botDesc.Armor = (1.25f * upgrades);
+
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
+			bot->SetScale(0.01f);
+
+			if (wayPoints.Count() != 0)
+			{
+				bot->GetBrain()->RemoveAllSubgoals();
+				bot->GetBrain()->QueueGoalAttackMove(GetPos(wayPoints[0], 0.05f));
+			}
+
+			gameState->GetScene()->AddElement(go);
+		}
+
 
 		void TikiBotFactory::CreateEnemyTower(GameObject* go)
 		{
@@ -228,12 +267,13 @@ namespace TikiEngine
 			gameState->GetScene()->AddElement(go);
 		}
 
-		void TikiBotFactory::CreatePlayerMop(GameObject* go, const Vector3& dest)
+		void TikiBotFactory::CreatePlayerMob(GameObject* go, const Vector3& dest)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_marine"));
 			go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			go->GModel()->GetMesh("LP_Backpack")->SetVisible(false);
 
-			auto ah = TIKI_NEW AnimationHandlerDefaultUnit(go->GModel());
+			auto ah = TIKI_NEW AnimationHandlerMGUnit(go->GModel());
 			go->GModel()->SetAnimationHandler(ah);
 
 
@@ -262,6 +302,42 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+		
+		void TikiBotFactory::CreatePlayerMobHeavy(GameObject* go, const Vector3& destination)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"unit_marine"));
+			go->GModel()->GetMesh("standartMG")->SetVisible(false);
+
+			auto ah = TIKI_NEW AnimationHandlerPlasmaUnit(go->GModel());
+			go->GModel()->SetAnimationHandler(ah);
+
+
+#if TIKI_USE_SCENEGRAPH
+			go->GetSceneGraphElement().SetDynamic();
+#endif
+
+			// Create bot
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 2.0f;
+			botDesc.Radius = 1.8f;
+
+			float upgrades = (float)(gameTime / 180);
+
+			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
+			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGFireRate = 0.67f;
+			botDesc.MaxSpeed = 3.25f;
+			botDesc.Armor = (1.25f * upgrades);
+
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
+			bot->SetScale(0.01f);
+
+			bot->GetBrain()->AddGoalAttackMove(destination);
+
+			gameState->GetScene()->AddElement(go);
+		}
+
 		#pragma endregion
 
 		#pragma region Member - Create - Player - Buildings
@@ -297,6 +373,9 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerMainBuilding(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"mainbuilding"));
+			auto ah = TIKI_NEW AnimationHandlerPlayerBase(go->GModel());
+			go->GModel()->SetAnimationHandler(ah);
+
 
 			playerBase->MainBuilding = go;
 

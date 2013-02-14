@@ -39,9 +39,8 @@ namespace TikiEngine
 			virtual double GetAnimationSpeed() = 0;
 			virtual void SetAnimationSpeed(double speed) = 0;
 
-			virtual bool GetLoop() = 0;
-			virtual void SetLoop(bool isLoop) = 0;
-
+			virtual bool IsLoop() = 0;
+			virtual void SetLoop(int loopAmount = 1) = 0;
 			virtual bool IsFinished() = 0;
 
 			virtual void SetNextAnimation(IAnimation* animation) = 0;

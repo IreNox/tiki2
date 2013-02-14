@@ -265,12 +265,6 @@
     <ClInclude Include="inc\Game\PESparks.h">
       <Filter>Particle\PESparks</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerDefaultUnit.h">
-      <Filter>AI\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerHero.h">
-      <Filter>AI\Animation</Filter>
-    </ClInclude>
     <ClInclude Include="inc\Game\Attributes.h">
       <Filter>AI\Attributes</Filter>
     </ClInclude>
@@ -445,10 +439,7 @@
     <ClInclude Include="inc\Game\TikiBot.h">
       <Filter>AI</Filter>
     </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerSpidermine.h">
-      <Filter>AI\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="inc\Game\AnimationHandlerPlayerBase.h">
+    <ClInclude Include="inc\Game\AnimationHandler.h">
       <Filter>AI\Animation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -573,9 +564,6 @@
     <ClCompile Include="src\Game\Trigger.cpp">
       <Filter>AI\Triggers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\AnimationHandlerDefaultUnit.cpp">
-      <Filter>AI\Animation</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game\DatabaseLevel.cpp">
       <Filter>Level</Filter>
     </ClCompile>
@@ -602,9 +590,6 @@
     </ClCompile>
     <ClCompile Include="src\Game\PathPlanner.cpp">
       <Filter>AI\Movement</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\AnimationHandlerHero.cpp">
-      <Filter>AI\Animation</Filter>
     </ClCompile>
     <ClCompile Include="src\Game\CameraTPS.cpp">
       <Filter>Scripts</Filter>
@@ -706,10 +691,7 @@
     <ClCompile Include="src\Game\Regulator.cpp">
       <Filter>AI\Misc</Filter>
     </ClCompile>
-    <ClCompile Include="src\Game\AnimationHandlerSpidermine.cpp">
-      <Filter>AI\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Game\AnimationHandlerPlayerBase.cpp">
+    <ClCompile Include="src\Game\AnimationHandler.cpp">
       <Filter>AI\Animation</Filter>
     </ClCompile>
   </ItemGroup>

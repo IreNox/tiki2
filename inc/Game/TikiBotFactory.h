@@ -26,12 +26,13 @@ namespace TikiEngine
 
 			void Init();
 
-			void CreateEnemy1(GameObject* go, const List<Vector2>& wayPoints);
-			//void CreateEnemy2(GameObject* go);
+			void CreateEnemyMob(GameObject* go, const List<Vector2>& wayPoints);
+			void CreateEnemyMobHeavy(GameObject* go, const List<Vector2>& wayPoints);
 			void CreateEnemyTower(GameObject* go);
 			void CreateEnemyBuilding(GameObject* go);
 			
-			void CreatePlayerMop(GameObject* go, const Vector3& destination);
+			void CreatePlayerMob(GameObject* go, const Vector3& destination);
+			void CreatePlayerMobHeavy(GameObject* go, const Vector3& destination);
 			void CreatePlayerHero(GameObject* go);
 			void CreatePlayerSpiderMine(GameObject* go, const Vector3& target);
 

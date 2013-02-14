@@ -74,7 +74,7 @@ namespace TikiEngine
 			{
 				GameObject* go = TIKI_NEW GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = pos;
-				gameState->GetBotFactory()->CreateEnemy1(go, this->WayPoints);
+				gameState->GetBotFactory()->CreateEnemyMobHeavy(go, this->WayPoints);
 			}
 
 			if (player)
@@ -83,7 +83,7 @@ namespace TikiEngine
 
 				GameObject* go = TIKI_NEW GameObject(gameState->GetEngine());
 				go->PRS.SPosition() = gameState->GetBotFactory()->GetPos(pos2, 3);
-				gameState->GetBotFactory()->CreatePlayerMop(go, pos);
+				gameState->GetBotFactory()->CreatePlayerMob(go, pos);
 			}
 		}
 		#pragma endregion

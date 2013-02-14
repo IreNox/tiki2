@@ -14,10 +14,11 @@ namespace TikiEngine
 	enum AnimationType
 	{
 		AT_Idle,
-		AT_Walk,
 		AT_Attack,
 		AT_Run,
 		AT_Death,
+
+		AT_Rocket,
 
 		AT_Folding,
 		AT_UnFolding,

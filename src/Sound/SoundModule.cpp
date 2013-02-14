@@ -155,40 +155,36 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region Member
-		FMOD::Sound* SoundModule::LoadSound(Stream* stream)
+		FMOD::Sound* SoundModule::CreateSound(ISound* sound)
 		{
-			Sound* sound = 0;
-			
-			char* data = TIKI_NEW char[stream->GetLength()];
-			stream->Read(data, 0, stream->GetLength());
+			char* nativeResource = (char*)sound->GetNativeResource();
+
+			FMOD::Sound* natSound = 0;
 
 			FMOD_CREATESOUNDEXINFO info;
 			ZeroMemory(&info, sizeof(info));
 			info.cbsize = sizeof(info);
-			info.length = (UInt32)stream->GetLength();
+			info.length = *(UInt32*)nativeResource;
 
-			system->createStream(data, FMOD_OPENMEMORY , &info, &sound);
+			system->createStream(nativeResource + 4, FMOD_OPENMEMORY, &info, &natSound);
 
-
-			return sound;
+			return natSound;
 		}
 
-		FMOD::Sound* SoundModule::LoadSound3D(Stream* stream)
+		FMOD::Sound* SoundModule::CreateSound3D(ISound* sound)
 		{
-			Sound* sound = 0;
+			char* nativeResource = (char*)sound->GetNativeResource();
 
-			char* data = TIKI_NEW char[stream->GetLength()];
-			stream->Read(data, 0, stream->GetLength());
+			FMOD::Sound* natSound = 0;
 
 			FMOD_CREATESOUNDEXINFO info;
 			ZeroMemory(&info, sizeof(info));
 			info.cbsize = sizeof(info);
-			info.length = (UInt32)stream->GetLength();
+			info.length = *(UInt32*)nativeResource;
 
-			system->createStream(data, FMOD_OPENMEMORY | FMOD_3D, &info, &sound);
+			system->createStream(nativeResource + 4, FMOD_OPENMEMORY | FMOD_3D, &info, &natSound);
 
-
-			return sound;
+			return natSound;
 		}
 
 		#pragma endregion
@@ -214,40 +210,27 @@ namespace TikiEngine
 		}
 		#pragma endregion
 				
-		void SoundModule::Play(ISound* sound)
+		void SoundModule::Play(ISound* sound, bool loop)
 		{
-			char* nativeResource = (char*)sound->GetNativeResource();
-
-			FMOD::Sound* natSound = 0;
+			FMOD::Sound* natSound = CreateSound(sound);
 			FMOD::Channel* ch = 0;
-
-			FMOD_CREATESOUNDEXINFO info;
-			ZeroMemory(&info, sizeof(info));
-			info.cbsize = sizeof(info);
-			info.length = *(UInt32*)nativeResource;
-
-			system->createStream(nativeResource + 4, FMOD_OPENMEMORY, &info, &natSound);
-
-			system->playSound(FMOD_CHANNEL_FREE, natSound, false, &ch);
-
-		}
-
-		void SoundModule::Play3D(ISound3D* sound, const Vector3& position)
-		{
-			char* nativeResource = (char*)sound->GetNativeResource();
-
-			FMOD::Sound* natSound = 0;
-			FMOD::Channel* ch = 0;
-
-			FMOD_CREATESOUNDEXINFO info;
-			ZeroMemory(&info, sizeof(info));
-			info.cbsize = sizeof(info);
-			info.length = *(UInt32*)nativeResource;
-
-			system->createStream(nativeResource + 4, FMOD_OPENMEMORY | FMOD_3D, &info, &natSound);
 
 			system->playSound(FMOD_CHANNEL_FREE, natSound, true, &ch);
 
+			if(loop)
+				ch->setMode(FMOD_LOOP_NORMAL);
+			ch->setPaused(false);
+		}
+
+		void SoundModule::Play3D(ISound* sound, const Vector3& position, bool loop)
+		{
+			FMOD::Sound* natSound = CreateSound3D(sound);
+			FMOD::Channel* ch = 0;
+
+			system->playSound(FMOD_CHANNEL_FREE, natSound, true, &ch);
+
+			if(loop)
+				ch->setMode(FMOD_LOOP_NORMAL);
 			ch->set3DAttributes((FMOD_VECTOR*)&position, (FMOD_VECTOR*)&Vector3::Zero);
 			ch->setPaused(false);
 		}

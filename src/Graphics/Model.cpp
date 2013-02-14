@@ -101,6 +101,7 @@ namespace TikiEngine
 		{
 			for(UInt32 i = 0; i < animations.Count(); i++)
 			{
+				TikiAnimation* anim = animations[i];
 				if(animations[i]->GetName() == name)
 					return (IAnimation*)animations[i];
 			}

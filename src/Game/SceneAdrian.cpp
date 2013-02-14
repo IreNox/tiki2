@@ -17,12 +17,12 @@
 
 #include "Core/LightObject.h"
 
-#include "Game/AnimationHandlerDefaultUnit.h"
-#include "Game/AnimationHandlerSpidermine.h"
-#include "Game/AnimationHandlerPlayerBase.h"
+#include "Game/AnimationHandler.h"
+
 #include "Core/EventAnimation.h"
 
 #include "Core/RectangleF.h"
+#include "Core/ISoundSystem.h"
 
 namespace TikiEngine
 {
@@ -68,17 +68,20 @@ namespace TikiEngine
 			go->PRS.SScale() = Vector3(0.01f);*/
 			//this->AddElement(go);
 
-			//folding
-			//idle
-			//unfolding
-			//
-
 
 			GameObject* go = new GameObject(engine);
-			go->SModel(args.Content->LoadModel(L"tree08"));
-			//auto ha = TIKI_NEW AnimationHandlerPlayerBase(go->GModel());
-			//go->GModel()->SetAnimationHandler(ha);
-			go->PRS.SScale() = Vector3(0.01f);
+			go->SModel(args.Content->LoadModel(L"base_radar"));
+			int animCount = go->GModel()->AnimationCount();
+
+			//go->GModel()->GetMesh("LP_Backpack")->SetVisible(false);
+			//go->GModel()->GetMesh("heavyPlasma")->SetVisible(false);
+			//go->GModel()->GetMesh("standartMG")->SetVisible(false);
+			//go->GModel()->GetMesh("Laser")->SetVisible(false);
+
+			auto ha = TIKI_NEW AnimationHandlerResearchBuilding(go->GModel());
+			go->GModel()->SetAnimationHandler(ha);
+
+			go->PRS.SScale() = Vector3(0.001f);
 			go->GetSceneGraphElement().SetDynamic();
 
 			this->AddElement(go);
@@ -136,15 +139,35 @@ namespace TikiEngine
 				);
 
 #if _DEBUG
-			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitX, Color::Red);
-			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitY, Color::Green);
-			engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitZ, Color::Blue);
+			//engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitX, Color::Red);
+			//engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitY, Color::Green);
+			//engine->graphics->DrawLine(Vector3::Zero, Vector3::UnitZ, Color::Blue);
 #endif
 
 		}
 
 		void SceneAdrian::Update(const UpdateArgs& args)
 		{
+			GameObject* go = GetMainCamera()->GetGameObject();
+
+			engine->sound->SetListenerPosition(
+				go->PRS.GPosition(),
+				Vector3::Zero, 
+				go->PRS.GetForward(),
+				go->PRS.GetUp());
+
+
+			if(args.Input.GetKeyPressed(KEY_ALPHA8))
+			{
+				engine->sound->Play(engine->content->LoadSound(L"ambient"), true);
+			}
+
+			if(args.Input.GetKeyPressed(KEY_ALPHA7))
+			{
+				engine->sound->Play3D(engine->content->LoadSound(L"mech_spawn"), Vector3::Zero, true);
+			}
+
+
 			//ANIMATION TIMING EXAMPLE
 
 			//AnimationArgs animArgs(AT_Death);
@@ -175,19 +198,19 @@ namespace TikiEngine
 			}
 			if(args.Input.GetKey(KEY_ALPHA2))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Folding));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Attack));
 			}
 			if(args.Input.GetKey(KEY_ALPHA3))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Folded));
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Run));
 			}
 			if(args.Input.GetKey(KEY_ALPHA4))
 			{
-				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_UnFolding));
-			}
-			if(args.Input.GetKeyPressed(KEY_ALPHA5))
-			{
 				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Death));
+			}
+			if(args.Input.GetKey(KEY_ALPHA5))
+			{
+				this->model->AnimationHandler->RaiseAnimationEvent(this->model, AnimationArgs(AT_Rocket));
 			}
 		}
 	}

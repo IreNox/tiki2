@@ -40,6 +40,7 @@
     <None Include="bin\Data\GFX_GLSL\os_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_glfx.glsl" />
     <None Include="bin\Data\GFX_GLSL\Inc\is_define.glsl" />
+    <None Include="bin\Data\Models\base_radar.tiki" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
     <None Include="bin\Data\Models\gatecontrol.tiki" />
@@ -174,6 +175,10 @@
     <None Include="bin\Data\Textures\unit_hero\Unit_Hero_Body_light.dds" />
     <None Include="bin\Data\Textures\unit_hero\Unit_Hero_Body_normal.dds" />
     <None Include="bin\Data\Textures\unit_hero\Unit_Hero_Body_spec.dds" />
+    <None Include="bin\Data\Textures\unit_marine\MarineBackpack_Diff.dds" />
+    <None Include="bin\Data\Textures\unit_marine\MarineBackpack_Light.dds" />
+    <None Include="bin\Data\Textures\unit_marine\MarineBackpack_Normal.dds" />
+    <None Include="bin\Data\Textures\unit_marine\MarineBackpack_Spec.dds" />
     <None Include="bin\Data\Textures\unit_marine\Marine_L_diff.dds" />
     <None Include="bin\Data\Textures\unit_marine\Marine_L_light.dds" />
     <None Include="bin\Data\Textures\unit_marine\Marine_L_normal.dds" />
@@ -235,6 +240,7 @@
     <Content Include="bin\Data\Effects\pp_default.fx" />
     <Content Include="bin\Data\Effects\pp_fow.fx" />
     <Content Include="bin\Data\Effects\pp_ssao.fx" />
+    <Content Include="bin\Data\Sounds\ambient.wav" />
     <Content Include="bin\Data\Sounds\beep.wav" />
     <Content Include="bin\Data\Sounds\Mech_Spawn.wav" />
   </ItemGroup>

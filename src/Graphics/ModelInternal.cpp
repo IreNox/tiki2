@@ -869,14 +869,16 @@ namespace TikiEngine
 
 		#pragma region TikiAnimation
 		TikiAnimation::TikiAnimation()
-			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), isLoop(true), finished(false), nextAnimation(0), priority(0)
+			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), 
+			/*isLoop(true), finished(false), */nextAnimation(0), priority(0), loopAmount(0), loopCounter(0)
 		{
 		}
 
 		TikiAnimation::TikiAnimation(TikiAnimation* copy)
-			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed), isLoop(copy->isLoop),
-			  finished(copy->finished), nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
-			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime), priority(copy->priority)
+			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed),/* isLoop(copy->isLoop),
+																											   finished(copy->finished), */nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
+			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime), priority(copy->priority),
+			  loopAmount(copy->loopAmount), loopCounter(copy->loopCounter)
 		{
 			timeStamps = copy->timeStamps;
 
@@ -983,20 +985,20 @@ namespace TikiEngine
 			this->animationSpeed = (float)speed;
 		}
 
-		bool TikiAnimation::GetLoop()
-		{
-			return this->isLoop;
-		}
-		
-		void TikiAnimation::SetLoop(bool isLoop)
-		{
-			this->isLoop = isLoop;
-		}
+		//bool TikiAnimation::GetLoop()
+		//{
+		//	return this->isLoop;
+		//}
+		//
+		//void TikiAnimation::SetLoop(bool isLoop)
+		//{
+		//	this->isLoop = isLoop;
+		//}
 
-		bool TikiAnimation::IsFinished()
-		{
-			return this->finished;
-		}
+		//bool TikiAnimation::IsFinished()
+		//{
+		//	return this->finished;
+		//}
 
 		void TikiAnimation::SetNextAnimation(IAnimation* animation)
 		{
@@ -1021,27 +1023,35 @@ namespace TikiEngine
 		void TikiAnimation::Reset()
 		{
 			this->currentTime = this->startTime;
-			this->finished = false;
+			this->loopCounter = this->loopAmount;
+			//this->finished = false;
 			this->Update();
 		}
 
 		void TikiAnimation::Update(const double& deltaTime)
 		{
-			if(finished)
+			if(IsFinished())
 				return;
 
 			this->currentTime += deltaTime * this->animationSpeed;
 
 			if(currentTime >= stopTime)
 			{
-				if(isLoop)
+				if(IsLoop())
 				{
 					currentTime -= stopTime - startTime;
 				}
 				else
 				{
-					finished = true;
-					currentTime = stopTime;
+					loopCounter--;
+					if(IsFinished())
+					{
+						currentTime = stopTime;
+					}
+					else
+					{
+						currentTime -= stopTime - startTime;
+					}
 				}
 			}
 

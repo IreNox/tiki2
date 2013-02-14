@@ -315,10 +315,10 @@ namespace TikiEngine
 				gameState->GetScene()->AddElement(this);
 				break;
 			case 1: // player
-				gameState->GetBotFactory()->CreatePlayerMop(this, Vector3::Zero);
+				gameState->GetBotFactory()->CreatePlayerMob(this, Vector3::Zero);
 				break;
 			case 2: // enemy
-				gameState->GetBotFactory()->CreateEnemy1(this, List<Vector2>());
+				gameState->GetBotFactory()->CreateEnemyMob(this, List<Vector2>());
 				break;
 			case 3: // Hero Platform
 				gameState->GetBotFactory()->CreatePlayerHeroPlatform(this);

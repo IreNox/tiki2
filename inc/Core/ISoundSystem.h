@@ -2,14 +2,12 @@
 
 #include "Core/IModule.h"
 #include "Core/ISound.h"
-#include "Core/ISound3D.h"
 
 namespace TikiEngine
 {
 	namespace Modules
 	{
 		using TikiEngine::Resources::ISound;
-		using TikiEngine::Resources::ISound3D;
 
 		class ISoundSystem : public IModule
 		{
@@ -18,8 +16,8 @@ namespace TikiEngine
 			ISoundSystem(Engine* engine) : IModule(engine) {}
 			~ISoundSystem() {}
 
-			virtual void Play(ISound* sound) = 0;
-			virtual void Play3D(ISound3D* sound, const Vector3& position) = 0;
+			virtual void Play(ISound* sound, bool loop = false) = 0;
+			virtual void Play3D(ISound* sound, const Vector3& position, bool loop = false) = 0;
 
 			virtual void SetListenerPosition(
 				const Vector3& position, 
