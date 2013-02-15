@@ -38,7 +38,7 @@ namespace TikiEditor
 
 		for each (System::String^ file in files)
 		{
-			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			if (!useFile(file))
 			{
 				continue;
 			}
@@ -58,7 +58,7 @@ namespace TikiEditor
 		int i = 0;	
 		for each (System::String^ file in files)
 		{
-			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			if (!useFile(file))
 			{
 				continue;
 			}
@@ -82,7 +82,7 @@ namespace TikiEditor
 		len = 0;
 		for each (System::String^ file in files)
 		{
-			if (System::IO::Path::GetFileName(file)->StartsWith("is") && System::IO::Path::GetExtension(file) == ".fx")
+			if (!useFile(file))
 			{
 				continue;
 			}
@@ -154,5 +154,20 @@ namespace TikiEditor
 		delete(stream);
 
 		Marshal::Release(System::IntPtr((void*)fileName2));
+	}
+
+	bool ResConverter::useFile(System::String^ file)
+	{
+		if (System::IO::Path::GetFileName(file)->StartsWith("is") && (System::IO::Path::GetExtension(file) == ".fx" || System::IO::Path::GetExtension(file) == ".glsl"))
+		{
+			return false;
+		}
+
+		if ((System::IO::Path::GetExtension(file) == ".dat" && System::IO::Path::GetFileNameWithoutExtension(file) != "licence") || System::IO::Path::GetExtension(file) == ".sqlite")
+		{
+			return false;
+		}
+
+		return true;
 	}
 }

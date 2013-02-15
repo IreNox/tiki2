@@ -1,4 +1,5 @@
 
+#if _DEBUG
 #include "Game/SceneMark.h"
 
 #include "Core/IPhysics.h"
@@ -281,3 +282,4 @@ namespace TikiEngine
 		}
 	}
 }
+#endif

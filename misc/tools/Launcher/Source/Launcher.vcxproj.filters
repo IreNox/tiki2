@@ -30,7 +30,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="E:\Dropbox\TikiEngine\Art\Work in Progress\Logo\Icon\icon.ico">
+    <None Include="..\..\..\res\icon.ico">
       <Filter>Ressourcendateien</Filter>
     </None>
   </ItemGroup>

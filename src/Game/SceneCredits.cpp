@@ -8,6 +8,7 @@
 
 #include "Core/LightObject.h"
 #include "Core/CameraObject.h"
+#include "Core/ISoundSystem.h"
 #include "Core/IMeshRenderer.h"
 
 #include "Game/CameraFly.h"
@@ -34,6 +35,10 @@ namespace TikiEngine
 
 		void SceneCredits::Initialize(const InitializationArgs& args)
 		{
+			engine->sound->Play(
+				engine->content->LoadSound(L"ambient"), true
+			);
+
 			font24 = engine->librarys->CreateResource<IFont>();			
 			font24->Create(L"segoewp", 32.0f);
 

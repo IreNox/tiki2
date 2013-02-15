@@ -71,9 +71,6 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 ////////////////////////////////////////////////////////////////////////////////
 
 
-//#include "Data/Effects/Inc/is_technique.fx"
-
-
 DepthStencilState DisableDepth
 {
     DepthEnable = FALSE;
@@ -84,14 +81,26 @@ DepthStencilState DisableDepth
     //StencilWriteMask = 0x0;
 };
 
+technique11 tiki10
+{
+    pass FinalScreen10
+    {
+        SetVertexShader( CompileShader( vs_4_0, VS_Main() ) );
+		SetGeometryShader(  NULL );
+        SetPixelShader( CompileShader( ps_4_0, PS_Main() ) );
+
+		SetDepthStencilState( DisableDepth, 0 );
+    }
+}
+
 technique11 tiki11
 {
-    pass FinalScreen
+    pass FinalScreen11
     {
         SetVertexShader( CompileShader( vs_5_0, VS_Main() ) );
 		SetGeometryShader(  NULL );
         SetPixelShader( CompileShader( ps_5_0, PS_Main() ) );
-//
+
 		SetDepthStencilState( DisableDepth, 0 );
     }
 }

@@ -1,4 +1,5 @@
 
+#if _DEBUG
 #include "Game/SceneTim.h"
 
 #include "Core/Engine.h"
@@ -158,3 +159,4 @@ namespace TikiEngine
 		#pragma endregion
 	}
 }
+#endif

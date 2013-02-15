@@ -27,7 +27,7 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && true)
+	if ((name == L"tim.boden" || name == L"Tim") && false)
 	{
 		scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);

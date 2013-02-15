@@ -25,5 +25,7 @@ namespace TikiEditor
 		ResIOContext* context;
 		System::Collections::Generic::List<System::String^>^ files;
 
+		bool useFile(System::String^ fileName);
+
 	};
 }

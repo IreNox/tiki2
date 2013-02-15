@@ -1,4 +1,5 @@
 
+#if _DEBUG
 #include "Game/SceneAdrian.h"
 
 #include "Core/IMeshRenderer.h"
@@ -223,3 +224,4 @@ namespace TikiEngine
 		}
 	}
 }
+#endif

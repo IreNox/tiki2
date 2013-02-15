@@ -208,35 +208,29 @@ private:
 
 		if (optimized)
 		{
-			UInt32 mid = list.Count() / 2;
-			UInt32 step = mid;
+			UInt32 mid;
+			UInt32 left = 0;
+			UInt32 right = list.Count() - 1;
 
-			while (true)
+			while (left <= right)
 			{
-				step /= 2;
-				
-				if (step == 0 && (mid == 0 || list[mid-1] < key) && list[mid+1] > key && list[mid].GetKey() != key)
+				mid = (left + right) / 2;
+
+				if (list[ mid ] < key) 
 				{
-					break;
+					left = mid + 1;
 				}
-				else if (step == 0)
+				else if (list[ mid ] > key)
 				{
-					step = 1;
-				}
-		
-				if (list[mid] < key)
-				{
-					mid += step;
-				}
-				else if (list[mid] > key)
-				{
-					mid -= step;
+					right = mid - 1;
 				}
 				else
 				{
 					return mid;
 				}
 			}
+
+			return -1;
 		}
 		else
 		{

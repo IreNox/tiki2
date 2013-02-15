@@ -202,8 +202,8 @@ namespace TikiEngine
 				SetWindowText(window->GetHWND(), s.CStr());
 			}
 #else
-			wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(1.0 / elapsedTime);
-			SetWindowText(window->GetHWND(), s.CStr());
+			//wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(1.0 / elapsedTime);
+			//SetWindowText(window->GetHWND(), s.CStr());
 #endif
 
 			this->Update(updateArgs);

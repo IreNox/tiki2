@@ -269,7 +269,7 @@ namespace TikiEngine
 			description->SetTriangulationCallback(callback);
 			//description->EnableLogging();
 
-			Stream* stream = engine->content->LoadData(L"Data/terrain/Licence/licence.dat");
+			Stream* stream = engine->content->LoadData(L"data/terrain/licence/licence.dat");
 
 			UInt32 len = (UInt32)stream->GetLength();
 			Byte* data = TIKI_NEW Byte[len];

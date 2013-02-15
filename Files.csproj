@@ -74,9 +74,7 @@
     <None Include="bin\Data\terrain\map1.E16C24.rect.dat" />
     <None Include="bin\Data\terrain\Licence\licence.dat" />
     <None Include="bin\Data\Meshes\collider\collider_map1.obj" />
-    <None Include="bin\Data\Meshes\collider\collider_map2.obj" />
     <None Include="bin\Data\Meshes\navmesh\navmesh_map1.obj" />
-    <None Include="bin\Data\Meshes\navmesh\navmesh_map2.obj" />
     <None Include="bin\Data\Meshes\plane.obj" />
     <None Include="bin\Data\Meshes\rocket.obj" />
     <None Include="bin\Data\Models\base_spawn.tiki" />
