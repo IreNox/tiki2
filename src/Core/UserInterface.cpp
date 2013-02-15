@@ -552,7 +552,9 @@ namespace TikiEngine
 			engine->sprites->Draw(
 				texture,
 				boundingBox,
-				Color::White
+				texture->GetRectangle(),
+				Color::White,
+				1.0f - (this->GetParent() == nullptr ? 0.0f : 0.1f )
 			);
 		}
 		#pragma endregion

@@ -9,7 +9,7 @@ namespace TikiEngine
 		void SpriteBatchModule::End()
 		{
 			if (spriteInfos.Count() == 0) return;
-			spriteInfos.SortMerge();
+			spriteInfos.Sort();
 
 			DllMain::ModuleGraphics->SetStateAlphaBlend(BSM_Interface);
 			DllMain::ModuleGraphics->GetInterfaceTarget()->ApplyFirstAndOnly();

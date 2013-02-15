@@ -21,6 +21,8 @@ namespace TikiEngine
 		{
 		public:
 
+			float LayerDepth;
+
 			ClickEvent Click;
 			void* UserData;
 

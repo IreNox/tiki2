@@ -60,7 +60,7 @@ PS_OUTPUT PS_Main_Cloddy(PS_INPUT input) : SV_TARGET
 	color += colorTiled(TexNormalMap, input.Color.g, uv, 0.4);
 	color += colorTiled(TexSpecularMap, input.Color.b * 2, uv, 0.1);
 
-	color.g += input.Color.b * 0.1f;
+	color.g += input.Color.b * 0.1f;	
 
 	PS_OUTPUT output = (PS_OUTPUT)0;
 	output.Screen.rgb = color.rgb / color.w;

@@ -74,12 +74,15 @@ namespace TikiEngine
 
 		/*! @brief Get current Scene */
 		Scene* GetScene() const;
-		/*! @brief Set and initialize a TIKI_NEW Scene */
+		/*! @brief go back to main menu */
+		void SetSceneMenu();
+		/*! @brief Set and initialize a new Scene */
 		void SetScene(Scene* scene);
+
 
 		/*! @brief Get the Scene there was showing at loading */
 		Scene* GetLoadingScene() const;
-		/*! @brief Set and initialize a TIKI_NEW Scene */
+		/*! @brief Set and initialize a new Scene */
 		void SetLoadingScene(Scene* scene);
 
 
@@ -109,6 +112,7 @@ namespace TikiEngine
 	private:
 
 		Scene* scene;
+		Scene* sceneMenu;
 
 		bool isLoading;
 		bool isLoadingFinish;

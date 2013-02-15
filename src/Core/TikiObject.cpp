@@ -6,6 +6,13 @@
 #include <typeinfo.h>
 #include <Windows.h>
 #include <sstream>
+
+#define TIKIOUT(str) OutputDebugStringA(str); \
+	_CrtDbgBreak();
+#else
+
+#define TIKIOUT(str)
+
 #endif
 
 #if _WIN64
@@ -14,7 +21,6 @@ TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCDCDCDCDCD;
 TikiObject* wrongPtr = (TikiObject*)0xCDCDCDCD;
 #endif
 
-#define TIKIOUT(str) OutputDebugStringA(str);
 
 TikiObject::TikiObject()
 	: refCount(0)

@@ -26,7 +26,7 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
-		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(false)
+		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(false), sceneMenu(0)
 #if _DEBUG
 		, fpsIndex(0), fpsAve(0)
 #endif
@@ -198,7 +198,7 @@ namespace TikiEngine
 				double fps = fpsCache[0] + fpsCache[1] + fpsCache[2] + fpsCache[3] + fpsCache[4]; 
 				fps /= 6.0;
 
-				wstring s = L"TikiEngine 2.0 - FPS: " + StringConvert::ToWString(fps);
+				wstring s = wstring(desc.Window.WindowTitle) + L" - FPS: " + StringConvert::ToWString(fps);
 				SetWindowText(window->GetHWND(), s.CStr());
 			}
 #else
@@ -226,11 +226,19 @@ namespace TikiEngine
 		return scene;
 	}
 
+	void Engine::SetSceneMenu()
+	{
+		this->SetScene(sceneMenu);
+	}
+
 	void Engine::SetScene(Scene* scene)
 	{
 		if (isLoading) return;
 
 		SafeChangeRef(&this->scene, scene);
+
+		if (sceneMenu == nullptr)
+			sceneMenu = scene;
 
 		if (this->scene && !this->scene->IsInitialized())
 		{

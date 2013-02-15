@@ -111,13 +111,9 @@ namespace TikiEngine
 			SafeRelease(&windowData);
 			SafeRelease(&windowMain);
 			SafeRelease(&windowMinimap);
-
-
-			//SafeRelease(&windowSkills);
-			//SafeRelease(&windowSkillUpgrades);
-			//SafeRelease(&windowBuildSlot);
-
-			//SafeRelease(&windowResources);
+			
+			SafeRelease(&controlSkillUpgrades);
+			SafeRelease(&controlBuildSlot);
 
 			SafeRelease(&imgMinimap);
 
@@ -492,9 +488,7 @@ namespace TikiEngine
 		{
 			if (sender == buttonMenu)
 			{
-				engine->SetScene(
-					new SceneMenuMain(engine)
-				);
+				engine->SetSceneMenu();
 			}
 			else if (sender == imgMinimap)
 			{

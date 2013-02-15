@@ -73,6 +73,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 		desc.hInst = hInst;
 		desc.Window.Width = 1100;
 		desc.Window.Height = 750;
+		desc.Window.WindowTitle = L"TikiDefence";
 		desc.Window.Icon = LoadIcon(hInst, MAKEINTRESOURCE(IDI_ICON1));
 		desc.Graphics.UseShadows = true;
 
@@ -91,7 +92,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nS
 			Scene* scene = GetStartScene(engine);
 			scene->AddRef();
 
-			//engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
+			engine->SetLoadingScene(TIKI_NEW SceneLoading(engine));
 			engine->SetScene(scene);
 
 #if _DEBUG
