@@ -76,7 +76,7 @@ namespace TikiEngine
 				IAnimation* anim = go->GModel()->GetAnimation(0);
 				anim->SetAnimationSpeed(5.0);
 				go->PRS.SScale() = Vector3(0.01f);
-				go->PRS.SPosition() = Vector3(i , 0, 0);
+				go->PRS.SPosition() = Vector3((float)i , 0, 0);
 				go->GetSceneGraphElement().SetDynamic();
 
 				this->AddElement(go);

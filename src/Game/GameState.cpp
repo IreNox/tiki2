@@ -88,8 +88,8 @@ namespace TikiEngine
 
 		void GameState::InitLevel()
 		{
-			hud->Init();
 			botFactory->Init();
+			hud->Init();
 		}
 
 		void GameState::DisposeLevel()

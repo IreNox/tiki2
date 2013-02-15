@@ -7,6 +7,7 @@
 #include "Game/SceneTim.h"
 #include "Game/SceneMark.h"
 #include "Game/SceneAdrian.h"
+#include "Game/SceneCredits.h"
 
 namespace TikiEngine
 {
@@ -43,10 +44,7 @@ namespace TikiEngine
 			image->SetTexture(logo);
 			image->AddRef();
 
-			window = TIKI_NEW GUIWindow(engine);
-			window->SSize() = Vector2(350, 475);
-			window->AddRef();
-
+#if _DEBUG
 			wcstring text[] = {
 				L"Start - Level 1",
 				L"Start - Level 2",
@@ -55,9 +53,22 @@ namespace TikiEngine
 				L"Test Scene - Adrian",
 				L"Exit",
 			};
+#else
+			wcstring text[] = {
+				L"Start Game",
+				L"Credits",
+				L"Exit",
+			};
+#endif
+
+			UInt32 c = sizeof(text) / sizeof(wcstring);
+
+			window = TIKI_NEW GUIWindow(engine);
+			window->SSize() = Vector2(350, 50 + (70.0f * c));
+			window->AddRef();
 
 			UInt32 i = 0;
-			while (i < 6)
+			while (i < c)
 			{
 				GUIButton* cmd = TIKI_NEW GUIButton(engine);
 				cmd->SSize() = Vector2(300, 50);
@@ -152,6 +163,7 @@ namespace TikiEngine
 				engine->SetScene(sLevel);
 				sLevel->LoadLevel(1);
 				break;
+#if _DEBUG
 			case 1:
 				sLevel = TIKI_NEW SceneLevel(engine);
 				engine->SetScene(sLevel);
@@ -170,6 +182,13 @@ namespace TikiEngine
 				engine->SetScene(s);
 				break;
 			case 5:
+#else
+			case 1:
+				s = TIKI_NEW SceneCredits(engine);
+				engine->SetScene(s);
+				break;
+			case 2:
+#endif
 				engine->Exit();
 				break;
 			}

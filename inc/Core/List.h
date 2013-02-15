@@ -70,6 +70,11 @@ public:
 		sortQuickSort(0, lengthData - 1);	
 	}
 
+	inline void SortMerge()
+	{
+		sortMerge();
+	}
+
 	inline void Clear()
 	{
 		this->lengthData = 0;
@@ -280,7 +285,7 @@ private:
 	}
 	#pragma endregion
 
-	#pragma region Private Member - Sort
+	#pragma region Private Member - QuickSort
 	inline void sortQuickSort(int left, int right)
 	{
 		int iLeft = left;
@@ -338,6 +343,95 @@ private:
 		}
 
 		return i;
+	}
+	#pragma endregion
+
+	#pragma region Private Member - MergeSort
+	inline void sortMerge()
+	{
+		sortMergeRange(
+			data,
+			this->Count()
+		);
+	}
+
+	inline void sortMergeRange(T* range, UInt32 count)
+	{
+		if (count < 2)
+		{
+			return;
+		}
+
+		UInt32 leftCount = count / 2;
+		UInt32 rightCount = count - leftCount;
+
+		T* left = new T[leftCount];
+		memcpy(left, range, sizeof(T) * leftCount);
+		sortMergeRange(left, leftCount);
+
+		T* right = new T[rightCount];
+		memcpy(right, range + leftCount, sizeof(T) * rightCount);
+		sortMergeRange(right, rightCount);
+
+		sortMergeMerge(
+			range,
+			left,
+			leftCount,
+			right,
+			rightCount
+		);
+
+		delete[](left);
+		delete[](right);
+	}
+
+	inline void sortMergeMerge(T* destination, T* left, UInt32 leftCount, T* right, UInt32 rightCount)
+	{
+		UInt32 indexDes = 0;
+		UInt32 indexLeft = 0;
+		UInt32 indexRight = 0;
+
+		UInt32 len = leftCount + rightCount;
+
+		while (indexLeft < leftCount && indexRight < rightCount)
+		{
+			if (left[indexLeft] < right[indexRight])
+			{
+				destination[indexDes] = left[indexLeft];
+
+				indexDes++;
+				indexLeft++;
+			}
+			else
+			{
+				destination[indexDes] = right[indexRight];
+
+				indexDes++;
+				indexRight++;
+			}
+		}
+
+		if (indexLeft < leftCount)
+		{
+			while (indexDes < len)
+			{
+				destination[indexDes] = left[indexLeft];
+
+				indexDes++;
+				indexLeft++;
+			}
+		}
+
+		if (indexRight < rightCount)
+		{
+			while (indexDes < len)
+			{
+				destination[indexDes] = right[indexRight];
+
+				indexDes++;
+				indexRight++;
+			}
+		}
 	}
 	#pragma endregion
 };

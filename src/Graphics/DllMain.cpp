@@ -141,7 +141,7 @@ namespace TikiEngine
 		}
 		else if (hash == typeid(IFont).hash_code())
 		{
-			return L"font";
+			return L"fonts";
 		}
 		else if (hash == typeid(ITexture).hash_code())
 		{

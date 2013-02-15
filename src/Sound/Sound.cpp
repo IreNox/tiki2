@@ -38,7 +38,7 @@ namespace TikiEngine
 		void Sound::loadFromStream(wcstring fileName, Stream* stream)
 		{
 			data = TIKI_NEW char[stream->GetLength() + 4];
-			*(UInt32*)data = stream->GetLength();
+			*(UInt32*)data = (UInt32)stream->GetLength();
 			stream->Read(data + 4, 0, stream->GetLength());
 			//sound = DllMain::Module->LoadSound(stream);
 		}

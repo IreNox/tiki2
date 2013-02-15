@@ -57,7 +57,9 @@ namespace TikiEngine
 
 		void RenderTarget::Resize(TDX_RenderTargetView* renderTarget)
 		{
+			if (texture) texture->texture = nullptr;
 			SafeRelease(&texture);
+
 			this->renderTarget = renderTarget;
 
 			TDX_Resource* res = 0;

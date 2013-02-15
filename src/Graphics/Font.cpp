@@ -4,6 +4,8 @@
 #include <Windows.h>
 
 #include "Core/TypeGlobals.h"
+#include "Core/LibraryManager.h"
+#include "Core/IContentManager.h"
 #include "Core/NotSupportedException.h"
 
 #include "Graphics/Font.h"
@@ -41,11 +43,31 @@ namespace TikiEngine
 			GdiplusStartupInput gdiplusStartupInput;
 			GdiplusStartup(&gdiplusToken, &gdiplusStartupInput, NULL);
 
-			Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
+			//Gdiplus::Font* font = new Gdiplus::Font(fontName, fontSize);
 
-			this->createGdiImage(font, &pixels, &width, &height);
-			this->fillTexture(pixels, width, height);
+			Gdiplus::PrivateFontCollection* fontCollection = new Gdiplus::PrivateFontCollection();
 
+			wstring filePath = engine->librarys->GetResourcePath(typeid(IFont).hash_code(), fontName);
+			Stream* stream = engine->content->LoadData(filePath);
+
+			Byte* data = new Byte[stream->GetLength()];
+			stream->Read(data, 0, stream->GetLength());
+			fontCollection->AddMemoryFont(data, (int)stream->GetLength());
+
+			{
+				int found = 0;
+				FontFamily family;
+				fontCollection->GetFamilies(1, &family, &found);
+
+				Gdiplus::Font* font = new Gdiplus::Font(&family, fontSize, FontStyleRegular, UnitPixel);
+
+				this->createGdiImage(font, &pixels, &width, &height);
+				this->fillTexture(pixels, width, height);
+			}
+			
+			delete[](data);
+			delete(stream);
+			delete(fontCollection);
 			GdiplusShutdown(gdiplusToken);
 			delete[](pixels);
 		}
@@ -172,7 +194,7 @@ namespace TikiEngine
 		{
 			Gdiplus::Font* font = (Gdiplus::Font*)fontIn;
 
-			wcstring chars = L" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!\"§$%&/()=?,.-;:_#'+*~<>|";
+			wcstring chars = L" ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzäöü0123456789!\"§$%&/()=?,.-;:_#'+*~<>|";
 			PInt len = wcslen(chars);
 			
 			pixelHeight = font->GetHeight(96);

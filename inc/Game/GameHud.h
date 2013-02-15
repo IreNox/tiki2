@@ -52,20 +52,23 @@ namespace TikiEngine
 			void Handle(GameState* sender, const UnitSelectionChangedArgs& args);
 
 		private:
-
+						
 			GameState* gameState;
 
+			float scale;
+			Vector2 vp;
+
+			GUIImage* buttonMenu;
+			GUIImage* windowData;
+			GUIImage* windowMain;
+			GUIImage* windowMinimap;
+
 			GUILabel* labelRes;
-
-			GUIButton* buttonMenu;
-			GUIWindow* windowResources;
-			
-			GUIWindow* windowSkills;
-			GUIWindow* windowSkillUpgrades;
-
-			GUIWindow* windowBuildSlot;
-
 			GUIImage* imgMinimap;
+
+			GUIImage* controlBuildSlot;
+			GUIControl* controlSkills;
+			GUIWindow* controlSkillUpgrades;
 
 			List<GUIControl*> enabledControls;
 
@@ -79,9 +82,11 @@ namespace TikiEngine
 			ITexture* texMinimapMop;
 			ITexture* texMinimapHero;
 
-			//void initRes();
-			//void initSkills();
-			//void initMinimapBot();
+			ITexture* texBarHpBg;
+			ITexture* texBarHpText;
+
+			ITexture* texBarExpBg;
+			ITexture* texBarExpText;
 
 		};
 	}

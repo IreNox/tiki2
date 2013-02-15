@@ -34,12 +34,14 @@
     <None Include="bin\clean.bat" />
     <None Include="bin\clean_with_game.bat" />
     <None Include="bin\Data\Fonts\arial.ttf" />
+    <None Include="bin\Data\Fonts\CALIBRI.TTF" />
     <None Include="bin\Data\Fonts\SegoeWP.ttf" />
     <None Include="bin\Data\Fonts\wearealien.ttf" />
     <None Include="bin\Data\GFX_GLSL\pp_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_default.glsl" />
     <None Include="bin\Data\GFX_GLSL\os_glfx.glsl" />
     <None Include="bin\Data\GFX_GLSL\Inc\is_define.glsl" />
+    <None Include="bin\Data\Meshes\box.obj" />
     <None Include="bin\Data\Models\base_radar.tiki" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
@@ -91,6 +93,7 @@
     <None Include="bin\Data\Textures\Buildpoint\Buildpoint_spec.dds" />
     <None Include="bin\Data\Textures\checker.dds" />
     <None Include="bin\Data\Textures\controls.dds" />
+    <None Include="bin\Data\Textures\credits.dds" />
     <None Include="bin\Data\Textures\env_pipe_01\Box001_diff.dds" />
     <None Include="bin\Data\Textures\env_pipe_01\Box001_normal.dds" />
     <None Include="bin\Data\Textures\env_pipe_01\Box001_spec.dds" />
@@ -103,7 +106,14 @@
     <None Include="bin\Data\Textures\Hud\icons\heal_aura.dds" />
     <None Include="bin\Data\Textures\Hud\icons\rocket.dds" />
     <None Include="bin\Data\Textures\Hud\icons\spider_mine.dds" />
+    <None Include="bin\Data\Textures\Hud\if_build.dds" />
+    <None Include="bin\Data\Textures\Hud\if_data.dds" />
+    <None Include="bin\Data\Textures\Hud\if_exp.dds" />
+    <None Include="bin\Data\Textures\Hud\if_exp_bar.dds" />
+    <None Include="bin\Data\Textures\Hud\if_hp.dds" />
+    <None Include="bin\Data\Textures\Hud\if_hp_bar.dds" />
     <None Include="bin\Data\Textures\Hud\if_main.dds" />
+    <None Include="bin\Data\Textures\Hud\if_menu.dds" />
     <None Include="bin\Data\Textures\Hud\if_minimap.dds" />
     <None Include="bin\Data\Textures\Hud\loading.dds" />
     <None Include="bin\Data\Textures\Hud\mainmenu_bg.dds" />
@@ -232,6 +242,7 @@
     <Content Include="bin\Data\Effects\Inc\is_input_light.fx" />
     <Content Include="bin\Data\Effects\Inc\is_struct_light.fx" />
     <Content Include="bin\Data\Effects\IncOS\is_technique.fx" />
+    <Content Include="bin\Data\Effects\os_simple.fx" />
     <Content Include="bin\Data\Effects\pp_depth_of_field.fx" />
     <Content Include="bin\Data\Effects\pp_shadow.fx" />
     <Content Include="bin\Data\Effects\os_cloddy.fx" />

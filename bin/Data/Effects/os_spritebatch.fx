@@ -34,6 +34,13 @@ float value;
 
 Texture2D tex;
 
+SamplerState samSB : register(s0)
+{    
+  AddressU  = CLAMP;
+  AddressV = CLAMP;
+  FILTER = MIN_MAG_LINEAR_MIP_POINT;
+};
+
 ////////////////////////////////////////////////////////////////////////////////
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
@@ -80,7 +87,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 	
 	if (!(input.UV.x == -1.0f && input.UV.y == -1.0f))
 	{
-		color = tex.Sample(sam, input.UV) * color;
+		color = tex.Sample(samSB, input.UV) * color;
 	}
 
 	return color;

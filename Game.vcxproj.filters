@@ -130,6 +130,9 @@
     <Filter Include="AI\Misc">
       <UniqueIdentifier>{c6b65b13-b5d4-4d74-9b96-20f9c63d2a96}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Scenes\Credits">
+      <UniqueIdentifier>{a4751469-6857-4989-8909-7f1f233647c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Game\GameState.h">
@@ -442,6 +445,9 @@
     <ClInclude Include="inc\Game\AnimationHandler.h">
       <Filter>AI\Animation</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SceneCredits.h">
+      <Filter>Scenes\Credits</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\CameraFly.cpp">
@@ -693,6 +699,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\AnimationHandler.cpp">
       <Filter>AI\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneCredits.cpp">
+      <Filter>Scenes\Credits</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

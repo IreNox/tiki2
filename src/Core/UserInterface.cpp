@@ -41,7 +41,7 @@ namespace TikiEngine
 			}
 			childs.Clear();
 
-			if (!defaultFont->Release()) defaultFont = 0;
+			if (defaultFont && !defaultFont->Release()) defaultFont = 0;
 		}
 		#pragma endregion
 

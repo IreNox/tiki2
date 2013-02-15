@@ -44,8 +44,6 @@ SamplerState samC
 // Pixel Shader
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Data/Effects/IncOS/is_defaultshader_pixel.fx"
-
 float4 colorTiled(Texture2D tex, float value, float2 uv, float scale)
 {
 	return tex.Sample(samC, uv * scale) * value;

@@ -8,6 +8,7 @@
 #include "Game/SceneTim.h"
 #include "Game/SceneLevel.h"
 #include "Game/SceneLoading.h"
+#include "Game/SceneCredits.h"
 
 #include "../misc/res/resource.h"
 
@@ -26,11 +27,12 @@ inline Scene* GetStartScene(Engine* engine)
 
 	Scene* scene;
 
-	if ((name == L"tim.boden" || name == L"Tim") && false)
+	if ((name == L"tim.boden" || name == L"Tim") && true)
 	{
 		//scene = TIKI_NEW SceneTim(engine);
 		//scene = TIKI_NEW SceneMark(engine);
 		//scene = TIKI_NEW SceneAdrian(engine);
+		//scene = TIKI_NEW SceneCredits(engine);
 
 		scene = TIKI_NEW SceneLevel(engine);
 		((SceneLevel*)scene)->LoadLevel(1);
@@ -58,7 +60,7 @@ inline Scene* GetStartScene(Engine* engine)
 #pragma region WinMain
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE hPrevInst, LPSTR lpCmdLine, int nShowCmd)
 {
-	//_CrtSetBreakAlloc(12803);
+	//_CrtSetBreakAlloc(1364);
 
 	{
 #if _DEBUG

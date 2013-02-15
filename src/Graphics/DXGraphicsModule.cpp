@@ -197,12 +197,12 @@ namespace TikiEngine
 				DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH
 			);
 
-			//r = swapChain->SetFullscreenState(desc.Graphics.Fullscreen, NULL);
+			r = swapChain->SetFullscreenState(desc.Graphics.Fullscreen, NULL);
 
-			//if (FAILED(r))
-			//{
-			//	engine->HLog.Write("Warning: Can't change Fullscreen mode.");
-			//}
+			if (FAILED(r))
+			{
+				engine->HLog.Write("Warning: Can't change Fullscreen mode.");
+			}
 
 			if (FAILED(r))
 			{

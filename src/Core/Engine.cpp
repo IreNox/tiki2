@@ -209,13 +209,6 @@ namespace TikiEngine
 			this->Update(updateArgs);
 			this->Draw(updateArgs);
 
-			// TODO: Fullscreen
-			//if (args.Input.GetKeyPressed(KEY_F11))
-			//{
-			//	desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
-			//	graphics->Reset();
-			//}
-			
 			window->End();
 			frameCount++;
 		}
@@ -338,15 +331,23 @@ namespace TikiEngine
 			content->End();
 			input->End();
 
+			if (args.Input.GetKeyPressed(KEY_F11))
+			{
+				desc.Graphics.Fullscreen = !desc.Graphics.Fullscreen;
+				graphics->Reset();
+			}
+
 			if (args.Input.GetKeyPressed(KEY_F12))
 			{
 				graphics->MakeScreenshot();
 			}
 
+#if _DEBUG
 			if (args.Input.GetKeyPressed(KEY_ESCAPE)) 
 			{
 				this->Exit();
 			}
+#endif
 		}
 		else
 		{
