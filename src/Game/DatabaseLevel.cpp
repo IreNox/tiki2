@@ -394,8 +394,31 @@ namespace TikiEngine
 				gameState->GetBotFactory()->CreatePlayerTower(this);
 				break;
 			case 28:
+				gameState->GetBotFactory()->CreatePlayerSpawnBuilding(this);
+				break;
 			case 29:
-				// reserve for future objects
+				gameState->GetBotFactory()->CreatePlayerResearchBuilding(this);
+				break;
+			case 30:
+				{
+					this->PRS.SScale() *= 0.01f;
+					this->SModel(engine->content->LoadModel(L"bolder"));
+					gameState->GetScene()->AddElement(this);
+				}
+				break;
+			case 31:
+				{
+					this->PRS.SScale() *= 0.01f;
+					this->SModel(engine->content->LoadModel(L"crates_01"));
+					gameState->GetScene()->AddElement(this);
+				}
+				break;
+			case 32:
+				{
+					this->PRS.SScale() *= 0.01f;
+					this->SModel(engine->content->LoadModel(L"crates_02"));
+					gameState->GetScene()->AddElement(this);
+				}
 				break;
 			default:
 				throw "Wrong Object Type";

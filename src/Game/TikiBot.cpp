@@ -127,6 +127,9 @@ namespace TikiEngine
 		#pragma region Member - Health
 		void TikiBot::ReduceHealth(double val, bool useArmor)
 		{
+			if (IsDead())
+				return;
+
 			if (useArmor)
 			{
 				val *= 100 / (100 + attSys[TA_Armor]);
@@ -136,6 +139,8 @@ namespace TikiEngine
 
 			if (health <= 0)
 			{
+				health = 0;
+
 				OnDeath.RaiseEvent(this, BotDeadArgs(this));
 				SetDead();
 			}

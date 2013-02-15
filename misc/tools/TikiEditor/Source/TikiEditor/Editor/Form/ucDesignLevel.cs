@@ -163,5 +163,15 @@ namespace TikiEditor.Designer
         }
         #endregion
 
+        private void buttonAddEnemyTower_Click(object sender, EventArgs e)
+        {
+            _addObjectByType(12);
+        }
+
+        private void buttonAddPlayerTower_Click(object sender, EventArgs e)
+        {
+            _addObjectByType(13);
+        }
+
     }
 }

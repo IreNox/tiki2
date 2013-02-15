@@ -47,12 +47,11 @@ namespace TikiEngine
 			
 			imgMinimap = TIKI_NEW GUIImage(engine);
 			imgMinimap->Click.AddHandler(this);
-			imgMinimap->LayerDepth = 1.1f;
+			imgMinimap->LayerDepth = 0.9f;
 			enabledControls.Add(imgMinimap);
 
 			labelRes = TIKI_NEW GUILabel(engine);
 			labelRes->Text() = L"0";
-			labelRes->SetFont(gameState->GetDefaultFont());
 			windowData->AddChild(labelRes);
 
 			controlSkills = TIKI_NEW GUIControl(engine);
@@ -388,21 +387,21 @@ namespace TikiEngine
 								texInfo,
 								RectangleF::Create(pos.X - 40, pos.Y - 20, 80, 16),
 								Color::White,
-								1.3f
+								1.9f
 							);
 
 							args.SpriteBatch->Draw(
 								texHealth,
 								RectangleF::Create(pos.X - 39, pos.Y - 19, (float)(bot->Health() / bot->MaxHealth()) * 78.0f, 11),
 								Color::White,
-								1.2f
+								1.7f
 							);
 
 							args.SpriteBatch->Draw(
 								texShield,
 								RectangleF::Create(pos.X - 39, pos.Y - 8, xp * 78.0f, 4),
 								Color::White,
-								1.2f
+								1.7f
 							);
 						}
 						else

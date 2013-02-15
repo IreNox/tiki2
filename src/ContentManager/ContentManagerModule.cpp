@@ -410,11 +410,14 @@ namespace TikiEngine
 
 					if (engine->HPath.FileExists(fileName))
 					{
-						HANDLE handle;
-						while((handle = CreateFile(fileName.CStr(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE) { }
+						UInt32 counter = 0;
+
+						HANDLE handle = 0;
+						while((handle = CreateFile(fileName.CStr(), GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL)) == INVALID_HANDLE_VALUE && counter < 1000) { counter++; }
 						CloseHandle(handle);
 
-						changedFiles.Add(fileName);
+						if (counter < 1000)
+							changedFiles.Add(fileName);
 					}
 
 					dataBin += dataInfo->NextEntryOffset;

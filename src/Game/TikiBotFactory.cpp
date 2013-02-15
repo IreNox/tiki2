@@ -429,6 +429,26 @@ namespace TikiEngine
 
 			gameState->GetScene()->AddElement(go);
 		}
+
+		void TikiBotFactory::CreatePlayerResearchBuilding(GameObject* go)
+		{
+			go->SModel(gameState->GetEngine()->content->LoadModel(L"base_radar"));
+
+			TikiBotDescription botDesc;
+			botDesc.Faction = 0;
+			botDesc.Height = 10.0f;
+			botDesc.Radius = 5.0f;
+			botDesc.MaxSpeed = 0.000001f;
+			botDesc.EntityType = ET_Building;
+
+			botDesc.MaxHealth = 2000.0f;
+
+			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
+			bot->GetController()->SetGroup(CG_Collidable_Non_Pushable);
+			bot->SetScale(0.01f);
+
+			gameState->GetScene()->AddElement(go);
+		}
 		#pragma endregion
 
 		#pragma region Member - Create - Player - Misc

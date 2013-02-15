@@ -43,8 +43,11 @@
     <None Include="bin\Data\GFX_GLSL\Inc\is_define.glsl" />
     <None Include="bin\Data\Meshes\box.obj" />
     <None Include="bin\Data\Models\base_radar.tiki" />
+    <None Include="bin\Data\Models\bolder.tiki" />
     <None Include="bin\Data\Models\building_03_05.tiki" />
     <None Include="bin\Data\Models\buildpoint.tiki" />
+    <None Include="bin\Data\Models\crates_01.tiki" />
+    <None Include="bin\Data\Models\crates_02.tiki" />
     <None Include="bin\Data\Models\gatecontrol.tiki" />
     <None Include="bin\Data\Models\heroplatform.tiki" />
     <None Include="bin\Data\Models\mainbuilding.tiki" />
