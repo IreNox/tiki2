@@ -45,7 +45,8 @@ namespace TikiEngine
 
 		void SkillFlash::internUpgrade()
 		{
-			description.ActivationRange = SkillFlashRange[currentLevel - 1];
+			description.Cooldown = SkillFlashCooldown[currentLevel - 1];
+			//description.ActivationRange = SkillFlashRange[currentLevel - 1];
 		}
 	}
 }

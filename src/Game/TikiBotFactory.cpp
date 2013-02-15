@@ -105,8 +105,8 @@ namespace TikiEngine
 
 			float upgrades = (float)(gameTime / 180);
 
-			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
-			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.MaxHealth = 280.0f + (20.0f * upgrades);
+			botDesc.StartMGDamage = 15 + (4.0f * upgrades);
 			botDesc.StartMGFireRate = 0.67f;
 			botDesc.MaxSpeed = 3.25f;
 			botDesc.Armor = (1.25f * upgrades);
@@ -145,7 +145,7 @@ namespace TikiEngine
 			float upgrades = (float)(gameTime / 180);
 
 			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
-			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGDamage = 18 + (2.0f * upgrades);
 			botDesc.StartMGFireRate = 0.67f;
 			botDesc.MaxSpeed = 3.25f;
 			botDesc.Armor = (1.25f * upgrades);
@@ -242,10 +242,10 @@ namespace TikiEngine
 			botDesc.Radius = 1.8f;
 			botDesc.EntityType = ET_Hero;
 
-			botDesc.Armor = 12.65f;
+			botDesc.Armor = 18.0f;
 			botDesc.MaxHealth = 395;
-			botDesc.MaxSpeed = 3.95f;
-			botDesc.StartMGDamage = 47.5f;
+			botDesc.MaxSpeed = 3.95f * 2;
+			botDesc.StartMGDamage = 47.5f * 1.5f;
 			botDesc.StartMGFireRate = 0.625f;
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
@@ -289,10 +289,10 @@ namespace TikiEngine
 			float upgrades = (float)(gameTime / 180);
 
 			botDesc.MaxHealth = 280.0f + (15.0f * upgrades);
-			botDesc.StartMGDamage = 25 + (2.0f * upgrades);
+			botDesc.StartMGDamage = 20 + (2.0f * upgrades);
 			botDesc.StartMGFireRate = 0.67f;
 			botDesc.MaxSpeed = 3.25f;
-			botDesc.Armor = (1.25f * upgrades);
+			botDesc.Armor = (3.0f * upgrades);
 
 			TikiBot* bot = TIKI_NEW TikiBot(gameState, go, botDesc);
 			bot->SetScale(0.01f);
@@ -485,6 +485,8 @@ namespace TikiEngine
 		#pragma region Member - EventHandler
 		void TikiBotFactory::Handle(TikiBot* sender, const HeroLevelUpEventArgs& args)
 		{
+			amodHeroArmor.SetValue(3.5f * args.HeroLevel);
+			sender->GetAttSys().UpdateModifier(&amodHeroArmor);
 			//args.
 		}
 		#pragma endregion

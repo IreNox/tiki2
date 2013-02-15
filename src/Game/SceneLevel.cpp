@@ -96,7 +96,7 @@ namespace TikiEngine
 				this->LoadLevel(levelId);
 			}
 
-			//engine->sound->Play(engine->content->LoadSound(L"ambient"), true);
+			engine->sound->Play(engine->content->LoadSound(L"ambient"), true);
 		}
 		#pragma endregion
 

@@ -34,6 +34,7 @@ namespace TikiEngine
 		{
 			if (target->GetFaction() == owner->GetFaction())
 			{
+
 				target->IncreaseHealth(
 					(float)(SkillHealAuraHealPerSecound[currentLevel - 1] * args.Time.ElapsedTime)
 				);

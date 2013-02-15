@@ -11,7 +11,7 @@ namespace TikiEngine
 		#pragma region Class
 		SkillSystem::SkillSystem(TikiBot* owner)
 			: owner(owner), heroLevel(1), skillUpgrades(1), currentXp(0), nextLevelXp(HeroNeededXPFirstLevelUp), lastLevelXp(0),
-			  attmodMaxHealth(TA_MaxHealth, AMT_PerPercent, HeroMaxHealthIncement, 0)
+			  attmodMaxHealth(TA_MaxHealth, AMT_PerPercent, HeroHPPerLevel, 0)
 		{
 		}
 
@@ -59,7 +59,8 @@ namespace TikiEngine
 			{
 				heroLevel++;
 				skillUpgrades++;
-				attmodMaxHealth.SetValue(10 + (2.1458 * heroLevel));
+				
+				attmodMaxHealth.SetValue(HeroHP + (HeroHPPerLevel* heroLevel));
 				
 				owner->GetAttSys().UpdateModifier(&attmodMaxHealth);
 
