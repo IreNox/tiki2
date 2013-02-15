@@ -870,15 +870,16 @@ namespace TikiEngine
 		#pragma region TikiAnimation
 		TikiAnimation::TikiAnimation()
 			: Left(0), Right(0), weight(1.0f), currentTime(0.0), animationSpeed(1.0f), 
-			/*isLoop(true), finished(false), */nextAnimation(0), priority(0), loopAmount(0), loopCounter(0)
+			nextAnimation(0), priority(0), loopAmount(0), loopCounter(0)
 		{
 		}
 
 		TikiAnimation::TikiAnimation(TikiAnimation* copy)
-			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed),/* isLoop(copy->isLoop),
-																											   finished(copy->finished), */nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
-			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), currentTime(copy->currentTime), priority(copy->priority),
-			  loopAmount(copy->loopAmount), loopCounter(copy->loopCounter)
+			: Left(copy->Left), Right(copy->Right), weight(copy->weight), animationSpeed(copy->animationSpeed),
+			nextAnimation(copy->nextAnimation), name(copy->name), index(copy->index), bsv(copy->bsv),
+			  startTime(copy->startTime), stopTime(copy->stopTime), lastUpdateTime(copy->lastUpdateTime), 
+			  currentTime(copy->currentTime), priority(copy->priority), loopAmount(copy->loopAmount), 
+			  loopCounter(copy->loopCounter)
 		{
 			timeStamps = copy->timeStamps;
 
@@ -1030,6 +1031,9 @@ namespace TikiEngine
 
 		void TikiAnimation::Update(const double& deltaTime)
 		{
+			if(timeStamps.Count() == 0)
+				return;
+
 			if(IsFinished())
 				return;
 
@@ -1108,7 +1112,7 @@ namespace TikiEngine
 
 		#pragma region AnimationStack
 		AnimationStack::AnimationStack()
-			: blendTarget(0)
+			: blendTarget(0), blendTime(0.0), blendTimer(0.0)
 		{
 
 		}
