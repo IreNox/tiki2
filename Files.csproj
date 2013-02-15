@@ -72,7 +72,6 @@
     <None Include="bin\Data\Models\unit_marine.tiki" />
     <None Include="bin\Data\Models\unit_soldier.tiki" />
     <None Include="bin\Data\terrain\map1.E16C24.rect.dat" />
-    <None Include="bin\Data\terrain\map2.E16C24.rect.dat" />
     <None Include="bin\Data\terrain\Licence\licence.dat" />
     <None Include="bin\Data\Meshes\collider\collider_map1.obj" />
     <None Include="bin\Data\Meshes\collider\collider_map2.obj" />
@@ -166,9 +165,7 @@
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_normal.dds" />
     <None Include="bin\Data\Textures\SpiderMine\spidermine001_spec.dds" />
     <None Include="bin\Data\Textures\terrain\color_map1.dds" />
-    <None Include="bin\Data\Textures\terrain\color_map2.dds" />
     <None Include="bin\Data\Textures\terrain\minimap_map1.dds" />
-    <None Include="bin\Data\Textures\terrain\minimap_map2.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Grass.dds" />
     <None Include="bin\Data\Textures\terrain\terrain_rock.dds" />
     <None Include="bin\Data\Textures\terrain\Terrain_Sand.dds" />

@@ -413,6 +413,8 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerSpawnBuilding(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"base_spawn"));
+			go->GModel()->SetAnimationHandler(TIKI_NEW AnimationHandlerSpawn(go->GModel()));
+
 			
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;
@@ -433,6 +435,7 @@ namespace TikiEngine
 		void TikiBotFactory::CreatePlayerResearchBuilding(GameObject* go)
 		{
 			go->SModel(gameState->GetEngine()->content->LoadModel(L"base_radar"));
+			go->GModel()->SetAnimationHandler(TIKI_NEW AnimationHandlerResearchBuilding(go->GModel()));
 
 			TikiBotDescription botDesc;
 			botDesc.Faction = 0;

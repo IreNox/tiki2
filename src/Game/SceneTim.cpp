@@ -66,9 +66,9 @@ namespace TikiEngine
 			auto renP = engine->librarys->CreateComponent<IMeshRenderer>(go);
 			renP->SetMaterial(engine->content->LoadMaterial(L"os_default"));
 			renP->GetMaterial()->TexDiffuse = engine->content->LoadTexture(L"terrain/color_map1");
-			renP->SetMesh(engine->content->LoadMesh(L"box"));
+			renP->SetMesh(engine->content->LoadMesh(L"plane"));
 			go->PRS.SPosition() = Vector3(0, -0.1f, 0);
-			go->PRS.SScale() = Vector3(1.0f, -1.0f, 1.0f);
+			go->PRS.SScale() = 5.0f;
 			this->AddElement(go);
 
 			// Marine
