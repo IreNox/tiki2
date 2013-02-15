@@ -32,22 +32,27 @@ namespace TikiEngine
 
 			windowData = TIKI_NEW GUIImage(engine);
 			windowData->SetTexture(engine->content->LoadTexture(L"hud/if_data"));
+			windowData->LayerDepth = 1.1f;
 			enabledControls.Add(windowData);
 
 			windowMain = TIKI_NEW GUIImage(engine);
 			windowMain->SetTexture(engine->content->LoadTexture(L"hud/if_main"));
+			windowMain->LayerDepth = 1.1f;
 			enabledControls.Add(windowMain);
 
 			windowMinimap = TIKI_NEW GUIImage(engine);
 			windowMinimap->SetTexture(engine->content->LoadTexture(L"hud/if_minimap"));
+			windowMinimap->LayerDepth = 1.1f;
 			enabledControls.Add(windowMinimap);
 			
 			imgMinimap = TIKI_NEW GUIImage(engine);
 			imgMinimap->Click.AddHandler(this);
+			imgMinimap->LayerDepth = 1.1f;
 			enabledControls.Add(imgMinimap);
 
 			labelRes = TIKI_NEW GUILabel(engine);
 			labelRes->Text() = L"0";
+			labelRes->SetFont(gameState->GetDefaultFont());
 			windowData->AddChild(labelRes);
 
 			controlSkills = TIKI_NEW GUIControl(engine);
@@ -59,6 +64,7 @@ namespace TikiEngine
 				GUIImage* cmd = TIKI_NEW GUIImage(engine);
 				cmd->SPosition() = Vector2(0.0f + (68.0f * i), 0.0f);
 				cmd->Click.AddHandler(this);
+				cmd->LayerDepth = 0.8f;
 
 				controlSkills->AddChild(cmd);
 
@@ -86,6 +92,7 @@ namespace TikiEngine
 
 			controlBuildSlot = TIKI_NEW GUIImage(engine);
 			controlBuildSlot->SetTexture(engine->content->LoadTexture(L"hud/if_build"));
+			controlBuildSlot->LayerDepth = 0.9f;
 			controlBuildSlot->Click.AddHandler(this);
 
 			texInfo = engine->content->LoadTexture(L"hud/unit_bg");
@@ -185,7 +192,7 @@ namespace TikiEngine
 			controlSkillUpgrades->SPosition() = Vector2(350.0f * scale, vp.Y - (290.0f * scale));
 
 			controlBuildSlot->SPosition() = Vector2(964.0f * scale, vp.Y - (189.0f * scale));
-			controlBuildSlot->SSize() = controlBuildSlot->GetTexture()->GetSize() * scale;
+			controlBuildSlot->SSize() = controlBuildSlot->GetTexture()->GetSize() * (80.0f / 128.0f) * scale;
 
 			labelRes->SPosition() = Vector2(vp.X - (168.0f * scale), 14.0f * scale);
 
@@ -232,8 +239,8 @@ namespace TikiEngine
 					cont->GetBoundingBox().Position(),
 				 	0.0f,
 					Vector2::Zero,
-					(Vector2(80.0f) / 128.0f) * scale ,
-					0.9f,
+					(Vector2(80.0f) / 128.0f) * scale,
+					0.7f,
 					Color::White,
 					(skill->GetAtWorkState() ? -(float)args.Time.TotalTime : (float)skill->GetCooldownState())
 				);
@@ -242,8 +249,8 @@ namespace TikiEngine
 					GUIControl::GetDefaultFont(),
 					skill->GetCurrentLevelString(),
 					cont->GetBoundingBox().Position() + cont->GSize() - Vector2(15.0f * scale, 20.0f * scale),
-					Color::White,
-					0.8f
+					Color::Black,
+					0.6f
 				);
 
 				i++;
@@ -264,7 +271,7 @@ namespace TikiEngine
 				),
 				texBarExpBg->GetRectangle(),
 				Color::White,
-				0.9f
+				0.6f
 			);
 
 			args.SpriteBatch->Draw(
@@ -277,7 +284,7 @@ namespace TikiEngine
 				),
 				texBarHpText->GetRectangle(),
 				Color::White,
-				0.8f
+				0.5f
 			);
 
 			args.SpriteBatch->Draw(
@@ -290,7 +297,7 @@ namespace TikiEngine
 				),
 				texBarExpBg->GetRectangle(),
 				Color::White,
-				0.9f
+				0.6f
 			);
 
 			args.SpriteBatch->Draw(
@@ -303,7 +310,7 @@ namespace TikiEngine
 				),
 				texBarExpText->GetRectangle(),
 				Color::White,
-				0.8f
+				0.5f
 			);
 			#pragma endregion
 
@@ -381,21 +388,21 @@ namespace TikiEngine
 								texInfo,
 								RectangleF::Create(pos.X - 40, pos.Y - 20, 80, 16),
 								Color::White,
-								1.2f
+								1.3f
 							);
 
 							args.SpriteBatch->Draw(
 								texHealth,
 								RectangleF::Create(pos.X - 39, pos.Y - 19, (float)(bot->Health() / bot->MaxHealth()) * 78.0f, 11),
 								Color::White,
-								1.1f
+								1.2f
 							);
 
 							args.SpriteBatch->Draw(
 								texShield,
 								RectangleF::Create(pos.X - 39, pos.Y - 8, xp * 78.0f, 4),
 								Color::White,
-								1.1f
+								1.2f
 							);
 						}
 						else
@@ -411,7 +418,7 @@ namespace TikiEngine
 								texHealth,
 								RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(bot->Health() / bot->MaxHealth()) * 38.0f, 7),
 								Color::White,
-								1.1f
+								1.2f
 							);
 						}
 					}
@@ -423,7 +430,7 @@ namespace TikiEngine
 						mmCenter + ((go->PRS.GPosition().XZ() / levelSize) * imgMinimap->GSize().X),
 						0.0f,
 						tex->GetCenter(),
-						1.0f,
+						scale,
 						0.8f,
 						(bot->GetFaction() == 0 ? Color::Green : Color::Red)
 					);

@@ -20,7 +20,7 @@ namespace TikiEngine
 		#pragma region GUIControl
 		#pragma region Class
 		GUIControl::GUIControl(Engine* engine)
-			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0), UserData(0)
+			: EngineObject(engine), isDirty(true), mouseOver(false), parent(0), UserData(0), LayerDepth(1.0f)
 		{
 			if (defaultFont == 0)
 			{
@@ -554,7 +554,7 @@ namespace TikiEngine
 				boundingBox,
 				texture->GetRectangle(),
 				Color::White,
-				1.0f - (this->GetParent() == nullptr ? 0.0f : 0.1f )
+				this->LayerDepth
 			);
 		}
 		#pragma endregion
