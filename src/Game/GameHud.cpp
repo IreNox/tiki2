@@ -410,14 +410,14 @@ namespace TikiEngine
 								texInfo,
 								RectangleF::Create(pos.X - 20, pos.Y - 16, 40, 9),
 								Color::White,
-								1.2f
+								1.9f
 							);
 
 							args.SpriteBatch->Draw(
 								texHealth,
 								RectangleF::Create(pos.X - 19, pos.Y - 15, (float)(bot->Health() / bot->MaxHealth()) * 38.0f, 7),
 								Color::White,
-								1.2f
+								1.7f
 							);
 						}
 					}
