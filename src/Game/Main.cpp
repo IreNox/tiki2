@@ -9,6 +9,7 @@
 #include "Game/SceneLevel.h"
 #include "Game/SceneLoading.h"
 #include "Game/SceneCredits.h"
+#include "Game/SceneThomas.h"
 
 #include "../misc/res/resource.h"
 
@@ -44,6 +45,16 @@ inline Scene* GetStartScene(Engine* engine)
 	else if((name == L"Mark.Reichert" || name == L"Shekk") && false)
 	{
 		scene = TIKI_NEW SceneMark(engine);
+	}
+	else if ((name == L"thomas.riedel" || name == L"Tom") && true)
+	{
+		scene = TIKI_NEW SceneThomas(engine);
+		//scene = TIKI_NEW SceneMark(engine);
+		//scene = TIKI_NEW SceneAdrian(engine);
+		//scene = TIKI_NEW SceneCredits(engine);
+
+		//scene = TIKI_NEW SceneLevel(engine);
+		//((SceneLevel*)scene)->LoadLevel(1);
 	}
 	else
 	{

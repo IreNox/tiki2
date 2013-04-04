@@ -448,6 +448,9 @@
     <ClInclude Include="inc\Game\SceneCredits.h">
       <Filter>Scenes\Credits</Filter>
     </ClInclude>
+    <ClInclude Include="inc\Game\SceneThomas.h">
+      <Filter>Scenes\Test</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game\CameraFly.cpp">
@@ -702,6 +705,9 @@
     </ClCompile>
     <ClCompile Include="src\Game\SceneCredits.cpp">
       <Filter>Scenes\Credits</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game\SceneThomas.cpp">
+      <Filter>Scenes\Test</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
