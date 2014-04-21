@@ -69,7 +69,7 @@ typedef const wchar_t* wcstring;
 #define TIKI_LOG(msg) 
 #endif
 
-#define TIKI_MIN(a, b) (a < b ? a : b);
-#define TIKI_MAX(a, b) (a > b ? a : b);
+#define TIKI_MIN(a, b) ((a) < (b) ? (a) : (b))
+#define TIKI_MAX(a, b) ((a) > (b) ? (a) : (b))
 #pragma endregion
 

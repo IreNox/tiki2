@@ -1,6 +1,7 @@
 
 #include "Game/DebugConsole.h"
 
+#include "Core/TypeDef.h"
 #include "Core/IInput.h"
 #include "Core/IGraphics.h"
 #include "Core/ISpriteBatch.h"
@@ -45,7 +46,7 @@ namespace TikiEngine
 		void DebugConsole::Draw(const DrawArgs& args)
 		{			
 			UInt32 c = 0;
-			UInt32 i = (UInt32)max(0, (Int32)lines.Count() - 10);
+			UInt32 i = (UInt32)TIKI_MAX( 0, (Int32)lines.Count( ) - 10 );
 
 			if (enabled)
 			{
@@ -87,8 +88,8 @@ namespace TikiEngine
 						args.SpriteBatch->DrawString(
 							font,
 							kvp.GetKey(),
-							Vector2(5, 14.0f * c),
-							Color(1.0f, 1.0f, 1.0f, (float)min(kvp.GetValue(), 1.0))
+							Vector2( 5, 14.0f * c ),
+							Color( 1.0f, 1.0f, 1.0f, (float)TIKI_MIN( kvp.GetValue(), 1.0 ) )
 						);
 
 						lines[kvp.GetKey()] -= args.Time.ElapsedTime;

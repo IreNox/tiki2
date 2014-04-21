@@ -141,7 +141,7 @@ namespace TikiEngine
 			float scale = TIKI_MAX(
 				(float)args.Graphics->GetViewPort()->Width / (float)texBG->GetWidth(),
 				(float)args.Graphics->GetViewPort()->Height / (float)texBG->GetHeight()
-			)
+			);
 
 			rectBG = RectangleF::Create(
 				0,

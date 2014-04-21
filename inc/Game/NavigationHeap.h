@@ -1,9 +1,11 @@
 #pragma once
 
+#include "Game/NavigationCell.h"
+
 #include <vector>
 #include <list>
 #include <algorithm>
-#include "Game/NavigationCell.h"
+#include <functional>
 
 namespace TikiEngine
 {

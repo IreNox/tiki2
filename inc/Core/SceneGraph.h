@@ -43,11 +43,11 @@ namespace TikiEngine
 #pragma endregion
 
 #pragma region Member - Find
-		void Find(List<GameObject*>& result, RectangleF& rect , function<bool(GameObject*)> where = 0);
-		void Find(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
-		void Find(List<GameObject*>& result, Frustum& frustum);
-		void Find(List<GameObject*>& result, Vector3& point, float distance, function<bool(GameObject*)> where = 0);
-		void FindInFrustum(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
+		void Find( List<GameObject*>& result, RectangleF& rect, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void Find( List<GameObject*>& result, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void Find( List<GameObject*>& result, Frustum& frustum );
+		void Find( List<GameObject*>& result, Vector3& point, float distance, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void FindInFrustum( List<GameObject*>& result, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
 
 #pragma endregion
 

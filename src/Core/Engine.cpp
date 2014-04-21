@@ -246,7 +246,7 @@ namespace TikiEngine
 			{
 				isLoading = true;
 				isLoadingFinish = false;			
-				loadingThread = TIKI_NEW Thread<Engine, Scene>(&Engine::initScene);
+				loadingThread = TIKI_NEW Thread<Engine, Scene>( std::mem_fn( &Engine::initScene ) );
 				loadingThread->Start(this, scene);
 			}
 			else

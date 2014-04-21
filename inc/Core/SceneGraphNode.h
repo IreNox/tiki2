@@ -26,10 +26,10 @@ namespace TikiEngine
 		void Do(function<void(GameObject*)> whatIWant);
 		void DoWithinRange(RectangleF& rect, const Vector3& point, float distance, function<void(GameObject*)> whatIWant);
 
-		void Find(List<GameObject*>& result, RectangleF& rect, function<bool(GameObject*)> where = 0);
-		void Find(List<GameObject*>& result, RectangleF& rect, Vector3& point, float distance, function<bool(GameObject*)> where = 0);
-		void Find(List<GameObject*>& result, function<bool(GameObject*)> where = 0);
-		void Find(List<GameObject*>& result, Frustum& frustum);
+		void Find( List<GameObject*>& result, RectangleF& rect, function<bool( GameObject* )> where = std::function<bool(GameObject*)>( nullptr ) );
+		void Find( List<GameObject*>& result, RectangleF& rect, Vector3& point, float distance, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void Find( List<GameObject*>& result, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void Find( List<GameObject*>& result, Frustum& frustum );
 		
 
 		SceneGraphNode* Find(GameObject* gameObject);
@@ -44,8 +44,8 @@ namespace TikiEngine
 
 		void Clean();
 
-		void GetContent(List<GameObject*>& content, function<bool(GameObject*)> where = 0);
-		void GetSubContent(List<GameObject*>& content, function<bool(GameObject*)> where = 0);
+		void GetContent( List<GameObject*>& content, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
+		void GetSubContent( List<GameObject*>& content, function<bool( GameObject* )> where = std::function<bool( GameObject* )>( nullptr ) );
 
 		bool IsEmpty();
 
