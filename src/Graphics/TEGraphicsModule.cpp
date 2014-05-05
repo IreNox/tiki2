@@ -63,6 +63,13 @@ namespace TikiEngine
 			rtScreen[rtScreenIndex]->Clear(clearColor);
 			rtInterface->Clear(Color::TransparentBlack);
 
+#if TIKI_DX10
+//			ID3D10ShaderResourceView* textures[] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+#elif TIKI_DX11
+			ID3D11ShaderResourceView* textures[] = { nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr };
+			deviceContext->PSSetShaderResources( 0u, 16u, textures );
+#endif
+
 			rtLight->Apply(3);
 			rtDepth->Apply(1);
 			rtNormal->Apply(2);
@@ -223,10 +230,9 @@ namespace TikiEngine
 			{
 				Light* l = args.Lights.SceneLights->Get(i);
 
-				buf->Data[i].Range = l->GetRange();
 				buf->Data[i].Color = l->GetColor().ToVector4();
-				buf->Data[i].Position = l->GetGameObject()->PRS.GPosition();
-				buf->Data[i].Direction = l->GetGameObject()->PRS.GRotation() * Vector3::Forward;
+				buf->Data[ i ].Position = Vector4( l->GetGameObject()->PRS.GPosition( ), l->GetRange() );
+				buf->Data[i].Direction = Vector4( l->GetGameObject()->PRS.GRotation() * Vector3::Forward, 0.0f );
 
 				i++;
 			}

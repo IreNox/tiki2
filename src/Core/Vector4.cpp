@@ -23,6 +23,11 @@ Vector4::Vector4(float* arr)
 {
 }
 
+Vector4::Vector4( const Vector3& vec, float w )
+: X( vec.X ), Y( vec.Y ), Z( vec.Z ), W( w )
+{
+}
+
 Vector4::~Vector4(void)
 {
 }

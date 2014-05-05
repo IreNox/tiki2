@@ -25,11 +25,7 @@ namespace TikiEngine
 
 			~ITerrainRenderer() {}
 
-			virtual void LoadTerrain(string fileName, int scale, int size, float elevation
-#if _DEBUG
-				, bool useCloddy
-#endif
-			) = 0;
+			virtual void LoadTerrain(string fileName, int scale, int size, float elevation, bool useCloddy ) = 0;
 			
 			virtual Material* GetMaterial() = 0;
 			virtual void SetMaterial(Material* mat) = 0;
@@ -41,7 +37,6 @@ namespace TikiEngine
 			virtual float SampleHeight(const Vector3& position) = 0;
 
 			virtual void UpdateCollider(IHeightFieldCollider* collider) = 0;
-			//virtual void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi) = 0;
 
 		};
 	}

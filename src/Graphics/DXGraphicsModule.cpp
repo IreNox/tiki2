@@ -397,7 +397,7 @@ namespace TikiEngine
 				NULL,
 				D3D_DRIVER_TYPE_HARDWARE,
 				NULL,
-				0, // DEBUG FLAG
+				D3D11_CREATE_DEVICE_DEBUG, //0, // DEBUG FLAG
 				&levels,
 				1,
 				D3D11_SDK_VERSION,

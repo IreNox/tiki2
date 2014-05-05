@@ -73,9 +73,6 @@ namespace TikiEngine
 			this->mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 
-			// PostProcess
-			engine->graphics->AddPostProcess(TIKI_NEW PPFogOfWar(gameState));
-			
 			//auto ssao = TIKI_NEW PPScreenSpaceAmbientOcclusion(engine);
 			//temp = ssao->GetAO();
 			//engine->graphics->AddPostProcess(ssao);
@@ -95,6 +92,9 @@ namespace TikiEngine
 			{
 				this->LoadLevel(levelId);
 			}
+
+			// PostProcess
+			engine->graphics->AddPostProcess( TIKI_NEW PPFogOfWar( gameState ) );
 
 			engine->sound->Play(engine->content->LoadSound(L"ambient"), true);
 		}

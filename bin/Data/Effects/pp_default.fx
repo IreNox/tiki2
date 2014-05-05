@@ -45,7 +45,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 
 		for (float i = 0; i < LightsCount; i++)
 		{
-			float3 lightDir = normalize(Lights[i].Direction); //normalize(Lights[i].Position - pixelPos);
+			float3 lightDir = normalize(Lights[i].Direction.xyz); //normalize(Lights[i].Position - pixelPos);
 
 			float lighting = dot(pixelNormal, lightDir);	
 			//lighting *= (Lights[i].Range / dot(lightDir, lightDir));

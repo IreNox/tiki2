@@ -6,10 +6,9 @@ namespace TikiEngine
 	{
 		struct LightData
 		{
-			Vector3 Position;
-			Vector3 Direction;
+			Vector4 Position;
+			Vector4 Direction;
 			Vector4 Color;
-			float Range;
 		};
 	}
 }

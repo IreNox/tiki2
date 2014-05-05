@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/Vector3.h"
+
 #include <math.h>
 
 //TODO INLINE
@@ -21,6 +23,7 @@ public:
 	Vector4();
 	Vector4(float all);
 	Vector4(float* arr);
+	Vector4( const Vector3& vec, float w );
 	Vector4(float x, float y, float z, float w);
 
 	virtual ~Vector4();
