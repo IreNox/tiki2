@@ -160,7 +160,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Graphics\AllComponents.cpp" />
-    <ClCompile Include="src\Graphics\CloddyInternal.cpp" />
     <ClCompile Include="src\Graphics\DebugLineRenderer.cpp" />
     <ClCompile Include="src\Graphics\DllMain.cpp" />
     <ClCompile Include="src\Graphics\DXGraphicsModule.cpp" />

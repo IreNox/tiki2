@@ -37,7 +37,6 @@
     <ClCompile Include="src\Graphics\TEShader.cpp" />
     <ClCompile Include="src\Graphics\TESpriteBatchModule.cpp" />
     <ClCompile Include="src\Graphics\VertexInternal.cpp" />
-    <ClCompile Include="src\Graphics\CloddyInternal.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\Graphics\AnimationStack.h" />

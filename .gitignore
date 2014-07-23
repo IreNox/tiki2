@@ -1,1 +1,10 @@
 /obj
+/bin/Bin64/*.pdb
+/bin/Bin64/*.exe
+/TikiEngine.sdf
+/*.suo
+/*.opensdf
+/bin/*.log
+/lib/x64/Debug/Effects11.lib
+/lib/x64/Debug/TikiEngine.Core.lib
+/bin/Bin64/TikiEngine.*

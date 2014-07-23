@@ -1,6 +1,8 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.Core", "TikiEngine.Core.vcxproj", "{939525FD-4CD7-4020-9947-77629AC5A091}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game", "Game.vcxproj", "{2B5BC09C-F375-4729-92FE-EDF77ABD35DE}"
@@ -57,46 +59,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TikiEngine.GraphicsOGL", "T
 	EndProjectSection
 EndProject
 Global
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://ion02.de:8080/tfs/defaultcollection
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = TikiEngine.Core.vcxproj
-		SccProjectTopLevelParentUniqueName1 = TikiEngine.sln
-		SccLocalPath1 = .
-		SccProjectUniqueName2 = Game.vcxproj
-		SccProjectTopLevelParentUniqueName2 = TikiEngine.sln
-		SccLocalPath2 = .
-		SccProjectUniqueName3 = TikiEngine.Physics.vcxproj
-		SccProjectTopLevelParentUniqueName3 = TikiEngine.sln
-		SccLocalPath3 = .
-		SccProjectUniqueName4 = src\\Effects11\\Effects11.vcxproj
-		SccProjectTopLevelParentUniqueName4 = TikiEngine.sln
-		SccProjectName4 = src/Effects11
-		SccLocalPath4 = src\\Effects11
-		SccProjectUniqueName5 = TikiEngine.Input.vcxproj
-		SccProjectTopLevelParentUniqueName5 = TikiEngine.sln
-		SccLocalPath5 = .
-		SccProjectUniqueName6 = TikiEngine.Sound.vcxproj
-		SccProjectTopLevelParentUniqueName6 = TikiEngine.sln
-		SccLocalPath6 = .
-		SccProjectUniqueName7 = TikiEngine.GraphicsDX11.vcxproj
-		SccProjectTopLevelParentUniqueName7 = TikiEngine.sln
-		SccLocalPath7 = .
-		SccProjectUniqueName8 = TikiEngine.ContentManager.vcxproj
-		SccProjectTopLevelParentUniqueName8 = TikiEngine.sln
-		SccLocalPath8 = .
-		SccProjectUniqueName9 = Files.csproj
-		SccProjectTopLevelParentUniqueName9 = TikiEngine.sln
-		SccLocalPath9 = .
-		SccProjectUniqueName10 = TikiEngine.GraphicsDX10.vcxproj
-		SccProjectTopLevelParentUniqueName10 = TikiEngine.sln
-		SccLocalPath10 = .
-		SccProjectUniqueName11 = TikiEngine.GraphicsOGL.vcxproj
-		SccProjectTopLevelParentUniqueName11 = TikiEngine.sln
-		SccLocalPath11 = .
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -173,7 +135,6 @@ Global
 		{07E6BAA5-4F4C-4F0F-A331-BF09FFB08A2E}.Release|x64.ActiveCfg = Release|Any CPU
 		{07E6BAA5-4F4C-4F0F-A331-BF09FFB08A2E}.Release|x86.ActiveCfg = Release|Any CPU
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Debug|x64.ActiveCfg = Debug|x64
-		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Debug|x64.Build.0 = Debug|x64
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Debug|x86.ActiveCfg = Debug|Win32
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Debug|x86.Build.0 = Debug|Win32
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x64.ActiveCfg = Release|x64
@@ -181,7 +142,6 @@ Global
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x86.ActiveCfg = Release|Win32
 		{A5DA3004-8282-427A-9B70-D029AF67A6A2}.Release|x86.Build.0 = Release|Win32
 		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x64.ActiveCfg = Debug|x64
-		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x64.Build.0 = Debug|x64
 		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x86.ActiveCfg = Debug|Win32
 		{7DE74242-4745-40AD-808E-FD205405B128}.Debug|x86.Build.0 = Debug|Win32
 		{7DE74242-4745-40AD-808E-FD205405B128}.Release|x64.ActiveCfg = Release|x64

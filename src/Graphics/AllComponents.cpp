@@ -174,15 +174,9 @@ namespace TikiEngine
 		#pragma endregion
 
 		#pragma region TerrainRenderer
-		//using namespace Cloddy::API;
-		//using namespace Cloddy::API::MeshVisitors;
-		//using namespace Cloddy::Core::Math::Vectors;
-		//using namespace Cloddy::API::Geometries;
-
 		#pragma region Class
 		TerrainRenderer::TerrainRenderer(Engine* engine, GameObject* gameObject)
-			: ITerrainRenderer( engine, gameObject ), material( 0 ), useCloddy( false ) //, indexBuffer(0), vertexBuffer(0), callback(0)
-			  //, collisionIndexBuffer(0), collisionVertexBuffer(0), collisionRegions(0)
+			: ITerrainRenderer( engine, gameObject ), material( 0 ), useCloddy( false ), m_pVertexBuffer( nullptr ), m_pVertexData( nullptr ), m_vertexCount( 0 )
 		{
 		}
 
@@ -232,6 +226,8 @@ namespace TikiEngine
 
 			if (useCloddy)
 			{
+				 
+
 				//datasetSample = TIKI_NEW cloddy_CloddyLocalDataset(fileName.CStr(), true, cloddy_CloddyDatasetConverterType::E16C24);
 				//heightmap = datasetSample->GetHeightmap();
 				//
@@ -348,45 +344,7 @@ namespace TikiEngine
 
 		bool TerrainRenderer::GetReady()
 		{
-			return (material != 0); // && (callback != 0);
-		}
-		#pragma endregion
-
-		#pragma region Member - Collision
-		void TerrainRenderer::UpdateCollider(IHeightFieldCollider* collider)
-		{
-			//UInt32 i = 0;
-			//UInt32 w = heightmap->GetWidth() / 20;
-			//UInt32 h = heightmap->GetHeight() / 20;
-			//UInt32 c = w * h;
-			//
-			//UInt16* height = TIKI_NEW UInt16[c];
-			//HeightmapSample sam;
-
-			//while (i < c)
-			//{
-			//	UInt32 x = (w - (i % w)) * 20;
-			//	UInt32 y = (i / w) * 20;
-
-			//	heightmap->Get(x, y, &sam);
-
-			//	height[i] = (UInt16)(((double)sam.Elevation / 1073741823) * 65536);
-
-			//	i++;
-			//}
-
-			//float s = (float)size;
-
-			//HeightFieldDesc desc;
-			//desc.Columns = w;
-			//desc.Rows = h;
-			//desc.ColumnScale = s / w;
-			//desc.RowScale = s / h;
-			//desc.HeightScale = elevation;
-
-			//collider->SetCenter(Vector3(-s / 2, 0, -s / 2));
-			//collider->SetHeightField(height, desc);
-			//delete[](height);
+			return (material != 0);
 		}
 		#pragma endregion
 
@@ -436,24 +394,8 @@ namespace TikiEngine
 
 		void TerrainRenderer::Update(const UpdateArgs& args)
 		{
-			//if (useCloddy)
-			//{
-			//	manager->Update(70.0f, engine->graphics->GetViewPort()->Height);
-			//}
 		}
 		#pragma endregion
-
-		//#pragma region Private Member
-		//CodeX::int32 TerrainRenderer::toCloddyColor(Color c)
-		//{
-		//	CodeX::int32 a = (int)(c.A * 255.0f);
-		//	CodeX::int32 r = (int)(c.R * 255.0f);
-		//	CodeX::int32 g = (int)(c.G * 255.0f);
-		//	CodeX::int32 b = (int)(c.B * 255.0f);
-
-		//	return Cloddy::API::Util::Colors::Color::FromRGB(a, r, g ,b);
-		//}
-		//#pragma endregion
 		#pragma endregion
 	}
 }

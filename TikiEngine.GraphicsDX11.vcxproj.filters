@@ -123,9 +123,6 @@
     <ClCompile Include="src\Graphics\ModelInternal.cpp">
       <Filter>Internal\Model</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\CloddyInternal.cpp">
-      <Filter>Internal\Cloddy</Filter>
-    </ClCompile>
     <ClCompile Include="src\Graphics\VertexInternal.cpp">
       <Filter>Internal\Vertex</Filter>
     </ClCompile>

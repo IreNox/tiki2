@@ -1,26 +1,5 @@
 #pragma once
 
-//#define CODEX_PREFIX
-//#define CLODDY_CORE_PREFIX
-//#define CLODDY_KERNEL_PREFIX
-//#define CLODDY_API_PREFIX
-//#define CLODDY_GRAPHICS_PREFIX
-//#define CLODDY_EXTENSIONS_PREFIX
-//
-//#include "CodeX/Codex.h"
-//#include "Cloddy/Cloddy_Core.h"
-//#include "Cloddy/Cloddy_Kernel.h"
-//#include "Cloddy/Cloddy_API.h"
-//#include "Cloddy/Cloddy_Extensions.h"
-//
-//#if TIKI_DX10
-//#include "Cloddy/dx10/Cloddy_Graphics.h"
-//#pragma comment(lib, "Cloddy.GraphicsDX10.lib")
-//#else
-//#include "Cloddy/dx11/Cloddy_Graphics.h"
-//#pragma comment(lib, "Cloddy.GraphicsDX11.lib")
-//#endif
-
 #include "Core/ITerrainRenderer.h"
 
 //#include "Graphics/TikiHeightmap.h"
@@ -29,17 +8,16 @@
 //#include "Graphics/TerrainTriangulationCallback.h"
 
 #include "Graphics/VertexDeclaration.h"
+#include "Graphics/StaticBuffer.h"
 
 namespace TikiEngine
 {
+	struct TerrainVertex;
+
 	namespace Components
 	{
-		//using namespace Cloddy::Graphics;
-		//using namespace Cloddy::Extensions;
-		//using namespace Cloddy::API::Heightmaps;
-		//using namespace Cloddy::API::VertexFactories::VertexFormats;
-		//using namespace TikiEngine::Vertices;
-		//using namespace TikiEngine::Graphics;
+		using namespace TikiEngine::Vertices;
+		using namespace TikiEngine::Graphics;
 
 		class TerrainRenderer : public ITerrainRenderer
 		{
@@ -62,9 +40,6 @@ namespace TikiEngine
 
 			float SampleHeight(const Vector3& position);
 
-			void UpdateCollider(IHeightFieldCollider* collider);
-			//void UpdateCollider(ITriangleMeshCollider* collider, List<Vector3>* poi);
-
 			bool GetReady();
 	
 		private:
@@ -73,9 +48,10 @@ namespace TikiEngine
 
 			TDX_InputLayout* layout;
 
-			//UInt32 collisionRegions;
-			//TerrainIndexBuffer* collisionIndexBuffer;
-			//TerrainVertexBuffer* collisionVertexBuffer;
+			TerrainVertex*		m_pVertexData;
+			int					m_vertexCount;
+
+			StaticBuffer< TIKI_VERTEX_BUFFER >*	m_pVertexBuffer;
 
 			bool useCloddy;
 
