@@ -42,6 +42,9 @@ namespace TikiEngine
 		Shader::Shader(Engine* engine)
 			: IShader(engine), effect(0)
 		{
+			technique = nullptr;
+			pass = nullptr;
+			effect = nullptr;
 		}
 
 		Shader::~Shader()

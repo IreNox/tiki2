@@ -364,7 +364,6 @@ namespace TikiEngine
 			ZeroMemory(&swapDesc, sizeof(DXGI_SWAP_CHAIN_DESC));
 
 			swapDesc.BufferCount = 2;
-			swapDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
 			swapDesc.BufferDesc.Height = desc.Graphics.Height;
 			swapDesc.BufferDesc.Width = desc.Graphics.Width;
 			swapDesc.BufferDesc.RefreshRate.Denominator = 1;
@@ -378,6 +377,8 @@ namespace TikiEngine
 			swapDesc.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH;
 			
 #if TIKI_DX10
+			swapDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+
 			HRESULT r = D3D10CreateDeviceAndSwapChain(
 				NULL,
 				D3D10_DRIVER_TYPE_HARDWARE,
@@ -390,6 +391,8 @@ namespace TikiEngine
 			);
 			deviceContext = device;
 #else
+			swapDesc.BufferDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
+
 			D3D_FEATURE_LEVEL level;
 			D3D_FEATURE_LEVEL levels = D3D_FEATURE_LEVEL_11_0;
 
