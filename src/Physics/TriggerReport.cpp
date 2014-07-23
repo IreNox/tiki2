@@ -1,10 +1,8 @@
 #include "Physics/TriggerReport.h"
 
 #include "Core/ICollider.h"
-//#include "Core/EventTriggers.h"
 
 #include "PhysX/Physics/NxActor.h"
-
 
 namespace TikiEngine
 {
