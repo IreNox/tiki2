@@ -189,14 +189,17 @@ namespace TikiEngine
 				followHero = !followHero;
 
 			CameraRTS* rtsCam = scene->GetMainCamera()->GetGameObject()->GetComponent<CameraRTS>();	
-			TikiBot* heroBot = GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>();
-			if(heroBot->IsAlive() && (args.Input.GetKey(KEY_SPACE) || followHero))
+			if ( rtsCam )
 			{
-				rtsCam->SetCameraTarget(heroBot->GetGameObject());
-			}
-			else
-			{
-				rtsCam->ClearCameraTarget();
+				TikiBot* heroBot = GetPart<PlayerBase>( 0 )->Hero->GetComponent<TikiBot>();
+				if ( heroBot->IsAlive() && (args.Input.GetKey( KEY_SPACE ) || followHero) )
+				{
+					rtsCam->SetCameraTarget( heroBot->GetGameObject() );
+				}
+				else
+				{
+					rtsCam->ClearCameraTarget();
+				}
 			}
 
 			if(args.Input.GetMousePressed(MB_Right))

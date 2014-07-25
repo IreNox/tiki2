@@ -37,7 +37,21 @@ SamplerState samC
 // Vertex Shader
 ////////////////////////////////////////////////////////////////////////////////
 
-#include "Data/Effects/IncOS/is_getworld_default.fx"
+Texture2D TexHeight;
+
+matrix GetWorld( VS_INPUT input )
+{
+	matrix mtx = WorldM;
+
+	float2 halfSize = TerrainSize / 2;
+	float2 uv = input.Pos.xz + halfSize;
+	uv /= TerrainSize;
+
+	mtx[ 3 ][ 1 ] += TexHeight.SampleLevel( sam, uv, 0 );
+
+	return mtx;
+}
+
 #include "Data/Effects/IncOS/is_defaultshader_vertex.fx"
 
 ////////////////////////////////////////////////////////////////////////////////

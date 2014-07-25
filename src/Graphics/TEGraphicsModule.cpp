@@ -110,7 +110,7 @@ namespace TikiEngine
 			drawPostProcess(defaultPostProcess);
 
 #if TIKI_DX10 || TIKI_DX11
-			swapChain->Present(0, 0);
+			swapChain->Present(1, 0);
 #elif TIKI_OGL
 			SwapBuffers(deviceContext);
 #endif

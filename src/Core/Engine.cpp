@@ -26,7 +26,7 @@ namespace TikiEngine
 	#pragma region Class
 	Engine::Engine()
 		: scene(0), loadedModules(), desc(), input(0), sound(0), physics(0), graphics(0), sprites(0), content(0), loadingScene(0),
-		  isLoading(false), isLoadingFinish(true), frameCount(0), syncWait(0), useShadows(false), sceneMenu(0)
+		  isLoading(false), isLoadingFinish(true), frameCount(0), useShadows(false), sceneMenu(0)
 #if _DEBUG
 		, fpsIndex(0), fpsAve(0)
 #endif
@@ -370,16 +370,6 @@ namespace TikiEngine
 			critLoading.Unlock();
 
 			loadingScene->Update(args);
-		}
-
-		syncWait += (args.Time.ElapsedTime > 0.014 ? -1 : 1);
-		if (syncWait > 0)
-		{
-			//Sleep(syncWait);
-		}
-		else
-		{
-			syncWait = 0;
 		}
 	}
 	#pragma endregion

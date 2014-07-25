@@ -129,7 +129,6 @@ namespace TikiEngine
 		double fpsAve;
 		double fpsCache[5];
 #endif
-		Int32 syncWait;
 		UInt64 frameCount;
 
 		EngineDescription desc;

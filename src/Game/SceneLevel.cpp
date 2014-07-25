@@ -13,6 +13,7 @@
 #include "Core/CameraObject.h"
 
 #include "Game/CameraRTS.h"
+#include "Game/CameraFly.h"
 
 #include "Game/PPBlur.h"
 #include "Game/PPFogOfWar.h"
@@ -70,6 +71,7 @@ namespace TikiEngine
 			// Camera
 			CameraObject* go = TIKI_NEW CameraObject(engine);
 			(TIKI_NEW CameraRTS(go, level->GetTerrain()));
+			//(TIKI_NEW CameraFly( engine, go ));
 			this->mainCamera = go->GetCameraComponent();
 			this->AddElement(go);
 

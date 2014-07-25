@@ -64,10 +64,6 @@ namespace TikiEngine
 				shader->SetBoolean("heroDead", pb->IsHeroDead());
 			}
 
-#if _DEBUG
-			shader->SetConstantBuffer("FogOfWar", buffer);
-#endif
-
 			CBFogOfWar* fow = buffer->MapT<CBFogOfWar>();
 
 			UInt32 i = 0;
@@ -133,6 +129,8 @@ namespace TikiEngine
 			fow->MapSize = Vector3(size, state->GetScene()->GLevel()->GetTerrain()->GElevation(), size);
 
 			buffer->Unmap();
+
+			shader->SetConstantBuffer( "FogOfWar", buffer );
 		}
 		#pragma endregion
 

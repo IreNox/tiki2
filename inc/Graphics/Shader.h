@@ -88,6 +88,7 @@ namespace TikiEngine
 			void saveToStream(wcstring fileName, Stream* stream);
 
 			void applyType(const wstring& fileName);
+			void applyConstants();
 		};
 	}
 }

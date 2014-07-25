@@ -66,6 +66,8 @@ namespace TikiEngine
 
 		void Shader::Apply()
 		{
+			applyConstants();
+
 #if TIKI_DX10
 			pass->Apply(0);
 #else

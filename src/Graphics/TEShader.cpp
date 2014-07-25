@@ -61,7 +61,24 @@ namespace TikiEngine
 			case 'o':
 			case 'O':
 				type = ST_Object;
+				break;
+			case 'p':
+			case 'P':
+				type = ST_PostProcess;
+				break;
+			default:
+				type = ST_Unknown;
+				break;
+			}
 
+			applyConstants();
+		}
+		
+		void Shader::applyConstants()
+		{
+			switch ( type )
+			{
+			case ST_Object:
 				this->SetConstantBuffer(
 					"ObjectData",
 					DllMain::ModuleGraphics->GetCBufferObject()
@@ -77,17 +94,13 @@ namespace TikiEngine
 					DllMain::ModuleGraphics->GetCBufferCamera()
 				);
 				break;
-			case 'p':
-			case 'P':
-				type = ST_PostProcess;
-
+			case ST_PostProcess:
 				this->SetConstantBuffer(
 					"LightBuffer",
 					DllMain::ModuleGraphics->GetCBufferLight()
 				);
 				break;
 			default:
-				type = ST_Unknown;
 				break;
 			}
 		}

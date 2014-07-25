@@ -282,10 +282,16 @@ namespace TikiEngine
 			Vector2 pos = position;
 			while (i < text.Length())
 			{
-				width = font->DrawChar(text[i], pos, color, layerDepth);
+				const wchar_t c = text[ i++ ];
+
+				if ( c == L'\n' )
+				{
+					continue;
+				}
+
+				width = font->DrawChar( c, pos, color, layerDepth );
 
 				pos.X += width;
-				i++;
 			}
 		}
 		#pragma endregion

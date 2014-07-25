@@ -131,13 +131,15 @@ namespace TikiEngine
 							cmdEnter = L"";
 						}
 						break;
-					}
-
-					wchar_t c = engine->input->KeyCodeToChar(keys[i]);
-					
-					if (font->ContainsChar(c))
-					{
-						cmdEnter += c;
+					default:
+						{
+							const wchar_t c = engine->input->KeyCodeToChar( keys[ i ] );
+							if ( font->ContainsChar( c ) )
+							{
+								cmdEnter += c;
+							}
+						}
+						break;
 					}
 
 					i++;

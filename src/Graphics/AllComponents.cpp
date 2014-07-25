@@ -9,9 +9,32 @@
 #include "Core/GameObject.h"
 #include "Core/Camera.h"
 #include "Core/IContentManager.h"
+#include "Graphics/Texture.h"
+
+#include "Core/FileStream.h"
+
+#include <assert.h>
 
 namespace TikiEngine
 {
+	struct TerrainVertex
+	{
+		Single Position[ 3u ];
+		Single Normal[ 3u ];
+		Single Color[ 4u ];
+
+		static UInt32 DeclarationCount;
+		static InputElement Declaration[ 3 ];
+	};
+
+	UInt32 TerrainVertex::DeclarationCount = 3u;
+	InputElement TerrainVertex::Declaration[ 3 ] =
+	{
+		InputElement( IST_Position, 0, IEF_Float, 3 ),
+		InputElement( IST_Normal, 0, IEF_Float, 3 ),
+		InputElement( IST_Color, 0, IEF_Float, 4 )
+	};
+
 	namespace Components
 	{
 		#pragma region  MeshRenderer
@@ -182,39 +205,27 @@ namespace TikiEngine
 
 		TerrainRenderer::~TerrainRenderer()
 		{
-			//SafeDelete(&collisionIndexBuffer);
-			//SafeDelete(&collisionVertexBuffer);
+			SafeRelease(&m_pVertexBuffer);
+			SafeRelease(&m_pIndexBuffer);
 			SafeRelease(&material);
-			SafeRelease(&layout);
+			SafeRelease(&m_pDeclaration);
+			SafeRelease( &m_pHeightTexture );
+			SafeRelease( &m_pHeightD3dTexture );
 
-			//if (terrain != 0)
-			//{
-			//	terrain->Dispose();
-			//	terrain = 0;
-			//}
-
-			//if (manager != 0)
-			//{
-			//	manager->Shutdown();
-			//	manager = 0;
-			//}
-
-			//vertexFormat = 0;
-
-			//indexBuffer = 0;
-			//vertexBuffer = 0;
-
-			//if (callback != 0)
-			//{
-			//	callback->Dispose();
-			//	callback = 0;
-			//}
-
-			//terrainDescription = 0;
+			SafeDelete( &m_pHeightData );
+			SafeDelete( &m_pFinalHeightData );
+			SafeDelete( &m_pVertexData );
+			SafeDelete( &m_pIndexData );
 		}
 		#pragma endregion
 
 		#pragma region Member - Load
+		struct TerrainInitializationData
+		{
+			UInt32		width;
+			UInt32		height;
+		};
+
 		void TerrainRenderer::LoadTerrain(string fileName, int scale, int size, float elevation, bool useCloddy )
 		{
 			this->size = size;
@@ -226,64 +237,101 @@ namespace TikiEngine
 
 			if (useCloddy)
 			{
-				 
+				IO::FileStream stream( StringAtoW( fileName ), IO::FM_Read );
 
-				//datasetSample = TIKI_NEW cloddy_CloddyLocalDataset(fileName.CStr(), true, cloddy_CloddyDatasetConverterType::E16C24);
-				//heightmap = datasetSample->GetHeightmap();
-				//
-				//vertexFormat = cloddy_VertexFormat::P3F()
-				//	//->Append(cloddy_VertexFormat::T2F(1, 1))
-				//	->Append(cloddy_VertexFormat::N3F())
-				//	->Append(cloddy_VertexFormat::C1I(cloddy_ColorFormat_RGBA));
-				////->Append(cloddy_VertexFormat::X4F_12());
+				TerrainInitializationData initData;
+				stream.Read( &initData, 0u, sizeof(initData) );
 
-				//datasetDraw = TIKI_NEW cloddy_CloddyLocalDataset(fileName.CStr(), true, cloddy_CloddyDatasetConverterType::E16C24);
+				m_width = initData.width;
+				m_height = initData.height;
+
+				m_resWidth = m_width / 4u;
+				m_resHeight = m_height / 4u;
 			
-				//int size2 = (engine->graphics->GetViewPort()->Width * engine->graphics->GetViewPort()->Height);
-				////vertexBuffer = TIKI_NEW TerrainVertexBuffer(size2);
-				////indexBuffer = TIKI_NEW TerrainIndexBuffer(size2 * 3);
-				////callback = TIKI_NEW TerrainTriangulationCallback(indexBuffer, vertexBuffer);
-				////if (material) callback->SetMaterial(material);
+				m_vertexCount = m_resWidth * m_resHeight;
+				m_pVertexData = TIKI_NEW TerrainVertex[ m_vertexCount ];
 
-				//indexBuffer = TIKI_NEW IndexBuffer(DllMain::Device, size2 * 3);
-				//vertexBuffer = TIKI_NEW VertexBuffer(DllMain::Device, size2, vertexFormat->GetVertexSize());
-				//callback = TIKI_NEW TriangulationCallback(DllMain::Device, vertexBuffer, indexBuffer);
+				const UInt32 pixelCount = m_width * m_height;
+				m_pHeightData = TIKI_NEW float[ pixelCount ];
+				m_pFinalHeightData = TIKI_NEW float[ pixelCount ];
+				
+				stream.Read( m_pHeightData, 0u, sizeof(float)* pixelCount );
 
-				//description = TIKI_NEW cloddy_CloddyDescription();
-				//description->SetVertexBuffer(vertexBuffer);
-				//description->SetIndexBuffer(indexBuffer);
-				//description->SetVertexFormat(vertexFormat);
-				//description->SetTriangulationCallback(callback);
-				////description->EnableLogging();
+				stream.Close();
 
-				//Stream* stream = engine->content->LoadData(L"data/terrain/licence/licence.dat");
+				const float halfWidth = size / -2.0f;
+				const float halfHeight = size / -2.0f;
+				const float cellWidth = (float)size / m_resWidth;
+				const float cellHeight = (float)size / m_resHeight;
+				for (int i = 0u; i < m_vertexCount; ++i)
+				{
+					const int x = i % m_resWidth;
+					const int y = i / m_resWidth;
 
-				//UInt32 len = (UInt32)stream->GetLength();
-				//Byte* data = TIKI_NEW Byte[len];
+					TerrainVertex& vertex = m_pVertexData[ i ];
 
-				//stream->Read(data, 0, len);
-				//SafeRelease(&stream);
+					vertex.Position[ 0u ] = halfWidth + x * cellWidth;
+					vertex.Position[ 1u ] = 0.0f;
+					vertex.Position[ 2u ] = halfHeight + y * cellHeight;
 
-				//CodeX::Ptr<ByteBuffer> licBuffer = ByteBuffer::Raw(len);
-				//licBuffer->SetRawPointer(data);
+					vertex.Normal[ 0u ] = 0.0f;
+					vertex.Normal[ 1u ] = 1.0f;
+					vertex.Normal[ 2u ] = 0.0f;
 
-				//manager = TIKI_NEW cloddy_CloddyManager(description);
-				//manager->SetLicence(licBuffer);
-				//manager->Initialize();
+					vertex.Color[ 0u ] = 1.0f;
+					vertex.Color[ 1u ] = 0.0f;
+					vertex.Color[ 2u ] = 0.0f;
+					vertex.Color[ 3u ] = 0.0f;
+				}
 
-				//delete[](data);
-			
-				//terrainDescription = TIKI_NEW cloddy_CloddyRectangularTerrainDescription();
-				//terrainDescription->SetLightCount(1);
-				//terrainDescription->SetElevation(elevation);
-				//terrainDescription->SetHeightmap(datasetDraw->GetHeightmap()->Scale(scale + 1)); // anpassen für perfekte aussehen
-				//terrainDescription->SetWidth((float)size);
-				//terrainDescription->SetHeight((float)size);
-				//terrainDescription->SetHandedness(Handedness_RightHanded);
-				////terrainDescription->set
+				m_indexCount = (m_resWidth - 1u) * (m_resHeight - 1u) * 6u;
+				m_pIndexData = TIKI_NEW UInt32[ m_indexCount ];
 
-				//terrain = manager->CreateTerrain(terrainDescription);			
-				//terrain->SetTolerance(2.5f);
+				int i = 0u;
+				for ( int y = 0u; y < m_resHeight - 1u; ++y )
+				{
+					for ( int x = 0u; x < m_resWidth - 1u; ++x )
+					{
+						m_pIndexData[ i++ ] = ((y + 1) * m_resWidth) + x;
+						m_pIndexData[ i++ ] = (y * m_resWidth) + x;
+						m_pIndexData[ i++ ] = ((y + 1) * m_resWidth) + (x + 1);
+						m_pIndexData[ i++ ] = (y * m_resWidth) + x;
+						m_pIndexData[ i++ ] = ((y + 1) * m_resWidth) + (x + 1);
+						m_pIndexData[ i++ ] = (y * m_resWidth) + (x + 1);
+					}
+				}
+				//assert( i == m_indexCount );
+				m_indexCount = i;
+
+				m_pVertexBuffer = TIKI_NEW StaticBuffer< TIKI_VERTEX_BUFFER >( engine, sizeof(TerrainVertex), m_vertexCount, m_pVertexData );
+				m_pIndexBuffer = TIKI_NEW StaticBuffer< TIKI_INDEX_BUFFER >( engine, sizeof(UInt32), m_indexCount, m_pIndexData );
+
+				for (int i = 0u; i < pixelCount; ++i)
+				{
+					m_pFinalHeightData[ i ] = m_pHeightData[ i ] * elevation;
+				} 
+
+				D3D11_TEXTURE2D_DESC texDesc;
+				ZeroMemory( &texDesc, sizeof(texDesc) );
+
+				texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+				texDesc.Width = m_width;
+				texDesc.Height = m_height;
+				texDesc.Usage = D3D11_USAGE_DEFAULT;
+				texDesc.SampleDesc.Count = 1u;
+				texDesc.SampleDesc.Quality = 0u;
+				texDesc.ArraySize = 1u;
+				texDesc.MipLevels = 1u;
+				texDesc.Format = DXGI_FORMAT_R32_FLOAT;
+
+				D3D11_SUBRESOURCE_DATA texInitData;
+				texInitData.pSysMem = m_pFinalHeightData;
+				texInitData.SysMemPitch = sizeof(float)* m_width;
+				texInitData.SysMemSlicePitch = 0u; // texInitData.SysMemPitch * m_resHeight;
+
+				DllMain::Device->CreateTexture2D( &texDesc, &texInitData, &m_pHeightD3dTexture );
+
+				m_pHeightTexture = TIKI_NEW Texture( engine, m_pHeightD3dTexture, true, false );
 			}
 		}
 		#pragma endregion
@@ -300,46 +348,30 @@ namespace TikiEngine
 			
 			if ( this->GetReady() )
 			{
-				TDX_Input_Element_desc layoutDescription[] =
-				{
-					{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
-					//{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT,    0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
-					{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
-					{ "COLOR",    0, DXGI_FORMAT_R8G8B8A8_UNORM,  0, TIKI_VERTEXLAYOUT_APPEND_ALIGNED_ELEMENT, TIKI_VERTEXLAYOUT_INPUT_PER_VERTEX_DATA, 0 },
-				};
-
 				Shader* shader = (Shader*)material->GetShader();
-				shader->CreateLayout(layoutDescription, 3, &layout, 0);
-
-				//callback->SetMaterial(mat);
+				m_pDeclaration = TIKI_NEW VertexDeclaration( engine, shader, TerrainVertex::Declaration, TerrainVertex::DeclarationCount );
 			}
 		}
 
 		float TerrainRenderer::SampleHeight(const Vector3& position)
 		{
-			double height = 0;
+			float height = 0.0f;
+			if ( useCloddy )
+			{
+				float s = (float)size;
+				float w = (float)m_width;
+				float h = (float)m_height;
 
-			//if ( useCloddy )
-			//{
-			//	HeightmapSample sam;
+				Vector3 pos = position + Vector3( s / 2, 0, s / 2 );
+				pos = pos * (w / s);
+				
+				const UInt32 x = UInt32( pos.X );
+				const UInt32 y = UInt32( pos.Z );
 
-			//	float s = (float)size;
-			//	float w = (float)heightmap->GetWidth();
-			//	float h = (float)heightmap->GetHeight();
+				height = m_pFinalHeightData[ y * m_width + x ];
+			}
 
-			//	Vector3 pos = position * (w / s);
-			//	pos = pos + Vector3(w / 2, 0, h / 2);
-
-			//	heightmap->Get(
-			//		(int32)pos.X,
-			//		(int32)pos.Z,
-			//		&sam
-			//	);
-
-			//	height = ((double)sam.Elevation / 1073741823) * elevation;
-			//}
-
-			return (float)height;
+			return height;
 		}
 
 		bool TerrainRenderer::GetReady()
@@ -351,45 +383,20 @@ namespace TikiEngine
 		#pragma region Member - Draw/Update
 		void TerrainRenderer::Draw(const DrawArgs& args)
 		{
-			//if (!this->GetReady() || args.Mode == DM_Shadows) return;
-			//
-			//material->UpdateDrawArgs(args, gameObject);
-			//material->Apply();
+			if (!this->GetReady() || args.Mode == DM_Shadows) return;
+			
+			material->UpdateDrawArgs(args, gameObject);
+			material->Apply();
 
-			//DllMain::Context->IASetInputLayout(layout);
+			m_pDeclaration->Apply();
 
-			//Matrix world;
-			//gameObject->PRS.FillWorldMatrix(&world);
+			m_pIndexBuffer->Apply();
+			m_pVertexBuffer->Apply();
+			
+			material->GetShader()->SetTexture( "TexHeight", m_pHeightTexture );
 
-			//Light* light = (args.Lights.MainLightIndex >= 0 ? args.Lights.SceneLights->Get(args.Lights.MainLightIndex) : 0);
-
-			//Vector3 cameraPos = args.CurrentCamera->GetGameObject()->PRS.GPosition();
-			//
-			//if (useCloddy)
-			//{
-			//	manager->BeginTriangulation();
-			//	terrain->SetTransform(cloddy_Mat4F(world.n));
-			//	terrain->SetCameraPosition(cloddy_Vec3F(cameraPos.arr));
-
-			//	if (light)
-			//	{
-			//		Vector3 lightD = light->GetGameObject()->PRS.GetForward();
-			//		lightD.Z = -lightD.Z;
-
-			//		terrain->SetLight(0, cloddy_Vec3F(lightD.arr), toCloddyColor(light->GetColor()));
-			//		terrain->EnableLight(0);
-			//	}
-			//	else
-			//	{
-			//		terrain->DisableLight(0);
-			//	}
-
-			//	terrain->Triangulate(
-			//		cloddy_Mat4F((float*)args.CurrentCamera->GetViewMatrix().n),
-			//		cloddy_Mat4F((float*)args.CurrentCamera->GetProjectionMatrix().n)
-			//	);
-			//	manager->EndTriangulation();
-			//}
+			DllMain::Context->IASetPrimitiveTopology( D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST );
+			DllMain::Context->DrawIndexed( m_indexCount, 0u, 0u );
 		}
 
 		void TerrainRenderer::Update(const UpdateArgs& args)

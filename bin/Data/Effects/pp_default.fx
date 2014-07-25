@@ -53,7 +53,7 @@ float4 PS_Main(PS_INPUT input) : SV_TARGET
 			termLight += Lights[i].Color * lighting;
 		}		
 
-		color.rgb *= termLight;
+		//color.rgb *= termLight;
 	}
 	color *= shadowColor;
 	color *= ambientColor;
