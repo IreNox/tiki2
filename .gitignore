@@ -9,3 +9,4 @@
 /lib/x64/Debug/Effects11.lib
 /lib/x64/Debug/TikiEngine.Core.lib
 /bin/Bin64/TikiEngine.*
+*.user
