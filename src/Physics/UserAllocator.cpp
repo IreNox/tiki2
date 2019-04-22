@@ -46,11 +46,11 @@ UserAllocator::~UserAllocator()
 {
 	LOCK();
 
-	if (mNbAllocatedBytes)	printf("Memory leak detected: %d bytes non released\n", mNbAllocatedBytes);
+	if (mNbAllocatedBytes)	printf("Memory leak detected: %zd bytes non released\n", mNbAllocatedBytes);
 	if (mNbAllocs)		printf("Remaining allocs: %d\n", mNbAllocs);
 	printf("Nb alloc: %d\n", mTotalNbAllocs);
 	printf("Nb realloc: %d\n", mNbReallocs);
-	printf("High water mark: %d Kb\n", mHighWaterMark/1024);
+	printf("High water mark: %zd Kb\n", mHighWaterMark/1024);
 
 #if defined(_DEBUG)
 	// Scanning for memory leaks
@@ -62,7 +62,7 @@ UserAllocator::~UserAllocator()
 		{
 			if (NULL == mMemBlockList[i]) continue;
 			BlockHeader *ptr = reinterpret_cast<BlockHeader *>(mMemBlockList[i]);
-			printf(" Address 0x%08x, %u bytes (%s), allocated in: %s(%d):\n\n", &ptr[1], ptr->size, ptr->name, ptr->file, ptr->line);
+			printf(" Address 0x%p, %zd bytes (%s), allocated in: %s(%zd):\n\n", &ptr[1], ptr->size, ptr->name, ptr->file, ptr->line);
 			++NbLeaks;
 		}
 		printf("\n  Dump complete (%d leaks)\n\n", NbLeaks);
@@ -238,7 +238,7 @@ void* UserAllocator::realloc(void* memory, size_t size)
 	{
 		if (ptr2->indx >= mMemBlockListSize)
 		{
-			fprintf(stderr, "Oops: index (%u) >= list size (%u)\n", ptr2->indx, mMemBlockListSize);
+			fprintf(stderr, "Oops: index (%zd) >= list size (%u)\n", ptr2->indx, mMemBlockListSize);
 			fflush(stderr);
 		}
 		else
@@ -275,7 +275,7 @@ void UserAllocator::free(void* memory)
 
 		if (mNbAllocatedBytes < ptr->size)
 		{
-			fprintf(stderr, "Oops: size = %u\n", ptr->size);
+			fprintf(stderr, "Oops: size = %zd\n", ptr->size);
 			fflush(stderr);
 			break;
 		}
@@ -290,7 +290,7 @@ void UserAllocator::free(void* memory)
 		{
 			if (ptr->indx >= mMemBlockListSize)
 			{
-				fprintf(stderr, "Oops: index = %u (>= %u)\n", ptr->indx, mMemBlockListSize);
+				fprintf(stderr, "Oops: index = %zd (>= %u)\n", ptr->indx, mMemBlockListSize);
 				fflush(stderr);
 				break;
 			}

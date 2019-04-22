@@ -35,7 +35,7 @@ namespace TikiEngine
 
 				if (r != BZ_OK)
 				{
-					throw Exception("Can't close compressed file.");
+					//throw Exception("Can't close compressed file.");
 				}
 
 				fclose(file);

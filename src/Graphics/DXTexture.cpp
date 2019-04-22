@@ -25,7 +25,7 @@ namespace TikiEngine
 			: ITexture(engine), texture(tex), dynamic(dynamic), textureResource(0)
 		{
 			tex->GetDesc(&desc);
-						
+
 			if (createShaderView)
 			{
 				TDX_ShaderResourceView_Desc srDesc;
@@ -131,7 +131,7 @@ namespace TikiEngine
 
 			TDX_ShaderResourceView_Desc srDesc;
 			ZeroMemory(&srDesc, sizeof(srDesc));
-			
+
 #if TIKI_DX10
 			srDesc.ViewDimension = D3D10_SRV_DIMENSION_TEXTURE2D;
 #else
@@ -284,7 +284,7 @@ namespace TikiEngine
 			D3D11_MAPPED_SUBRESOURCE mapped;
 			HRESULT r = DllMain::Context->Map(texture, 0, D3D11_MAP_READ, 0, &mapped);
 #endif
-			
+
 			if (FAILED(r))
 			{
 				engine->HLog.Write("Can't map Texture. Unknown Error.");
@@ -297,7 +297,7 @@ namespace TikiEngine
 			UInt32 i = 0;
 			UInt32 c = desc.Width * desc.Height;
 			Byte* pixels = TIKI_NEW Byte[c * 4];
-			
+
 			while (i < c)
 			{
 				Byte* color = &pixels[i * 4];

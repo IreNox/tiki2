@@ -14,7 +14,7 @@ namespace TikiEngine
 	{
 
 	private:
-		enum 
+		enum
 		{
 			TOP = 0,
 			BOTTOM,
@@ -25,7 +25,7 @@ namespace TikiEngine
 		};
 
 	public:
-		static enum {OUTSIDE, INTERSECT, INSIDE};
+		enum {OUTSIDE, INTERSECT, INSIDE};
 
 		// The planes
 		Plane pl[6];
@@ -34,7 +34,7 @@ namespace TikiEngine
 		~Frustum(){}
 
 
-		// performs the plane extraction assuming that the matriz m = View * Projection 
+		// performs the plane extraction assuming that the matriz m = View * Projection
 		void CreatePlanes(const Matrix& m)
 		{
 
@@ -90,8 +90,8 @@ namespace TikiEngine
 				IntersectionPoint(pl[NEARP], pl[RIGHT], pl[BOTTOM]).XZ(),
 				IntersectionPoint(pl[NEARP], pl[LEFT], pl[BOTTOM]).XZ(),
 			};
-			
-			vertices.AddRange(v, 0, 4);			
+
+			vertices.AddRange(v, 0, 4);
 		}
 
 		Vector3 IntersectionPoint(Plane& a, Plane& b, Plane& c)
@@ -110,7 +110,7 @@ namespace TikiEngine
 
 		int PointInFrustum(const Vector3& p)
 		{
-			for(int i = 0; i < 6; i++) 
+			for(int i = 0; i < 6; i++)
 			{
 				if(ClassifyPoint(pl[i], p) < 0)
 					return OUTSIDE;
@@ -139,7 +139,7 @@ namespace TikiEngine
 			int result = INSIDE;
 			float distance;
 
-			for(int i = 0; i < 6; i++) 
+			for(int i = 0; i < 6; i++)
 			{
 				distance = pl[i].Distance(p);
 				if (distance < -radius)
@@ -153,7 +153,7 @@ namespace TikiEngine
 		int BoxInFrustum(IBoundingBox* b)
 		{
 			int result = INSIDE;
-			for(int i = 0; i < 6; i++) 
+			for(int i = 0; i < 6; i++)
 			{
 				if (pl[i].Distance(b->GetVertexP(pl[i].Normal())) < 0)
 					return OUTSIDE;
@@ -168,7 +168,7 @@ namespace TikiEngine
 
 			_CrtDbgBreak(); //NYI
 			int result = INSIDE;
-			for(int i = 0; i < 6; i++) 
+			for(int i = 0; i < 6; i++)
 			{
 				if (pl[i].Distance(rect.GetVertexP(pl[i].Normal(), height)) < 0)
 					return OUTSIDE;
