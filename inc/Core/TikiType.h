@@ -23,5 +23,5 @@
 		if (type == 0) type = TikiType(typeid(*this).name(), components); \
 		return type; \
 	}
- 
-//static TikiTypeDescription* GetTikiTypeDesc() { return &TikiTypeDesc; } 
+
+//static TikiTypeDescription* GetTikiTypeDesc() { return &TikiTypeDesc; }

@@ -53,7 +53,7 @@ Vector4 Vector4::Negate()
 #pragma region Length, Distance, Angle, Print
 float Vector4::Length()
 {
-	return sqrt(
+	return sqrtf(
 		(this->X * this->X) +
 		(this->Y * this->Y) +
 		(this->Z * this->Z) +
@@ -85,7 +85,7 @@ float Vector4::DistanceSquared(const Vector4& value1, const Vector4& value2)
 
 float Vector4::Angle(Vector4 vector)
 {
-	return acos(Dot(*this, vector)/
+	return acosf(Dot(*this, vector)/
 		(this->Length() * vector.Length())
 	) * (180 / 3.1415926f);
 }

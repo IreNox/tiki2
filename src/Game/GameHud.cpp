@@ -82,7 +82,7 @@ namespace TikiEngine
 				cmd->SPosition() = Vector2(10.0f + (50.0f * i), 10.0f);
 				cmd->Text() = L"+";
 				cmd->Click.AddHandler(this);
-				cmd->UserData = (void*)i;
+				cmd->UserData = (void*)(size_t)i;
 
 				controlSkillUpgrades->AddChild(cmd);
 
@@ -532,7 +532,7 @@ namespace TikiEngine
 			}
 			else if (sender->GetParent() == controlSkillUpgrades)
 			{
-				UInt32 index = (UInt32)sender->UserData;
+				UInt32 index = (UInt32)(size_t)sender->UserData;
 
 				SkillSystem* sys = gameState->GetPart<PlayerBase>(0)->Hero->GetComponent<TikiBot>()->GetSkillSys();
 				sys->UpgradeSkill(index);

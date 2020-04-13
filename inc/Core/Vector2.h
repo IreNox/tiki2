@@ -38,7 +38,7 @@ public:
 	// adjusts x and y so that the length of the vector does not exceed max
 	void Truncate(float maximum);
 	
-	float Length() const { return sqrt((X * X) + (Y * Y)); }
+	float Length() const { return sqrtf((X * X) + (Y * Y)); }
 	inline float LengthSquared() const { return (X * X) + (Y * Y); }
 
 	void Normalize();

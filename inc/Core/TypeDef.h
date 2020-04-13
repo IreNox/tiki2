@@ -33,7 +33,7 @@ typedef const wchar_t* wcstring;
 #define MATH_PI			3.141592654
 #define MATH_TWOPI		6.283185307
 
-#ifndef TIKI_EDITOR 
+#ifndef TIKI_EDITOR
 #define TIKI_ENGINE 1
 #endif
 
@@ -66,10 +66,16 @@ typedef const wchar_t* wcstring;
 #if _DEBUG
 #define TIKI_LOG(msg) engine->HLog.Write(msg)
 #else
-#define TIKI_LOG(msg) 
+#define TIKI_LOG(msg)
 #endif
 
 #define TIKI_MIN(a, b) ((a) < (b) ? (a) : (b))
 #define TIKI_MAX(a, b) ((a) > (b) ? (a) : (b))
 #pragma endregion
 
+#if _DEBUG
+#define TIKI_DEBUG_OUTPUT(str) OutputDebugStringA(str); \
+	_CrtDbgBreak();
+#else
+#define TIKI_DEBUG_OUTPUT(str)
+#endif

@@ -263,7 +263,7 @@ namespace TikiEngine
 				const float halfHeight = size / -2.0f;
 				const float cellWidth = (float)size / m_resWidth;
 				const float cellHeight = (float)size / m_resHeight;
-				for (int i = 0u; i < m_vertexCount; ++i)
+				for (UInt32 i = 0u; i < m_vertexCount; ++i)
 				{
 					const int x = i % m_resWidth;
 					const int y = i / m_resWidth;
@@ -287,10 +287,10 @@ namespace TikiEngine
 				m_indexCount = (m_resWidth - 1u) * (m_resHeight - 1u) * 6u;
 				m_pIndexData = TIKI_NEW UInt32[ m_indexCount ];
 
-				int i = 0u;
-				for ( int y = 0u; y < m_resHeight - 1u; ++y )
+				UInt32 i = 0u;
+				for ( UInt32 y = 0u; y < m_resHeight - 1u; ++y )
 				{
-					for ( int x = 0u; x < m_resWidth - 1u; ++x )
+					for ( UInt32 x = 0u; x < m_resWidth - 1u; ++x )
 					{
 						m_pIndexData[ i++ ] = ((y + 1) * m_resWidth) + x;
 						m_pIndexData[ i++ ] = (y * m_resWidth) + x;
@@ -306,7 +306,7 @@ namespace TikiEngine
 				m_pVertexBuffer = TIKI_NEW StaticBuffer< TIKI_VERTEX_BUFFER >( engine, sizeof(TerrainVertex), m_vertexCount, m_pVertexData );
 				m_pIndexBuffer = TIKI_NEW StaticBuffer< TIKI_INDEX_BUFFER >( engine, sizeof(UInt32), m_indexCount, m_pIndexData );
 
-				for (int i = 0u; i < pixelCount; ++i)
+				for (UInt32 i = 0u; i < pixelCount; ++i)
 				{
 					m_pFinalHeightData[ i ] = m_pHeightData[ i ] * elevation;
 				} 

@@ -4,7 +4,7 @@
 #pragma region Methods
 float Vector3::Length() const
 {
-	return sqrt(
+	return sqrtf(
 		(this->X * this->X) +
 		(this->Y * this->Y) +
 		(this->Z * this->Z)
@@ -37,7 +37,7 @@ float Vector3::Angle(const Vector3& vector1, const Vector3& vector2)
 	float dot = Vector3::Dot(vector1, vector2);
 	float len = vector1.Length() * vector2.Length();
 
-	return acos(dot / len) * (180 / 3.1415926f);
+	return acosf(dot / len) * (180 / 3.1415926f);
 }
 
 float Vector3::Distance(const Vector3& vector1, const Vector3& vector2)
@@ -66,7 +66,7 @@ Vector3 Vector3::Negate(const Vector3& vector)
 
 Vector3 Vector3::Normalize(const Vector3& vector) 
 {
-	float length = sqrt(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z);
+	float length = sqrtf(vector.X * vector.X + vector.Y * vector.Y + vector.Z * vector.Z);
 	return Vector3(vector.X / length, vector.Y / length, vector.Z / length);
 
 }

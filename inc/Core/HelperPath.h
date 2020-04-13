@@ -2,8 +2,6 @@
 
 #include "Core/TypeGlobals.h"
 
-#include <typeinfo.h>
-
 namespace TikiEngine
 {
 	class HelperPath
@@ -33,6 +31,5 @@ namespace TikiEngine
 
 		wstring binaryPath;
 		wstring workingPath;
-
 	};
 }

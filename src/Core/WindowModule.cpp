@@ -35,7 +35,7 @@ namespace TikiEngine
 			win.hbrBackground	= (HBRUSH)COLOR_WINDOWFRAME;
 			win.hCursor			= LoadCursor(NULL, IDC_ARROW);
 			win.hIcon			= desc.Window.Icon;
-	
+
 			HRESULT r = RegisterClassEx(&win);
 
 			if (FAILED(r))

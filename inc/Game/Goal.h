@@ -17,8 +17,8 @@ namespace TikiEngine
         template <class entity_type>
         class Goal
         {
-        public: 
-            enum 
+        public:
+            enum
             {
                 // The goal has been activated and will be processed each update step
                 Active,
@@ -52,11 +52,11 @@ namespace TikiEngine
             // goals can handle messages. Many don't though, so this defines a default behavior
             virtual bool HandleMessage(const Telegram& msg) { return false; }
 
-            // a Goal is atomic and cannot aggregate subgoals yet we must implement this method to provide 
+            // a Goal is atomic and cannot aggregate subgoals yet we must implement this method to provide
             // the uniform interface required for the goal hierarchy.
             virtual void AddSubgoal(Goal<entity_type>* g)
             {
-                throw std::runtime_error("Cannot add goals to atomic goals");
+                TIKI_DEBUG_OUTPUT( "Cannot add goals to atomic goals" );
             }
 
             //used to render any goal specific information

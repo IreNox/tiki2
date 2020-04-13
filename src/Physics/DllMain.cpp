@@ -8,8 +8,6 @@
 #include "Physics/TriangleMeshCollider.h"
 #include "Physics/BoundingBox.h"
 
-#include <typeinfo.h>
-
 namespace TikiEngine
 {
 	using namespace TikiEngine::Modules;

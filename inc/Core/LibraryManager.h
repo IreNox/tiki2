@@ -4,8 +4,6 @@
 #include "Core/TikiInfo.h"
 #include "Core/IModule.h"
 
-#include <typeinfo.h>
-
 #include "Core/Dictionary.h"
 
 namespace TikiEngine

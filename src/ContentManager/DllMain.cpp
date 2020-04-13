@@ -1,8 +1,6 @@
 
 #include "ContentManager/DllMain.h"
 
-#include <typeinfo.h>
-
 namespace TikiEngine
 {
 	using namespace TikiEngine::Resources;

@@ -13,8 +13,6 @@
 #include "ContentManager/ContentManagerModule.h"
 #include "ContentManager/DllMain.h"
 
-#include <typeinfo.h>
-
 namespace TikiEngine
 {
 	namespace Resources

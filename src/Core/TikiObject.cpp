@@ -3,16 +3,8 @@
 #include "Core/TypeGlobals.h"
 
 #if _DEBUG
-#include <typeinfo.h>
 #include <Windows.h>
 #include <sstream>
-
-#define TIKIOUT(str) OutputDebugStringA(str); \
-	_CrtDbgBreak();
-#else
-
-#define TIKIOUT(str)
-
 #endif
 
 #if _WIN64
@@ -32,7 +24,7 @@ TikiObject::~TikiObject()
 #if _DEBUG
 	if (refCount > 0)
 	{
-		TIKIOUT("Used object destroyed.");
+		TIKI_DEBUG_OUTPUT("Used object destroyed.");
 	}
 #endif
 }
@@ -44,7 +36,7 @@ Int32 TikiObject::AddRef()
 
 	if (this == wrongPtr)
 	{
-		TIKIOUT("AddRef wrong Pointer.");
+		TIKI_DEBUG_OUTPUT("AddRef wrong Pointer.");
 		return -1;
 	}
 
@@ -61,13 +53,13 @@ Int32 TikiObject::Release()
 #if _DEBUG
 	if (refCount == 0xfeeefeed)
 	{
-		TIKIOUT("Release Released Object.");
+		TIKI_DEBUG_OUTPUT("Release Released Object.");
 		return -1;
 	}
 
 	if (this == wrongPtr)
 	{
-		TIKIOUT( "Release wrong Pointer.");
+		TIKI_DEBUG_OUTPUT( "Release wrong Pointer.");
 		return -1;
 	}
 #endif

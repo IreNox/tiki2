@@ -102,7 +102,8 @@ namespace TikiEngine
 			if (it != memoryMap.end())
 				return it->second.lastSensedPosition;
 
-			throw std::runtime_error("<SensoryMemory::GetLastRecordedPositionOfOpponent>: Attempting to get position of unrecorded bot");
+			TIKI_DEBUG_OUTPUT( "<SensoryMemory::GetLastRecordedPositionOfOpponent>: Attempting to get position of unrecorded bot" );
+			return Vector3::Zero;
 		}
 
 		double SensorMemory::GetTimeOpponentHasBeenVisible(TikiBot* opponent, const GameTime& time) const
@@ -160,7 +161,7 @@ namespace TikiEngine
 #if _DEBUG
 			std::list<TikiBot*> opponents = GetListOfRecentlySensedOpponents(args.Time);
 			std::list<TikiBot*>::const_iterator it;
-			
+
 			for(it = opponents.begin(); it != opponents.end(); ++it)
 			{
 				Vector3 p = (*it)->Pos3D();
@@ -176,7 +177,7 @@ namespace TikiEngine
 
 		void SensorMemory::MakeTIKI_NEWRecordIfNotAlreadyPresent(TikiBot* opponent)
 		{
-			// else check to see if this Opponent already exists in the memory. 
+			// else check to see if this Opponent already exists in the memory.
 			// If it doesn't, create a TIKI_NEW record
 			if (memoryMap.find(opponent) == memoryMap.end())
 				memoryMap[opponent] = MemoryRecord();

@@ -1,7 +1,6 @@
 
 #include "Core/GameObject.h"
 #include "Core/TypeGlobals.h"
-#include <typeinfo.h>
 
 namespace TikiEngine
 {
@@ -145,7 +144,7 @@ namespace TikiEngine
 			childs[i]->Draw(args);
 			i++;
 		}
-		
+
         if (model) model->Draw(this, args);
 
 		i = 0;

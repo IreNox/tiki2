@@ -23,8 +23,6 @@
 #include "Graphics/OGLGraphicsModule.h"
 #endif
 
-#include <typeinfo.h>
-
 namespace TikiEngine
 {
 	using namespace TikiEngine::Components;

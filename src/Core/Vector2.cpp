@@ -57,7 +57,7 @@ float Vector2::Distance(const Vector2& vector1, const Vector2& vector2)
 {
 	float num =  vector2.X - vector1.X;
 	float num2 = vector2.Y - vector1.Y;
-	return sqrt(num * num + num2 * num2);
+	return sqrtf(num * num + num2 * num2);
 }
 
 float Vector2::DistanceSquared(const Vector2& vector1, const Vector2& vector2)
@@ -88,7 +88,7 @@ Vector2 Vector2::Cross()
 
 float Vector2::Angle(const Vector2& vector1, const Vector2& vector2)
 {
-	return acos(Dot(vector1,vector2) /(vector1.Length() * vector2.Length())) * (180 / 3.1415926f);
+	return acosf(Dot(vector1,vector2) /(vector1.Length() * vector2.Length())) * (180 / 3.1415926f);
 }
 #pragma endregion
 
